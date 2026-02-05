@@ -1,0 +1,49 @@
+{
+  "config": {
+    "benchmarks": [
+      "msc"
+    ],
+    "baselines": [
+      "naive_rag"
+    ],
+    "subset": 50,
+    "model": "gpt-4o",
+    "extraction_model": "gpt-4o-mini",
+    "judge_model": "gpt-4o"
+  },
+  "results": {
+    "msc": {
+      "naive_rag": {
+        "summary": {
+          "overall": {
+            "score": 46.0,
+            "total": 50
+          },
+          "by_type": {
+            "memory_qa": {
+              "score": 46.0,
+              "count": 50
+            }
+          }
+        },
+        "timestamp": "2026-02-05T05:33:35.911051+00:00",
+        "raw_count": 50
+      }
+    }
+  },
+  "comparison": {
+    "benchmarks": {
+      "msc": "MSC"
+    },
+    "baselines": {
+      "naive_rag": "naive_rag"
+    },
+    "matrix": {
+      "msc": {
+        "naive_rag": 46.0
+      }
+    }
+  },
+  "timestamp": "2026-02-05T05:33:35.911314+00:00",
+  "total_time_seconds": 142.35196232795715
+}

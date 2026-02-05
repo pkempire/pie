@@ -804,6 +804,11 @@ def _compile_temporal_context(
         is_event = state.get("_is_event", False) or state.get("date")
         event_date = state.get("date", "")
         
+        # FALLBACK: If this looks like an event but has no date, use first_seen timestamp
+        # This handles cases where extraction identified an event but didn't compute the date
+        if is_event and not event_date:
+            event_date = first_date  # first_date is already computed from first_seen
+        
         if is_event and event_date:
             # For events, prominently show the EVENT DATE
             lines.append(f"## {name} (EVENT)")
