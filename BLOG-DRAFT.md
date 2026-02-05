@@ -337,9 +337,13 @@ To be precise about contributions:
 
 ## What the Benchmarks Show
 
-We ran PIE's naive_rag baseline against four major benchmarks. The results confirmed our core thesis — and revealed something unexpected.
+We first established baseline performance with standard embedding-based retrieval (naive_rag), then tested PIE's semantic temporal compilation approach. The results confirmed our thesis about temporal reasoning being underserved — and revealed a critical, non-obvious finding about when our approach helps vs. hurts.
 
-### LongMemEval: 66.3%
+### Baseline Performance: naive_rag
+
+Before testing PIE's temporal compilation, we needed to know how far simple embedding retrieval gets you.
+
+**LongMemEval: 66.3%**
 
 | Category | Accuracy | Notes |
 |----------|----------|-------|
@@ -356,11 +360,11 @@ We ran PIE's naive_rag baseline against four major benchmarks. The results confi
 - Emergence AI: 86.0%
 - Supermemory: 71.4%
 - Zep: 71.2%
-- **Our naive_rag: 66.3%**
+- **naive_rag baseline: 66.3%**
 
-We're competitive but not leading. The gap is mostly in multi-session and preference — exactly where PIE's structured approach should help.
+The baseline is competitive but not leading. The gap is mostly in multi-session and preference — exactly where better temporal modeling should help. But the real question is whether PIE's semantic temporal compilation improves on this baseline. (Spoiler: it's complicated.)
 
-### LoCoMo: 58%
+**LoCoMo: 58%** (naive_rag baseline)
 
 | Category | Accuracy |
 |----------|----------|
@@ -370,13 +374,13 @@ We're competitive but not leading. The gap is mostly in multi-session and prefer
 
 Same pattern. Temporal is the weakest category by a wide margin. The benchmarks keep confirming: temporal reasoning is the unsolved problem.
 
-### MSC: 46% (76% partial credit)
+**MSC: 46%** (naive_rag baseline, 76% partial credit)
 
-The Multi-Session Chat benchmark tests persona consistency. Our 76% partial credit rate means the model retrieves *some* relevant facts but misses nuances. Persona consistency requires tracking how self-descriptions evolve — exactly what typed state transitions are designed for.
+The Multi-Session Chat benchmark tests persona consistency. The 76% partial credit rate means retrieval gets *some* relevant facts but misses nuances. Persona consistency requires tracking how self-descriptions evolve — exactly what typed state transitions are designed for.
 
-### Test of Time: The Aha Moment
+### Test of Time: Where PIE Actually Got Tested
 
-This is where things got interesting. We tested three conditions:
+This is where things got interesting — and where we have actual PIE results, not just baselines. We tested three conditions:
 - **naive_rag** (embedding retrieval): 56.2%
 - **baseline** (raw facts with dates): 46.2%
 - **pie_temporal** (semantic narrative reformulation): 31.2%

@@ -418,13 +418,33 @@ Continual Learning (the model that grows with you)
 
 **Visual:** Back to screen recording of ChatGPT. But now, in a second panel, PIE's query interface is open showing rich temporal context.
 
-> "4,758 conversations. 33 months. 16 million tokens. For the first time, all of it is structured, temporal, and queryable.
+> "4,758 conversations. 33 months. 16 million tokens. 866 entities. For the first time, all of it is structured, temporal, and queryable.
+>
+> But here's what I want you to take away: we ran these experiments expecting to prove that semantic temporal context beats raw timestamps. Instead, we discovered it's not that simple. Duration queries? +25% improvement. Date lookups? -37% disaster. The answer isn't one or the other — it's both, selected based on what you're asking.
+>
+> That insight — that temporal context should be task-adaptive — that might be the most important thing we found. And now you know it too.
 >
 > PIE is open source. Link in the description. If you're building in agent memory, check out the paper. If you think this matters, share this video.
 >
 > And next time you open a new chat and your AI has no idea who you are... remember — it doesn't have to be this way."
 
 **End card:** Links to repo, paper, blog post. Subscribe CTA.
+
+---
+
+## POST-PRODUCTION NOTES (Updated)
+
+### Section 5 is now the emotional core
+
+The "aha moment" where pie_temporal underperforms, followed by the insight about task-adaptive temporal context, should be edited for maximum dramatic effect:
+
+1. **Build tension:** Show the benchmark setup, explain what we expected
+2. **The reveal:** pie_temporal at 31.2% — pause, let it sink in
+3. **The investigation:** "We spent a week..." — quick montage of debugging
+4. **The insight:** Per-question breakdown appears, light bulb moment
+5. **The implication:** Split-screen showing hybrid approach
+
+This is the scientific story of the video — hypothesis → unexpected result → deeper understanding. Edit accordingly.
 
 ---
 
@@ -473,3 +493,4 @@ Continual Learning (the model that grows with you)
 
 **Changelog:**
 - v0.1 (Feb 2026): Initial outline. Results section (Section 5) entirely TODO — need working system + experiments.
+- v0.2 (Feb 2026): **Major update** — Added actual benchmark results (LongMemEval 66.3%, LoCoMo 58%, MSC 46%, Test of Time task-adaptive finding). Section 5 completely rewritten with the "aha moment" narrative about task-adaptive temporal context. Added new visuals for the insight reveal. Updated timing to 18-20 min.

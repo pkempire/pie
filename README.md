@@ -125,4 +125,9 @@ MIT
 
 ## Contact
 
-[TODO: contact links]
+- GitHub: [@pkempire](https://github.com/pkempire)
+- Twitter: [@parthkocheta](https://twitter.com/parthkocheta)
+
+## Contributing
+
+PRs welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.

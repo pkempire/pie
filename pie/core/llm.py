@@ -133,7 +133,7 @@ def parse_extraction_result(raw: dict, conversation_ids: list[str], tokens: dict
     for e in raw.get("entities", []):
         # Validate entity type
         etype = e.get("type", "concept").lower()
-        valid_types = {"person", "project", "tool", "organization", "belief", "decision", "concept", "period"}
+        valid_types = {"person", "project", "tool", "organization", "belief", "decision", "concept", "period", "event"}
         if etype not in valid_types:
             etype = "concept"  # default fallback
         

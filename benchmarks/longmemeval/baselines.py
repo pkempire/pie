@@ -14,7 +14,11 @@ from __future__ import annotations
 import logging
 import time
 from dataclasses import dataclass, field
-from typing import Any
+from pathlib import Path
+from typing import Any, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from benchmarks.common.cache import CachedWorldModel
 
 from pie.core.llm import LLMClient
 from pie.core.world_model import WorldModel, cosine_similarity
@@ -960,6 +964,335 @@ def _ask_llm_temporal(
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# Baseline 4: PIE Temporal Cached (optimized for benchmark runs)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+
+class PIETemporalCachedBaseline:
+    """
+    PIE Temporal baseline with caching for efficient benchmark runs.
+    
+    Key optimizations:
+    - World model built once and cached to disk
+    - Entity embeddings computed once and cached
+    - Each question only does: embed query → retrieve → compile context → answer
+    
+    Usage:
+        baseline = PIETemporalCachedBaseline(
+            cache_dir=Path("cache/"),
+            llm=llm,
+            model="gpt-4o",
+        )
+        
+        # For each question in benchmark
+        result = baseline.run(item)
+    """
+    
+    def __init__(
+        self,
+        cache_dir: Path | str,
+        llm: LLMClient | None = None,
+        model: str = "gpt-4o",
+        extraction_model: str = "gpt-4o-mini",
+        embed_model: str = "text-embedding-3-large",
+        top_k_entities: int = 15,
+        max_context_chars: int = 12_000,
+    ):
+        from pathlib import Path
+        from benchmarks.common.cache import CachedWorldModel
+        
+        self.cache_dir = Path(cache_dir)
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
+        
+        self.llm = llm or LLMClient()
+        self.model = model
+        self.extraction_model = extraction_model
+        self.embed_model = embed_model
+        self.top_k_entities = top_k_entities
+        self.max_context_chars = max_context_chars
+        
+        # Cache of loaded CachedWorldModels by question_id
+        self._cached_models: dict[str, CachedWorldModel] = {}
+    
+    def _get_cached_world_model(self, item: dict[str, Any]) -> "CachedWorldModel":
+        """Get or build cached world model for a question."""
+        from benchmarks.common.cache import CachedWorldModel
+        
+        qid = item["question_id"]
+        
+        if qid in self._cached_models:
+            return self._cached_models[qid]
+        
+        cache_path = self.cache_dir / f"{qid}_world_model.json"
+        
+        def build_fn():
+            return _build_world_model_for_question(
+                item, self.llm, self.extraction_model
+            )
+        
+        cached_wm = CachedWorldModel.load_or_build(
+            cache_path=cache_path,
+            build_fn=build_fn,
+            llm=self.llm,
+            embed_model=self.embed_model,
+        )
+        
+        self._cached_models[qid] = cached_wm
+        return cached_wm
+    
+    def run(self, item: dict[str, Any]) -> BaselineResult:
+        """
+        Run PIE temporal baseline on a single question using cached world model.
+        """
+        t0 = time.time()
+        
+        try:
+            # Get cached world model (builds if needed)
+            cached_wm = self._get_cached_world_model(item)
+            
+            question = item["question"]
+            question_ts = parse_question_date(item["question_date"])
+            
+            # Retrieve relevant entities (uses cached embeddings)
+            retrieved = cached_wm.retrieve(question, top_k=self.top_k_entities)
+            
+            if not retrieved:
+                return BaselineResult(
+                    question_id=item["question_id"],
+                    question_type=item["question_type"],
+                    question=question,
+                    gold_answer=item["answer"],
+                    hypothesis="I don't have enough information to answer this question.",
+                    baseline_name="pie_temporal_cached",
+                    model=self.model,
+                    latency_ms=(time.time() - t0) * 1000,
+                )
+            
+            # Compile temporal context
+            context = _compile_temporal_context_cached(
+                retrieved=retrieved,
+                cached_wm=cached_wm,
+                question_ts=question_ts,
+                max_chars=self.max_context_chars,
+            )
+            
+            # Ask LLM
+            answer = _ask_llm_temporal(
+                context=context,
+                question=question,
+                question_date=item["question_date"],
+                llm=self.llm,
+                model=self.model,
+            )
+            
+            return BaselineResult(
+                question_id=item["question_id"],
+                question_type=item["question_type"],
+                question=question,
+                gold_answer=item["answer"],
+                hypothesis=answer,
+                baseline_name="pie_temporal_cached",
+                model=self.model,
+                latency_ms=(time.time() - t0) * 1000,
+                context_chars=len(context),
+                retrieval_count=len(retrieved),
+            )
+        
+        except Exception as e:
+            logger.exception(f"PIE temporal cached failed for {item['question_id']}")
+            return BaselineResult(
+                question_id=item["question_id"],
+                question_type=item["question_type"],
+                question=item["question"],
+                gold_answer=item["answer"],
+                hypothesis=f"Error: {e}",
+                baseline_name="pie_temporal_cached",
+                model=self.model,
+                latency_ms=(time.time() - t0) * 1000,
+                error=str(e),
+            )
+    
+    def print_stats(self):
+        """Print caching statistics."""
+        print(f"\nPIETemporalCachedBaseline Stats:")
+        print(f"  Cached models loaded: {len(self._cached_models)}")
+        for qid, cached_wm in self._cached_models.items():
+            print(f"  [{qid}]")
+            cached_wm.print_stats()
+
+
+def _compile_temporal_context_cached(
+    retrieved: list[tuple[str, Any, float]],
+    cached_wm: "CachedWorldModel",
+    question_ts: float,
+    max_chars: int = 12_000,
+) -> str:
+    """
+    Compile temporal context using CachedWorldModel.
+    
+    Same as _compile_temporal_context but uses cached_wm interface.
+    """
+    import datetime
+    
+    parts = []
+    total_chars = 0
+    
+    for eid, entity, relevance in retrieved:
+        transitions = cached_wm.get_transitions(eid, ordered=True)
+        relationships = cached_wm.get_relationships(eid)
+        
+        lines = []
+        name = entity.name
+        etype = entity.type.value
+        state = entity.current_state or {}
+        
+        # Header with temporal metadata
+        first_seen = entity.first_seen
+        last_seen = entity.last_seen
+        first_ago = _humanize_delta(question_ts - first_seen)
+        last_ago = _humanize_delta(question_ts - last_seen)
+        
+        first_date = datetime.datetime.fromtimestamp(
+            first_seen, tz=datetime.timezone.utc
+        ).strftime("%Y-%m-%d")
+        last_date = datetime.datetime.fromtimestamp(
+            last_seen, tz=datetime.timezone.utc
+        ).strftime("%Y-%m-%d")
+        
+        change_count = len(transitions)
+        months_span = max((last_seen - first_seen) / (30 * 86400), 1)
+        velocity = change_count / months_span
+        
+        # Check if this is an event
+        is_event = state.get("_is_event", False) or state.get("date")
+        event_date = state.get("date", "")
+        
+        if is_event and not event_date:
+            event_date = first_date
+        
+        if is_event and event_date:
+            lines.append(f"## {name} (EVENT)")
+            try:
+                event_dt = datetime.datetime.strptime(
+                    event_date, "%Y-%m-%d"
+                ).replace(tzinfo=datetime.timezone.utc)
+                event_ts = event_dt.timestamp()
+                event_ago = _humanize_delta(question_ts - event_ts)
+                lines.append(f"**Event date: {event_date} ({event_ago})**")
+            except:
+                lines.append(f"**Event date: {event_date}**")
+            
+            desc = state.get("description", "")
+            location = state.get("location", "")
+            if desc:
+                lines.append(f"Description: {desc}")
+            if location:
+                lines.append(f"Location: {location}")
+        else:
+            lines.append(f"## {name} ({etype})")
+            lines.append(
+                f"First mentioned: {first_date} ({first_ago}), "
+                f"last mentioned: {last_date} ({last_ago})."
+            )
+            if change_count > 1:
+                lines.append(
+                    f"State changed {change_count} times "
+                    f"(~{velocity:.1f}x/month)."
+                )
+            
+            if state:
+                desc = state.get("description", "")
+                if not desc and isinstance(state, dict):
+                    desc = "; ".join(
+                        f"{k}: {v}" for k, v in state.items()
+                        if k not in ("description", "_is_event") and v
+                    )
+                if desc:
+                    lines.append(f"Current state: {desc}")
+        
+        # Timeline
+        if transitions and len(transitions) > 1:
+            lines.append("")
+            lines.append("Timeline:")
+            for t in transitions:
+                t_ago = _humanize_delta(question_ts - t.timestamp)
+                t_date = datetime.datetime.fromtimestamp(
+                    t.timestamp, tz=datetime.timezone.utc
+                ).strftime("%Y-%m-%d")
+                ttype = t.transition_type
+                
+                prefix = "  •"
+                if ttype == TransitionType.CONTRADICTION:
+                    prefix = "  ⚠ [CHANGED]"
+                elif ttype == TransitionType.CREATION:
+                    prefix = "  ★"
+                
+                summary = t.trigger_summary
+                if summary:
+                    lines.append(f"{prefix} {t_date} ({t_ago}): {summary}")
+        
+        # Relationships
+        if relationships:
+            rel_strs = []
+            for r in relationships[:5]:
+                other_id = r.target_id if r.source_id == eid else r.source_id
+                other = cached_wm.get_entity(other_id)
+                if other:
+                    rel_strs.append(
+                        f"{r.type.value}: {other.name}"
+                        + (f" ({r.description})" if r.description else "")
+                    )
+            if rel_strs:
+                lines.append(f"\nRelated: {'; '.join(rel_strs)}")
+        
+        part = "\n".join(lines)
+        
+        if total_chars + len(part) > max_chars:
+            break
+        
+        parts.append(part)
+        total_chars += len(part)
+    
+    return "\n\n".join(parts)
+
+
+def pie_temporal_cached(
+    item: dict[str, Any],
+    baseline: PIETemporalCachedBaseline | None = None,
+    cache_dir: str | Path | None = None,
+    llm: LLMClient | None = None,
+    model: str = "gpt-4o",
+    extraction_model: str = "gpt-4o-mini",
+    top_k_entities: int = 15,
+    max_context_chars: int = 12_000,
+) -> BaselineResult:
+    """
+    Function wrapper for PIETemporalCachedBaseline.
+    
+    If baseline is provided, uses it directly (for batch runs).
+    Otherwise creates a new baseline instance (for single question).
+    """
+    from pathlib import Path
+    
+    if baseline is not None:
+        return baseline.run(item)
+    
+    # Create baseline for single-question use
+    if cache_dir is None:
+        cache_dir = Path(__file__).parent / "cache"
+    
+    baseline = PIETemporalCachedBaseline(
+        cache_dir=cache_dir,
+        llm=llm,
+        model=model,
+        extraction_model=extraction_model,
+        top_k_entities=top_k_entities,
+        max_context_chars=max_context_chars,
+    )
+    return baseline.run(item)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # Baseline registry (for runner)
 # ═══════════════════════════════════════════════════════════════════════════════
 
@@ -967,4 +1300,5 @@ BASELINES = {
     "full_context": full_context,
     "naive_rag": naive_rag,
     "pie_temporal": pie_temporal,
+    "pie_temporal_cached": pie_temporal_cached,
 }

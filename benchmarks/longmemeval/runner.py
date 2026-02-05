@@ -64,6 +64,8 @@ from benchmarks.longmemeval.baselines import (
     full_context,
     naive_rag,
     pie_temporal,
+    pie_temporal_cached,
+    PIETemporalCachedBaseline,
     BASELINES,
 )
 
@@ -330,6 +332,14 @@ def run_single_question(
             model=model,
             extraction_model=extraction_model,
         )
+    elif baseline_name == "pie_temporal_cached":
+        result = pie_temporal_cached(
+            item,
+            cache_dir=cache_dir,
+            llm=llm,
+            model=model,
+            extraction_model=extraction_model,
+        )
     else:
         raise ValueError(f"Unknown baseline: {baseline_name}")
 
@@ -533,7 +543,133 @@ def _save_results(
     logger.info(f"  {hypothesis_path.name} — LongMemEval-compatible format")
 
 
-# ── PIE Temporal with Caching ─────────────────────────────────────────────────
+# ── PIE Temporal Cached (New Optimized Runner) ────────────────────────────────
+
+
+def run_pie_cached(
+    dataset: list[dict[str, Any]],
+    cache_dir: Path,
+    model: str = "gpt-4o",
+    extraction_model: str = "gpt-4o-mini",
+    judge_model: str = "gpt-4o",
+    output_dir: Path | None = None,
+    debug: bool = False,
+    save_every: int = 10,
+) -> BenchmarkScores:
+    """
+    Run PIE temporal cached baseline — optimized for benchmark runs.
+    
+    Key difference from run_pie_with_caching:
+    - Uses PIETemporalCachedBaseline class that caches embeddings
+    - Single baseline instance reused across all questions
+    - 10-20x faster after initial world model build
+    """
+    llm = LLMClient()
+    cache_dir = Path(cache_dir)
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    
+    scores = BenchmarkScores()
+    total = len(dataset)
+    t0 = time.time()
+    
+    if output_dir:
+        output_dir = Path(output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
+    
+    logger.info(f"Running PIE temporal cached (optimized)")
+    logger.info(f"  Questions: {total}")
+    logger.info(f"  Cache dir: {cache_dir}")
+    logger.info(f"  Model: {model}, Extraction: {extraction_model}")
+    
+    # Create single baseline instance for all questions
+    baseline = PIETemporalCachedBaseline(
+        cache_dir=cache_dir,
+        llm=llm,
+        model=model,
+        extraction_model=extraction_model,
+    )
+    
+    # Count cached world models
+    cached_count = sum(
+        1 for item in dataset
+        if (cache_dir / f"{item['question_id']}_world_model.json").exists()
+    )
+    logger.info(f"  Cached world models: {cached_count}/{total}")
+    
+    for i, item in enumerate(dataset):
+        qid = item["question_id"]
+        qtype = item["question_type"]
+        
+        logger.info(
+            f"[{i+1}/{total}] {qid} ({qtype}): "
+            f"{item['question'][:60]}..."
+        )
+        
+        try:
+            # Run using cached baseline
+            result = baseline.run(item)
+            
+            # Judge
+            score, reason = judge_answer(
+                question=item["question"],
+                gold_answer=item["answer"],
+                hypothesis=result.hypothesis,
+                llm=llm,
+                model=judge_model,
+            )
+            
+            scores.add(result, score, reason)
+            
+            emoji = "✅" if score == 1.0 else "🟡" if score == 0.5 else "❌"
+            running_acc = scores.overall_accuracy * 100
+            logger.info(
+                f"  {emoji} {score} | Running: {running_acc:.1f}% "
+                f"({int(scores.total_score)}/{scores.total}) | "
+                f"{result.latency_ms:.0f}ms"
+            )
+            
+            if debug:
+                print(f"  Q: {item['question']}")
+                print(f"  Gold: {item['answer']}")
+                print(f"  Pred: {result.hypothesis}")
+                print(f"  Reason: {reason}")
+        
+        except Exception as e:
+            logger.error(f"  ❌ Error: {e}")
+            error_result = BaselineResult(
+                question_id=qid,
+                question_type=qtype,
+                question=item["question"],
+                gold_answer=item["answer"],
+                hypothesis=f"Error: {e}",
+                baseline_name="pie_temporal_cached",
+                model=model,
+                error=str(e),
+            )
+            scores.add(error_result, 0.0, f"Error: {e}")
+        
+        # Periodic save
+        if output_dir and (i + 1) % save_every == 0:
+            _save_intermediate(scores, output_dir, "pie_temporal_cached")
+    
+    total_time = time.time() - t0
+    logger.info(
+        f"\nCompleted in {total_time:.0f}s ({total_time/60:.1f}m) — "
+        f"avg {total_time/max(total,1):.1f}s/question"
+    )
+    
+    # Print cache stats
+    baseline.print_stats()
+    
+    scores.print_report("pie_temporal_cached")
+    
+    if output_dir:
+        _save_results(scores, output_dir, "pie_temporal_cached")
+    
+    return scores
+
+
+# ── PIE Temporal with Caching (Original) ──────────────────────────────────────
 
 
 def run_pie_with_caching(
@@ -840,7 +976,7 @@ Examples:
         "--baseline", "-b",
         type=str,
         default="pie_temporal",
-        choices=["full_context", "naive_rag", "naive_rag_session", "pie_temporal", "all"],
+        choices=["full_context", "naive_rag", "naive_rag_session", "pie_temporal", "pie_temporal_cached", "all"],
         help="Which baseline to run (default: pie_temporal)",
     )
 
@@ -945,7 +1081,7 @@ Examples:
         )
 
     # Set default cache dir for PIE
-    if args.cache_dir is None and args.baseline in ("pie_temporal", "all"):
+    if args.cache_dir is None and args.baseline in ("pie_temporal", "pie_temporal_cached", "all"):
         args.cache_dir = (
             PROJECT_ROOT / "benchmarks" / "longmemeval" / "cache"
         )
@@ -958,6 +1094,17 @@ Examples:
             extraction_model=args.extraction_model,
             judge_model=args.judge_model,
             cache_dir=args.cache_dir,
+            output_dir=args.output,
+            debug=args.debug,
+        )
+    elif args.baseline == "pie_temporal_cached":
+        # Use optimized cached runner
+        run_pie_cached(
+            dataset=dataset,
+            cache_dir=args.cache_dir,
+            model=args.model,
+            extraction_model=args.extraction_model,
+            judge_model=args.judge_model,
             output_dir=args.output,
             debug=args.debug,
         )
