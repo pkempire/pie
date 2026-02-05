@@ -35,20 +35,16 @@ import numpy as np
 SCRIPT_DIR = Path(__file__).parent
 DATA_PATH = SCRIPT_DIR / "data" / "tot_semantic" / "test.json"
 
-# Get API key
+# Get API key from environment
 def get_api_key():
+    """Get OpenAI API key from environment variable."""
     key = os.environ.get("OPENAI_API_KEY")
-    if key and not key.startswith("your-"):
-        return key
-    try:
-        with open(os.path.expanduser("~/.openclaw/openclaw.json")) as f:
-            cfg = json.load(f)
-        key = cfg.get("skills", {}).get("entries", {}).get("openai-image-gen", {}).get("apiKey", "")
-        if key:
-            return key
-    except Exception:
-        pass
-    raise RuntimeError("No OpenAI API key found. Set OPENAI_API_KEY or configure ~/.openclaw/openclaw.json")
+    if not key:
+        raise RuntimeError(
+            "OPENAI_API_KEY environment variable not set. "
+            "Please set it before running the benchmark."
+        )
+    return key
 
 # ---------------------------------------------------------------------------
 # Data structures

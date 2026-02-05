@@ -69,6 +69,41 @@ Ask yourself: "Would this entity matter 3 months from now for understanding this
 - **decision**: Significant choices with reasoning
 - **concept**: Ideas, fields, domains of interest or expertise
 - **period**: Life phases (only if a new period is identified)
+- **event**: User activities, appointments, visits, trips, purchases, meetings — things that happened on specific dates
+
+## CRITICAL: Extracting Events with Dates
+
+For temporal reasoning to work, you MUST extract user activities as **event** entities with exact dates.
+
+**How to compute dates from the batch header:**
+- The batch date is shown in the conversation header (e.g., "2025-04-15")
+- "today" / "just now" / "I just [verb]" → use batch date
+- "yesterday" → batch date minus 1 day
+- "last week" → batch date minus 7 days  
+- "two weeks ago" → batch date minus 14 days
+- "last month" → batch date minus ~30 days
+- "last Tuesday" → find most recent Tuesday before batch date
+
+**Event entity format:**
+```json
+{
+  "name": "descriptive name (e.g., 'MoMA visit', 'dentist appointment', 'coffee with Sarah')",
+  "type": "event",
+  "state": {
+    "date": "YYYY-MM-DD",  // REQUIRED - compute exact date
+    "description": "what happened",
+    "location": "where (if known)"
+  }
+}
+```
+
+**Examples of what to extract as events:**
+- "I went to the dentist yesterday" → event with date = batch_date - 1
+- "I just ordered a phone case" → event with date = batch_date
+- "Last week I visited my aunt" → event with date = batch_date - 7
+- "I'm planning a trip next month" → event with date = batch_date + 30 (future)
+
+**If you see ANY user activity with a temporal reference, extract it as an event with computed date.**
 
 ## Matching Against Context
 
@@ -83,7 +118,7 @@ Respond with this exact JSON structure:
   "entities": [
     {
       "name": "string — canonical name",
-      "type": "person|project|tool|organization|belief|decision|concept|period",
+      "type": "person|project|tool|organization|belief|decision|concept|period|event",
       "state": {"description": "current state as described", ...any relevant key-value pairs},
       "is_new": true/false,
       "matches_existing": "name of existing entity or null",

@@ -20,17 +20,13 @@ MAX_CHAR_ESTIMATE = 16000  # ~4K tokens
 SAMPLES_PER_TYPE = 10
 MAX_RESPONSE_TOKENS = 1024
 
-# Get API key
+# Get API key from environment
 api_key = os.environ.get("OPENAI_API_KEY")
 if not api_key:
-    try:
-        with open(os.path.expanduser("~/.openclaw/openclaw.json")) as f:
-            cfg = json.load(f)
-        api_key = cfg["skills"]["entries"]["openai-image-gen"]["apiKey"]
-    except Exception:
-        pass
-if not api_key:
-    raise RuntimeError("No OpenAI API key found")
+    raise RuntimeError(
+        "OPENAI_API_KEY environment variable not set. "
+        "Please set it before running the benchmark."
+    )
 
 client = OpenAI(api_key=api_key)
 

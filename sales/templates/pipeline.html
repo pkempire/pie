@@ -3,58 +3,55 @@
 {% block title %}Pipeline — Sales Intelligence{% endblock %}
 
 {% block content %}
-<div class="space-y-6">
+<div class="space-y-10">
     <!-- Header -->
     <div class="flex items-center justify-between">
-        <div>
-            <h1 class="text-3xl font-bold">Pipeline</h1>
-            <p class="text-gray-400 mt-1">{{ total_deals }} deals across all stages</p>
+        <div class="text-center flex-1">
+            <h1 class="text-3xl font-serif font-semibold tracking-tight">Pipeline</h1>
+            <p class="text-ink-500 mt-2">{{ total_deals }} deals across all stages</p>
         </div>
-        <div class="flex items-center gap-3">
-            <a href="{{ url_for('upload') }}" class="px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 transition-colors text-sm">
-                <i data-lucide="plus" class="w-4 h-4 inline mr-2"></i>
-                Add Deal
-            </a>
-        </div>
+        <a href="{{ url_for('upload') }}" class="px-4 py-2 rounded-lg bg-ink-900 text-white hover:bg-ink-800 transition-subtle text-sm font-medium">
+            Add Deal
+        </a>
     </div>
     
     <!-- Kanban Board -->
-    <div class="overflow-x-auto pb-4">
-        <div class="flex gap-4 min-w-max">
+    <div class="overflow-x-auto pb-4 -mx-6 px-6">
+        <div class="flex gap-5 min-w-max">
             {% for stage in stages %}
                 {% if stage not in ['closed_won', 'closed_lost'] %}
-                <div class="w-80 flex-shrink-0">
+                <div class="w-72 flex-shrink-0">
                     <!-- Column Header -->
                     <div class="flex items-center justify-between mb-4 px-1">
                         <div class="flex items-center gap-2">
-                            <div class="w-3 h-3 rounded-full stage-{{ stage }}" style="background: var(--stage-color);"></div>
-                            <h3 class="font-semibold text-gray-200">{{ stage_display[stage] }}</h3>
-                            <span class="px-2 py-0.5 rounded-full text-xs bg-dark-600 text-gray-400">
-                                {{ by_stage[stage]|length }}
-                            </span>
+                            <div class="w-2 h-2 rounded-full stage-{{ stage }}" style="background: var(--stage-color);"></div>
+                            <h3 class="font-medium text-sm text-ink-700">{{ stage_display[stage] }}</h3>
                         </div>
+                        <span class="text-xs text-ink-400 bg-cream-100 px-2 py-0.5 rounded-full">
+                            {{ by_stage[stage]|length }}
+                        </span>
                     </div>
                     
                     <!-- Cards Container -->
-                    <div class="space-y-3 min-h-[200px] p-2 rounded-xl bg-dark-800/50">
+                    <div class="space-y-3 min-h-[200px] p-3 rounded-xl bg-cream-100/50">
                         {% for deal in by_stage[stage] %}
                         <a href="{{ url_for('prospect_detail', prospect_id=deal.prospect_id) }}"
-                           class="block p-4 rounded-xl bg-dark-700 border border-dark-600 hover:border-dark-500 card-hover group">
+                           class="block p-4 rounded-lg bg-white shadow-soft hover:shadow-card transition-subtle">
                             <!-- Deal Header -->
                             <div class="flex items-start justify-between mb-3">
                                 <div class="flex items-center gap-2">
-                                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-sm font-semibold">
+                                    <div class="w-7 h-7 rounded-full bg-cream-100 flex items-center justify-center text-ink-600 text-xs font-medium">
                                         {{ deal.prospect_name[0] }}
                                     </div>
                                     <div>
-                                        <div class="font-medium text-sm group-hover:text-indigo-400 transition-colors">
+                                        <div class="font-medium text-sm hover:text-accent transition-subtle">
                                             {{ deal.prospect_name }}
                                         </div>
-                                        <div class="text-xs text-gray-500">{{ deal.company }}</div>
+                                        <div class="text-xs text-ink-400">{{ deal.company }}</div>
                                     </div>
                                 </div>
                                 {% if deal.is_stalled %}
-                                <span class="px-2 py-0.5 rounded-full text-xs bg-amber-500/20 text-amber-400">
+                                <span class="text-xs text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">
                                     Stalled
                                 </span>
                                 {% endif %}
@@ -62,13 +59,13 @@
                             
                             <!-- Deal Info -->
                             <div class="space-y-2">
-                                <div class="flex items-center gap-2 text-xs text-gray-400">
-                                    <i data-lucide="calendar" class="w-3 h-3"></i>
-                                    <span>{{ deal.total_days|default(0) }} days in pipeline</span>
+                                <div class="flex items-center gap-2 text-xs text-ink-400">
+                                    <i data-lucide="clock" class="w-3 h-3"></i>
+                                    <span>{{ deal.total_days|default(0) }} days</span>
                                 </div>
                                 
                                 <!-- Stage Progress -->
-                                <div class="flex gap-1">
+                                <div class="flex gap-0.5">
                                     {% for s in stages[:7] %}
                                         {% set is_completed = false %}
                                         {% for ds in deal.stages %}
@@ -76,15 +73,15 @@
                                                 {% set is_completed = true %}
                                             {% endif %}
                                         {% endfor %}
-                                        <div class="h-1 flex-1 rounded-full {{ 'stage-' + s if is_completed or s == deal.current_stage else 'bg-dark-500' }}"
-                                             style="{{ 'background: var(--stage-color);' if is_completed or s == deal.current_stage else '' }}"></div>
+                                        <div class="h-1 flex-1 rounded-full {{ 'stage-' + s if is_completed or s == deal.current_stage else 'bg-cream-200' }}"
+                                             style="{{ 'background: var(--stage-color); opacity: 0.6;' if is_completed or s == deal.current_stage else '' }}"></div>
                                     {% endfor %}
                                 </div>
                             </div>
                         </a>
                         {% else %}
-                        <div class="p-6 text-center text-gray-600 text-sm">
-                            <i data-lucide="inbox" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
+                        <div class="p-6 text-center text-ink-400 text-sm">
+                            <i data-lucide="inbox" class="w-6 h-6 mx-auto mb-2 opacity-40"></i>
                             No deals
                         </div>
                         {% endfor %}
@@ -94,30 +91,30 @@
             {% endfor %}
             
             <!-- Closed Columns -->
-            <div class="w-80 flex-shrink-0">
+            <div class="w-72 flex-shrink-0 space-y-5">
                 <!-- Won Column -->
-                <div class="mb-6">
+                <div>
                     <div class="flex items-center justify-between mb-4 px-1">
                         <div class="flex items-center gap-2">
-                            <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
-                            <h3 class="font-semibold text-emerald-400">Won</h3>
-                            <span class="px-2 py-0.5 rounded-full text-xs bg-emerald-500/20 text-emerald-400">
-                                {{ by_stage['closed_won']|length }}
-                            </span>
+                            <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                            <h3 class="font-medium text-sm text-emerald-700">Won</h3>
                         </div>
+                        <span class="text-xs text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                            {{ by_stage['closed_won']|length }}
+                        </span>
                     </div>
                     
-                    <div class="space-y-3 min-h-[100px] p-2 rounded-xl bg-emerald-500/5 border border-emerald-500/20">
+                    <div class="space-y-2 min-h-[80px] p-3 rounded-xl bg-emerald-50/50">
                         {% for deal in by_stage['closed_won'] %}
-                        <div class="p-3 rounded-lg bg-dark-700 border border-emerald-500/30">
+                        <div class="p-3 rounded-lg bg-white shadow-soft">
                             <div class="flex items-center gap-2">
-                                <i data-lucide="trophy" class="w-4 h-4 text-emerald-400"></i>
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-500"></i>
                                 <span class="text-sm font-medium">{{ deal.prospect_name }}</span>
                             </div>
-                            <div class="text-xs text-gray-500 mt-1">{{ deal.company }}</div>
+                            <div class="text-xs text-ink-400 mt-1 ml-6">{{ deal.company }}</div>
                         </div>
                         {% else %}
-                        <div class="p-4 text-center text-emerald-500/50 text-sm">
+                        <div class="p-4 text-center text-emerald-400 text-sm">
                             No won deals yet
                         </div>
                         {% endfor %}
@@ -128,25 +125,25 @@
                 <div>
                     <div class="flex items-center justify-between mb-4 px-1">
                         <div class="flex items-center gap-2">
-                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                            <h3 class="font-semibold text-red-400">Lost</h3>
-                            <span class="px-2 py-0.5 rounded-full text-xs bg-red-500/20 text-red-400">
-                                {{ by_stage['closed_lost']|length }}
-                            </span>
+                            <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                            <h3 class="font-medium text-sm text-red-700">Lost</h3>
                         </div>
+                        <span class="text-xs text-red-600 bg-red-50 px-2 py-0.5 rounded-full">
+                            {{ by_stage['closed_lost']|length }}
+                        </span>
                     </div>
                     
-                    <div class="space-y-3 min-h-[100px] p-2 rounded-xl bg-red-500/5 border border-red-500/20">
+                    <div class="space-y-2 min-h-[80px] p-3 rounded-xl bg-red-50/50">
                         {% for deal in by_stage['closed_lost'] %}
-                        <div class="p-3 rounded-lg bg-dark-700 border border-red-500/30">
+                        <div class="p-3 rounded-lg bg-white shadow-soft">
                             <div class="flex items-center gap-2">
-                                <i data-lucide="x-circle" class="w-4 h-4 text-red-400"></i>
+                                <i data-lucide="x" class="w-4 h-4 text-red-500"></i>
                                 <span class="text-sm font-medium">{{ deal.prospect_name }}</span>
                             </div>
-                            <div class="text-xs text-gray-500 mt-1">{{ deal.company }}</div>
+                            <div class="text-xs text-ink-400 mt-1 ml-6">{{ deal.company }}</div>
                         </div>
                         {% else %}
-                        <div class="p-4 text-center text-red-500/50 text-sm">
+                        <div class="p-4 text-center text-red-400 text-sm">
                             No lost deals
                         </div>
                         {% endfor %}

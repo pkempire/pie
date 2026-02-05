@@ -35,7 +35,9 @@ logger = logging.getLogger("sales.app")
 
 # Flask app
 app = Flask(__name__)
-app.secret_key = os.environ.get("FLASK_SECRET_KEY", "sales-intel-dev-key-change-in-prod")
+# SECURITY: Set FLASK_SECRET_KEY env var in production!
+# The default is only for local development.
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-only-change-in-production")
 
 # Config
 UPLOAD_FOLDER = Path(__file__).parent / "uploads"

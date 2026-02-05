@@ -471,21 +471,36 @@ For each session below, extract:
    - source, target, type (related_to|uses|works_on|has|prefers|located_in|attended|participated_in), description
 
 CRITICAL FOR TEMPORAL QUESTIONS — EXTRACT EVENTS WITH EXACT DATES:
-- Extract ALL user activities/events: visits, meetings, purchases, trips, appointments, dinners, etc.
+
+**PRIORITY 1: USER'S COMPLETED ACTIVITIES (MOST IMPORTANT!)**
+Look for phrases where the USER says they DID something:
+- "I just [verb]" → event happened TODAY (session date)
+- "I [verb] today" → event happened TODAY (session date)
+- "I [verb] yesterday" → event happened YESTERDAY (session date - 1 day)
+- "I [verb] last week" → event happened ~7 days before session
+- "I recently [verb]" → event happened around session date
+
+Examples of USER ACTIVITIES to extract as events:
+- "I just got back from a tour at MoMA" → MoMA visit event, date = session date
+- "I just helped my friend prepare a nursery today" → nursery preparation event, date = session date
+- "I just ordered a customized phone case" → phone case order event, date = session date
+- "I attended the exhibit yesterday" → exhibit visit event, date = session date - 1 day
+- "I helped my cousin pick out stuff for her baby shower" → baby shower shopping event
+
+**PRIORITY 2: ALL OTHER USER ACTIVITIES**
+- Extract ALL user activities: visits, meetings, purchases, trips, appointments, dinners, helping friends, etc.
 - ALWAYS compute the EXACT DATE in YYYY-MM-DD format
 - For relative references, compute from the session date:
+  * "today" → session date
   * "yesterday" → subtract 1 day from session date
   * "last Tuesday" → find the most recent Tuesday before session date
   * "last week" → subtract 7 days
   * "two weeks ago" → subtract 14 days
   * "last month" → same day, previous month
-- Example: Session is "January 15, 2024", user says "I went to the dentist yesterday"
-  → Extract event with date: "2024-01-14"
-- Example: Session is "March 20, 2024", user says "last Tuesday I visited MoMA"
-  → Find Tuesday before March 20 = March 19, extract date: "2024-03-19"
 
-Focus on FACTS ABOUT THE USER — their life, preferences, activities, relationships.
-Skip generic conversational content.
+**PRIORITY 3: Other facts about the user**
+- Focus on FACTS ABOUT THE USER — their life, preferences, relationships.
+- Skip generic conversational content and assistant recommendations.
 
 Output JSON:
 {
@@ -684,6 +699,22 @@ def _apply_extraction_to_world_model(
             )
 
 
+def _extract_keywords(text: str) -> set[str]:
+    """Extract meaningful keywords from text (lowercased, 3+ chars)."""
+    import re
+    # Remove punctuation and split
+    words = re.findall(r'\b[a-zA-Z]{3,}\b', text.lower())
+    # Filter out common stop words
+    stop_words = {
+        'the', 'and', 'for', 'that', 'this', 'with', 'from', 'have', 'has',
+        'was', 'were', 'been', 'being', 'are', 'what', 'when', 'where', 'which',
+        'how', 'many', 'much', 'did', 'does', 'doing', 'would', 'could', 'should',
+        'ago', 'between', 'first', 'last', 'order', 'happened', 'passed', 'days',
+        'weeks', 'months', 'years', 'today', 'yesterday', 'about', 'after', 'before',
+    }
+    return {w for w in words if w not in stop_words}
+
+
 def _retrieve_entities_for_question(
     question: str,
     world_model: WorldModel,
@@ -691,13 +722,18 @@ def _retrieve_entities_for_question(
     top_k: int = 15,
 ) -> list[tuple[str, dict, float]]:
     """
-    Retrieve relevant entities for a question via embedding similarity.
+    Retrieve relevant entities for a question via hybrid scoring:
+    - Embedding similarity (semantic matching)
+    - Keyword matching boost (ensures entities mentioned by name are retrieved)
     
     Returns list of (entity_id, entity_dict, similarity) sorted by relevance.
     """
     if not world_model.entities:
         return []
 
+    # Extract keywords from question for boosting
+    question_keywords = _extract_keywords(question)
+    
     # Embed the question
     query_emb = llm.embed_single(question)
 
@@ -720,12 +756,29 @@ def _retrieve_entities_for_question(
         except Exception as e:
             logger.warning(f"Batch embedding failed: {e}")
 
-    # Score all entities
+    # Score all entities with hybrid approach
     scored = []
     for eid, entity in world_model.entities.items():
         if entity.embedding:
+            # Base score: embedding similarity
             sim = cosine_similarity(query_emb, entity.embedding)
-            scored.append((eid, entity, sim))
+            
+            # Keyword boost: add 0.2 for each keyword match in entity name/description
+            entity_text = entity.name.lower()
+            state = entity.current_state or {}
+            if isinstance(state, dict):
+                entity_text += " " + state.get("description", "").lower()
+            
+            entity_keywords = _extract_keywords(entity_text)
+            keyword_overlap = len(question_keywords & entity_keywords)
+            
+            # Boost: 0.15 per keyword match, capped at 0.45 (3 matches)
+            keyword_boost = min(keyword_overlap * 0.15, 0.45)
+            
+            # Combined score (embedding similarity + keyword boost)
+            combined_score = sim + keyword_boost
+            
+            scored.append((eid, entity, combined_score))
 
     scored.sort(key=lambda x: x[2], reverse=True)
     return [(eid, e, s) for eid, e, s in scored[:top_k]]

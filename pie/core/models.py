@@ -17,6 +17,7 @@ class EntityType(str, Enum):
     DECISION = "decision"
     CONCEPT = "concept"
     PERIOD = "period"
+    EVENT = "event"  # User activities with specific dates (visits, meetings, purchases, etc.)
 
 
 class TransitionType(str, Enum):
