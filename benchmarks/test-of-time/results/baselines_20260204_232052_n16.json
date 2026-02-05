@@ -1,0 +1,647 @@
+{
+  "meta": {
+    "timestamp": "20260204_232052",
+    "model": "gpt-4o-mini",
+    "total_questions": 16,
+    "question_type_filter": null,
+    "baselines": [
+      "baseline",
+      "naive_rag",
+      "pie_temporal"
+    ],
+    "elapsed_seconds": 92.5
+  },
+  "overall": {
+    "baseline": {
+      "correct": 6,
+      "total": 16,
+      "accuracy": 37.5
+    },
+    "naive_rag": {
+      "correct": 6,
+      "total": 16,
+      "accuracy": 37.5
+    },
+    "pie_temporal": {
+      "correct": 8,
+      "total": 16,
+      "accuracy": 50.0
+    }
+  },
+  "by_type": {
+    "baseline": {
+      "before_after": {
+        "correct": 0,
+        "total": 2,
+        "accuracy": 0.0
+      },
+      "event_at_the_time_of_another_event": {
+        "correct": 2,
+        "total": 2,
+        "accuracy": 100.0
+      },
+      "event_at_time_t": {
+        "correct": 0,
+        "total": 2,
+        "accuracy": 0.0
+      },
+      "event_at_what_time": {
+        "correct": 2,
+        "total": 2,
+        "accuracy": 100.0
+      },
+      "first_last": {
+        "correct": 1,
+        "total": 2,
+        "accuracy": 50.0
+      },
+      "number_of_events_in_time_interval": {
+        "correct": 0,
+        "total": 2,
+        "accuracy": 0.0
+      },
+      "relation_duration": {
+        "correct": 1,
+        "total": 2,
+        "accuracy": 50.0
+      },
+      "timeline": {
+        "correct": 0,
+        "total": 2,
+        "accuracy": 0.0
+      }
+    },
+    "naive_rag": {
+      "before_after": {
+        "correct": 0,
+        "total": 2,
+        "accuracy": 0.0
+      },
+      "event_at_the_time_of_another_event": {
+        "correct": 2,
+        "total": 2,
+        "accuracy": 100.0
+      },
+      "event_at_time_t": {
+        "correct": 0,
+        "total": 2,
+        "accuracy": 0.0
+      },
+      "event_at_what_time": {
+        "correct": 2,
+        "total": 2,
+        "accuracy": 100.0
+      },
+      "first_last": {
+        "correct": 2,
+        "total": 2,
+        "accuracy": 100.0
+      },
+      "number_of_events_in_time_interval": {
+        "correct": 0,
+        "total": 2,
+        "accuracy": 0.0
+      },
+      "relation_duration": {
+        "correct": 0,
+        "total": 2,
+        "accuracy": 0.0
+      },
+      "timeline": {
+        "correct": 0,
+        "total": 2,
+        "accuracy": 0.0
+      }
+    },
+    "pie_temporal": {
+      "before_after": {
+        "correct": 0,
+        "total": 2,
+        "accuracy": 0.0
+      },
+      "event_at_the_time_of_another_event": {
+        "correct": 2,
+        "total": 2,
+        "accuracy": 100.0
+      },
+      "event_at_time_t": {
+        "correct": 0,
+        "total": 2,
+        "accuracy": 0.0
+      },
+      "event_at_what_time": {
+        "correct": 2,
+        "total": 2,
+        "accuracy": 100.0
+      },
+      "first_last": {
+        "correct": 2,
+        "total": 2,
+        "accuracy": 100.0
+      },
+      "number_of_events_in_time_interval": {
+        "correct": 0,
+        "total": 2,
+        "accuracy": 0.0
+      },
+      "relation_duration": {
+        "correct": 2,
+        "total": 2,
+        "accuracy": 100.0
+      },
+      "timeline": {
+        "correct": 0,
+        "total": 2,
+        "accuracy": 0.0
+      }
+    }
+  },
+  "details": {
+    "baseline": [
+      {
+        "question_type": "before_after",
+        "question": "Find the entity that was the R11 of E57 immediately after E95 was the R11 of E57.",
+        "label": "E76",
+        "hypothesis": "{\"explanation\":\"E95 was the R11 of E57 from 1992 to 1993. The next entity that was the R11 of E57 after E95 is E36, which was the R11 of E57 from 1995 to 1997.\",\"answer\":\"E36\"}",
+        "correct": false,
+        "latency_ms": 11831.7,
+        "context_chars": 24209,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "before_after",
+        "question": "Find the entity that was the R11 of E57 immediately after E95 was the R11 of E57.",
+        "label": "E76",
+        "hypothesis": "{\"explanation\":\"E95 was the R11 of E57 from 1992 to 1993. After that, E57 was the R11 of E36 from 1997 to 1998. Therefore, the entity that was the R11 of E57 immediately after E95 is E36.\",\"answer\":\"E36\"}",
+        "correct": false,
+        "latency_ms": 1557.2,
+        "context_chars": 24209,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "event_at_the_time_of_another_event",
+        "question": "At the start time of E92 being the R17 of E59, E22 was the R11 of which entity?",
+        "label": "E30",
+        "hypothesis": "{\"explanation\":\"At the start time of E92 being the R17 of E59, which is 1931, E22 was the R11 of E30 from 1921 to 1931. Therefore, at that time, E22 was the R11 of E30.\",\"answer\":\"E30\"}",
+        "correct": true,
+        "latency_ms": 1158.6,
+        "context_chars": 3785,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "event_at_the_time_of_another_event",
+        "question": "At the start time of E92 being the R17 of E59, E22 was the R11 of which entity?",
+        "label": "E30",
+        "hypothesis": "{\"explanation\":\"At the start time of E92 being the R17 of E59, which is from 1931, we look for the relationship of E22 at that time. E22 was the R11 of E30 from 1921 to 1931, and since 1931 is the end of that relationship, E22 was the R11 of E30 at the start of 1931.\",\"answer\":\"E30\"}",
+        "correct": true,
+        "latency_ms": 2336.3,
+        "context_chars": 3785,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "event_at_time_t",
+        "question": "Which entity was the R63 of E69 in 1982?",
+        "label": "E92",
+        "hypothesis": "{\"explanation\":\"In 1982, E22 was the R63 of E69 as per the provided temporal facts.\",\"answer\":\"E22\"}",
+        "correct": false,
+        "latency_ms": 1127.5,
+        "context_chars": 5886,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "event_at_time_t",
+        "question": "Which entity was the R63 of E69 in 1982?",
+        "label": "E92",
+        "hypothesis": "{\"explanation\":\"Based on the provided temporal facts, E22 was the R63 of E69 from 1968 to 1977. Since 1982 falls within this range, E22 is the entity that was the R63 of E69 in 1982.\",\"answer\":\"E22\"}",
+        "correct": false,
+        "latency_ms": 1413.3,
+        "context_chars": 5886,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "event_at_what_time",
+        "question": "At what time did E92 stop being the R88 of E11?",
+        "label": "1985",
+        "hypothesis": "{\"explanation\":\"E92 was the R88 of E11 from 1982 to 1985, so it stopped being the R88 of E11 in 1985.\",\"answer\":\"1985\"}",
+        "correct": true,
+        "latency_ms": 946.3,
+        "context_chars": 2303,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "event_at_what_time",
+        "question": "At what time did E92 stop being the R88 of E11?",
+        "label": "1985",
+        "hypothesis": "{\"explanation\":\"E92 was the R88 of E11 from 1982 to 1985, so it stopped being the R88 of E11 in 1985.\",\"answer\":\"1985\"}",
+        "correct": true,
+        "latency_ms": 1353.7,
+        "context_chars": 2303,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "first_last",
+        "question": "Identify the entity that was the first R90 of entity E11.",
+        "label": "E24",
+        "hypothesis": "{\n  \"explanation\": \"Based on the temporal facts, E59 was the R90 of E11 from 1961 to 1964, and there are no earlier records of any other entity being the R90 of E11 before E59.\",\n  \"answer\": \"E59\"\n}",
+        "correct": false,
+        "latency_ms": 1184.1,
+        "context_chars": 2565,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "first_last",
+        "question": "Identify the entity that was the first R90 of entity E11.",
+        "label": "E24",
+        "hypothesis": "{\"explanation\":\"Based on the temporal facts, E24 was the R90 of E11 from 1950 to 1953, which is the earliest instance of E11 having an R90 relationship. Therefore, E24 is the first R90 of E11.\",\"answer\":\"E24\"}",
+        "correct": true,
+        "latency_ms": 1027.5,
+        "context_chars": 2565,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "number_of_events_in_time_interval",
+        "question": "Find the number of unique entities that were the R22 of E83 between 1921 to 1928. Relations that ended in 1921 or started in 1928 must be counted as well.",
+        "label": "1",
+        "hypothesis": "{\"explanation\":\"The entities that were the R22 of E83 between 1921 to 1928 are E26 (1921-1925) and E6 (1924-1927). Both of these entities fall within the specified time range. Therefore, there are 2 unique entities.\",\"answer\":\"2\"}",
+        "correct": false,
+        "latency_ms": 1780.2,
+        "context_chars": 17479,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "number_of_events_in_time_interval",
+        "question": "Find the number of unique entities that were the R22 of E83 between 1921 to 1928. Relations that ended in 1921 or started in 1928 must be counted as well.",
+        "label": "1",
+        "hypothesis": "{\"explanation\":\"The entities that were the R22 of E83 between 1921 to 1928 are E21 (1921-1927) and E59 (1922-1928). Both entities are unique and fall within the specified time range. Therefore, the total count of unique entities is 2.\",\"answer\":2}",
+        "correct": false,
+        "latency_ms": 5337.3,
+        "context_chars": 17479,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "relation_duration",
+        "question": "The 3rd time it happened, for how many years was E33 the R53 of E22? The duration can be computed by subtracting the start time from the end time.",
+        "label": "2",
+        "hypothesis": "{\"explanation\":\"E33 was the R53 of E22 from 1982 to 1984, which is the 3rd occurrence. The duration is 1984 - 1982 = 2 years.\",\"answer\":2}",
+        "correct": true,
+        "latency_ms": 976.3,
+        "context_chars": 6948,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "relation_duration",
+        "question": "The 3rd time it happened, for how many years was E33 the R53 of E22? The duration can be computed by subtracting the start time from the end time.",
+        "label": "2",
+        "hypothesis": "{\"explanation\":\"E33 was the R53 of E22 from 1967 to 1968, which is the 3rd occurrence. The duration is 1968 - 1967 = 1 year.\",\"answer\":\"1\"}",
+        "correct": false,
+        "latency_ms": 1075.8,
+        "context_chars": 6948,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "timeline",
+        "question": "Give me a comma-separated list of all entities that were the R20 of E95 in the order of start time from lowest to highest.",
+        "label": "E59,E57,E43,E60,E98",
+        "hypothesis": "{\"explanation\":\"Based on the temporal facts, E59 was the R20 of E95 from 1978 to 1979, and E43 was the R20 of E95 from 1982 to 1983. These are the only entities that were the R20 of E95, and they are listed in order of their start time.\",\"answer\":\"E59,E43\"}",
+        "correct": false,
+        "latency_ms": 10378.1,
+        "context_chars": 23748,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "timeline",
+        "question": "Give me a comma-separated list of all entities that were the R20 of E95 in the order of start time from lowest to highest.",
+        "label": "E59,E57,E43,E60,E98",
+        "hypothesis": "{\"explanation\":\"Based on the provided temporal facts, E59 was the R20 of E95 from 1978 to 1979, and E6 was the R20 of E95 from 1980 to 1984. These are the only entities that were the R20 of E95, and they are listed in order of their start time.\",\"answer\":\"E59,E6\"}",
+        "correct": false,
+        "latency_ms": 2263.4,
+        "context_chars": 23748,
+        "retrieval_count": 0
+      }
+    ],
+    "naive_rag": [
+      {
+        "question_type": "before_after",
+        "question": "Find the entity that was the R11 of E57 immediately after E95 was the R11 of E57.",
+        "label": "E76",
+        "hypothesis": "E98",
+        "correct": false,
+        "latency_ms": 1770.1,
+        "context_chars": 1196,
+        "retrieval_count": 20
+      },
+      {
+        "question_type": "before_after",
+        "question": "Find the entity that was the R11 of E57 immediately after E95 was the R11 of E57.",
+        "label": "E76",
+        "hypothesis": "E98",
+        "correct": false,
+        "latency_ms": 443.2,
+        "context_chars": 1196,
+        "retrieval_count": 20
+      },
+      {
+        "question_type": "event_at_the_time_of_another_event",
+        "question": "At the start time of E92 being the R17 of E59, E22 was the R11 of which entity?",
+        "label": "E30",
+        "hypothesis": "E30",
+        "correct": true,
+        "latency_ms": 1119.8,
+        "context_chars": 1196,
+        "retrieval_count": 20
+      },
+      {
+        "question_type": "event_at_the_time_of_another_event",
+        "question": "At the start time of E92 being the R17 of E59, E22 was the R11 of which entity?",
+        "label": "E30",
+        "hypothesis": "E30",
+        "correct": true,
+        "latency_ms": 388.8,
+        "context_chars": 1196,
+        "retrieval_count": 20
+      },
+      {
+        "question_type": "event_at_time_t",
+        "question": "Which entity was the R63 of E69 in 1982?",
+        "label": "E92",
+        "hypothesis": "E33",
+        "correct": false,
+        "latency_ms": 1491.2,
+        "context_chars": 1196,
+        "retrieval_count": 20
+      },
+      {
+        "question_type": "event_at_time_t",
+        "question": "Which entity was the R63 of E69 in 1982?",
+        "label": "E92",
+        "hypothesis": "E33",
+        "correct": false,
+        "latency_ms": 397.7,
+        "context_chars": 1196,
+        "retrieval_count": 20
+      },
+      {
+        "question_type": "event_at_what_time",
+        "question": "At what time did E92 stop being the R88 of E11?",
+        "label": "1985",
+        "hypothesis": "1985",
+        "correct": true,
+        "latency_ms": 1228.2,
+        "context_chars": 1199,
+        "retrieval_count": 20
+      },
+      {
+        "question_type": "event_at_what_time",
+        "question": "At what time did E92 stop being the R88 of E11?",
+        "label": "1985",
+        "hypothesis": "1985",
+        "correct": true,
+        "latency_ms": 454.1,
+        "context_chars": 1199,
+        "retrieval_count": 20
+      },
+      {
+        "question_type": "first_last",
+        "question": "Identify the entity that was the first R90 of entity E11.",
+        "label": "E24",
+        "hypothesis": "E24",
+        "correct": true,
+        "latency_ms": 1387.0,
+        "context_chars": 1199,
+        "retrieval_count": 20
+      },
+      {
+        "question_type": "first_last",
+        "question": "Identify the entity that was the first R90 of entity E11.",
+        "label": "E24",
+        "hypothesis": "E24",
+        "correct": true,
+        "latency_ms": 361.8,
+        "context_chars": 1199,
+        "retrieval_count": 20
+      },
+      {
+        "question_type": "number_of_events_in_time_interval",
+        "question": "Find the number of unique entities that were the R22 of E83 between 1921 to 1928. Relations that ended in 1921 or started in 1928 must be counted as well.",
+        "label": "1",
+        "hypothesis": "3",
+        "correct": false,
+        "latency_ms": 1153.9,
+        "context_chars": 1194,
+        "retrieval_count": 20
+      },
+      {
+        "question_type": "number_of_events_in_time_interval",
+        "question": "Find the number of unique entities that were the R22 of E83 between 1921 to 1928. Relations that ended in 1921 or started in 1928 must be counted as well.",
+        "label": "1",
+        "hypothesis": "3",
+        "correct": false,
+        "latency_ms": 363.6,
+        "context_chars": 1194,
+        "retrieval_count": 20
+      },
+      {
+        "question_type": "relation_duration",
+        "question": "The 3rd time it happened, for how many years was E33 the R53 of E22? The duration can be computed by subtracting the start time from the end time.",
+        "label": "2",
+        "hypothesis": "1",
+        "correct": false,
+        "latency_ms": 1127.5,
+        "context_chars": 1198,
+        "retrieval_count": 20
+      },
+      {
+        "question_type": "relation_duration",
+        "question": "The 3rd time it happened, for how many years was E33 the R53 of E22? The duration can be computed by subtracting the start time from the end time.",
+        "label": "2",
+        "hypothesis": "1",
+        "correct": false,
+        "latency_ms": 327.3,
+        "context_chars": 1198,
+        "retrieval_count": 20
+      },
+      {
+        "question_type": "timeline",
+        "question": "Give me a comma-separated list of all entities that were the R20 of E95 in the order of start time from lowest to highest.",
+        "label": "E59,E57,E43,E60,E98",
+        "hypothesis": "E59,E57,E43,E10,E98,E6,E26,E60",
+        "correct": false,
+        "latency_ms": 2086.1,
+        "context_chars": 1198,
+        "retrieval_count": 20
+      },
+      {
+        "question_type": "timeline",
+        "question": "Give me a comma-separated list of all entities that were the R20 of E95 in the order of start time from lowest to highest.",
+        "label": "E59,E57,E43,E60,E98",
+        "hypothesis": "E59,E57,E43,E10,E98,E26,E60,E98",
+        "correct": false,
+        "latency_ms": 690.4,
+        "context_chars": 1198,
+        "retrieval_count": 20
+      }
+    ],
+    "pie_temporal": [
+      {
+        "question_type": "before_after",
+        "question": "Find the entity that was the R11 of E57 immediately after E95 was the R11 of E57.",
+        "label": "E76",
+        "hypothesis": "E36",
+        "correct": false,
+        "latency_ms": 479.9,
+        "context_chars": 102220,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "before_after",
+        "question": "Find the entity that was the R11 of E57 immediately after E95 was the R11 of E57.",
+        "label": "E76",
+        "hypothesis": "E36",
+        "correct": false,
+        "latency_ms": 511.6,
+        "context_chars": 102220,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "event_at_the_time_of_another_event",
+        "question": "At the start time of E92 being the R17 of E59, E22 was the R11 of which entity?",
+        "label": "E30",
+        "hypothesis": "E30",
+        "correct": true,
+        "latency_ms": 557.6,
+        "context_chars": 19745,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "event_at_the_time_of_another_event",
+        "question": "At the start time of E92 being the R17 of E59, E22 was the R11 of which entity?",
+        "label": "E30",
+        "hypothesis": "E30",
+        "correct": true,
+        "latency_ms": 295.7,
+        "context_chars": 19745,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "event_at_time_t",
+        "question": "Which entity was the R63 of E69 in 1982?",
+        "label": "E92",
+        "hypothesis": "E33",
+        "correct": false,
+        "latency_ms": 5678.3,
+        "context_chars": 40128,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "event_at_time_t",
+        "question": "Which entity was the R63 of E69 in 1982?",
+        "label": "E92",
+        "hypothesis": "E33",
+        "correct": false,
+        "latency_ms": 2078.9,
+        "context_chars": 40128,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "event_at_what_time",
+        "question": "At what time did E92 stop being the R88 of E11?",
+        "label": "1985",
+        "hypothesis": "1985",
+        "correct": true,
+        "latency_ms": 439.5,
+        "context_chars": 12996,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "event_at_what_time",
+        "question": "At what time did E92 stop being the R88 of E11?",
+        "label": "1985",
+        "hypothesis": "1985",
+        "correct": true,
+        "latency_ms": 279.0,
+        "context_chars": 12996,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "first_last",
+        "question": "Identify the entity that was the first R90 of entity E11.",
+        "label": "E24",
+        "hypothesis": "E24",
+        "correct": true,
+        "latency_ms": 607.6,
+        "context_chars": 15494,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "first_last",
+        "question": "Identify the entity that was the first R90 of entity E11.",
+        "label": "E24",
+        "hypothesis": "E24",
+        "correct": true,
+        "latency_ms": 297.0,
+        "context_chars": 15494,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "number_of_events_in_time_interval",
+        "question": "Find the number of unique entities that were the R22 of E83 between 1921 to 1928. Relations that ended in 1921 or started in 1928 must be counted as well.",
+        "label": "1",
+        "hypothesis": "3",
+        "correct": false,
+        "latency_ms": 7868.6,
+        "context_chars": 68646,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "number_of_events_in_time_interval",
+        "question": "Find the number of unique entities that were the R22 of E83 between 1921 to 1928. Relations that ended in 1921 or started in 1928 must be counted as well.",
+        "label": "1",
+        "hypothesis": "3",
+        "correct": false,
+        "latency_ms": 9183.7,
+        "context_chars": 68646,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "relation_duration",
+        "question": "The 3rd time it happened, for how many years was E33 the R53 of E22? The duration can be computed by subtracting the start time from the end time.",
+        "label": "2",
+        "hypothesis": "2",
+        "correct": true,
+        "latency_ms": 511.8,
+        "context_chars": 27095,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "relation_duration",
+        "question": "The 3rd time it happened, for how many years was E33 the R53 of E22? The duration can be computed by subtracting the start time from the end time.",
+        "label": "2",
+        "hypothesis": "2",
+        "correct": true,
+        "latency_ms": 613.1,
+        "context_chars": 27095,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "timeline",
+        "question": "Give me a comma-separated list of all entities that were the R20 of E95 in the order of start time from lowest to highest.",
+        "label": "E59,E57,E43,E60,E98",
+        "hypothesis": "E10,E43,E57,E76,E98",
+        "correct": false,
+        "latency_ms": 1933.4,
+        "context_chars": 103316,
+        "retrieval_count": 0
+      },
+      {
+        "question_type": "timeline",
+        "question": "Give me a comma-separated list of all entities that were the R20 of E95 in the order of start time from lowest to highest.",
+        "label": "E59,E57,E43,E60,E98",
+        "hypothesis": "E10,E43,E57,E76,E98",
+        "correct": false,
+        "latency_ms": 574.6,
+        "context_chars": 103316,
+        "retrieval_count": 0
+      }
+    ]
+  }
+}

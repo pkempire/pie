@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sales Intelligence — Prospect Intelligence</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2333;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --orange: #d29922;
+    --red: #f85149;
+    --purple: #bc8cff;
+    --cyan: #39d2c0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 0;
+  }
+
+  .app { display: flex; height: 100vh; overflow: hidden; }
+
+  /* Sidebar */
+  .sidebar {
+    width: 280px;
+    min-width: 280px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sidebar-header h1 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+  }
+
+  .sidebar-header p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .prospect-list { padding: 8px; }
+
+  .prospect-card {
+    padding: 14px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border: 1px solid transparent;
+  }
+
+  .prospect-card:hover { background: var(--surface2); }
+  .prospect-card.active {
+    background: var(--surface2);
+    border-color: var(--accent);
+  }
+
+  .prospect-card .name {
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .prospect-card .meta {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .prospect-card .badges {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+  }
+
+  .badge.pain { background: rgba(248, 81, 73, 0.15); color: var(--red); }
+  .badge.signal { background: rgba(63, 185, 80, 0.15); color: var(--green); }
+  .badge.objection { background: rgba(210, 153, 34, 0.15); color: var(--orange); }
+  .badge.uncertainty { background: rgba(210, 153, 34, 0.3); color: var(--orange); border: 1px solid var(--orange); }
+
+  /* Main content */
+  .main { flex: 1; overflow-y: auto; padding: 24px 32px; }
+
+  .prospect-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+  }
+
+  .prospect-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .prospect-header .subtitle {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-top: 4px;
+  }
+
+  .stage-badge {
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .stage-evaluation { background: rgba(88, 166, 255, 0.15); color: var(--accent); }
+  .stage-discovery { background: rgba(188, 140, 255, 0.15); color: var(--purple); }
+  .stage-proposal { background: rgba(63, 185, 80, 0.15); color: var(--green); }
+
+  /* Personality */
+  .personality-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .trait-chip {
+    padding: 4px 12px;
+    border-radius: 14px;
+    font-size: 12px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  /* Sections */
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title .count {
+    background: var(--surface2);
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-size: 11px;
+  }
+
+  /* Entity rows */
+  .entity-row {
+    padding: 10px 12px;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    background: var(--surface2);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .entity-row .severity-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+
+  .severity-critical { background: var(--red); }
+  .severity-high { background: var(--orange); }
+  .severity-medium { background: #d29922; }
+  .severity-low { background: var(--green); }
+
+  .entity-row .content { flex: 1; }
+  .entity-row .description { font-size: 13px; }
+  .entity-row .meta-line {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 3px;
+  }
+
+  /* Strength indicator */
+  .strength {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  .strength-strong { background: rgba(63, 185, 80, 0.2); color: var(--green); }
+  .strength-moderate { background: rgba(88, 166, 255, 0.2); color: var(--accent); }
+  .strength-weak { background: rgba(139, 148, 158, 0.2); color: var(--text-muted); }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 24px; }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .timeline-event {
+    position: relative;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    background: var(--surface2);
+    border-radius: 8px;
+  }
+
+  .timeline-event::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 16px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+
+  .timeline-event .event-title {
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  .timeline-event .event-meta {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* Uncertainty flags (highlighted in orange) */
+  .uncertainty-flag {
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    background: rgba(210, 153, 34, 0.08);
+    border: 1px solid rgba(210, 153, 34, 0.3);
+  }
+
+  .uncertainty-flag .flag-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .uncertainty-flag .flag-type {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(210, 153, 34, 0.2);
+    color: var(--orange);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .uncertainty-flag .flag-impact {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .impact-high { background: rgba(248, 81, 73, 0.2); color: var(--red); }
+  .impact-medium { background: rgba(210, 153, 34, 0.2); color: var(--orange); }
+  .impact-low { background: rgba(139, 148, 158, 0.2); color: var(--text-muted); }
+
+  .uncertainty-flag .question {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--orange);
+    margin-bottom: 4px;
+  }
+
+  .uncertainty-flag .context {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .uncertainty-flag .action {
+    font-size: 12px;
+    color: var(--cyan);
+    margin-top: 6px;
+  }
+
+  /* Simulate button */
+  .simulate-section {
+    margin-top: 24px;
+    text-align: center;
+  }
+
+  .simulate-btn {
+    padding: 12px 28px;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+
+  .simulate-btn:hover { opacity: 0.85; }
+  .simulate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .pitch-input {
+    width: 100%;
+    padding: 12px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 13px;
+    margin-bottom: 12px;
+    resize: vertical;
+    min-height: 60px;
+  }
+
+  .pitch-input::placeholder { color: var(--text-muted); }
+
+  .simulation-result {
+    margin-top: 16px;
+    padding: 16px;
+    background: var(--surface2);
+    border: 1px solid var(--purple);
+    border-radius: 8px;
+    font-size: 13px;
+    white-space: pre-wrap;
+    display: none;
+  }
+
+  .simulation-result.visible { display: block; }
+
+  /* Enrichment sidebar */
+  .enrichment-sidebar {
+    width: 320px;
+    min-width: 320px;
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 20px;
+  }
+
+  .enrichment-sidebar h3 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    margin-top: 20px;
+  }
+
+  .enrichment-sidebar h3:first-child { margin-top: 0; }
+
+  .enrichment-item {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    padding-left: 12px;
+    border-left: 2px solid var(--border);
+  }
+
+  .enrichment-item strong { color: var(--text); }
+
+  .enrichment-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 12px;
+  }
+
+  .enrichment-link:hover { text-decoration: underline; }
+
+  .confidence-bar {
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+
+  .confidence-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s;
+  }
+
+  .loading {
+    text-align: center;
+    padding: 60px;
+    color: var(--text-muted);
+  }
+
+  .loading .spinner {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 3px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 12px;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Grid layout for some sections */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 1200px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* Top questions */
+  .top-question {
+    padding: 10px 14px;
+    background: rgba(210, 153, 34, 0.05);
+    border-left: 3px solid var(--orange);
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  .top-question .number {
+    color: var(--orange);
+    font-weight: 700;
+    margin-right: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <div>Loading intelligence data...</div>
+  </div>
+</div>
+
+<script>
+const DATA_URL = 'demo_data.json';
+
+let data = null;
+let currentProspect = null;
+
+async function init() {
+  try {
+    const resp = await fetch(DATA_URL);
+    data = await resp.json();
+    render();
+  } catch (e) {
+    document.getElementById('loading').innerHTML =
+      `<p style="color: var(--red);">Failed to load data. Run <code>python sales/demo.py</code> first.</p>
+       <p style="color: var(--text-muted); margin-top: 8px;">Error: ${e.message}</p>`;
+  }
+}
+
+function render() {
+  const names = Object.keys(data.prospects);
+  if (!currentProspect && names.length > 0) currentProspect = names[0];
+
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h1>⚡ Sales Intelligence</h1>
+        <p>Temporal Knowledge Graph</p>
+      </div>
+      <div class="prospect-list">
+        ${names.map(n => renderProspectCard(n)).join('')}
+      </div>
+    </div>
+    <div class="main" id="main-content">
+      ${currentProspect ? renderProspectDetail(data.prospects[currentProspect]) : '<div class="loading">Select a prospect</div>'}
+    </div>
+    ${currentProspect ? `<div class="enrichment-sidebar">${renderEnrichmentSidebar(data.prospects[currentProspect])}</div>` : ''}
+  `;
+}
+
+function selectProspect(name) {
+  currentProspect = name;
+  render();
+}
+
+function renderProspectCard(name) {
+  const p = data.prospects[name];
+  const active = name === currentProspect ? 'active' : '';
+  const painCount = (p.pain_points || []).length;
+  const sigCount = (p.buying_signals || []).length;
+  const objCount = (p.objections || []).length;
+  const uncCount = (p.uncertainties || []).length;
+
+  return `
+    <div class="prospect-card ${active}" onclick="selectProspect('${name}')">
+      <div class="name">${p.name}</div>
+      <div class="meta">${p.title} — ${p.company}</div>
+      <div class="badges">
+        ${painCount ? `<span class="badge pain">${painCount} pain</span>` : ''}
+        ${sigCount ? `<span class="badge signal">${sigCount} signals</span>` : ''}
+        ${objCount ? `<span class="badge objection">${objCount} objections</span>` : ''}
+        ${uncCount ? `<span class="badge uncertainty">${uncCount} ⚠️</span>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+function renderProspectDetail(p) {
+  const meta = p.meeting_metadata || {};
+  const stage = (meta.overall_deal_stage || 'unknown').toLowerCase();
+  const stageClass = stage.includes('eval') ? 'stage-evaluation' :
+                     stage.includes('disc') ? 'stage-discovery' : 'stage-proposal';
+
+  return `
+    <div class="prospect-header">
+      <div>
+        <h2>${p.name}</h2>
+        <div class="subtitle">${p.title} at ${p.company} · ${p.email || ''}</div>
+      </div>
+      <div>
+        <span class="stage-badge ${stageClass}">${meta.overall_deal_stage || 'Unknown'}</span>
+      </div>
+    </div>
+
+    <div class="personality-bar">
+      ${(p.personality_traits || []).map(t => `<span class="trait-chip">${t}</span>`).join('')}
+      ${p.communication_style ? `<span class="trait-chip">📢 ${p.communication_style}</span>` : ''}
+      ${p.decision_style ? `<span class="trait-chip">🧠 ${p.decision_style}</span>` : ''}
+    </div>
+
+    <div class="two-col">
+      ${renderPainPoints(p.pain_points)}
+      ${renderBuyingSignals(p.buying_signals)}
+    </div>
+
+    ${renderObjections(p.objections)}
+    ${renderStakeholders(p.stakeholders)}
+    ${renderCompetitive(p.competitive_context)}
+    ${renderTimeline(p)}
+    ${renderUncertainties(p)}
+    ${renderNextSteps(p.next_steps)}
+    ${renderSimulate(p)}
+  `;
+}
+
+function renderPainPoints(points) {
+  if (!points || !points.length) return '';
+  return `
+    <div class="section">
+      <div class="section-title">🔴 Pain Points <span class="count">${points.length}</span></div>
+      ${points.map(pp => `
+        <div class="entity-row">
+          <div class="severity-dot severity-${(pp.severity || 'medium').toLowerCase()}"></div>
+          <div class="content">
+            <div class="description">${pp.description || ''}</div>
+            <div class="meta-line">
+              ${pp.category || ''} · Meeting ${pp.meeting_number || '?'}
+              ${pp.evolution ? ` · <em>${pp.evolution}</em>` : ''}
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderBuyingSignals(signals) {
+  if (!signals || !signals.length) return '';
+  return `
+    <div class="section">
+      <div class="section-title">💚 Buying Signals <span class="count">${signals.length}</span></div>
+      ${signals.map(s => `
+        <div class="entity-row">
+          <div class="content">
+            <div class="description">${s.signal || ''}</div>
+            <div class="meta-line">
+              <span class="strength strength-${(s.strength || 'moderate').toLowerCase()}">${s.strength || ''}</span>
+              · ${s.type || ''}
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderObjections(objs) {
+  if (!objs || !objs.length) return '';
+  return `
+    <div class="section">
+      <div class="section-title">⚠️ Objections <span class="count">${objs.length}</span></div>
+      ${objs.map(o => {
+        const statusIcon = o.resolution_status === 'resolved' ? '✅' :
+                           o.resolution_status === 'partially_resolved' ? '🔄' : '❌';
+        return `
+          <div class="entity-row">
+            <div class="content">
+              <div class="description">${statusIcon} [${o.type || '?'}] ${o.description || ''}</div>
+              <div class="meta-line">
+                Status: ${o.resolution_status || '?'}
+                ${o.what_would_resolve ? ` · Fix: ${o.what_would_resolve}` : ''}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function renderStakeholders(stakeholders) {
+  if (!stakeholders || !stakeholders.length) return '';
+  return `
+    <div class="section">
+      <div class="section-title">👥 Stakeholders <span class="count">${stakeholders.length}</span></div>
+      ${stakeholders.map(s => {
+        const emoji = {positive: '👍', neutral: '😐', negative: '👎', unknown: '❓'}[s.sentiment] || '❓';
+        return `
+          <div class="entity-row">
+            <div class="content">
+              <div class="description">${emoji} ${s.name || '?'} — ${s.role || '?'}</div>
+              <div class="meta-line">Influence: ${s.influence || '?'} · ${s.mentioned_context || ''}</div>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function renderCompetitive(context) {
+  if (!context || !context.length) return '';
+  return `
+    <div class="section">
+      <div class="section-title">⚔️ Competitive Context <span class="count">${context.length}</span></div>
+      ${context.map(c => `
+        <div class="entity-row">
+          <div class="content">
+            <div class="description">${c.competitor_or_alternative || '?'} (${c.type || '?'})</div>
+            <div class="meta-line">${c.details || ''}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderTimeline(p) {
+  const meta = p.meeting_metadata || {};
+  const meetings = meta.meetings || [];
+  const evolutions = p.evolutions || [];
+
+  return `
+    <div class="section">
+      <div class="section-title">📅 Timeline & Evolution</div>
+      <div style="margin-bottom: 12px; font-size: 13px;">
+        <strong>Momentum:</strong> ${meta.momentum || 'unknown'} ·
+        <strong>Meetings:</strong> ${meta.meeting_count || '?'}
+      </div>
+      <div class="timeline">
+        ${meetings.map(m => `
+          <div class="timeline-event">
+            <div class="event-title">Meeting ${m.number}: ${m.topic || ''}</div>
+            <div class="event-meta">Tone: ${m.tone || '?'}</div>
+          </div>
+        `).join('')}
+        ${evolutions.filter(e => e.changed).map(e => `
+          <div class="timeline-event">
+            <div class="event-title">[${e.entity_type}] ${e.entity_key}</div>
+            <div class="event-meta">${e.evolution_summary}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderUncertainties(p) {
+  const uncertainties = p.uncertainties || [];
+  if (!uncertainties.length) return '';
+
+  // Try to get top questions from the uncertainty data
+  const highImpact = uncertainties.filter(u => u.impact === 'high');
+  const medImpact = uncertainties.filter(u => u.impact === 'medium');
+  const lowImpact = uncertainties.filter(u => u.impact === 'low' || !u.impact);
+
+  return `
+    <div class="section">
+      <div class="section-title" style="color: var(--orange);">⚠️ Uncertainty Flags <span class="count">${uncertainties.length}</span></div>
+
+      ${highImpact.length ? '<div style="margin-bottom: 8px; font-size: 11px; color: var(--red); font-weight: 600;">HIGH IMPACT</div>' : ''}
+      ${highImpact.map(renderUncertaintyFlag).join('')}
+
+      ${medImpact.length ? '<div style="margin-bottom: 8px; margin-top: 12px; font-size: 11px; color: var(--orange); font-weight: 600;">MEDIUM IMPACT</div>' : ''}
+      ${medImpact.map(renderUncertaintyFlag).join('')}
+
+      ${lowImpact.length ? '<div style="margin-bottom: 8px; margin-top: 12px; font-size: 11px; color: var(--text-muted); font-weight: 600;">LOW IMPACT</div>' : ''}
+      ${lowImpact.map(renderUncertaintyFlag).join('')}
+    </div>
+  `;
+}
+
+function renderUncertaintyFlag(u) {
+  return `
+    <div class="uncertainty-flag">
+      <div class="flag-header">
+        <span class="flag-type">${u.type || '?'}</span>
+        <span class="flag-impact impact-${u.impact || 'medium'}">${u.impact || 'medium'}</span>
+        <span style="font-size: 11px; color: var(--text-muted);">${u.entity_type || ''}</span>
+      </div>
+      <div class="question">❓ ${u.question || ''}</div>
+      <div class="context">${u.context || ''}</div>
+      <div class="action">💡 ${u.suggested_action || ''}</div>
+    </div>
+  `;
+}
+
+function renderNextSteps(steps) {
+  if (!steps || !steps.length) return '';
+  return `
+    <div class="section">
+      <div class="section-title">🎯 Next Steps <span class="count">${steps.length}</span></div>
+      ${steps.map(s => {
+        const icon = s.commitment_level === 'firm' ? '🎯' :
+                     s.commitment_level === 'tentative' ? '🔄' : '💡';
+        return `
+          <div class="entity-row">
+            <div class="content">
+              <div class="description">${icon} ${s.action || ''}</div>
+              <div class="meta-line">Owner: ${s.owner || '?'} · Commitment: ${s.commitment_level || '?'}${s.timeline ? ` · ${s.timeline}` : ''}</div>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function renderSimulate(p) {
+  return `
+    <div class="section simulate-section">
+      <div class="section-title">🎭 Simulate Response</div>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
+        Based on everything we know about ${p.name}, how would they respond to your pitch?
+      </p>
+      <textarea class="pitch-input" id="pitch-input"
+        placeholder="Enter your pitch or message to simulate ${p.name}'s response..."
+      >We'd like to start with a focused 30-day pilot on your top 3 critical pipelines. We'll define clear SLAs together and I'll personally ensure your compliance team has everything they need.</textarea>
+      <button class="simulate-btn" onclick="simulateResponse('${p.name}')">
+        Simulate ${p.name}'s Response
+      </button>
+      <div class="simulation-result" id="simulation-result"></div>
+    </div>
+  `;
+}
+
+async function simulateResponse(name) {
+  const p = data.prospects[name];
+  const pitch = document.getElementById('pitch-input').value;
+  const resultDiv = document.getElementById('simulation-result');
+  const btn = document.querySelector('.simulate-btn');
+
+  btn.disabled = true;
+  btn.textContent = 'Thinking...';
+  resultDiv.className = 'simulation-result visible';
+  resultDiv.textContent = '🤔 Generating response...';
+
+  // Build simulation context
+  const simContext = buildSimulationContext(p, pitch);
+  resultDiv.innerHTML = `
+    <div style="color: var(--purple); font-weight: 600; margin-bottom: 8px;">
+      🎭 ${p.name} would likely respond:
+    </div>
+    <div style="color: var(--text-muted); font-style: italic; margin-bottom: 12px;">
+      (Simulation based on ${(p.pain_points || []).length} pain points,
+      ${(p.buying_signals || []).length} buying signals,
+      ${(p.personality_traits || []).length} personality traits,
+      and ${(p.uncertainties || []).length} uncertainty flags)
+    </div>
+    <div style="padding: 12px; background: var(--bg); border-radius: 6px; white-space: pre-wrap;">
+      ${simContext}
+    </div>
+    <div style="margin-top: 12px; font-size: 11px; color: var(--text-muted);">
+      ⚠️ This is a local simulation based on extracted intelligence.
+      For live AI simulation, connect to the API endpoint.
+    </div>
+  `;
+
+  btn.disabled = false;
+  btn.textContent = `Simulate ${name}'s Response`;
+}
+
+function buildSimulationContext(p, pitch) {
+  const traits = (p.personality_traits || []).join(', ');
+  const painSummary = (p.pain_points || []).map(pp =>
+    `• ${pp.description} (${pp.severity})`
+  ).join('\n');
+  const objSummary = (p.objections || []).map(o =>
+    `• ${o.description} (${o.resolution_status})`
+  ).join('\n');
+
+  return `Given ${p.name}'s profile:
+— Personality: ${traits}
+— Communication: ${p.communication_style}
+— Decision style: ${p.decision_style}
+— Key pains:\n${painSummary}
+— Objections:\n${objSummary}
+
+Your pitch: "${pitch}"
+
+Likely response pattern:
+${p.decision_style?.includes('consensus') || p.decision_style?.includes('stakeholder') ?
+  `→ Would likely express interest but defer to stakeholders before committing.` :
+  `→ Would evaluate the specifics and ask pointed technical questions.`}
+${(p.objections || []).some(o => o.resolution_status === 'unresolved') ?
+  `→ Would raise unresolved concerns about: ${(p.objections || []).filter(o => o.resolution_status === 'unresolved').map(o => o.description).join(', ')}` : ''}
+${(p.next_steps || []).length ?
+  `→ Would reference agreed next steps: ${(p.next_steps || []).map(n => n.action).join(', ')}` : ''}`;
+}
+
+function renderEnrichmentSidebar(p) {
+  const enrich = p.web_enrichment || {};
+  const company = enrich.company || {};
+  const person = enrich.person || {};
+  const tech = enrich.tech_stack || {};
+  const industry = enrich.industry || {};
+  const marketing = enrich.marketing || {};
+
+  let html = '<h3>🏢 Company Intel</h3>';
+
+  if (company.description) {
+    html += `<div class="enrichment-item">${company.description}</div>`;
+  }
+  if (company.website || company.url) {
+    html += `<div class="enrichment-item"><a class="enrichment-link" href="${company.website || company.url}" target="_blank">🌐 ${company.website || company.url}</a></div>`;
+  }
+  if (company.industry) {
+    html += `<div class="enrichment-item"><strong>Industry:</strong> ${company.industry}</div>`;
+  }
+  if (company.size_estimate) {
+    html += `<div class="enrichment-item"><strong>Size:</strong> ${company.size_estimate}</div>`;
+  }
+
+  const news = company.recent_developments || company.recent_news || [];
+  if (news.length) {
+    html += '<h3>📰 Recent Developments</h3>';
+    news.forEach(n => {
+      html += `<div class="enrichment-item">${n}</div>`;
+    });
+  }
+
+  if (person.linkedin_url) {
+    html += '<h3>👤 Person</h3>';
+    html += `<div class="enrichment-item"><a class="enrichment-link" href="${person.linkedin_url}" target="_blank">LinkedIn Profile</a></div>`;
+    if (person.background) {
+      html += `<div class="enrichment-item">${person.background}</div>`;
+    }
+  }
+
+  const techs = tech.known_technologies || [];
+  if (techs.length) {
+    html += '<h3>🔧 Tech Stack</h3>';
+    techs.forEach(t => {
+      html += `<div class="enrichment-item">${t}</div>`;
+    });
+  }
+
+  const signals = tech.infrastructure_signals || tech.signals || [];
+  if (signals.length) {
+    html += '<h3>🏗️ Infrastructure Signals</h3>';
+    signals.forEach(s => {
+      html += `<div class="enrichment-item">${s}</div>`;
+    });
+  }
+
+  const trends = industry.key_trends || industry.trends || [];
+  if (trends.length) {
+    html += `<h3>📈 ${industry.name || 'Industry'} Trends</h3>`;
+    trends.forEach(t => {
+      html += `<div class="enrichment-item">${t}</div>`;
+    });
+  }
+
+  const talkingPoints = company.talking_points || [];
+  if (talkingPoints.length) {
+    html += '<h3>💬 Talking Points</h3>';
+    talkingPoints.forEach(tp => {
+      html += `<div class="enrichment-item" style="border-left-color: var(--green);"><strong>${tp}</strong></div>`;
+    });
+  }
+
+  if (!company.description && !person.linkedin_url && !techs.length) {
+    html += '<div class="enrichment-item" style="color: var(--text-muted);">No web enrichment data. Run demo with --web flag.</div>';
+  }
+
+  return html;
+}
+
+// Initialize
+init();
+</script>
+</body>
+</html>

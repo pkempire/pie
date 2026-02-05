@@ -1,0 +1,17 @@
+{
+  "overall": {
+    "accuracy": 80.0,
+    "total": 10,
+    "total_score": 8.0
+  },
+  "by_category": {
+    "temporal-reasoning": {
+      "accuracy": 80.0,
+      "count": 10,
+      "score": 8.0
+    }
+  },
+  "baseline": "naive_rag",
+  "timestamp": "2026-02-05T03:18:28.428618+00:00",
+  "num_results": 10
+}

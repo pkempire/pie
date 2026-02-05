@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}Pipeline — Sales Intelligence{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-3xl font-bold">Pipeline</h1>
+            <p class="text-gray-400 mt-1">{{ total_deals }} deals across all stages</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <button class="px-4 py-2 rounded-lg bg-dark-700 text-gray-300 hover:bg-dark-600 transition-colors text-sm">
+                <i data-lucide="filter" class="w-4 h-4 inline mr-2"></i>
+                Filter
+            </button>
+            <a href="{{ url_for('upload') }}" class="px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 transition-colors text-sm">
+                <i data-lucide="plus" class="w-4 h-4 inline mr-2"></i>
+                Add Deal
+            </a>
+        </div>
+    </div>
+    
+    <!-- Kanban Board -->
+    <div class="overflow-x-auto pb-4">
+        <div class="flex gap-4 min-w-max">
+            {% for stage in stages %}
+                {% if stage not in ['closed_won', 'closed_lost'] %}
+                <div class="w-80 flex-shrink-0">
+                    <!-- Column Header -->
+                    <div class="flex items-center justify-between mb-4 px-1">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full stage-{{ stage }}" style="background: var(--stage-color);"></div>
+                            <h3 class="font-semibold text-gray-200">{{ stage_display[stage] }}</h3>
+                            <span class="px-2 py-0.5 rounded-full text-xs bg-dark-600 text-gray-400">
+                                {{ by_stage[stage]|length }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Cards Container -->
+                    <div class="space-y-3 min-h-[200px] p-2 rounded-xl bg-dark-800/50">
+                        {% for deal in by_stage[stage] %}
+                        <a href="{{ url_for('prospect_detail', prospect_id=deal.prospect_id) }}"
+                           class="block p-4 rounded-xl bg-dark-700 border border-dark-600 hover:border-dark-500 card-hover group">
+                            <!-- Deal Header -->
+                            <div class="flex items-start justify-between mb-3">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-sm font-semibold">
+                                        {{ deal.prospect_name[0] }}
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-sm group-hover:text-indigo-400 transition-colors">
+                                            {{ deal.prospect_name }}
+                                        </div>
+                                        <div class="text-xs text-gray-500">{{ deal.company }}</div>
+                                    </div>
+                                </div>
+                                {% if deal.is_stalled %}
+                                <span class="px-2 py-0.5 rounded-full text-xs bg-amber-500/20 text-amber-400">
+                                    Stalled
+                                </span>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Deal Info -->
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-2 text-xs text-gray-400">
+                                    <i data-lucide="calendar" class="w-3 h-3"></i>
+                                    <span>{{ deal.total_days }} days in pipeline</span>
+                                </div>
+                                
+                                <!-- Stage Progress -->
+                                <div class="flex gap-1">
+                                    {% for s in stages[:7] %}
+                                        {% set is_completed = false %}
+                                        {% for ds in deal.stages %}
+                                            {% if ds.stage == s %}
+                                                {% set is_completed = true %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        <div class="h-1 flex-1 rounded-full {{ 'stage-' + s if is_completed or s == deal.current_stage else 'bg-dark-500' }}"
+                                             style="{{ 'background: var(--stage-color);' if is_completed or s == deal.current_stage else '' }}"></div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </a>
+                        {% else %}
+                        <div class="p-6 text-center text-gray-600 text-sm">
+                            <i data-lucide="inbox" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
+                            No deals
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+            
+            <!-- Closed Columns -->
+            <div class="w-80 flex-shrink-0">
+                <!-- Won Column -->
+                <div class="mb-6">
+                    <div class="flex items-center justify-between mb-4 px-1">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+                            <h3 class="font-semibold text-emerald-400">Won</h3>
+                            <span class="px-2 py-0.5 rounded-full text-xs bg-emerald-500/20 text-emerald-400">
+                                {{ by_stage['closed_won']|length }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3 min-h-[100px] p-2 rounded-xl bg-emerald-500/5 border border-emerald-500/20">
+                        {% for deal in by_stage['closed_won'] %}
+                        <div class="p-3 rounded-lg bg-dark-700 border border-emerald-500/30">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="trophy" class="w-4 h-4 text-emerald-400"></i>
+                                <span class="text-sm font-medium">{{ deal.prospect_name }}</span>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1">{{ deal.company }}</div>
+                        </div>
+                        {% else %}
+                        <div class="p-4 text-center text-emerald-500/50 text-sm">
+                            No won deals yet
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Lost Column -->
+                <div>
+                    <div class="flex items-center justify-between mb-4 px-1">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <h3 class="font-semibold text-red-400">Lost</h3>
+                            <span class="px-2 py-0.5 rounded-full text-xs bg-red-500/20 text-red-400">
+                                {{ by_stage['closed_lost']|length }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3 min-h-[100px] p-2 rounded-xl bg-red-500/5 border border-red-500/20">
+                        {% for deal in by_stage['closed_lost'] %}
+                        <div class="p-3 rounded-lg bg-dark-700 border border-red-500/30">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="x-circle" class="w-4 h-4 text-red-400"></i>
+                                <span class="text-sm font-medium">{{ deal.prospect_name }}</span>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1">{{ deal.company }}</div>
+                        </div>
+                        {% else %}
+                        <div class="p-4 text-center text-red-500/50 text-sm">
+                            No lost deals
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    lucide.createIcons();
+</script>
+{% endblock %}
