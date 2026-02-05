@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+output/world_model.json
+output/*.html
+sales/output/*.json
+sales/uploads/
+benchmarks/longmemeval/cache/
+benchmarks/longmemeval/data/*.json
+benchmarks/test-of-time/data/
+benchmarks/locomo/data/
+*.log
+
+# Secrets (never commit)
+.env
+.env.local
+secrets.json
+
+# Large files
+*.zip
+*.tar.gz
+checkpoints/
