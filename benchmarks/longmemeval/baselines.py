@@ -454,12 +454,15 @@ def pie_temporal(
 PIE_EXTRACTION_PROMPT = """\
 You are extracting structured knowledge from a user's chat history.
 
+Each session header shows the EXACT DATE in format: [Session — Month DD, YYYY at HH:MM]
+Use this to compute exact dates from relative references!
+
 For each session below, extract:
 1. **Entities**: People, places, projects, preferences, AND USER ACTIVITIES/EVENTS.
    - name: canonical name (for events, use descriptive name like "MoMA visit" or "friend's wedding")
    - type: person|project|tool|organization|belief|concept|preference|event
    - state: dict of key-value attributes
-   - For EVENTS, include: {date: "YYYY-MM-DD", description: "...", location: "..." (if known)}
+   - For EVENTS, ALWAYS include: {date: "YYYY-MM-DD", description: "...", location: "..." (if known)}
 
 2. **State changes**: If an entity's state changed from a previous value.
    - entity_name, what_changed, old_state (if known), new_state, is_contradiction
@@ -467,10 +470,19 @@ For each session below, extract:
 3. **Relationships**: How entities relate to each other.
    - source, target, type (related_to|uses|works_on|has|prefers|located_in|attended|participated_in), description
 
-CRITICAL FOR TEMPORAL QUESTIONS:
-- Extract EVENTS the user participated in (visits, meetings, purchases, trips)
-- Include EXACT DATES when mentioned (e.g., "November 18", "last Tuesday" → compute actual date)
-- The session date is provided — use it to compute relative dates
+CRITICAL FOR TEMPORAL QUESTIONS — EXTRACT EVENTS WITH EXACT DATES:
+- Extract ALL user activities/events: visits, meetings, purchases, trips, appointments, dinners, etc.
+- ALWAYS compute the EXACT DATE in YYYY-MM-DD format
+- For relative references, compute from the session date:
+  * "yesterday" → subtract 1 day from session date
+  * "last Tuesday" → find the most recent Tuesday before session date
+  * "last week" → subtract 7 days
+  * "two weeks ago" → subtract 14 days
+  * "last month" → same day, previous month
+- Example: Session is "January 15, 2024", user says "I went to the dentist yesterday"
+  → Extract event with date: "2024-01-14"
+- Example: Session is "March 20, 2024", user says "last Tuesday I visited MoMA"
+  → Find Tuesday before March 20 = March 19, extract date: "2024-03-19"
 
 Focus on FACTS ABOUT THE USER — their life, preferences, activities, relationships.
 Skip generic conversational content.
@@ -586,6 +598,7 @@ def _apply_extraction_to_world_model(
             continue
 
         etype_str = entity_data.get("type", "concept").lower()
+        is_event = etype_str == "event"
         try:
             etype = EntityType(etype_str)
         except ValueError:
@@ -594,7 +607,7 @@ def _apply_extraction_to_world_model(
                 "preference": EntityType.BELIEF,
                 "place": EntityType.CONCEPT,
                 "location": EntityType.CONCEPT,
-                "event": EntityType.CONCEPT,
+                "event": EntityType.CONCEPT,  # Will be marked via state
                 "skill": EntityType.CONCEPT,
                 "hobby": EntityType.CONCEPT,
                 "food": EntityType.CONCEPT,
@@ -607,6 +620,13 @@ def _apply_extraction_to_world_model(
         state = entity_data.get("state", {})
         if isinstance(state, str):
             state = {"description": state}
+
+        # Mark events and preserve their date
+        if is_event:
+            state["_is_event"] = True
+            # If date wasn't in state, try to extract it from entity_data
+            if "date" not in state and entity_data.get("date"):
+                state["date"] = entity_data.get("date")
 
         # Check if entity already exists
         existing = wm.find_by_name(name)
@@ -762,6 +782,7 @@ def _compile_temporal_context(
         lines = []
         name = entity.name
         etype = entity.type.value
+        state = entity.current_state or {}
 
         # Header with temporal metadata - INCLUDE EXACT DATES for arithmetic
         import datetime
@@ -779,29 +800,53 @@ def _compile_temporal_context(
         months_span = max((last_seen - first_seen) / (30 * 86400), 1)
         velocity = change_count / months_span
 
-        lines.append(f"## {name} ({etype})")
-        lines.append(
-            f"First mentioned: {first_date} ({first_ago}), "
-            f"last mentioned: {last_date} ({last_ago})."
-        )
-        if change_count > 1:
-            lines.append(
-                f"State changed {change_count} times "
-                f"(~{velocity:.1f}x/month)."
-            )
-
-        # Current state
-        state = entity.current_state
-        if state:
+        # Check if this is an event with an explicit date
+        is_event = state.get("_is_event", False) or state.get("date")
+        event_date = state.get("date", "")
+        
+        if is_event and event_date:
+            # For events, prominently show the EVENT DATE
+            lines.append(f"## {name} (EVENT)")
+            # Compute relative time from event date
+            try:
+                event_dt = datetime.datetime.strptime(event_date, "%Y-%m-%d").replace(tzinfo=datetime.timezone.utc)
+                event_ts = event_dt.timestamp()
+                event_ago = _humanize_delta(question_ts - event_ts)
+                lines.append(f"**Event date: {event_date} ({event_ago})**")
+            except:
+                lines.append(f"**Event date: {event_date}**")
+            
+            # Add description and location if available
             desc = state.get("description", "")
-            if not desc and isinstance(state, dict):
-                # Build description from state dict
-                desc = "; ".join(
-                    f"{k}: {v}" for k, v in state.items()
-                    if k != "description" and v
-                )
+            location = state.get("location", "")
             if desc:
-                lines.append(f"Current state: {desc}")
+                lines.append(f"Description: {desc}")
+            if location:
+                lines.append(f"Location: {location}")
+        else:
+            # Regular entity handling
+            lines.append(f"## {name} ({etype})")
+            lines.append(
+                f"First mentioned: {first_date} ({first_ago}), "
+                f"last mentioned: {last_date} ({last_ago})."
+            )
+            if change_count > 1:
+                lines.append(
+                    f"State changed {change_count} times "
+                    f"(~{velocity:.1f}x/month)."
+                )
+
+            # Current state
+            if state:
+                desc = state.get("description", "")
+                if not desc and isinstance(state, dict):
+                    # Build description from state dict (exclude internal fields)
+                    desc = "; ".join(
+                        f"{k}: {v}" for k, v in state.items()
+                        if k not in ("description", "_is_event") and v
+                    )
+                if desc:
+                    lines.append(f"Current state: {desc}")
 
         # Timeline of changes (most relevant for temporal/knowledge-update)
         if transitions and len(transitions) > 1:

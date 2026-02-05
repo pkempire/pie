@@ -1,0 +1,1150 @@
+[
+  {
+    "entities": [
+      {
+        "name": "pandas",
+        "type": "tool",
+        "state": "used for DataFrame operations",
+        "is_new_mention": false
+      },
+      {
+        "name": "tqdm",
+        "type": "tool",
+        "state": "used for progress bars",
+        "is_new_mention": false
+      },
+      {
+        "name": "json",
+        "type": "tool",
+        "state": "used for JSON operations",
+        "is_new_mention": false
+      },
+      {
+        "name": "re",
+        "type": "tool",
+        "state": "used for regular expressions",
+        "is_new_mention": false
+      },
+      {
+        "name": "requests",
+        "type": "tool",
+        "state": "used for HTTP requests",
+        "is_new_mention": false
+      },
+      {
+        "name": "urlparse",
+        "type": "tool",
+        "state": "used for URL parsing",
+        "is_new_mention": false
+      },
+      {
+        "name": "concurrent.futures",
+        "type": "tool",
+        "state": "used for threading and parallel execution",
+        "is_new_mention": false
+      },
+      {
+        "name": "perf_counter",
+        "type": "tool",
+        "state": "used for measuring execution time",
+        "is_new_mention": false
+      },
+      {
+        "name": "url_cache",
+        "type": "concept",
+        "state": "global cache for storing extracted domains",
+        "is_new_mention": false
+      },
+      {
+        "name": "measure_time",
+        "type": "concept",
+        "state": "decorator for measuring function execution time",
+        "is_new_mention": false
+      },
+      {
+        "name": "expand_url",
+        "type": "function",
+        "state": "expands shortened URLs with caching",
+        "is_new_mention": false
+      },
+      {
+        "name": "quick_domain_extract",
+        "type": "function",
+        "state": "extracts domain with caching",
+        "is_new_mention": false
+      },
+      {
+        "name": "create_batch_prompt",
+        "type": "function",
+        "state": "creates prompt for multiple videos",
+        "is_new_mention": false
+      },
+      {
+        "name": "process_batch",
+        "type": "function",
+        "state": "processes one batch with threading",
+        "is_new_mention": false
+      },
+      {
+        "name": "batch_size",
+        "type": "concept",
+        "state": "determines how many items go in one prompt/request",
+        "is_new_mention": false
+      },
+      {
+        "name": "max_workers",
+        "type": "concept",
+        "state": "determines how many requests can run simultaneously",
+        "is_new_mention": false
+      },
+      {
+        "name": "ThreadPoolExecutor",
+        "type": "tool",
+        "state": "used for creating a pool of threads",
+        "is_new_mention": false
+      },
+      {
+        "name": "deepseek-chat",
+        "type": "tool",
+        "state": "model used for LLM API calls",
+        "is_new_mention": false
+      }
+    ],
+    "state_changes": [],
+    "relationships": [
+      {
+        "source": "expand_url",
+        "target": "measure_time",
+        "type": "decorates",
+        "description": "expand_url is decorated by measure_time to track execution time"
+      },
+      {
+        "source": "quick_domain_extract",
+        "target": "url_cache",
+        "type": "uses",
+        "description": "quick_domain_extract uses url_cache to store extracted domains"
+      },
+      {
+        "source": "create_batch_prompt",
+        "target": "process_batch",
+        "type": "used_by",
+        "description": "create_batch_prompt is used by process_batch to create prompts"
+      },
+      {
+        "source": "batch_size",
+        "target": "max_workers",
+        "type": "related_to",
+        "description": "batch_size determines items per request, max_workers determines concurrent requests"
+      },
+      {
+        "source": "ThreadPoolExecutor",
+        "target": "process_batch",
+        "type": "executes",
+        "description": "ThreadPoolExecutor executes process_batch in parallel"
+      },
+      {
+        "source": "deepseek-chat",
+        "target": "process_batch",
+        "type": "used_by",
+        "description": "deepseek-chat model is used in process_batch for API calls"
+      }
+    ],
+    "temporal_context": "This conversation is part of the user's ongoing work on optimizing code for processing large datasets using LLMs, specifically around January 2025.",
+    "significance": 0.7,
+    "user_state": "learning",
+    "summary": "The user is working on optimizing a Python script that processes video data to detect brand sponsorships using an LLM API. They are exploring threading and concurrency to improve performance, particularly for large datasets. The conversation includes detailed explanations of threading concepts, the difference between batch size and max workers, and how to effectively use a ThreadPoolExecutor for parallel processing. The user is also considering optimizations like increasing batch size and using URL caching to reduce unnecessary network requests.",
+    "_meta": {
+      "conversation_id": "6777e520-f318-800b-98da-5c2535d7ed37",
+      "title": "Code Optimization Tips",
+      "date": "2025-01-03",
+      "model": "o1",
+      "turn_count": 24,
+      "total_chars": 176714,
+      "tokens_used": {
+        "prompt": 13066,
+        "completion": 1161,
+        "total": 14227
+      }
+    }
+  },
+  {
+    "entities": [
+      {
+        "name": "Lucid Academy",
+        "type": "organization",
+        "state": "planning a website design",
+        "is_new_mention": true
+      },
+      {
+        "name": "website design",
+        "type": "project",
+        "state": "in planning phase",
+        "is_new_mention": true
+      },
+      {
+        "name": "Framer",
+        "type": "tool",
+        "state": "considered for use after design phase",
+        "is_new_mention": true
+      },
+      {
+        "name": "Figma",
+        "type": "tool",
+        "state": "recommended for wireframing",
+        "is_new_mention": true
+      },
+      {
+        "name": "copywriting",
+        "type": "concept",
+        "state": "recommended to be done before design",
+        "is_new_mention": true
+      },
+      {
+        "name": "high-ticket STEM mentorship programs",
+        "type": "concept",
+        "state": "target audience for Lucid Academy",
+        "is_new_mention": true
+      }
+    ],
+    "state_changes": [],
+    "relationships": [
+      {
+        "source": "Lucid Academy",
+        "target": "website design",
+        "type": "works_on",
+        "description": "Lucid Academy is planning a website design."
+      },
+      {
+        "source": "website design",
+        "target": "Framer",
+        "type": "uses",
+        "description": "Framer is considered for use after the design phase."
+      },
+      {
+        "source": "website design",
+        "target": "Figma",
+        "type": "uses",
+        "description": "Figma is recommended for wireframing the website."
+      },
+      {
+        "source": "website design",
+        "target": "copywriting",
+        "type": "related_to",
+        "description": "Copywriting is recommended to be done before the design phase."
+      }
+    ],
+    "temporal_context": "early 2025, planning phase for Lucid Academy's website",
+    "significance": 0.6,
+    "user_state": "exploratory",
+    "summary": "The user is planning the design of a website for their business, Lucid Academy. They are considering the sequence of tasks such as writing copy, designing, and using tools like Framer and Figma. The conversation outlines a structured approach to website design, emphasizing the importance of planning, copywriting, and visual design to effectively communicate Lucid Academy's offerings in high-ticket STEM mentorship programs.",
+    "_meta": {
+      "conversation_id": "6797d5b9-4af0-800b-90cc-ebf8f01bc58a",
+      "title": "Website Design Strategy Guide",
+      "date": "2025-01-27",
+      "model": "gpt-4o",
+      "turn_count": 2,
+      "total_chars": 4765,
+      "tokens_used": {
+        "prompt": 1301,
+        "completion": 559,
+        "total": 1860
+      }
+    }
+  },
+  {
+    "entities": [
+      {
+        "name": "Real-Time API Documentation Checker",
+        "type": "project",
+        "state": "MVP development phase",
+        "is_new_mention": true
+      },
+      {
+        "name": "ChatGPT",
+        "type": "tool",
+        "state": "used for generating code examples",
+        "is_new_mention": false
+      },
+      {
+        "name": "OpenAI API",
+        "type": "tool",
+        "state": "subject of documentation scraping and correction",
+        "is_new_mention": true
+      },
+      {
+        "name": "Streamlit",
+        "type": "tool",
+        "state": "used for UI development",
+        "is_new_mention": true
+      },
+      {
+        "name": "FAISS",
+        "type": "tool",
+        "state": "used for vectorization and retrieval",
+        "is_new_mention": true
+      },
+      {
+        "name": "BeautifulSoup",
+        "type": "tool",
+        "state": "used for web scraping",
+        "is_new_mention": true
+      },
+      {
+        "name": "Scrapy",
+        "type": "tool",
+        "state": "used for web scraping",
+        "is_new_mention": true
+      },
+      {
+        "name": "Python",
+        "type": "tool",
+        "state": "programming language used for implementation",
+        "is_new_mention": true
+      },
+      {
+        "name": "AST",
+        "type": "tool",
+        "state": "used for code parsing",
+        "is_new_mention": true
+      },
+      {
+        "name": "SentenceTransformers",
+        "type": "tool",
+        "state": "used for creating embeddings",
+        "is_new_mention": true
+      },
+      {
+        "name": "Crawl4AI",
+        "type": "tool",
+        "state": "considered for dynamic scraping",
+        "is_new_mention": true
+      },
+      {
+        "name": "Parth Kocheta",
+        "type": "person",
+        "state": "user running the script",
+        "is_new_mention": true
+      }
+    ],
+    "state_changes": [
+      {
+        "entity_name": "Real-Time API Documentation Checker",
+        "what_changed": "Focus shifted to a v1 proof-of-concept for OpenAI API",
+        "from_state": "general MVP development",
+        "to_state": "specific POC for OpenAI API",
+        "is_contradiction": false
+      }
+    ],
+    "relationships": [
+      {
+        "source": "Real-Time API Documentation Checker",
+        "target": "OpenAI API",
+        "type": "uses",
+        "description": "The project aims to correct deprecated API usage in OpenAI API."
+      },
+      {
+        "source": "Real-Time API Documentation Checker",
+        "target": "Streamlit",
+        "type": "uses",
+        "description": "Streamlit is used to create the user interface for the project."
+      },
+      {
+        "source": "Real-Time API Documentation Checker",
+        "target": "FAISS",
+        "type": "uses",
+        "description": "FAISS is used for vectorization and retrieval in the project."
+      },
+      {
+        "source": "Real-Time API Documentation Checker",
+        "target": "BeautifulSoup",
+        "type": "uses",
+        "description": "BeautifulSoup is used for scraping API documentation."
+      },
+      {
+        "source": "Real-Time API Documentation Checker",
+        "target": "Scrapy",
+        "type": "uses",
+        "description": "Scrapy is used for scraping API documentation."
+      },
+      {
+        "source": "Real-Time API Documentation Checker",
+        "target": "Python",
+        "type": "uses",
+        "description": "Python is the programming language used for the project."
+      },
+      {
+        "source": "Real-Time API Documentation Checker",
+        "target": "AST",
+        "type": "uses",
+        "description": "AST is used for parsing code to identify API calls."
+      },
+      {
+        "source": "Real-Time API Documentation Checker",
+        "target": "SentenceTransformers",
+        "type": "uses",
+        "description": "SentenceTransformers is used for creating embeddings of documentation."
+      },
+      {
+        "source": "Real-Time API Documentation Checker",
+        "target": "Crawl4AI",
+        "type": "considered_for",
+        "description": "Crawl4AI is considered for dynamic scraping of documentation."
+      },
+      {
+        "source": "Parth Kocheta",
+        "target": "Real-Time API Documentation Checker",
+        "type": "works_on",
+        "description": "Parth Kocheta is developing the project."
+      }
+    ],
+    "temporal_context": "Development phase of a proof-of-concept for a real-time API documentation checker in early 2025.",
+    "significance": 0.7,
+    "user_state": "building",
+    "summary": "The user is working on a proof-of-concept for a real-time API documentation checker, focusing on correcting deprecated API usage in OpenAI's API. The project involves scraping documentation, vectorizing it, and using a Streamlit UI to demonstrate corrections. The user encountered technical issues with Playwright and Crawl4AI but is actively resolving them to proceed with the development.",
+    "_meta": {
+      "conversation_id": "67abdd23-c778-800b-a46b-4bfb4213e62b",
+      "title": "POC API Correction Demo",
+      "date": "2025-02-11",
+      "model": "o3-mini-high",
+      "turn_count": 10,
+      "total_chars": 46442,
+      "tokens_used": {
+        "prompt": 5816,
+        "completion": 1159,
+        "total": 6975
+      }
+    }
+  },
+  {
+    "entities": [
+      {
+        "name": "Claude",
+        "type": "tool",
+        "state": "AI assistant capable of using MCP",
+        "is_new_mention": true
+      },
+      {
+        "name": "MCP (Model Context Protocol)",
+        "type": "concept",
+        "state": "open standard for connecting AI assistants with data sources and tools",
+        "is_new_mention": true
+      },
+      {
+        "name": "Anthropic",
+        "type": "organization",
+        "state": "developer of MCP",
+        "is_new_mention": true
+      },
+      {
+        "name": "AI assistants",
+        "type": "tool",
+        "state": "can be integrated with MCP for enhanced functionality",
+        "is_new_mention": false
+      },
+      {
+        "name": "File Systems",
+        "type": "tool",
+        "state": "can be accessed by AI through MCP",
+        "is_new_mention": true
+      },
+      {
+        "name": "Version Control Systems",
+        "type": "tool",
+        "state": "can be interacted with by AI through MCP",
+        "is_new_mention": true
+      },
+      {
+        "name": "Calendars and Communication Tools",
+        "type": "tool",
+        "state": "can be used by AI through MCP",
+        "is_new_mention": true
+      }
+    ],
+    "state_changes": [],
+    "relationships": [
+      {
+        "source": "Claude",
+        "target": "MCP (Model Context Protocol)",
+        "type": "uses",
+        "description": "Claude uses MCP to connect with data sources and tools"
+      },
+      {
+        "source": "Anthropic",
+        "target": "MCP (Model Context Protocol)",
+        "type": "developed_by",
+        "description": "Anthropic developed MCP"
+      },
+      {
+        "source": "AI assistants",
+        "target": "MCP (Model Context Protocol)",
+        "type": "uses",
+        "description": "AI assistants use MCP for integration with external systems"
+      }
+    ],
+    "temporal_context": "March 2025",
+    "significance": 0.5,
+    "user_state": "learning",
+    "summary": "The user sought an explanation of the Model Context Protocol (MCP), an open standard developed by Anthropic to connect AI assistants like Claude with various data sources and tools. MCP standardizes integration, allowing AI systems to access resources and perform tasks such as file management and interaction with version control systems. The conversation provided an overview of MCP's features and practical applications, indicating the user's interest in understanding how AI can be integrated into workflows.",
+    "_meta": {
+      "conversation_id": "67c371f0-1c70-800b-81cb-08c3877bb0eb",
+      "title": "MCP Overview Explained",
+      "date": "2025-03-01",
+      "model": "gpt-4o",
+      "turn_count": 2,
+      "total_chars": 2483,
+      "tokens_used": {
+        "prompt": 1205,
+        "completion": 573,
+        "total": 1778
+      }
+    }
+  },
+  {
+    "entities": [
+      {
+        "name": "timeline of technology",
+        "type": "concept",
+        "state": "detailed breakdown from ancient innovations to modern computing",
+        "is_new_mention": true
+      },
+      {
+        "name": "internet",
+        "type": "concept",
+        "state": "fundamental technology enabling global communication",
+        "is_new_mention": true
+      },
+      {
+        "name": "Wi-Fi",
+        "type": "concept",
+        "state": "wireless networking technology",
+        "is_new_mention": true
+      },
+      {
+        "name": "computers",
+        "type": "concept",
+        "state": "devices for processing information, evolved from early computing to modern personal and portable devices",
+        "is_new_mention": true
+      },
+      {
+        "name": "ancient innovations",
+        "type": "concept",
+        "state": "early technological developments like stone tools and fire",
+        "is_new_mention": true
+      },
+      {
+        "name": "modern computing",
+        "type": "concept",
+        "state": "current state of computing technology including AI and quantum computing",
+        "is_new_mention": true
+      }
+    ],
+    "state_changes": [],
+    "relationships": [
+      {
+        "source": "timeline of technology",
+        "target": "ancient innovations",
+        "type": "part_of",
+        "description": "ancient innovations are part of the technology timeline"
+      },
+      {
+        "source": "timeline of technology",
+        "target": "modern computing",
+        "type": "part_of",
+        "description": "modern computing is part of the technology timeline"
+      },
+      {
+        "source": "modern computing",
+        "target": "internet",
+        "type": "related_to",
+        "description": "internet is a key component of modern computing"
+      },
+      {
+        "source": "modern computing",
+        "target": "Wi-Fi",
+        "type": "related_to",
+        "description": "Wi-Fi is a key component of modern computing"
+      },
+      {
+        "source": "modern computing",
+        "target": "computers",
+        "type": "related_to",
+        "description": "computers are a key component of modern computing"
+      }
+    ],
+    "temporal_context": "User is exploring the history and evolution of technology in March 2025.",
+    "significance": 0.5,
+    "user_state": "learning",
+    "summary": "The user is seeking to understand the entire timeline of technology, focusing on key developments from ancient innovations to modern computing, including the internet, Wi-Fi, and computers. The assistant provides a detailed breakdown of technological evolution, highlighting significant milestones and their impacts.",
+    "_meta": {
+      "conversation_id": "67d536c7-79ac-800b-ac12-e3d7c6495e4a",
+      "title": "Tech Timeline Breakdown",
+      "date": "2025-03-15",
+      "model": "gpt-4o",
+      "turn_count": 2,
+      "total_chars": 6120,
+      "tokens_used": {
+        "prompt": 1379,
+        "completion": 589,
+        "total": 1968
+      }
+    }
+  },
+  {
+    "entities": [
+      {
+        "name": "AI Innovators",
+        "type": "project",
+        "state": "considering renaming",
+        "is_new_mention": false
+      },
+      {
+        "name": "Lucid AI Fellowship",
+        "type": "project",
+        "state": "potential new name for AI Innovators",
+        "is_new_mention": true
+      },
+      {
+        "name": "Lucid Labs",
+        "type": "project",
+        "state": "name suggestion for AI Innovators",
+        "is_new_mention": true
+      },
+      {
+        "name": "Project Lucid",
+        "type": "project",
+        "state": "name suggestion for AI Innovators",
+        "is_new_mention": true
+      },
+      {
+        "name": "The Lucid Collective",
+        "type": "project",
+        "state": "name suggestion for AI Innovators",
+        "is_new_mention": true
+      },
+      {
+        "name": "Lucid Futures",
+        "type": "project",
+        "state": "name suggestion for AI Innovators",
+        "is_new_mention": true
+      },
+      {
+        "name": "Neural Spark",
+        "type": "project",
+        "state": "name suggestion for AI Innovators",
+        "is_new_mention": true
+      },
+      {
+        "name": "Ignite AI",
+        "type": "project",
+        "state": "name suggestion for AI Innovators",
+        "is_new_mention": true
+      },
+      {
+        "name": "Futuremakers",
+        "type": "project",
+        "state": "name suggestion for AI Innovators",
+        "is_new_mention": true
+      },
+      {
+        "name": "Lucid Forge",
+        "type": "project",
+        "state": "name suggestion for AI Innovators",
+        "is_new_mention": true
+      },
+      {
+        "name": "MindMesh",
+        "type": "project",
+        "state": "name suggestion for AI Innovators",
+        "is_new_mention": true
+      },
+      {
+        "name": "Synapse",
+        "type": "project",
+        "state": "name suggestion for AI Innovators",
+        "is_new_mention": true
+      },
+      {
+        "name": "Lucid AI Launchpad",
+        "type": "project",
+        "state": "name suggestion for summer program",
+        "is_new_mention": true
+      },
+      {
+        "name": "The Lucid Summer",
+        "type": "project",
+        "state": "name suggestion for summer program",
+        "is_new_mention": true
+      },
+      {
+        "name": "Lucid: Build",
+        "type": "project",
+        "state": "name suggestion for summer program",
+        "is_new_mention": true
+      },
+      {
+        "name": "Lucid Genesis",
+        "type": "project",
+        "state": "name suggestion for summer program",
+        "is_new_mention": true
+      },
+      {
+        "name": "AI Unlocked (by Lucid)",
+        "type": "project",
+        "state": "name suggestion for summer program",
+        "is_new_mention": true
+      },
+      {
+        "name": "Lucid Summer Lab",
+        "type": "project",
+        "state": "name suggestion for summer program",
+        "is_new_mention": true
+      },
+      {
+        "name": "Lucid Edge",
+        "type": "project",
+        "state": "name suggestion for summer program",
+        "is_new_mention": true
+      },
+      {
+        "name": "Epoch One",
+        "type": "project",
+        "state": "name suggestion for summer program",
+        "is_new_mention": true
+      },
+      {
+        "name": "The Build Fellowship",
+        "type": "project",
+        "state": "name suggestion for summer program",
+        "is_new_mention": true
+      },
+      {
+        "name": "CTRL+Fellowship",
+        "type": "project",
+        "state": "name suggestion for summer program",
+        "is_new_mention": true
+      }
+    ],
+    "state_changes": [
+      {
+        "entity_name": "AI Innovators",
+        "what_changed": "considering renaming the summer program",
+        "from_state": "current name",
+        "to_state": "new name under consideration",
+        "is_contradiction": false
+      }
+    ],
+    "relationships": [
+      {
+        "source": "AI Innovators",
+        "target": "Lucid AI Fellowship",
+        "type": "related_to",
+        "description": "Lucid AI Fellowship is a potential new name for AI Innovators"
+      },
+      {
+        "source": "AI Innovators",
+        "target": "Lucid AI Launchpad",
+        "type": "related_to",
+        "description": "Lucid AI Launchpad is a name suggestion for the summer program"
+      },
+      {
+        "source": "AI Innovators",
+        "target": "The Lucid Summer",
+        "type": "related_to",
+        "description": "The Lucid Summer is a name suggestion for the summer program"
+      },
+      {
+        "source": "AI Innovators",
+        "target": "Lucid: Build",
+        "type": "related_to",
+        "description": "Lucid: Build is a name suggestion for the summer program"
+      },
+      {
+        "source": "AI Innovators",
+        "target": "Lucid Genesis",
+        "type": "related_to",
+        "description": "Lucid Genesis is a name suggestion for the summer program"
+      },
+      {
+        "source": "AI Innovators",
+        "target": "AI Unlocked (by Lucid)",
+        "type": "related_to",
+        "description": "AI Unlocked (by Lucid) is a name suggestion for the summer program"
+      },
+      {
+        "source": "AI Innovators",
+        "target": "Lucid Summer Lab",
+        "type": "related_to",
+        "description": "Lucid Summer Lab is a name suggestion for the summer program"
+      },
+      {
+        "source": "AI Innovators",
+        "target": "Lucid Edge",
+        "type": "related_to",
+        "description": "Lucid Edge is a name suggestion for the summer program"
+      },
+      {
+        "source": "AI Innovators",
+        "target": "Epoch One",
+        "type": "related_to",
+        "description": "Epoch One is a name suggestion for the summer program"
+      },
+      {
+        "source": "AI Innovators",
+        "target": "The Build Fellowship",
+        "type": "related_to",
+        "description": "The Build Fellowship is a name suggestion for the summer program"
+      },
+      {
+        "source": "AI Innovators",
+        "target": "CTRL+Fellowship",
+        "type": "related_to",
+        "description": "CTRL+Fellowship is a name suggestion for the summer program"
+      }
+    ],
+    "temporal_context": "March 2025, user is considering renaming a summer program",
+    "significance": 0.5,
+    "user_state": "exploratory",
+    "summary": "The user is considering renaming their summer program, currently called AI Innovators, to something more distinct and memorable. They are exploring various name options that convey a sense of innovation, creativity, and youthfulness, while also being appealing to both students and parents. The conversation involves brainstorming and evaluating different name ideas for the program.",
+    "_meta": {
+      "conversation_id": "67e39189-68f0-800b-932e-9497a2cc17ba",
+      "title": "AI Program Name Ideas",
+      "date": "2025-03-26",
+      "model": "gpt-4o",
+      "turn_count": 4,
+      "total_chars": 3882,
+      "tokens_used": {
+        "prompt": 1560,
+        "completion": 1633,
+        "total": 3193
+      }
+    }
+  },
+  {
+    "entities": [
+      {
+        "name": "Google Dorks",
+        "type": "concept",
+        "state": "used for finding specific profiles or companies on LinkedIn",
+        "is_new_mention": true
+      },
+      {
+        "name": "college counselors",
+        "type": "person",
+        "state": "target for Google search queries",
+        "is_new_mention": true
+      },
+      {
+        "name": "LinkedIn",
+        "type": "tool",
+        "state": "platform for finding profiles and companies",
+        "is_new_mention": false
+      },
+      {
+        "name": "Apollo.io",
+        "type": "tool",
+        "state": "B2B lead database",
+        "is_new_mention": true
+      },
+      {
+        "name": "Clay.com",
+        "type": "tool",
+        "state": "lead enrichment and outreach orchestration tool",
+        "is_new_mention": true
+      },
+      {
+        "name": "PhantomBuster",
+        "type": "tool",
+        "state": "automates LinkedIn scraping",
+        "is_new_mention": true
+      },
+      {
+        "name": "Lucid Academy",
+        "type": "organization",
+        "state": "targeting high school students for AI/ML mentorship and STEM college prep",
+        "is_new_mention": true
+      },
+      {
+        "name": "B2B partnerships",
+        "type": "concept",
+        "state": "potential partnerships for Lucid Academy",
+        "is_new_mention": true
+      }
+    ],
+    "state_changes": [],
+    "relationships": [
+      {
+        "source": "Google Dorks",
+        "target": "LinkedIn",
+        "type": "uses",
+        "description": "Google Dorks are used to find specific profiles or companies on LinkedIn"
+      },
+      {
+        "source": "Lucid Academy",
+        "target": "college counselors",
+        "type": "related_to",
+        "description": "Lucid Academy is looking for partnerships with college counselors"
+      },
+      {
+        "source": "Lucid Academy",
+        "target": "B2B partnerships",
+        "type": "related_to",
+        "description": "Lucid Academy is seeking B2B partnerships for growth"
+      }
+    ],
+    "temporal_context": "April 2025, user is exploring ways to find and establish partnerships for Lucid Academy",
+    "significance": 0.6,
+    "user_state": "exploratory",
+    "summary": "The user is exploring ways to use Google Dorks to find college counselors and businesses on LinkedIn for potential partnerships with Lucid Academy, which targets high school students for AI/ML mentorship and STEM college prep. They are considering using tools like Apollo.io, Clay.com, and PhantomBuster for lead generation and outreach. The conversation focuses on identifying potential B2B partners and automating the lead scraping and outreach process.",
+    "_meta": {
+      "conversation_id": "67f190cf-6260-800b-b636-e720cacf39e7",
+      "title": "Google Dorks for Counselors",
+      "date": "2025-04-05",
+      "model": "gpt-4o",
+      "turn_count": 6,
+      "total_chars": 7181,
+      "tokens_used": {
+        "prompt": 2437,
+        "completion": 634,
+        "total": 3071
+      }
+    }
+  },
+  {
+    "entities": [
+      {
+        "name": "TikTok Business Center",
+        "type": "tool",
+        "state": "used for running paid ads, managing TikTok Shop as a seller, and collaborating with team members",
+        "is_new_mention": true
+      },
+      {
+        "name": "TikTok Creator Center",
+        "type": "tool",
+        "state": "platform for creators to apply for affiliate programs and create content",
+        "is_new_mention": true
+      },
+      {
+        "name": "TikTok Shop Affiliate",
+        "type": "project",
+        "state": "user is interested in creating affiliate videos and earning commission",
+        "is_new_mention": true
+      }
+    ],
+    "state_changes": [
+      {
+        "entity_name": "TikTok Shop Affiliate",
+        "what_changed": "user's understanding of the correct platform to use for affiliate marketing",
+        "from_state": "considering TikTok Business Center",
+        "to_state": "realizing TikTok Creator Center is needed",
+        "is_contradiction": false
+      }
+    ],
+    "relationships": [
+      {
+        "source": "TikTok Business Center",
+        "target": "TikTok Creator Center",
+        "type": "related_to",
+        "description": "Both are TikTok platforms but serve different purposes"
+      },
+      {
+        "source": "TikTok Creator Center",
+        "target": "TikTok Shop Affiliate",
+        "type": "part_of",
+        "description": "TikTok Creator Center is used to apply for and manage TikTok Shop Affiliate activities"
+      }
+    ],
+    "temporal_context": "User is exploring affiliate marketing opportunities on TikTok in April 2025.",
+    "significance": 0.4,
+    "user_state": "exploratory",
+    "summary": "The user is exploring how to create TikTok Shop affiliate videos without selling their own products. They initially accessed the TikTok Business Center but were advised to use the TikTok Creator Center for affiliate marketing. The conversation clarified the correct platform for their needs and provided steps to start as an affiliate creator.",
+    "_meta": {
+      "conversation_id": "67ff4ee5-679c-800b-8041-b4094656b870",
+      "title": "TT Affiliate Videos",
+      "date": "2025-04-16",
+      "model": "gpt-4o",
+      "turn_count": 2,
+      "total_chars": 1305,
+      "tokens_used": {
+        "prompt": 851,
+        "completion": 450,
+        "total": 1301
+      }
+    }
+  },
+  {
+    "entities": [
+      {
+        "name": "learning rate",
+        "type": "concept",
+        "state": "threshold set to stop training if below 1e-5",
+        "is_new_mention": false
+      },
+      {
+        "name": "model",
+        "type": "project",
+        "state": "being trained with specific callbacks",
+        "is_new_mention": false
+      },
+      {
+        "name": "TerminateOnLowLR",
+        "type": "tool",
+        "state": "custom callback to stop training if learning rate is below threshold",
+        "is_new_mention": true
+      },
+      {
+        "name": "ModelCheckpoint",
+        "type": "tool",
+        "state": "saves the best model to 'best_model.keras'",
+        "is_new_mention": true
+      },
+      {
+        "name": "EarlyStopping",
+        "type": "tool",
+        "state": "callback with patience of 8, restores best weights",
+        "is_new_mention": false
+      },
+      {
+        "name": "ReduceLROnPlateau",
+        "type": "tool",
+        "state": "callback with patience of 4, reduces learning rate by factor of 0.2",
+        "is_new_mention": false
+      },
+      {
+        "name": "best_model.keras",
+        "type": "tool",
+        "state": "file where the best model is saved",
+        "is_new_mention": true
+      },
+      {
+        "name": "final_model.keras",
+        "type": "tool",
+        "state": "file where the best model is saved after training",
+        "is_new_mention": true
+      }
+    ],
+    "state_changes": [
+      {
+        "entity_name": "model",
+        "what_changed": "Added new callbacks for training",
+        "from_state": "basic callbacks",
+        "to_state": "callbacks including TerminateOnLowLR and ModelCheckpoint",
+        "is_contradiction": false
+      }
+    ],
+    "relationships": [
+      {
+        "source": "model",
+        "target": "TerminateOnLowLR",
+        "type": "uses",
+        "description": "model uses this callback to stop training if learning rate is too low"
+      },
+      {
+        "source": "model",
+        "target": "ModelCheckpoint",
+        "type": "uses",
+        "description": "model uses this callback to save the best model"
+      },
+      {
+        "source": "model",
+        "target": "EarlyStopping",
+        "type": "uses",
+        "description": "model uses this callback to stop training early if no improvement"
+      },
+      {
+        "source": "model",
+        "target": "ReduceLROnPlateau",
+        "type": "uses",
+        "description": "model uses this callback to reduce learning rate on plateau"
+      },
+      {
+        "source": "best_model.keras",
+        "target": "final_model.keras",
+        "type": "related_to",
+        "description": "final_model.keras is the renamed and moved version of best_model.keras"
+      }
+    ],
+    "temporal_context": "April 2025, user is working on model training improvements",
+    "significance": 0.5,
+    "user_state": "building",
+    "summary": "The user is enhancing their model training process by implementing new callbacks to manage learning rate and model saving. They introduced a custom callback, TerminateOnLowLR, to stop training if the learning rate drops below a certain threshold, and used ModelCheckpoint to save the best model. They also requested a script to save and move the best model file after training.",
+    "_meta": {
+      "conversation_id": "680a003a-a638-800b-accb-3da2c8162877",
+      "title": "Stop training on low LR",
+      "date": "2025-04-24",
+      "model": "o4-mini-high",
+      "turn_count": 4,
+      "total_chars": 3850,
+      "tokens_used": {
+        "prompt": 1503,
+        "completion": 783,
+        "total": 2286
+      }
+    }
+  },
+  {
+    "entities": [
+      {
+        "name": "Lion's Mane",
+        "type": "concept",
+        "state": "can be taken either in the morning or before bed depending on the user's goal",
+        "is_new_mention": true
+      },
+      {
+        "name": "focus, productivity, and cognitive performance",
+        "type": "concept",
+        "state": "associated with taking Lion's Mane in the morning",
+        "is_new_mention": true
+      },
+      {
+        "name": "neurogenesis, memory consolidation, or long-term brain health",
+        "type": "concept",
+        "state": "associated with taking Lion's Mane at night",
+        "is_new_mention": true
+      },
+      {
+        "name": "vivid dreams or REM sleep",
+        "type": "concept",
+        "state": "potential effect of taking Lion's Mane at night",
+        "is_new_mention": true
+      }
+    ],
+    "state_changes": [],
+    "relationships": [
+      {
+        "source": "Lion's Mane",
+        "target": "focus, productivity, and cognitive performance",
+        "type": "related_to",
+        "description": "Taking Lion's Mane in the morning is related to enhancing focus, productivity, and cognitive performance."
+      },
+      {
+        "source": "Lion's Mane",
+        "target": "neurogenesis, memory consolidation, or long-term brain health",
+        "type": "related_to",
+        "description": "Taking Lion's Mane at night is related to supporting neurogenesis, memory consolidation, or long-term brain health."
+      },
+      {
+        "source": "Lion's Mane",
+        "target": "vivid dreams or REM sleep",
+        "type": "related_to",
+        "description": "Taking Lion's Mane at night may lead to vivid dreams or enhanced REM sleep."
+      }
+    ],
+    "temporal_context": "User is exploring the best time to take Lion's Mane for specific benefits.",
+    "significance": 0.3,
+    "user_state": "exploratory",
+    "summary": "The user is exploring the optimal timing for taking Lion's Mane, considering its effects on focus and cognitive performance when taken in the morning, versus its benefits for neurogenesis and brain health when taken at night. The conversation suggests that the user is interested in understanding how to align supplement intake with personal health goals.",
+    "_meta": {
+      "conversation_id": "68134933-62e4-800b-a949-1001f4939158",
+      "title": "Lion's Mane Timing",
+      "date": "2025-05-01",
+      "model": "gpt-4o",
+      "turn_count": 2,
+      "total_chars": 872,
+      "tokens_used": {
+        "prompt": 747,
+        "completion": 509,
+        "total": 1256
+      }
+    }
+  }
+]

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIE Benchmark Dashboard</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --text: #c9d1d9;
+            --text-muted: #8b949e;
+            --border: #30363d;
+            --accent: #58a6ff;
+            --success: #3fb950;
+            --warning: #d29922;
+            --danger: #f85149;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent), #a371f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        input[type="file"], select {
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg-secondary);
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        input[type="file"]:hover, select:hover {
+            border-color: var(--accent);
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card h2 .icon {
+            font-size: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        tr:hover {
+            background: rgba(88, 166, 255, 0.05);
+        }
+
+        .score {
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .score.high {
+            color: var(--success);
+        }
+
+        .score.medium {
+            color: var(--warning);
+        }
+
+        .score.low {
+            color: var(--danger);
+        }
+
+        .delta {
+            font-size: 0.85rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .delta.positive {
+            background: rgba(63, 185, 80, 0.2);
+            color: var(--success);
+        }
+
+        .delta.negative {
+            background: rgba(248, 81, 73, 0.2);
+            color: var(--danger);
+        }
+
+        .delta.neutral {
+            background: rgba(139, 148, 158, 0.2);
+            color: var(--text-muted);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .badge.pie { background: #238636; }
+        .badge.rag { background: #1f6feb; }
+        .badge.full { background: #6e7681; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .winner {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .winner::before {
+            content: '👑';
+        }
+
+        .chart-container {
+            height: 300px;
+            margin-top: 1rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state h3 {
+            margin-bottom: 1rem;
+        }
+
+        .empty-state code {
+            display: block;
+            background: var(--bg);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .breakdown-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .breakdown-item {
+            background: var(--bg);
+            padding: 1rem;
+            border-radius: 6px;
+        }
+
+        .breakdown-item .type {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .breakdown-item .value {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧠 PIE Benchmark Dashboard</h1>
+            <p class="subtitle">Personal Intelligence Evaluation Suite</p>
+        </header>
+
+        <div class="controls">
+            <div class="control-group">
+                <label>Load Results</label>
+                <input type="file" id="fileInput" accept=".json" multiple>
+            </div>
+            <div class="control-group">
+                <label>Baseline Filter</label>
+                <select id="baselineFilter">
+                    <option value="all">All Baselines</option>
+                    <option value="pie_temporal">PIE Temporal</option>
+                    <option value="naive_rag">Naive RAG</option>
+                    <option value="full_context">Full Context</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="dashboard">
+            <div class="empty-state">
+                <h3>📊 No Results Loaded</h3>
+                <p>Load benchmark results to see the comparison dashboard.</p>
+                <code>python -m benchmarks.eval_harness --baseline all --subset 10</code>
+            </div>
+        </div>
+
+        <footer>
+            <p>PIE — Personal Intelligence Engine</p>
+        </footer>
+    </div>
+
+    <script>
+        let allResults = {};
+
+        document.getElementById('fileInput').addEventListener('change', handleFiles);
+        document.getElementById('baselineFilter').addEventListener('change', renderDashboard);
+
+        async function handleFiles(e) {
+            const files = e.target.files;
+            for (const file of files) {
+                const text = await file.text();
+                try {
+                    const data = JSON.parse(text);
+                    // Handle both unified_results.json and individual summaries
+                    if (data.results) {
+                        // Unified results format
+                        Object.assign(allResults, data.results);
+                    } else if (data.baseline && data.benchmark) {
+                        // Individual summary format
+                        const key = data.benchmark;
+                        if (!allResults[key]) allResults[key] = {};
+                        allResults[key][data.baseline] = { summary: data };
+                    } else if (data.baseline) {
+                        // Legacy format with just baseline
+                        const key = 'unknown';
+                        if (!allResults[key]) allResults[key] = {};
+                        allResults[key][data.baseline] = { summary: data };
+                    }
+                } catch (err) {
+                    console.error('Failed to parse:', file.name, err);
+                }
+            }
+            renderDashboard();
+        }
+
+        function renderDashboard() {
+            const container = document.getElementById('dashboard');
+            const filter = document.getElementById('baselineFilter').value;
+
+            if (Object.keys(allResults).length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <h3>📊 No Results Loaded</h3>
+                        <p>Load benchmark results to see the comparison dashboard.</p>
+                        <code>python -m benchmarks.eval_harness --baseline all --subset 10</code>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+
+            // Summary stats
+            html += renderSummaryStats();
+
+            // Comparison table
+            html += renderComparisonTable(filter);
+
+            // Per-benchmark breakdown
+            html += renderBreakdowns(filter);
+
+            // Win/Lose analysis
+            html += renderWinLoseAnalysis();
+
+            container.innerHTML = html;
+        }
+
+        function renderSummaryStats() {
+            const benchmarks = Object.keys(allResults);
+            const baselines = new Set();
+            let pieWins = 0, pieTotal = 0;
+
+            for (const b of benchmarks) {
+                for (const baseline of Object.keys(allResults[b])) {
+                    baselines.add(baseline);
+                }
+            }
+
+            // Count wins
+            for (const benchmark of benchmarks) {
+                const pieScore = getScore(allResults[benchmark]?.pie_temporal);
+                for (const baseline of baselines) {
+                    if (baseline === 'pie_temporal') continue;
+                    const otherScore = getScore(allResults[benchmark]?.[baseline]);
+                    if (pieScore && otherScore) {
+                        pieTotal++;
+                        if (pieScore > otherScore) pieWins++;
+                    }
+                }
+            }
+
+            const avgPie = calculateAvg('pie_temporal');
+            const avgRag = calculateAvg('naive_rag');
+
+            return `
+                <div class="card">
+                    <h2><span class="icon">📈</span> Summary</h2>
+                    <div class="grid">
+                        <div class="stat-card">
+                            <div class="stat-value">${benchmarks.length}</div>
+                            <div class="stat-label">Benchmarks</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">${baselines.size}</div>
+                            <div class="stat-label">Baselines</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value score ${avgPie > 70 ? 'high' : avgPie > 50 ? 'medium' : 'low'}">${avgPie.toFixed(1)}%</div>
+                            <div class="stat-label">PIE Average</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">${pieWins}/${pieTotal}</div>
+                            <div class="stat-label">PIE Wins</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderComparisonTable(filter) {
+            const benchmarks = Object.keys(allResults).sort();
+            const baselines = new Set();
+            
+            for (const b of benchmarks) {
+                for (const baseline of Object.keys(allResults[b])) {
+                    if (filter === 'all' || baseline === filter) {
+                        baselines.add(baseline);
+                    }
+                }
+            }
+
+            const baselineList = Array.from(baselines).sort();
+
+            let headerCells = baselineList.map(b => {
+                const badgeClass = b.includes('pie') ? 'pie' : b.includes('rag') ? 'rag' : 'full';
+                return `<th><span class="badge ${badgeClass}">${b}</span></th>`;
+            }).join('');
+
+            let rows = benchmarks.map(benchmark => {
+                const cells = baselineList.map(baseline => {
+                    const score = getScore(allResults[benchmark]?.[baseline]);
+                    if (score === null) return '<td>—</td>';
+                    
+                    const cls = score > 70 ? 'high' : score > 50 ? 'medium' : 'low';
+                    
+                    // Calculate delta vs PIE
+                    let deltaHtml = '';
+                    if (baseline !== 'pie_temporal') {
+                        const pieScore = getScore(allResults[benchmark]?.pie_temporal);
+                        if (pieScore !== null) {
+                            const delta = pieScore - score;
+                            const deltaClass = delta > 0 ? 'positive' : delta < 0 ? 'negative' : 'neutral';
+                            deltaHtml = `<span class="delta ${deltaClass}">${delta > 0 ? '+' : ''}${delta.toFixed(1)}</span>`;
+                        }
+                    }
+                    
+                    return `<td><span class="score ${cls}">${score.toFixed(1)}%</span> ${deltaHtml}</td>`;
+                }).join('');
+
+                const best = findBest(benchmark, baselineList);
+                const benchmarkDisplay = benchmark.charAt(0).toUpperCase() + benchmark.slice(1);
+
+                return `
+                    <tr>
+                        <td><strong>${benchmarkDisplay}</strong></td>
+                        ${cells}
+                    </tr>
+                `;
+            }).join('');
+
+            // Add average row
+            const avgCells = baselineList.map(baseline => {
+                const avg = calculateAvg(baseline);
+                const cls = avg > 70 ? 'high' : avg > 50 ? 'medium' : 'low';
+                return `<td><span class="score ${cls}">${avg.toFixed(1)}%</span></td>`;
+            }).join('');
+
+            return `
+                <div class="card">
+                    <h2><span class="icon">📊</span> Comparison Table</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Benchmark</th>
+                                ${headerCells}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rows}
+                            <tr style="border-top: 2px solid var(--border); font-weight: 600;">
+                                <td>AVERAGE</td>
+                                ${avgCells}
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        function renderBreakdowns(filter) {
+            let html = '<div class="grid">';
+
+            for (const benchmark of Object.keys(allResults).sort()) {
+                const data = allResults[benchmark];
+                const baseline = filter === 'all' ? 'pie_temporal' : filter;
+                const result = data[baseline];
+
+                if (!result?.summary?.by_category && !result?.summary?.by_type) continue;
+
+                const categories = result.summary.by_category || result.summary.by_type || {};
+                
+                html += `
+                    <div class="card">
+                        <h2><span class="icon">🔍</span> ${benchmark} Breakdown</h2>
+                        <p style="color: var(--text-muted); margin-bottom: 1rem;">Baseline: ${baseline}</p>
+                        <div class="breakdown-grid">
+                            ${Object.entries(categories).map(([type, data]) => {
+                                const score = data.accuracy || data.score || 0;
+                                const cls = score > 70 ? 'high' : score > 50 ? 'medium' : 'low';
+                                return `
+                                    <div class="breakdown-item">
+                                        <div class="type">${type}</div>
+                                        <div class="value score ${cls}">${score.toFixed(1)}%</div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            html += '</div>';
+            return html;
+        }
+
+        function renderWinLoseAnalysis() {
+            const benchmarks = Object.keys(allResults);
+            const comparisons = [];
+
+            for (const benchmark of benchmarks) {
+                const pieScore = getScore(allResults[benchmark]?.pie_temporal);
+                for (const baseline of Object.keys(allResults[benchmark])) {
+                    if (baseline === 'pie_temporal') continue;
+                    const otherScore = getScore(allResults[benchmark]?.[baseline]);
+                    if (pieScore !== null && otherScore !== null) {
+                        comparisons.push({
+                            benchmark,
+                            baseline,
+                            pieScore,
+                            otherScore,
+                            delta: pieScore - otherScore,
+                        });
+                    }
+                }
+            }
+
+            if (comparisons.length === 0) return '';
+
+            const wins = comparisons.filter(c => c.delta > 0);
+            const losses = comparisons.filter(c => c.delta < 0);
+
+            return `
+                <div class="card">
+                    <h2><span class="icon">🏆</span> PIE vs Baselines</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Benchmark</th>
+                                <th>vs Baseline</th>
+                                <th>PIE Score</th>
+                                <th>Baseline Score</th>
+                                <th>Delta</th>
+                                <th>Result</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${comparisons.sort((a, b) => b.delta - a.delta).map(c => `
+                                <tr>
+                                    <td>${c.benchmark}</td>
+                                    <td>${c.baseline}</td>
+                                    <td>${c.pieScore.toFixed(1)}%</td>
+                                    <td>${c.otherScore.toFixed(1)}%</td>
+                                    <td><span class="delta ${c.delta > 0 ? 'positive' : c.delta < 0 ? 'negative' : 'neutral'}">${c.delta > 0 ? '+' : ''}${c.delta.toFixed(1)}%</span></td>
+                                    <td>${c.delta > 0 ? '✅ Win' : c.delta < 0 ? '❌ Lose' : '➖ Tie'}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        function getScore(result) {
+            if (!result?.summary) return null;
+            const s = result.summary;
+            return s.overall?.accuracy ?? s.overall?.score ?? null;
+        }
+
+        function calculateAvg(baseline) {
+            const scores = [];
+            for (const benchmark of Object.keys(allResults)) {
+                const score = getScore(allResults[benchmark]?.[baseline]);
+                if (score !== null) scores.push(score);
+            }
+            if (scores.length === 0) return 0;
+            return scores.reduce((a, b) => a + b, 0) / scores.length;
+        }
+
+        function findBest(benchmark, baselines) {
+            let best = null;
+            let bestScore = -1;
+            for (const b of baselines) {
+                const score = getScore(allResults[benchmark]?.[b]);
+                if (score !== null && score > bestScore) {
+                    bestScore = score;
+                    best = b;
+                }
+            }
+            return best;
+        }
+    </script>
+</body>
+</html>

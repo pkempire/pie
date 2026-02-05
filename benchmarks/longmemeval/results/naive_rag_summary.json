@@ -1,17 +1,42 @@
 {
   "overall": {
-    "accuracy": 80.0,
-    "total": 10,
-    "total_score": 8.0
+    "accuracy": 66.3,
+    "total": 500,
+    "total_score": 331.5
   },
   "by_category": {
+    "knowledge-update": {
+      "accuracy": 79.5,
+      "count": 78,
+      "score": 62.0
+    },
+    "multi-session": {
+      "accuracy": 55.6,
+      "count": 133,
+      "score": 74.0
+    },
+    "single-session-assistant": {
+      "accuracy": 98.2,
+      "count": 56,
+      "score": 55.0
+    },
+    "single-session-preference": {
+      "accuracy": 6.7,
+      "count": 30,
+      "score": 2.0
+    },
+    "single-session-user": {
+      "accuracy": 84.3,
+      "count": 70,
+      "score": 59.0
+    },
     "temporal-reasoning": {
-      "accuracy": 80.0,
-      "count": 10,
-      "score": 8.0
+      "accuracy": 59.8,
+      "count": 133,
+      "score": 79.5
     }
   },
   "baseline": "naive_rag",
-  "timestamp": "2026-02-05T03:18:28.428618+00:00",
-  "num_results": 10
+  "timestamp": "2026-02-05T04:53:49.716344+00:00",
+  "num_results": 500
 }

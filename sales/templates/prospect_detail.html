@@ -1,0 +1,363 @@
+{% extends "base.html" %}
+
+{% block title %}{{ prospect.name }} — Sales Intelligence{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-2 text-sm text-gray-400">
+        <a href="{{ url_for('pipeline') }}" class="hover:text-white transition-colors">Pipeline</a>
+        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+        <span class="text-white">{{ prospect.name }}</span>
+    </nav>
+    
+    <!-- Header Card -->
+    <div class="bg-dark-800 rounded-2xl p-6 border border-dark-600">
+        <div class="flex items-start justify-between">
+            <div class="flex items-center gap-4">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold">
+                    {{ prospect.name[0] }}
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold">{{ prospect.name }}</h1>
+                    <div class="text-gray-400">{{ prospect.title }}</div>
+                    <div class="flex items-center gap-2 mt-2">
+                        <span class="px-3 py-1 rounded-full text-sm font-medium stage-{{ timeline.current_stage if timeline else 'discovery' }}"
+                              style="background: color-mix(in srgb, var(--stage-color) 20%, transparent); color: var(--stage-color);">
+                            {{ stage_display.get(timeline.current_stage, 'Discovery') if timeline else 'Discovery' }}
+                        </span>
+                        {% if timeline and timeline.is_stalled %}
+                        <span class="px-3 py-1 rounded-full text-sm font-medium bg-amber-500/20 text-amber-400">
+                            <i data-lucide="alert-circle" class="w-4 h-4 inline mr-1"></i>
+                            Stalled {{ timeline.stall_days }}d
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-right">
+                <div class="text-lg font-semibold text-indigo-400">{{ prospect.company }}</div>
+                {% if prospect.email %}
+                <a href="mailto:{{ prospect.email }}" class="text-sm text-gray-400 hover:text-white transition-colors">
+                    {{ prospect.email }}
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Timeline Progress -->
+        {% if timeline %}
+        <div class="mt-6 pt-6 border-t border-dark-600">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-sm text-gray-400">Deal Progress</span>
+                <span class="text-sm font-mono text-gray-500">{{ timeline.total_days|default(0) }} days total</span>
+            </div>
+            <div class="flex gap-1">
+                {% for stage in stages[:8] %}
+                    {% set in_stage = false %}
+                    {% for s in timeline.stages %}
+                        {% if s.stage == stage %}
+                            {% set in_stage = true %}
+                        {% endif %}
+                    {% endfor %}
+                    <div class="relative flex-1 group">
+                        <div class="h-2 rounded-full {{ 'stage-' + stage if in_stage else 'bg-dark-600' }}"
+                             style="{{ 'background: var(--stage-color);' if in_stage else '' }}"></div>
+                        <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                            {{ stage_display.get(stage, stage) }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+    <!-- Main Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Left Column: Details -->
+        <div class="lg:col-span-2 space-y-6">
+            
+            <!-- Personality & Style -->
+            <div class="bg-dark-800 rounded-2xl p-6 border border-dark-600">
+                <h2 class="text-lg font-semibold flex items-center gap-2 mb-4">
+                    <i data-lucide="user-circle" class="w-5 h-5 text-purple-400"></i>
+                    Personality Profile
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Traits -->
+                    <div>
+                        <div class="text-xs text-gray-500 uppercase tracking-wide mb-2">Traits</div>
+                        <div class="flex flex-wrap gap-2">
+                            {% for trait in prospect.personality_traits %}
+                            <span class="px-2 py-1 rounded-lg text-xs bg-purple-500/20 text-purple-300">
+                                {{ trait if trait is string else trait.trait|default(trait) }}
+                            </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <!-- Communication -->
+                    <div>
+                        <div class="text-xs text-gray-500 uppercase tracking-wide mb-2">Communication</div>
+                        <div class="text-sm text-gray-300">
+                            {{ prospect.communication_style if prospect.communication_style is string else prospect.communication_style.style|default(prospect.communication_style) }}
+                        </div>
+                    </div>
+                    
+                    <!-- Decision Style -->
+                    <div>
+                        <div class="text-xs text-gray-500 uppercase tracking-wide mb-2">Decision Style</div>
+                        <div class="text-sm text-gray-300">
+                            {{ prospect.decision_style if prospect.decision_style is string else prospect.decision_style.style|default(prospect.decision_style) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pain Points -->
+            <div class="bg-dark-800 rounded-2xl p-6 border border-dark-600">
+                <h2 class="text-lg font-semibold flex items-center gap-2 mb-4">
+                    <i data-lucide="alert-octagon" class="w-5 h-5 text-red-400"></i>
+                    Pain Points
+                </h2>
+                
+                {% if prospect.pain_points %}
+                <div class="space-y-3">
+                    {% for pp in prospect.pain_points %}
+                    {% set sev_color = {'critical': 'red', 'high': 'orange', 'medium': 'yellow', 'low': 'green'}.get(pp.severity, 'gray') %}
+                    <div class="p-4 rounded-xl bg-dark-700 border-l-4 border-{{ sev_color }}-500">
+                        <div class="flex items-start justify-between">
+                            <div class="flex-1">
+                                <div class="font-medium">{{ pp.description }}</div>
+                                {% if pp.verbatim_quote %}
+                                <div class="mt-2 text-sm text-gray-400 italic">
+                                    "{{ pp.verbatim_quote }}"
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="flex items-center gap-2 ml-4">
+                                <span class="px-2 py-0.5 rounded text-xs font-medium bg-{{ sev_color }}-500/20 text-{{ sev_color }}-400">
+                                    {{ pp.severity }}
+                                </span>
+                                <span class="px-2 py-0.5 rounded text-xs bg-dark-600 text-gray-400">
+                                    {{ pp.category }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-gray-500 text-center py-4">No pain points identified yet</p>
+                {% endif %}
+            </div>
+            
+            <!-- Objections -->
+            {% if prospect.objections %}
+            <div class="bg-dark-800 rounded-2xl p-6 border border-dark-600">
+                <h2 class="text-lg font-semibold flex items-center gap-2 mb-4">
+                    <i data-lucide="shield-alert" class="w-5 h-5 text-amber-400"></i>
+                    Objections & Concerns
+                </h2>
+                
+                <div class="space-y-3">
+                    {% for obj in prospect.objections %}
+                    <div class="p-4 rounded-xl bg-dark-700">
+                        <div class="flex items-start justify-between">
+                            <div class="flex-1">
+                                <div class="font-medium">{{ obj.description }}</div>
+                                {% if obj.what_would_resolve %}
+                                <div class="mt-2 text-sm text-gray-400">
+                                    <span class="text-emerald-400">Resolution:</span> {{ obj.what_would_resolve }}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="flex items-center gap-2 ml-4">
+                                <span class="px-2 py-0.5 rounded text-xs bg-dark-600 text-gray-400">
+                                    {{ obj.type }}
+                                </span>
+                                <span class="px-2 py-0.5 rounded text-xs 
+                                    {{ 'bg-emerald-500/20 text-emerald-400' if obj.resolution_status == 'resolved' else '' }}
+                                    {{ 'bg-amber-500/20 text-amber-400' if obj.resolution_status == 'partially_resolved' else '' }}
+                                    {{ 'bg-red-500/20 text-red-400' if obj.resolution_status == 'unresolved' else '' }}">
+                                    {{ obj.resolution_status }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Buying Signals -->
+            {% if prospect.buying_signals %}
+            <div class="bg-dark-800 rounded-2xl p-6 border border-dark-600">
+                <h2 class="text-lg font-semibold flex items-center gap-2 mb-4">
+                    <i data-lucide="trending-up" class="w-5 h-5 text-emerald-400"></i>
+                    Buying Signals
+                </h2>
+                
+                <div class="space-y-3">
+                    {% for sig in prospect.buying_signals %}
+                    <div class="p-4 rounded-xl bg-dark-700 border-l-4 border-emerald-500">
+                        <div class="flex items-start justify-between">
+                            <div class="flex-1">
+                                <div class="font-medium">{{ sig.signal }}</div>
+                                {% if sig.verbatim_quote %}
+                                <div class="mt-2 text-sm text-gray-400 italic">
+                                    "{{ sig.verbatim_quote }}"
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="flex items-center gap-2 ml-4">
+                                <span class="px-2 py-0.5 rounded text-xs 
+                                    {{ 'bg-emerald-500/20 text-emerald-400' if sig.strength == 'strong' else '' }}
+                                    {{ 'bg-blue-500/20 text-blue-400' if sig.strength == 'moderate' else '' }}
+                                    {{ 'bg-gray-500/20 text-gray-400' if sig.strength == 'weak' else '' }}">
+                                    {{ sig.strength }}
+                                </span>
+                                <span class="px-2 py-0.5 rounded text-xs bg-dark-600 text-gray-400">
+                                    {{ sig.type }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Right Column: Actions & Intelligence -->
+        <div class="space-y-6">
+            
+            <!-- Uncertainties / Questions -->
+            {% if prospect.uncertainties %}
+            <div class="bg-dark-800 rounded-2xl p-6 border border-dark-600">
+                <h2 class="text-lg font-semibold flex items-center gap-2 mb-4">
+                    <i data-lucide="help-circle" class="w-5 h-5 text-blue-400"></i>
+                    Key Questions
+                </h2>
+                
+                <div class="space-y-3">
+                    {% for u in prospect.uncertainties[:5] %}
+                    <div class="p-3 rounded-xl bg-dark-700">
+                        <div class="flex items-start gap-2">
+                            <span class="mt-0.5 px-1.5 py-0.5 rounded text-xs 
+                                {{ 'bg-red-500/20 text-red-400' if u.impact == 'high' else '' }}
+                                {{ 'bg-amber-500/20 text-amber-400' if u.impact == 'medium' else '' }}
+                                {{ 'bg-gray-500/20 text-gray-400' if u.impact == 'low' else '' }}">
+                                {{ u.impact }}
+                            </span>
+                            <div class="flex-1">
+                                <div class="text-sm font-medium">{{ u.question }}</div>
+                                <div class="text-xs text-gray-500 mt-1">{{ u.suggested_action }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Next Steps -->
+            {% if prospect.next_steps %}
+            <div class="bg-dark-800 rounded-2xl p-6 border border-dark-600">
+                <h2 class="text-lg font-semibold flex items-center gap-2 mb-4">
+                    <i data-lucide="list-checks" class="w-5 h-5 text-indigo-400"></i>
+                    Next Steps
+                </h2>
+                
+                <div class="space-y-3">
+                    {% for ns in prospect.next_steps %}
+                    <div class="p-3 rounded-xl bg-dark-700">
+                        <div class="flex items-start gap-3">
+                            <div class="w-6 h-6 rounded-full flex items-center justify-center mt-0.5
+                                {{ 'bg-indigo-500/20' if ns.owner == 'rep' else '' }}
+                                {{ 'bg-purple-500/20' if ns.owner == 'prospect' else '' }}
+                                {{ 'bg-blue-500/20' if ns.owner == 'both' else '' }}">
+                                <i data-lucide="{{ 'user' if ns.owner == 'rep' else 'users' }}" 
+                                   class="w-3 h-3 {{ 'text-indigo-400' if ns.owner == 'rep' else 'text-purple-400' if ns.owner == 'prospect' else 'text-blue-400' }}"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="text-sm">{{ ns.action }}</div>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="text-xs text-gray-500">Owner: {{ ns.owner }}</span>
+                                    <span class="text-xs px-1.5 py-0.5 rounded 
+                                        {{ 'bg-emerald-500/20 text-emerald-400' if ns.commitment_level == 'firm' else 'bg-gray-500/20 text-gray-400' }}">
+                                        {{ ns.commitment_level }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Stakeholders -->
+            {% if prospect.stakeholders %}
+            <div class="bg-dark-800 rounded-2xl p-6 border border-dark-600">
+                <h2 class="text-lg font-semibold flex items-center gap-2 mb-4">
+                    <i data-lucide="users" class="w-5 h-5 text-violet-400"></i>
+                    Stakeholders
+                </h2>
+                
+                <div class="space-y-3">
+                    {% for sh in prospect.stakeholders %}
+                    <div class="flex items-center gap-3 p-3 rounded-xl bg-dark-700">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-white text-sm font-medium">
+                            {{ sh.name[0] if sh.name and sh.name != 'unknown' else '?' }}
+                        </div>
+                        <div class="flex-1">
+                            <div class="text-sm font-medium">{{ sh.name if sh.name and sh.name != 'unknown' else sh.role }}</div>
+                            <div class="flex items-center gap-2 text-xs text-gray-500">
+                                <span>{{ sh.influence }}</span>
+                                <span class="w-1 h-1 rounded-full bg-gray-600"></span>
+                                <span class="{{ 'text-emerald-400' if sh.sentiment == 'positive' else 'text-red-400' if sh.sentiment == 'negative' else 'text-gray-400' }}">
+                                    {{ sh.sentiment }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Quick Actions -->
+            <div class="bg-dark-800 rounded-2xl p-6 border border-dark-600">
+                <h2 class="text-lg font-semibold mb-4">Quick Actions</h2>
+                
+                <div class="space-y-2">
+                    <a href="{{ url_for('simulation') }}?prospect={{ prospect.id }}" 
+                       class="flex items-center gap-3 p-3 rounded-xl bg-dark-700 hover:bg-dark-600 transition-colors">
+                        <i data-lucide="flask-conical" class="w-5 h-5 text-indigo-400"></i>
+                        <span class="text-sm">Run "What If" Simulation</span>
+                    </a>
+                    <button class="flex items-center gap-3 p-3 rounded-xl bg-dark-700 hover:bg-dark-600 transition-colors w-full text-left">
+                        <i data-lucide="message-square" class="w-5 h-5 text-purple-400"></i>
+                        <span class="text-sm">Generate Follow-up Email</span>
+                    </button>
+                    <button class="flex items-center gap-3 p-3 rounded-xl bg-dark-700 hover:bg-dark-600 transition-colors w-full text-left">
+                        <i data-lucide="sparkles" class="w-5 h-5 text-amber-400"></i>
+                        <span class="text-sm">Simulate Conversation</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    lucide.createIcons();
+</script>
+{% endblock %}

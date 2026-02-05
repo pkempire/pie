@@ -439,6 +439,6 @@ PIE makes specific, testable claims. We are designing experiments to validate or
 
 ---
 
-*PIE is open source: [TODO: repo link]*
+*PIE is open source: [github.com/pkempire/pie](https://github.com/pkempire/pie)*
 
 *[TODO: contact / discussion links]*

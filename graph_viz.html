@@ -1,0 +1,331 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>PIE World Model — vis-network</title>
+        <!-- Vendored vis-network (no CDN) -->
+        <script src="lib/vis-9.1.2/vis-network.min.js"></script>
+        <style type="text/css">
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { background: #0d0d1a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #e0e0e0; }
+
+            #mynetwork {
+                width: 100%;
+                height: 100vh;
+                background-color: #0a0a0f;
+                position: relative;
+                float: left;
+            }
+
+            #legend {
+                position: fixed; top: 10px; right: 10px; background: rgba(15,15,25,0.95);
+                border: 1px solid #333; border-radius: 8px; padding: 15px;
+                z-index: 1000; font-size: 12px; max-width: 220px;
+                backdrop-filter: blur(10px);
+            }
+            #legend .title { font-weight: bold; margin-bottom: 10px; font-size: 14px; color: #fff; }
+            #legend .item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; color: #ccc; }
+            #legend .dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+            #legend .stats { margin-top: 10px; padding-top: 10px; border-top: 1px solid #333; font-size: 11px; color: #888; }
+            #legend .stats div { margin-bottom: 3px; }
+            #legend .stats span { color: #fff; font-weight: 600; }
+
+            #loadingBar {
+                position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+                background-color: rgba(10,10,15,0.9);
+                display: flex; align-items: center; justify-content: center;
+                z-index: 2000; transition: opacity 0.5s ease;
+            }
+            #loadingBar .inner {
+                background: rgba(20,20,35,0.95); border: 1px solid #333;
+                border-radius: 12px; padding: 24px 32px; text-align: center;
+            }
+            #loadingBar .bar-track {
+                width: 300px; height: 8px; background: #1a1a2e; border-radius: 4px;
+                margin: 12px 0 8px; overflow: hidden;
+            }
+            #loadingBar .bar-fill { height: 100%; background: #4fc3f7; border-radius: 4px; width: 0%; transition: width 0.2s; }
+            #loadingBar .label { font-size: 13px; color: #888; }
+            #loadingBar .percent { font-size: 18px; font-weight: 600; color: #fff; }
+
+            #error {
+                position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                background: rgba(20,20,35,0.95); border: 1px solid #e74c3c; border-radius: 12px;
+                padding: 24px 32px; text-align: center; display: none; z-index: 3000;
+            }
+            #error h3 { color: #e74c3c; margin-bottom: 8px; }
+            #error p { color: #aaa; font-size: 13px; }
+
+            /* Detail panel */
+            #detail-panel {
+                position: fixed; top: 60px; right: 240px; width: 380px; max-height: calc(100vh - 80px);
+                background: rgba(15,15,25,0.95); border: 1px solid #333; border-radius: 12px;
+                padding: 20px; overflow-y: auto; display: none; backdrop-filter: blur(10px); z-index: 1000;
+            }
+            #detail-panel.visible { display: block; }
+            #detail-panel h2 { font-size: 15px; color: #fff; margin-bottom: 4px; word-break: break-word; }
+            #detail-panel .type-badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-bottom: 12px; font-weight: 600; color: #000; }
+            #detail-panel .desc { font-size: 13px; color: #aaa; line-height: 1.5; margin-bottom: 12px; }
+            #detail-panel .section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #555; margin: 10px 0 5px; }
+            #detail-panel .transition { font-size: 12px; color: #bbb; padding: 5px 0; border-bottom: 1px solid #1a1a2e; }
+            #detail-panel .transition .tt { color: #666; font-size: 10px; text-transform: uppercase; }
+            #detail-panel .close { position: absolute; top: 10px; right: 14px; cursor: pointer; color: #555; font-size: 18px; }
+            #detail-panel .close:hover { color: #fff; }
+        </style>
+    </head>
+    <body>
+
+        <div id="mynetwork"></div>
+
+        <div id="legend">
+            <div class="title">PIE World Model</div>
+            <div id="legend-items"></div>
+            <div class="stats" id="legend-stats"></div>
+        </div>
+
+        <div id="detail-panel">
+            <span class="close" onclick="document.getElementById('detail-panel').classList.remove('visible')">✕</span>
+            <h2 id="dp-name"></h2>
+            <span class="type-badge" id="dp-type"></span>
+            <div class="desc" id="dp-desc"></div>
+            <div class="section-title">State Transitions</div>
+            <div id="dp-transitions"></div>
+        </div>
+
+        <div id="loadingBar">
+            <div class="inner">
+                <div class="label">Loading graph…</div>
+                <div class="bar-track"><div class="bar-fill" id="bar-fill"></div></div>
+                <div class="percent" id="bar-text">0%</div>
+            </div>
+        </div>
+
+        <div id="error">
+            <h3>Failed to load world model</h3>
+            <p id="error-msg"></p>
+        </div>
+
+        <script type="text/javascript">
+const TYPE_COLORS = {
+    project: '#4fc3f7', tool: '#81c784', organization: '#ffb74d',
+    person: '#f06292', decision: '#ba68c8', belief: '#ff8a65',
+    concept: '#90a4ae', period: '#ffd54f'
+};
+
+const TYPE_SHAPES = {
+    project: 'dot', tool: 'diamond', organization: 'square',
+    person: 'star', decision: 'triangle', belief: 'triangleDown',
+    concept: 'dot', period: 'hexagon'
+};
+
+const EDGE_COLORS = {
+    uses: '#4fc3f7', works_on: '#81c784', caused_by: '#ff8a65',
+    part_of: '#ba68c8', integrates_with: '#ffd54f', related_to: '#555'
+};
+
+let worldModel = null;
+let network = null;
+
+async function loadAndRender() {
+    try {
+        // Try loading from output/world_model.json (relative path)
+        const resp = await fetch('output/world_model.json');
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}: ${resp.statusText}`);
+        worldModel = await resp.json();
+        render();
+    } catch (err) {
+        console.error('Failed to load world_model.json:', err);
+        document.getElementById('loadingBar').style.display = 'none';
+        document.getElementById('error').style.display = 'block';
+        document.getElementById('error-msg').textContent =
+            `Could not load output/world_model.json: ${err.message}. ` +
+            `Make sure this file is served via a local HTTP server (e.g. python3 -m http.server).`;
+    }
+}
+
+function render() {
+    const entities = worldModel.entities || {};
+    const transitions = worldModel.transitions || {};
+    const relationships = worldModel.relationships || {};
+
+    // Build legend
+    const typesPresent = new Set(Object.values(entities).map(e => e.type));
+    const legendEl = document.getElementById('legend-items');
+    legendEl.innerHTML = '';
+    for (const [type, color] of Object.entries(TYPE_COLORS)) {
+        if (!typesPresent.has(type)) continue;
+        const div = document.createElement('div');
+        div.className = 'item';
+        div.innerHTML = `<div class="dot" style="background:${color}"></div>${type}`;
+        legendEl.appendChild(div);
+    }
+
+    // Stats
+    const statsEl = document.getElementById('legend-stats');
+    let minT = Infinity, maxT = -Infinity;
+    for (const e of Object.values(entities)) {
+        if (e.first_seen && e.first_seen < minT) minT = e.first_seen;
+        if (e.last_seen && e.last_seen > maxT) maxT = e.last_seen;
+    }
+    const fmt = (ts) => new Date(ts * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    statsEl.innerHTML = `
+        <div>Entities: <span>${Object.keys(entities).length}</span></div>
+        <div>Transitions: <span>${Object.keys(transitions).length}</span></div>
+        <div>Relationships: <span>${Object.keys(relationships).length}</span></div>
+        <div>${minT < Infinity ? fmt(minT) + ' – ' + fmt(maxT) : ''}</div>
+    `;
+
+    // Count transitions per entity for sizing
+    const transCount = {};
+    for (const t of Object.values(transitions)) {
+        transCount[t.entity_id] = (transCount[t.entity_id] || 0) + 1;
+    }
+
+    // Build vis-network nodes
+    const visNodes = [];
+    for (const [eid, e] of Object.entries(entities)) {
+        const tc = transCount[eid] || 0;
+        const color = TYPE_COLORS[e.type] || '#666';
+        const size = Math.max(12, Math.min(35, 10 + tc * 5));
+        let label = e.name || eid;
+        if (label.length > 35) label = label.substring(0, 33) + '…';
+
+        visNodes.push({
+            id: eid,
+            label: label,
+            color: { background: color, border: color, highlight: { background: '#fff', border: color } },
+            shape: TYPE_SHAPES[e.type] || 'dot',
+            size: size,
+            font: { color: '#ccc', size: 11, face: 'system-ui, sans-serif' },
+            borderWidth: 1.5,
+            shadow: { enabled: true, color: color + '40', size: 8 },
+            title: `<b>${e.name}</b><br>Type: ${e.type}<br>${(e.current_state?.description || '').substring(0, 150)}`
+        });
+    }
+
+    // Build vis-network edges from relationships
+    const visEdges = [];
+    for (const [rid, r] of Object.entries(relationships)) {
+        if (!entities[r.source_id] || !entities[r.target_id]) continue;
+
+        const edgeColor = EDGE_COLORS[r.type] || '#444';
+        const dashes = r.type === 'caused_by';
+
+        visEdges.push({
+            from: r.source_id,
+            to: r.target_id,
+            label: r.type.replace(/_/g, ' '),
+            color: { color: edgeColor, opacity: 0.6, highlight: edgeColor },
+            font: { color: '#555', size: 9, strokeWidth: 0 },
+            arrows: { to: { enabled: true, scaleFactor: 0.5 } },
+            dashes: dashes,
+            smooth: { type: 'continuous', roundness: 0.3 },
+            width: 1.5,
+            title: r.description || ''
+        });
+    }
+
+    // Create vis-network
+    const container = document.getElementById('mynetwork');
+    const data = {
+        nodes: new vis.DataSet(visNodes),
+        edges: new vis.DataSet(visEdges)
+    };
+
+    const options = {
+        nodes: {
+            borderWidth: 2,
+            borderWidthSelected: 4,
+            font: { size: 12, face: 'system-ui, sans-serif' }
+        },
+        edges: {
+            arrows: { to: { enabled: true, scaleFactor: 0.5 } },
+            color: { inherit: false },
+            smooth: { type: 'continuous' },
+            font: { size: 9, color: '#777', strokeWidth: 0 }
+        },
+        physics: {
+            solver: 'forceAtlas2Based',
+            forceAtlas2Based: {
+                gravitationalConstant: -80,
+                centralGravity: 0.01,
+                springLength: 180,
+                springConstant: 0.03,
+                damping: 0.4,
+                avoidOverlap: 0.5
+            },
+            stabilization: { iterations: 200 }
+        },
+        interaction: {
+            hover: true,
+            tooltipDelay: 100,
+            navigationButtons: true,
+            keyboard: true
+        }
+    };
+
+    network = new vis.Network(container, data, options);
+
+    // Loading bar
+    network.on('stabilizationProgress', function(params) {
+        const pct = Math.round((params.iterations / params.total) * 100);
+        document.getElementById('bar-fill').style.width = pct + '%';
+        document.getElementById('bar-text').textContent = pct + '%';
+    });
+
+    network.once('stabilizationIterationsDone', function() {
+        document.getElementById('bar-fill').style.width = '100%';
+        document.getElementById('bar-text').textContent = '100%';
+        document.getElementById('loadingBar').style.opacity = '0';
+        setTimeout(() => { document.getElementById('loadingBar').style.display = 'none'; }, 500);
+    });
+
+    // Click to show detail panel
+    network.on('click', function(params) {
+        if (params.nodes.length > 0) {
+            showDetail(params.nodes[0]);
+        } else {
+            document.getElementById('detail-panel').classList.remove('visible');
+        }
+    });
+}
+
+function showDetail(entityId) {
+    const e = worldModel.entities[entityId];
+    if (!e) return;
+
+    document.getElementById('dp-name').textContent = e.name;
+    const badge = document.getElementById('dp-type');
+    badge.textContent = e.type;
+    badge.style.background = TYPE_COLORS[e.type] || '#666';
+
+    const desc = e.current_state?.description || JSON.stringify(e.current_state || {}, null, 2);
+    document.getElementById('dp-desc').textContent = desc;
+
+    // Transitions
+    const trans = Object.values(worldModel.transitions || {})
+        .filter(t => t.entity_id === entityId)
+        .sort((a, b) => a.timestamp - b.timestamp);
+
+    const transEl = document.getElementById('dp-transitions');
+    transEl.innerHTML = '';
+    if (trans.length === 0) {
+        transEl.innerHTML = '<div style="color:#555;font-size:12px;">No transitions</div>';
+    } else {
+        for (const t of trans) {
+            const d = new Date(t.timestamp * 1000);
+            const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            const div = document.createElement('div');
+            div.className = 'transition';
+            div.innerHTML = `<div class="tt">${t.transition_type} · ${dateStr}</div>${t.trigger_summary}`;
+            transEl.appendChild(div);
+        }
+    }
+
+    document.getElementById('detail-panel').classList.add('visible');
+}
+
+// Init
+loadAndRender();
+        </script>
+    </body>
+</html>

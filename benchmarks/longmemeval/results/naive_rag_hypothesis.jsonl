@@ -1,10 +1,500 @@
-{"question_id": "gpt4_59149c77", "hypothesis": "Seven days passed between your visit to the Museum of Modern Art (MoMA) on January 8, 2023, and the \"Ancient Civilizations\" exhibit at the Metropolitan Museum of Art on January 15, 2023."}
+{"question_id": "e47becba", "hypothesis": "You graduated with a degree in Business Administration."}
+{"question_id": "118b2229", "hypothesis": "Your daily commute takes 45 minutes each way."}
+{"question_id": "51a45a95", "hypothesis": "You redeemed a $5 coupon on coffee creamer from your email inbox."}
+{"question_id": "58bf7951", "hypothesis": "You attended a production of \"The Glass Menagerie\" at the local community theater."}
+{"question_id": "1e043500", "hypothesis": "The name of the playlist you created on Spotify is \"Summer Vibes.\""}
+{"question_id": "c5e8278d", "hypothesis": "Your last name before you changed it was Johnson."}
+{"question_id": "6ade9755", "hypothesis": "You take yoga classes at Serenity Yoga."}
+{"question_id": "6f9b354f", "hypothesis": "You repainted your bedroom walls a lighter shade of gray."}
+{"question_id": "58ef2f1c", "hypothesis": "I don't know."}
+{"question_id": "f8c5f88b", "hypothesis": "You bought your new tennis racket from a sports store downtown."}
+{"question_id": "5d3d2817", "hypothesis": "You were responsible for managing a team of interns in your previous role at a startup."}
+{"question_id": "7527f7e2", "hypothesis": "You spent $800 on a designer handbag."}
+{"question_id": "c960da58", "hypothesis": "You have 20 playlists on Spotify."}
+{"question_id": "3b6f954b", "hypothesis": "You attended the University of Melbourne for your study abroad program."}
+{"question_id": "726462e0", "hypothesis": "You got a 10% discount on your first purchase from the new clothing brand."}
+{"question_id": "94f70d80", "hypothesis": "It took you 4 hours to assemble the IKEA bookshelf."}
+{"question_id": "66f24dbb", "hypothesis": "You bought your sister a yellow dress and a pair of earrings to match."}
+{"question_id": "ad7109d1", "hypothesis": "Your new internet plan is 500 Mbps."}
+{"question_id": "af8d2e46", "hypothesis": "You packed 7 shirts for your 5-day trip to Costa Rica."}
+{"question_id": "dccbc061", "hypothesis": "You used to be a staunch atheist."}
+{"question_id": "c8c3f81d", "hypothesis": "Nike is your favorite brand for running shoes."}
+{"question_id": "8ebdbe50", "hypothesis": "You completed a certification in Data Science last month."}
+{"question_id": "6b168ec8", "hypothesis": "You own three bikes: a road bike, a mountain bike, and a commuter bike."}
+{"question_id": "75499fd8", "hypothesis": "Your dog, Max, is a Golden Retriever."}
+{"question_id": "21436231", "hypothesis": "You caught 12 largemouth bass on your last trip to Lake Michigan."}
+{"question_id": "95bcc1c8", "hypothesis": "You watched 10 amateur comedians perform at the open mic night."}
+{"question_id": "0862e8bf", "hypothesis": "Your cat's name is Luna."}
+{"question_id": "853b0a1d", "hypothesis": "You were 18 years old when your grandma gave you the silver necklace."}
+{"question_id": "a06e4cfe", "hypothesis": "Your preferred gin-to-vermouth ratio for a classic gin martini is 3:1."}
+{"question_id": "37d43f65", "hypothesis": "You upgraded your laptop's RAM to 16GB."}
+{"question_id": "b86304ba", "hypothesis": "I don't know."}
+{"question_id": "d52b4f67", "hypothesis": "At the Grand Ballroom."}
+{"question_id": "25e5aa4f", "hypothesis": "You completed your Bachelor's degree in Computer Science at UCLA."}
+{"question_id": "caf9ead2", "hypothesis": "It took around 5 hours to move everything into the new apartment."}
+{"question_id": "8550ddae", "hypothesis": "You tried a lavender gin fizz recipe last weekend."}
+{"question_id": "60d45044", "hypothesis": "Your favorite type of rice is Japanese short-grain rice."}
+{"question_id": "3f1e9474", "hypothesis": "You had a conversation with your friend Sarah about destiny."}
+{"question_id": "86b68151", "hypothesis": "You bought your new bookshelf from IKEA."}
+{"question_id": "577d4d32", "hypothesis": "You stop checking work emails and messages by 7 pm."}
+{"question_id": "ec81a493", "hypothesis": "500 copies of your favorite artist's debut album were released worldwide."}
+{"question_id": "15745da0", "hypothesis": "You have been collecting vintage cameras for three months as of May 21, 2023."}
+{"question_id": "e01b8e2f", "hypothesis": "You went to Hawaii on a week-long trip with your family."}
+{"question_id": "bc8a6e93", "hypothesis": "You baked a lemon blueberry cake for your niece's birthday party."}
+{"question_id": "ccb36322", "hypothesis": "Spotify"}
+{"question_id": "001be529", "hypothesis": "You waited over a year for the decision on your asylum application."}
+{"question_id": "b320f3f8", "hypothesis": "You bought a rare blue Snaggletooth action figure from a thrift store."}
+{"question_id": "19b5f2b3", "hypothesis": "You were in Japan for two weeks."}
+{"question_id": "4fd1909e", "hypothesis": "You attended the Imagine Dragons concert at the Xfinity Center on June 15th."}
+{"question_id": "545bd2b5", "hypothesis": "You've been averaging around 2 hours of screen time on Instagram per day for the past two weeks."}
+{"question_id": "8a137a7f", "hypothesis": "You replaced the bulb in your bedside lamp with a Philips LED bulb."}
+{"question_id": "76d63226", "hypothesis": "Your new Samsung TV is a 55-inch 4K smart TV."}
+{"question_id": "86f00804", "hypothesis": "You are currently reading \"The Seven Husbands of Evelyn Hugo.\""}
+{"question_id": "8e9d538c", "hypothesis": "You found a stash of 17 skeins of worsted weight yarn."}
+{"question_id": "311778f1", "hypothesis": "You spent around 10 hours last month watching documentaries on Netflix."}
+{"question_id": "c19f7a0b", "hypothesis": "You usually get home from work around 6:30 pm on weekdays."}
+{"question_id": "4100d0a0", "hypothesis": "Your ethnicity is mixed, specifically Irish and Italian."}
+{"question_id": "29f2956b", "hypothesis": "You practice guitar for 30 minutes daily."}
+{"question_id": "1faac195", "hypothesis": "I don't know."}
+{"question_id": "faba32e5", "hypothesis": "Alex marinated the BBQ ribs in a special sauce for 24 hours before grilling them."}
+{"question_id": "f4f1d8a4", "hypothesis": "Your sister gave you a new stand mixer as a birthday gift."}
+{"question_id": "c14c00dd", "hypothesis": "You currently use a lavender scented shampoo from Trader Joe's."}
+{"question_id": "36580ce8", "hypothesis": "You initially thought your health issue was just a cold, but it turned out to be a bad case of bronchitis."}
+{"question_id": "3d86fd0a", "hypothesis": "You met Sophia at a coffee shop in the city."}
+{"question_id": "a82c026e", "hypothesis": "You finally beat the last boss in the Dark Souls 3 DLC last weekend."}
+{"question_id": "0862e8bf_abs", "hypothesis": "I don't know."}
+{"question_id": "15745da0_abs", "hypothesis": "I don't know."}
+{"question_id": "bc8a6e93_abs", "hypothesis": "I don't know."}
+{"question_id": "19b5f2b3_abs", "hypothesis": "I don't know."}
+{"question_id": "29f2956b_abs", "hypothesis": "I don't know."}
+{"question_id": "f4f1d8a4_abs", "hypothesis": "I don't know."}
+{"question_id": "0a995998", "hypothesis": "You need to pick up a pair of boots from Zara that you exchanged for a larger size."}
+{"question_id": "6d550036", "hypothesis": "I don't know."}
+{"question_id": "gpt4_59c863d7", "hypothesis": "You have mentioned working on or buying at least four model kits: a 1/72 scale B-29 bomber, a 1/24 scale '69 Camaro, a Revell F-15 Eagle, and a Tamiya 1/48 scale Spitfire Mk.V."}
+{"question_id": "b5ef892d", "hypothesis": "You spent a total of 8 days on camping trips in the United States this year: 5 days in Yellowstone National Park and 3 days in Big Sur."}
+{"question_id": "e831120c", "hypothesis": "It took you about two weeks to watch all the Marvel Cinematic Universe movies and a week and a half to watch all the main Star Wars films."}
+{"question_id": "3a704032", "hypothesis": "You acquired a peace lily, a succulent, and a snake plant in the last month."}
+{"question_id": "gpt4_d84a3211", "hypothesis": "I don't know."}
+{"question_id": "aae3761f", "hypothesis": "I don't know."}
+{"question_id": "gpt4_f2262a51", "hypothesis": "You visited three different doctors: Dr. Patel (ENT specialist), Dr. Lee (dermatologist), and Dr. Smith (primary care physician)."}
+{"question_id": "dd2973ad", "hypothesis": "You went to bed at 2 AM on the day before your doctor's appointment."}
+{"question_id": "c4a1ceb8", "hypothesis": "Based on the provided context, you have used the following types of citrus fruits in your cocktail recipes: orange, lemon, lime, and grapefruit."}
+{"question_id": "gpt4_a56e767c", "hypothesis": "You attended at least three film festivals: the Austin Film Festival, the Portland Film Festival, and AFI Fest in LA."}
+{"question_id": "6cb6f249", "hypothesis": "You took social media breaks for a total of 17 days: a 10-day break in mid-February and a week-long (7-day) break in mid-January."}
+{"question_id": "46a3abf7", "hypothesis": "You currently have three tanks: a 1-gallon tank set up for your friend's kid, a 5-gallon tank that you previously used for a betta fish named Finley, and a 20-gallon community tank named \"Amazonia.\""}
+{"question_id": "36b9f61e", "hypothesis": "Based on the provided context, you mentioned spending $800 on a luxury evening gown, $1,200 on a Gucci handbag, and $500 on a pair of leather boots from a high-end Italian designer. The total amount spent on these luxury items is $2,500."}
+{"question_id": "28dc39ac", "hypothesis": "I don't know."}
+{"question_id": "gpt4_2f8be40d", "hypothesis": "I don't know."}
+{"question_id": "2e6d26dc", "hypothesis": "Five babies were born to friends and family members in the last few months: David's son Jasper, Rachel's son Max, Mike and Emma's daughter Charlotte, and your aunt's twins Ava and Lily."}
+{"question_id": "gpt4_15e38248", "hypothesis": "You bought a new coffee table and a mattress, assembled an IKEA bookshelf, and fixed a wobbly leg on your kitchen table."}
+{"question_id": "88432d0a", "hypothesis": "You baked something at least four times in the past two weeks: an apple pie in your cast iron skillet, a chocolate cake for your sister's birthday, a batch of cookies using the convection setting, and a whole wheat baguette."}
+{"question_id": "80ec1f4f", "hypothesis": "Based on the provided context, you visited at least two different museums or galleries in February: The Art Cube on 15th February and the Natural History Museum on 8th February."}
+{"question_id": "d23cf73b", "hypothesis": "You have learned to cook or tried out at least four different cuisines in the past few months: Ethiopian, Indian, Korean, and vegan cuisine."}
+{"question_id": "gpt4_7fce9456", "hypothesis": "I don't know."}
+{"question_id": "d682f1a2", "hypothesis": "You have mentioned using three different food delivery services recently: Domino's Pizza, Uber Eats, and Fresh Fusion."}
+{"question_id": "7024f17c", "hypothesis": "I don't know."}
+{"question_id": "gpt4_5501fe77", "hypothesis": "You gained the most followers on Twitter, with an increase from 420 to 540 followers over the past month."}
+{"question_id": "gpt4_2ba83207", "hypothesis": "You spent the most money at Thrive Market, where you spent around $150."}
+{"question_id": "2318644b", "hypothesis": "You spent over $300 per night on accommodations in Hawaii, and around $30 per night in Tokyo. Therefore, you spent over $270 more per night in Hawaii compared to Tokyo."}
+{"question_id": "2ce6a0f2", "hypothesis": "You attended two art-related events in the past month: the \"Women in Art\" exhibition on February 10th and the \"Art Afternoon\" event at the Children's Museum on February 17th."}
+{"question_id": "gpt4_d12ceb0e", "hypothesis": "The average age of you, your parents, and your grandparents is 54.5 years."}
+{"question_id": "00ca467f", "hypothesis": "You went to two doctor's appointments in March: one with your orthopedic surgeon, Dr. Thompson, on March 20th, and one with your primary care physician, Dr. Smith, on March 3rd."}
+{"question_id": "b3c15d39", "hypothesis": "It took 5 days for you to receive the new remote shutter release after you ordered it on February 5th, as it arrived on February 10th."}
+{"question_id": "gpt4_31ff4165", "hypothesis": "I don't know."}
+{"question_id": "eeda8a6d", "hypothesis": "I don't know."}
+{"question_id": "2788b940", "hypothesis": "You attend four fitness classes in a typical week: Zumba on Tuesdays and Thursdays, BodyPump on Mondays, and yoga on Sundays."}
+{"question_id": "60bf93ed", "hypothesis": "It took 5 days for your laptop backpack to arrive after you bought it."}
+{"question_id": "9d25d4e0", "hypothesis": "I don't know."}
+{"question_id": "129d1232", "hypothesis": "You raised a total of $5,850 through all the charity events you participated in."}
+{"question_id": "60472f9c", "hypothesis": "You have been working on two projects simultaneously, excluding your thesis: a Data Mining project and a Database Systems project."}
+{"question_id": "gpt4_194be4b3", "hypothesis": "Based on the provided context, you currently own a black Fender Stratocaster electric guitar, a Korg B1 piano, and you mentioned having an old drum set, a 5-piece Pearl Export, which you are thinking of selling. You are also considering buying a new ukulele. Therefore, you currently own at least three musical instruments."}
+{"question_id": "a9f6b44c", "hypothesis": "You planned to replace the front tire of your commuter bike in March, and you got your road bike serviced at Pedal Power on March 10th."}
+{"question_id": "d851d5ba", "hypothesis": "I don't know."}
+{"question_id": "5a7937c8", "hypothesis": "You participated in faith-related activities on at least two days in December: December 10th (helping at the church's annual holiday food drive) and December 17th (leading a Bible study)."}
+{"question_id": "gpt4_ab202e7f", "hypothesis": "You replaced or fixed four kitchen items: the kitchen shelves, the toaster (replaced with a toaster oven), the kitchen faucet, and your cat's food and water bowls."}
+{"question_id": "gpt4_e05b82a6", "hypothesis": "You rode rollercoasters a total of 9 times across the events you attended from July to October:\n\n1. Mako, Kraken, and Manta at SeaWorld San Diego in July (3 rides).\n2. Xcelerator at Knott's Berry Farm on October 8th (1 ride).\n3. Revenge of the Mummy at Universal Studios Hollywood on October 15th (3 rides).\n4. Space Mountain: Ghost Galaxy at Disneyland on September 24th (3 rides)."}
+{"question_id": "gpt4_731e37d7", "hypothesis": "I don't know."}
+{"question_id": "edced276", "hypothesis": "You spent 10 days in Hawaii and 5 days in New York City, totaling 15 days of travel."}
+{"question_id": "10d9b85a", "hypothesis": "You attended a lecture on sustainable development on April 10th and a 2-day workshop on April 17th and 18th. Therefore, you spent 3 days attending workshops and lectures in April."}
+{"question_id": "e3038f8c", "hypothesis": "I don't know."}
+{"question_id": "2b8f3739", "hypothesis": "You earned a total of $345 from selling your products at the markets: $225 from selling 15 jars of homemade jam and $120 from selling 12 bunches of fresh organic herbs."}
+{"question_id": "1a8a66a6", "hypothesis": "You currently have a subscription to The New Yorker magazine."}
+{"question_id": "c2ac3c61", "hypothesis": "You have completed a total of five online courses: three on Coursera and two on edX."}
+{"question_id": "bf659f65", "hypothesis": "I don't know."}
+{"question_id": "gpt4_372c3eed", "hypothesis": "You spent a total of 10 years in formal education from high school to the completion of your Bachelor's degree: 4 years at Arcadia High School (2010-2014), 2 years at Pasadena City College (2014-2016), and 4 years at UCLA (2016-2020)."}
+{"question_id": "gpt4_2f91af09", "hypothesis": "You have completed a total of 23 pieces of writing: 17 poems, 5 short stories, and at least 1 piece for the writing challenge."}
+{"question_id": "81507db6", "hypothesis": "You have attended three graduation ceremonies in the past three months: your little cousin Emma's preschool graduation, your colleague Alex's graduation from a leadership development program, and your best friend Rachel's master's degree graduation ceremony."}
+{"question_id": "88432d0a_abs", "hypothesis": "I don't know."}
+{"question_id": "80ec1f4f_abs", "hypothesis": "I don't know."}
+{"question_id": "eeda8a6d_abs", "hypothesis": "I don't know."}
+{"question_id": "60bf93ed_abs", "hypothesis": "I don't know."}
+{"question_id": "edced276_abs", "hypothesis": "I don't know."}
+{"question_id": "gpt4_372c3eed_abs", "hypothesis": "I don't know."}
+{"question_id": "8a2466db", "hypothesis": "I don't know."}
+{"question_id": "06878be2", "hypothesis": "I don't know."}
+{"question_id": "75832dbd", "hypothesis": "I don't know."}
+{"question_id": "0edc2aef", "hypothesis": "I don't know."}
+{"question_id": "35a27287", "hypothesis": "I don't know."}
+{"question_id": "32260d93", "hypothesis": "I don't know."}
+{"question_id": "195a1a1b", "hypothesis": "I don't know."}
+{"question_id": "afdc33df", "hypothesis": "I don't know."}
+{"question_id": "caf03d32", "hypothesis": "I don't know."}
+{"question_id": "54026fce", "hypothesis": "You can stay connected with your colleagues by organizing virtual coffee breaks, participating in online team activities, joining social channels for informal chats, and collaborating on projects. Additionally, consider starting interest-based groups or celebrating milestones with virtual events."}
+{"question_id": "06f04340", "hypothesis": "I don't know."}
+{"question_id": "6b7dfb22", "hypothesis": "I don't know."}
+{"question_id": "1a1907b4", "hypothesis": "I don't know."}
+{"question_id": "09d032c9", "hypothesis": "I don't know."}
+{"question_id": "38146c39", "hypothesis": "I don't know."}
+{"question_id": "d24813b1", "hypothesis": "I don't know."}
+{"question_id": "57f827a0", "hypothesis": "I don't know."}
+{"question_id": "95228167", "hypothesis": "I don't know."}
+{"question_id": "505af2f5", "hypothesis": "I don't know."}
+{"question_id": "75f70248", "hypothesis": "I don't know."}
+{"question_id": "d6233ab6", "hypothesis": "I don't know."}
+{"question_id": "1da05512", "hypothesis": "I don't know."}
+{"question_id": "fca70973", "hypothesis": "I don't know."}
+{"question_id": "b6025781", "hypothesis": "I don't know."}
+{"question_id": "a89d7624", "hypothesis": "I don't know."}
+{"question_id": "b0479f84", "hypothesis": "I recommend checking out \"Dynasties\" and \"Chasing Coral.\" \"Dynasties\" focuses on the social structures and family dynamics of iconic animal groups, while \"Chasing Coral\" documents the decline of coral reefs and the impact of climate change with stunning underwater footage. Both offer unique perspectives and are engaging and thought-provoking."}
+{"question_id": "1d4e3b97", "hypothesis": "I don't know."}
+{"question_id": "07b6f563", "hypothesis": "I don't know."}
+{"question_id": "1c0ddc50", "hypothesis": "I don't know."}
+{"question_id": "0a34ad58", "hypothesis": "I don't know."}
+{"question_id": "d3ab962e", "hypothesis": "The total distance of the hikes you did on two consecutive weekends is 8 miles (3 miles at Valley of Fire State Park and 5 miles at Red Rock Canyon)."}
+{"question_id": "2311e44b", "hypothesis": "You have 190 pages left to read in 'The Nightingale'."}
+{"question_id": "cc06de0d", "hypothesis": "The taxi ride was $12, while the daily train fare is $6. Therefore, the taxi ride was $6 more expensive than the train fare."}
+{"question_id": "a11281a2", "hypothesis": "You experienced an increase of approximately 100 Instagram followers in two weeks, going from 250 to 350 followers."}
+{"question_id": "4f54b7c9", "hypothesis": "You inherited or acquired four antique items from your family members: an antique tea set from your cousin Rachel, a vintage typewriter that belonged to your dad, a vintage diamond necklace from your grandmother, and an antique music box from your great-aunt. Additionally, you have a set of depression-era glassware from your mom."}
+{"question_id": "85fa3a3f", "hypothesis": "The total cost of the new food bowl, measuring cup, dental chews, and flea and tick collar for Max is $50. This includes:\n\n- Stainless steel food bowl: $15\n- Measuring cup: $5\n- Dental chews: $10\n- Flea and tick collar: $20"}
+{"question_id": "9aaed6a3", "hypothesis": "You earned $0.75 in cashback at SaveMart last Thursday."}
+{"question_id": "1f2b8d4f", "hypothesis": "The difference in price between your luxury boots ($800) and the similar pair found at the budget store ($50) is $750."}
+{"question_id": "e6041065", "hypothesis": "You wore 40% of the shoes you packed on your last trip."}
+{"question_id": "51c32626", "hypothesis": "You submitted your research paper on sentiment analysis to ACL before May 22, 2023."}
+{"question_id": "d905b33f", "hypothesis": "You got a 20% discount on the book from your favorite author."}
+{"question_id": "7405e8b1", "hypothesis": "Yes, you received a higher percentage discount on your first order from HelloFresh (40%) compared to your first UberEats order (15%)."}
+{"question_id": "f35224e0", "hypothesis": "You've listened to around 15 episodes of \"How I Built This\" and 12 episodes of \"My Favorite Murder.\""}
+{"question_id": "6456829e", "hypothesis": "You initially planted 5 tomato plants and 3 cucumber plants."}
+{"question_id": "a4996e51", "hypothesis": "You typically work up to 50 hours a week during peak campaign seasons."}
+{"question_id": "3c1045c8", "hypothesis": "You are 2.5 years older than the average age of employees in your department, which is 29.5 years old."}
+{"question_id": "60036106", "hypothesis": "Your Facebook ad campaign reached around 2,000 people. The context does not provide the total number of people reached by your Instagram influencer collaboration."}
+{"question_id": "681a1674", "hypothesis": "You re-watched two Marvel movies: \"Avengers: Endgame\" and \"Spider-Man: No Way Home.\""}
+{"question_id": "e25c3b8d", "hypothesis": "You saved $300 on the designer handbag at TK Maxx, as it was originally $500 and you got it for $200."}
+{"question_id": "4adc0475", "hypothesis": "You have scored a total of 3 goals and made 2 assists in the recreational indoor soccer league."}
+{"question_id": "4bc144e2", "hypothesis": "You spent $15 on a car wash on February 3rd and $50 on a parking ticket on January 5th."}
+{"question_id": "ef66a6e5", "hypothesis": "Two sports: swimming and tennis."}
+{"question_id": "5025383b", "hypothesis": "Hiking and cooking."}
+{"question_id": "a1cc6108", "hypothesis": "I don't know."}
+{"question_id": "9ee3ecd6", "hypothesis": "You need a total of 300 points to redeem a free skincare product at Sephora."}
+{"question_id": "3fdac837", "hypothesis": "I don't know."}
+{"question_id": "91b15a6e", "hypothesis": "I don't know."}
+{"question_id": "27016adc", "hypothesis": "The cost of the renovations you plan to do on your current house is $20,000. The countryside property is listed at $200,000. The percentage of the countryside property's price that the renovation cost represents is 10%."}
+{"question_id": "720133ac", "hypothesis": "The total cost of Lola's vet visit and flea medication is $75 ($50 for the vet consultation fee and $25 for the flea and tick prevention medication)."}
+{"question_id": "77eafa52", "hypothesis": "I don't know."}
+{"question_id": "8979f9ec", "hypothesis": "You got a total of 8 lunch meals: 3 from the chicken fajitas and 5 from the lentil soup."}
+{"question_id": "0100672e", "hypothesis": "You spent $60 on coffee mugs for your coworkers."}
+{"question_id": "a96c20ee", "hypothesis": "I don't know."}
+{"question_id": "92a0aa75", "hypothesis": "You have been working as a Senior Marketing Specialist for 2 years and 4 months."}
+{"question_id": "3fe836c9", "hypothesis": "The pre-approval amount was $350,000, and the final sale price of the house was $325,000. The pre-approval amount was $25,000 more than the final sale price."}
+{"question_id": "1c549ce4", "hypothesis": "The total cost of the car cover and detailing spray you purchased is $140. The car cover cost $120, and the detailing spray cost $20."}
+{"question_id": "6c49646a", "hypothesis": "I don't know."}
+{"question_id": "1192316e", "hypothesis": "The total time it takes you to get ready and commute to work is 1 hour and 30 minutes. You spend about an hour getting ready, which includes a 20-minute meditation session, a 30-minute workout, and a quick breakfast, followed by a 30-minute commute to work."}
+{"question_id": "0ea62687", "hypothesis": "Your car was getting 30 miles per gallon in the city a few months ago, and it is currently getting around 28 miles per gallon."}
+{"question_id": "67e0d0f2", "hypothesis": "You have completed 12 courses on Coursera."}
+{"question_id": "bb7c3b45", "hypothesis": "You saved $300 on the Jimmy Choo heels, as you purchased them for $200 at the outlet mall, and they originally retailed for $500."}
+{"question_id": "ba358f49", "hypothesis": "I don't know."}
+{"question_id": "61f8c8f8", "hypothesis": "You finished the 5K run 10 minutes faster compared to your previous year's time. This year, you completed it in 35 minutes, whereas last year it took you 45 minutes."}
+{"question_id": "60159905", "hypothesis": "I don't know."}
+{"question_id": "ef9cf60a", "hypothesis": "You spent around $200 on a silver necklace with a small pendant from Tiffany's and $100 on a gift card to her favorite spa."}
+{"question_id": "73d42213", "hypothesis": "I don't know."}
+{"question_id": "bc149d6b", "hypothesis": "I don't know."}
+{"question_id": "099778bb", "hypothesis": "I don't know."}
+{"question_id": "09ba9854", "hypothesis": "Based on the provided context, taking the train from Narita Airport to Shinjuku Station costs around ¥1,000-1,200 (approximately $9-11 USD). In contrast, a taxi from Narita Airport to Tokyo can cost around ¥15,000 - ¥20,000 (approximately $140 - $180 USD) during the daytime. Therefore, you could save approximately $130 - $171 USD by choosing the train over a taxi."}
+{"question_id": "d6062bb9", "hypothesis": "Your most popular video on TikTok, featuring Luna chasing a laser pointer, has 1,456 views. Your most popular video on YouTube, a tutorial on social media analytics, has 542 views."}
+{"question_id": "157a136e", "hypothesis": "I don't know."}
+{"question_id": "c18a7dc8", "hypothesis": "You are 8 years older than when you graduated from college."}
+{"question_id": "a3332713", "hypothesis": "You spent a total of $200 on gifts for your coworker and brother: $100 for your coworker's baby shower gift and $100 for your brother's graduation gift."}
+{"question_id": "55241a1f", "hypothesis": "Your recent Facebook Live session about cooking vegan recipes received 12 comments, and your most popular YouTube video on social media analytics has 21 comments."}
+{"question_id": "a08a253f", "hypothesis": "You attend fitness classes three days a week: Zumba classes on Tuesdays and Thursdays, and a weightlifting class on Saturdays."}
+{"question_id": "f0e564bc", "hypothesis": "You spent a total of $1,300 on the designer handbag and high-end skincare products ($800 on the Coach handbag and $500 on skincare products)."}
+{"question_id": "078150f1", "hypothesis": "You raised $50 more than your initial goal in the charity cycling event."}
+{"question_id": "8cf4d046", "hypothesis": "The average GPA of your undergraduate and graduate studies is 3.83."}
+{"question_id": "a346bb18", "hypothesis": "You exceeded your target time by 12 minutes in the marathon."}
+{"question_id": "37f165cf", "hypothesis": "I don't know."}
+{"question_id": "8e91e7d9", "hypothesis": "You have a total of four siblings: three sisters and one brother."}
+{"question_id": "87f22b4a", "hypothesis": "You have made $120 from selling eggs this month, as you sold 40 dozen eggs at $3 per dozen."}
+{"question_id": "e56a43b9", "hypothesis": "You will get a $5 discount on your next purchase at FreshMart, as every 100 points translate to a $1 discount and you have reached 500 points."}
+{"question_id": "efc3f7c2", "hypothesis": "You wake up 30 minutes earlier on Fridays compared to other weekdays."}
+{"question_id": "21d02d0d", "hypothesis": "You missed one fun run in March due to work commitments."}
+{"question_id": "2311e44b_abs", "hypothesis": "I don't know."}
+{"question_id": "6456829e_abs", "hypothesis": "You initially planted 5 tomato plants. I don't know how many chili pepper plants you planted."}
+{"question_id": "e5ba910e_abs", "hypothesis": "I don't know."}
+{"question_id": "a96c20ee_abs", "hypothesis": "I don't know."}
+{"question_id": "ba358f49_abs", "hypothesis": "I don't know."}
+{"question_id": "09ba9854_abs", "hypothesis": "I don't know."}
+{"question_id": "gpt4_59149c77", "hypothesis": "Seven days passed between your visit to the Museum of Modern Art (MoMA) on January 8, 2023, and the 'Ancient Civilizations' exhibit at the Metropolitan Museum of Art on January 15, 2023."}
 {"question_id": "gpt4_f49edff3", "hypothesis": "First, you helped your friend prepare the nursery. Next, you helped your cousin pick out stuff for her baby shower. Lastly, you ordered a customized phone case for your friend's birthday."}
-{"question_id": "71017276", "hypothesis": "You received the crystal chandelier from your aunt on March 4, 2023. Since the question was asked on April 1, 2023, you met up with your aunt and received the chandelier 4 weeks ago."}
+{"question_id": "71017276", "hypothesis": "You received the crystal chandelier from your aunt on March 4, 2023. If the question was asked on April 1, 2023, it was approximately 4 weeks ago."}
 {"question_id": "b46e15ed", "hypothesis": "I don't know."}
 {"question_id": "gpt4_fa19884c", "hypothesis": "Six days passed between the day you started playing along to your favorite songs on your old keyboard (March 25, 2023) and the day you discovered a bluegrass band (March 31, 2023)."}
 {"question_id": "0bc8ad92", "hypothesis": "I don't know."}
-{"question_id": "af082822", "hypothesis": "You attended the friends and family sale at Nordstrom on November 17, 2022. Since today is December 01, 2022, it was two weeks ago."}
+{"question_id": "af082822", "hypothesis": "I don't know."}
 {"question_id": "gpt4_4929293a", "hypothesis": "Michael's engagement party happened first."}
 {"question_id": "gpt4_b5700ca9", "hypothesis": "You attended the Maundy Thursday service at the Episcopal Church on April 6, 2023. Today is April 10, 2023, so it was 4 days ago."}
-{"question_id": "9a707b81", "hypothesis": "You attended a baking class at a local culinary school on March 20, 2022, and you made your friend's birthday cake on April 10, 2022. Therefore, you attended the baking class 21 days before making the birthday cake."}
+{"question_id": "9a707b81", "hypothesis": "You attended a baking class at a local culinary school on March 20, 2022. You mentioned making your friend's birthday cake on April 10, 2022. Therefore, you attended the baking class 21 days before making the birthday cake."}
+{"question_id": "gpt4_1d4ab0c9", "hypothesis": "24 days passed between the day you started watering your herb garden (March 22, 2023) and the day you harvested your first batch of fresh herbs (April 15, 2023)."}
+{"question_id": "gpt4_e072b769", "hypothesis": "You started using the cashback app 'Ibotta' on April 16, 2023. If today is May 06, 2023, it has been approximately 3 weeks since you started using it."}
+{"question_id": "0db4c65d", "hypothesis": "18 days had passed since you finished reading \"The Seven Husbands of Evelyn Hugo\" on December 28, 2022, when you attended the book reading event on January 15, 2023."}
+{"question_id": "gpt4_1d80365e", "hypothesis": "I don't know."}
+{"question_id": "gpt4_7f6b06db", "hypothesis": "1. Day hike to Muir Woods National Monument with family.\n2. Solo camping trip to Yosemite.\n3. Road trip with friends to Big Sur and Monterey."}
+{"question_id": "gpt4_6dc9b45b", "hypothesis": "You attended the Seattle International Film Festival in May 2021. As of October 2021, that was 5 months ago."}
+{"question_id": "gpt4_8279ba02", "hypothesis": "You bought a smoker on March 15, 2023. Since the question was asked on March 25, 2023, you bought the smoker 10 days ago."}
+{"question_id": "gpt4_18c2b244", "hypothesis": "1. I used a Buy One Get One Free coupon on Luvs diapers at Walmart.\n2. I redeemed $12 cashback for a $10 Amazon gift card from Ibotta.\n3. I signed up for the rewards program at ShopRite."}
+{"question_id": "gpt4_a1b77f9c", "hypothesis": "I don't know."}
+{"question_id": "gpt4_1916e0ea", "hypothesis": "54 days passed between the day you cancelled your FarmFresh subscription on January 5, 2023, and the day you did your online grocery shopping from Instacart on February 28, 2023."}
+{"question_id": "gpt4_7a0daae1", "hypothesis": "One week passed between the day you bought your new tennis racket and the day you received it."}
+{"question_id": "gpt4_468eb063", "hypothesis": "You met Emma on April 11, 2023, and today is April 20, 2023, so you met her 9 days ago."}
+{"question_id": "gpt4_7abb270c", "hypothesis": "I don't know."}
+{"question_id": "gpt4_1e4a8aeb", "hypothesis": "Six days passed between the day you attended the gardening workshop (April 15, 2023) and the day you planted the tomato saplings (April 21, 2023)."}
+{"question_id": "gpt4_4fc4f797", "hypothesis": "I don't know."}
+{"question_id": "4dfccbf7", "hypothesis": "You started taking ukulele lessons on February 1, 2023, and decided to take your acoustic guitar to the guitar tech for servicing on February 25, 2023. Therefore, 24 days had passed."}
+{"question_id": "gpt4_61e13b3c", "hypothesis": "Three weeks passed between the time you sold homemade baked goods at the Farmers' Market on February 26, 2023, and the time you participated in the Spring Fling Market on March 21, 2023."}
+{"question_id": "gpt4_45189cb4", "hypothesis": "1. NBA game at the Staples Center (Lakers vs. Chicago Bulls).\n2. College Football National Championship game (Georgia vs. Alabama).\n3. NFL Divisional Round game (Kansas City Chiefs vs. Buffalo Bills)."}
+{"question_id": "2ebe6c90", "hypothesis": "You started \"The Nightingale\" by Kristin Hannah on January 10, 2023, and finished it on January 31, 2023. It took you 21 days to finish the book."}
+{"question_id": "gpt4_e061b84f", "hypothesis": "1. Spring Sprint Triathlon\n2. Midsummer 5K Run\n3. Company's annual charity soccer tournament"}
+{"question_id": "370a8ff4", "hypothesis": "I don't know."}
+{"question_id": "gpt4_d6585ce8", "hypothesis": "I don't know."}
+{"question_id": "gpt4_4ef30696", "hypothesis": "One day passed between the day you finished reading 'The Nightingale' on January 15, 2022, and the day you started reading 'The Hitchhiker's Guide to the Galaxy' on January 16, 2022."}
+{"question_id": "gpt4_ec93e27f", "hypothesis": "You most recently took a train ride to visit your family in the countryside on March 3rd."}
+{"question_id": "6e984301", "hypothesis": "You had been taking sculpting classes for about 6 weeks when you invested in your own set of sculpting tools."}
+{"question_id": "8077ef71", "hypothesis": "You attended a networking event on March 9, 2022. Since today is April 4, 2022, it was 26 days ago."}
+{"question_id": "gpt4_f420262c", "hypothesis": "Based on the provided context, the order of airlines you flew with from earliest to latest before today is:\n\n1. American Airlines (New York to Los Angeles on February 10th)\n2. United Airlines (Boston to Chicago, date not specified)\n3. American Airlines (LAX to JFK, delayed due to bad weather conditions, date not specified)"}
+{"question_id": "gpt4_8e165409", "hypothesis": "14 days passed between the day you repotted the previous spider plant (March 4, 2023) and the day you gave your neighbor, Mrs. Johnson, a few cuttings from your spider plant (March 18, 2023)."}
+{"question_id": "gpt4_74aed68e", "hypothesis": "29 days passed between the day you replaced your spark plugs on February 14, 2023, and the day you participated in the Turbocharged Tuesdays event on March 15, 2023."}
+{"question_id": "bcbe585f", "hypothesis": "You attended a bird watching workshop at the local Audubon society on April 1, 2023. If the question is asked on May 1, 2023, it was 4 weeks ago."}
+{"question_id": "gpt4_21adecb5", "hypothesis": "I don't know."}
+{"question_id": "5e1b23de", "hypothesis": "You attended the photography workshop in November 2023. Since the question is asked in February 2024, it was three months ago."}
+{"question_id": "gpt4_98f46fc6", "hypothesis": "I don't know."}
+{"question_id": "gpt4_af6db32f", "hypothesis": "I don't know."}
+{"question_id": "eac54adc", "hypothesis": "I don't know."}
+{"question_id": "gpt4_7ddcf75f", "hypothesis": "Three days ago."}
+{"question_id": "gpt4_a2d1d1f6", "hypothesis": "You harvested your first batch of fresh herbs from the herb garden kit on April 15, 2023. If today is April 18, 2023, it was 3 days ago."}
+{"question_id": "gpt4_85da3956", "hypothesis": "You attended the \"Summer Nights\" festival at Universal Studios Hollywood about three weeks before July 15, 2023."}
+{"question_id": "gpt4_b0863698", "hypothesis": "You participated in the 5K charity run on March 19, 2023. If today is March 26, 2023, it was 7 days ago."}
+{"question_id": "gpt4_68e94287", "hypothesis": "Your post about the vegan chili recipe happened first."}
+{"question_id": "gpt4_e414231e", "hypothesis": "Four days passed between the day you fixed your mountain bike (March 15, 2023) and the day you decided to upgrade your road bike's pedals (March 19, 2023)."}
+{"question_id": "gpt4_7ca326fa", "hypothesis": "Emma graduated first, followed by Rachel, and then Alex."}
+{"question_id": "gpt4_7bc6cf22", "hypothesis": "You read the March 15th issue of The New Yorker on March 20, 2023. Since today is April 1, 2023, you read it 12 days ago."}
+{"question_id": "2ebe6c92", "hypothesis": "You finished \"The Nightingale\" by Kristin Hannah a week ago."}
+{"question_id": "gpt4_e061b84g", "hypothesis": "The event you mentioned participating in two weeks ago was the company's annual charity soccer tournament."}
+{"question_id": "71017277", "hypothesis": "I don't know."}
+{"question_id": "b46e15ee", "hypothesis": "You participated in the \"Walk for Hunger\" charity event on March 19, 2023."}
+{"question_id": "gpt4_d6585ce9", "hypothesis": "I don't know."}
+{"question_id": "gpt4_1e4a8aec", "hypothesis": "I don't know."}
+{"question_id": "gpt4_f420262d", "hypothesis": "American Airlines."}
+{"question_id": "gpt4_59149c78", "hypothesis": "I don't know."}
+{"question_id": "gpt4_e414231f", "hypothesis": "I don't know."}
+{"question_id": "gpt4_4929293b", "hypothesis": "I don't know."}
+{"question_id": "gpt4_468eb064", "hypothesis": "You met with Emma, a freelance writer, during lunch last Tuesday."}
+{"question_id": "gpt4_fa19884d", "hypothesis": "I don't know."}
+{"question_id": "9a707b82", "hypothesis": "You mentioned baking a chocolate cake for your friend's birthday party."}
+{"question_id": "eac54add", "hypothesis": "I don't know."}
+{"question_id": "4dfccbf8", "hypothesis": "I don't know."}
+{"question_id": "0bc8ad93", "hypothesis": "I don't know."}
+{"question_id": "6e984302", "hypothesis": "I don't know."}
+{"question_id": "gpt4_8279ba03", "hypothesis": "I don't know."}
+{"question_id": "gpt4_b5700ca0", "hypothesis": "You attended the Maundy Thursday service at the Episcopal Church."}
+{"question_id": "gpt4_68e94288", "hypothesis": "You participated in a social media challenge called #PlankChallenge."}
+{"question_id": "gpt4_2655b836", "hypothesis": "The first issue you had with your new car after its first service was with the GPS system, which occurred on March 22, 2023."}
+{"question_id": "gpt4_2487a7cb", "hypothesis": "You attended the 'Data Analysis using Python' webinar first."}
+{"question_id": "gpt4_76048e76", "hypothesis": "You took care of your bike first in February. You mentioned having your bike repaired in mid-February, while you washed your car on February 27th."}
+{"question_id": "gpt4_2312f94c", "hypothesis": "You got the Dell XPS 13 first. You pre-ordered it on January 28th, and it arrived on February 25th. You got the Samsung Galaxy S22 on February 20th."}
+{"question_id": "0bb5a684", "hypothesis": "You attended the workshop on \"Effective Communication in the Workplace\" on January 10th, and your team meeting was on January 17th. Therefore, you attended the workshop 7 days before the team meeting."}
+{"question_id": "08f4fc43", "hypothesis": "I don't know."}
+{"question_id": "2c63a862", "hypothesis": "It took 14 days for you to find a house you loved after starting to work with Rachel on February 15th, as you saw the house on March 1st."}
+{"question_id": "gpt4_385a5000", "hypothesis": "The tomatoes were started first, as the user mentioned starting seeds indoors on February 20th, while the marigold seeds were started after they arrived on March 3rd."}
+{"question_id": "2a1811e2", "hypothesis": "21 days had passed between the Hindu festival of Holi on February 26th and the Sunday mass at St. Mary's Church on March 19th."}
+{"question_id": "bbf86515", "hypothesis": "Four days before the 'Rack Fest' on June 18th, you participated in the 'Turbocharged Tuesdays' event on June 14th."}
+{"question_id": "gpt4_5dcc0aab", "hypothesis": "You cleaned your white Adidas sneakers last month."}
+{"question_id": "gpt4_0b2f1d21", "hypothesis": "The malfunction of the stand mixer happened first."}
+{"question_id": "f0853d11", "hypothesis": "14 days had passed between the 'Walk for Hunger' event on February 21st and the 'Coastal Cleanup' event on March 7th."}
+{"question_id": "gpt4_6ed717ea", "hypothesis": "You purchased the training pads for Luna first."}
+{"question_id": "gpt4_70e84552", "hypothesis": "You completed trimming the goats' hooves first."}
+{"question_id": "a3838d2b", "hypothesis": "I don't know."}
+{"question_id": "gpt4_93159ced", "hypothesis": "I don't know."}
+{"question_id": "gpt4_2d58bcd6", "hypothesis": "You finished reading \"The Nightingale\" first."}
+{"question_id": "gpt4_65aabe59", "hypothesis": "You set up the mesh network system first."}
+{"question_id": "982b5123", "hypothesis": "Three months ago."}
+{"question_id": "b9cfe692", "hypothesis": "You took a total of five and a half weeks to finish both \"The Seven Husbands of Evelyn Hugo\" (two and a half weeks) and \"The Nightingale\" (three weeks) combined."}
+{"question_id": "gpt4_4edbafa2", "hypothesis": "You attended the first BBQ event in June on the 3rd."}
+{"question_id": "c8090214", "hypothesis": "I don't know."}
+{"question_id": "gpt4_483dd43c", "hypothesis": "You started watching \"Game of Thrones\" first."}
+{"question_id": "e4e14d04", "hypothesis": "I don't know."}
+{"question_id": "c9f37c46", "hypothesis": "About two months."}
+{"question_id": "gpt4_2c50253f", "hypothesis": "You wake up 15 minutes earlier than usual on Tuesdays and Thursdays."}
+{"question_id": "dcfa8644", "hypothesis": "14 days had passed."}
+{"question_id": "gpt4_b4a80587", "hypothesis": "The road trip to the coast happened first."}
+{"question_id": "gpt4_9a159967", "hypothesis": "United Airlines"}
+{"question_id": "cc6d1ec1", "hypothesis": "You had been bird watching for about three months when you attended the bird watching workshop."}
+{"question_id": "gpt4_8c8961ae", "hypothesis": "You took the solo trip to Thailand first."}
+{"question_id": "gpt4_d9af6064", "hypothesis": "You set up the new router first on January 15th, and then the smart thermostat on February 10th."}
+{"question_id": "gpt4_7de946e7", "hypothesis": "You dealt with the persistent cough first. You visited your primary care physician, Dr. Smith, on February 10th due to the cough, and the skin tag removal procedure was on February 22nd."}
+{"question_id": "d01c6aa8", "hypothesis": "I don't know."}
+{"question_id": "993da5e2", "hypothesis": "You had been using the new area rug for about one week when you rearranged your living room furniture."}
+{"question_id": "a3045048", "hypothesis": "You ordered your best friend's gift 7 days before her birthday party."}
+{"question_id": "gpt4_d31cdae3", "hypothesis": "The family road trip across the American Southwest was taken first."}
+{"question_id": "gpt4_cd90e484", "hypothesis": "You used your new binoculars for about two weeks before you saw the American goldfinches returning to the area."}
+{"question_id": "gpt4_88806d6e", "hypothesis": "You met Tom first. You mentioned volunteering at a charity event a few months ago where you met Tom. You met Mark and Sarah about a month ago on a beach trip."}
+{"question_id": "gpt4_4cd9eba1", "hypothesis": "You were accepted into the exchange program on March 20th and started attending pre-departure orientation sessions on March 27th. Therefore, you had been accepted for 1 week when you started attending the sessions."}
+{"question_id": "gpt4_93f6379c", "hypothesis": "You joined the \"Page Turners\" group first."}
+{"question_id": "b29f3365", "hypothesis": "You had been taking guitar lessons for six weeks when you bought the new guitar amp."}
+{"question_id": "gpt4_2f56ae70", "hypothesis": "Apple TV+"}
+{"question_id": "6613b389", "hypothesis": "Rachel got engaged on May 15th, and your anniversary is on July 22nd. Therefore, Rachel got engaged approximately two months before your anniversary."}
+{"question_id": "gpt4_78cf46a3", "hypothesis": "The narrator received their new phone case first."}
+{"question_id": "gpt4_0a05b494", "hypothesis": "You met the tourist from Australia first."}
+{"question_id": "gpt4_1a1dc16d", "hypothesis": "The meeting with Rachel happened first, on April 10th, before the pride parade on May 1st."}
+{"question_id": "gpt4_2f584639", "hypothesis": "You bought the photo album for your mom first."}
+{"question_id": "gpt4_213fd887", "hypothesis": "The charity 5K run to raise money for a local children's hospital."}
+{"question_id": "gpt4_5438fa52", "hypothesis": "The start of your Spanish classes happened first."}
+{"question_id": "gpt4_c27434e8", "hypothesis": "You started the Japanese Zero fighter plane model first, about a month before May 29, 2023. You began the Ferrari 288 GTO model about three weeks before May 29, 2023."}
+{"question_id": "gpt4_fe651585", "hypothesis": "Alex became a parent first, adopting a baby girl from China in January. Rachel's twins, Jackson and Julia, were born on February 12th."}
+{"question_id": "8c18457d", "hypothesis": "I don't know."}
+{"question_id": "gpt4_70e84552_abs", "hypothesis": "I don't know."}
+{"question_id": "gpt4_93159ced_abs", "hypothesis": "I don't know."}
+{"question_id": "982b5123_abs", "hypothesis": "I don't know."}
+{"question_id": "c8090214_abs", "hypothesis": "I don't know."}
+{"question_id": "gpt4_c27434e8_abs", "hypothesis": "I don't know."}
+{"question_id": "gpt4_fe651585_abs", "hypothesis": "I don't know."}
+{"question_id": "6a1eabeb", "hypothesis": "Your personal best time in the charity 5K run was 25:50."}
+{"question_id": "6aeb4375", "hypothesis": "You have tried four different Korean restaurants in your city."}
+{"question_id": "830ce83f", "hypothesis": "Rachel moved back to the suburbs after her recent relocation."}
+{"question_id": "852ce960", "hypothesis": "You were pre-approved for $350,000 from Wells Fargo."}
+{"question_id": "945e3d21", "hypothesis": "You attend yoga classes three times a week to help with your anxiety."}
+{"question_id": "d7c942c3", "hypothesis": "Yes, your mom is using the same grocery list app as you."}
+{"question_id": "71315a70", "hypothesis": "You have spent 10-12 hours on your abstract ocean sculpture."}
+{"question_id": "89941a93", "hypothesis": "You currently own four bikes."}
+{"question_id": "ce6d2d27", "hypothesis": "You take a cocktail-making class on Fridays."}
+{"question_id": "9ea5eabc", "hypothesis": "Your most recent family trip was to Paris."}
+{"question_id": "07741c44", "hypothesis": "Under your bed for storage."}
+{"question_id": "a1eacc2a", "hypothesis": "You have written 7 short stories since you started writing regularly."}
+{"question_id": "184da446", "hypothesis": "You have read 220 pages of \"A Short History of Nearly Everything\" so far."}
+{"question_id": "031748ae", "hypothesis": "When you just started your new role as Senior Software Engineer, you led a team of 4 engineers. Now, you lead a team of 5 engineers."}
+{"question_id": "4d6b87c8", "hypothesis": "Your to-watch list currently has 25 titles."}
+{"question_id": "0f05491a", "hypothesis": "I don't know."}
+{"question_id": "08e075c7", "hypothesis": "You have been using your Fitbit Charge 3 for 9 months as of September 2, 2023."}
+{"question_id": "f9e8c073", "hypothesis": "You attended five sessions of the bereavement support group."}
+{"question_id": "41698283", "hypothesis": "You most recently purchased a Canon EF 70-200mm f/2.8L IS III USM lens."}
+{"question_id": "2698e78f", "hypothesis": "You see your therapist, Dr. Smith, every week."}
+{"question_id": "b6019101", "hypothesis": "You watched 5 MCU films in the last 3 months."}
+{"question_id": "45dc21b6", "hypothesis": "You have tried out three of Emma's recipes."}
+{"question_id": "5a4f22c0", "hypothesis": "Rachel is currently working at TechCorp."}
+{"question_id": "6071bd76", "hypothesis": "You switched to less water per tablespoon of coffee. Initially, you used 1 tablespoon of coffee for every 6 ounces of water, and later you mentioned using 1 tablespoon for every 5 ounces of water."}
+{"question_id": "e493bb7c", "hypothesis": "The painting \"Ethereal Dreams\" by Emma Taylor is currently hanging above the user's bed in their bedroom."}
+{"question_id": "618f13b2", "hypothesis": "You have worn your new black Converse Chuck Taylor All Star sneakers six times."}
+{"question_id": "72e3ee87", "hypothesis": "You have completed 50 episodes of the Science series on Crash Course."}
+{"question_id": "c4ea545c", "hypothesis": "Yes, you mentioned that you have been consistent with your gym routine, going four times a week."}
+{"question_id": "01493427", "hypothesis": "You have added 25 new postcards to your collection since you started collecting again."}
+{"question_id": "6a27ffc2", "hypothesis": "You have completed 30 videos of Corey Schafer's Python programming series."}
+{"question_id": "2133c1b5", "hypothesis": "You have been living in your current apartment in Harajuku for 3 months."}
+{"question_id": "18bc8abd", "hypothesis": "You are currently obsessed with Kansas City Masterpiece BBQ sauce."}
+{"question_id": "db467c8c", "hypothesis": "Your parents have been staying with you in the US for nine months."}
+{"question_id": "7a87bd0c", "hypothesis": "You have been sticking to your daily tidying routine for 4 weeks."}
+{"question_id": "e61a7584", "hypothesis": "You have had your cat, Luna, for about 9 months."}
+{"question_id": "1cea1afa", "hypothesis": "I don't know."}
+{"question_id": "ed4ddc30", "hypothesis": "You currently have 20 dozen eggs stocked up in your refrigerator."}
+{"question_id": "8fb83627", "hypothesis": "You have finished reading five issues of National Geographic."}
+{"question_id": "b01defab", "hypothesis": "Yes, you finished reading \"The Nightingale\" by Kristin Hannah."}
+{"question_id": "22d2cb42", "hypothesis": "You got your guitar serviced at a music shop on Main St called \"Rhythm Central.\""}
+{"question_id": "0e4e4c46", "hypothesis": "Your current highest score in Ticket to Ride is 132 points."}
+{"question_id": "4b24c848", "hypothesis": "You have bought five tops from H&M so far."}
+{"question_id": "7e974930", "hypothesis": "You earned $420 at the Downtown Farmers Market on your most recent visit."}
+{"question_id": "603deb26", "hypothesis": "You have tried making a Negroni at home 10 times since your friend Emma showed you how to make it."}
+{"question_id": "59524333", "hypothesis": "You usually go to the gym at 7:00 pm on Mondays, Wednesdays, and Fridays."}
+{"question_id": "5831f84d", "hypothesis": "You have watched 15 Crash Course videos in the past few weeks."}
+{"question_id": "eace081b", "hypothesis": "You are planning to stay on Oahu for your birthday trip to Hawaii."}
+{"question_id": "affe2881", "hypothesis": "You have seen 32 different species of birds in your local park."}
+{"question_id": "50635ada", "hypothesis": "Your previous frequent flyer status on United Airlines was Premier Silver before you reached your current status of Premier Gold."}
+{"question_id": "e66b632c", "hypothesis": "Your previous personal best time for the charity 5K run was 26 minutes and 30 seconds."}
+{"question_id": "0ddfec37", "hypothesis": "You added 15 autographed baseballs to your collection in the first three months."}
+{"question_id": "f685340e", "hypothesis": "Previously, you played tennis with your friends at the local park weekly. As of July 30, 2023, you play every other week."}
+{"question_id": "cc5ded98", "hypothesis": "You dedicate about two hours each day to coding exercises."}
+{"question_id": "dfde3500", "hypothesis": "You met with your previous language exchange tutor Juan on Wednesday evenings."}
+{"question_id": "69fee5aa", "hypothesis": "You have a total of 37 pre-1920 American coins in your collection."}
+{"question_id": "7401057b", "hypothesis": "I don't know."}
+{"question_id": "cf22b7bf", "hypothesis": "You have lost 10 pounds since you started going to the gym consistently."}
+{"question_id": "a2f3aa27", "hypothesis": "I don't know."}
+{"question_id": "c7dc5443", "hypothesis": "Your current record in the recreational volleyball league is 5-2."}
+{"question_id": "06db6396", "hypothesis": "You have completed 5 projects since starting painting classes."}
+{"question_id": "3ba21379", "hypothesis": "You are currently working on a Ford F-150 pickup truck model."}
+{"question_id": "9bbe84a2", "hypothesis": "Your previous goal for your Apex Legends level was to reach level 100 before the end of the year."}
+{"question_id": "10e09553", "hypothesis": "You caught 7 largemouth bass with Alex on your trip to Lake Michigan on 7/10."}
+{"question_id": "dad224aa", "hypothesis": "You wake up around 8:30 am on Saturday mornings."}
+{"question_id": "ba61f0b9", "hypothesis": "There are 6 women on the team led by your former manager Rachel."}
+{"question_id": "42ec0761", "hypothesis": "Yes, you have a spare screwdriver that you picked up when you organized your computer desk."}
+{"question_id": "5c40ec5b", "hypothesis": "You have met up with Alex from Germany twice."}
+{"question_id": "c6853660", "hypothesis": "You most recently increased the limit to two cups of coffee in the morning."}
+{"question_id": "26bdc477", "hypothesis": "You have taken your Canon EOS 80D camera on five trips."}
+{"question_id": "0977f2af", "hypothesis": "You invested in an Instant Pot before getting the Air Fryer."}
+{"question_id": "6aeb4375_abs", "hypothesis": "I don't know."}
+{"question_id": "031748ae_abs", "hypothesis": "I don't know."}
+{"question_id": "2698e78f_abs", "hypothesis": "I don't know."}
+{"question_id": "2133c1b5_abs", "hypothesis": "I don't know."}
+{"question_id": "0ddfec37_abs", "hypothesis": "I don't know."}
+{"question_id": "f685340e_abs", "hypothesis": "I don't know."}
+{"question_id": "89941a94", "hypothesis": "Yes, before purchasing the gravel bike, you also had a road bike and a hybrid bike in addition to your mountain bike and commuter bike."}
+{"question_id": "07741c45", "hypothesis": "You currently keep your old sneakers under your bed for storage."}
+{"question_id": "7161e7e2", "hypothesis": "On Sunday, Admon was scheduled for the 8 am - 4 pm (Day Shift)."}
+{"question_id": "c4f10528", "hypothesis": "Miss Bee Providore."}
+{"question_id": "89527b6b", "hypothesis": "The scaly body of the Plesiosaur in the image was blue."}
+{"question_id": "e9327a54", "hypothesis": "The unique dessert shop with the giant milkshakes you talked about last time is The Sugar Factory, located at Icon Park."}
+{"question_id": "4c36ccef", "hypothesis": "Roscioli"}
+{"question_id": "6ae235be", "hypothesis": "The refining processes used at the Lake Charles Refinery include atmospheric distillation, fluid catalytic cracking (FCC), alkylation, and hydrotreating."}
+{"question_id": "7e00a6cb", "hypothesis": "The hostel near the Red Light District that was recommended is the International Budget Hostel."}
+{"question_id": "1903aded", "hypothesis": "The 7th job in the list of work from home jobs for seniors is \"Transcriptionist.\""}
+{"question_id": "ceb54acb", "hypothesis": "The other four options I suggested were:\n\n1. Sexual fixations\n2. Problematic sexual behaviors\n3. Sexual impulsivity\n4. Compulsive sexuality"}
+{"question_id": "f523d9fe", "hypothesis": "Yes, you used \"Doc Martin\" as an example of a show where only the last season was available."}
+{"question_id": "0e5e2d1a", "hypothesis": "The study published in the journal Music and Medicine involved 38 subjects who listened to binaural beats for 30 minutes daily for three weeks."}
+{"question_id": "fea54f57", "hypothesis": "The song \"Evolution\" was mentioned as best exemplifying the band's growth and development as artists on the Fifth Album."}
+{"question_id": "cc539528", "hypothesis": "Ruby, Python, or PHP."}
+{"question_id": "dc439ea3", "hypothesis": "The traditional game often performed by skilled dancers at powwows is the Hoop Dance."}
+{"question_id": "18dcd5a5", "hypothesis": "The party will face 4 mummies in the temple."}
+{"question_id": "488d3006", "hypothesis": "The hiking trail I recommended is the GR-90."}
+{"question_id": "58470ed2", "hypothesis": "Borges described the Library as \"a sphere whose exact center is any one of its hexagons and whose circumference is inaccessible.\""}
+{"question_id": "8cf51dda", "hypothesis": "The three objectives outlined for the project were:\n\n1. To identify molecular subtypes of endometrial cancer using a combination of genomic and transcriptomic approaches.\n2. To investigate the clinical and biological significance of the identified molecular subtypes, including their association with patient outcomes and response to therapy.\n3. To develop biomarkers for the early detection and prognosis of endometrial cancer based on the identified molecular subtypes."}
+{"question_id": "1d4da289", "hypothesis": "The two-factor authentication methods mentioned include biometric authentication and one-time passwords (OTP)."}
+{"question_id": "8464fc84", "hypothesis": "Roscioli."}
+{"question_id": "8aef76bc", "hypothesis": "I recommended using Mod Podge or another sealant to make the newspaper flower vase water-resistant."}
+{"question_id": "71a3fd6b", "hypothesis": "The phone number of the Speyer tourism board is +49 (0) 62 32 / 14 23 - 0."}
+{"question_id": "2bf43736", "hypothesis": "Chapter 4 of Book 1 in the second part of Adolphe Tanqueray's Spiritual Life treatise discusses vocal prayer and meditation."}
+{"question_id": "70b3e69b", "hypothesis": "The Spanish-Catalan singer-songwriter who supports unity between Catalonia and Spain is Manolo García."}
+{"question_id": "8752c811", "hypothesis": "Sound effects (e.g., ambient, diegetic, non-diegetic, etc.)"}
+{"question_id": "3249768e", "hypothesis": "The fifth bottle recommended for making a wide variety of gin-based cocktails was Absinthe."}
+{"question_id": "1b9b7252", "hypothesis": "The website that includes free guided imagery exercises like \"The Mountain Meditation\" and \"The Body Scan Meditation\" is Mindful.org."}
+{"question_id": "1568498a", "hypothesis": "28. Kg3"}
+{"question_id": "6222b6eb", "hypothesis": "The 6S algorithm is implemented in the SIAC_GEE tool."}
+{"question_id": "e8a79c70", "hypothesis": "You need 2-3 eggs for the classic French omelette recipe."}
+{"question_id": "d596882b", "hypothesis": "By Chloe is the vegan eatery with multiple locations throughout New York City that I recommended."}
+{"question_id": "e3fc4d6e", "hypothesis": "Dr. Arati Prabhakar is the President's Chief Advisor for Science and Technology mentioned in the article."}
+{"question_id": "51b23612", "hypothesis": "The Soviet cartoon mentioned that mocked Western culture is “Nu, pogodi!”"}
+{"question_id": "3e321797", "hypothesis": "You should apply the tomato juice mixed with lemon juice on your under-eye area and wash it off after 10 minutes with cold water."}
+{"question_id": "e982271f", "hypothesis": "Revolution Hall"}
+{"question_id": "352ab8bd", "hypothesis": "The average improvement in framerate when using the Hardware-Aware Modular Training (HAMT) agent was approximately 20%."}
+{"question_id": "fca762bc", "hypothesis": "The language learning app that uses mnemonics to help learners memorize words and phrases is Memrise."}
+{"question_id": "7a8d0b71", "hypothesis": "The budget allocated for influencer marketing in the DHL Wellness Retreats campaign plan was $2,000."}
+{"question_id": "a40e080f", "hypothesis": "The two companies mentioned that prioritize employee safety and well-being like Triumvirate are Patagonia and Southwest Airlines."}
+{"question_id": "8b9d4367", "hypothesis": "Jaipur Rugs is the company that employs over 40,000 people in the rug-manufacturing industry."}
+{"question_id": "5809eb10", "hypothesis": "The construction of the house began in 2014."}
+{"question_id": "41275add", "hypothesis": "The Mayo Clinic video recommended is \"How to Sit Properly at a Desk to Avoid Back Pain.\""}
+{"question_id": "4388e9dd", "hypothesis": "Andy was wearing an untidy, stained white shirt."}
+{"question_id": "4baee567", "hypothesis": "The Kansas City Chiefs and the Jacksonville Jaguars have played 12 games at Arrowhead Stadium in Kansas City, Missouri."}
+{"question_id": "561fabcd", "hypothesis": "I don't know."}
+{"question_id": "b759caee", "hypothesis": "The Instagram handle of the UK-based designer who works with unusual gemstones is @jessica_poole_jewellery."}
+{"question_id": "ac031881", "hypothesis": "The designation on your jumpsuit was \"LIV.\""}
+{"question_id": "28bcfaac", "hypothesis": "The website I recommended for free lessons and exercises on music theory is MusicTheory.net."}
+{"question_id": "16c90bf4", "hypothesis": "I recommended using a pilsner or lager for the Seco de Cordero recipe."}
+{"question_id": "c8f1aeed", "hypothesis": "Pennsylvania is the state mentioned as an example that requires fracking companies to monitor groundwater quality at nearby wells before drilling and for a certain period after drilling is complete."}
+{"question_id": "eaca4986", "hypothesis": "The chord progression for the chorus in the second song is: C D E F G A B A G F E D C."}
+{"question_id": "c7cf7dfd", "hypothesis": "Nostalgia"}
+{"question_id": "e48988bc", "hypothesis": "The company mentioned is Patagonia."}
+{"question_id": "1de5cff2", "hypothesis": "The brand that uses wild rubber sourced from the Amazon rainforest is Veja."}
+{"question_id": "65240037", "hypothesis": "The recommended ratio is to dilute tea tree oil with a carrier oil in a 1:10 ratio."}
+{"question_id": "778164c6", "hypothesis": "Grilled Snapper with Mango Salsa."}

@@ -1,0 +1,17 @@
+{
+  "overall": {
+    "accuracy": 40.0,
+    "total": 5,
+    "total_score": 2.0
+  },
+  "by_category": {
+    "temporal-reasoning": {
+      "accuracy": 40.0,
+      "count": 5,
+      "score": 2.0
+    }
+  },
+  "baseline": "pie_temporal_cached",
+  "timestamp": "2026-02-05T05:09:13.465693+00:00",
+  "num_results": 5
+}

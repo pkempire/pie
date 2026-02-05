@@ -86,23 +86,6 @@
             box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.3);
         }
         
-        /* Animated gradient border */
-        .gradient-border {
-            position: relative;
-        }
-        .gradient-border::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 1px;
-            background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-        }
-        
         /* Stage colors */
         .stage-lead { --stage-color: #64748b; }
         .stage-discovery { --stage-color: #3b82f6; }
@@ -121,11 +104,6 @@
         }
         .animate-pulse-glow {
             animation: pulse-glow 2s ease-in-out infinite;
-        }
-        
-        /* Funnel visualization */
-        .funnel-stage {
-            clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
         }
     </style>
     
@@ -190,7 +168,7 @@
                 
                 <!-- Right side -->
                 <div class="flex items-center space-x-4">
-                    <button onclick="refreshData()" class="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-dark-700 transition-colors">
+                    <button onclick="refreshData()" class="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-dark-700 transition-colors" title="Refresh data">
                         <i data-lucide="refresh-cw" class="w-5 h-5"></i>
                     </button>
                 </div>

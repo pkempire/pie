@@ -247,6 +247,21 @@ def load_dataset(
     return data
 
 
+# LoCoMo question type mapping (numeric -> string)
+QUESTION_TYPE_MAP = {
+    1: "single_hop",
+    2: "multi_hop",
+    3: "temporal",
+    4: "adversarial",
+    5: "commonsense",
+    "single_hop": "single_hop",
+    "multi_hop": "multi_hop",
+    "temporal": "temporal",
+    "adversarial": "adversarial",
+    "commonsense": "commonsense",
+}
+
+
 def flatten_qa(dataset: list[dict]) -> list[dict]:
     """
     Flatten the dataset to individual QA items.
@@ -267,10 +282,14 @@ def flatten_qa(dataset: list[dict]) -> list[dict]:
         conversation = sample.get("conversation", {})
 
         for i, qa in enumerate(qa_list):
+            # Map numeric question types to string names
+            raw_type = qa.get("category", "unknown")
+            question_type = QUESTION_TYPE_MAP.get(raw_type, str(raw_type))
+
             items.append({
                 "question_id": f"{sample_id}_q{i}",
                 "question": qa.get("question", ""),
-                "question_type": qa.get("category", "unknown"),
+                "question_type": question_type,
                 "answer": qa.get("answer", ""),
                 "evidence": qa.get("evidence", []),
                 "sample_id": sample_id,

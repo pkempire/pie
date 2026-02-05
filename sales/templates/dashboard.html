@@ -10,9 +10,6 @@
             <h1 class="text-3xl font-bold">Dashboard</h1>
             <p class="text-gray-400 mt-1">Pipeline overview and key metrics</p>
         </div>
-        <div class="text-sm text-gray-500 font-mono">
-            Last updated: {{ "now"|format_date }}
-        </div>
     </div>
     
     <!-- Key Metrics -->
@@ -26,7 +23,7 @@
                 <span class="text-xs font-medium px-2 py-1 rounded-full bg-indigo-500/20 text-indigo-300">All Time</span>
             </div>
             <div class="mt-4">
-                <div class="text-4xl font-bold">{{ summary.total_deals or 0 }}</div>
+                <div class="text-4xl font-bold">{{ summary.total_deals|default(0) }}</div>
                 <div class="text-gray-400 text-sm mt-1">Total Deals</div>
             </div>
         </div>
@@ -40,7 +37,7 @@
                 <span class="text-xs font-medium px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-300">Active</span>
             </div>
             <div class="mt-4">
-                <div class="text-4xl font-bold text-emerald-400">{{ summary.active_deals or 0 }}</div>
+                <div class="text-4xl font-bold text-emerald-400">{{ summary.active_deals|default(0) }}</div>
                 <div class="text-gray-400 text-sm mt-1">Active Deals</div>
             </div>
         </div>
@@ -54,7 +51,7 @@
                 <span class="text-xs font-medium px-2 py-1 rounded-full bg-amber-500/20 text-amber-300">Attention</span>
             </div>
             <div class="mt-4">
-                <div class="text-4xl font-bold text-amber-400">{{ summary.stalled_deals or 0 }}</div>
+                <div class="text-4xl font-bold text-amber-400">{{ summary.stalled_deals|default(0) }}</div>
                 <div class="text-gray-400 text-sm mt-1">Stalled Deals</div>
             </div>
         </div>
@@ -68,7 +65,7 @@
                 <span class="text-xs font-medium px-2 py-1 rounded-full bg-purple-500/20 text-purple-300">Health</span>
             </div>
             <div class="mt-4">
-                <div class="text-4xl font-bold">{{ summary.stall_rate or 0 }}%</div>
+                <div class="text-4xl font-bold">{{ summary.stall_rate|default(0) }}%</div>
                 <div class="text-gray-400 text-sm mt-1">Stall Rate</div>
             </div>
         </div>
@@ -97,7 +94,7 @@
                             <div class="flex-1 relative">
                                 <div class="h-10 rounded-lg bg-dark-600 overflow-hidden">
                                     <div class="h-full rounded-lg transition-all duration-500 stage-{{ stage.stage }}"
-                                         style="width: {{ stage.width_percent }}%; 
+                                         style="width: {{ stage.width_percent|default(stage.conversion_from_lead) }}%; 
                                                 background: linear-gradient(90deg, var(--stage-color) 0%, color-mix(in srgb, var(--stage-color) 70%, transparent) 100%);">
                                     </div>
                                 </div>
@@ -170,7 +167,7 @@
                         </div>
                         <div class="mt-1 h-1.5 bg-dark-600 rounded-full overflow-hidden">
                             <div class="h-full rounded-full stage-{{ stage_key }}" 
-                                 style="width: {{ (count / summary.total_deals * 100) if summary.total_deals else 0 }}%; background: var(--stage-color);"></div>
+                                 style="width: {{ (count / summary.total_deals * 100)|round|int if summary.total_deals else 0 }}%; background: var(--stage-color);"></div>
                         </div>
                     </div>
                 </div>
