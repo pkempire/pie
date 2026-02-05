@@ -1,47 +1,45 @@
 {% extends "base.html" %}
 
 {% block title %}Upload — Sales Intelligence{% endblock %}
-{% block page_title %}Upload Data{% endblock %}
-{% block page_subtitle %}Import sales call transcripts and pipeline data{% endblock %}
 
 {% block content %}
-<div class="space-y-8 animate-fade-in">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Upload Zone (2 cols) -->
+<div class="space-y-12">
+    <!-- Header -->
+    <div class="text-center">
+        <h1 class="text-3xl font-serif font-semibold tracking-tight">Upload Data</h1>
+        <p class="text-ink-500 mt-2">Import sales call transcripts and pipeline data</p>
+    </div>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <!-- Upload Zone -->
         <div class="lg:col-span-2">
             <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data" id="upload-form">
-                <div class="glass-card rounded-2xl p-8">
+                <div class="bg-white rounded-xl p-8 shadow-soft">
                     <!-- Drag and Drop Zone -->
                     <div id="drop-zone" 
-                         class="relative border-2 border-dashed border-slate-700 rounded-2xl p-12 text-center transition-smooth hover:border-emerald-500/50 hover:bg-emerald-500/5 cursor-pointer">
+                         class="relative border-2 border-dashed border-cream-300 rounded-xl p-12 text-center transition-subtle hover:border-ink-400 hover:bg-cream-50 cursor-pointer">
                         <input type="file" name="file" id="file-input" 
                                accept=".txt,.json,.csv" 
                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
                         
-                        <div id="upload-icon" class="mx-auto w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500/10 to-violet-500/10 flex items-center justify-center mb-6">
-                            <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                            </svg>
+                        <div id="upload-icon" class="mx-auto w-14 h-14 rounded-full bg-cream-100 flex items-center justify-center mb-5">
+                            <i data-lucide="upload" class="w-6 h-6 text-ink-400"></i>
                         </div>
                         
                         <div id="upload-text">
-                            <p class="text-lg font-medium text-slate-200 mb-2">Drag and drop your files here</p>
-                            <p class="text-sm text-slate-500 mb-4">or click to browse</p>
+                            <p class="text-base font-medium text-ink-700 mb-1">Drag and drop your files here</p>
+                            <p class="text-sm text-ink-400">or click to browse</p>
                         </div>
                         
                         <div id="file-preview" class="hidden">
-                            <div class="flex items-center justify-center space-x-3 p-4 bg-slate-800/50 rounded-xl border border-slate-700/50">
-                                <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                                </svg>
+                            <div class="flex items-center justify-center space-x-3 p-4 bg-cream-50 rounded-lg">
+                                <i data-lucide="file-text" class="w-6 h-6 text-ink-500"></i>
                                 <div class="text-left">
-                                    <p id="file-name" class="text-sm font-medium text-slate-200"></p>
-                                    <p id="file-size" class="text-xs text-slate-500"></p>
+                                    <p id="file-name" class="text-sm font-medium text-ink-700"></p>
+                                    <p id="file-size" class="text-xs text-ink-400"></p>
                                 </div>
-                                <button type="button" id="clear-file" class="p-1 text-slate-400 hover:text-red-400 transition-smooth">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                    </svg>
+                                <button type="button" id="clear-file" class="p-1 text-ink-400 hover:text-red-500 transition-subtle">
+                                    <i data-lucide="x" class="w-4 h-4"></i>
                                 </button>
                             </div>
                         </div>
@@ -49,10 +47,8 @@
                     
                     <!-- Upload Button -->
                     <button type="submit" id="upload-btn" disabled
-                            class="mt-6 w-full flex items-center justify-center px-6 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-semibold rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:from-emerald-600 hover:to-emerald-700 transition-smooth shadow-lg shadow-emerald-500/20">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
-                        </svg>
+                            class="mt-6 w-full flex items-center justify-center px-6 py-3.5 bg-ink-900 text-white font-medium rounded-lg disabled:opacity-40 disabled:cursor-not-allowed hover:bg-ink-800 transition-subtle">
+                        <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
                         Upload File
                     </button>
                 </div>
@@ -61,62 +57,56 @@
         
         <!-- Supported Formats -->
         <div class="space-y-6">
-            <div class="glass-card rounded-2xl p-6">
-                <h3 class="text-lg font-semibold text-slate-100 mb-4">Supported Formats</h3>
+            <div class="bg-white rounded-xl p-6 shadow-soft">
+                <h3 class="text-base font-serif font-semibold mb-5">Supported Formats</h3>
                 
-                <div class="space-y-4">
-                    <div class="flex items-start space-x-3 p-4 bg-slate-800/50 rounded-xl">
-                        <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
-                            <span class="text-xs font-bold text-blue-400">.json</span>
+                <div class="space-y-3">
+                    <div class="flex items-start space-x-3 p-3 bg-cream-50 rounded-lg">
+                        <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0">
+                            <span class="text-xs font-semibold text-blue-600">.json</span>
                         </div>
                         <div>
-                            <p class="text-sm font-medium text-slate-200">JSON</p>
-                            <p class="text-xs text-slate-500 mt-1">Structured prospect data or pipeline exports</p>
+                            <p class="text-sm font-medium text-ink-700">JSON</p>
+                            <p class="text-xs text-ink-400 mt-0.5">Structured prospect data</p>
                         </div>
                     </div>
                     
-                    <div class="flex items-start space-x-3 p-4 bg-slate-800/50 rounded-xl">
-                        <div class="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
-                            <span class="text-xs font-bold text-emerald-400">.txt</span>
+                    <div class="flex items-start space-x-3 p-3 bg-cream-50 rounded-lg">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center flex-shrink-0">
+                            <span class="text-xs font-semibold text-emerald-600">.txt</span>
                         </div>
                         <div>
-                            <p class="text-sm font-medium text-slate-200">Text</p>
-                            <p class="text-xs text-slate-500 mt-1">Call transcripts and meeting notes</p>
+                            <p class="text-sm font-medium text-ink-700">Text</p>
+                            <p class="text-xs text-ink-400 mt-0.5">Call transcripts and notes</p>
                         </div>
                     </div>
                     
-                    <div class="flex items-start space-x-3 p-4 bg-slate-800/50 rounded-xl">
-                        <div class="w-10 h-10 rounded-lg bg-violet-500/10 flex items-center justify-center flex-shrink-0">
-                            <span class="text-xs font-bold text-violet-400">.csv</span>
+                    <div class="flex items-start space-x-3 p-3 bg-cream-50 rounded-lg">
+                        <div class="w-8 h-8 rounded-lg bg-violet-50 flex items-center justify-center flex-shrink-0">
+                            <span class="text-xs font-semibold text-violet-600">.csv</span>
                         </div>
                         <div>
-                            <p class="text-sm font-medium text-slate-200">CSV</p>
-                            <p class="text-xs text-slate-500 mt-1">CRM exports and tabular data</p>
+                            <p class="text-sm font-medium text-ink-700">CSV</p>
+                            <p class="text-xs text-ink-400 mt-0.5">CRM exports</p>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="glass-card rounded-2xl p-6">
-                <h3 class="text-sm font-semibold text-slate-300 mb-4">Tips</h3>
-                <ul class="space-y-3 text-xs text-slate-400">
+            <div class="bg-white rounded-xl p-6 shadow-soft">
+                <h3 class="text-sm font-medium text-ink-700 mb-4">Tips</h3>
+                <ul class="space-y-2 text-xs text-ink-500">
                     <li class="flex items-start space-x-2">
-                        <svg class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
+                        <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500 mt-0.5 flex-shrink-0"></i>
                         <span>Max file size: 16MB</span>
                     </li>
                     <li class="flex items-start space-x-2">
-                        <svg class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        <span>JSON files should include prospect name and company</span>
+                        <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500 mt-0.5 flex-shrink-0"></i>
+                        <span>JSON files should include name and company</span>
                     </li>
                     <li class="flex items-start space-x-2">
-                        <svg class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        <span>Text transcripts will be processed by LLM extraction</span>
+                        <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500 mt-0.5 flex-shrink-0"></i>
+                        <span>Text files processed by LLM extraction</span>
                     </li>
                 </ul>
             </div>
@@ -124,18 +114,16 @@
     </div>
     
     <!-- JSON Schema Example -->
-    <div class="glass-card rounded-2xl p-6">
-        <div class="flex items-center justify-between mb-4">
-            <h3 class="text-lg font-semibold text-slate-100">JSON Schema Example</h3>
-            <button onclick="copySchema()" class="flex items-center text-sm text-slate-400 hover:text-emerald-400 transition-smooth">
-                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                </svg>
+    <div class="bg-white rounded-xl p-8 shadow-soft">
+        <div class="flex items-center justify-between mb-5">
+            <h3 class="text-base font-serif font-semibold">JSON Schema Example</h3>
+            <button onclick="copySchema()" class="flex items-center text-sm text-ink-500 hover:text-ink-700 transition-subtle">
+                <i data-lucide="copy" class="w-4 h-4 mr-1"></i>
                 Copy
             </button>
         </div>
         
-        <pre id="schema-example" class="p-4 bg-slate-800/50 rounded-xl border border-slate-700/50 text-xs text-slate-300 overflow-x-auto font-mono"><code>{
+        <pre id="schema-example" class="p-5 bg-cream-50 rounded-lg text-xs text-ink-600 overflow-x-auto font-mono leading-relaxed"><code>{
   "id": "prospect_001",
   "name": "John Smith",
   "company": "Acme Corp",
@@ -152,50 +140,42 @@
     {
       "type": "budget",
       "description": "Q2 budget not confirmed",
-      "impact": "medium",
-      "evidence": "John mentioned budget review in March"
+      "impact": "medium"
     }
   ],
   "next_steps": [
     { "action": "Send ROI calculator", "priority": "high" },
     { "action": "Schedule demo with tech team", "priority": "medium" }
-  ],
-  "events": [
-    { "type": "call", "date": "2024-01-28", "description": "Discovery call - discussed pain points" },
-    { "type": "email", "date": "2024-01-25", "description": "Initial outreach" }
   ]
 }</code></pre>
     </div>
     
-    <!-- Recent Uploads (placeholder) -->
-    <div class="glass-card rounded-2xl p-6">
+    <!-- Recent Uploads -->
+    <div class="bg-white rounded-xl p-8 shadow-soft">
         <div class="flex items-center justify-between mb-6">
             <div>
-                <h3 class="text-lg font-semibold text-slate-100">Recent Uploads</h3>
-                <p class="text-sm text-slate-500">Previously imported files</p>
+                <h3 class="text-base font-serif font-semibold">Recent Uploads</h3>
+                <p class="text-sm text-ink-400 mt-1">Previously imported files</p>
             </div>
         </div>
         
         <div class="overflow-x-auto">
             <table class="w-full">
                 <thead>
-                    <tr class="border-b border-slate-700/50">
-                        <th class="pb-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">File</th>
-                        <th class="pb-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Type</th>
-                        <th class="pb-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Size</th>
-                        <th class="pb-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Uploaded</th>
-                        <th class="pb-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
+                    <tr class="border-b border-cream-200">
+                        <th class="pb-3 text-left text-xs font-medium text-ink-400 uppercase tracking-wider">File</th>
+                        <th class="pb-3 text-left text-xs font-medium text-ink-400 uppercase tracking-wider">Type</th>
+                        <th class="pb-3 text-left text-xs font-medium text-ink-400 uppercase tracking-wider">Size</th>
+                        <th class="pb-3 text-left text-xs font-medium text-ink-400 uppercase tracking-wider">Uploaded</th>
+                        <th class="pb-3 text-left text-xs font-medium text-ink-400 uppercase tracking-wider">Status</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-800/50">
-                    <!-- This would be populated from the server -->
+                <tbody class="divide-y divide-cream-100">
                     <tr>
-                        <td colspan="5" class="py-8 text-center text-slate-500">
-                            <svg class="w-10 h-10 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                            </svg>
+                        <td colspan="5" class="py-10 text-center text-ink-400">
+                            <i data-lucide="upload-cloud" class="w-8 h-8 mx-auto mb-3 opacity-30"></i>
                             <p class="text-sm">No recent uploads</p>
-                            <p class="text-xs mt-1 text-slate-600">Upload files to see them here</p>
+                            <p class="text-xs mt-1 text-ink-400">Upload files to see them here</p>
                         </td>
                     </tr>
                 </tbody>
@@ -207,6 +187,8 @@
 
 {% block scripts %}
 <script>
+    lucide.createIcons();
+    
     const dropZone = document.getElementById('drop-zone');
     const fileInput = document.getElementById('file-input');
     const uploadBtn = document.getElementById('upload-btn');
@@ -229,13 +211,13 @@
     
     ['dragenter', 'dragover'].forEach(eventName => {
         dropZone.addEventListener(eventName, () => {
-            dropZone.classList.add('border-emerald-500', 'bg-emerald-500/5');
+            dropZone.classList.add('border-ink-400', 'bg-cream-50');
         }, false);
     });
     
     ['dragleave', 'drop'].forEach(eventName => {
         dropZone.addEventListener(eventName, () => {
-            dropZone.classList.remove('border-emerald-500', 'bg-emerald-500/5');
+            dropZone.classList.remove('border-ink-400', 'bg-cream-50');
         }, false);
     });
     
@@ -277,13 +259,14 @@
         uploadText.classList.remove('hidden');
         filePreview.classList.add('hidden');
         uploadBtn.disabled = true;
+        lucide.createIcons();
     });
     
     // Form submission
     document.getElementById('upload-form').addEventListener('submit', function() {
         uploadBtn.disabled = true;
         uploadBtn.innerHTML = `
-            <svg class="w-5 h-5 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-4 h-4 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
             </svg>
             Uploading...
@@ -294,17 +277,17 @@
     function copySchema() {
         const schema = document.getElementById('schema-example').textContent;
         navigator.clipboard.writeText(schema).then(() => {
-            // Show feedback
             const btn = event.target.closest('button');
             const originalHTML = btn.innerHTML;
             btn.innerHTML = `
-                <svg class="w-4 h-4 mr-1 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
-                <span class="text-emerald-400">Copied!</span>
+                Copied
             `;
             setTimeout(() => {
                 btn.innerHTML = originalHTML;
+                lucide.createIcons();
             }, 2000);
         });
     }

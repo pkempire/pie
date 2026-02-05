@@ -236,7 +236,7 @@ class SalesProcessMiner:
         """
         Build a deal timeline from prospect data.
         
-        Infers stage progression from meeting metadata and signals.
+        Uses explicit stage_transitions if available, otherwise infers from metadata.
         """
         if base_date is None:
             base_date = datetime.now() - timedelta(days=30)
@@ -251,43 +251,61 @@ class SalesProcessMiner:
             company=company,
         )
         
-        # Get current stage
+        # Get current stage and outcome
         current_stage = self.extract_stage_from_metadata(prospect_data)
         timeline.current_stage = current_stage
+        timeline.outcome = prospect_data.get("outcome")
         
-        # Build stage history
-        # Infer from meeting metadata
-        meetings = prospect_data.get("meeting_metadata", {}).get("meetings", [])
-        meeting_count = len(meetings)
+        # Check if we have explicit stage transitions (from rich demo data)
+        stage_transitions = prospect_data.get("stage_transitions", [])
         
-        # Standard progression based on meeting count and metadata
-        stage_order = ["lead", "discovery", "qualification", "demo", "evaluation", "proposal", "negotiation"]
-        current_idx = stage_order.index(current_stage) if current_stage in stage_order else 0
-        
-        # Build history up to current stage
-        days_per_stage = max(3, 30 // (current_idx + 1))
-        stage_date = base_date
-        
-        for i, stage in enumerate(stage_order[:current_idx + 1]):
-            # Add some variance
-            days = days_per_stage + random.randint(-2, 5)
-            if days < 1:
-                days = 1
-                
-            timeline.stages.append({
-                "stage": stage,
-                "display_name": STAGE_DISPLAY.get(stage, stage),
-                "entered_at": stage_date.isoformat(),
-                "exited_at": (stage_date + timedelta(days=days)).isoformat() if i < current_idx else None,
-                "days_in_stage": days if i < current_idx else (datetime.now() - stage_date).days,
-            })
-            stage_date += timedelta(days=days)
+        if stage_transitions:
+            # Use explicit transitions
+            for trans in stage_transitions:
+                timeline.stages.append({
+                    "stage": trans["stage"],
+                    "display_name": STAGE_DISPLAY.get(trans["stage"], trans["stage"]),
+                    "entered_at": trans.get("entered"),
+                    "exited_at": trans.get("exited"),
+                    "days_in_stage": trans.get("days", 0),
+                })
+        else:
+            # Infer from meeting metadata (fallback for old-style data)
+            meetings = prospect_data.get("meeting_metadata", {}).get("meetings", [])
+            meeting_count = len(meetings)
+            
+            # Standard progression based on meeting count and metadata
+            stage_order = ["lead", "discovery", "qualification", "demo", "evaluation", "proposal", "negotiation"]
+            current_idx = stage_order.index(current_stage) if current_stage in stage_order else 0
+            
+            # Build history up to current stage
+            days_per_stage = max(3, 30 // (current_idx + 1))
+            stage_date = base_date
+            
+            for i, stage in enumerate(stage_order[:current_idx + 1]):
+                # Add some variance
+                days = days_per_stage + random.randint(-2, 5)
+                if days < 1:
+                    days = 1
+                    
+                timeline.stages.append({
+                    "stage": stage,
+                    "display_name": STAGE_DISPLAY.get(stage, stage),
+                    "entered_at": stage_date.isoformat(),
+                    "exited_at": (stage_date + timedelta(days=days)).isoformat() if i < current_idx else None,
+                    "days_in_stage": days if i < current_idx else (datetime.now() - stage_date).days,
+                })
+                stage_date += timedelta(days=days)
         
         # Check for stall
         momentum = prospect_data.get("meeting_metadata", {}).get("momentum", "steady")
         if momentum == "stalling":
             timeline.is_stalled = True
-            timeline.stall_days = random.randint(7, 21)
+            # Use actual days from last stage if available
+            if timeline.stages:
+                timeline.stall_days = timeline.stages[-1].get("days_in_stage", 14)
+            else:
+                timeline.stall_days = random.randint(7, 21)
         elif timeline.stages:
             last_stage = timeline.stages[-1]
             days_in_current = last_stage.get("days_in_stage", 0)

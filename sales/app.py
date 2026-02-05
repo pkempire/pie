@@ -28,6 +28,7 @@ from sales.process_mining import (
     STAGE_DISPLAY,
 )
 from sales.prospect_model import ProspectWorldModel
+from sales.demo_data import get_demo_prospects, get_pipeline_summary
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -61,12 +62,12 @@ def allowed_file(filename: str) -> bool:
 
 
 def load_existing_prospects():
-    """Load existing prospect data from output folder."""
+    """Load existing prospect data from output folder or demo data."""
     global pipeline_data
     
     prospects = []
     
-    # Load individual prospect files
+    # Load individual prospect files from output folder
     for json_file in OUTPUT_FOLDER.glob("prospect_*.json"):
         try:
             with open(json_file) as f:
@@ -76,10 +77,15 @@ def load_existing_prospects():
         except Exception as e:
             logger.error(f"Error loading {json_file}: {e}")
     
-    # If no prospects found, generate demo data
+    # If no custom prospects, load the rich demo data
     if not prospects:
-        logger.info("No existing prospects found, generating demo pipeline...")
-        prospects = generate_demo_pipeline()
+        logger.info("Loading realistic demo pipeline data...")
+        prospects = get_demo_prospects()
+        summary = get_pipeline_summary()
+        logger.info(
+            f"Loaded {summary['total_deals']} deals worth ${summary['total_pipeline_value']:,} "
+            f"(weighted: ${summary['weighted_pipeline_value']:,})"
+        )
     
     pipeline_data = prospects
     return prospects

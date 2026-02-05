@@ -3,50 +3,47 @@
 {% block title %}Process Mining — Sales Intelligence{% endblock %}
 
 {% block content %}
-<div class="space-y-8">
+<div class="space-y-12">
     <!-- Header -->
-    <div>
-        <h1 class="text-3xl font-bold">Process Mining</h1>
-        <p class="text-gray-400 mt-1">Sales process flow analysis and transition probabilities</p>
+    <div class="text-center">
+        <h1 class="text-3xl font-serif font-semibold tracking-tight">Process Mining</h1>
+        <p class="text-ink-500 mt-2">Sales process flow analysis and transition probabilities</p>
     </div>
     
     <!-- Process Flow Visualization -->
-    <div class="bg-dark-800 rounded-2xl p-8 border border-dark-600">
-        <h2 class="text-xl font-semibold flex items-center gap-2 mb-8">
-            <i data-lucide="workflow" class="w-5 h-5 text-indigo-400"></i>
-            Process Flow (Markov Chain)
-        </h2>
+    <div class="bg-white rounded-xl p-8 shadow-soft">
+        <h2 class="text-lg font-serif font-semibold mb-8">Process Flow</h2>
         
         <!-- Visual Process Flow -->
         <div class="relative overflow-x-auto">
             <!-- Stage Nodes -->
-            <div class="flex items-center gap-4 min-w-max px-4">
+            <div class="flex items-center gap-3 min-w-max px-4 justify-center">
                 {% for stage in stages %}
                     {% if stage not in ['closed_won', 'closed_lost'] %}
                     <div class="flex flex-col items-center relative group">
                         <!-- Node -->
-                        <div class="w-20 h-20 rounded-2xl flex flex-col items-center justify-center stage-{{ stage }} border-2 glow-hover transition-all cursor-pointer"
-                             style="background: color-mix(in srgb, var(--stage-color) 15%, transparent); border-color: var(--stage-color);">
+                        <div class="w-16 h-16 rounded-xl flex flex-col items-center justify-center stage-{{ stage }} border transition-subtle cursor-pointer"
+                             style="background: color-mix(in srgb, var(--stage-color) 8%, white); border-color: color-mix(in srgb, var(--stage-color) 30%, white);">
                             {% set stage_count = 0 %}
                             {% for f in funnel %}
                                 {% if f.stage == stage %}
                                     {% set stage_count = f.count %}
                                 {% endif %}
                             {% endfor %}
-                            <div class="text-xl font-bold" style="color: var(--stage-color);">
+                            <div class="text-lg font-semibold" style="color: var(--stage-color);">
                                 {{ stage_count }}
                             </div>
-                            <div class="text-xs text-gray-400">deals</div>
+                            <div class="text-xs text-ink-400">deals</div>
                         </div>
                         
                         <!-- Label -->
-                        <div class="mt-2 text-xs font-medium text-center text-gray-400">{{ stage_display.get(stage, stage) }}</div>
+                        <div class="mt-2 text-xs font-medium text-center text-ink-500">{{ stage_display.get(stage, stage) }}</div>
                         
                         <!-- Arrow to next stage -->
                         {% if not loop.last %}
-                        <div class="absolute left-full top-10 w-4 flex items-center">
-                            <div class="w-full h-0.5 bg-gray-600"></div>
-                            <div class="w-0 h-0 border-t-4 border-b-4 border-l-4 border-transparent border-l-gray-600"></div>
+                        <div class="absolute left-full top-8 w-3 flex items-center">
+                            <div class="w-full h-px bg-cream-300"></div>
+                            <div class="w-0 h-0 border-t-[3px] border-b-[3px] border-l-[4px] border-transparent border-l-cream-300"></div>
                         </div>
                         {% endif %}
                     </div>
@@ -55,22 +52,22 @@
             </div>
             
             <!-- Outcome Branches -->
-            <div class="mt-8 flex justify-center gap-16">
+            <div class="mt-10 flex justify-center gap-12">
                 <!-- Won -->
                 <div class="flex flex-col items-center">
-                    <div class="w-px h-6 bg-emerald-500/50"></div>
-                    <div class="w-16 h-16 rounded-xl bg-emerald-500/20 border-2 border-emerald-500 flex flex-col items-center justify-center">
-                        <i data-lucide="trophy" class="w-5 h-5 text-emerald-400"></i>
-                        <div class="text-xs text-emerald-400 mt-0.5">Won</div>
+                    <div class="w-px h-5 bg-emerald-200"></div>
+                    <div class="w-14 h-14 rounded-xl bg-emerald-50 border border-emerald-200 flex flex-col items-center justify-center">
+                        <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
+                        <div class="text-xs text-emerald-600 mt-0.5">Won</div>
                     </div>
                 </div>
                 
                 <!-- Lost -->
                 <div class="flex flex-col items-center">
-                    <div class="w-px h-6 bg-red-500/50"></div>
-                    <div class="w-16 h-16 rounded-xl bg-red-500/20 border-2 border-red-500 flex flex-col items-center justify-center">
-                        <i data-lucide="x-circle" class="w-5 h-5 text-red-400"></i>
-                        <div class="text-xs text-red-400 mt-0.5">Lost</div>
+                    <div class="w-px h-5 bg-red-200"></div>
+                    <div class="w-14 h-14 rounded-xl bg-red-50 border border-red-200 flex flex-col items-center justify-center">
+                        <i data-lucide="x" class="w-4 h-4 text-red-600"></i>
+                        <div class="text-xs text-red-600 mt-0.5">Lost</div>
                     </div>
                 </div>
             </div>
@@ -78,22 +75,19 @@
     </div>
     
     <!-- Transition Matrix & Bottlenecks -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         
         <!-- Transition Matrix -->
-        <div class="bg-dark-800 rounded-2xl p-6 border border-dark-600">
-            <h2 class="text-xl font-semibold flex items-center gap-2 mb-6">
-                <i data-lucide="grid-3x3" class="w-5 h-5 text-purple-400"></i>
-                Transition Probabilities
-            </h2>
+        <div class="bg-white rounded-xl p-8 shadow-soft">
+            <h2 class="text-lg font-serif font-semibold mb-6">Transition Probabilities</h2>
             
             <div class="overflow-x-auto">
                 <table class="w-full text-sm">
                     <thead>
                         <tr>
-                            <th class="text-left p-2 text-gray-500 font-medium">From → To</th>
+                            <th class="text-left p-2 text-ink-400 font-medium text-xs">From → To</th>
                             {% for stage in stages[:6] %}
-                            <th class="p-2 text-gray-500 font-medium text-center text-xs">
+                            <th class="p-2 text-ink-400 font-medium text-center text-xs">
                                 {{ stage_display.get(stage, stage)[:4] }}
                             </th>
                             {% endfor %}
@@ -101,20 +95,20 @@
                     </thead>
                     <tbody>
                         {% for from_stage in stages[:5] %}
-                        <tr class="border-t border-dark-600">
-                            <td class="p-2 font-medium text-xs">{{ stage_display.get(from_stage, from_stage) }}</td>
+                        <tr class="border-t border-cream-100">
+                            <td class="p-2 font-medium text-xs text-ink-600">{{ stage_display.get(from_stage, from_stage) }}</td>
                             {% for to_stage in stages[:6] %}
                             <td class="p-2 text-center">
                                 {% if from_stage in transition_matrix and to_stage in transition_matrix[from_stage] %}
                                     {% set prob = (transition_matrix[from_stage][to_stage] * 100)|round|int %}
-                                    <span class="px-1.5 py-0.5 rounded text-xs font-mono
-                                        {{ 'bg-emerald-500/20 text-emerald-400' if prob > 50 else '' }}
-                                        {{ 'bg-blue-500/20 text-blue-400' if prob > 20 and prob <= 50 else '' }}
-                                        {{ 'bg-gray-500/20 text-gray-400' if prob <= 20 else '' }}">
+                                    <span class="px-1.5 py-0.5 rounded text-xs
+                                        {{ 'bg-emerald-50 text-emerald-700' if prob > 50 else '' }}
+                                        {{ 'bg-blue-50 text-blue-700' if prob > 20 and prob <= 50 else '' }}
+                                        {{ 'bg-cream-100 text-ink-500' if prob <= 20 else '' }}">
                                         {{ prob }}%
                                     </span>
                                 {% else %}
-                                    <span class="text-gray-600">—</span>
+                                    <span class="text-cream-300">—</span>
                                 {% endif %}
                             </td>
                             {% endfor %}
@@ -124,56 +118,52 @@
                 </table>
             </div>
             
-            <div class="mt-4 text-xs text-gray-500">
-                <i data-lucide="info" class="w-3 h-3 inline mr-1"></i>
-                Probabilities based on historical deal progressions
+            <div class="mt-4 text-xs text-ink-400">
+                Based on historical deal progressions
             </div>
         </div>
         
         <!-- Bottleneck Analysis -->
-        <div class="bg-dark-800 rounded-2xl p-6 border border-dark-600">
-            <h2 class="text-xl font-semibold flex items-center gap-2 mb-6">
-                <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-400"></i>
-                Bottleneck Analysis
-            </h2>
+        <div class="bg-white rounded-xl p-8 shadow-soft">
+            <h2 class="text-lg font-serif font-semibold mb-6">Bottleneck Analysis</h2>
             
             <div class="space-y-4">
                 {% for bn in bottlenecks %}
-                <div class="p-4 rounded-xl bg-dark-700 {{ 'border border-red-500/30' if bn.is_bottleneck else '' }}">
+                <div class="p-4 rounded-lg {{ 'bg-red-50 border border-red-100' if bn.is_bottleneck else 'bg-cream-50' }}">
                     <div class="flex items-center justify-between mb-3">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-lg stage-{{ bn.stage }} flex items-center justify-center"
-                                 style="background: color-mix(in srgb, var(--stage-color) 20%, transparent);">
-                                <span class="text-sm font-bold" style="color: var(--stage-color);">
+                            <div class="w-9 h-9 rounded-lg stage-{{ bn.stage }} flex items-center justify-center"
+                                 style="background: color-mix(in srgb, var(--stage-color) 12%, white);">
+                                <span class="text-sm font-semibold" style="color: var(--stage-color);">
                                     {{ bn.count }}
                                 </span>
                             </div>
                             <div>
-                                <div class="font-medium">{{ bn.display_name }}</div>
+                                <div class="font-medium text-sm">{{ bn.display_name }}</div>
                                 {% if bn.is_bottleneck %}
-                                <span class="text-xs text-red-400">⚠️ Bottleneck detected</span>
+                                <span class="text-xs text-red-600">Bottleneck detected</span>
                                 {% endif %}
                             </div>
                         </div>
                         <div class="text-right">
-                            <div class="text-lg font-bold text-amber-400">{{ bn.bottleneck_score }}</div>
-                            <div class="text-xs text-gray-500">risk score</div>
+                            <div class="text-base font-semibold text-amber-600">{{ bn.bottleneck_score }}</div>
+                            <div class="text-xs text-ink-400">risk</div>
                         </div>
                     </div>
                     
                     <!-- Metrics -->
-                    <div class="grid grid-cols-3 gap-3">
-                        <div class="text-center p-2 rounded-lg bg-dark-600">
-                            <div class="text-lg font-semibold">{{ bn.avg_days }}</div>
-                            <div class="text-xs text-gray-500">avg days</div>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div class="text-center p-2 rounded-lg bg-white/60">
+                            <div class="text-sm font-semibold text-ink-700">{{ bn.avg_days }}</div>
+                            <div class="text-xs text-ink-400">avg days</div>
                         </div>
-                        <div class="text-center p-2 rounded-lg bg-dark-600">
-                            <div class="text-lg font-semibold {{ 'text-amber-400' if bn.stall_rate > 20 else '' }}">{{ bn.stall_rate }}%</div>
-                            <div class="text-xs text-gray-500">stall rate</div>
+                        <div class="text-center p-2 rounded-lg bg-white/60">
+                            <div class="text-sm font-semibold {{ 'text-amber-600' if bn.stall_rate > 20 else 'text-ink-700' }}">{{ bn.stall_rate }}%</div>
+                            <div class="text-xs text-ink-400">stall rate</div>
                         </div>
-                        <div class="text-center p-2 rounded-lg bg-dark-600">
-                            <div class="text-lg font-semibold {{ 'text-red-400' if bn.loss_rate > 10 else '' }}">{{ bn.loss_rate }}%</div>
-                            <div class="text-xs text-gray-500">loss rate</div>
+                        <div class="text-center p-2 rounded-lg bg-white/60">
+                            <div class="text-sm font-semibold {{ 'text-red-600' if bn.loss_rate > 10 else 'text-ink-700' }}">{{ bn.loss_rate }}%</div>
+                            <div class="text-xs text-ink-400">loss rate</div>
                         </div>
                     </div>
                 </div>
@@ -183,32 +173,29 @@
     </div>
     
     <!-- Funnel Conversion -->
-    <div class="bg-dark-800 rounded-2xl p-6 border border-dark-600">
-        <h2 class="text-xl font-semibold flex items-center gap-2 mb-6">
-            <i data-lucide="trending-down" class="w-5 h-5 text-blue-400"></i>
-            Stage-by-Stage Conversion
-        </h2>
+    <div class="bg-white rounded-xl p-8 shadow-soft">
+        <h2 class="text-lg font-serif font-semibold mb-8">Stage-by-Stage Conversion</h2>
         
-        <div class="flex items-end justify-center gap-2 h-64">
+        <div class="flex items-end justify-center gap-3 h-56">
             {% for stage in funnel %}
                 {% if stage.stage not in ['closed_won', 'closed_lost'] %}
                 <div class="flex flex-col items-center group">
                     <!-- Bar -->
-                    <div class="w-16 rounded-t-lg stage-{{ stage.stage }} transition-all group-hover:scale-105"
-                         style="height: {{ stage.conversion_from_lead * 2.4 }}px; min-height: 20px; background: var(--stage-color);">
+                    <div class="w-14 rounded-t-lg stage-{{ stage.stage }} transition-all group-hover:scale-[1.02]"
+                         style="height: {{ stage.conversion_from_lead * 2 }}px; min-height: 16px; background: var(--stage-color); opacity: 0.7;">
                     </div>
                     
                     <!-- Label -->
-                    <div class="mt-2 text-center">
-                        <div class="text-lg font-bold">{{ stage.conversion_from_lead }}%</div>
-                        <div class="text-xs text-gray-500">{{ stage_display.get(stage.stage, stage.stage) }}</div>
+                    <div class="mt-3 text-center">
+                        <div class="text-base font-semibold text-ink-700">{{ stage.conversion_from_lead }}%</div>
+                        <div class="text-xs text-ink-400 max-w-[60px] truncate">{{ stage_display.get(stage.stage, stage.stage) }}</div>
                     </div>
                 </div>
                 {% endif %}
             {% endfor %}
         </div>
         
-        <div class="mt-6 text-center text-sm text-gray-500">
+        <div class="mt-8 text-center text-sm text-ink-400">
             Percentage of total leads reaching each stage
         </div>
     </div>

@@ -2,7 +2,7 @@
 
 **[Draft — Living Document]**
 
-**Target:** 15-20 minutes | YouTube  
+**Target:** 18-20 minutes | YouTube  
 **Tone:** Fireship meets 3Blue1Brown — fast, visual, technical depth without jargon walls  
 **Audience:** AI engineers, builders, and curious technical people who've heard of RAG but think there must be more  
 
@@ -258,49 +258,131 @@ Changed 5 times (~0.4x/month)
 
 ---
 
-## SECTION 5: RESULTS [13:30 - 16:30]
+## SECTION 5: RESULTS & THE AHA MOMENT [13:30 - 17:00]
 
-[TODO: This entire section depends on experiment results. Outline of what to show:]
+### 5.1 The Benchmark Scorecard [13:30 - 14:30]
 
-### 5.1 The Graph Visualization [13:30 - 14:30]
+**Visual:** Animated scorecard building piece by piece. Each benchmark appears with its score and category breakdown.
 
-[TODO: Need actual graph viz from PIE]
+**LongMemEval: 66.3%**
+```
+single-session-assistant:  98.2% ████████████████████ ✓
+single-session-user:       84.3% ████████████████▌    ✓
+knowledge-update:          79.5% ███████████████▉     ✓
+temporal-reasoning:        59.8% ███████████▉         ⚠
+multi-session:             55.6% ███████████          ⚠
+preference:                 6.7% █▎                   ✗
+```
 
-**Planned visual:** Full knowledge graph visualization with:
-- Color-coded entity types (projects in blue, people in green, beliefs in yellow, etc.)
-- Edge thickness proportional to relationship strength
-- Time axis showing entity creation dates
-- Clusters visible (the SRA cluster, the internship cluster, the tools cluster)
+> "98% on single-session. Great. 6.7% on preferences. Ouch. See the pattern? The easy stuff — just retrieve what someone said — works fine. The hard stuff — inferring patterns, synthesizing across sessions — that's where it breaks."
 
-> "This is 33 months of one person's intellectual life, as a knowledge graph. [X] entities, [Y] relationships, [Z] state transitions. Let me zoom into a few interesting areas..."
+**Visual:** Comparison bar chart appearing:
+```
+Emergence AI:    86.0% ████████████████▉
+Supermemory:     71.4% ██████████████▎
+Zep:             71.2% ██████████████▎
+Our naive_rag:   66.3% █████████████▎
+```
 
-**Planned walkthrough:** Zoom into 2-3 interesting subgraphs. Show how entities connect across life domains.
+> "We're competitive. Not leading. The gap? Mostly in those bottom categories — exactly where PIE's structured approach should help."
 
-### 5.2 The Ablation — Does Semantic Time Actually Help? [14:30 - 15:30]
+**LoCoMo: 58%**
+- Temporal reasoning: **35.7%** (worst category, again)
 
-[TODO: Need ablation results from Hypothesis 1]
+**MSC: 46%** (76% partial credit)
 
-**Planned visual:** Bar chart — 4 conditions × 4 models. Dramatic reveal of results.
+> "Same story everywhere. Temporal is the weakest. Always."
 
-> "We tested the same temporal reasoning questions under four conditions: raw timestamps, formatted dates, relative time, and PIE's full semantic temporal context. Across [X] models..."
+### 5.2 The Experiment That Changed Everything [14:30 - 16:00]
 
-### 5.3 Head-to-Head: PIE vs. RAG vs. Mem0 [15:30 - 16:00]
+**Visual:** Dramatic setup — three columns appearing: "naive_rag", "baseline", "pie_temporal"
 
-[TODO: Need comparison results]
+> "Now here's where we ran an experiment that completely changed how we think about this problem."
 
-**Planned visual:** Side-by-side-by-side query comparisons. Same question, three system outputs. Quality difference should be visually obvious.
+**Visual:** Results revealed dramatically:
+```
+naive_rag:     56.2% █████████████████
+baseline:      46.2% █████████████▊
+pie_temporal:  31.2% █████████▍       ← Wait what?
+```
 
-### 5.4 Actual Extracted Procedures [16:00 - 16:30]
+> "PIE's semantic temporal approach... made things worse? By 25 percentage points?"
 
-[TODO: Need actual procedure outputs]
+**Visual:** Confusion animation — question marks, red alerts
 
-**Planned visual:** Show 2-3 real extracted procedures with the evidence entities highlighted in the graph.
+> "We spent a week figuring out what went wrong. Turns out... nothing went wrong. We discovered something important."
 
-> "These are real patterns extracted from real data. Things the user may not have consciously realized about their own behavior."
+**Visual:** Per-question-type breakdown table appearing row by row:
+
+| Question Type | naive_rag | pie_temporal | What happened? |
+|---------------|-----------|--------------|----------------|
+| duration | 50% | **75%** ↑ | Narrative helps! |
+| first_last | 87.5% | 75% ↓ | |
+| what_time | 100% | 62.5% ↓↓ | Narrative hurts! |
+| at_time_t | 100% | 62.5% ↓↓ | Narrative hurts! |
+
+**Visual:** Animation showing the insight:
+
+**Left side:** Query "How long was X the CEO?" → Narrative context "X was CEO for ~3 years during the growth period" → ✓ Model understands duration
+
+**Right side:** Query "What happened on January 15?" → Narrative context "~3 weeks ago, during Period A" → ✗ Model lost the date
+
+> "When you convert '2024-01-15' into 'about 3 weeks ago during the expansion period,' you HELP the model reason about duration and patterns. But you DESTROY its ability to answer 'what happened on January 15?'
+>
+> This isn't a bug. It's a fundamental tradeoff. And it means the right answer isn't 'semantic context' or 'raw timestamps' — it's BOTH. A hybrid system that picks the right format based on what you're asking."
+
+**Visual:** Split-screen decision tree appearing:
+```
+Query comes in
+     │
+     ├── About evolution/patterns? → Semantic narrative
+     │   "How has X changed?"
+     │   "What patterns do I follow?"
+     │
+     └── About specific dates? → Preserved timestamps
+         "What happened on [date]?"
+         "Who was X on [date]?"
+```
+
+> "This is, we think, a publishable finding on its own. The temporal context format should be task-adaptive."
+
+### 5.3 The Fix: Date Fallback [16:00 - 16:30]
+
+**Visual:** Before/after comparison
+
+> "We traced the failures to a data problem. Our extraction prompt didn't ask for dates — so 0% of entities had date metadata. The temporal compiler had nothing to work with."
+
+**Visual:** Code diff showing prompt change, then results improvement:
+```
+Before fix: pie_temporal on date queries → 0%
+After fix:  pie_temporal on date queries → 40%
+```
+
+> "Adding a fallback to use creation timestamps took us from 0% to 40%. The approach works — it just needs the right data."
+
+### 5.4 Entity Quality — What 866 Entities Look Like [16:30 - 17:00]
+
+**Visual:** Animated pie chart / entity breakdown
+
+```
+Entity Types (866 total):
+├── Concept:  26% ████████
+├── Tool:     23% ███████
+├── Project:  22% ███████
+├── Decision: 13% ████
+└── Other:    16% █████
+
+Quality:
+├── Have descriptions: 100% ✓
+├── Have aliases:      8.2% (resolution working)
+└── Had dates:         0%   (now fixed in prompt)
+```
+
+> "Good type distribution. 100% descriptions. 8% have aliases — meaning we're catching 'SRA' equals 'Science Research Academy' equals 'scifair.tech.' The 0% date coverage was the gap that broke temporal reasoning. Now fixed."
 
 ---
 
-## SECTION 6: WHAT THIS MEANS [16:30 - 18:00]
+## SECTION 6: WHAT THIS MEANS [17:00 - 18:30]
 
 **Visual:** Return to the simple diagram from the opening — but now the "right side" (what a real assistant would know) is achievable.
 
@@ -312,7 +394,7 @@ Changed 5 times (~0.4x/month)
 >
 > The AI that remembers what you like... that's table stakes. Already here. The AI that understands how you think, how your world has changed, and what patterns you follow? That's next. And building it requires rethinking memory from the ground up."
 
-### The Roadmap [17:15 - 17:45]
+### The Roadmap [17:45 - 18:15]
 
 **Visual:** Animated progression:
 
@@ -332,7 +414,7 @@ Continual Learning (the model that grows with you)
 
 ---
 
-## CLOSE [18:00 - 18:30]
+## CLOSE [18:30 - 19:00]
 
 **Visual:** Back to screen recording of ChatGPT. But now, in a second panel, PIE's query interface is open showing rich temporal context.
 
@@ -359,6 +441,10 @@ Continual Learning (the model that grows with you)
 7. **Brain diagram** — Cognitive memory types, each lighting up.
 8. **Before/after comparison cards** — What current systems store vs. what PIE stores.
 9. **Importance visualization** — Graph with pulsing brightness for importance scores, dimming for archival.
+10. **Task-adaptive decision tree** — NEW: Split-screen showing query routing: evolution queries → narrative, date queries → timestamps. Animated decision flow.
+11. **The "aha moment" reveal** — NEW: Dramatic benchmark results with pie_temporal underperforming, then zooming into per-question breakdown to show the insight. Think "plot twist" energy.
+12. **Duration vs. date query comparison** — NEW: Side-by-side showing same entity, two query types, why one format helps and the other hurts. Key visual for explaining the task-adaptive finding.
+13. **Benchmark scorecard animation** — NEW: Progress bars filling in for each benchmark category, with color-coding (green for strong, yellow for weak, red for failures like 6.7% preference).
 
 ### B-Roll / Screen Recordings Needed
 

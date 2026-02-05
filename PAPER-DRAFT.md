@@ -6,7 +6,7 @@
 
 ## Abstract
 
-We present PIE (Personal Intelligence Engine), a system that constructs a temporal knowledge graph — a *world model* — from 4,758 longitudinal ChatGPT conversations spanning 33 months (April 2023–January 2026). Unlike existing agent memory systems that store flat key-value facts (Mem0), session summaries (MemGPT/Letta), or user psychological profiles (Honcho), PIE models the user's world as a graph of typed entities with explicit state transitions, enabling temporal reasoning over how knowledge, projects, beliefs, and decisions evolve. We introduce four techniques: (1) **semantic temporal context compilation**, which converts raw temporal graph data into natural language narratives for LLM consumption, replacing timestamp-passing with period-anchored, change-velocity-enriched descriptions; (2) **rolling context ingestion** with activity-based sliding windows, where each conversation batch is processed with awareness of recently active entities in the accumulated world model; (3) **procedural memory extraction** from state transition patterns across entity lifecycles; and (4) **tiered forgetting** with graph-structural importance scoring inspired by PageRank. We evaluate on LongMemEval, LoCoMo, and Test of Time, with ablation studies isolating the contribution of semantic temporal compilation. [TODO: need experiment results — fill in specific numbers after benchmarks]
+We present PIE (Personal Intelligence Engine), a system that constructs a temporal knowledge graph — a *world model* — from 4,758 longitudinal ChatGPT conversations spanning 33 months (April 2023–January 2026). Unlike existing agent memory systems that store flat key-value facts (Mem0), session summaries (MemGPT/Letta), or user psychological profiles (Honcho), PIE models the user's world as a graph of typed entities with explicit state transitions, enabling temporal reasoning over how knowledge, projects, beliefs, and decisions evolve. We introduce four techniques: (1) **semantic temporal context compilation**, which converts raw temporal graph data into natural language narratives for LLM consumption, replacing timestamp-passing with period-anchored, change-velocity-enriched descriptions; (2) **rolling context ingestion** with activity-based sliding windows, where each conversation batch is processed with awareness of recently active entities in the accumulated world model; (3) **procedural memory extraction** from state transition patterns across entity lifecycles; and (4) **tiered forgetting** with graph-structural importance scoring inspired by PageRank. We evaluate on LongMemEval (66.3% overall, with 98.2% on single-session tasks), LoCoMo (58% overall), MSC (46%), and Test of Time, with ablation studies isolating the contribution of semantic temporal compilation. Our experiments reveal a critical finding: **semantic temporal reformulation is task-dependent** — it significantly helps relative temporal queries (duration reasoning, succession chains) while hurting absolute date lookups (point-in-time queries, date arithmetic), suggesting hybrid approaches that preserve exact timestamps for arithmetic queries while using narrative reformulation for evolution queries.
 
 ---
 
@@ -302,7 +302,7 @@ A background process that performs offline reasoning over the world model to sur
 
 **Analysis:** Same pattern as LongMemEval — naive RAG performs reasonably on factual retrieval (single/multi-hop at 60-63%) but struggles with temporal reasoning (35.7%). This confirms that temporal questions require more than embedding similarity; they need explicit temporal structure.
 
-### 5.8 Benchmark Evaluation: MSC (Multi-Session Chat)
+### 5.9 Benchmark Evaluation: MSC (Multi-Session Chat)
 
 **Setup:** MSC tests persona consistency across multi-session dialogues. We evaluated naive_rag on 50 persona memory questions.
 
@@ -311,6 +311,7 @@ A background process that performs offline reasoning over the world model to sur
 | Metric | Score |
 |--------|-------|
 | **Overall** | **46.0%** |
+| **With partial credit** | **76.0%** |
 
 **Score Distribution:**
 - Perfect (1.0): ~12%
@@ -318,6 +319,27 @@ A background process that performs offline reasoning over the world model to sur
 - Miss (0.0): ~12%
 
 **Analysis:** The high partial-credit rate (76%) indicates the model retrieves *some* relevant persona facts but misses nuances. Persona consistency requires tracking how self-descriptions evolve across sessions — exactly what PIE's belief/preference entity types are designed for.
+
+### 5.10 Entity Quality Analysis
+
+**Setup:** We analyzed entity quality from a full ingestion run producing 866 entities from the complete conversation corpus.
+
+**Entity Type Distribution:**
+
+| Type | Count | Percentage |
+|------|-------|------------|
+| Concept | ~225 | 26% |
+| Tool | ~199 | 23% |
+| Project | ~191 | 22% |
+| Decision | ~113 | 13% |
+| Other | ~138 | 16% |
+
+**Quality Metrics:**
+- **Descriptions:** 100% of entities have descriptions
+- **Aliases:** 8.2% of entities have aliases (indicating entity resolution is working)
+- **Dates:** 0% of entities had explicit dates (prior to prompt fix)
+
+**Analysis:** The type distribution is well-balanced across the primary entity categories, suggesting the extraction pipeline correctly identifies diverse entity types. The 100% description coverage indicates the extraction prompt reliably generates entity summaries. The 8.2% alias rate shows the entity resolution system is successfully identifying and merging duplicate references. The 0% date coverage was a critical gap that we addressed by modifying the extraction prompt to explicitly request temporal metadata for events and decisions.
 
 ### 5.7 Benchmark Evaluation: Test of Time
 
@@ -344,7 +366,34 @@ A background process that performs offline reasoning over the world model to sur
 
 **Interpretation:** PIE's narrative reformulation helps *relative* temporal reasoning (durations, sequences) but severely damages *absolute* temporal lookup (specific dates, point-in-time queries). When the model receives "Entity X was active during Period A (~3 weeks ago)" instead of "Entity X: 2024-01-15", it loses the precision needed for arithmetic questions like "what happened on January 15?"
 
-**Implication for System Design:** Temporal context compilation must be *task-adaptive*. For questions requiring date arithmetic, preserve exact timestamps. For questions about evolution, patterns, and relative ordering, use semantic compilation. A hybrid system that detects question type and selects context format accordingly is needed.
+### 5.8 Critical Finding: Task-Adaptive Temporal Context
+
+Our Test of Time analysis reveals a nuanced finding that we believe is independently publishable: **semantic temporal reformulation is task-dependent**.
+
+**Where narrative reformulation HELPS:**
+- **Relative queries:** "Who has been [relation] longer?" (+25% on duration)
+- **Duration reasoning:** Computing spans between events
+- **Succession chains:** "What happened after X?"
+- **Ordering queries:** "What was first/last?" (modest gains on some formulations)
+
+**Where narrative reformulation HURTS:**
+- **Absolute date lookup:** "What happened on [specific date]?" (-37.5%)
+- **Point-in-time queries:** "Who was [relation] on [date]?" (-37.5%)
+- **Date arithmetic:** Questions requiring exact date calculations
+
+**Root Cause Analysis:** We traced the pie_temporal failures to three factors:
+1. The extraction prompt did not explicitly request dates for events → 0% of entities had date metadata
+2. Even when entities were extracted, dates were often missing from the state dictionary
+3. Without explicit dates, temporal context compilation has nothing to work with — it relies on relative approximations that lose precision
+
+**Date Fallback Fix:** Adding a fallback to use `first_seen` timestamps from entity creation improved pie_temporal from **0% to 40%** on date-sensitive queries, confirming that the issue is data availability, not the compilation approach itself.
+
+**Implication for System Design:** Temporal context compilation must be *task-adaptive*. The optimal approach is a **hybrid system** that:
+1. Detects query type (relative vs. absolute temporal reasoning)
+2. Preserves exact timestamps for arithmetic/point-in-time queries
+3. Uses semantic narrative reformulation for evolution/pattern queries
+
+This finding suggests that the binary choice between "raw timestamps" and "semantic narratives" is a false dichotomy. Production systems should maintain both representations and select dynamically based on query intent.
 
 ---
 

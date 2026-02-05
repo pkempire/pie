@@ -699,22 +699,6 @@ def _apply_extraction_to_world_model(
             )
 
 
-def _extract_keywords(text: str) -> set[str]:
-    """Extract meaningful keywords from text (lowercased, 3+ chars)."""
-    import re
-    # Remove punctuation and split
-    words = re.findall(r'\b[a-zA-Z]{3,}\b', text.lower())
-    # Filter out common stop words
-    stop_words = {
-        'the', 'and', 'for', 'that', 'this', 'with', 'from', 'have', 'has',
-        'was', 'were', 'been', 'being', 'are', 'what', 'when', 'where', 'which',
-        'how', 'many', 'much', 'did', 'does', 'doing', 'would', 'could', 'should',
-        'ago', 'between', 'first', 'last', 'order', 'happened', 'passed', 'days',
-        'weeks', 'months', 'years', 'today', 'yesterday', 'about', 'after', 'before',
-    }
-    return {w for w in words if w not in stop_words}
-
-
 def _retrieve_entities_for_question(
     question: str,
     world_model: WorldModel,
@@ -722,18 +706,13 @@ def _retrieve_entities_for_question(
     top_k: int = 15,
 ) -> list[tuple[str, dict, float]]:
     """
-    Retrieve relevant entities for a question via hybrid scoring:
-    - Embedding similarity (semantic matching)
-    - Keyword matching boost (ensures entities mentioned by name are retrieved)
+    Retrieve relevant entities for a question using embedding similarity.
     
     Returns list of (entity_id, entity_dict, similarity) sorted by relevance.
     """
     if not world_model.entities:
         return []
 
-    # Extract keywords from question for boosting
-    question_keywords = _extract_keywords(question)
-    
     # Embed the question
     query_emb = llm.embed_single(question)
 
@@ -756,29 +735,12 @@ def _retrieve_entities_for_question(
         except Exception as e:
             logger.warning(f"Batch embedding failed: {e}")
 
-    # Score all entities with hybrid approach
+    # Score entities by embedding similarity
     scored = []
     for eid, entity in world_model.entities.items():
         if entity.embedding:
-            # Base score: embedding similarity
             sim = cosine_similarity(query_emb, entity.embedding)
-            
-            # Keyword boost: add 0.2 for each keyword match in entity name/description
-            entity_text = entity.name.lower()
-            state = entity.current_state or {}
-            if isinstance(state, dict):
-                entity_text += " " + state.get("description", "").lower()
-            
-            entity_keywords = _extract_keywords(entity_text)
-            keyword_overlap = len(question_keywords & entity_keywords)
-            
-            # Boost: 0.15 per keyword match, capped at 0.45 (3 matches)
-            keyword_boost = min(keyword_overlap * 0.15, 0.45)
-            
-            # Combined score (embedding similarity + keyword boost)
-            combined_score = sim + keyword_boost
-            
-            scored.append((eid, entity, combined_score))
+            scored.append((eid, entity, sim))
 
     scored.sort(key=lambda x: x[2], reverse=True)
     return [(eid, e, s) for eid, e, s in scored[:top_k]]
