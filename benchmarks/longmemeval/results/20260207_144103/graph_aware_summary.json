@@ -1,0 +1,17 @@
+{
+  "overall": {
+    "accuracy": 0.0,
+    "total": 2,
+    "total_score": 0.0
+  },
+  "by_category": {
+    "single-session-user": {
+      "accuracy": 0.0,
+      "count": 2,
+      "score": 0.0
+    }
+  },
+  "baseline": "graph_aware",
+  "timestamp": "2026-02-07T19:41:03.978397+00:00",
+  "num_results": 2
+}

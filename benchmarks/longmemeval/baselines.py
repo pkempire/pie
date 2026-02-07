@@ -1435,6 +1435,192 @@ def graph_aware(
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# Baseline 5: Graph-Aware Cached (fast version with pre-built world models)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+
+class GraphAwareCachedBaseline:
+    """
+    Graph-aware retrieval with cached world models for faster evaluation.
+    
+    Uses the same caching infrastructure as PIETemporalCachedBaseline but
+    adds graph traversal and bi-temporal filtering.
+    """
+    
+    def __init__(
+        self,
+        cache_dir: str | Path,
+        llm: LLMClient | None = None,
+        model: str = "gpt-4o",
+        extraction_model: str = "gpt-4o-mini",
+        embed_model: str = "text-embedding-3-large",
+        max_entities: int = 15,
+        max_hops: int = 2,
+        max_context_chars: int = 12_000,
+    ):
+        from pathlib import Path
+        from benchmarks.common.cache import CachedWorldModel
+        
+        self.cache_dir = Path(cache_dir)
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
+        
+        self.llm = llm or LLMClient()
+        self.model = model
+        self.extraction_model = extraction_model
+        self.embed_model = embed_model
+        self.max_entities = max_entities
+        self.max_hops = max_hops
+        self.max_context_chars = max_context_chars
+        
+        self._cached_models: dict[str, "CachedWorldModel"] = {}
+    
+    def _get_cached_world_model(self, item: dict[str, Any]) -> "CachedWorldModel":
+        from benchmarks.common.cache import CachedWorldModel
+        
+        qid = item["question_id"]
+        if qid in self._cached_models:
+            return self._cached_models[qid]
+        
+        cache_path = self.cache_dir / f"{qid}_world_model.json"
+        
+        def build_fn():
+            return _build_world_model_for_question(
+                item, self.llm, self.extraction_model
+            )
+        
+        cached_wm = CachedWorldModel.load_or_build(
+            cache_path=cache_path,
+            build_fn=build_fn,
+            llm=self.llm,
+            embed_model=self.embed_model,
+        )
+        
+        self._cached_models[qid] = cached_wm
+        return cached_wm
+    
+    def run(self, item: dict[str, Any]) -> BaselineResult:
+        from pie.retrieval.graph_retriever import retrieve_subgraph
+        
+        t0 = time.time()
+        
+        try:
+            cached_wm = self._get_cached_world_model(item)
+            question = item["question"]
+            question_ts = parse_question_date(item["question_date"])
+            
+            # Graph-aware retrieval using cached world model
+            subgraph = retrieve_subgraph(
+                query=question,
+                world_model=cached_wm.world_model,
+                llm=self.llm,
+                max_entities=self.max_entities,
+                max_hops=self.max_hops,
+            )
+            
+            # Also do RAG on chunks (hybrid approach)
+            chunks = _chunk_haystack(
+                item["haystack_sessions"],
+                item["haystack_dates"],
+                chunk_by="turn",
+            )
+            
+            query_embedding = self.llm.embed([question])[0]
+            chunk_texts = [c["text"][:2000] for c in chunks]
+            chunk_embeddings = _batch_embed(chunk_texts, self.llm)
+            
+            chunk_scores = []
+            for i, emb in enumerate(chunk_embeddings):
+                sim = cosine_similarity(query_embedding, emb)
+                chunk_scores.append((i, sim, chunks[i]))
+            
+            chunk_scores.sort(key=lambda x: x[1], reverse=True)
+            top_chunks = chunk_scores[:5]
+            
+            # Compile hybrid context
+            context_parts = []
+            
+            if subgraph.entity_ids:
+                entities = subgraph.get_entities(cached_wm.world_model)
+                context_parts.append("=== Extracted Knowledge ===")
+                for entity in entities[:self.max_entities]:
+                    lines = [f"• {entity.name} ({entity.type.value})"]
+                    state = entity.current_state
+                    if isinstance(state, dict):
+                        for k, v in list(state.items())[:5]:
+                            if v and k not in ("_is_event",):
+                                lines.append(f"  {k}: {v}")
+                    context_parts.append("\n".join(lines))
+            
+            context_parts.append("\n=== Relevant Conversations ===")
+            for idx, score, chunk in top_chunks:
+                context_parts.append(f"\n[{chunk['date']}] (relevance: {score:.2f})")
+                context_parts.append(chunk["text"][:1500])
+            
+            context = "\n".join(context_parts)[:self.max_context_chars]
+            
+            answer = _ask_llm_temporal(
+                context=context,
+                question=question,
+                question_date=item["question_date"],
+                llm=self.llm,
+                model=self.model,
+            )
+            
+            return BaselineResult(
+                question_id=item["question_id"],
+                question_type=item["question_type"],
+                question=question,
+                gold_answer=item["answer"],
+                hypothesis=answer,
+                baseline_name="graph_aware_cached",
+                model=self.model,
+                latency_ms=(time.time() - t0) * 1000,
+                context_chars=len(context),
+                retrieval_count=len(subgraph.entity_ids) + len(top_chunks),
+            )
+        
+        except Exception as e:
+            logger.exception(f"Graph-aware cached failed for {item['question_id']}")
+            return BaselineResult(
+                question_id=item["question_id"],
+                question_type=item["question_type"],
+                question=item["question"],
+                gold_answer=item["answer"],
+                hypothesis=f"Error: {e}",
+                baseline_name="graph_aware_cached",
+                model=self.model,
+                latency_ms=(time.time() - t0) * 1000,
+                error=str(e),
+            )
+
+
+def graph_aware_cached(
+    item: dict[str, Any],
+    baseline: GraphAwareCachedBaseline | None = None,
+    cache_dir: str | Path | None = None,
+    llm: LLMClient | None = None,
+    model: str = "gpt-4o",
+    extraction_model: str = "gpt-4o-mini",
+) -> BaselineResult:
+    """Function wrapper for GraphAwareCachedBaseline."""
+    from pathlib import Path
+    
+    if baseline is not None:
+        return baseline.run(item)
+    
+    if cache_dir is None:
+        cache_dir = Path(__file__).parent / "cache"
+    
+    baseline = GraphAwareCachedBaseline(
+        cache_dir=cache_dir,
+        llm=llm,
+        model=model,
+        extraction_model=extraction_model,
+    )
+    return baseline.run(item)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # Baseline registry (for runner)
 # ═══════════════════════════════════════════════════════════════════════════════
 
@@ -1444,4 +1630,5 @@ BASELINES = {
     "pie_temporal": pie_temporal,
     "pie_temporal_cached": pie_temporal_cached,
     "graph_aware": graph_aware,
+    "graph_aware_cached": graph_aware_cached,
 }
