@@ -37,6 +37,10 @@
 - [x] Built graph retriever with intent parsing
 - [x] Created research ideas doc with RL directions
 - [x] Ran retriever comparison
+- [x] Added MIT LICENSE
+- [x] Updated README with real benchmark numbers
+- [x] Fixed .gitignore (excluded large files)
+- [x] Pushed to GitHub (https://github.com/pkempire/pie)
 
 ### Evening (Now → 11pm)
 

@@ -141,21 +141,36 @@ def select_seeds(
                 seeds[entity.id] = ScoredEntity(entity.id, score * 0.95, "named_fuzzy")
     
     # 2. Embedding search (constrained by intent)
+    # NOTE: WorldModel.find_by_embedding only works if entities have embeddings.
+    # Since we don't persist embeddings, compute them on the fly.
     query_embedding = llm.embed_single(intent.raw_query)
     
     # Filter by entity type if specified
-    type_filter = intent.entity_types[0] if len(intent.entity_types) == 1 else None
+    type_filter = set(intent.entity_types) if intent.entity_types else None
+    candidate_ids = set(world_model.entities.keys()) - set(seeds.keys())
     
-    embedding_matches = world_model.find_by_embedding(
-        query_embedding,
-        top_k=max_seeds * 2,
-        entity_type=type_filter,
-        exclude_ids=set(seeds.keys()),
-    )
+    if type_filter:
+        candidate_ids = {eid for eid in candidate_ids 
+                        if world_model.entities[eid].type.value in type_filter}
     
-    for entity, sim in embedding_matches:
-        if sim >= embedding_threshold and entity.id not in seeds:
-            seeds[entity.id] = ScoredEntity(entity.id, sim, "embedding")
+    # Batch compute embeddings for candidates
+    if candidate_ids:
+        candidates = [(eid, world_model.entities[eid]) for eid in list(candidate_ids)[:200]]
+        texts = []
+        for eid, entity in candidates:
+            state = entity.current_state
+            desc = state.get("description", str(state)[:200]) if isinstance(state, dict) else str(state)[:200]
+            text = f"{entity.name} ({entity.type.value}): {desc}"
+            texts.append(text)
+        
+        try:
+            embeddings = llm.embed(texts)
+            for (eid, entity), emb in zip(candidates, embeddings):
+                sim = cosine_similarity(query_embedding, emb)
+                if sim >= embedding_threshold and eid not in seeds:
+                    seeds[eid] = ScoredEntity(eid, sim, "embedding")
+        except Exception as e:
+            logger.warning(f"Batch embedding failed: {e}")
     
     # 3. Type-based retrieval if we have type constraints but few seeds
     if intent.entity_types and len(seeds) < max_seeds // 2:

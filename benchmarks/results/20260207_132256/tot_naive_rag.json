@@ -1,0 +1,17 @@
+{
+  "benchmark": "tot",
+  "approach": "naive_rag",
+  "accuracy": 0.0,
+  "total": 5,
+  "correct": 0,
+  "by_type": {
+    "before_after": {
+      "correct": 0,
+      "total": 5,
+      "accuracy": 0.0
+    }
+  },
+  "elapsed_seconds": 23.53304409980774,
+  "timestamp": "2026-02-07T13:22:56.982809",
+  "model": "gpt-4o-mini"
+}
