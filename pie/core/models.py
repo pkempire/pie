@@ -81,15 +81,31 @@ class Conversation:
 
 @dataclass
 class Entity:
-    """An entity in the world model graph."""
+    """An entity in the world model graph.
+    
+    Bi-temporal modeling:
+    - ingested_at / first_seen / last_seen: SYSTEM TIME (when we learned about it)
+    - valid_from / valid_to: EVENT TIME (when it was actually true/active in the world)
+    
+    This distinction is critical for temporal queries:
+    - "What did I know on Jan 15?" → filter by ingested_at
+    - "What was happening in December?" → filter by valid_from/valid_to
+    """
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     type: EntityType = EntityType.CONCEPT
     name: str = ""
     aliases: list[str] = field(default_factory=list)
     current_state: dict[str, Any] = field(default_factory=dict)
     created_from: str | None = None      # conversation_id
-    first_seen: float = field(default_factory=time.time)
-    last_seen: float = field(default_factory=time.time)
+    
+    # SYSTEM TIME: when we ingested this information
+    first_seen: float = field(default_factory=time.time)  # first ingestion
+    last_seen: float = field(default_factory=time.time)   # last update
+    
+    # EVENT TIME: when this was actually valid in the real world
+    valid_from: float | None = None   # start of validity (None = unknown/always)
+    valid_to: float | None = None     # end of validity (None = still valid/ongoing)
+    
     importance: float = 0.0
     embedding: list[float] | None = None
     
@@ -109,7 +125,12 @@ class Entity:
 
 @dataclass
 class StateTransition:
-    """A state change for an entity."""
+    """A state change for an entity.
+    
+    Bi-temporal modeling:
+    - ingested_at: SYSTEM TIME (when we learned about this change)
+    - valid_at: EVENT TIME (when the change actually occurred)
+    """
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     entity_id: str = ""
     from_state: dict[str, Any] | None = None
@@ -117,20 +138,40 @@ class StateTransition:
     transition_type: TransitionType = TransitionType.UPDATE
     trigger_conversation_id: str = ""
     trigger_summary: str = ""
+    
+    # SYSTEM TIME: when we ingested this transition
+    ingested_at: float = field(default_factory=time.time)
+    # Legacy field for backward compat - use ingested_at
     timestamp: float = field(default_factory=time.time)
+    
+    # EVENT TIME: when this actually happened in the real world
+    valid_at: float | None = None  # None = same as ingested_at (unknown)
+    
     confidence: float = 1.0
 
 
 @dataclass
 class Relationship:
-    """A relationship between two entities."""
+    """A relationship between two entities.
+    
+    Bi-temporal modeling:
+    - ingested_at: SYSTEM TIME (when we learned about this relationship)
+    - valid_from / valid_to: EVENT TIME (when this relationship was active)
+    """
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     source_id: str = ""
     target_id: str = ""
     type: RelationshipType = RelationshipType.RELATED_TO
     description: str = ""
     source_conversation_id: str | None = None
-    timestamp: float = field(default_factory=time.time)
+    
+    # SYSTEM TIME
+    ingested_at: float = field(default_factory=time.time)
+    timestamp: float = field(default_factory=time.time)  # legacy compat
+    
+    # EVENT TIME: when this relationship was active
+    valid_from: float | None = None  # start of relationship
+    valid_to: float | None = None    # end (None = still active)
 
 
 @dataclass

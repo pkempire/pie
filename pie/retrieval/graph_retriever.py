@@ -20,6 +20,7 @@ from typing import Literal
 
 from pie.core.llm import LLMClient
 from pie.core.world_model import WorldModel, cosine_similarity
+from pie.core.temporal import TemporalFilter
 
 logger = logging.getLogger("pie.retrieval")
 
@@ -294,20 +295,28 @@ def filter_by_temporal_intent(
     world_model: WorldModel,
 ) -> list[TraversalPath]:
     """
-    Re-score paths based on temporal constraints.
+    Re-score paths based on temporal constraints using bi-temporal filtering.
+    
+    Bi-temporal dimensions:
+    - System time (ingested_at): When we learned about it
+    - Event time (valid_at/valid_from/valid_to): When it actually happened
     
     Temporal patterns:
     - "evolution": prioritize entities with many transitions
-    - "first"/"last": prioritize by first_seen/last_seen
-    - "during" + time_anchor: filter to time range
+    - "first"/"last": prioritize by first_seen/last_seen  
+    - "during" + time_anchor: filter to time range using TemporalFilter
     """
     if not intent.temporal_pattern and not intent.time_anchor:
         return paths
+    
+    # Build temporal filter from intent
+    temporal_filter = TemporalFilter.from_query(intent.raw_query) if intent.raw_query else None
     
     rescored = []
     
     for path in paths:
         temporal_score = 1.0
+        entity_matches = 0
         
         for eid in path.entity_ids:
             entity = world_model.get_entity(eid)
@@ -316,28 +325,39 @@ def filter_by_temporal_intent(
             
             transitions = world_model.get_transitions(eid)
             
+            # Bi-temporal filter: check if entity is in scope
+            if temporal_filter:
+                if not temporal_filter.matches_entity(entity):
+                    temporal_score *= 0.1  # heavy penalty but don't exclude
+                else:
+                    entity_matches += 1
+            
             if intent.temporal_pattern == "evolution":
                 # Boost entities with rich history
                 temporal_score *= min(1.0 + len(transitions) * 0.1, 2.0)
             
             elif intent.temporal_pattern in ("first", "earliest"):
-                # Score by how early this entity appeared
-                # Lower first_seen = higher score
-                if entity.first_seen > 0:
-                    # Normalize: entities from 2+ years ago get max boost
+                # Score by how early this entity appeared (event time preferred)
+                valid_from = getattr(entity, 'valid_from', None)
+                ref_time = valid_from or entity.first_seen
+                if ref_time > 0:
                     import time
-                    age_days = (time.time() - entity.first_seen) / 86400
+                    age_days = (time.time() - ref_time) / 86400
                     temporal_score *= min(1.0 + age_days / 365, 2.0)
             
             elif intent.temporal_pattern in ("last", "latest", "recent"):
-                # Score by recency
-                if entity.last_seen > 0:
+                # Score by recency (event time preferred)
+                valid_to = getattr(entity, 'valid_to', None)
+                ref_time = valid_to or entity.last_seen
+                if ref_time > 0:
                     import time
-                    days_ago = (time.time() - entity.last_seen) / 86400
-                    # Recent = higher score
+                    days_ago = (time.time() - ref_time) / 86400
                     temporal_score *= max(0.3, 1.0 - days_ago / 180)
-            
-            # TODO: parse time_anchor into time_range and filter
+        
+        # Boost paths where more entities match temporal filter
+        if temporal_filter and len(path.entity_ids) > 0:
+            match_ratio = entity_matches / len(path.entity_ids)
+            temporal_score *= (0.5 + 0.5 * match_ratio)
         
         rescored.append(TraversalPath(
             entity_ids=path.entity_ids,

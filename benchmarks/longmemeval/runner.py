@@ -65,6 +65,7 @@ from benchmarks.longmemeval.baselines import (
     naive_rag,
     pie_temporal,
     pie_temporal_cached,
+    graph_aware,
     PIETemporalCachedBaseline,
     BASELINES,
 )
@@ -336,6 +337,14 @@ def run_single_question(
         result = pie_temporal_cached(
             item,
             cache_dir=cache_dir,
+            llm=llm,
+            model=model,
+            extraction_model=extraction_model,
+        )
+    elif baseline_name == "graph_aware":
+        result = graph_aware(
+            item,
+            world_model=cached_wm,
             llm=llm,
             model=model,
             extraction_model=extraction_model,
@@ -976,7 +985,7 @@ Examples:
         "--baseline", "-b",
         type=str,
         default="pie_temporal",
-        choices=["full_context", "naive_rag", "naive_rag_session", "pie_temporal", "pie_temporal_cached", "all"],
+        choices=["full_context", "naive_rag", "naive_rag_session", "pie_temporal", "pie_temporal_cached", "graph_aware", "all"],
         help="Which baseline to run (default: pie_temporal)",
     )
 

@@ -11,6 +11,7 @@ Each baseline takes a question item and returns an answer string.
 """
 
 from __future__ import annotations
+import datetime
 import logging
 import time
 from dataclasses import dataclass, field
@@ -1293,6 +1294,147 @@ def pie_temporal_cached(
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# Baseline 4: Graph-Aware Retrieval
+# ═══════════════════════════════════════════════════════════════════════════════
+
+
+def graph_aware(
+    item: dict[str, Any],
+    world_model: WorldModel | None = None,
+    llm: LLMClient | None = None,
+    model: str = "gpt-4o",
+    extraction_model: str = "gpt-4o-mini",
+    max_entities: int = 15,
+    max_hops: int = 2,
+    max_context_chars: int = 12_000,
+) -> BaselineResult:
+    """
+    Hybrid graph-aware retrieval baseline:
+      1. Parse query intent with LLM
+      2. Select seed entities (named, embedding, type-constrained)
+      3. Traverse graph along relevant edges
+      4. Also retrieve raw conversation chunks (RAG fallback)
+      5. Combine entity context + raw chunks
+      6. Answer using hybrid context
+    
+    This hybrid approach uses graph structure for structured info
+    while keeping RAG for simple facts that weren't extracted as entities.
+    """
+    from pie.retrieval.graph_retriever import retrieve_subgraph
+    from pie.core.temporal import format_temporal_context
+    
+    llm = llm or LLMClient()
+    t0 = time.time()
+    
+    try:
+        # Step 1: Build or reuse world model
+        if world_model is None:
+            world_model = _build_world_model_for_question(
+                item, llm, extraction_model
+            )
+        
+        question = item["question"]
+        question_ts = parse_question_date(item["question_date"])
+        
+        # Step 2: Graph-aware retrieval
+        subgraph = retrieve_subgraph(
+            query=question,
+            world_model=world_model,
+            llm=llm,
+            max_entities=max_entities,
+            max_hops=max_hops,
+        )
+        
+        # Step 3: Also do RAG on raw conversation chunks
+        # This catches simple facts not extracted as entities
+        chunks = _chunk_haystack(
+            item["haystack_sessions"],
+            item["haystack_dates"],
+            chunk_by="turn",
+        )
+        
+        # Embed and retrieve top chunks
+        query_embedding = llm.embed([question])[0]
+        chunk_texts = [c["text"][:2000] for c in chunks]
+        chunk_embeddings = _batch_embed(chunk_texts, llm)
+        
+        chunk_scores = []
+        for i, emb in enumerate(chunk_embeddings):
+            sim = cosine_similarity(query_embedding, emb)
+            chunk_scores.append((i, sim, chunks[i]))
+        
+        chunk_scores.sort(key=lambda x: x[1], reverse=True)
+        top_chunks = chunk_scores[:5]  # Top 5 raw chunks
+        
+        # Step 4: Compile hybrid context
+        context_parts = []
+        
+        # Part A: Entity-based context (if entities found)
+        if subgraph.entity_ids:
+            entities = subgraph.get_entities(world_model)
+            
+            intent = subgraph.intent
+            if intent.temporal_pattern:
+                context_parts.append(f"[Query analysis: type={intent.query_type}, temporal={intent.temporal_pattern}]")
+            
+            context_parts.append("=== Extracted Knowledge ===")
+            for entity in entities[:max_entities]:
+                lines = [f"\n• {entity.name} ({entity.type.value})"]
+                
+                state = entity.current_state
+                if isinstance(state, dict):
+                    for k, v in list(state.items())[:5]:
+                        if v and k not in ("_is_event",):
+                            lines.append(f"  {k}: {v}")
+                
+                context_parts.append("\n".join(lines))
+        
+        # Part B: Raw conversation chunks (RAG fallback)
+        context_parts.append("\n=== Relevant Conversations ===")
+        for idx, score, chunk in top_chunks:
+            context_parts.append(f"\n[{chunk['date']}] (relevance: {score:.2f})")
+            context_parts.append(chunk["text"][:1500])
+        
+        context = "\n".join(context_parts)[:max_context_chars]
+        
+        # Step 5: Answer
+        answer = _ask_llm_temporal(
+            context=context,
+            question=question,
+            question_date=item["question_date"],
+            llm=llm,
+            model=model,
+        )
+        
+        return BaselineResult(
+            question_id=item["question_id"],
+            question_type=item["question_type"],
+            question=question,
+            gold_answer=item["answer"],
+            hypothesis=answer,
+            baseline_name="graph_aware",
+            model=model,
+            latency_ms=(time.time() - t0) * 1000,
+            context_chars=len(context),
+            retrieval_count=len(subgraph.entity_ids) + len(top_chunks),
+        )
+    
+    except Exception as e:
+        logger.exception(f"Graph-aware retrieval failed for {item['question_id']}")
+        return BaselineResult(
+            question_id=item["question_id"],
+            question_type=item["question_type"],
+            question=item["question"],
+            gold_answer=item["answer"],
+            hypothesis=f"Error: {e}",
+            baseline_name="graph_aware",
+            model=model,
+            latency_ms=(time.time() - t0) * 1000,
+            error=str(e),
+        )
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # Baseline registry (for runner)
 # ═══════════════════════════════════════════════════════════════════════════════
 
@@ -1301,4 +1443,5 @@ BASELINES = {
     "naive_rag": naive_rag,
     "pie_temporal": pie_temporal,
     "pie_temporal_cached": pie_temporal_cached,
+    "graph_aware": graph_aware,
 }
