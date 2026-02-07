@@ -483,4 +483,4 @@ The goal: anyone building agent memory systems should be able to add temporal st
 
 *PIE is open source: [github.com/pkempire/pie](https://github.com/pkempire/pie)*
 
-*[TODO: contact / discussion links]*
+GitHub: [pkempire/pie](https://github.com/pkempire/pie) | Twitter: [@parthkocheta](https://twitter.com/parthkocheta)

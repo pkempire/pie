@@ -1,0 +1,488 @@
+{
+  "meta": {
+    "model": "gpt-4o-mini",
+    "limit": 50,
+    "timestamp": "2026-02-05T13:20:28.896859"
+  },
+  "overall": {
+    "baseline_accuracy": 41.66666666666667,
+    "hybrid_accuracy": 56.25,
+    "delta": 14.583333333333329
+  },
+  "by_type": {
+    "before_after": {
+      "baseline_accuracy": 0.0,
+      "hybrid_accuracy": 83.33333333333334,
+      "count": 6
+    },
+    "event_at_the_time_of_another_event": {
+      "baseline_accuracy": 100.0,
+      "hybrid_accuracy": 83.33333333333334,
+      "count": 6
+    },
+    "event_at_time_t": {
+      "baseline_accuracy": 16.666666666666664,
+      "hybrid_accuracy": 50.0,
+      "count": 6
+    },
+    "event_at_what_time": {
+      "baseline_accuracy": 100.0,
+      "hybrid_accuracy": 83.33333333333334,
+      "count": 6
+    },
+    "first_last": {
+      "baseline_accuracy": 50.0,
+      "hybrid_accuracy": 100.0,
+      "count": 6
+    },
+    "number_of_events_in_time_interval": {
+      "baseline_accuracy": 16.666666666666664,
+      "hybrid_accuracy": 0.0,
+      "count": 6
+    },
+    "relation_duration": {
+      "baseline_accuracy": 50.0,
+      "hybrid_accuracy": 33.33333333333333,
+      "count": 6
+    },
+    "timeline": {
+      "baseline_accuracy": 0.0,
+      "hybrid_accuracy": 16.666666666666664,
+      "count": 6
+    }
+  },
+  "details": [
+    {
+      "question_type": "before_after",
+      "question": "Find the entity that was the R11 of E57 immediately after E95 was the R11 of E57.",
+      "label": "E76",
+      "baseline_answer": "E36",
+      "hybrid_answer": "E76",
+      "baseline_correct": false,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "before_after",
+      "question": "Find the entity that was the R11 of E57 immediately after E95 was the R11 of E57.",
+      "label": "E76",
+      "baseline_answer": "E98",
+      "hybrid_answer": "E76",
+      "baseline_correct": false,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "before_after",
+      "question": "Find the entity that was the R11 of E57 immediately after E95 was the R11 of E57.",
+      "label": "E76",
+      "baseline_answer": "E6",
+      "hybrid_answer": "E76",
+      "baseline_correct": false,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "before_after",
+      "question": "Find the entity that was the R11 of E57 immediately after E95 was the R11 of E57.",
+      "label": "E76",
+      "baseline_answer": "E94",
+      "hybrid_answer": "E76",
+      "baseline_correct": false,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "before_after",
+      "question": "Find the entity that was the R11 of E57 immediately after E95 was the R11 of E57.",
+      "label": "E76",
+      "baseline_answer": "E98",
+      "hybrid_answer": "E76",
+      "baseline_correct": false,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "before_after",
+      "question": "Which entity was the R96 of E59 immediately before E92?",
+      "label": "E11",
+      "baseline_answer": "E9",
+      "hybrid_answer": "E9",
+      "baseline_correct": false,
+      "hybrid_correct": false
+    },
+    {
+      "question_type": "event_at_the_time_of_another_event",
+      "question": "At the start time of E92 being the R17 of E59, E22 was the R11 of which entity?",
+      "label": "E30",
+      "baseline_answer": "E30",
+      "hybrid_answer": "E30",
+      "baseline_correct": true,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "event_at_the_time_of_another_event",
+      "question": "At the start time of E92 being the R17 of E59, E22 was the R11 of which entity?",
+      "label": "E30",
+      "baseline_answer": "E30",
+      "hybrid_answer": "E30",
+      "baseline_correct": true,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "event_at_the_time_of_another_event",
+      "question": "At the start time of E92 being the R17 of E59, E22 was the R11 of which entity?",
+      "label": "E30",
+      "baseline_answer": "E30",
+      "hybrid_answer": "E92",
+      "baseline_correct": true,
+      "hybrid_correct": false
+    },
+    {
+      "question_type": "event_at_the_time_of_another_event",
+      "question": "At the start time of E92 being the R17 of E59, E22 was the R11 of which entity?",
+      "label": "E30",
+      "baseline_answer": "E30",
+      "hybrid_answer": "E30",
+      "baseline_correct": true,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "event_at_the_time_of_another_event",
+      "question": "At the start time of E92 being the R17 of E59, E22 was the R11 of which entity?",
+      "label": "E30",
+      "baseline_answer": "E30",
+      "hybrid_answer": "E30",
+      "baseline_correct": true,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "event_at_the_time_of_another_event",
+      "question": "E11 was the R63 of which entity at the time when E42 started being the R88 of E24?",
+      "label": "E24",
+      "baseline_answer": "E24",
+      "hybrid_answer": "E24",
+      "baseline_correct": true,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "event_at_time_t",
+      "question": "Which entity was the R63 of E69 in 1982?",
+      "label": "E92",
+      "baseline_answer": "E22",
+      "hybrid_answer": "E92",
+      "baseline_correct": false,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "event_at_time_t",
+      "question": "Which entity was the R63 of E69 in 1982?",
+      "label": "E92",
+      "baseline_answer": "E22",
+      "hybrid_answer": "E22",
+      "baseline_correct": false,
+      "hybrid_correct": false
+    },
+    {
+      "question_type": "event_at_time_t",
+      "question": "Which entity was the R63 of E69 in 1982?",
+      "label": "E92",
+      "baseline_answer": "E33",
+      "hybrid_answer": "E92",
+      "baseline_correct": false,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "event_at_time_t",
+      "question": "Which entity was the R63 of E69 in 1982?",
+      "label": "E92",
+      "baseline_answer": "E22",
+      "hybrid_answer": "E92",
+      "baseline_correct": false,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "event_at_time_t",
+      "question": "Which entity was the R63 of E69 in 1982?",
+      "label": "E92",
+      "baseline_answer": "E22",
+      "hybrid_answer": "E22",
+      "baseline_correct": false,
+      "hybrid_correct": false
+    },
+    {
+      "question_type": "event_at_time_t",
+      "question": "In 1988, E41 was the R53 of which entity?",
+      "label": "E22",
+      "baseline_answer": "E22",
+      "hybrid_answer": "E9",
+      "baseline_correct": true,
+      "hybrid_correct": false
+    },
+    {
+      "question_type": "event_at_what_time",
+      "question": "At what time did E92 stop being the R88 of E11?",
+      "label": "1985",
+      "baseline_answer": "1985",
+      "hybrid_answer": "1985",
+      "baseline_correct": true,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "event_at_what_time",
+      "question": "At what time did E92 stop being the R88 of E11?",
+      "label": "1985",
+      "baseline_answer": "1985",
+      "hybrid_answer": "1985",
+      "baseline_correct": true,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "event_at_what_time",
+      "question": "At what time did E92 stop being the R88 of E11?",
+      "label": "1985",
+      "baseline_answer": "1985",
+      "hybrid_answer": "1985",
+      "baseline_correct": true,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "event_at_what_time",
+      "question": "At what time did E92 stop being the R88 of E11?",
+      "label": "1985",
+      "baseline_answer": "1985",
+      "hybrid_answer": "1985",
+      "baseline_correct": true,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "event_at_what_time",
+      "question": "At what time did E92 stop being the R88 of E11?",
+      "label": "1985",
+      "baseline_answer": "1985",
+      "hybrid_answer": "1985",
+      "baseline_correct": true,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "event_at_what_time",
+      "question": "At what time did the entity E74 stop being the R20 of E63?",
+      "label": "1973",
+      "baseline_answer": "1973",
+      "hybrid_answer": "1977",
+      "baseline_correct": true,
+      "hybrid_correct": false
+    },
+    {
+      "question_type": "first_last",
+      "question": "Identify the entity that was the first R90 of entity E11.",
+      "label": "E24",
+      "baseline_answer": "E59",
+      "hybrid_answer": "E24",
+      "baseline_correct": false,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "first_last",
+      "question": "Identify the entity that was the first R90 of entity E11.",
+      "label": "E24",
+      "baseline_answer": "E24",
+      "hybrid_answer": "E24",
+      "baseline_correct": true,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "first_last",
+      "question": "Identify the entity that was the first R90 of entity E11.",
+      "label": "E24",
+      "baseline_answer": "E59",
+      "hybrid_answer": "E24",
+      "baseline_correct": false,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "first_last",
+      "question": "Identify the entity that was the first R90 of entity E11.",
+      "label": "E24",
+      "baseline_answer": "E24",
+      "hybrid_answer": "E24",
+      "baseline_correct": true,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "first_last",
+      "question": "Identify the entity that was the first R90 of entity E11.",
+      "label": "E24",
+      "baseline_answer": "E24",
+      "hybrid_answer": "E24",
+      "baseline_correct": true,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "first_last",
+      "question": "Which entity has been the last R85 of E25?",
+      "label": "E69",
+      "baseline_answer": "E33",
+      "hybrid_answer": "E69",
+      "baseline_correct": false,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "number_of_events_in_time_interval",
+      "question": "Find the number of unique entities that were the R22 of E83 between 1921 to 1928. Relations that ended in 1921 or started in 1928 must be counted as well.",
+      "label": "1",
+      "baseline_answer": "3",
+      "hybrid_answer": "2",
+      "baseline_correct": false,
+      "hybrid_correct": false
+    },
+    {
+      "question_type": "number_of_events_in_time_interval",
+      "question": "Find the number of unique entities that were the R22 of E83 between 1921 to 1928. Relations that ended in 1921 or started in 1928 must be counted as well.",
+      "label": "1",
+      "baseline_answer": "2",
+      "hybrid_answer": "2",
+      "baseline_correct": false,
+      "hybrid_correct": false
+    },
+    {
+      "question_type": "number_of_events_in_time_interval",
+      "question": "Find the number of unique entities that were the R22 of E83 between 1921 to 1928. Relations that ended in 1921 or started in 1928 must be counted as well.",
+      "label": "1",
+      "baseline_answer": "3",
+      "hybrid_answer": "2",
+      "baseline_correct": false,
+      "hybrid_correct": false
+    },
+    {
+      "question_type": "number_of_events_in_time_interval",
+      "question": "Find the number of unique entities that were the R22 of E83 between 1921 to 1928. Relations that ended in 1921 or started in 1928 must be counted as well.",
+      "label": "1",
+      "baseline_answer": "5",
+      "hybrid_answer": "3",
+      "baseline_correct": false,
+      "hybrid_correct": false
+    },
+    {
+      "question_type": "number_of_events_in_time_interval",
+      "question": "Find the number of unique entities that were the R22 of E83 between 1921 to 1928. Relations that ended in 1921 or started in 1928 must be counted as well.",
+      "label": "1",
+      "baseline_answer": "3",
+      "hybrid_answer": "2",
+      "baseline_correct": false,
+      "hybrid_correct": false
+    },
+    {
+      "question_type": "number_of_events_in_time_interval",
+      "question": "Between 1941 to 1942, how many unique entities where the R35 of E59? Relations that ended in 1941 or started in 1942 should also be counted.",
+      "label": "0",
+      "baseline_answer": "0",
+      "hybrid_answer": "E94",
+      "baseline_correct": true,
+      "hybrid_correct": false
+    },
+    {
+      "question_type": "relation_duration",
+      "question": "The 3rd time it happened, for how many years was E33 the R53 of E22? The duration can be computed by subtracting the start time from the end time.",
+      "label": "2",
+      "baseline_answer": "1",
+      "hybrid_answer": "1",
+      "baseline_correct": false,
+      "hybrid_correct": false
+    },
+    {
+      "question_type": "relation_duration",
+      "question": "The 3rd time it happened, for how many years was E33 the R53 of E22? The duration can be computed by subtracting the start time from the end time.",
+      "label": "2",
+      "baseline_answer": "6",
+      "hybrid_answer": "1",
+      "baseline_correct": false,
+      "hybrid_correct": false
+    },
+    {
+      "question_type": "relation_duration",
+      "question": "The 3rd time it happened, for how many years was E33 the R53 of E22? The duration can be computed by subtracting the start time from the end time.",
+      "label": "2",
+      "baseline_answer": "2",
+      "hybrid_answer": "1",
+      "baseline_correct": true,
+      "hybrid_correct": false
+    },
+    {
+      "question_type": "relation_duration",
+      "question": "The 3rd time it happened, for how many years was E33 the R53 of E22? The duration can be computed by subtracting the start time from the end time.",
+      "label": "2",
+      "baseline_answer": "2",
+      "hybrid_answer": "1",
+      "baseline_correct": true,
+      "hybrid_correct": false
+    },
+    {
+      "question_type": "relation_duration",
+      "question": "The 3rd time it happened, for how many years was E33 the R53 of E22? The duration can be computed by subtracting the start time from the end time.",
+      "label": "2",
+      "baseline_answer": "2",
+      "hybrid_answer": "2",
+      "baseline_correct": true,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "relation_duration",
+      "question": "For how many years did it last when E11 was the R17 of E59 for the 3rd time? The duration can be computed by subtracting the start time from the end time.",
+      "label": "8",
+      "baseline_answer": "9",
+      "hybrid_answer": "8",
+      "baseline_correct": false,
+      "hybrid_correct": true
+    },
+    {
+      "question_type": "timeline",
+      "question": "Give me a comma-separated list of all entities that were the R20 of E95 in the order of start time from lowest to highest.",
+      "label": "E59,E57,E43,E60,E98",
+      "baseline_answer": "E59,E43,E10",
+      "hybrid_answer": "E59,E57,E43,E10,E30,E6,E98",
+      "baseline_correct": false,
+      "hybrid_correct": false
+    },
+    {
+      "question_type": "timeline",
+      "question": "Give me a comma-separated list of all entities that were the R20 of E95 in the order of start time from lowest to highest.",
+      "label": "E59,E57,E43,E60,E98",
+      "baseline_answer": "E59,E57",
+      "hybrid_answer": "E59,E57,E30,E10,E98,E43",
+      "baseline_correct": false,
+      "hybrid_correct": false
+    },
+    {
+      "question_type": "timeline",
+      "question": "Give me a comma-separated list of all entities that were the R20 of E95 in the order of start time from lowest to highest.",
+      "label": "E59,E57,E43,E60,E98",
+      "baseline_answer": "E43,E27",
+      "hybrid_answer": "E59,E57,E6,E30,E43,E98,E10",
+      "baseline_correct": false,
+      "hybrid_correct": false
+    },
+    {
+      "question_type": "timeline",
+      "question": "Give me a comma-separated list of all entities that were the R20 of E95 in the order of start time from lowest to highest.",
+      "label": "E59,E57,E43,E60,E98",
+      "baseline_answer": "E59,E57,E43",
+      "hybrid_answer": "E59,E57,E43,E30,E10,E98,E6,E26,E43,E98",
+      "baseline_correct": false,
+      "hybrid_correct": false
+    },
+    {
+      "question_type": "timeline",
+      "question": "Give me a comma-separated list of all entities that were the R20 of E95 in the order of start time from lowest to highest.",
+      "label": "E59,E57,E43,E60,E98",
+      "baseline_answer": "E59,E43",
+      "hybrid_answer": "E59,E57,E43,E30,E10,E6,E98",
+      "baseline_correct": false,
+      "hybrid_correct": false
+    },
+    {
+      "question_type": "timeline",
+      "question": "Which entities were the R96 of E94? Provide a comma-separated list of all entities sorted by end time from lowest to highest.",
+      "label": "E9,E33,E22",
+      "baseline_answer": "E30,E33,E17",
+      "hybrid_answer": "E9,E33,E22",
+      "baseline_correct": false,
+      "hybrid_correct": true
+    }
+  ]
+}

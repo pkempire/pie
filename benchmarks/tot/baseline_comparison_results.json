@@ -1,0 +1,167 @@
+{
+  "model": "gpt-5.2-mini",
+  "samples_per_type": 10,
+  "timestamp": "2026-02-05T14:27:29.034911",
+  "results": {
+    "naive": {
+      "sem_before_after": {
+        "correct": 0,
+        "total": 10
+      },
+      "sem_event_at_the_time_of_another_event": {
+        "correct": 0,
+        "total": 10
+      },
+      "sem_event_at_time_t": {
+        "correct": 0,
+        "total": 10
+      },
+      "sem_event_at_what_time": {
+        "correct": 0,
+        "total": 10
+      },
+      "sem_first_last": {
+        "correct": 0,
+        "total": 10
+      },
+      "sem_number_of_events_in_time_interval": {
+        "correct": 0,
+        "total": 10
+      },
+      "sem_relation_duration": {
+        "correct": 0,
+        "total": 10
+      },
+      "sem_timeline": {
+        "correct": 0,
+        "total": 10
+      },
+      "arith_add_subtract": {
+        "correct": 0,
+        "total": 10
+      },
+      "arith_compare": {
+        "correct": 0,
+        "total": 10
+      },
+      "arith_duration": {
+        "correct": 0,
+        "total": 10
+      },
+      "arith_multi_op": {
+        "correct": 0,
+        "total": 10
+      },
+      "arith_schedule": {
+        "correct": 0,
+        "total": 10
+      },
+      "arith_timezone": {
+        "correct": 0,
+        "total": 10
+      },
+      "arith_trick": {
+        "correct": 0,
+        "total": 10
+      }
+    },
+    "hybrid": {
+      "sem_before_after": {
+        "correct": 0,
+        "total": 10
+      },
+      "sem_event_at_the_time_of_another_event": {
+        "correct": 0,
+        "total": 10
+      },
+      "sem_event_at_time_t": {
+        "correct": 0,
+        "total": 10
+      },
+      "sem_event_at_what_time": {
+        "correct": 0,
+        "total": 10
+      },
+      "sem_first_last": {
+        "correct": 0,
+        "total": 10
+      },
+      "sem_number_of_events_in_time_interval": {
+        "correct": 0,
+        "total": 10
+      },
+      "sem_relation_duration": {
+        "correct": 0,
+        "total": 10
+      },
+      "sem_timeline": {
+        "correct": 0,
+        "total": 10
+      },
+      "arith_add_subtract": {
+        "correct": 0,
+        "total": 10
+      },
+      "arith_compare": {
+        "correct": 0,
+        "total": 10
+      },
+      "arith_duration": {
+        "correct": 0,
+        "total": 10
+      },
+      "arith_multi_op": {
+        "correct": 0,
+        "total": 10
+      },
+      "arith_schedule": {
+        "correct": 0,
+        "total": 10
+      },
+      "arith_timezone": {
+        "correct": 0,
+        "total": 10
+      },
+      "arith_trick": {
+        "correct": 0,
+        "total": 10
+      }
+    }
+  },
+  "totals": {
+    "naive": {
+      "semantic": {
+        "correct": 0,
+        "total": 80,
+        "accuracy": 0.0
+      },
+      "arithmetic": {
+        "correct": 0,
+        "total": 70,
+        "accuracy": 0.0
+      },
+      "overall": {
+        "correct": 0,
+        "total": 150,
+        "accuracy": 0.0
+      }
+    },
+    "hybrid": {
+      "semantic": {
+        "correct": 0,
+        "total": 80,
+        "accuracy": 0.0
+      },
+      "arithmetic": {
+        "correct": 0,
+        "total": 70,
+        "accuracy": 0.0
+      },
+      "overall": {
+        "correct": 0,
+        "total": 150,
+        "accuracy": 0.0
+      }
+    }
+  }
+}

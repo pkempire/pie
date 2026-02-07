@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+{% block title %}Simulate — {{ prospect.name }}{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto space-y-6">
+    <div>
+        <a href="{{ url_for('prospect_detail', prospect_id=prospect.id) }}" class="text-gray-500 hover:text-gray-700 text-sm">← Back to {{ prospect.name }}</a>
+        <h1 class="text-2xl font-bold mt-2">Simulate Email Sequence</h1>
+        <p class="text-gray-500">Test how <strong>{{ prospect.name }}</strong> at {{ prospect.company }} will respond to your content</p>
+    </div>
+    
+    <div class="grid grid-cols-2 gap-6">
+        <!-- Input Form -->
+        <div class="space-y-4">
+            <form method="POST" class="bg-white rounded-xl border p-6 space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Use Existing Play</label>
+                    <select name="play_id" id="play_select" class="w-full border rounded-lg px-3 py-2" onchange="updateEmailOptions()">
+                        <option value="">— Write custom email —</option>
+                        {% for play in sales_plays %}
+                        <option value="{{ play.id }}">{{ play.name }} ({{ play.emails|length }} emails)</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div id="email_select_container" class="hidden">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Select Email</label>
+                    <select name="email_idx" id="email_select" class="w-full border rounded-lg px-3 py-2">
+                    </select>
+                </div>
+                
+                <div id="custom_email_container">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Subject Line</label>
+                        <input type="text" name="subject" class="w-full border rounded-lg px-3 py-2" placeholder="Re: Modernizing content management at {{ prospect.company }}">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Email Body</label>
+                        <textarea name="body" rows="8" class="w-full border rounded-lg px-3 py-2 font-mono text-sm" placeholder="Hi {{ prospect.name.split()[0] if prospect.name else 'there' }},
+
+I wanted to reach out about..."></textarea>
+                    </div>
+                </div>
+                
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 font-medium">
+                    🔮 Run Simulation
+                </button>
+            </form>
+            
+            <!-- Prospect Context -->
+            <div class="bg-gray-50 rounded-xl p-4">
+                <h3 class="font-semibold text-sm text-gray-700 mb-2">Prospect Context</h3>
+                {% if prospect.pain_points %}
+                <div class="mb-3">
+                    <div class="text-xs text-gray-500 mb-1">Pain Points</div>
+                    <ul class="text-sm space-y-1">
+                        {% for pain in prospect.pain_points[:3] %}
+                        <li class="text-red-700">• {{ pain.description }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                {% if prospect.objections %}
+                <div>
+                    <div class="text-xs text-gray-500 mb-1">Open Objections</div>
+                    <ul class="text-sm space-y-1">
+                        {% for obj in prospect.objections if obj.status == 'open' %}
+                        <li class="text-amber-700">• {{ obj.description }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Simulation Results -->
+        <div>
+            {% if simulation_result %}
+            <div class="bg-white rounded-xl border p-6 space-y-4">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-semibold text-lg">Simulation Results</h2>
+                    <span class="px-3 py-1 rounded-full text-sm font-medium {% if simulation_result.risk_level == 'low' %}bg-green-100 text-green-700{% elif simulation_result.risk_level == 'medium' %}bg-amber-100 text-amber-700{% else %}bg-red-100 text-red-700{% endif %}">
+                        {{ simulation_result.risk_level }} risk
+                    </span>
+                </div>
+                
+                <!-- Engagement Predictions -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="text-2xl font-bold text-blue-600">{{ (simulation_result.open_probability * 100)|round(0)|int }}%</div>
+                        <div class="text-sm text-gray-500">Open Probability</div>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="text-2xl font-bold text-purple-600">{{ (simulation_result.response_probability * 100)|round(0)|int }}%</div>
+                        <div class="text-sm text-gray-500">Response Probability</div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <div class="text-sm text-gray-500 mb-1">Predicted Response Type</div>
+                    <div class="font-medium capitalize">{{ simulation_result.predicted_response_type }}</div>
+                </div>
+                
+                <!-- Pain Resonance -->
+                {% if simulation_result.pain_resonance %}
+                <div>
+                    <h3 class="font-medium mb-2">Pain Point Resonance</h3>
+                    <div class="space-y-2">
+                        {% for pr in simulation_result.pain_resonance %}
+                        <div class="flex items-center gap-2">
+                            <div class="flex-1 truncate text-sm">{{ pr.pain }}</div>
+                            <div class="w-24 bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-500 h-2 rounded-full" style="width: {{ pr.resonance_score * 100 }}%"></div>
+                            </div>
+                            <div class="text-sm text-gray-500 w-12 text-right">{{ (pr.resonance_score * 100)|round(0)|int }}%</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Objection Changes -->
+                {% if simulation_result.objection_changes %}
+                <div>
+                    <h3 class="font-medium mb-2">Objection Impact</h3>
+                    <div class="space-y-2">
+                        {% for oc in simulation_result.objection_changes %}
+                        <div class="bg-gray-50 rounded p-2">
+                            <div class="text-sm font-medium">{{ oc.objection }}</div>
+                            <div class="flex items-center gap-2 mt-1">
+                                <span class="text-xs text-gray-400">{{ (oc.before * 100)|round(0)|int }}%</span>
+                                <span class="text-xs">→</span>
+                                <span class="text-xs {% if oc.delta < 0 %}text-green-600{% else %}text-red-600{% endif %}">{{ (oc.after * 100)|round(0)|int }}%</span>
+                                <span class="text-xs text-gray-400">({{ '%+.0f'|format(oc.delta * 100) }}%)</span>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1">{{ oc.reason }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- New Concerns -->
+                {% if simulation_result.new_concerns %}
+                <div class="bg-red-50 rounded-lg p-4">
+                    <h3 class="font-medium text-red-800 mb-2">⚠️ New Concerns May Surface</h3>
+                    <ul class="text-sm text-red-700 space-y-1">
+                        {% for concern in simulation_result.new_concerns %}
+                        <li>• {{ concern }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                
+                <!-- Recommendation -->
+                {% if simulation_result.recommended_followup %}
+                <div class="bg-blue-50 rounded-lg p-4">
+                    <h3 class="font-medium text-blue-800 mb-1">Recommended Next Step</h3>
+                    <p class="text-sm text-blue-700">{{ simulation_result.recommended_followup }}</p>
+                </div>
+                {% endif %}
+                
+                <!-- Timing -->
+                <div class="text-sm text-gray-500">
+                    Optimal: {{ simulation_result.optimal_day_of_week }} {{ simulation_result.optimal_send_time }}
+                </div>
+            </div>
+            {% else %}
+            <div class="bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 p-12 text-center">
+                <div class="text-gray-400 text-4xl mb-4">🔮</div>
+                <div class="text-gray-500">Select an email or write your own, then run simulation to see predicted outcomes.</div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+const plays = {{ sales_plays|tojson }};
+
+function updateEmailOptions() {
+    const playId = document.getElementById('play_select').value;
+    const emailContainer = document.getElementById('email_select_container');
+    const customContainer = document.getElementById('custom_email_container');
+    const emailSelect = document.getElementById('email_select');
+    
+    if (playId) {
+        const play = plays.find(p => p.id === playId);
+        emailSelect.innerHTML = play.emails.map((e, i) => 
+            `<option value="${i}">${e.touch}: ${e.subject.slice(0, 50)}...</option>`
+        ).join('');
+        emailContainer.classList.remove('hidden');
+        customContainer.classList.add('hidden');
+    } else {
+        emailContainer.classList.add('hidden');
+        customContainer.classList.remove('hidden');
+    }
+}
+</script>
+{% endblock %}

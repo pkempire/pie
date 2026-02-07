@@ -31,12 +31,12 @@ class LLMClient:
         }
     
     # Models that don't support custom temperature
-    NO_TEMP_MODELS = {"gpt-5-mini", "gpt-5-nano", "gpt-5-mini-2025-08-07", "gpt-5-nano-2025-08-07"}
+    NO_TEMP_MODELS = {"gpt-4o-mini", "gpt-5-nano", "gpt-4o-mini-2025-08-07", "gpt-5-nano-2025-08-07"}
     
     def chat(
         self,
         messages: list[dict],
-        model: str = "gpt-5-mini",
+        model: str = "gpt-4o-mini",
         temperature: float = 0.1,
         json_mode: bool = False,
         max_tokens: int | None = None,
@@ -55,7 +55,7 @@ class LLMClient:
         if json_mode:
             kwargs["response_format"] = {"type": "json_object"}
         if max_tokens:
-            # gpt-5-mini/nano use max_completion_tokens instead of max_tokens
+            # gpt-4o-mini/nano use max_completion_tokens instead of max_tokens
             if model_base in self.NO_TEMP_MODELS:
                 kwargs["max_completion_tokens"] = max_tokens
             else:

@@ -60,7 +60,7 @@ class CachedWorldModel:
             cache_embeddings_path: Optional path to persist embeddings to disk
         """
         self.wm = world_model
-        self.llm = llm or LLMClient()
+        self._llm = llm  # Lazy init - only create if needed
         self.embed_model = embed_model
         self.cache_embeddings_path = Path(cache_embeddings_path) if cache_embeddings_path else None
         
@@ -81,6 +81,13 @@ class CachedWorldModel:
         # Load cached embeddings if available
         if self.cache_embeddings_path and self.cache_embeddings_path.exists():
             self._load_embeddings()
+    
+    @property
+    def llm(self) -> LLMClient:
+        """Lazy init LLM client."""
+        if self._llm is None:
+            self._llm = LLMClient()
+        return self._llm
     
     @classmethod
     def load_or_build(

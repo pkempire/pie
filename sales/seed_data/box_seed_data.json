@@ -1,0 +1,651 @@
+{
+  "generated_at": "2026-02-05T15:05:52.031421",
+  "sales_plays": [
+    {
+      "id": "sales_play_example_1",
+      "name": "ECM Modernization",
+      "description": "Replace legacy ECM systems",
+      "source_file": "Sales Play Example 1.boxnote",
+      "emails": [
+        {
+          "touch": "1st TOUCH - A",
+          "subject": "\u201cRethinking ECM for the AI era\u201d",
+          "body": "Hi [PERSONALIZE],IT teams overspend by a whopping ~30% to maintain outdated ECM systems \u2013 like OpenText and Hyland OnBase\u00a0\u2013 that store content, but can\u2019t truly activate it. Instead of adding single-purpose tools to fill those gaps, Box helps teams unlock more value from their content with:\n\nIntelligent search \u2192 built-in AI-powered search supported across all documents and data\n\nBuilt-in workflow automation \u2192 extract key information, route approvals, trigger workflows\n\nIntegrated security & compliance \u2192 advanced threat detection and auto-classification\n\nUnlimited e-signatures \u2192 unlimited signature requests at no additional cost within Box\n\nAll this functionality happens in one place, via one platform \u2013 not only lowering tool costs, but also minimizing friction users face day-to-day.\n\nWould you be open to exploring whether [PERSONALIZE] could achieve similar gains with Box? \n\nBest,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "1st TOUCH - B",
+          "subject": "Your content is the big missed opportunity",
+          "body": "Hi [PERSONALIZE],\n\nEvery organization sits on terabytes of unstructured data (contracts, policies, emails, recordings) all loaded with information, but impossible to tap into with outdated content management tools.With Box\u2019s Intelligent Content Management, businesses can turn their unstructured data into actionable insights \u2013 automatically and securely \u2013 while cutting costs and reducing complexity.\n\nInstead of spending hours searching, tagging, routing files, etc. \u2013 Box helps teams:\n\n\nUnlock insights instantly with secure, AI-powered search and metadata extraction\n\nAutomate repetitive work through no-code workflows and custom AI agents\n\nProtect sensitive information with advanced threat detection and automatic classification\n\nSimplify governance with centralized control for retention, legal holds, and compliance\n\nMy team is currently offering complimentary ROI assessments, if that\u2019s something [PERSONALIZE] would be interested in. Let me know when works best, or feel free to grab a slot here. \nKindly,[PERSONALIZE]"
+        },
+        {
+          "touch": "1st TOUCH - C",
+          "subject": "\u201cThe smarter way to manage (and secure) content\u201d Hi {{first_name}},IT teams spend ~30% more than they need to by trying maintain outdated content management tools. Legacy ECMs like OpenText and Hyland OnBase were built to store content, not activate it.",
+          "body": "With built-in AI search, no-code automation, malware detection, and unlimited e-sign + storage, Box is the only intelligent content management platform that unlocks the full value of content:  \n\n\n\nBroadcom saw this firsthand: transitioning to Box saved them $10M through tool consolidation and an even higher ROI in time savings by enabling smarter, safer ways to work with content.\nWould you be interested in seeing a quick, informal demo this week?\n\nBest,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "2nd TOUCH - A",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hey [PERSONALIZE],\n\nNot sure if you had a chance to read my last email, but one quick follow-up \u2013\u00a0\n\nBox now supports no-code workflow automation, enabling teams to streamline reviews, route approvals, and enforce policies directly within Box:\n\n\nIt\u2019s been a game-changer for teams looking to modernize their content strategy.Do you have time on [PERSONALIZE] to chat about what that could look like for [PERSONALIZE]?\n\nThanks,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "2nd TOUCH - B",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE],\n\nI know inboxes overflow on [PERSONALIZE]s, so I\u2019ll keep this brief \u2013 if [PERSONALIZE] is still manually tagging, searching, or routing content, Box could save your team hours every week:\n\nAny chance you have 15 minutes this week for a quick, informal chat?\nThanks,[PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - A",
+          "subject": "\u201c{{custom52}}\u2019s 2026 content strategy\u201d Hi {{first_name}},",
+          "body": "As we approach 2026, many IT leaders are leaving legacy ECM behind \u2013\u00a0unifying content, automation, and security in one intelligent platform \u2013 cutting costs by 30-40% and boosting productivity.\n\nWith Intelligent Content Management, teams are:\n\n\nAutomating manual ECM tasks like tagging, routing, and retention\n\nCentralizing content and e-signatures in one governed workspace\n\nLeveraging AI to improve search, compliance, and productivity across content\n\nReal world example \u2192 Insperity migrated 36 million records from legacy systems into Box to tackle inefficient workflows and saw immediate ROI through faster, more connected processes.\n\nWould you be open to a quick conversation about what an AI-powered content strategy could unlock for [PERSONALIZE]?\n\nBest,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - B",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE],\n\nTeams that have moved to Intelligent Content Management with Box are saving thousands of hours a year by automating manual tasks like tagging files, routing approvals, applying retention rules, and tracking down information across silos:\nIn fact, we recently helped the Texas DMV save $1M+ in ECM costs by replacing a legacy tool with Box\u2019s metadata-driven dashboards \u2013 enabling faster record search and service responses.\n\nCurious how this aligns with [PERSONALIZE]\u2019s 2026 priorities \u2013\u00a0would love to hear your thoughts either way.\nThank you,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "4th TOUCH - A",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE], how are things?\n\nI don\u2019t want [PERSONALIZE] to miss out if this is something you\u2019ve been considering for 2026 -Box helps teams cut ECM costs and complexity by consolidating infrastructure, automating manual work, and strengthening security with Intelligent Content Management.\n\nBroadcom, for example, saved $10M in costs after migrating to Box \u2013\u00a0all while giving 50k+ employees a single, secure platform for collaboration and accelerating productivity with AI.\n\nAny interest in chatting through how [PERSONALIZE] could achieve similar results? My goal isn\u2019t to annoy you, so if I should be reaching out to someone else for this please let me know!\n\nBest,\n[PERSONALIZE]\n\nP.S. If it\u2019s easier, feel free to book directly on or share my calendar link"
+        },
+        {
+          "touch": "4th TOUCH - B",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE], sorry if I\u2019ve been reaching out at a bad time \u2013\u00a0We\u2019re offering 15-minute cost & risk assessments to show where teams are finding the biggest efficiencies when modernizing ECM: duplicate storage, fragmented tooling, manual processes, unmanaged content sprawl, and more.Would it make sense to schedule one for [PERSONALIZE] before FY26 planning wraps up?\n\nLet me know either way, happy to connect with someone else if easier.\n\nThanks,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "4th TOUCH - C",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE],\n\nI don\u2019t want [PERSONALIZE] to miss out if this is something you\u2019ve been considering for 2026 \u2013Box is the leading Intelligent Content Management solution, bringing enterprise-grade security, powerful AI, and automated workflows together in one unified platform:\n\n\n\nWould you be open to a quick conversation about what this could look like for [PERSONALIZE]? If there\u2019s a better point of contact for this, let me know!\n\nBest,\n[PERSONALIZE]\n\n\n\nCustomer (Data)\nFY26 - ECM Play - US ENT - Customer - Data - AtPly\nSequence:"
+        },
+        {
+          "touch": "1st TOUCH - A",
+          "subject": "\u201cECM is stuck in the past, here\u2019s what\u2019s next\u201d or \u201cRethinking ECM for the AI era\u201d",
+          "body": "Hi [PERSONALIZE],\n\nI was looking at your Box environment and noticed\u00a0over [PERSONALIZE] GBs of content across [PERSONALIZE] users. That\u2019s great momentum!Even with adoption at this level, many teams still end up managing redundant tools for storage, e-signature, or security \u2013 all of which Box already covers natively. And with recent updates, Box now brings even more functionality into a single, secure platform:\n\n\nIncludes unlimited, native e-signatures so teams can execute agreements directly within Box\n\nKeeps sensitive data protected with built-in threat detection and auto-classification\n\nApplies AI across all content securely, using the model or platform of your choice\n\nProtects global collaboration with data residency and compliance built in\nWould you be open to a quick conversation about how [PERSONALIZE] can get even more out of its Box investment? I\u2019d also love to share a few new security updates that could be relevant.\n\nBest,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "1st TOUCH - B",
+          "subject": "\u201cDo more with Box \u2013\u00a0simplify your content stack\u201d or \u201cGetting more value from {{custom52}}\u2019s Box investment\u201d",
+          "body": "Hi [PERSONALIZE],\nEven with strong Box adoption across [PERSONALIZE] users and [PERSONALIZE] GBs of data, there\u2019s often still untapped value in how organizations like [PERSONALIZE] manage, secure, and activate that content.With Intelligent Content Management, Box goes far beyond traditional storage \u2013 creating a secure, connected content ecosystem that automates workflows, surfaces insights, and gives IT deeper visibility and control:\n\nWould you be open to a quick conversation about how [PERSONALIZE] can get even more out of its current Box investment? Happy to include a 10-minute ROI assessment as well.\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "2nd TOUCH - A",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE],\n\nI know inboxes are overflowing, so I\u2019ll keep this brief \u2013 there are a few capabilities included in [PERSONALIZE]\u2019s Box plan that haven\u2019t been activated yet. A quick sync could help pinpoint where you can save time, strengthen security, and get more out of what you already have.\n\nWould you have 15 minutes on [PERSONALIZE] for a quick walkthrough?\nThanks,[PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - A",
+          "subject": "\u201c{{custom52}}\u2019s 2026 content strategy\u201d Hi {{first_name}},",
+          "body": "Many Box customers are taking the next step in their content strategy by consolidating ECM & point solutions into one secure platform \u2013 cutting costs by 30\u201340% and increasing productivity.\nWith Box\u2019s Intelligent Content Management capabilities, teams are:\n\nAutomating manual ECM tasks like tagging, routing, and retention\n\nLeveraging AI to improve search, compliance, and productivity across content\n\nConsolidating content storage and unlimited e-signatures in one governed workspace\n\nWould it make sense to explore how [PERSONALIZE] could activate more of its content with AI?\n\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - B",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE],\n\nNot sure if this is still on your radar, but wanted to reach back out just in case.Customers that have fully migrated their legacy ECM systems into Box\u2019s Intelligent Content Management platform are cutting ECM costs by 30\u201340% and saving thousands of hours a year by consolidating into a single, secure platform for content, e-signatures, and automation.\nCurious how this aligns with [PERSONALIZE]\u2019s 2026 priorities around consolidation, automation, or cost optimization \u2013\u00a0would love to hear your thoughts either way.\nThank you,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "4th TOUCH - A",
+          "subject": "\u201cROI assessment: where {{custom52}} can gain more value\u201d",
+          "body": "Hi [PERSONALIZE],Before planning for the new year wraps up, we\u2019re offering quick, informal consults to help customers like [PERSONALIZE] assess their current Box environment and uncover new ROI opportunities for 2026.\n\nDuring the session, we\u2019ll review:\n\nFeature utilization report highlighting inactive capabilities already available in your Box plan\n\nTailored recommendations for cost savings, consolidation, and efficiency opportunities\n\nBenchmarks showing how similar organizations are optimizing spend and governance\n\nWould [PERSONALIZE] work for a short consult? Feel free to grab a slot here, if easier.\n\nBest,\n[PERSONALIZE]\n\nP.S. If there\u2019s someone else I should be coordinating with, just let me know. Thanks!"
+        },
+        {
+          "touch": "4th TOUCH - B",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE], sorry if I\u2019ve been reaching out at a bad time \u2013\u00a0We\u2019re offering quick 15-minute cost & risk reviews to help teams maximize their Box ROI and finalize their 2026 content roadmap \u2013 identifying opportunities to consolidate, automate, and strengthen governance.Are you available on [PERSONALIZE] afternoon for a short consult? If someone else handles content strategy, I\u2019m happy to connect with them instead.\n\nThanks,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "4th TOUCH - C",
+          "subject": "Re: + (same as previous touch)Hi {{first_name}}, sorry if I\u2019ve been reaching out at a bad time \u2013\u00a0We\u2019re offering quick 15-minute cost & risk reviews to help teams maximize their Box ROI and finalize their 2026 content roadmap \u2013 identifying opportunities to consolidate, automate, and strengthen governance.Are you available on {{weekdays_from_now 2}} afternoon for a short consult? We can also cover your Box security score of {{custom86}}/20 and how to optimize for 2026, if helpful.",
+          "body": "Thanks,\n[PERSONALIZE]\n\n\nCustomer (No Data)\nFY26 - ECM Play - US ENT - Customer - No Data - AtPly\nSequence:"
+        },
+        {
+          "touch": "1st TOUCH - A",
+          "subject": "Rethinking ECM for the AI era",
+          "body": "Hi [PERSONALIZE],I was looking at your Box environment and noticed strong adoption across your organization. That\u2019s great momentum!Even with that level of engagement, many teams still end up managing redundant tools for storage, e-signature, or security \u2013 all of which Box already covers natively. And with recent updates, Box now brings even more functionality into a single, secure platform:\n\n\nIncludes unlimited, native e-signatures so teams can execute agreements directly within Box\n\nKeeps sensitive data protected with built-in threat detection and auto-classification\n\nApplies AI across all content securely, using the model or platform of your choice\n\nProtects global collaboration with data residency and compliance built in\nWould you be open to a quick conversation about how [PERSONALIZE] can get even more out of its Box investment? I\u2019d also love to share a few new security updates that could be relevant.\n\nBest,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "1st TOUCH - B",
+          "subject": "Getting more value from {{custom52}}\u2019s Box investment",
+          "body": "Hi [PERSONALIZE],\nEven with strong Box adoption, there\u2019s often still untapped value in how organizations like [PERSONALIZE] manage, secure, and activate that content.With Intelligent Content Management, Box goes far beyond traditional storage \u2013 creating a secure, connected content ecosystem that automates workflows, surfaces insights, and gives IT deeper visibility and control:\n\nWould you be open to a quick conversation about how [PERSONALIZE] can get even more out of its current Box investment? Happy to include a 10-minute ROI assessment as well.\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "2nd TOUCH - A",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE],\n\nI know inboxes are overflowing, so I\u2019ll keep this brief \u2013 there are a few capabilities included in [PERSONALIZE]\u2019s Box plan that could be activated today. A quick consult could help pinpoint where you can save time, strengthen security, and get more out of what you already have.\n\nWould you have 15 minutes on [PERSONALIZE] for a quick walkthrough?\nThanks,[PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - A",
+          "subject": "\u201c{{custom52}}\u2019s 2026 content strategy\u201d Hi {{first_name}},",
+          "body": "Many Box customers are taking the next step in their content strategy by consolidating ECM & point solutions into one secure platform \u2013 cutting costs by 30\u201340% and increasing productivity.\nWith Box\u2019s Intelligent Content Management capabilities, teams are:\n\nAutomating manual ECM tasks like tagging, routing, and retention\n\nLeveraging AI to improve search, compliance, and productivity across content\n\nConsolidating content storage and unlimited e-signatures in one governed workspace\n\nWould it make sense to explore how [PERSONALIZE] could activate more of its content with AI?\n\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - B",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE],\n\nNot sure if this is still on your radar, but wanted to reach back out just in case.Customers that have fully migrated their legacy ECM systems into Box\u2019s Intelligent Content Management platform are cutting ECM costs by 30\u201340% and saving thousands of hours a year by consolidating into a single, secure platform for content, e-signatures, and automation.\nCurious how this aligns with [PERSONALIZE]\u2019s 2026 priorities around consolidation, automation, or cost optimization \u2013\u00a0would love to hear your thoughts either way.\nThank you,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "4th TOUCH - A",
+          "subject": "\u201cROI assessment: where {{custom52}} can gain more value\u201d",
+          "body": "Hi [PERSONALIZE],Before planning for the new year wraps up, we\u2019re offering quick, informal consults to help customers like [PERSONALIZE] assess their current Box environment and uncover new ROI opportunities for 2026.\n\nDuring the session, we\u2019ll review:\n\nFeature utilization report highlighting inactive capabilities already available in your Box plan\n\nTailored recommendations for cost savings, consolidation, and efficiency opportunities\n\nBenchmarks showing how similar organizations are optimizing spend and governance\n\nWould [PERSONALIZE] work for a short consult? Feel free to grab a slot here, if easier.\n\nBest,\n[PERSONALIZE]\n\nP.S. If there\u2019s someone else I should be coordinating with, just let me know. Thanks!"
+        },
+        {
+          "touch": "4th TOUCH - B",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE], sorry if I\u2019ve been reaching out at a bad time \u2013\u00a0We\u2019re offering quick 15-minute cost & risk reviews to help teams maximize their Box ROI and finalize their 2026 content roadmap \u2013 identifying opportunities to consolidate, automate, and strengthen governance.Are you available on [PERSONALIZE] afternoon for a short consult? If someone else handles content strategy, I\u2019m happy to connect with them instead.\n\nThanks,\n[PERSONALIZE]\n\n\u2192 Opt-Out Instructions\n\nHow to opt-out contacts, video tutorial: https://cloud.box.com/s/n0n8wz57ut3d7abejowj9e6dyy4a4dpj\n\nSTEP 01 - Access the play\u2019s dynamic opt-out URL - you will ONLY see contacts under your ownership - locate the \u2018Sales Play Email Opt Out\u2019 column\n\nPlease Note: If you do not see any contacts populate when accessing the opt-out URL, none of your accounts are currently being targeted at this time OR we were unable to find quality contacts to purchase for your account(s)\n\nSTEP 02 - Select the contact(s) you wish to opt-out from this play, click the pencil icon to modify the contact record(s)\n\nSTEP 03 - Check the empty box of the contact(s) you want to opt-out, the box(es) should turn blue\n\nSTEP 04 - Click out of the contact box and confirm your selection(s) by clicking the \u2018Save\u2019  button, you must save in order to record any changes \n\nSTEP 05 - Confirmation that your changes have saved will appear, if you encounter any issues please reach out to @Nadeen Awadalla, @Riley Purcell, or @G\n\n\n\u2192 Opt-In Instructions\n\nHow to opt-i"
+        }
+      ],
+      "raw_content": "\n\u2192 Read Me\nOPT-OUT / OPT-IN CONTACTS BY: Wednesday, December 3rd (EOD)\nSFDC PROGRAM TAGS: \n\nField East: \u201cENT Sales Play - 41 - FY26\u201d  + \u201cENT Sales Play - 25 - FY26\u201d\n\nField Central: \u201cENT Sales Play - 42 - FY26\u201d  +  \u201cENT Sales Play - 43 - FY26\u201d\n\nField West:  \u201cENT Sales Play - 44 - FY26\u201d  +  \u201cENT Sales Play - 45 - FY26\u201d\nOPT-OUT / OPT-IN CONTACT REFRESHER:\n\nHow to opt-out contacts, video tutorial: https://cloud.box.com/s/n0n8wz57ut3d7abejowj9e6dyy4a4dpj\n\nHow to opt-in contacts, video tutorial: https://cloud.box.com/s/psbk411d5au5yhqeya05gsprp2hwz1t4\n\u2192 Account & Contact Target Lists\nNOTE: Account teams must review BOTH the contact & leads lists, all opted-in individuals will emailed\nAE List View(s)\nWave 01 \n\nEast:\n\nContacts\n\nLeads (1) \n\nLeads (2)\n\nCentral:\n\nContacts\n\nLeads (1)\n\nLeads (2)\n\nWest:\n\nContacts\n\nLeads (1) \n\nLeads (2)\nWave 02 - PENDING\n\u2192 Outreach Sequences\nPlay Name\nSequence URL\nUS Field East - ECM Play - FY26 Q2 - Wave 01 - AtPly (V2)\n\nNet New: https://web.outreach.io/sequences/64669/overview\n\nCustomer: https://web.outreach.io/sequences/64706/overview\nFY26 - ECM Play - AtPly\n\nPENDING\n\u2192 Plain Text Play Version(s)\nMESSAGING SUBJECT TO CHANGE - DO NOT USE - FOR SALES STRAT USE ONLY\n\nProspects\nFY26 - ECM Play - Prospect - AtPly\nSequence:\n1st TOUCH - A\nSubject line(s): \u201cRethinking ECM for the AI era\u201d\n\nHi {{first_name}},IT teams overspend by a whopping ~30% to maintain outdated ECM systems \u2013 like OpenText and Hyland OnBase\u00a0\u2013 that store content, but can\u2019t truly activate it. Instead of adding single-purpose tools to fill those gaps, Box helps teams unlock more value from their content with:\n\nIntelligent search \u2192 built-in AI-powered search supported across all documents and data\n\nBuilt-in workflow automation \u2192 extract key information, route approvals, trigger workflows\n\nIntegrated security & compliance \u2192 advanced threat detection and auto-classification\n\nUnlimited e-signatures \u2192 unlimited signature requests at no additional cost within Box\n\nAll this functionality happens in one place, via one platform \u2013 not only lowering tool costs, but also minimizing friction users face day-to-day.\n\nWould you be open to exploring whether {{custom52}} could achieve similar gains with Box? \n\nBest,\n{{sender.first_name}}\n\u00a0\u00a0\n1st TOUCH - B\nSubject line(s): Your content is the big missed opportunity\n\nHi {{first_name}},\n\nEvery organization sits on terabytes of unstructured data (contracts, policies, emails, recordings) all loaded with information, but impossible to tap into with outdated content management tools.With Box\u2019s Intelligent Content Management, businesses can turn their unstructured data into actionable insights \u2013 automatically and securely \u2013 while cutting costs and reducing complexity.\n\nInstead of spending hours searching, tagging, routing files, etc. \u2013 Box helps teams:\n\n\nUnlock insights instantly with secure, AI-powered search and metadata extraction\n\nAutomate repetitive work through no-code workflows and custom AI agents\n\nProtect sensitive information with advanced threat detection and automatic classification\n\nSimplify governance with centralized control for retention, legal holds, and compliance\n\nMy team is currently offering complimentary ROI assessments, if that\u2019s something {{custom52}} would be interested in. Let me know when works best, or feel free to grab a slot here. \nKindly,{{sender.first_name}}\n1st TOUCH - C\nSubject line(s): \u201cThe smarter way to manage (and secure) content\u201d Hi {{first_name}},IT teams spend ~30% more than they need to by trying maintain outdated content management tools. Legacy ECMs like OpenText and Hyland OnBase were built to store content, not activate it.\n\nWith built-in AI search, no-code automation, malware detection, and unlimited e-sign + storage, Box is the only intelligent content management platform that unlocks the full value of content:  \n\n\n\nBroadcom saw this firsthand: transitioning to Box saved them $10M through tool consolidation and an even higher ROI in time savings by enabling smarter, safer ways to work with content.\nWould you be interested in seeing a quick, informal demo this week?\n\nBest,\n{{sender.first_name}}\n\n2nd TOUCH - A\nSubject line(s): Re: + (same as previous touch)\n\nHey {{first_name}},\n\nNot sure if you had a chance to read my last email, but one quick follow-up \u2013\u00a0\n\nBox now supports no-code workflow automation, enabling teams to streamline reviews, route approvals, and enforce policies directly within Box:\n\n\nIt\u2019s been a game-changer for teams looking to modernize their content strategy.Do you have time on {{weekdays_from_now 3}} to chat about what that could look like for {{custom52}}?\n\nThanks,\n{{sender.first_name}}\n\n2nd TOUCH - B\nSubject line(s): Re: + (same as previous touch)\n\nHi {{first_name}},\n\nI know inboxes overflow on {{today}}s, so I\u2019ll keep this brief \u2013 if {{custom52}} is still manually tagging, searching, or routing content, Box could save your team hours every week:\n\nAny chance you have 15 minutes this week for a quick, informal chat?\nThanks,{{sender.first_n"
+    },
+    {
+      "id": "sales_play_example_2",
+      "name": "Shield Pro Security",
+      "description": "Advanced security for content",
+      "source_file": "Sales Play Example 2.boxnote",
+      "emails": [
+        {
+          "touch": "1st TOUCH - A",
+          "subject": "\u201cStaying ahead of {{custom52}}\u2019s content growth\u201d",
+          "body": "Hi [PERSONALIZE],[PERSONALIZE]\u2019s content volume has grown [PERSONALIZE]% over the past year \u2013 now totaling over [PERSONALIZE] GBs stored in Box across [PERSONALIZE] users. That\u2019s great momentum, but as content generation increases, visibility and control become harder to maintain.That\u2019s why we\u2019ve built Box Shield Pro \u2013 an evolution of Shield that strengthens protection with:\n\n\nAdaptive AI Classification \u2013 instantly interprets content in context, learning from user behavior and governance rules to auto-classify sensitive data as it\u2019s created or shared\n\nIntelligent Threat Analysis \u2013 analyzes complex threat alerts, distilling them into precise, high-impact insights with actionable remediation steps\n\nAdvanced Ransomware Protection - detects emerging ransomware behavior in real time, helping admins isolate and stop attacks before encryption before they spread\n\nThese enhancements extend your existing Shield foundation to stay ahead of evolving risks, without adding new friction or complexity.\n\nWould you be open to a quick walkthrough this week or next? Feel free to grab time on my calendar if that\u2019s easier. \n\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "1st TOUCH - B",
+          "subject": "\u201c{{custom52}}\u2019s content grew {{customXX}}% this year \u2013 what\u2019s next?\u201d",
+          "body": "Hi [PERSONALIZE],Organizations now face ~1.3 million security alerts a year \u2013 a number that keeps rising as AI accelerates how quickly content is created, shared, and accessed.At [PERSONALIZE], content creation is up [PERSONALIZE]% in the past year, now totaling [PERSONALIZE] GBs in Box. While that\u2019s great for productivity, it also multiplies the number of alerts, access attempts, and potential exposure your security team needs to manage every day.To help teams stay ahead, we\u2019ve built Shield Pro \u2013 the next generation of Shield, built to deliver intelligent, proactive protection for the AI era.\nCould we schedule a quick walkthrough on [PERSONALIZE] or [PERSONALIZE] to explore what this could look like for [PERSONALIZE]?\n\nBest,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "1st TOUCH - C",
+          "subject": "\u201cKeeping security aligned with {{custom52}}\u2019s growth\u201d",
+          "body": "Hi [PERSONALIZE],IT teams struggle to keep up with the evolving security landscape. There\u2019s more content, more collaboration, and more threats than ever \u2013 all with fewer resources and less time to respond.At [PERSONALIZE], that growth is clear. Content creation increased [PERSONALIZE]% in the past year, now totaling [PERSONALIZE] GBs in Box across [PERSONALIZE] users. It\u2019s a great sign for productivity, but it can also expand the risk of unintended exposure.\nWe regularly perform security reviews to pinpoint where sensitive data lives, how it\u2019s shared, and what new controls can help minimize risk as content continues to grow.\n\nWould you be open to scheduling a brief review to make sure [PERSONALIZE]\u2019s setup is keeping pace with these changes?\n\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "1st TOUCH - D",
+          "subject": "\u201cKeeping security aligned with {{custom52}}\u2019s growth\u201d",
+          "body": "Hi [PERSONALIZE],\nI was reviewing [PERSONALIZE]\u2019s Box activity and noticed [PERSONALIZE] new users were added this year, alongside a [PERSONALIZE]% increase in content creation. With that growth comes more collaboration, more data to manage \u2013\u00a0and a greater need for intelligent, adaptive security.\nTo help customers stay ahead, Box is rolling out new intelligent security capabilities built for the AI era, expanding your current protection with:\n\nAdaptive AI Classification \u2013 auto-classifies content based on context, patterns, and policy\n\nIntelligent Threat Analysis \u2013 condenses complex threat alerts into clear, actionable insights\n\nAdvanced Ransomware Protection - detects emerging ransomware behavior in real time\nThese updates are designed to give your team deeper visibility, faster response, and stronger protection as [PERSONALIZE] continues to scale.\nWould you be open to a brief walkthrough to see what these enhancements could mean for your environment?\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "2nd TOUCH - A",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE], circling back on this \u2013 As AI-driven collaboration expands, rule-based policies alone can miss context or patterns that signal emerging threats. That\u2019s where Shield Pro adds value \u2013 extending your current setup with:\n\n\nRule-based classification \u2192 Adaptive AI Classification  (pattern + context recognition)\n\nAnomalous threat alerts \u2192 Intelligent Threat Analysis (prioritization + summarization)\n\nMalicious activity insights \u2192 Ransomware Activity Detection (detection + rapid remediation)\nIt builds directly on your existing Shield foundation, adding adaptive intelligence that evolves protection as new risks emerge.\nHappy to set up a brief consult tailored to [PERSONALIZE]\u00a0\u2013 when works best for you?\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "2nd TOUCH - B",
+          "subject": "Re: + (same as previous touch)Hi {{first_name}},",
+          "body": "[PERSONALIZE]\u2019s content volume has grown [PERSONALIZE]% over the past year, and that momentum is only expected to accelerate heading into 2026.That means more files to scan, more alerts to triage, and a larger surface area to protect.\n\nWould it be helpful to schedule a quick overview of Shield vs. Shield Pro to see how teams are staying ahead of that growth?\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "2nd TOUCH - A",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE], it\u2019s difficult to miss how much AI has changed the way we work -\n\nReports, images, files, etc. can be created at the push of a button. It makes life easier for users, but creates a content nightmare for security teams. \nRule-based policies can miss context or patterns that signal emerging threats. That\u2019s where Shield Pro adds value \u2013 extending your current setup with AI Classification, Intelligent Threat Analysis, and Ransomware Activity Detection.\nIt builds directly on your existing Shield foundation, adding adaptive intelligence that evolves protection as new risks emerge - would you be interested in seeing a quick demo? \nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - A",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE],Even with strong policies in place, it\u2019s easy for sensitive files to slip through manual or rule-based tagging \u2013 especially as content and users grow.\n\nBox is helping teams close that gap with an AI Classification Agent that understands context and recognizes patterns, ensuring files are protected from the moment they\u2019re created or shared:\nIt\u2019s saving teams hours by simplify audits, improve accuracy, and keep sensitive data protected without increasing manual effort.\nWould you be open to exploring how [PERSONALIZE] could apply this?\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - B",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE],Security teams everywhere are struggling with alert fatigue \u2013 the average organization faces around 1.3 million alerts every year. With content volume increasing [PERSONALIZE]% in the past year, I can only imagine how much this has impacted your team at [PERSONALIZE].To counter this, Box is offering intelligent threat analysis that condenses complex alerts into clear, actionable insights \u2013 surfacing what actually needs attention & enabling faster responses:\n\nBuilt on your existing Shield foundation, this could help [PERSONALIZE]\u2019s stay ahead of potential threats with less noise and faster response times.\n\nWould you be open to a quick walkthrough to explore what this might look like for [PERSONALIZE]?\n\nBest,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - C",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE],\n\nMost ransomware starts small \u2013 one process encrypting files quietly in the background \u2013 and spreads before anyone notices.\n\nBox now offers ransomware activity detection functionality that helps teams identify early encryption patterns and stops them in real time, before any content is locked or compromised:\n\n\n\nThis adds an intelligent layer of protection to your Shield setup and strengthens [PERSONALIZE]\u2019s response against today\u2019s evolving threat landscape.\n\nDo you have 15-min to touch base on [PERSONALIZE] or [PERSONALIZE]? Happy to share a live demo.\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "4th TOUCH - A",
+          "subject": "\u201c2026 security planning with Box?\u201d",
+          "body": "Hi [PERSONALIZE],As we wrap up the year, Box is offering quick security reviews to help customers ensure their content protection and governance settings are ready for 2026.\n\nWith content creation at [PERSONALIZE] growing [PERSONALIZE]% this year, it\u2019s a good time to confirm that your security and governance policies are keeping pace. We\u2019ve also introduced a number of new security capabilities via Shield Pro that could benefit your teams significantly.Early adopters are already using these updates to simplify audits, reduce data-handling errors, and strengthen governance as content volume grows:\n\nWould you be open to connecting on [PERSONALIZE] to review how these capabilities could strengthen [PERSONALIZE]\u2019s content security posture heading into 2026?\nAll the best,[PERSONALIZE]"
+        },
+        {
+          "touch": "4th TOUCH - B",
+          "subject": "\u201cQuick sync before year-end?\u201d",
+          "body": "Hi [PERSONALIZE],\n\nThe amount of content being created, shared, and stored in [PERSONALIZE]\u2019s Box instance is growing exponentially. That\u2019s great for productivity, but it also makes it harder for security teams to continuously monitor and protect sensitive information.To help close that gap, Box is introducing an intelligent security layer that builds on your existing Shield foundation \u2013 using AI to identify patterns, surface risks faster, and strengthen protection without adding new tools or workflows:\n\n\nWould you be open to a quick discussion on [PERSONALIZE] to walk through how these updates could support [PERSONALIZE]\u2019s security strategy heading into 2026?\n\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "5th TOUCH - A",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE], Circling back one last time \u2013 are you interested in learning more about Shield Pro ahead of its  GA release in December?Early adopters are already seeing strong results from the new AI Classification and Threat Detection capabilities, which automatically safeguard content against emerging risks.If there\u2019s someone else on your team who owns content security or AI governance, I\u2019m happy to connect with them instead.\nThank you,[PERSONALIZE]\n\nShield Customers (No Data)\nFY26 - Shield Pro - Shield Customer - No Data -  AtPly\nSequence: PENDING"
+        },
+        {
+          "touch": "1st TOUCH - A",
+          "subject": "Evolving {{custom52}}\u2019s defense for the AI era",
+          "body": "Hi [PERSONALIZE],\n[PERSONALIZE]\u2019s content volume continues to grow as teams create, share, and collaborate more across Box. That\u2019s great momentum, but as content generation increases, visibility and control become harder to maintain.That\u2019s why we\u2019ve built Shield Pro, an evolution of Shield that strengthens protection with:\n\n\nAdaptive AI Classification \u2013 auto-classifies content based on context, patterns, and policy\n\nIntelligent Threat Analysis \u2013 condenses complex threat alerts into clear, actionable insights\n\nAdvanced Ransomware Protection \u2013 detects & stops mass-encryption activity in real time\n\nThese enhancements extend your existing Shield foundation to stay ahead of evolving risks, without adding new friction or complexity.\nWould you be open to a quick walkthrough this week or next? Feel free to grab time on my calendar if that\u2019s easier.\n\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "1st TOUCH - B",
+          "subject": "Keeping protection ahead of AI-driven growth",
+          "body": "Hi [PERSONALIZE],Organizations now face ~1.3 million security alerts a year \u2013 a number that keeps rising as AI accelerates how fast content is created, shared, and accessed.With content creation increasing at [PERSONALIZE], I\u2019d imagine so have the number of alerts, access attempts, and potential exposure your security team needs to manage every day.\nTo help teams stay ahead, we\u2019ve built Shield Pro \u2013 the next generation of Shield, built to deliver intelligent, proactive protection for the AI era.\nCould we schedule a quick walkthrough on [PERSONALIZE] or [PERSONALIZE] to explore what this could look like for [PERSONALIZE]?\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "1st TOUCH - C",
+          "subject": "Threats are evolving \u2013 and so is Box Shield",
+          "body": "Hi [PERSONALIZE],\n\nSecurity is a moving target \u2013 and as AI accelerates how fast content is created and shared, even the strongest defenses need to evolve to keep pace.That\u2019s why we\u2019re extending Box Shield with Shield Pro, an intelligent security layer built to adapt as content, users, and threats continue to advance:Now that Shield Pro is available, could we find time to discuss what this means for [PERSONALIZE]\u2019s security setup?\n\nBest,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "2nd TOUCH - A",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE], circling back on this \u2013 As AI-driven collaboration expands, rule-based policies alone can miss context or patterns that signal emerging threats. That\u2019s where Shield Pro adds value \u2013 extending your current setup with:\n\n\nRule-based classification \u2192 Adaptive AI Classification  (pattern + context recognition)\n\nAnomalous threat alerts \u2192 Intelligent Threat Analysis (prioritization + summarization)\n\nMalicious activity insights \u2192 Ransomware Activity Detection (detection + rapid remediation)\nIt builds directly on your existing Shield foundation, adding adaptive intelligence that evolves protection as new risks emerge.\nHappy to set up a brief consult tailored to [PERSONALIZE]\u00a0\u2013 when works best for you?\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "2nd TOUCH - B",
+          "subject": "Re: + (same as previous touch)Hi {{first_name}}, Your teams are creating and sharing more content than ever \u2013 and that momentum is only set to accelerate in 2026.As content volume grows, so do the alerts to triage, the activity to monitor, and the pressure on security teams to stay ahead of emerging threats.",
+          "body": "Shield Pro helps cut through that noise by automatically flagging high-risk activity and surfacing clear, actionable summaries for faster response:\n\nWould a quick overview of what\u2019s new in Shield Pro and how it builds on your current setup be helpful?\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - A",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE],Even with strong policies in place, it\u2019s easy for sensitive files to slip through manual or rule-based tagging \u2013 especially as content and users grow.\n\nBox is helping teams close that gap with an AI Classification Agent that understands context and recognizes patterns, ensuring files are protected from the moment they\u2019re created or shared.\nIt\u2019s saving teams hours by simplify audits, improve accuracy, and keep sensitive data protected without increasing manual effort.\nWould you be open to exploring how [PERSONALIZE] could apply this?\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - B",
+          "subject": "Re: + (same as previous touch)Hi {{first_name}},The average organization faces over a million alerts every year \u2013\u00a0so it\u2019s no surprise that teams everywhere are struggling with alert fatigue.To counter this, Box is offering intelligent threat analysis that condenses complex alerts into clear, actionable insights \u2013 surfacing what actually needs attention & enabling faster responses:",
+          "body": "Built on your existing Shield foundation, this could help [PERSONALIZE]\u2019s stay ahead of potential threats with less noise and faster response times.\n\nWould you be open to a quick walkthrough to explore what this might look like for [PERSONALIZE]?\n\nBest,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - C",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE],\n\nMost ransomware starts small \u2013 one process encrypting files quietly in the background \u2013 and spreads before anyone notices.\n\nBox now offers ransomware activity detection functionality that helps teams identify early encryption patterns and stops them in real time, before any content is locked or compromised:\n\n\n\nThis adds an intelligent layer of protection to your Shield setup and strengthens [PERSONALIZE]\u2019s response against today\u2019s evolving threat landscape.\n\nDo you have 15-min to touch base on [PERSONALIZE] or [PERSONALIZE]? Happy to share a live demo.\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "4th TOUCH - A",
+          "subject": "\u201c2026 security planning with Box?\u201d",
+          "body": "Hi [PERSONALIZE],As we close out the year, Box is offering quick security reviews to help teams solidify their content protection and governance settings for 2026.For [PERSONALIZE], it\u2019s a great chance to confirm that your setup is keeping pace with growing content volume, increased collaboration, and the rise of AI-driven work. We\u2019ve also introduced a number of new security capabilities via Shield Pro that could enhance your existing setup.Early adopters are already using these updates to simplify audits, reduce data-handling errors, and strengthen governance as content volume grows:\n\nWould you be open to exploring how Shield Pro could strengthen [PERSONALIZE]\u2019s AI security posture?\nAll the best,[PERSONALIZE]"
+        },
+        {
+          "touch": "4th TOUCH - B",
+          "subject": "\u201cQuick sync before year-end?\u201d",
+          "body": "Hi [PERSONALIZE],\n\nThe amount of content being created, shared, and stored in [PERSONALIZE]\u2019s Box instance is growing exponentially. That\u2019s great for productivity, but it also makes it harder for security teams to continuously monitor and protect sensitive information.To help close that gap, Box is introducing an intelligent security layer that builds on your existing Shield foundation \u2013 using AI to identify patterns, surface risks faster, and strengthen protection without adding new tools or workflows:\n\n\nWould you be open to a quick discussion on [PERSONALIZE] to walk through how these updates could support [PERSONALIZE]\u2019s security strategy heading into 2026?\n\nBest,[PERSONALIZE]\n\nNon-Shield Customers (Data)\nFY26 - Shield Pro - Customers w/o Shield + Data -  AtPly\nSequence: PENDING"
+        },
+        {
+          "touch": "1st TOUCH - A",
+          "subject": "\u201cStaying ahead of {{custom52}}\u2019s content growth\u201d",
+          "body": "Hi [PERSONALIZE],[PERSONALIZE]\u2019s content volume has grown [PERSONALIZE]% over the last year \u2013 now totaling [PERSONALIZE] GBs in Box across [PERSONALIZE] users. That\u2019s great momentum, but as content generation increases, visibility and control become harder to maintain.We understand that security is a moving target, which is why Box is introducing new intelligent security capabilities that extend protection beyond our core platform, including:\n\n\nAdaptive AI Classification \u2013 auto-classifies content based on context, patterns, and policy\n\nIntelligent Threat Analysis \u2013 turns high volumes of alerts into clear, actionable summaries\n\nAdvanced Ransomware Detection \u2013 helps admins stop mass-encryption activity in real-time \n\nTogether, these capabilities deliver end-to-end protection that continuously evolves to counter new and emerging threats.\n\nWould you be interested in a brief walkthrough this week or next? Feel free to grab time on my calendar if that\u2019s easier.\n\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "1st TOUCH - B",
+          "subject": "\u201c{{custom52}}\u2019s content grew {{customXX}}% this year \u2013 what\u2019s next?\u201d",
+          "body": "Hi [PERSONALIZE],Organizations now face over a million security alerts a year \u2013 a number that keeps rising as AI accelerates how quickly content is created, shared, and accessed.\n\nAt [PERSONALIZE], content creation is up [PERSONALIZE]% in the past year, now totaling [PERSONALIZE] GBs in Box. While that\u2019s great for productivity, it also multiplies the number of alerts, access attempts, and potential exposure your security team needs to manage every dayTo help teams stay ahead, Box is introducing new intelligent security capabilities that provide real-time, adaptive protection as content is created and shared:\nCould we schedule a quick walkthrough on [PERSONALIZE] or [PERSONALIZE] to explore what this could look like for [PERSONALIZE]?\n\nBest,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "1st TOUCH - C",
+          "subject": "\u201cEvolving {{custom52}}\u2019s defense for the AI era\u201d",
+          "body": "Hi [PERSONALIZE],\nThis month, Box is launching Shield Pro \u2013\u00a0a new AI-powered layer for threat detection and data protection that evolves with your content, users, and risks. It automatically classifies sensitive files, summarizes threat activity, and detects ransomware patterns in real time:Given how quickly schedules fill up around the holidays, would you be open to a quick call this week or next to discuss what this means for [PERSONALIZE]?\n\nBest,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "1st TOUCH - D",
+          "subject": "\u201cKeeping security aligned with {{custom52}}\u2019s growth\u201d",
+          "body": "Hi [PERSONALIZE],IT teams are managing more content, more collaboration, and more threats than ever \u2013 all with fewer resources and less time to respond.\n\nAt [PERSONALIZE], that growth is clear. Content creation has increased [PERSONALIZE]% over the past year, now totaling [PERSONALIZE] GBs in Box across [PERSONALIZE] users. It\u2019s a great sign of productivity, but it can also expand the risk of unintended exposure.We regularly perform security reviews to pinpoint where sensitive data lives, how it\u2019s shared, and what new controls can help minimize risk as content continues to grow.Would you be open to scheduling a brief review to make sure [PERSONALIZE]\u2019s setup is keeping pace with these changes?\n\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "2nd TOUCH - A",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE],\nQuick follow up here \u2013 many organizations are taking a more strategic approach to content security as AI reshapes how information is created and shared.The most effective strategies now embed protection directly into the content layer \u2013 combining intelligent threat detection, automated classification, and continuous account monitoring to reduce risk without slowing collaboration.We\u2019ve been helping other teams apply this approach in Box to strengthen visibility, accelerate response times, and stay ahead of evolving threats as their content ecosystems scale.\nHappy to set up a brief consult tailored to [PERSONALIZE]\u00a0\u2013 when works best for you?\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "2nd TOUCH - B",
+          "subject": "Re: + (same as previous touch)Hi {{first_name}},",
+          "body": "[PERSONALIZE]\u2019s content volume has grown [PERSONALIZE]% over the past year, and that momentum is only expected to accelerate heading into 2026.That means more files to scan, more alerts to triage, and a larger surface area to protect.\n Would it be helpful to walk through how other organizations are managing that growth in Box \u2013 from visibility and classification to intelligent threat detection?\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - A",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE],\nEven with strong policies in place, it\u2019s easy for sensitive files to slip through manual or rule-based tagging \u2013 especially as content and users grow.\nBox is helping teams close that gap with an AI Classification Agent that understands context and recognizes patterns, ensuring files are protected from the moment they\u2019re created or shared:\n\nIt\u2019s saving teams hours by simplify audits, improve accuracy, and keep sensitive data protected without increasing manual effort.\nWould you be open to exploring how [PERSONALIZE] could apply this?\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - B",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE],Security teams everywhere are struggling with alert fatigue \u2013 the average organization faces around 1.3 million alerts every year. With content volume increasing [PERSONALIZE]% in the past year, I can only imagine how much this has impacted your team at [PERSONALIZE].To counter this, Box is offering intelligent threat analysis that condenses complex alerts into clear, actionable insights \u2013 surfacing what actually needs attention & enabling faster responses:\n\n\nWould you be open to a quick walkthrough to explore what this might look like for [PERSONALIZE]?\n\nBest,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - C",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE],\n\nMost ransomware starts small \u2013 one process encrypting files quietly in the background \u2013 and spreads before anyone notices.\n\nBox now offers ransomware activity detection functionality that helps teams identify early encryption patterns and stops them in real time, before any content is locked or compromised:\n\n\n\nThis adds an intelligent layer of protection to your existing security setup and strengthens [PERSONALIZE]\u2019s response against today\u2019s evolving threat landscape.\n\nDo you have 15-min to touch base on [PERSONALIZE] or [PERSONALIZE]? Happy to share a live demo.\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "4th TOUCH - A",
+          "subject": "\u201c2026 security planning with Box?\u201d",
+          "body": "Hi [PERSONALIZE],As we wrap up the year, Box is offering quick security reviews to help customers ensure their content protection and governance settings are ready for 2026.\n\nWith content creation at [PERSONALIZE] growing [PERSONALIZE]% this year, it\u2019s a good time to confirm that your security and governance policies are keeping pace. We\u2019ve also introduced a number of new security capabilities via Shield Pro that could benefit your teams significantly.Early adopters are already using these updates to simplify audits, reduce data-handling errors, and strengthen governance as content volume grows:\n\nWould you be open to connecting on [PERSONALIZE] to discuss how these capabilities could strengthen [PERSONALIZE]\u2019s content-security posture?\nAll the best,[PERSONALIZE]"
+        },
+        {
+          "touch": "4th TOUCH - B",
+          "subject": "\u201cQuick sync before year-end?\u201d",
+          "body": "Hi [PERSONALIZE],\n\nThe amount of content being created, shared, and stored in [PERSONALIZE]\u2019s Box instance is growing exponentially.  That\u2019s great for productivity, but it also makes it harder for security teams to continuously monitor and protect sensitive information.To help close that gap, Box is introducing an intelligent security layer that builds on your existing security foundation \u2013 using AI to identify patterns, surface risks faster, and strengthen protection without adding new tools or workflows:\n\n\nWould you be open to a quick discussion on [PERSONALIZE] to walk through how these updates could support [PERSONALIZE]\u2019s security strategy heading into 2026?\n\nBest,[PERSONALIZE]\n\nNon-Shield Customers (No Data)\nFY26 - Shield Pro - Customer w/o Shield - No Data - AtPly\nSequence:"
+        },
+        {
+          "touch": "1st TOUCH - A",
+          "subject": "Evolving {{custom52}}\u2019s defense for the AI era",
+          "body": "Hi [PERSONALIZE],\n\nTeams at [PERSONALIZE] are creating and sharing more content than ever \u2013 that\u2019s great progress, but it also raises the bar for how organizations protect and govern sensitive information.To help with this, Box is introducing new intelligent security capabilities that extend protection beyond the core platform \u2013 intentionally designed for the AI era:\n\n\nAdaptive AI Classification \u2013 auto-classifies content based on context, patterns, and policy\n\nIntelligent Threat Analysis \u2013 condenses complex threat alerts into clear, actionable insights\n\nAdvanced Ransomware Protection \u2013 detects & stops mass-encryption activity in real time\n\nThese new capabilities deliver proactive, end-to-end protection that continuously evolves with your content.\n\nWould you be open to a quick walkthrough to explore how this could strengthen [PERSONALIZE]\u2019s security posture? Feel free to grab time on my calendar if that\u2019s easier.\n\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "1st TOUCH - B",
+          "subject": "Keeping protection ahead of AI-driven growth",
+          "body": "Hi [PERSONALIZE],Organizations now face nearly 1.3 million security alerts a year \u2013 a number that continues to rise as AI accelerates how quickly content is created, shared, and accessed.\nTo help customers stay ahead, Box is introducing the next-generation content security shield that delivers adaptive, real-time defense for modern collaboration.\n\nIt automatically classifies sensitive data, triages security alerts, and detects ransomware patterns before they spread \u2013 all while keeping content governed within Box.\nCould we schedule a quick walkthrough on [PERSONALIZE] or [PERSONALIZE] to explore what this could look like for [PERSONALIZE]?\n\nBest,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "1st TOUCH - C",
+          "subject": "Threats are evolving \u2013 and so is Box Shield",
+          "body": "Hi [PERSONALIZE],AI is accelerating how fast content moves, and how quickly threats evolve.\nIn December, Box is launching Shield Pro, a new AI-powered layer for threat detection and data protection that evolves with your content, users, and risks. It automatically classifies sensitive files, summarizes threat activity, and detects ransomware patterns in real time:Given how quickly schedules fill up around the holidays, would you be open to a quick call this week or next to discuss what this could mean for [PERSONALIZE]?\n\nBest,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "2nd TOUCH - A",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE],\nCircling back on this\u2013 many organizations are taking a more strategic approach to content security as AI reshapes how information is created and shared.The most effective strategies now embed protection directly into the content layer \u2013 combining intelligent threat detection, automated classification, and continuous account monitoring to reduce risk without slowing collaboration.We\u2019ve been helping other teams apply this approach in Box to strengthen visibility, accelerate response times, and stay ahead of evolving threats as their content ecosystems scale.\nHappy to set up a brief consult tailored to [PERSONALIZE]\u00a0\u2013 when works best for you?\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "2nd TOUCH - B",
+          "subject": "Re: + (same as previous touch)Hi {{first_name}},We\u2019re hearing a consistent theme across security teams: AI is driving more content and activity than ever, while time and resources stay flat.\u00a0That means more files to scan, more alerts to triage, and a larger surface area to protect.Box\u2019s new intelligent security capabilities cut through that noise by automatically flagging high-risk activity and surfacing clear, actionable summaries for faster response: Would it be helpful to walk through how other organizations are managing that growth in Box \u2013 from visibility and classification to intelligent threat detection?",
+          "body": "Best,[PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - A",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE],\nEven with strong policies in place, it\u2019s easy for sensitive files to slip through manual or rule-based tagging \u2013 especially as content and users grow.\nBox is helping teams close that gap with an Adaptive AI Classification that understands context and recognizes patterns, ensuring files are protected from the moment they\u2019re created or shared:\n\nIt\u2019s saving teams hours by simplify audits, improve accuracy, and keep sensitive data protected without increasing manual effort.\nWould you be open to exploring how [PERSONALIZE] could apply this?\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - B",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE],Security teams everywhere are struggling with alert fatigue \u2013 the average organization faces around 1.3 million alerts every year. To counter this, Box now offers Intelligent Threat Detection that condenses alerts into clear, actionable insights \u2013 surfacing what actually needs attention and enabling faster responses:\n\n\nWould you be open to a quick walkthrough to explore what this might look like for [PERSONALIZE]?\n\nBest,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - C",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE],\n\nMost ransomware starts small \u2013 one process encrypting files quietly in the background \u2013 and spreads before anyone notices.\n\nBox now offers ransomware activity detection functionality that helps team identify early encryption patterns and stops them in real time, before any content is locked or compromised:\n\n\n\nThis adds an intelligent layer of protection to your existing security setup and strengthens [PERSONALIZE]\u2019s response against today\u2019s evolving threat landscape.\n\nDo you have 15-min to touch base on [PERSONALIZE] or [PERSONALIZE]? Happy to share a live demo.\nBest,[PERSONALIZE]"
+        },
+        {
+          "touch": "4th TOUCH - A",
+          "subject": "\u201c2026 security planning with Box?\u201d",
+          "body": "Hi [PERSONALIZE],As we wrap up the year, Box is offering quick security reviews to help customers ensure their content protection and governance settings are ready for 2026.With content generation accelerating across the board, it\u2019s a good time to confirm that your security and governance policies are keeping pace. We\u2019ve also introduced some new security capabilities that could benefit your teams significantly.Early adopters are already using these updates to simplify audits, reduce data-handling errors, and strengthen governance as content volume grows:\n\nWould you be open to connecting on [PERSONALIZE] to discuss how these capabilities could strengthen [PERSONALIZE]\u2019s content-security posture?\nAll the best,[PERSONALIZE]"
+        },
+        {
+          "touch": "4th TOUCH - B",
+          "subject": "\u201cQuick sync before year-end?\u201d",
+          "body": "Hi [PERSONALIZE],\n\nThe amount of content being created, shared, and stored in [PERSONALIZE]\u2019s Box instance is growing exponentially.  That\u2019s great for productivity, but it also makes it harder for security teams to continuously monitor and protect sensitive information.To help close that gap, Box is introducing an intelligent security layer that builds on your existing security foundation \u2013 using AI to identify patterns, surface risks faster, and strengthen protection without adding new tools or workflows:\nWould you be open to a quick discussion on [PERSONALIZE] to walk through how these updates could support [PERSONALIZE]\u2019s security strategy heading into 2026?\n\nBest,[PERSONALIZE]\n\n\u2192 Opt-Out Instructions\n\nHow to opt-out contacts, video tutorial: https://cloud.box.com/s/n0n8wz57ut3d7abejowj9e6dyy4a4dpj\n\nSTEP 01 - Access the play\u2019s dynamic opt-out URL - you will ONLY see contacts under your ownership - locate the \u2018Sales Play Email Opt Out\u2019 column\n\nPlease Note: If you do not see any contacts populate when accessing the opt-out URL, none of your accounts are currently being targeted at this time OR we were unable to find quality contacts to purchase for your account(s)\n\nSTEP 02 - Select the contact(s) you wish to opt-out from this play, click the pencil icon to modify the contact record(s)\n\nSTEP 03 - Check the empty box of the contact(s) you want to opt-out, the box(es) should turn blue\n\nSTEP 04 - Click out of the contact box and confirm your selection(s) by clicking the \u2018Save\u2019  "
+        }
+      ],
+      "raw_content": "\n\u2192 Read Me\nOPT-OUT / OPT-IN CONTACTS BY: 12pm ET on Tuesday, Dec. 2\nSFDC PROGRAM TAG: ENT Sales Play - 61 - FY26  & ENT Sales Play - 62 - FY26\nOPT-OUT / OPT-IN CONTACT REFRESHER:\n\nHow to opt-out contacts, video tutorial: https://cloud.box.com/s/n0n8wz57ut3d7abejowj9e6dyy4a4dpj\n\nHow to opt-in contacts, video tutorial: https://cloud.box.com/s/psbk411d5au5yhqeya05gsprp2hwz1t4\n\u2192 Account & Contact Target Lists\nNOTE: Account teams must review BOTH the contact & leads lists, all opted-in individuals will emailed\nAE List View(s)\nWave 01 \n\nField West\n\nField Central\n\nField East\nWave 02 - PENDING\n\u2192 Outreach Sequences\nPlay Name\nSequence URL\nFY26 Q3 - Shield Pro - Shield Customer w/ Data -  AtPly\n\nPENDING\nFY26 Q3 - Shield Pro - Shield Customer - No Data -  AtPly\n\nPENDING\nFY26 Q3 - Shield Pro - Customers w/o Shield + Data -  AtPly\n\nPENDING\nFY26 Q3 - Shield Pro - Customer w/o Shield - No Data - AtPly\n\nPENDING\n\u2192 Plain Text Play Version(s)\nMESSAGING SUBJECT TO CHANGE - DO NOT USE - FOR SALES STRAT USE ONLY\nShield Customers (Data)\nFY26 - Shield Pro - Shield Customer w/ Data -  AtPly\nSequence: PENDING\n1st TOUCH - A\nSubject line(s): \u201cStaying ahead of {{custom52}}\u2019s content growth\u201d\n\nHi {{first_name}},{{custom52}}\u2019s content volume has grown {{customXX}}% over the past year \u2013 now totaling over {{custom88}} GBs stored in Box across {{custom95}} users. That\u2019s great momentum, but as content generation increases, visibility and control become harder to maintain.That\u2019s why we\u2019ve built Box Shield Pro \u2013 an evolution of Shield that strengthens protection with:\n\n\nAdaptive AI Classification \u2013 instantly interprets content in context, learning from user behavior and governance rules to auto-classify sensitive data as it\u2019s created or shared\n\nIntelligent Threat Analysis \u2013 analyzes complex threat alerts, distilling them into precise, high-impact insights with actionable remediation steps\n\nAdvanced Ransomware Protection - detects emerging ransomware behavior in real time, helping admins isolate and stop attacks before encryption before they spread\n\nThese enhancements extend your existing Shield foundation to stay ahead of evolving risks, without adding new friction or complexity.\n\nWould you be open to a quick walkthrough this week or next? Feel free to grab time on my calendar if that\u2019s easier. \n\nBest,{{sender.first_name}}\n\n\n1st TOUCH - B\nSubject line(s): \u201c{{custom52}}\u2019s content grew {{customXX}}% this year \u2013 what\u2019s next?\u201d\n\nHi {{first_name}},Organizations now face ~1.3 million security alerts a year \u2013 a number that keeps rising as AI accelerates how quickly content is created, shared, and accessed.At {{custom52}}, content creation is up {{customXX}}% in the past year, now totaling {{custom88}} GBs in Box. While that\u2019s great for productivity, it also multiplies the number of alerts, access attempts, and potential exposure your security team needs to manage every day.To help teams stay ahead, we\u2019ve built Shield Pro \u2013 the next generation of Shield, built to deliver intelligent, proactive protection for the AI era.\nCould we schedule a quick walkthrough on {{weekdays_from_now 2}} or {{weekdays_from_now 3}} to explore what this could look like for {{custom52}}?\n\nBest,\n{{sender.first_name}}\n\n1st TOUCH - C\nSubject line(s): \u201cKeeping security aligned with {{custom52}}\u2019s growth\u201d \n\nHi {{first_name}},IT teams struggle to keep up with the evolving security landscape. There\u2019s more content, more collaboration, and more threats than ever \u2013 all with fewer resources and less time to respond.At {{custom52}}, that growth is clear. Content creation increased {{customXX}}% in the past year, now totaling {{custom88}} GBs in Box across {{custom95}} users. It\u2019s a great sign for productivity, but it can also expand the risk of unintended exposure.\nWe regularly perform security reviews to pinpoint where sensitive data lives, how it\u2019s shared, and what new controls can help minimize risk as content continues to grow.\n\nWould you be open to scheduling a brief review to make sure {{custom52}}\u2019s setup is keeping pace with these changes?\n\nBest,{{sender.first_name}}\n\n1st TOUCH - D\nSubject line(s): \u201cKeeping security aligned with {{custom52}}\u2019s growth\u201d \n\nHi {{first_name}},\nI was reviewing {{custom52}}\u2019s Box activity and noticed {{customN}} new users were added this year, alongside a {{customXX}}% increase in content creation. With that growth comes more collaboration, more data to manage \u2013\u00a0and a greater need for intelligent, adaptive security.\nTo help customers stay ahead, Box is rolling out new intelligent security capabilities built for the AI era, expanding your current protection with:\n\nAdaptive AI Classification \u2013 auto-classifies content based on context, patterns, and policy\n\nIntelligent Threat Analysis \u2013 condenses complex threat alerts into clear, actionable insights\n\nAdvanced Ransomware Protection - detects emerging ransomware behavior in real time\nThese updates are designed to give your team deeper visibility, faster response, and stronger protection as {{custom52}} continu"
+    },
+    {
+      "id": "sales_play_example_3",
+      "name": "CMMC 2.0 Compliance",
+      "description": "Defense contractor compliance",
+      "source_file": "Sales Play Example 3.boxnote",
+      "emails": [
+        {
+          "touch": "1st TOUCH - A",
+          "subject": "CMMC 2.0: Is {{custom52}} ready for Nov 10?",
+          "body": "Hi [PERSONALIZE] - hope all is well.\n\nWith Phase 1 of CMMC 2.0 implementation beginning November 10, I thought now would be a good time to touch base. Since [PERSONALIZE] already uses Box, you\u2019re well positioned to safeguard both FCI and CUI in line with DFARS and NIST requirements through:\n\n\nEncryption of data at rest and in transit, ensuring protection against unauthorized disclosure\n\nRole-based access controls and granular permission settings for files, folders, & shared links\n\nBox\u2019s regulatory credentials, including: SOC 2, ISO 27001, and FedRamp High status\n\nThese capabilities help defense contractors securely manage sensitive data, modernize from legacy systems, and reduce audit prep while staying compliant.\n\nCould we connect on [PERSONALIZE] or [PERSONALIZE] to discuss how [PERSONALIZE] can be best positioned for CMMC 2.0?\n\nAll the best,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "1st TOUCH - B",
+          "subject": "Account Review - CMMC 2.0 Compliance",
+          "body": "Hi [PERSONALIZE],\n\nAs you may know, CMMC 2.0 becomes a DFARS contract requirement starting November 10th. Fortunately, Box is already FedRAMP High certified, meeting the security standards you\u2019ll need.That said, [PERSONALIZE]\u2019s account is not currently configured to take full advantage of all the available features that support CMMC 2.0 readiness \u2013 such as advanced access controls, automated retention policies, and secure AI for managing FCI and CUI:\n\n\nWould you be open to a quick call on [PERSONALIZE] to confirm [PERSONALIZE] is prepared for upcoming assessments and explore how to unlock more value from your Box investment?\n\nAll the best,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "2nd TOUCH - A",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE], any thoughts on the above?\n\nMany contractors have shared with me that access control and continuous monitoring are their biggest challenges under CMMC 2.0. Box addresses this with:\n\n\nGovernance: customizable and defensible retention policies with audit trails\n\nBox Shield: anomaly detection, malware deep scan, and granular access policies\n\nFedRAMP High status: aligned with DoD\u2019s most stringent data security standards\n\nWould you like to map [PERSONALIZE]\u2019s current setup against CMMC controls so you know exactly where you stand before the November deadline?\n\n\u2013 [PERSONALIZE]"
+        },
+        {
+          "touch": "2nd TOUCH - B",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE], any thoughts on the above?A lot of contractors I speak with are trying to gain visibility into how their systems align with the new CMMC 2.0 requirements. With Box, you get defensible monitoring and a clear view of how your account aligns to compliance expectations \u2013 including where optimizations may be needed:\n\n[PERSONALIZE]\n\nWould you like to see how [PERSONALIZE]\u2019s current account setup maps against CMMC Level 2 and Level 3 controls before enforcement begins?\n\n\u2013 [PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - A",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE], following up on my earlier note \u2013 As the Nov. 10 deadline approaches, many of the defense contractors I work with are setting up account reviews to ensure compliance. Even though Box already meets FedRAMP High and DFARS requirements, I often find accounts aren\u2019t fully optimized for things like:\n\nRunning AI inside a FedRAMP High environment \u2013\u00a0ensuring FCI/CUI is always protected\n\nProviding audit-ready activity logs \u2013\u00a0making AI usage monitored and defensible in reviews\n\nEnabling advanced threat detection \u2013 limiting CUI access strictly to authorized users\nA quick check-in now helps avoid surprises during assessments and ensures you\u2019re getting the full value out of your Box investment.\n\nWould you be open to a short call on [PERSONALIZE] to walk through this?\nBest,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - B",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hey [PERSONALIZE], sorry if I\u2019ve been reaching out at a bad time -As contractors prepare for CMMC 2.0 enforcement on Nov. 10, I\u2019m seeing AI governance come up more and more in conversations. Since Box AI runs entirely inside our FedRAMP High environment, contractors can safely unlock AI-powered productivity while protecting FCI/ CUI.Here\u2019s what this could unlock at [PERSONALIZE]:\n\n\nCould we schedule a call [PERSONALIZE] to walk through how [PERSONALIZE] can securely take advantage of AI as part of your CMMC 2.0 readiness?\n\nKind regards,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "4th TOUCH - A",
+          "subject": "ICYMI \u2013\u00a0CMMC deadline approaching",
+          "body": "Hey [PERSONALIZE], \n\nWith CMMC enforcement right around the corner, I want to make sure [PERSONALIZE] is fully prepared. Box provides the compliance foundation you need, including:\n\n\nAt-rest and in-transit encryption to protect CUI from unauthorized disclosure\n\nRole-based access controls and granular permission settings for files, folders, & shared links\n\nBox\u2019s regulatory credentials, including: SOC 2, ISO 27001, and FedRamp High status\n\nThe deadline is almost here, and a short conversation now can help confirm [PERSONALIZE] is covered and make sure you\u2019re unlocking the full value of your Box investment.\n\nLet me know a time that works best, or feel free to grab time directly on my calendar: here\n\nThank you,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "4th TOUCH - B",
+          "subject": "Hey {{first_name}},",
+          "body": "If you\u2019re open to learning more about how Box can support CMMC 2.0 compliance, please feel free to schedule time via my calendar: [PERSONALIZE]\n\nWith Box, your team can securely manage content, collaborate across teams, and leverage AI-powered features to automate content workflows. Additionally, our encryption of data at-rest and in-transit strengthens access controls, ensuring only authorized users can access sensitive information.\n\nIf any of the above align with your 2025 initiatives, I\u2019d love to touch base. Alternatively, if there is someone else I should be reaching out to, please let me know. \n\n- [PERSONALIZE]"
+        },
+        {
+          "touch": "5th TOUCH - A",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE], hope you\u2019re doing well \u2013\u00a0\n\nWho on your team is best to connect with regarding [PERSONALIZE]\u2019s Box setup and CMMC 2.0 readiness?\n\nIt looks like you have capabilities in Box that aren\u2019t yet enabled \u2014 which could help with audit prep, protecting CUI, and meeting upcoming CMMC 2.0 requirements.\n\nAppreciate your help!\n\n- [PERSONALIZE]\nProspect\nCMMC 2.0 Play - Pub Sec - Prospect - Q3 FY26 - AtPly\nOutreach URL: PENDING"
+        },
+        {
+          "touch": "1st TOUCH - A",
+          "subject": "CMMC 2.0: Is {{custom53}} ready for Nov 10?",
+          "body": "Hi [PERSONALIZE] - hope all is well.\n\nWith Phase 1 of CMMC 2.0 enforcement beginning November 10, many defense contractors are evaluating platforms that can both meet compliance requirements and modernize workflows.Box helps safeguard FCI and CUI through:\n\n\nEncryption at rest and in transit, protecting critical data against unauthorized disclosure\n\nRole-based access controls and granular permissions across files, folders, and links\n\nRegulatory credentials, including SOC 2, ISO 27001, and FedRAMP High status\n\nThese capabilities help defense contractors securely manage sensitive data, modernize from legacy systems, and reduce audit prep while staying compliant.\n\nWould you be open to a call on [PERSONALIZE] or [PERSONALIZE] to see how Box could support [PERSONALIZE]\u2019s CMMC 2.0 readiness?\n\nAll the best,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "1st TOUCH - B",
+          "subject": "Account Review - CMMC 2.0 Compliance",
+          "body": "Hi [PERSONALIZE],\n\nAs you know, CMMC 2.0 becomes a DFARS contract requirement starting November 10. Unfortunately, many platforms contractors rely on don\u2019t fully meet those requirements.Box is FedRAMP High authorized and built to help defense contractors comply with the most stringent security standards. Beyond compliance, Box offers features like advanced access controls, automated retention policies, and secure AI for managing FCI and CUI:\n\n\nWould you be open to a quick call on [PERSONALIZE] to see how Box could help [PERSONALIZE] prepare for assessments and modernize content management?\n\nAll the best,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "2nd TOUCH - A",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE], any thoughts on the above?\n\nA common challenge I hear from contractors is managing access control and continuous monitoring under CMMC 2.0. Box helps address this with:\n\n\nGovernance: customizable and defensible retention policies with audit trails\n\nBox Shield: anomaly detection, malware deep scan, and granular access policies\n\nFedRAMP High status: aligned with DoD\u2019s most stringent data security standards\n\nWould you like to see how [PERSONALIZE] could map its current environment against CMMC controls before the November deadline?\n\n\u2013 [PERSONALIZE]"
+        },
+        {
+          "touch": "2nd TOUCH - B",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE], any thoughts on the above?Many contractors I speak with are looking for visibility into how their systems align with CMMC 2.0. With Box, you get defensible monitoring and a clear view of compliance alignment \u2013 including where optimizations may be needed:\n\n[PERSONALIZE]\n\nWould you like to see how [PERSONALIZE]\u2019s environment could align with CMMC Level 2 and Level 3 requirements before enforcement begins?\n\n\u2013 [PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - A",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE], following up on my earlier note \u2013 As the Nov. 10 deadline approaches, many contractors are reassessing whether their current content platform can meet CMMC 2.0 requirements long-term.Box is FedRAMP High and DFARS-aligned, but what really sets it apart is how it helps contractors prepare for assessments and strengthen security day-to-day. For example:\n\nRunning AI inside a FedRAMP High environment \u2013\u00a0ensuring FCI/CUI is always protected\n\nProviding audit-ready activity logs \u2013\u00a0making AI usage monitored and defensible in reviews\n\nEnabling advanced threat detection \u2013 limiting CUI access strictly to authorized users\nA short call now could help [PERSONALIZE] identify any gaps and see if Box is the right fit for your compliance strategy.\n\nCould we find time on [PERSONALIZE] to connect?\nBest,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "3rd TOUCH - B",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hey [PERSONALIZE], sorry if I\u2019ve been reaching out at a bad time \u2013As contractors get ready for CMMC 2.0 enforcement on Nov. 10, I\u2019m hearing a lot of questions about how to incorporate AI securely. With Box AI, everything runs inside our FedRAMP High environment \u2013 so teams can safely explore AI without putting FCI or CUI at risk.Here\u2019s a quick look at what this could unlock for [PERSONALIZE]:\n\n\nWould you be open to a quick call on [PERSONALIZE] to explore how Box could help [PERSONALIZE] securely leverage AI as part of your CMMC 2.0 readiness?\n\nKind regards,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "4th TOUCH - A",
+          "subject": "ICYMI \u2013\u00a0CMMC deadline approaching",
+          "body": "Hey [PERSONALIZE], \n\nWith CMMC 2.0 enforcement starting Nov. 10, many contractors are in the final stages of evaluating platforms that can both secure CUI and meet compliance long-term.\n\nBox provides the compliance foundation contractors need:\n\n\nAt-rest and in-transit encryption to protect CUI from unauthorized disclosure\n\nRole-based access controls and granular permission settings for files, folders, & shared links\n\nStrong regulatory credentials, including: SOC 2, ISO 27001, and FedRamp High status\n\nBeyond compliance, Box also helps reduce audit prep and modernize collaboration across teams.Could we find time to and explore whether Box could be a fit for [PERSONALIZE]\u2019s compliance and modernization priorities? If easier, feel free to use my calendar link: here\n\nThank you,\n[PERSONALIZE]"
+        },
+        {
+          "touch": "4th TOUCH - B",
+          "subject": "Hey {{first_name}},",
+          "body": "If you\u2019re open to learning more about Box\u2019s FedRamp High and how we support CMMC 2.0 compliance, please feel free to schedule time via my calendar: [PERSONALIZE]\n\nWith Box, your team can securely manage content, collaborate across teams, and leverage AI-powered features to automate content workflows. Additionally, our encryption of data at-rest and in-transit strengthens access controls, ensuring only authorized users can access sensitive information.\n\nIf any of the above align with your 2025 initiatives, I\u2019d love to touch base. Alternatively, if there is someone else I should be reaching out to, please let me know. \n\n- [PERSONALIZE]"
+        },
+        {
+          "touch": "5th TOUCH - A",
+          "subject": "Re: + (same as previous touch)",
+          "body": "Hi [PERSONALIZE], hope you\u2019re doing well \u2013\u00a0\n\nWho on your team is best to connect with about [PERSONALIZE]\u2019s plans for CMMC 2.0 readiness? With Nov. 10 right around the corner, now\u2019s the time to ensure you\u2019ve got a long-term compliant content management solution in place.\n\nI\u2019d be glad to share how Box supports compliance and reduces audit prep for defense contractors.\n\nAppreciate your help!\n\n- [PERSONALIZE]\n\n\u2192 Opt-Out Instructions\n\nHow to opt-out contacts, video tutorial: https://cloud.box.com/s/n0n8wz57ut3d7abejowj9e6dyy4a4dpj\n\nSTEP 01 - Access the play\u2019s dynamic opt-out URL - you will ONLY see contacts under your ownership - locate the \u2018Sales Play Email Opt Out\u2019 column\n\nPlease Note: If you do not see any contacts populate when accessing the opt-out URL, none of your accounts are currently being targeted at this time OR we were unable to find quality contacts to purchase for your account(s)\n\nSTEP 02 - Select the contact(s) you wish to opt-out from this play, click the pencil icon to modify the contact record(s)\n\nSTEP 03 - Check the empty box of the contact(s) you want to opt-out, the box(es) should turn blue\n\nSTEP 04 - Click out of the contact box and confirm your selection(s) by clicking the \u2018Save\u2019  button, you must save in order to record any changes \n\nSTEP 05 - Confirmation that your changes have saved will appear, if you encounter any issues please reach out to @Nadeen Awadalla, @Riley Purcell, or @G\n\n\n\u2192 Opt-In Instructions\n\nHow to opt-in contacts, video tutorial: https:/"
+        }
+      ],
+      "raw_content": "\n\u2192 Read Me\nOPT-OUT / OPT-IN CONTACTS BY: EOD, Wednesday (Oct. 22)\nSFDC PROGRAM TAG: MM Sales Play - 22 - FY26\nOPT-OUT / OPT-IN CONTACT REFRESHER:\n\nHow to opt-out contacts, video tutorial: https://cloud.box.com/s/n0n8wz57ut3d7abejowj9e6dyy4a4dpj\n\nHow to opt-in contacts, video tutorial: https://cloud.box.com/s/psbk411d5au5yhqeya05gsprp2hwz1t4\n\u2192 Account & Contact Target Lists\nNOTE: Account teams must review BOTH the contact & leads lists, all opted-in individuals will emailed\nAE List View(s)\nWave 01 \n\nContacts:\n\nHERE\n\nLeads:\n\nHERE\nWave 02 - PENDING\n\u2192 Outreach Sequences\nPlay Name\nSequence URL\nCMMC 2.0 Play - Pub Sec - Customer - Q3 FY26 - AtPly\n\nPENDING\nCMMC 2.0 Play - Pub Sec - Prospect - Q3 FY26 - AtPly\n\nPENDING\n\u2192 Plain Text Play Version(s)\nMESSAGING SUBJECT TO CHANGE - DO NOT USE - FOR SALES STRAT USE ONLY\nCustomer\nCMMC 2.0 Play - Pub Sec - Customer - Q3 FY26 - AtPly\nOutreach URL: PENDING\n1st TOUCH - A\nSubject Line(s): CMMC 2.0: Is {{custom52}} ready for Nov 10? \n\nHi {{first_name}} - hope all is well.\n\nWith Phase 1 of CMMC 2.0 implementation beginning November 10, I thought now would be a good time to touch base. Since {{custom52}} already uses Box, you\u2019re well positioned to safeguard both FCI and CUI in line with DFARS and NIST requirements through:\n\n\nEncryption of data at rest and in transit, ensuring protection against unauthorized disclosure\n\nRole-based access controls and granular permission settings for files, folders, & shared links\n\nBox\u2019s regulatory credentials, including: SOC 2, ISO 27001, and FedRamp High status\n\nThese capabilities help defense contractors securely manage sensitive data, modernize from legacy systems, and reduce audit prep while staying compliant.\n\nCould we connect on {{weekdays_from_now 2}} or {{weekdays_from_now 3}} to discuss how {{custom52}} can be best positioned for CMMC 2.0?\n\nAll the best,\n{{sender.first_name}}\n\n\n1st TOUCH - B\nSubject Line(s): Account Review - CMMC 2.0 Compliance\n\nHi {{first_name}},\n\nAs you may know, CMMC 2.0 becomes a DFARS contract requirement starting November 10th. Fortunately, Box is already FedRAMP High certified, meeting the security standards you\u2019ll need.That said, {{custom52}}\u2019s account is not currently configured to take full advantage of all the available features that support CMMC 2.0 readiness \u2013 such as advanced access controls, automated retention policies, and secure AI for managing FCI and CUI:\n\n\nWould you be open to a quick call on {{weekdays_from_now 2}} to confirm {{custom52}} is prepared for upcoming assessments and explore how to unlock more value from your Box investment?\n\nAll the best,\n{{sender.first_name}}\n\n2nd TOUCH - A\nSubject Line(s): Re: + (same as previous touch)\n\nHi {{first_name}}, any thoughts on the above?\n\nMany contractors have shared with me that access control and continuous monitoring are their biggest challenges under CMMC 2.0. Box addresses this with:\n\n\nGovernance: customizable and defensible retention policies with audit trails\n\nBox Shield: anomaly detection, malware deep scan, and granular access policies\n\nFedRAMP High status: aligned with DoD\u2019s most stringent data security standards\n\nWould you like to map {{custom52}}\u2019s current setup against CMMC controls so you know exactly where you stand before the November deadline?\n\n\u2013 {{sender.first_name}}\n\n\n2nd TOUCH - B\nSubject Line(s): Re: + (same as previous touch)\n\nHi {{first_name}}, any thoughts on the above?A lot of contractors I speak with are trying to gain visibility into how their systems align with the new CMMC 2.0 requirements. With Box, you get defensible monitoring and a clear view of how your account aligns to compliance expectations \u2013 including where optimizations may be needed:\n\n{{GIF}}\n\nWould you like to see how {{custom52}}\u2019s current account setup maps against CMMC Level 2 and Level 3 controls before enforcement begins?\n\n\u2013 {{sender.first_name}}\n\n3rd TOUCH - A\nSubject Line(s): Re: + (same as previous touch)\n\nHi {{first_name}}, following up on my earlier note \u2013 As the Nov. 10 deadline approaches, many of the defense contractors I work with are setting up account reviews to ensure compliance. Even though Box already meets FedRAMP High and DFARS requirements, I often find accounts aren\u2019t fully optimized for things like:\n\nRunning AI inside a FedRAMP High environment \u2013\u00a0ensuring FCI/CUI is always protected\n\nProviding audit-ready activity logs \u2013\u00a0making AI usage monitored and defensible in reviews\n\nEnabling advanced threat detection \u2013 limiting CUI access strictly to authorized users\nA quick check-in now helps avoid surprises during assessments and ensures you\u2019re getting the full value out of your Box investment.\n\nWould you be open to a short call on {{weekdays_from_now 2}} to walk through this?\nBest,\n{{sender.first_name}}3rd TOUCH - B\nSubject Line(s): Re: + (same as previous touch)\n\nHey {{first_name}}, sorry if I\u2019ve been reaching out at a bad time -As contractors prepare for CMMC 2.0 enforcement on Nov. 10, I\u2019m seeing AI governance come up more and more in conversation"
+    }
+  ],
+  "outreach_stats": [
+    {
+      "sequence_name": "US ENT - Security Capability 2.1 - Admin - Plan Agnostic - OBR - W04 - FcsPly",
+      "owner": "Nadeen Awadalla",
+      "meetings_booked": 36,
+      "open_rate": 0.8,
+      "reply_rate": 0.17,
+      "prospects_invited": 735
+    },
+    {
+      "sequence_name": "FY26 - Public Sector Summit - Attended",
+      "owner": "Enjay Brown",
+      "meetings_booked": 12,
+      "open_rate": 0.78,
+      "reply_rate": 0.12,
+      "prospects_invited": 316
+    },
+    {
+      "sequence_name": "AI Webinar Play",
+      "owner": "Vicente Revilla",
+      "meetings_booked": 8,
+      "open_rate": 0.83,
+      "reply_rate": 0.02,
+      "prospects_invited": 1899
+    },
+    {
+      "sequence_name": "Active free user- JA",
+      "owner": "Jahssyr Addo",
+      "meetings_booked": 5,
+      "open_rate": 0.94,
+      "reply_rate": 0.18,
+      "prospects_invited": 5
+    },
+    {
+      "sequence_name": "JG - New Users - USAF",
+      "owner": "Jake Ganley",
+      "meetings_booked": 5,
+      "open_rate": 0.95,
+      "reply_rate": 0.08,
+      "prospects_invited": 5
+    },
+    {
+      "sequence_name": "MW - Renewals",
+      "owner": "William Condy",
+      "meetings_booked": 5,
+      "open_rate": 0.23,
+      "reply_rate": 0.23,
+      "prospects_invited": 5
+    },
+    {
+      "sequence_name": "Box for Courts (SLED, Fed) - AtPly",
+      "owner": "Emily Longfellow",
+      "meetings_booked": 5,
+      "open_rate": 0.77,
+      "reply_rate": 0.02,
+      "prospects_invited": 932
+    },
+    {
+      "sequence_name": "10.29 SLED Webinars Invites ",
+      "owner": "Enjay Brown",
+      "meetings_booked": 5,
+      "open_rate": 0,
+      "reply_rate": 0,
+      "prospects_invited": 11
+    },
+    {
+      "sequence_name": "Colorado Webinar Follow Up ",
+      "owner": "Maddie St. Geme",
+      "meetings_booked": 5,
+      "open_rate": 0.96,
+      "reply_rate": 0.4,
+      "prospects_invited": 6
+    },
+    {
+      "sequence_name": "FY26 PubSec OBR - Invites to Virtual Summit [10.22]",
+      "owner": "Enjay Brown",
+      "meetings_booked": 4,
+      "open_rate": 0.63,
+      "reply_rate": 0.01,
+      "prospects_invited": 750
+    },
+    {
+      "sequence_name": "Social Services Webinar Invite - FY26 Q3 - AtPly",
+      "owner": "Maddie St. Geme",
+      "meetings_booked": 4,
+      "open_rate": 0.68,
+      "reply_rate": 0.0,
+      "prospects_invited": 682
+    },
+    {
+      "sequence_name": "DC - Freemium User Roll-In ",
+      "owner": "Luis Saldivar",
+      "meetings_booked": 3,
+      "open_rate": 1.0,
+      "reply_rate": 0.1,
+      "prospects_invited": 3
+    },
+    {
+      "sequence_name": "Add on Sequence ",
+      "owner": "Maddie St. Geme",
+      "meetings_booked": 3,
+      "open_rate": 0.67,
+      "reply_rate": 0.13,
+      "prospects_invited": 3
+    },
+    {
+      "sequence_name": "MW - BoxWorks to You",
+      "owner": "William Condy",
+      "meetings_booked": 3,
+      "open_rate": 0.78,
+      "reply_rate": 0.01,
+      "prospects_invited": 109
+    },
+    {
+      "sequence_name": "Series #4 - Power User Webinar (FED) - AtPly",
+      "owner": "Enjay Brown",
+      "meetings_booked": 3,
+      "open_rate": 0.78,
+      "reply_rate": 0.01,
+      "prospects_invited": 473
+    },
+    {
+      "sequence_name": "USDA FS Public Sector Summit",
+      "owner": "Emily Longfellow",
+      "meetings_booked": 3,
+      "open_rate": 1.0,
+      "reply_rate": 0.02,
+      "prospects_invited": 427
+    },
+    {
+      "sequence_name": "VA Managed User Webinar - Follow-up w/ Resources - 10.29",
+      "owner": "Alex Klussmann",
+      "meetings_booked": 3,
+      "open_rate": 0.77,
+      "reply_rate": 0.06,
+      "prospects_invited": 3
+    },
+    {
+      "sequence_name": "US ENT - Security Capability 2.1 - CRM - Plan Agnostic - OBR - W04 - FcsPly",
+      "owner": "Nadeen Awadalla",
+      "meetings_booked": 3,
+      "open_rate": 0.64,
+      "reply_rate": 0.01,
+      "prospects_invited": 4
+    },
+    {
+      "sequence_name": "TN New Users - Clone 2025 ",
+      "owner": "Luis Saldivar",
+      "meetings_booked": 2,
+      "open_rate": 0,
+      "reply_rate": 0,
+      "prospects_invited": 344
+    },
+    {
+      "sequence_name": "US - OBR - MQL - Blank",
+      "owner": "Megan Scheuber",
+      "meetings_booked": 2,
+      "open_rate": 0.5,
+      "reply_rate": 0.33,
+      "prospects_invited": 306
+    }
+  ],
+  "agent_config": {
+    "system_prompt": "\nSYSTEM INSTRUCTIONS (PASTE THIS AS THE AGENT PROMPT)\n\nYou are the Box Public Sector Sales Campaign QA + Generator Agent.\n\nYou help Box Account Executives and Public Sector Sellers create high-performing, compliant, persona-specific, and mission-aligned outbound email campaigns.\nYour goals are:\n\nIncrease open rates, reply rates, meeting rates, and pipeline.\n\nEnsure every campaign aligns to Box Public Sector best practices, including compliance language, tone, and value propositions.\n\nAutomatically generate optimized 3-touch outbound sequences for Box, AND review/upgrade existing sequences.\n\nYou specialize in federal, state, local, DOL, OSHA, DOT, DOJ, HHS, DHS, Education, Energy, Courts, Public Safety, OAG/OIG, and regulated public-sector environments.\n\n\ud83d\udd10 BOX PUBLIC SECTOR REQUIREMENTS BUILT INTO THIS AGENT\n\nThe agent must automatically incorporate:\n\n1. Public Sector Tone\n\nClear, concise, factual\n\nNo hype, no buzzword soup\n\nNo emojis\n\nRespectful of chain-of-command and procurement processes\n\nFocus on mission impact, risk reduction, compliance, and modernization\n\n2. Box Platform Value Propositions\n\nAlways anchor messaging around:\n\nSingle secure content cloud for public sector\n\nFedRAMP High, DoD IL4, CJIS, IRS 1075, HIPAA, FERPA, NIST 800-53 alignment\n\nAdvanced security: Box Shield Pro, malware deep scan, anomaly detection\n\nAI productivity at scale: Box AI, Box AI Agents, Metadata Extraction, Box Hubs, Box Apps, Box Automate\n\nExternal collaboration with vendors, contractors, higher-ed partners, and research institutes\n\nIntegrations (Salesforce, ServiceNow, Oracle, Workday, ESRI, GIS, etc.)\n\nReplace legacy ECM: FileNet, OpenText, Laserfiche, SharePoint, Share Drives\n\n3. Public Sector Value Themes\n\nOutbound campaigns must reflect:\n\nCost reduction vs duplicative point solutions\n\nModernization mandates + legacy system retirement\n\nWorkforce efficiency & understaffed teams\n\nFOIA / PRA responsiveness\n\nRecords + evidence governance\n\nSecure vendor collaboration\n\nAI policy compliance and safe rollout\n\nCUI/PII/PHI/CJIS/ITAR handling\n\n\ud83d\udccb WHAT THE USER WILL PROVIDE\n\nThe user will supply some combination of:\n\nPersona (e.g., \u201cState OSHA Director of Enforcement\u201d)\n\nAgency / Department context\n\nUse-case theme (e.g., safety incident case files, inspections, enforcement, claims intake)\n\nBox products relevant to the motion\n\nTrigger events (e.g., modernization grants, staffing shortages, system replacement initiatives)\n\nGoal / CTA (e.g., 30-min workflow mapping call)\n\nDraft campaign (for QA mode)\n\nIf any item is not provided, infer reasonable assumptions\u2014but keep public sector tone and accuracy.\n\n\ud83e\udde0 AGENT MODES\n\nYou operate in two modes depending on user input:\n\nMODE 1 \u2013 Campaign QA & Coaching\n\nWhen the user provides a draft campaign, you must:\n\n1) Summarize\n\nShort 3\u20135 bullet summary of intent + persona.\n\n2) Score (1\u20135)\n\nScore each area with one sentence justification:\n\nSubject Lines\n\nPersonalization + Relevance to Agency Mission\n\nPublic Sector Tone / Appropriateness\n\nValue Proposition Strength\n\nClarity & Brevity\n\nCTA Strength\n\nSequence Design\n\n3) Identify Risks & Gaps\n\n3\u20138 concrete issues that reduce open/reply rates.\n\n4) Recommendations\n\nSpecific, actionable improvements.\n\n5) Rewrite Fully Optimized 3-Touch Sequence\n\nUse Box Public Sector messaging, correct tone, compliant language, and persona alignment.\n\n6) Provide optional A/B tests\n\nNew subject lines or alternate email #1.\n\nMODE 2 \u2013 Generate a New 3-Touch Campaign\n\nWhen provided persona + use case, you must create:\n\nCampaign Overview\n\nPersona\n\nAgency\n\nUse-Case Theme\n\nSuggested Timing (Day 1, Day 4, Day 9)\n\nCTA\n\nEmail #1 (Day 1)\n\nTwo subject line options (2\u20136 words)\n\nSkimmable, 100\u2013140 words\n\nMission-aligned problem framing\n\nHigh-level Box value\n\nEmail #2 (Day 4)\n\nTwo subject lines\n\n90\u2013130 words\n\nSocial proof: other agencies, examples, metrics\n\nReinforce modernization + compliance\n\nEmail #3 (Day 9)\n\nTwo subject lines\n\n45\u201390 words\n\nPolite nudge + close-the-loop option\n\nNo pressure or gimmicks\n\n\u270d\ufe0f REQUIRED WRITING RULES\nSubject Lines\n\n2\u20136 words\n\nSpecific to role/use case\n\nNo marketing fluff (\u201cRevolutionizing digital transformation\u201d)\n\nAvoid spam triggers\n\nPersonalization\n\nMust speak directly to role responsibilities:\n\nOSHA: enforcement, inspection efficiency, evidence handling, reporting\n\nDepartment of Industrial Relations: claims, compliance, licensing, enforcement\n\nWorkplace Safety: incident files, video/photo evidence, case workflows\n\nBodies\n\nClear, brief, professional\n\nOne CTA only\n\nEvidence-oriented, not hype-based\n\nCompliance & Security\n\nWhere relevant, reference:\n\nCUI\n\nPII / PHI\n\nSafety incident documentation\n\nChain-of-custody\n\nCJIS\n\nFedRAMP High\n\nIL4 for contractor data\n\nIntegrations\n\nUse only relevant ones (e.g., Salesforce, ServiceNow, Oracle, SharePoint replacement).\n\n\ud83c\udfaf OUTPUT FORMAT (MANDATORY)\n\nAlways respond in:\n\n[1. Summary or Campaign Overview]\n\n[2. Scores (if QA mode)]\n\n[3. Gaps & Risks]\n\n[4. Recommendations]\n\n[5. Improved 3-Touch Sequence]\n   - Email 1\n   - Email 2\n   - Email 3\n\n[6. Optional A/B Variations]\n\n\nIf generating a new sequence from scratch, skip scoring and proceed directly to the campaign overview + emails.\n\n\u2705 READY-TO-USE SAMPLE (STATE OSHA / DEPT OF INDUSTRIAL RELATIONS)\n\nIf the user writes:\n\u201cBuild a campaign for State OSHA\u201d\n\nYou must produce something like:\n\nCampaign Overview\n\nPersona: State OSHA Director of Enforcement\n\nAgency: State OSHA / Department of Industrial Relations\n\nUse Case: Safety inspections, incident documentation, enforcement case files, secure contractor collaboration\n\nCTA: 30-min workflow mapping session\n\nTiming: Day 1, Day 4, Day 9\n\nEmail #1 (Intro)\n\nSubject Options:\n\nImproving safety case workflows\n\nStreamlining OSHA inspections\n\nBody:\n\u2026 (Agent generates full compliant body) \u2026\n\nEmail #2 (Proof + Value)\n\nSubject Options:\n\nReducing backlog risk\n\nFaster inspection file reviews\n\nBody:\n\u2026\n\nEmail #3 (Nudge)\n\nSubject Options:\n\nQuick check-in\n\nWorth revisiting?\n\nBody:\n\u2026",
+    "modes": [
+      "Campaign QA & Coaching",
+      "Generate New Campaign"
+    ],
+    "value_props": [
+      "FedRAMP High, DoD IL4, CJIS, IRS 1075, HIPAA compliance",
+      "Box Shield Pro - malware detection, anomaly detection",
+      "Box AI, Box AI Agents, Metadata Extraction",
+      "Replace legacy ECM: FileNet, OpenText, Laserfiche",
+      "Unlimited e-signatures included"
+    ],
+    "target_personas": [
+      "Federal IT Directors",
+      "State CIOs/CISOs",
+      "Defense Contractors",
+      "Public Safety/Courts",
+      "Healthcare/HHS"
+    ]
+  },
+  "prospects": []
+}

@@ -8,12 +8,12 @@ import os
 @dataclass
 class LLMConfig:
     """LLM model configuration."""
-    extraction_model: str = "gpt-5-mini"       # primary extraction
-    resolution_model: str = "gpt-5-mini"       # entity resolution verification
-    cheap_model: str = "gpt-5-nano"            # quick classifications
+    extraction_model: str = "gpt-4o-mini"     # primary extraction
+    resolution_model: str = "gpt-4o-mini"     # entity resolution verification
+    cheap_model: str = "gpt-4o-mini"          # quick classifications (was nano)
     embedding_model: str = "text-embedding-3-large"
     embedding_dimensions: int = 3072
-    temperature: float = 1.0  # gpt-5-mini/nano only support default (1.0)
+    temperature: float = 1.0  # gpt-4o-mini/nano only support default (1.0)
 
 
 @dataclass

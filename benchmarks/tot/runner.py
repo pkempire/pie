@@ -2,7 +2,7 @@
 """
 Test of Time (ToT) Benchmark Runner
 Evaluates temporal reasoning on ToT-Semantic and ToT-Arithmetic tasks.
-Uses OpenAI API (gpt-5-mini).
+Uses OpenAI API (gpt-4o-mini).
 """
 
 import os
@@ -15,9 +15,9 @@ from collections import defaultdict
 from openai import OpenAI
 
 # --------------- Config ---------------
-MODEL = "gpt-5-mini"
+MODEL = "gpt-4o-mini"
 MAX_CHAR_ESTIMATE = 16000  # ~4K tokens
-SAMPLES_PER_TYPE = 10
+SAMPLES_PER_TYPE = 2
 MAX_RESPONSE_TOKENS = 1024
 
 # Get API key from environment
@@ -40,7 +40,7 @@ def call_llm(prompt):
     resp = client.chat.completions.create(
         model=MODEL,
         messages=[{"role": "user", "content": prompt}],
-        max_completion_tokens=MAX_RESPONSE_TOKENS,
+        max_tokens=MAX_RESPONSE_TOKENS,
     )
     return resp.choices[0].message.content.strip()
 

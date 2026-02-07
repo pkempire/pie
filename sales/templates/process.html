@@ -1,202 +1,285 @@
 {% extends "base.html" %}
 
-{% block title %}Process Mining — Sales Intelligence{% endblock %}
+{% block title %}Process Mining — Prism{% endblock %}
+
+{% block head %}
+<style>
+    /* Transition matrix cell */
+    .matrix-cell {
+        transition: all 0.3s ease;
+    }
+    .matrix-cell:hover {
+        transform: scale(1.1);
+        z-index: 10;
+    }
+    
+    /* Flow animation */
+    @keyframes flowPulse {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 1; }
+    }
+    .flow-active {
+        animation: flowPulse 2s infinite;
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="space-y-12">
+<div class="space-y-8 stagger-children">
+    
     <!-- Header -->
-    <div class="text-center">
-        <h1 class="text-3xl font-serif font-semibold tracking-tight">Process Mining</h1>
-        <p class="text-ink-500 mt-2">Sales process flow analysis and transition probabilities</p>
+    <div>
+        <h1 class="text-3xl font-bold text-white">Process Mining</h1>
+        <p class="mt-2 text-dark-400">Understand where deals flow, stall, and convert</p>
+    </div>
+    
+    <!-- Key Metrics -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {% for stage in funnel %}
+            {% if stage.stage not in ['closed_won', 'closed_lost'] and loop.index <= 4 %}
+            <div class="gradient-border rounded-xl p-5">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-sm font-medium text-dark-400">{{ stage.display_name }}</span>
+                    <div class="w-2 h-2 rounded-full stage-{{ stage.stage }}" style="background: var(--stage-color);"></div>
+                </div>
+                <div class="text-2xl font-bold text-white">{{ stage.count }}</div>
+                <div class="text-xs text-dark-500 mt-1">{{ stage.conversion_from_lead }}% from lead</div>
+            </div>
+            {% endif %}
+        {% endfor %}
     </div>
     
     <!-- Process Flow Visualization -->
-    <div class="bg-white rounded-xl p-8 shadow-soft">
-        <h2 class="text-lg font-serif font-semibold mb-8">Process Flow</h2>
+    <div class="gradient-border rounded-xl p-8">
+        <h2 class="text-lg font-semibold text-white mb-8">Stage Flow</h2>
         
-        <!-- Visual Process Flow -->
-        <div class="relative overflow-x-auto">
-            <!-- Stage Nodes -->
-            <div class="flex items-center gap-3 min-w-max px-4 justify-center">
-                {% for stage in stages %}
-                    {% if stage not in ['closed_won', 'closed_lost'] %}
-                    <div class="flex flex-col items-center relative group">
-                        <!-- Node -->
-                        <div class="w-16 h-16 rounded-xl flex flex-col items-center justify-center stage-{{ stage }} border transition-subtle cursor-pointer"
-                             style="background: color-mix(in srgb, var(--stage-color) 8%, white); border-color: color-mix(in srgb, var(--stage-color) 30%, white);">
-                            {% set stage_count = 0 %}
+        <div class="relative">
+            <!-- Flow stages -->
+            <div class="flex items-center justify-between gap-2">
+                {% for stage in stages if stage not in ['closed_won', 'closed_lost'] %}
+                <div class="flex-1 relative group">
+                    <!-- Stage box -->
+                    <div class="p-4 rounded-xl border-2 transition-all cursor-pointer stage-{{ stage }}"
+                         style="border-color: var(--stage-color); background: var(--stage-bg);">
+                        <div class="text-center">
+                            <div class="text-xs font-medium text-dark-400 mb-1">{{ stage_display.get(stage, stage) }}</div>
+                            {% set count = 0 %}
                             {% for f in funnel %}
                                 {% if f.stage == stage %}
-                                    {% set stage_count = f.count %}
+                                    {% set count = f.count %}
                                 {% endif %}
                             {% endfor %}
-                            <div class="text-lg font-semibold" style="color: var(--stage-color);">
-                                {{ stage_count }}
-                            </div>
-                            <div class="text-xs text-ink-400">deals</div>
+                            <div class="text-xl font-bold" style="color: var(--stage-color);">{{ count }}</div>
                         </div>
-                        
-                        <!-- Label -->
-                        <div class="mt-2 text-xs font-medium text-center text-ink-500">{{ stage_display.get(stage, stage) }}</div>
-                        
-                        <!-- Arrow to next stage -->
-                        {% if not loop.last %}
-                        <div class="absolute left-full top-8 w-3 flex items-center">
-                            <div class="w-full h-px bg-cream-300"></div>
-                            <div class="w-0 h-0 border-t-[3px] border-b-[3px] border-l-[4px] border-transparent border-l-cream-300"></div>
+                    </div>
+                    
+                    <!-- Connector arrow -->
+                    {% if not loop.last %}
+                    <div class="absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
+                        <div class="w-6 h-6 rounded-full bg-dark-800 border border-dark-700 flex items-center justify-center">
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-dark-500"></i>
                         </div>
-                        {% endif %}
                     </div>
                     {% endif %}
+                </div>
                 {% endfor %}
             </div>
             
-            <!-- Outcome Branches -->
-            <div class="mt-10 flex justify-center gap-12">
-                <!-- Won -->
-                <div class="flex flex-col items-center">
-                    <div class="w-px h-5 bg-emerald-200"></div>
-                    <div class="w-14 h-14 rounded-xl bg-emerald-50 border border-emerald-200 flex flex-col items-center justify-center">
-                        <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
-                        <div class="text-xs text-emerald-600 mt-0.5">Won</div>
+            <!-- Outcomes -->
+            <div class="mt-8 flex items-center justify-center gap-8">
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-success/10 border border-success/30">
+                    <i data-lucide="trophy" class="w-6 h-6 text-success"></i>
+                    <div>
+                        <div class="text-xs text-dark-400">Won</div>
+                        {% set won_count = 0 %}
+                        {% for f in funnel %}
+                            {% if f.stage == 'closed_won' %}
+                                {% set won_count = f.count %}
+                            {% endif %}
+                        {% endfor %}
+                        <div class="text-xl font-bold text-success">{{ won_count }}</div>
                     </div>
                 </div>
                 
-                <!-- Lost -->
-                <div class="flex flex-col items-center">
-                    <div class="w-px h-5 bg-red-200"></div>
-                    <div class="w-14 h-14 rounded-xl bg-red-50 border border-red-200 flex flex-col items-center justify-center">
-                        <i data-lucide="x" class="w-4 h-4 text-red-600"></i>
-                        <div class="text-xs text-red-600 mt-0.5">Lost</div>
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-danger/10 border border-danger/30">
+                    <i data-lucide="x-circle" class="w-6 h-6 text-danger"></i>
+                    <div>
+                        <div class="text-xs text-dark-400">Lost</div>
+                        {% set lost_count = 0 %}
+                        {% for f in funnel %}
+                            {% if f.stage == 'closed_lost' %}
+                                {% set lost_count = f.count %}
+                            {% endif %}
+                        {% endfor %}
+                        <div class="text-xl font-bold text-danger">{{ lost_count }}</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- Transition Matrix & Bottlenecks -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Bottlenecks & Transition Matrix -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Bottlenecks -->
+        <div class="gradient-border rounded-xl p-6">
+            <h2 class="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+                <i data-lucide="alert-octagon" class="w-5 h-5 text-danger"></i>
+                Process Bottlenecks
+            </h2>
+            
+            {% if bottlenecks %}
+            <div class="space-y-3">
+                {% for bn in bottlenecks %}
+                <div class="p-4 rounded-xl transition-all
+                            {{ 'bg-danger/10 border border-danger/30' if bn.is_bottleneck else 'bg-dark-800/50 border border-dark-700' }}">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg flex items-center justify-center stage-{{ bn.stage }}"
+                                 style="background: var(--stage-bg); border: 1px solid var(--stage-border);">
+                                <span class="text-sm font-bold" style="color: var(--stage-color);">{{ bn.count }}</span>
+                            </div>
+                            <span class="font-medium text-dark-100">{{ bn.display_name }}</span>
+                        </div>
+                        {% if bn.is_bottleneck %}
+                        <span class="px-2 py-1 rounded-lg text-xs font-medium bg-danger/20 text-danger">
+                            Bottleneck
+                        </span>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Metrics -->
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div>
+                            <div class="text-lg font-semibold text-white">{{ bn.avg_days }}d</div>
+                            <div class="text-xs text-dark-500">Avg Time</div>
+                        </div>
+                        <div>
+                            <div class="text-lg font-semibold {{ 'text-warning' if bn.stall_rate > 20 else 'text-white' }}">
+                                {{ bn.stall_rate }}%
+                            </div>
+                            <div class="text-xs text-dark-500">Stall Rate</div>
+                        </div>
+                        <div>
+                            <div class="text-lg font-semibold {{ 'text-danger' if bn.loss_rate > 10 else 'text-white' }}">
+                                {{ bn.loss_rate }}%
+                            </div>
+                            <div class="text-xs text-dark-500">Loss Rate</div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="text-center py-8">
+                <div class="w-12 h-12 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-3">
+                    <i data-lucide="check" class="w-6 h-6 text-success"></i>
+                </div>
+                <p class="text-dark-400">No bottlenecks detected</p>
+            </div>
+            {% endif %}
+        </div>
         
         <!-- Transition Matrix -->
-        <div class="bg-white rounded-xl p-8 shadow-soft">
-            <h2 class="text-lg font-serif font-semibold mb-6">Transition Probabilities</h2>
+        <div class="gradient-border rounded-xl p-6">
+            <h2 class="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+                <i data-lucide="git-branch" class="w-5 h-5 text-accent"></i>
+                Transition Probabilities
+            </h2>
             
+            {% if transition_matrix %}
             <div class="overflow-x-auto">
                 <table class="w-full text-sm">
                     <thead>
                         <tr>
-                            <th class="text-left p-2 text-ink-400 font-medium text-xs">From → To</th>
-                            {% for stage in stages[:6] %}
-                            <th class="p-2 text-ink-400 font-medium text-center text-xs">
-                                {{ stage_display.get(stage, stage)[:4] }}
+                            <th class="text-left py-2 px-3 text-dark-400 font-medium">From</th>
+                            {% for stage in stages[:5] %}
+                            <th class="text-center py-2 px-2 text-dark-400 font-medium">
+                                <span class="text-xs">{{ stage[:3]|upper }}</span>
                             </th>
                             {% endfor %}
                         </tr>
                     </thead>
                     <tbody>
                         {% for from_stage in stages[:5] %}
-                        <tr class="border-t border-cream-100">
-                            <td class="p-2 font-medium text-xs text-ink-600">{{ stage_display.get(from_stage, from_stage) }}</td>
-                            {% for to_stage in stages[:6] %}
-                            <td class="p-2 text-center">
-                                {% if from_stage in transition_matrix and to_stage in transition_matrix[from_stage] %}
-                                    {% set prob = (transition_matrix[from_stage][to_stage] * 100)|round|int %}
-                                    <span class="px-1.5 py-0.5 rounded text-xs
-                                        {{ 'bg-emerald-50 text-emerald-700' if prob > 50 else '' }}
-                                        {{ 'bg-blue-50 text-blue-700' if prob > 20 and prob <= 50 else '' }}
-                                        {{ 'bg-cream-100 text-ink-500' if prob <= 20 else '' }}">
-                                        {{ prob }}%
+                        <tr>
+                            <td class="py-2 px-3 text-dark-300">{{ stage_display.get(from_stage, from_stage)[:10] }}</td>
+                            {% for to_stage in stages[:5] %}
+                                {% set prob = transition_matrix.get(from_stage, {}).get(to_stage, 0) %}
+                                <td class="text-center py-2 px-2">
+                                    {% if prob > 0 %}
+                                    <span class="matrix-cell inline-block px-2 py-1 rounded text-xs font-mono
+                                                 {{ 'bg-success/20 text-success' if prob > 0.5 else '' }}
+                                                 {{ 'bg-accent/20 text-accent' if prob > 0.2 and prob <= 0.5 else '' }}
+                                                 {{ 'bg-dark-700 text-dark-400' if prob <= 0.2 else '' }}">
+                                        {{ (prob * 100)|round }}%
                                     </span>
-                                {% else %}
-                                    <span class="text-cream-300">—</span>
-                                {% endif %}
-                            </td>
+                                    {% else %}
+                                    <span class="text-dark-600">—</span>
+                                    {% endif %}
+                                </td>
                             {% endfor %}
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-            
-            <div class="mt-4 text-xs text-ink-400">
-                Based on historical deal progressions
+            {% else %}
+            <div class="text-center py-8">
+                <p class="text-dark-400">No transition data available yet</p>
             </div>
-        </div>
-        
-        <!-- Bottleneck Analysis -->
-        <div class="bg-white rounded-xl p-8 shadow-soft">
-            <h2 class="text-lg font-serif font-semibold mb-6">Bottleneck Analysis</h2>
-            
-            <div class="space-y-4">
-                {% for bn in bottlenecks %}
-                <div class="p-4 rounded-lg {{ 'bg-red-50 border border-red-100' if bn.is_bottleneck else 'bg-cream-50' }}">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 rounded-lg stage-{{ bn.stage }} flex items-center justify-center"
-                                 style="background: color-mix(in srgb, var(--stage-color) 12%, white);">
-                                <span class="text-sm font-semibold" style="color: var(--stage-color);">
-                                    {{ bn.count }}
-                                </span>
-                            </div>
-                            <div>
-                                <div class="font-medium text-sm">{{ bn.display_name }}</div>
-                                {% if bn.is_bottleneck %}
-                                <span class="text-xs text-red-600">Bottleneck detected</span>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <div class="text-base font-semibold text-amber-600">{{ bn.bottleneck_score }}</div>
-                            <div class="text-xs text-ink-400">risk</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Metrics -->
-                    <div class="grid grid-cols-3 gap-2">
-                        <div class="text-center p-2 rounded-lg bg-white/60">
-                            <div class="text-sm font-semibold text-ink-700">{{ bn.avg_days }}</div>
-                            <div class="text-xs text-ink-400">avg days</div>
-                        </div>
-                        <div class="text-center p-2 rounded-lg bg-white/60">
-                            <div class="text-sm font-semibold {{ 'text-amber-600' if bn.stall_rate > 20 else 'text-ink-700' }}">{{ bn.stall_rate }}%</div>
-                            <div class="text-xs text-ink-400">stall rate</div>
-                        </div>
-                        <div class="text-center p-2 rounded-lg bg-white/60">
-                            <div class="text-sm font-semibold {{ 'text-red-600' if bn.loss_rate > 10 else 'text-ink-700' }}">{{ bn.loss_rate }}%</div>
-                            <div class="text-xs text-ink-400">loss rate</div>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
+            {% endif %}
         </div>
     </div>
     
-    <!-- Funnel Conversion -->
-    <div class="bg-white rounded-xl p-8 shadow-soft">
-        <h2 class="text-lg font-serif font-semibold mb-8">Stage-by-Stage Conversion</h2>
+    <!-- Insights -->
+    <div class="gradient-border rounded-xl p-6">
+        <h2 class="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+            <i data-lucide="lightbulb" class="w-5 h-5 text-warning"></i>
+            Process Insights
+        </h2>
         
-        <div class="flex items-end justify-center gap-3 h-56">
-            {% for stage in funnel %}
-                {% if stage.stage not in ['closed_won', 'closed_lost'] %}
-                <div class="flex flex-col items-center group">
-                    <!-- Bar -->
-                    <div class="w-14 rounded-t-lg stage-{{ stage.stage }} transition-all group-hover:scale-[1.02]"
-                         style="height: {{ stage.conversion_from_lead * 2 }}px; min-height: 16px; background: var(--stage-color); opacity: 0.7;">
-                    </div>
-                    
-                    <!-- Label -->
-                    <div class="mt-3 text-center">
-                        <div class="text-base font-semibold text-ink-700">{{ stage.conversion_from_lead }}%</div>
-                        <div class="text-xs text-ink-400 max-w-[60px] truncate">{{ stage_display.get(stage.stage, stage.stage) }}</div>
-                    </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Top Bottleneck -->
+            {% if bottlenecks and bottlenecks[0].is_bottleneck %}
+            <div class="p-4 rounded-xl bg-danger/5 border border-danger/20">
+                <div class="flex items-center gap-2 mb-2">
+                    <i data-lucide="alert-triangle" class="w-4 h-4 text-danger"></i>
+                    <span class="text-sm font-medium text-danger">Primary Bottleneck</span>
                 </div>
-                {% endif %}
-            {% endfor %}
-        </div>
-        
-        <div class="mt-8 text-center text-sm text-ink-400">
-            Percentage of total leads reaching each stage
+                <p class="text-dark-200">
+                    <strong>{{ bottlenecks[0].display_name }}</strong> stage has {{ bottlenecks[0].stall_rate }}% stall rate. 
+                    Consider reviewing deals stuck here.
+                </p>
+            </div>
+            {% endif %}
+            
+            <!-- Fastest Stage -->
+            {% set fastest = bottlenecks|sort(attribute='avg_days')|first if bottlenecks else None %}
+            {% if fastest %}
+            <div class="p-4 rounded-xl bg-success/5 border border-success/20">
+                <div class="flex items-center gap-2 mb-2">
+                    <i data-lucide="zap" class="w-4 h-4 text-success"></i>
+                    <span class="text-sm font-medium text-success">Fastest Stage</span>
+                </div>
+                <p class="text-dark-200">
+                    <strong>{{ fastest.display_name }}</strong> averages {{ fastest.avg_days }} days.
+                    Use this as a benchmark for other stages.
+                </p>
+            </div>
+            {% endif %}
+            
+            <!-- Recommendation -->
+            <div class="p-4 rounded-xl bg-accent/5 border border-accent/20">
+                <div class="flex items-center gap-2 mb-2">
+                    <i data-lucide="target" class="w-4 h-4 text-accent"></i>
+                    <span class="text-sm font-medium text-accent">Recommendation</span>
+                </div>
+                <p class="text-dark-200">
+                    Focus on deals in <strong>Evaluation</strong> and <strong>Proposal</strong> stages — 
+                    these typically have highest conversion impact.
+                </p>
+            </div>
         </div>
     </div>
 </div>

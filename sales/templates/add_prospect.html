@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block title %}Add Prospect — Prism{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto">
+    <h1 class="text-2xl font-bold mb-2">Add Prospect</h1>
+    <p class="text-gray-500 mb-6">Extract from a call transcript or add manually</p>
+    
+    <!-- Tabs -->
+    <div class="flex border-b mb-6">
+        <button onclick="showTab('extract')" id="tab-extract" class="px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-medium">
+            🎤 From Transcript
+        </button>
+        <button onclick="showTab('manual')" id="tab-manual" class="px-4 py-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+            ✏️ Manual Entry
+        </button>
+    </div>
+    
+    <!-- Extract Tab -->
+    <div id="panel-extract">
+        <form method="POST" class="bg-white rounded-xl border p-6 space-y-4">
+            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                <div class="font-medium text-blue-900 mb-1">🤖 PIE-Powered Extraction</div>
+                <div class="text-sm text-blue-700">Paste a call transcript, meeting notes, or sales conversation. PIE will automatically extract:</div>
+                <ul class="text-sm text-blue-600 mt-2 space-y-1">
+                    <li>• Contact name, title, company</li>
+                    <li>• Stakeholders and their roles</li>
+                    <li>• Pain points with severity</li>
+                    <li>• Objections and buying signals</li>
+                    <li>• Deal stage and next steps</li>
+                </ul>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Call Transcript / Notes</label>
+                <textarea name="transcript" rows="15" class="w-full border rounded-lg px-3 py-2 font-mono text-sm" placeholder="Paste your transcript here...
+
+Example:
+---
+[Meeting with John Smith, CTO at California DOT]
+
+John: Our biggest issue is the legacy FileNet system. It's costing us $800K a year just in maintenance.
+
+Rep: What's driving the urgency to change now?
+
+John: The governor's modernization mandate. We have until end of FY26 to migrate to cloud-based solutions. Plus our CISO wants FedRAMP compliance.
+
+Rep: Who else would need to be involved in this decision?
+
+John: Sarah Chen is our Director of IT Infrastructure, she'd be the technical evaluator. And Mike Rodriguez controls the budget as our CFO.
+---"></textarea>
+            </div>
+            
+            <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-medium">
+                Extract Prospect with PIE
+            </button>
+        </form>
+    </div>
+    
+    <!-- Manual Tab -->
+    <div id="panel-manual" class="hidden">
+        <form method="POST" class="bg-white rounded-xl border p-6 space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Contact Name *</label>
+                    <input type="text" name="name" required class="w-full border rounded-lg px-3 py-2" placeholder="John Smith">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                    <input type="text" name="title" class="w-full border rounded-lg px-3 py-2" placeholder="Chief Technology Officer">
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Organization *</label>
+                    <input type="text" name="company" required class="w-full border rounded-lg px-3 py-2" placeholder="California DOT">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Stage</label>
+                    <select name="stage" class="w-full border rounded-lg px-3 py-2">
+                        <option value="lead">Lead</option>
+                        <option value="discovery">Discovery</option>
+                        <option value="evaluation">Evaluation</option>
+                        <option value="proposal">Proposal</option>
+                        <option value="negotiation">Negotiation</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Deal Value ($)</label>
+                <input type="number" name="deal_value" class="w-full border rounded-lg px-3 py-2" placeholder="250000">
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Pain Points (one per line)</label>
+                <textarea name="pain_points" rows="4" class="w-full border rounded-lg px-3 py-2" placeholder="Legacy ECM costs $800K/year
+Content scattered across offices
+FOIA response times too slow"></textarea>
+            </div>
+            
+            <div class="flex items-center justify-between pt-4">
+                <a href="{{ url_for('prospects_list') }}" class="text-gray-500 hover:text-gray-700">Cancel</a>
+                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+                    Add Prospect
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function showTab(tab) {
+    // Hide all panels
+    document.getElementById('panel-extract').classList.add('hidden');
+    document.getElementById('panel-manual').classList.add('hidden');
+    
+    // Deactivate all tabs
+    document.getElementById('tab-extract').classList.remove('border-blue-600', 'text-blue-600');
+    document.getElementById('tab-extract').classList.add('border-transparent', 'text-gray-500');
+    document.getElementById('tab-manual').classList.remove('border-blue-600', 'text-blue-600');
+    document.getElementById('tab-manual').classList.add('border-transparent', 'text-gray-500');
+    
+    // Show selected panel and activate tab
+    document.getElementById('panel-' + tab).classList.remove('hidden');
+    document.getElementById('tab-' + tab).classList.remove('border-transparent', 'text-gray-500');
+    document.getElementById('tab-' + tab).classList.add('border-blue-600', 'text-blue-600');
+}
+</script>
+{% endblock %}

@@ -286,7 +286,7 @@ Same entity? (yes/no)"""
         try:
             result = self.llm.chat(
                 messages=[{"role": "user", "content": prompt}],
-                model="gpt-5-nano",  # cheap model for binary classification
+                model="gpt-5-mini",  # cheap model for binary classification
                 temperature=0.0,
             )
             answer = result["content"].strip().lower()

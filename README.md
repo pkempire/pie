@@ -55,7 +55,7 @@ python -m http.server 8765 --directory output
 │                    WORLD MODEL                              │
 │  ┌─────────┐  ┌─────────────┐  ┌──────────────┐            │
 │  │Entities │  │ Transitions │  │ Relationships│            │
-│  │  591+   │  │   1,240+    │  │    656+      │            │
+│  │  1,057  │  │   2,278     │  │   1,187      │            │
 │  └─────────┘  └─────────────┘  └──────────────┘            │
 └──────────────────────┬──────────────────────────────────────┘
                        │
@@ -83,12 +83,18 @@ LLMs never see raw timestamps. Context is compiled with relative time ("~3 weeks
 
 ## Benchmarks
 
-| Benchmark | naive_rag | PIE | Notes |
-|-----------|-----------|-----|-------|
-| LongMemEval | ~60% | TBD | Full 500q run in progress |
-| Test of Time | 56% | 31% | PIE hurts date arithmetic |
+| Benchmark | Baseline | naive_rag | pie_temporal | Notes |
+|-----------|----------|-----------|--------------|-------|
+| LongMemEval | — | **66.3%** | TBD | 500 questions |
+| Test of Time | 46% | **56%** | 31% | 80 questions |
+| LoCoMo | — | 58% | TBD | Temporal subset |
+| MSC | — | 46% | TBD | 76% partial credit |
 
-**Key finding**: PIE helps ordering/succession reasoning but hurts point-in-time lookup. Task-adaptive preprocessing is needed.
+**Key finding**: Semantic temporal reformulation is **task-dependent**:
+- ✅ **Helps**: ordering (+8-25%), duration reasoning, succession chains
+- ❌ **Hurts**: date arithmetic (-23-38%), point-in-time lookup
+
+This implies the right architecture isn't "timestamps vs narratives" — it's a hybrid that picks the format based on query type.
 
 ## Project Structure
 

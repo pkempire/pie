@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{{ play.name }} — Prism{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Header -->
+    <div>
+        <a href="{{ url_for('plays') }}" class="text-gray-500 hover:text-gray-700 text-sm">← Back to Plays</a>
+        <h1 class="text-2xl font-bold mt-2">{{ play.name }}</h1>
+        <p class="text-gray-500">{{ play.description }}</p>
+        <div class="text-sm text-gray-400 mt-2">Source: {{ play.source_file }}</div>
+    </div>
+    
+    <!-- Email Templates -->
+    <div class="space-y-4">
+        {% for email in play.emails %}
+        <div class="bg-white rounded-xl border">
+            <div class="border-b px-6 py-4 flex items-center justify-between bg-gray-50">
+                <div class="flex items-center gap-3">
+                    <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-medium">
+                        {{ email.touch }}
+                    </span>
+                </div>
+                <button onclick="copyEmail({{ loop.index0 }})" class="text-gray-400 hover:text-gray-600 text-sm flex items-center gap-1">
+                    <i data-lucide="copy" class="w-4 h-4"></i>
+                    Copy
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="mb-4">
+                    <div class="text-xs text-gray-400 uppercase tracking-wide mb-1">Subject Line</div>
+                    <div class="font-medium text-gray-900" id="subject-{{ loop.index0 }}">{{ email.subject }}</div>
+                </div>
+                <div>
+                    <div class="text-xs text-gray-400 uppercase tracking-wide mb-2">Body</div>
+                    <div class="bg-gray-50 rounded-lg p-4 text-sm text-gray-700 whitespace-pre-wrap font-mono" id="body-{{ loop.index0 }}">{{ email.body }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+function copyEmail(idx) {
+    const subject = document.getElementById('subject-' + idx).innerText;
+    const body = document.getElementById('body-' + idx).innerText;
+    const text = 'Subject: ' + subject + '\n\n' + body;
+    navigator.clipboard.writeText(text);
+    alert('Email copied to clipboard!');
+}
+</script>
+{% endblock %}

@@ -1,0 +1,422 @@
+{% extends "base.html" %}
+
+{% block title %}Simulate Content — Prism{% endblock %}
+
+{% block head %}
+<style>
+    /* Simulation visualization */
+    .state-change-positive {
+        background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.1));
+    }
+    .state-change-negative {
+        background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.1));
+    }
+    
+    /* Meter animation */
+    .meter-fill {
+        transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Loading pulse */
+    @keyframes simulationPulse {
+        0%, 100% { opacity: 0.5; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.02); }
+    }
+    .simulating {
+        animation: simulationPulse 1.5s infinite;
+    }
+    
+    /* Result card entrance */
+    .result-card {
+        animation: resultSlideIn 0.5s ease-out;
+    }
+    @keyframes resultSlideIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="space-y-8">
+    
+    <!-- Header -->
+    <div>
+        <h1 class="text-3xl font-bold text-white">Content Simulation</h1>
+        <p class="mt-2 text-dark-400">Test how content will interact with a prospect's world model</p>
+    </div>
+    
+    <!-- Simulation Setup -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Left: Selection Form -->
+        <div class="gradient-border rounded-xl p-6">
+            <h2 class="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+                <i data-lucide="settings" class="w-5 h-5 text-accent"></i>
+                Setup Simulation
+            </h2>
+            
+            <form method="POST" id="simulationForm" class="space-y-6">
+                <!-- Prospect Selection -->
+                <div>
+                    <label class="block text-sm font-medium text-dark-300 mb-2">Select Prospect</label>
+                    <select name="prospect_id" required
+                            class="w-full px-4 py-3 rounded-xl bg-dark-800 border border-dark-700 
+                                   text-white text-sm focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/20 transition-all">
+                        <option value="">Choose a prospect...</option>
+                        {% for p in prospects %}
+                        <option value="{{ p.id }}" {{ 'selected' if p.id == request.args.get('prospect_id') or p.name == selected_prospect else '' }}>
+                            {{ p.name }} — {{ p.company }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <!-- Content Selection -->
+                <div>
+                    <label class="block text-sm font-medium text-dark-300 mb-2">Select Content</label>
+                    <select name="content_id" required
+                            class="w-full px-4 py-3 rounded-xl bg-dark-800 border border-dark-700 
+                                   text-white text-sm focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/20 transition-all">
+                        <option value="">Choose content to simulate...</option>
+                        {% for c in content_items %}
+                        <option value="{{ c.id }}" {{ 'selected' if c.name == selected_content else '' }}>
+                            {{ c.name }} ({{ c.type.value if c.type.value else c.type }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                    
+                    {% if content_items|length == 0 %}
+                    <p class="mt-2 text-sm text-dark-500">
+                        No content available. <a href="{{ url_for('content_upload') }}" class="text-accent hover:underline">Upload content first →</a>
+                    </p>
+                    {% endif %}
+                </div>
+                
+                <!-- Submit -->
+                <button type="submit"
+                        class="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl 
+                               bg-gradient-to-r from-accent to-purple-500 hover:from-accent-dim hover:to-purple-600
+                               text-white font-semibold transition-all hover:shadow-glow"
+                        id="simulateBtn">
+                    <i data-lucide="sparkles" class="w-5 h-5"></i>
+                    Run Simulation
+                </button>
+            </form>
+        </div>
+        
+        <!-- Right: How it works -->
+        <div class="gradient-border rounded-xl p-6">
+            <h2 class="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+                <i data-lucide="info" class="w-5 h-5 text-blue-400"></i>
+                How It Works
+            </h2>
+            
+            <div class="space-y-4">
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center flex-shrink-0">
+                        <span class="text-sm font-bold text-accent">1</span>
+                    </div>
+                    <div>
+                        <div class="font-medium text-dark-100">World Model Analysis</div>
+                        <p class="text-sm text-dark-400 mt-1">We analyze the prospect's current state: pain points, objections, buying signals, personality traits.</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                        <span class="text-sm font-bold text-purple-400">2</span>
+                    </div>
+                    <div>
+                        <div class="font-medium text-dark-100">Content Mapping</div>
+                        <p class="text-sm text-dark-400 mt-1">We map content claims, proof points, and tone against the prospect's profile.</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                        <span class="text-sm font-bold text-emerald-400">3</span>
+                    </div>
+                    <div>
+                        <div class="font-medium text-dark-100">State Prediction</div>
+                        <p class="text-sm text-dark-400 mt-1">We predict how the prospect's state will evolve: objection changes, new signals, engagement likelihood.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-6 p-4 rounded-xl bg-dark-800/50 border border-dark-700">
+                <div class="flex items-center gap-2 text-sm text-dark-400">
+                    <i data-lucide="lightbulb" class="w-4 h-4 text-warning"></i>
+                    <span>Pro tip: Simulate multiple content pieces to find what resonates best with each prospect.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Results -->
+    {% if results %}
+    <div class="space-y-6 result-card">
+        
+        <!-- Results Header -->
+        <div class="flex items-center justify-between">
+            <div>
+                <h2 class="text-xl font-bold text-white">Simulation Results</h2>
+                <p class="text-dark-400 mt-1">{{ selected_content }} → {{ selected_prospect }}</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="text-right">
+                    <div class="text-sm text-dark-400">Risk Level</div>
+                    <div class="font-semibold 
+                                {{ 'text-success' if results.risk_level == 'low' else '' }}
+                                {{ 'text-warning' if results.risk_level == 'medium' else '' }}
+                                {{ 'text-danger' if results.risk_level == 'high' else '' }}">
+                        {{ results.risk_level|title }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Key Metrics -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <!-- Open Probability -->
+            <div class="gradient-border rounded-xl p-6">
+                <div class="text-sm text-dark-400 mb-2">Open Probability</div>
+                <div class="text-3xl font-bold text-white">{{ (results.open_probability * 100)|round }}%</div>
+                <div class="mt-4 h-2 bg-dark-700 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-accent to-purple-500 meter-fill" 
+                         style="width: {{ results.open_probability * 100 }}%"></div>
+                </div>
+            </div>
+            
+            <!-- Response Probability -->
+            <div class="gradient-border rounded-xl p-6">
+                <div class="text-sm text-dark-400 mb-2">Response Probability</div>
+                <div class="text-3xl font-bold text-white">{{ (results.response_probability * 100)|round }}%</div>
+                <div class="mt-4 h-2 bg-dark-700 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-emerald-500 to-cyan-500 meter-fill" 
+                         style="width: {{ results.response_probability * 100 }}%"></div>
+                </div>
+            </div>
+            
+            <!-- Predicted Response -->
+            <div class="gradient-border rounded-xl p-6">
+                <div class="text-sm text-dark-400 mb-2">Predicted Response</div>
+                <div class="text-xl font-bold {{ 'text-success' if results.predicted_response_type == 'positive' else 'text-warning' if results.predicted_response_type == 'objection' else 'text-dark-200' }}">
+                    {{ results.predicted_response_type|title }}
+                </div>
+                <div class="mt-2 flex items-center gap-2">
+                    <i data-lucide="{{ 'check-circle' if results.predicted_response_type == 'positive' else 'alert-circle' if results.predicted_response_type == 'objection' else 'message-circle' }}" 
+                       class="w-5 h-5 {{ 'text-success' if results.predicted_response_type == 'positive' else 'text-warning' if results.predicted_response_type == 'objection' else 'text-dark-400' }}"></i>
+                </div>
+            </div>
+            
+            <!-- Resonance Score -->
+            <div class="gradient-border rounded-xl p-6">
+                <div class="text-sm text-dark-400 mb-2">Pain Resonance</div>
+                <div class="text-3xl font-bold text-white">{{ (results.avg_resonance * 100)|round }}%</div>
+                <div class="mt-4 h-2 bg-dark-700 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-amber-500 to-orange-500 meter-fill" 
+                         style="width: {{ results.avg_resonance * 100 }}%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Detailed Analysis -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            <!-- Objection Changes -->
+            {% if results.objection_changes %}
+            <div class="gradient-border rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <i data-lucide="trending-down" class="w-5 h-5 text-success"></i>
+                    Objection Changes
+                </h3>
+                
+                <div class="space-y-4">
+                    {% for oc in results.objection_changes %}
+                    <div class="p-4 rounded-xl {{ 'state-change-positive' if oc.delta < 0 else 'state-change-negative' }} border border-dark-700">
+                        <div class="flex items-start justify-between">
+                            <div class="flex-1">
+                                <div class="text-sm font-medium text-dark-100">{{ oc.objection }}</div>
+                                <div class="text-xs text-dark-400 mt-2">{{ oc.reason }}</div>
+                            </div>
+                            <div class="text-right flex-shrink-0 ml-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-sm text-dark-400">{{ (oc.before * 100)|round }}%</span>
+                                    <i data-lucide="arrow-right" class="w-4 h-4 text-dark-500"></i>
+                                    <span class="text-sm font-semibold {{ 'text-success' if oc.delta < 0 else 'text-danger' }}">
+                                        {{ (oc.after * 100)|round }}%
+                                    </span>
+                                </div>
+                                <div class="text-xs font-semibold {{ 'text-success' if oc.delta < 0 else 'text-danger' }} mt-1">
+                                    {{ '+' if oc.delta > 0 else '' }}{{ (oc.delta * 100)|round }}%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="mt-4 p-3 rounded-xl bg-dark-800/50 border border-dark-700">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-dark-400">Net Objection Change</span>
+                        <span class="font-semibold {{ 'text-success' if results.net_objection_change < 0 else 'text-danger' }}">
+                            {{ '+' if results.net_objection_change > 0 else '' }}{{ (results.net_objection_change * 100)|round }}%
+                        </span>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Pain Resonance -->
+            {% if results.pain_resonance %}
+            <div class="gradient-border rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <i data-lucide="heart" class="w-5 h-5 text-pink-400"></i>
+                    Pain Resonance
+                </h3>
+                
+                <div class="space-y-3">
+                    {% for pr in results.pain_resonance %}
+                    <div class="p-4 rounded-xl bg-dark-800/50 border border-dark-700">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-sm font-medium text-dark-100 truncate max-w-[200px]">{{ pr.pain }}</span>
+                            <span class="text-sm font-semibold {{ 'text-success' if pr.resonance_score > 0.7 else 'text-warning' if pr.resonance_score > 0.4 else 'text-dark-400' }}">
+                                {{ (pr.resonance_score * 100)|round }}%
+                            </span>
+                        </div>
+                        <div class="h-2 bg-dark-700 rounded-full overflow-hidden">
+                            <div class="h-full rounded-full transition-all duration-1000
+                                        {{ 'bg-gradient-to-r from-success to-emerald-400' if pr.resonance_score > 0.7 else '' }}
+                                        {{ 'bg-gradient-to-r from-warning to-amber-400' if pr.resonance_score > 0.4 and pr.resonance_score <= 0.7 else '' }}
+                                        {{ 'bg-dark-600' if pr.resonance_score <= 0.4 else '' }}"
+                                 style="width: {{ pr.resonance_score * 100 }}%"></div>
+                        </div>
+                        {% if pr.addressed_by %}
+                        <div class="mt-3 text-xs text-dark-500">
+                            Addressed by: {{ pr.addressed_by|join(', ')|truncate(50) }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- New Signals & Concerns -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- New Signals -->
+            {% if results.new_signals %}
+            <div class="gradient-border rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <i data-lucide="zap" class="w-5 h-5 text-success"></i>
+                    Potential New Signals
+                </h3>
+                
+                <div class="space-y-2">
+                    {% for signal in results.new_signals %}
+                    <div class="flex items-center gap-3 p-3 rounded-xl bg-success/5 border border-success/20">
+                        <i data-lucide="plus-circle" class="w-4 h-4 text-success"></i>
+                        <span class="text-sm text-dark-100">{{ signal }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- New Concerns -->
+            {% if results.new_concerns %}
+            <div class="gradient-border rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <i data-lucide="alert-triangle" class="w-5 h-5 text-warning"></i>
+                    Potential New Concerns
+                </h3>
+                
+                <div class="space-y-2">
+                    {% for concern in results.new_concerns %}
+                    <div class="flex items-center gap-3 p-3 rounded-xl bg-warning/5 border border-warning/20">
+                        <i data-lucide="alert-circle" class="w-4 h-4 text-warning"></i>
+                        <span class="text-sm text-dark-100">{{ concern }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Risk Factors & Recommendations -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Risk Factors -->
+            {% if results.risk_factors %}
+            <div class="gradient-border rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <i data-lucide="shield-alert" class="w-5 h-5 text-danger"></i>
+                    Risk Factors
+                </h3>
+                
+                <div class="space-y-2">
+                    {% for risk in results.risk_factors %}
+                    <div class="flex items-start gap-3 p-3 rounded-xl bg-danger/5 border border-danger/20">
+                        <i data-lucide="x-circle" class="w-4 h-4 text-danger mt-0.5"></i>
+                        <span class="text-sm text-dark-100">{{ risk }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Recommendation -->
+            {% if results.recommended_followup %}
+            <div class="gradient-border rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <i data-lucide="lightbulb" class="w-5 h-5 text-accent"></i>
+                    Recommended Next Step
+                </h3>
+                
+                <div class="p-4 rounded-xl bg-accent/10 border border-accent/30">
+                    <p class="text-dark-100">{{ results.recommended_followup }}</p>
+                </div>
+                
+                <div class="mt-4 grid grid-cols-2 gap-4">
+                    <div class="p-3 rounded-xl bg-dark-800/50 border border-dark-700">
+                        <div class="text-xs text-dark-500">Optimal Send Time</div>
+                        <div class="text-sm font-medium text-dark-100 mt-1">{{ results.optimal_send_time|title }}</div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-dark-800/50 border border-dark-700">
+                        <div class="text-xs text-dark-500">Best Day</div>
+                        <div class="text-sm font-medium text-dark-100 mt-1">{{ results.optimal_day_of_week|title }}</div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    lucide.createIcons();
+    
+    // Form submission animation
+    document.getElementById('simulationForm').addEventListener('submit', function(e) {
+        const btn = document.getElementById('simulateBtn');
+        btn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Simulating...';
+        btn.disabled = true;
+        lucide.createIcons();
+    });
+    
+    // Animate meters on load
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.meter-fill').forEach((el, i) => {
+            const targetWidth = el.style.width;
+            el.style.width = '0%';
+            setTimeout(() => {
+                el.style.width = targetWidth;
+            }, 100 + i * 200);
+        });
+    });
+</script>
+{% endblock %}

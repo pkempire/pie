@@ -1,0 +1,86 @@
+{
+  "id": "43b865a7",
+  "name": "James Patterson",
+  "title": "CTO",
+  "company": "Texas Department of Criminal Justice",
+  "email": null,
+  "stage": "discovery",
+  "deal_value": 0.0,
+  "probability": 0.1,
+  "close_date": null,
+  "stakeholders": [
+    {
+      "name": "Lisa Martinez",
+      "title": "CISO",
+      "role": "influencer",
+      "email": null,
+      "linkedin": null,
+      "sentiment": "neutral",
+      "notes": [],
+      "enriched": false,
+      "company_tenure": null,
+      "previous_companies": [],
+      "education": null
+    },
+    {
+      "name": "Tom Wilson",
+      "title": "Deputy Director",
+      "role": "blocker",
+      "email": null,
+      "linkedin": null,
+      "sentiment": "neutral",
+      "notes": [],
+      "enriched": false,
+      "company_tenure": null,
+      "previous_companies": [],
+      "education": null
+    }
+  ],
+  "pain_points": [
+    {
+      "description": "Maintenance cost of the current system",
+      "severity": "critical",
+      "category": "budget",
+      "verbatim_quote": "$1.2 million annually",
+      "source": "transcript",
+      "created_at": "2026-02-05T16:00:36.199456"
+    },
+    {
+      "description": "Non-compliance with CJIS encryption requirements",
+      "severity": "high",
+      "category": "technical",
+      "verbatim_quote": "our current system doesn't meet the new encryption requirements",
+      "source": "transcript",
+      "created_at": "2026-02-05T16:00:36.199461"
+    },
+    {
+      "description": "Audit finding regarding compliance",
+      "severity": "high",
+      "category": "political",
+      "verbatim_quote": "We had an audit finding last quarter",
+      "source": "transcript",
+      "created_at": "2026-02-05T16:00:36.199464"
+    }
+  ],
+  "objections": [
+    {
+      "description": "Tom is skeptical due to previous experience with Salesforce migration.",
+      "status": "open",
+      "response": null,
+      "source": "transcript"
+    }
+  ],
+  "buying_signals": [
+    "Urgency to comply by end of Q3",
+    "Request for demo with Lisa next week"
+  ],
+  "company_description": null,
+  "company_industry": null,
+  "company_size": null,
+  "company_recent_news": [],
+  "competitors_mentioned": [],
+  "activities": [],
+  "created_at": "2026-02-05T16:00:36.199405",
+  "updated_at": "2026-02-05T16:00:36.199483",
+  "enriched_at": null
+}

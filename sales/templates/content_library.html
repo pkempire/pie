@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+{% block title %}Content Library — Prism{% endblock %}
+
+{% block content %}
+<div class="space-y-8">
+    
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-3xl font-bold text-white">Content Library</h1>
+            <p class="mt-2 text-dark-400">Manage and simulate your sales content</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="{{ url_for('sequence_create') }}" 
+               class="flex items-center gap-2 px-4 py-2 rounded-xl bg-dark-800 border border-dark-700 
+                      hover:border-purple-500/30 text-dark-200 hover:text-white text-sm font-medium transition-all">
+                <i data-lucide="list" class="w-4 h-4"></i>
+                New Sequence
+            </a>
+            <a href="{{ url_for('content_upload') }}" 
+               class="flex items-center gap-2 px-4 py-2 rounded-xl bg-accent hover:bg-accent-dim 
+                      text-white text-sm font-medium transition-all hover:shadow-glow-sm">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+                Add Content
+            </a>
+        </div>
+    </div>
+    
+    <!-- Tabs -->
+    <div class="flex items-center gap-1 p-1 bg-dark-800 rounded-xl w-fit">
+        <button class="tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-all bg-accent text-white" data-tab="content">
+            Content
+            <span class="ml-2 px-2 py-0.5 rounded-full text-xs bg-white/20">{{ content_items|length }}</span>
+        </button>
+        <button class="tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-all text-dark-400 hover:text-white" data-tab="sequences">
+            Sequences
+            <span class="ml-2 px-2 py-0.5 rounded-full text-xs bg-dark-700">{{ sequences|length }}</span>
+        </button>
+    </div>
+    
+    <!-- Content Tab -->
+    <div id="content-tab" class="tab-content">
+        {% if content_items %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 stagger-children">
+            {% for c in content_items %}
+            <div class="gradient-border rounded-xl p-5 card-hover group">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg flex items-center justify-center
+                                    {{ 'bg-blue-500/20' if c.type.value == 'email' else '' }}
+                                    {{ 'bg-purple-500/20' if c.type.value == 'call_script' else '' }}
+                                    {{ 'bg-emerald-500/20' if c.type.value == 'case_study' else '' }}
+                                    {{ 'bg-amber-500/20' if c.type.value == 'objection_handler' else '' }}
+                                    {{ 'bg-dark-700' }}">
+                            <i data-lucide="{{ 'mail' if c.type.value == 'email' else 'phone' if c.type.value == 'call_script' else 'file-text' }}" 
+                               class="w-5 h-5 {{ 'text-blue-400' if c.type.value == 'email' else 'text-purple-400' if c.type.value == 'call_script' else 'text-emerald-400' if c.type.value == 'case_study' else 'text-amber-400' if c.type.value == 'objection_handler' else 'text-dark-400' }}"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-medium uppercase tracking-wider text-dark-500">
+                                {{ c.type.value|replace('_', ' ') }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="opacity-0 group-hover:opacity-100 transition-opacity">
+                        <a href="{{ url_for('content_detail', content_id=c.id) }}" 
+                           class="p-2 rounded-lg hover:bg-dark-700 text-dark-400 hover:text-white transition-all inline-block">
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <h3 class="font-semibold text-white mb-2 line-clamp-2">{{ c.name }}</h3>
+                
+                {% if c.subject_line %}
+                <p class="text-sm text-dark-400 mb-3 line-clamp-1">{{ c.subject_line }}</p>
+                {% endif %}
+                
+                <div class="flex items-center gap-3 text-xs text-dark-500">
+                    <span class="flex items-center gap-1">
+                        <i data-lucide="type" class="w-3 h-3"></i>
+                        {{ c.word_count }} words
+                    </span>
+                    {% if c.claims %}
+                    <span class="flex items-center gap-1">
+                        <i data-lucide="target" class="w-3 h-3"></i>
+                        {{ c.claims|length }} claims
+                    </span>
+                    {% endif %}
+                </div>
+                
+                <!-- Tags -->
+                {% if c.pains_addressed %}
+                <div class="mt-4 flex flex-wrap gap-2">
+                    {% for pain in c.pains_addressed[:2] %}
+                    <span class="px-2 py-1 rounded-lg text-xs bg-dark-700 text-dark-300">
+                        {{ pain|truncate(20) }}
+                    </span>
+                    {% endfor %}
+                    {% if c.pains_addressed|length > 2 %}
+                    <span class="px-2 py-1 rounded-lg text-xs bg-dark-700 text-dark-400">
+                        +{{ c.pains_addressed|length - 2 }}
+                    </span>
+                    {% endif %}
+                </div>
+                {% endif %}
+                
+                <!-- Actions -->
+                <div class="mt-4 pt-4 border-t border-dark-700 flex items-center justify-between">
+                    <a href="{{ url_for('simulate_content') }}?content_id={{ c.id }}" 
+                       class="text-sm text-accent hover:text-accent-bright transition-colors flex items-center gap-1">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                        Simulate
+                    </a>
+                    <a href="{{ url_for('content_detail', content_id=c.id) }}" 
+                       class="text-sm text-dark-400 hover:text-white transition-colors">
+                        View →
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-16">
+            <div class="w-16 h-16 rounded-2xl bg-dark-800 flex items-center justify-center mx-auto mb-4">
+                <i data-lucide="file-plus" class="w-8 h-8 text-dark-500"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">No content yet</h3>
+            <p class="text-dark-400 mb-6">Upload your first email, script, or case study to get started.</p>
+            <a href="{{ url_for('content_upload') }}" 
+               class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-accent hover:bg-accent-dim 
+                      text-white font-medium transition-all hover:shadow-glow-sm">
+                <i data-lucide="plus" class="w-5 h-5"></i>
+                Add Content
+            </a>
+        </div>
+        {% endif %}
+    </div>
+    
+    <!-- Sequences Tab -->
+    <div id="sequences-tab" class="tab-content hidden">
+        {% if sequences %}
+        <div class="space-y-4 stagger-children">
+            {% for seq in sequences %}
+            <div class="gradient-border rounded-xl p-6 card-hover">
+                <div class="flex items-start justify-between">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 
+                                    flex items-center justify-center">
+                            <i data-lucide="workflow" class="w-6 h-6 text-purple-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-white">{{ seq.name }}</h3>
+                            {% if seq.description %}
+                            <p class="text-sm text-dark-400 mt-1 line-clamp-2">{{ seq.description }}</p>
+                            {% endif %}
+                            <div class="flex items-center gap-4 mt-3 text-sm text-dark-500">
+                                <span class="flex items-center gap-1">
+                                    <i data-lucide="layers" class="w-4 h-4"></i>
+                                    {{ seq.item_count }} items
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <i data-lucide="calendar" class="w-4 h-4"></i>
+                                    {{ seq.total_duration_days }} days
+                                </span>
+                                {% if seq.target_stage %}
+                                <span class="flex items-center gap-1">
+                                    <i data-lucide="target" class="w-4 h-4"></i>
+                                    {{ seq.target_stage }}
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <a href="{{ url_for('simulate_sequence') }}?sequence_id={{ seq.id }}" 
+                           class="flex items-center gap-2 px-4 py-2 rounded-xl bg-accent/10 hover:bg-accent/20 
+                                  border border-accent/30 text-accent text-sm font-medium transition-all">
+                            <i data-lucide="sparkles" class="w-4 h-4"></i>
+                            Simulate
+                        </a>
+                        <a href="{{ url_for('sequence_detail', sequence_id=seq.id) }}" 
+                           class="p-2 rounded-xl bg-dark-700 hover:bg-dark-600 text-dark-300 hover:text-white transition-all">
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Sequence Preview -->
+                <div class="mt-6 flex items-center gap-2 overflow-x-auto pb-2">
+                    {% for item in seq.items[:5] %}
+                    <div class="flex items-center gap-2 flex-shrink-0">
+                        <div class="px-3 py-2 rounded-lg bg-dark-800 border border-dark-700 text-sm text-dark-200">
+                            {{ item.name|truncate(25) }}
+                        </div>
+                        {% if not loop.last %}
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-dark-600"></i>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    {% if seq.items|length > 5 %}
+                    <span class="text-sm text-dark-500">+{{ seq.items|length - 5 }} more</span>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-16">
+            <div class="w-16 h-16 rounded-2xl bg-dark-800 flex items-center justify-center mx-auto mb-4">
+                <i data-lucide="workflow" class="w-8 h-8 text-dark-500"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">No sequences yet</h3>
+            <p class="text-dark-400 mb-6">Create sequences to organize content for nurture campaigns.</p>
+            <a href="{{ url_for('sequence_create') }}" 
+               class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-purple-500 hover:bg-purple-600 
+                      text-white font-medium transition-all">
+                <i data-lucide="plus" class="w-5 h-5"></i>
+                Create Sequence
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    lucide.createIcons();
+    
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Update buttons
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('bg-accent', 'text-white');
+                b.classList.add('text-dark-400', 'hover:text-white');
+            });
+            btn.classList.remove('text-dark-400', 'hover:text-white');
+            btn.classList.add('bg-accent', 'text-white');
+            
+            // Update content
+            const tabId = btn.dataset.tab;
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById(tabId + '-tab').classList.remove('hidden');
+            
+            // Re-initialize icons
+            lucide.createIcons();
+        });
+    });
+</script>
+{% endblock %}

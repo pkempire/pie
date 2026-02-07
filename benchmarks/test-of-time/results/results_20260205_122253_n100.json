@@ -1,0 +1,989 @@
+{
+  "meta": {
+    "timestamp": "20260205_122253",
+    "model": "gpt-4o-mini",
+    "total_questions": 100,
+    "question_type_filter": null,
+    "elapsed_seconds": 127.7
+  },
+  "overall": {
+    "baseline_accuracy": 42.0,
+    "pie_accuracy": 34.0,
+    "delta": -8.0,
+    "baseline_correct": 42,
+    "pie_correct": 34,
+    "total": 100
+  },
+  "by_type": {
+    "before_after": {
+      "n": 13,
+      "baseline_correct": 0,
+      "baseline_accuracy": 0.0,
+      "pie_correct": 0,
+      "pie_accuracy": 0.0,
+      "delta": 0.0
+    },
+    "event_at_the_time_of_another_event": {
+      "n": 13,
+      "baseline_correct": 9,
+      "baseline_accuracy": 69.23,
+      "pie_correct": 7,
+      "pie_accuracy": 53.85,
+      "delta": -15.38
+    },
+    "event_at_time_t": {
+      "n": 13,
+      "baseline_correct": 3,
+      "baseline_accuracy": 23.08,
+      "pie_correct": 0,
+      "pie_accuracy": 0.0,
+      "delta": -23.08
+    },
+    "event_at_what_time": {
+      "n": 13,
+      "baseline_correct": 12,
+      "baseline_accuracy": 92.31,
+      "pie_correct": 7,
+      "pie_accuracy": 53.85,
+      "delta": -38.46
+    },
+    "first_last": {
+      "n": 12,
+      "baseline_correct": 6,
+      "baseline_accuracy": 50.0,
+      "pie_correct": 7,
+      "pie_accuracy": 58.33,
+      "delta": 8.33
+    },
+    "number_of_events_in_time_interval": {
+      "n": 12,
+      "baseline_correct": 8,
+      "baseline_accuracy": 66.67,
+      "pie_correct": 5,
+      "pie_accuracy": 41.67,
+      "delta": -25.0
+    },
+    "relation_duration": {
+      "n": 12,
+      "baseline_correct": 4,
+      "baseline_accuracy": 33.33,
+      "pie_correct": 7,
+      "pie_accuracy": 58.33,
+      "delta": 25.0
+    },
+    "timeline": {
+      "n": 12,
+      "baseline_correct": 0,
+      "baseline_accuracy": 0.0,
+      "pie_correct": 1,
+      "pie_accuracy": 8.33,
+      "delta": 8.33
+    }
+  },
+  "flips": {
+    "pie_rescued": 11,
+    "pie_hurt": 19
+  },
+  "details": [
+    {
+      "question_type": "before_after",
+      "question": "Find the entity that was the R11 of E57 immediately after E95 was the R11 of E57.",
+      "label": "E76",
+      "baseline_answer": "{\"explanation\":\"E95 was the R11 of E57 from 1995 to 1999. The next entity that was the R11 of E57 after E95 is E36, which was the R11 of E57 from 1999 to 2001.\",\"answer\":\"E36\"}",
+      "pie_answer": "E36",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "before_after",
+      "question": "Find the entity that was the R11 of E57 immediately after E95 was the R11 of E57.",
+      "label": "E76",
+      "baseline_answer": "{\n  \"explanation\": \"E95 was the R11 of E57 from 1992 to 1993. After that, E57 was the R11 of E36 from 1997 to 1998. Therefore, the entity that was the R11 of E57 immediately after E95 is E36.\",\n  \"answer\": \"E36\"\n}",
+      "pie_answer": "E36",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "before_after",
+      "question": "Find the entity that was the R11 of E57 immediately after E95 was the R11 of E57.",
+      "label": "E76",
+      "baseline_answer": "{\"explanation\":\"E95 was the R11 of E57 from 1992 to 1993. The next entity that was the R11 of E57 after E95 is E6, which was the R11 of E57 from 2005 to 2008.\",\"answer\":\"E6\"}",
+      "pie_answer": "E36",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "before_after",
+      "question": "Find the entity that was the R11 of E57 immediately after E95 was the R11 of E57.",
+      "label": "E76",
+      "baseline_answer": "{\n  \"explanation\": \"E95 was the R11 of E57 from 1992 to 1993. After E95, E6 was the R11 of E57 from 1994 to 2001.\",\n  \"answer\": \"E6\"\n}",
+      "pie_answer": "E6",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "before_after",
+      "question": "Find the entity that was the R11 of E57 immediately after E95 was the R11 of E57.",
+      "label": "E76",
+      "baseline_answer": "{\n  \"explanation\": \"E95 was the R11 of E57 from 1992 to 1993. After that, E59 became the R11 of E57 from 1994 to 1998.\",\n  \"answer\": \"E59\"\n}",
+      "pie_answer": "E36",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "before_after",
+      "question": "Which entity was the R96 of E59 immediately before E92?",
+      "label": "E11",
+      "baseline_answer": "{\"explanation\":\"E59 was the R96 of E9 from 1930 to 1933. E92 was the R96 of E59 from 1938 to 1942. Therefore, the entity that was the R96 of E59 immediately before E92 is E9.\",\"answer\":\"E9\"}",
+      "pie_answer": "E37",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "before_after",
+      "question": "Which entity was the R96 of E59 immediately before E92?",
+      "label": "E11",
+      "baseline_answer": "{\"explanation\":\"To find the entity that was the R96 of E59 immediately before E92, we look for the last time E59 had a R96 relationship before E92 was established. The facts indicate that E59 was the R96 of E92 from 1913 to 1916, and before that, E59 was the R96 of E92 from 1926 to 1933. Therefore, the entity that was the R96 of E59 immediately before E92",
+      "pie_answer": "E37",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "before_after",
+      "question": "Which entity was the R96 of E59 immediately before E92?",
+      "label": "E11",
+      "baseline_answer": "{\"explanation\":\"To find the entity that was the R96 of E59 immediately before E92, we look for the R96 relationships involving E59. The facts indicate that E92 was the R96 of E59 from 1940 to 1942. The last entity that was the R96 of E59 before E92 is E11, which was the R96 of E59 from 1930 to 1933. Therefore, the answer is E11.\",\"answer\":\"E",
+      "pie_answer": "E33",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "before_after",
+      "question": "Which entity was the R96 of E59 immediately before E92?",
+      "label": "E11",
+      "baseline_answer": "{\"explanation\":\"Based on the temporal facts, E59 was the R96 of E92 from 1923 to 1925. The last entity that was the R96 of E59 before E92 is E33, which was the R96 of E59 from 1934 to 1935. Therefore, the entity that was the R96 of E59 immediately before E92 is E33.\",\"answer\":\"E33\"}",
+      "pie_answer": "E33",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "before_after",
+      "question": "Which entity was the R96 of E59 immediately before E92?",
+      "label": "E11",
+      "baseline_answer": "{\"explanation\":\"E59 was the R96 of E92 from 1933 to 1938. Therefore, the entity that was the R96 of E59 immediately before E92 is E33, which was the R96 of E59 from 1934 to 1940.\",\"answer\":\"E33\"}",
+      "pie_answer": "E33",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "before_after",
+      "question": "Which entity was the R82 of E60 immediately before E27?",
+      "label": "E98",
+      "baseline_answer": "{\"explanation\":\"To find the entity that was the R82 of E60 immediately before E27, we need to look at the time periods for E60 and E27. E27 was the R82 of E60 from 1934 to 1942. The last time E60 had a different R82 before E27 would be the period just before 1934. The last recorded R82 for E60 before E27 is E11, which was the R82 of E60",
+      "pie_answer": "E94",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "before_after",
+      "question": "Which entity was the R82 of E60 immediately before E27?",
+      "label": "E98",
+      "baseline_answer": "```json\n{\"explanation\":\"E60 was the R82 of E91 from 1926 to 1934, and E91 was the R82 of E27 from 1934 to 1935. Therefore, the entity that was the R82 of E60 immediately before E27 is E91.\",\"answer\":\"E91\"}\n```",
+      "pie_answer": "E94",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "before_after",
+      "question": "Which entity was the R82 of E60 immediately before E27?",
+      "label": "E98",
+      "baseline_answer": "{\"explanation\":\"To find the entity that was the R82 of E60 immediately before E27, we need to look for the R82 relationships involving E60 and E27. The facts show that E6 was the R82 of E60 from 1917 to 1924, and E27 was the R82 of E60 from 1934 to 1942. Therefore, E6 was the R82 of E60 immediately before E27.\",\"answer\":\"E6\"}",
+      "pie_answer": "E94",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_the_time_of_another_event",
+      "question": "At the start time of E92 being the R17 of E59, E22 was the R11 of which entity?",
+      "label": "E30",
+      "baseline_answer": "{\"explanation\":\"At the start time of E92 being the R17 of E59, which is 1931, E22 was the R11 of E30 from 1921 to 1931. Therefore, at that time, E22 was the R11 of E30.\",\"answer\":\"E30\"}",
+      "pie_answer": "E30",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "event_at_the_time_of_another_event",
+      "question": "At the start time of E92 being the R17 of E59, E22 was the R11 of which entity?",
+      "label": "E30",
+      "baseline_answer": "{\"explanation\":\"At the start time of E92 being the R17 of E59, which is from 1931, we look for the relationship of E22 at that time. E22 was the R11 of E30 from 1921 to 1931, and since 1931 is the end of that relationship, E22 was still the R11 of E30 at the start of 1931.\",\"answer\":\"E30\"}",
+      "pie_answer": "E92",
+      "baseline_correct": true,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_the_time_of_another_event",
+      "question": "At the start time of E92 being the R17 of E59, E22 was the R11 of which entity?",
+      "label": "E30",
+      "baseline_answer": "{\"explanation\":\"At the start time of E92 being the R17 of E59, which is 1931, we look for the relationship of E22. The facts state that E22 was the R11 of E30 from 1921 to 1931. Therefore, at the start time of 1931, E22 was the R11 of E30.\",\"answer\":\"E30\"}",
+      "pie_answer": "E30",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "event_at_the_time_of_another_event",
+      "question": "At the start time of E92 being the R17 of E59, E22 was the R11 of which entity?",
+      "label": "E30",
+      "baseline_answer": "{\"explanation\":\"E92 was the R17 of E59 from 1931 to 1935. Therefore, the start time is 1931. At that time, E22 was the R11 of E30 from 1921 to 1931, which means at the start of 1931, E22 was the R11 of E30.\",\"answer\":\"E30\"}",
+      "pie_answer": "E92",
+      "baseline_correct": true,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_the_time_of_another_event",
+      "question": "At the start time of E92 being the R17 of E59, E22 was the R11 of which entity?",
+      "label": "E30",
+      "baseline_answer": "{\"explanation\":\"At the start time of E92 being the R17 of E59, which is from 1931, we look for the relationship of E22 at that time. E22 was the R11 of E30 from 1921 to 1931, and since 1931 is the end of that duration, E22 was still the R11 of E30 at the start of 1931.\",\"answer\":\"E30\"}",
+      "pie_answer": "E92",
+      "baseline_correct": true,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_the_time_of_another_event",
+      "question": "E11 was the R63 of which entity at the time when E42 started being the R88 of E24?",
+      "label": "E24",
+      "baseline_answer": "{\"explanation\":\"E42 started being the R88 of E24 in 1969. At that time, E11 was the R63 of E59 from 1977 to 1979, which means E11 was the R63 of E59 in 1969.\",\"answer\":\"E59\"}",
+      "pie_answer": "E24",
+      "baseline_correct": false,
+      "pie_correct": true
+    },
+    {
+      "question_type": "event_at_the_time_of_another_event",
+      "question": "E11 was the R63 of which entity at the time when E42 started being the R88 of E24?",
+      "label": "E24",
+      "baseline_answer": "{\"explanation\":\"E42 started being the R88 of E24 in 1969. At that time, E11 was the R63 of E24 from 1966 to 1971, so E11 was still the R63 of E24.\",\"answer\":\"E24\"}",
+      "pie_answer": "E24",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "event_at_the_time_of_another_event",
+      "question": "E11 was the R63 of which entity at the time when E42 started being the R88 of E24?",
+      "label": "E24",
+      "baseline_answer": "{\"explanation\":\"E42 started being the R88 of E24 in 1969. At that time, E11 was the R63 of E24 from 1966 to 1971.\",\"answer\":\"E24\"}",
+      "pie_answer": "E24",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "event_at_the_time_of_another_event",
+      "question": "E11 was the R63 of which entity at the time when E42 started being the R88 of E24?",
+      "label": "E24",
+      "baseline_answer": "{\"explanation\":\"E42 started being the R88 of E24 in 1969. At that time, E11 was the R63 of E24 from 1966 to 1971, which means E11 was the R63 of E24.\",\"answer\":\"E24\"}",
+      "pie_answer": "E24",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "event_at_the_time_of_another_event",
+      "question": "E11 was the R63 of which entity at the time when E42 started being the R88 of E24?",
+      "label": "E24",
+      "baseline_answer": "{\"explanation\":\"E42 started being the R88 of E24 in 1969. At that time, E11 was the R63 of E24 from 1966 to 1971.\",\"answer\":\"E24\"}",
+      "pie_answer": "E24",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "event_at_the_time_of_another_event",
+      "question": "When E69 started being the R90 of E59, which entity was the R17 of E24?",
+      "label": "E11",
+      "baseline_answer": "{\"explanation\":\"E69 was the R90 of E59 from 1960 to 1967. During this time, E24 was the R17 of E69 from 1967 to 1975. Therefore, before E69 became the R90 of E59, E24 was the R17 of E69 from 1947 to 1953, and E42 was the R17 of E24 from 1967 to 1975. Thus, the R17 of",
+      "pie_answer": "E69",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_the_time_of_another_event",
+      "question": "When E69 started being the R90 of E59, which entity was the R17 of E24?",
+      "label": "E11",
+      "baseline_answer": "{\"explanation\":\"E69 was the R90 of E59 from 1960 to 1967. During this time, E24 was the R17 of E33 from 1955 to 1959, and E33 was the R90 of E69 from 1953 to 1954. Therefore, when E69 started being the R90 of E59, E33 was the R17 of E24.\",\"answer\":\"E33\"}",
+      "pie_answer": "E33",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_the_time_of_another_event",
+      "question": "When E69 started being the R90 of E59, which entity was the R17 of E24?",
+      "label": "E11",
+      "baseline_answer": "{\n  \"explanation\": \"E69 was the R90 of E59 from 1960 to 1967. During this time, E24 was the R17 of E33 from 1947 to 1950, and E11 was the R17 of E24 from 1955 to 1965. Since E69 started being the R90 of E59 in 1960, we look for the R17 of E24 during that period, which is E11.\",",
+      "pie_answer": "E33",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_time_t",
+      "question": "Which entity was the R63 of E69 in 1982?",
+      "label": "E92",
+      "baseline_answer": "{\"explanation\":\"In 1982, E22 was the R63 of E69 as per the provided temporal facts.\",\"answer\":\"E22\"}",
+      "pie_answer": "E22",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_time_t",
+      "question": "Which entity was the R63 of E69 in 1982?",
+      "label": "E92",
+      "baseline_answer": "{\"explanation\":\"Based on the provided temporal facts, E22 was the R63 of E69 from 1968 to 1977. Since 1982 falls within this range, E22 is the entity that was the R63 of E69 in 1982.\",\"answer\":\"E22\"}",
+      "pie_answer": "E22",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_time_t",
+      "question": "Which entity was the R63 of E69 in 1982?",
+      "label": "E92",
+      "baseline_answer": "{\"explanation\":\"Based on the provided temporal facts, E92 was the R63 of E69 from 1978 to 1986, which includes the year 1982.\",\"answer\":\"E92\"}",
+      "pie_answer": "E22",
+      "baseline_correct": true,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_time_t",
+      "question": "Which entity was the R63 of E69 in 1982?",
+      "label": "E92",
+      "baseline_answer": "{\"explanation\":\"Based on the temporal facts, E22 was the R63 of E69 from 1981 to 1983, which includes the year 1982.\",\"answer\":\"E22\"}",
+      "pie_answer": "E22",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_time_t",
+      "question": "Which entity was the R63 of E69 in 1982?",
+      "label": "E92",
+      "baseline_answer": "{\"explanation\":\"Based on the provided temporal facts, E22 was the R63 of E69 from 1968 to 1977, which includes the year 1982.\",\"answer\":\"E22\"}",
+      "pie_answer": "E22",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_time_t",
+      "question": "In 1988, E41 was the R53 of which entity?",
+      "label": "E22",
+      "baseline_answer": "{\"explanation\":\"In 1988, E41 was the R53 of E17 according to the provided temporal facts.\",\"answer\":\"E17\"}",
+      "pie_answer": "E96",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_time_t",
+      "question": "In 1988, E41 was the R53 of which entity?",
+      "label": "E22",
+      "baseline_answer": "{\"explanation\":\"Based on the temporal facts, E41 was the R53 of E69 from 1988 to 1990. Therefore, in 1988, E41 was the R53 of E69.\",\"answer\":\"E69\"}",
+      "pie_answer": "E96",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_time_t",
+      "question": "In 1988, E41 was the R53 of which entity?",
+      "label": "E22",
+      "baseline_answer": "{\"explanation\":\"In 1988, E41 was the R53 of E9 according to the temporal facts provided.\",\"answer\":\"E9\"}",
+      "pie_answer": "E17",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_time_t",
+      "question": "In 1988, E41 was the R53 of which entity?",
+      "label": "E22",
+      "baseline_answer": "{\n  \"explanation\": \"In 1988, E41 was the R53 of E22 according to the provided temporal facts.\",\n  \"answer\": \"E22\"\n}",
+      "pie_answer": "E17",
+      "baseline_correct": true,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_time_t",
+      "question": "In 1988, E41 was the R53 of which entity?",
+      "label": "E22",
+      "baseline_answer": "{\"explanation\":\"In 1988, E41 was the R53 of E22 from 1987 to 1989, which includes the year 1988.\",\"answer\":\"E22\"}",
+      "pie_answer": "E17",
+      "baseline_correct": true,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_time_t",
+      "question": "Which entity was the R11 of E43 in 1909?",
+      "label": "E44",
+      "baseline_answer": "{\"explanation\":\"Based on the provided temporal facts, E43 was the R11 of E36 from 1906 to 1907, and there are no facts indicating that E43 had an R11 in 1909. Therefore, there is no entity that was the R11 of E43 in 1909.\",\"answer\":\"\"}",
+      "pie_answer": "E36",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_time_t",
+      "question": "Which entity was the R11 of E43 in 1909?",
+      "label": "E44",
+      "baseline_answer": "{\"explanation\":\"Based on the provided temporal facts, there is no mention of any entity being the R11 of E43 in 1909. Therefore, the answer is not available in the given data.\",\"answer\":\"\"}",
+      "pie_answer": "E36",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_time_t",
+      "question": "Which entity was the R11 of E43 in 1909?",
+      "label": "E44",
+      "baseline_answer": "{\"explanation\":\"Based on the provided temporal facts, E43 was the R11 of E59 from 1932 to 1934, but there is no mention of E43 having an R11 in 1909. Therefore, there is no valid entity that fits the criteria for being the R11 of E43 in 1909.\",\"answer\":\"\"}",
+      "pie_answer": "E36",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_what_time",
+      "question": "At what time did E92 stop being the R88 of E11?",
+      "label": "1985",
+      "baseline_answer": "{\"explanation\":\"E92 was the R88 of E11 from 1982 to 1985, so it stopped being the R88 of E11 in 1985.\",\"answer\":\"1985\"}",
+      "pie_answer": "1985",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "event_at_what_time",
+      "question": "At what time did E92 stop being the R88 of E11?",
+      "label": "1985",
+      "baseline_answer": "{\"explanation\":\"E92 was the R88 of E11 from 1982 to 1985, so it stopped being the R88 of E11 in 1985.\",\"answer\":\"1985\"}",
+      "pie_answer": "1985",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "event_at_what_time",
+      "question": "At what time did E92 stop being the R88 of E11?",
+      "label": "1985",
+      "baseline_answer": "{\"explanation\":\"E92 was the R88 of E11 from 1982 to 1985, so it stopped being the R88 of E11 in 1985.\",\"answer\":\"1985\"}",
+      "pie_answer": "1985",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "event_at_what_time",
+      "question": "At what time did E92 stop being the R88 of E11?",
+      "label": "1985",
+      "baseline_answer": "{\"explanation\":\"E92 was the R88 of E11 from 1982 to 1985, so it stopped being the R88 of E11 in 1985.\",\"answer\":\"1985\"}",
+      "pie_answer": "1985",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "event_at_what_time",
+      "question": "At what time did E92 stop being the R88 of E11?",
+      "label": "1985",
+      "baseline_answer": "{\"explanation\":\"E92 was the R88 of E11 from 1982 to 1985, so it stopped being the R88 of E11 in 1985.\",\"answer\":\"1985\"}",
+      "pie_answer": "1985",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "event_at_what_time",
+      "question": "At what time did the entity E74 stop being the R20 of E63?",
+      "label": "1973",
+      "baseline_answer": "{\n  \"explanation\": \"E74 was the R20 of E63 from 1964 to 1973. Therefore, E74 stopped being the R20 of E63 in 1973.\",\n  \"answer\": 1973\n}",
+      "pie_answer": "1974",
+      "baseline_correct": true,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_what_time",
+      "question": "At what time did the entity E74 stop being the R20 of E63?",
+      "label": "1973",
+      "baseline_answer": "{\"explanation\":\"E74 was the R20 of E63 from 1964 to 1973. Therefore, E74 stopped being the R20 of E63 in 1973.\",\"answer\":1973}",
+      "pie_answer": "1976",
+      "baseline_correct": true,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_what_time",
+      "question": "At what time did the entity E74 stop being the R20 of E63?",
+      "label": "1973",
+      "baseline_answer": "{\"explanation\":\"The entity E74 was the R20 of E63 from 1964 to 1973. Therefore, it stopped being the R20 of E63 in 1973.\",\"answer\":\"1973\"}",
+      "pie_answer": "1972",
+      "baseline_correct": true,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_what_time",
+      "question": "At what time did the entity E74 stop being the R20 of E63?",
+      "label": "1973",
+      "baseline_answer": "{\"explanation\":\"The entity E74 was the R20 of E63 from 1956 to 1961. Therefore, E74 stopped being the R20 of E63 in 1961.\",\"answer\":\"1961\"}",
+      "pie_answer": "1979",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_what_time",
+      "question": "At what time did the entity E74 stop being the R20 of E63?",
+      "label": "1973",
+      "baseline_answer": "{\"explanation\":\"The entity E74 was the R20 of E63 from 1964 to 1973. Therefore, it stopped being the R20 of E63 in 1973.\",\"answer\":\"1973\"}",
+      "pie_answer": "1974",
+      "baseline_correct": true,
+      "pie_correct": false
+    },
+    {
+      "question_type": "event_at_what_time",
+      "question": "At what time did the entity E16 stop being the R17 of E22?",
+      "label": "1944",
+      "baseline_answer": "{\"explanation\":\"E16 was the R17 of E22 from 1939 to 1944. Therefore, E16 stopped being the R17 of E22 in 1944.\",\"answer\":\"1944\"}",
+      "pie_answer": "1944",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "event_at_what_time",
+      "question": "At what time did the entity E16 stop being the R17 of E22?",
+      "label": "1944",
+      "baseline_answer": "{\"explanation\":\"E16 was the R17 of E22 from 1939 to 1944, so it stopped being the R17 of E22 in 1944.\",\"answer\":\"1944\"}",
+      "pie_answer": "1944",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "event_at_what_time",
+      "question": "At what time did the entity E16 stop being the R17 of E22?",
+      "label": "1944",
+      "baseline_answer": "{\n  \"explanation\": \"E16 was the R17 of E22 from 1939 to 1944, which means it stopped being the R17 of E22 in 1944.\",\n  \"answer\": 1944\n}",
+      "pie_answer": "1941",
+      "baseline_correct": true,
+      "pie_correct": false
+    },
+    {
+      "question_type": "first_last",
+      "question": "Identify the entity that was the first R90 of entity E11.",
+      "label": "E24",
+      "baseline_answer": "{\"explanation\":\"Based on the temporal facts, E59 was the R90 of E11 from 1961 to 1964, and there are no earlier records of any other entity being the R90 of E11 before E59.\",\"answer\":\"E59\"}",
+      "pie_answer": "E24",
+      "baseline_correct": false,
+      "pie_correct": true
+    },
+    {
+      "question_type": "first_last",
+      "question": "Identify the entity that was the first R90 of entity E11.",
+      "label": "E24",
+      "baseline_answer": "{\"explanation\":\"Based on the temporal facts, E24 was the first entity to be the R90 of E11 from 1950 to 1953, making it the first R90 of E11.\",\"answer\":\"E24\"}",
+      "pie_answer": "E24",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "first_last",
+      "question": "Identify the entity that was the first R90 of entity E11.",
+      "label": "E24",
+      "baseline_answer": "{\"explanation\":\"Based on the temporal facts, E59 was the R90 of E11 from 1971 to 1976, and there are no earlier records of E11 having another R90 before E59. Therefore, E59 is the first R90 of E11.\",\"answer\":\"E59\"}",
+      "pie_answer": "E24",
+      "baseline_correct": false,
+      "pie_correct": true
+    },
+    {
+      "question_type": "first_last",
+      "question": "Identify the entity that was the first R90 of entity E11.",
+      "label": "E24",
+      "baseline_answer": "{\"explanation\":\"Based on the temporal facts, E24 was the R90 of E11 from 1950 to 1953, which is the earliest instance of E11 having an R90 relationship. Therefore, E24 is the first R90 of E11.\",\"answer\":\"E24\"}",
+      "pie_answer": "E24",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "first_last",
+      "question": "Identify the entity that was the first R90 of entity E11.",
+      "label": "E24",
+      "baseline_answer": "{\"explanation\":\"Based on the temporal facts, E24 was the R90 of E11 from 1950 to 1953, which is the earliest instance of E11 having an R90 relationship.\",\"answer\":\"E24\"}",
+      "pie_answer": "E24",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "first_last",
+      "question": "Which entity has been the last R85 of E25?",
+      "label": "E69",
+      "baseline_answer": "{\"explanation\":\"The last recorded R85 of E25 is E74, which held this role from 2013 to 2016. There are no subsequent entries indicating a change in this role after 2016.\",\"answer\":\"E74\"}",
+      "pie_answer": "E11",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "first_last",
+      "question": "Which entity has been the last R85 of E25?",
+      "label": "E69",
+      "baseline_answer": "{\"explanation\":\"Based on the provided temporal facts, E25 was the R85 of E37 from 1992 to 1993, and later E25 was the R85 of E69 from 2012 to 2016. The last recorded R85 for E25 is E69, as it is the most recent entity associated with E25 as R85.\",\"answer\":\"E69\"}",
+      "pie_answer": "E11",
+      "baseline_correct": true,
+      "pie_correct": false
+    },
+    {
+      "question_type": "first_last",
+      "question": "Which entity has been the last R85 of E25?",
+      "label": "E69",
+      "baseline_answer": "{\"explanation\":\"To determine the last R85 of E25, we look through the provided temporal facts for the most recent instance where E25 is mentioned as having an R85 relationship. The last mention is from 2016, where E33 is the R85 of E25 from 2014 to 2016. Therefore, the last R85 of E25 is E33.\",\"answer\":\"E33\"}",
+      "pie_answer": "E11",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "first_last",
+      "question": "Which entity has been the last R85 of E25?",
+      "label": "E69",
+      "baseline_answer": "{\n  \"explanation\": \"The last R85 of E25 is E69, as it was the R85 of E25 from 2012 to 2016, which is the most recent time frame mentioned.\",\n  \"answer\": \"E69\"\n}",
+      "pie_answer": "E24",
+      "baseline_correct": true,
+      "pie_correct": false
+    },
+    {
+      "question_type": "first_last",
+      "question": "Which entity has been the last R85 of E25?",
+      "label": "E69",
+      "baseline_answer": "{\"explanation\":\"Based on the provided temporal facts, E25 was the R85 of E69 from 2012 to 2016, and there are no later records indicating another entity took over this role after 2016. Therefore, E69 is the last entity that served as R85 of E25.\",\"answer\":\"E69\"}",
+      "pie_answer": "E22",
+      "baseline_correct": true,
+      "pie_correct": false
+    },
+    {
+      "question_type": "first_last",
+      "question": "Find the entity that has been the last R20 of E27.",
+      "label": "E6",
+      "baseline_answer": "{\"explanation\":\"The last R20 of E27 is E90, which was the R20 of E27 from 2014 to 2018. After that, there are no further R20 assignments for E27.\",\"answer\":\"E90\"}",
+      "pie_answer": "E6",
+      "baseline_correct": false,
+      "pie_correct": true
+    },
+    {
+      "question_type": "first_last",
+      "question": "Find the entity that has been the last R20 of E27.",
+      "label": "E6",
+      "baseline_answer": "{\"explanation\":\"To find the last R20 of E27, we need to look through the temporal facts for the instances where E27 is mentioned as an R20. The last occurrence is from 2017 to 2019, where E36 is the R20 of E27. Therefore, the answer is E36.\",\"answer\":\"E36\"}",
+      "pie_answer": "E6",
+      "baseline_correct": false,
+      "pie_correct": true
+    },
+    {
+      "question_type": "number_of_events_in_time_interval",
+      "question": "Find the number of unique entities that were the R22 of E83 between 1921 to 1928. Relations that ended in 1921 or started in 1928 must be counted as well.",
+      "label": "1",
+      "baseline_answer": "{\"explanation\":\"The entities that were the R22 of E83 between 1921 to 1928 are E26 (1921-1925) and E6 (1924-1927). Both of these entities fall within the specified time range. Therefore, there are 2 unique entities.\",\"answer\":\"2\"}",
+      "pie_answer": "3",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "number_of_events_in_time_interval",
+      "question": "Find the number of unique entities that were the R22 of E83 between 1921 to 1928. Relations that ended in 1921 or started in 1928 must be counted as well.",
+      "label": "1",
+      "baseline_answer": "{\n  \"explanation\": \"The only relation that fits the criteria is E6 being the R22 of E83 from 1919 to 1927, which includes the years 1921 and 1928. Therefore, there is 1 unique entity.\",\n  \"answer\": 1\n}",
+      "pie_answer": "3",
+      "baseline_correct": true,
+      "pie_correct": false
+    },
+    {
+      "question_type": "number_of_events_in_time_interval",
+      "question": "Find the number of unique entities that were the R22 of E83 between 1921 to 1928. Relations that ended in 1921 or started in 1928 must be counted as well.",
+      "label": "1",
+      "baseline_answer": "```json\n{\"explanation\":\"The only relation that fits the criteria is E82 which was the R22 of E83 from 1921 to 1923. No other relations for R22 of E83 exist in the specified time frame. Therefore, there is only one unique entity.\",\"answer\":1}\n```",
+      "pie_answer": "3",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "number_of_events_in_time_interval",
+      "question": "Find the number of unique entities that were the R22 of E83 between 1921 to 1928. Relations that ended in 1921 or started in 1928 must be counted as well.",
+      "label": "1",
+      "baseline_answer": "{\"explanation\":\"The entities that were the R22 of E83 between 1921 to 1928 are E26 (1921-1925), E57 (1921-1928), and E45 (1924-1925). Each of these entities is unique and falls within the specified time range. Therefore, the total count of unique entities is 3.\",\"answer\":\"3\"}",
+      "pie_answer": "3",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "number_of_events_in_time_interval",
+      "question": "Find the number of unique entities that were the R22 of E83 between 1921 to 1928. Relations that ended in 1921 or started in 1928 must be counted as well.",
+      "label": "1",
+      "baseline_answer": "{\n  \"explanation\": \"The only relation that qualifies is E6 being the R22 of E83 from 1921 to 1927. No other relations meet the criteria for the specified time frame.\",\n  \"answer\": 1\n}",
+      "pie_answer": "3",
+      "baseline_correct": true,
+      "pie_correct": false
+    },
+    {
+      "question_type": "number_of_events_in_time_interval",
+      "question": "Between 1941 to 1942, how many unique entities where the R35 of E59? Relations that ended in 1941 or started in 1942 should also be counted.",
+      "label": "0",
+      "baseline_answer": "{\"explanation\":\"Between 1941 and 1942, there are no records of any entities being the R35 of E59. The only relevant timeframes for R35 of E59 are from 1944 onwards. Therefore, the count of unique entities is zero.\",\"answer\":0}",
+      "pie_answer": "0",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "number_of_events_in_time_interval",
+      "question": "Between 1941 to 1942, how many unique entities where the R35 of E59? Relations that ended in 1941 or started in 1942 should also be counted.",
+      "label": "0",
+      "baseline_answer": "{\"explanation\":\"There are no records of any entities being the R35 of E59 between 1941 and 1942, including those that ended in 1941 or started in 1942.\",\"answer\":0}",
+      "pie_answer": "0",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "number_of_events_in_time_interval",
+      "question": "Between 1941 to 1942, how many unique entities where the R35 of E59? Relations that ended in 1941 or started in 1942 should also be counted.",
+      "label": "0",
+      "baseline_answer": "{\"explanation\":\"There are no records of any entities being the R35 of E59 between 1941 and 1942, including those that ended in 1941 or started in 1942.\",\"answer\":0}",
+      "pie_answer": "0",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "number_of_events_in_time_interval",
+      "question": "Between 1941 to 1942, how many unique entities where the R35 of E59? Relations that ended in 1941 or started in 1942 should also be counted.",
+      "label": "0",
+      "baseline_answer": "{\"explanation\":\"In the provided temporal facts, there are no records of any entities being the R35 of E59 between 1941 and 1942. Therefore, the count of unique entities is zero.\",\"answer\":0}",
+      "pie_answer": "0",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "number_of_events_in_time_interval",
+      "question": "Between 1941 to 1942, how many unique entities where the R35 of E59? Relations that ended in 1941 or started in 1942 should also be counted.",
+      "label": "0",
+      "baseline_answer": "{\"explanation\":\"During the period from 1941 to 1942, E59 had no recorded R35 relationships. Therefore, the count of unique entities where E59 was the R35 is zero.\",\"answer\":0}",
+      "pie_answer": "0",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "number_of_events_in_time_interval",
+      "question": "How many unique entities were the R17 of E17 between 1931 to 1932? Note: Relations that ended in 1931 or started in 1932 should also be counted.",
+      "label": "0",
+      "baseline_answer": "{\n  \"explanation\": \"The only R17 of E17 during the specified period is E59, which was R17 from 1933 to 1943. Since the relation started in 1933, it does not count for the years 1931 to 1932. No other entities are listed as R17 of E17 during that time frame.\",\n  \"answer\": 0\n}",
+      "pie_answer": "2",
+      "baseline_correct": true,
+      "pie_correct": false
+    },
+    {
+      "question_type": "number_of_events_in_time_interval",
+      "question": "How many unique entities were the R17 of E17 between 1931 to 1932? Note: Relations that ended in 1931 or started in 1932 should also be counted.",
+      "label": "0",
+      "baseline_answer": "{\n  \"explanation\": \"Between 1931 and 1932, E17 was the R17 of E92 from 1929 to 1932, which means E92 was the R17 of E17 during this period. No other entities are listed as R17 of E17 in the provided facts for this timeframe.\",\n  \"answer\": 1\n}",
+      "pie_answer": "2",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "relation_duration",
+      "question": "The 3rd time it happened, for how many years was E33 the R53 of E22? The duration can be computed by subtracting the start time from the end time.",
+      "label": "2",
+      "baseline_answer": "{\"explanation\":\"E33 was the R53 of E22 from 1960 to 1966 (6 years), from 1967 to 1968 (1 year), and from 1972 to 1974 (2 years). The 3rd time it happened was from 1972 to 1974, which is 2 years.\",\"answer\":2}",
+      "pie_answer": "2",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "relation_duration",
+      "question": "The 3rd time it happened, for how many years was E33 the R53 of E22? The duration can be computed by subtracting the start time from the end time.",
+      "label": "2",
+      "baseline_answer": "{\"explanation\":\"E33 was the R53 of E22 from 1967 to 1968, which is the 3rd occurrence. The duration is 1968 - 1967 = 1 year.\",\"answer\":\"1\"}",
+      "pie_answer": "2",
+      "baseline_correct": false,
+      "pie_correct": true
+    },
+    {
+      "question_type": "relation_duration",
+      "question": "The 3rd time it happened, for how many years was E33 the R53 of E22? The duration can be computed by subtracting the start time from the end time.",
+      "label": "2",
+      "baseline_answer": "{\"explanation\":\"The 3rd occurrence of E33 being the R53 of E22 is from 1967 to 1968, which is a duration of 1 year (1968 - 1967).\",\"answer\":\"1\"}",
+      "pie_answer": "2",
+      "baseline_correct": false,
+      "pie_correct": true
+    },
+    {
+      "question_type": "relation_duration",
+      "question": "The 3rd time it happened, for how many years was E33 the R53 of E22? The duration can be computed by subtracting the start time from the end time.",
+      "label": "2",
+      "baseline_answer": "{\"explanation\":\"E33 was the R53 of E22 from 1982 to 1984. The duration is 1984 - 1982 = 2 years.\",\"answer\":\"2\"}",
+      "pie_answer": "2",
+      "baseline_correct": true,
+      "pie_correct": true
+    },
+    {
+      "question_type": "relation_duration",
+      "question": "The 3rd time it happened, for how many years was E33 the R53 of E22? The duration can be computed by subtracting the start time from the end time.",
+      "label": "2",
+      "baseline_answer": "{\"explanation\":\"E33 was the R53 of E22 from 1967 to 1968, which is the 3rd occurrence. The duration is 1968 - 1967 = 1 year.\",\"answer\":\"1\"}",
+      "pie_answer": "2",
+      "baseline_correct": false,
+      "pie_correct": true
+    },
+    {
+      "question_type": "relation_duration",
+      "question": "For how many years did it last when E11 was the R17 of E59 for the 3rd time? The duration can be computed by subtracting the start time from the end time.",
+      "label": "8",
+      "baseline_answer": "{\n  \"explanation\": \"E11 was the R17 of E59 for the 3rd time from 1959 to 1967. The duration is calculated as 1967 - 1959, which equals 8 years.\",\n  \"answer\": 8\n}",
+      "pie_answer": "1",
+      "baseline_correct": true,
+      "pie_correct": false
+    },
+    {
+      "question_type": "relation_duration",
+      "question": "For how many years did it last when E11 was the R17 of E59 for the 3rd time? The duration can be computed by subtracting the start time from the end time.",
+      "label": "8",
+      "baseline_answer": "{\"explanation\":\"E11 was the R17 of E59 from 1957 to 1958, which is the 3rd time. The duration is 1958 - 1957 = 1 year.\",\"answer\":\"1\"}",
+      "pie_answer": "1",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "relation_duration",
+      "question": "For how many years did it last when E11 was the R17 of E59 for the 3rd time? The duration can be computed by subtracting the start time from the end time.",
+      "label": "8",
+      "baseline_answer": "{\"explanation\":\"E11 was the R17 of E59 for the 3rd time from 1959 to 1967. The duration is calculated as 1967 - 1959 = 8 years.\",\"answer\":8}",
+      "pie_answer": "1",
+      "baseline_correct": true,
+      "pie_correct": false
+    },
+    {
+      "question_type": "relation_duration",
+      "question": "For how many years did it last when E11 was the R17 of E59 for the 3rd time? The duration can be computed by subtracting the start time from the end time.",
+      "label": "8",
+      "baseline_answer": "{\"explanation\":\"E11 was the R17 of E59 from 1957 to 1958, which is the 3rd time. The duration is 1958 - 1957 = 1 year.\",\"answer\":\"1\"}",
+      "pie_answer": "1",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "relation_duration",
+      "question": "For how many years did it last when E11 was the R17 of E59 for the 3rd time? The duration can be computed by subtracting the start time from the end time.",
+      "label": "8",
+      "baseline_answer": "{\n  \"explanation\": \"E11 was the R17 of E59 from 1957 to 1958, which is the 3rd time. The duration is 1958 - 1957 = 1 year.\",\n  \"answer\": 1\n}",
+      "pie_answer": "1",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "relation_duration",
+      "question": "For how many years did it last when E44 was the R11 of E57 for the 3rd time? The duration can be computed by subtracting the start time from the end time.",
+      "label": "2",
+      "baseline_answer": "{\"explanation\":\"E44 was the R11 of E57 from 1985 to 1992. The duration is calculated as 1992 - 1985 = 7 years.\",\"answer\":\"7\"}",
+      "pie_answer": "2",
+      "baseline_correct": false,
+      "pie_correct": true
+    },
+    {
+      "question_type": "relation_duration",
+      "question": "For how many years did it last when E44 was the R11 of E57 for the 3rd time? The duration can be computed by subtracting the start time from the end time.",
+      "label": "2",
+      "baseline_answer": "{\"explanation\":\"E44 was the R11 of E57 from 1990 to 1995. The duration is calculated as 1995 - 1990 = 5 years.\",\"answer\":\"5\"}",
+      "pie_answer": "2",
+      "baseline_correct": false,
+      "pie_correct": true
+    },
+    {
+      "question_type": "timeline",
+      "question": "Give me a comma-separated list of all entities that were the R20 of E95 in the order of start time from lowest to highest.",
+      "label": "E59,E57,E43,E60,E98",
+      "baseline_answer": "{\"explanation\":\"Based on the provided temporal facts, E59 was the R20 of E95 from 1978 to 1979, and E43 was the R20 of E95 from 1982 to 1983. These are the only entities that were the R20 of E95, and they are listed in order of their start time.\",\"answer\":\"E59,E43\"}",
+      "pie_answer": "E6,E57,E43,E60,E98",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "timeline",
+      "question": "Give me a comma-separated list of all entities that were the R20 of E95 in the order of start time from lowest to highest.",
+      "label": "E59,E57,E43,E60,E98",
+      "baseline_answer": "{\"explanation\":\"Based on the provided temporal facts, E59 was the R20 of E95 from 1978 to 1979, and E43 was the R20 of E95 from 1982 to 1983. These are the only entities that were the R20 of E95, and they are listed in order of their start time.\",\"answer\":\"E59,E43\"}",
+      "pie_answer": "E6,E57,E43,E98,E30",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "timeline",
+      "question": "Give me a comma-separated list of all entities that were the R20 of E95 in the order of start time from lowest to highest.",
+      "label": "E59,E57,E43,E60,E98",
+      "baseline_answer": "{\"explanation\":\"Based on the provided temporal facts, E95 was the R20 of E43 from 2004 to 2008 and the R20 of E98 from 2004 to 2008. The entities that were the R20 of E95 are E43 and E98. Since both started in 2004, they are listed in the order they were mentioned in the facts.\",\"answer\":\"E43,E98\"}",
+      "pie_answer": "E6,E43,E57,E36,E10,E30",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "timeline",
+      "question": "Give me a comma-separated list of all entities that were the R20 of E95 in the order of start time from lowest to highest.",
+      "label": "E59,E57,E43,E60,E98",
+      "baseline_answer": "{\"explanation\":\"The entities that were the R20 of E95 are E59 (1978-1983), E57 (1980-1984), E43 (1982-1983), and E6 (2000-2001). They are listed in order of their start time.\",\"answer\":\"E59,E57,E43,E6\"}",
+      "pie_answer": "E59,E10,E44,E36",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "timeline",
+      "question": "Give me a comma-separated list of all entities that were the R20 of E95 in the order of start time from lowest to highest.",
+      "label": "E59,E57,E43,E60,E98",
+      "baseline_answer": "{\"explanation\":\"Based on the provided temporal facts, E95 was the R20 of E59 from 1978 to 1983, and E95 was the R20 of E43 from 2004 to 2008. Therefore, the entities that were the R20 of E95 are E59 and E43, ordered by their start time.\",\"answer\":\"E59,E43\"}",
+      "pie_answer": "E59,E57,E43,E60,E98",
+      "baseline_correct": false,
+      "pie_correct": true
+    },
+    {
+      "question_type": "timeline",
+      "question": "Which entities were the R96 of E94? Provide a comma-separated list of all entities sorted by end time from lowest to highest.",
+      "label": "E9,E33,E22",
+      "baseline_answer": "{\n  \"explanation\": \"The entities that were the R96 of E94 are E30 from 1985 to 1990, E33 from 1986 to 1989, E22 from 1990 to 1994, and E9 from 1990 to 2000. Sorting them by end time gives E30, E33, E22, E9.\",\n  \"answer\": \"E30,E33,E22,E9\"\n}",
+      "pie_answer": "E9,E22",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "timeline",
+      "question": "Which entities were the R96 of E94? Provide a comma-separated list of all entities sorted by end time from lowest to highest.",
+      "label": "E9,E33,E22",
+      "baseline_answer": "{\"explanation\":\"The entities that were the R96 of E94 are E30 (1973-1976), E92 (1991-1994), and E24 (1981-1986). Sorting them by end time gives E30, E24, E92.\",\"answer\":\"E30,E24,E92\"}",
+      "pie_answer": "E9,E22",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "timeline",
+      "question": "Which entities were the R96 of E94? Provide a comma-separated list of all entities sorted by end time from lowest to highest.",
+      "label": "E9,E33,E22",
+      "baseline_answer": "{\"explanation\":\"The entities that were the R96 of E94 are E30 (1990), E22 (1994). Sorting by end time gives E30 first and then E22.\",\"answer\":\"E30,E22\"}",
+      "pie_answer": "E92,E24",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "timeline",
+      "question": "Which entities were the R96 of E94? Provide a comma-separated list of all entities sorted by end time from lowest to highest.",
+      "label": "E9,E33,E22",
+      "baseline_answer": "{\"explanation\":\"The entities that were the R96 of E94 are E22 (1994), E30 (1994), E9 (2000), and E25 (2000). Sorting them by end time gives E22, E30, E9, E25.\",\"answer\":\"E22,E30,E9,E25\"}",
+      "pie_answer": "E92,E24,E22",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "timeline",
+      "question": "Which entities were the R96 of E94? Provide a comma-separated list of all entities sorted by end time from lowest to highest.",
+      "label": "E9,E33,E22",
+      "baseline_answer": "{\"explanation\":\"The entities that were the R96 of E94 are E30 (1972-1981), E9 (1980-1983), and E22 (1990-1994). Sorting them by end time gives E30, E9, E22.\",\"answer\":\"E30,E9,E22\"}",
+      "pie_answer": "E92,E24,E22",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "timeline",
+      "question": "Which entities were the R14 of the entity E45? Provide a comma-separated list. Sort by end time ascending.",
+      "label": "E44,E63,E8",
+      "baseline_answer": "{\"explanation\":\"The entities that were the R14 of E45 are E8 (1948-1950), E44 (1948-1950), and E95 (1946-1956). Sorting by end time gives E8, E44, E95.\",\"answer\":\"E8,E44,E95\"}",
+      "pie_answer": "E90,E8,E21,E76",
+      "baseline_correct": false,
+      "pie_correct": false
+    },
+    {
+      "question_type": "timeline",
+      "question": "Which entities were the R14 of the entity E45? Provide a comma-separated list. Sort by end time ascending.",
+      "label": "E44,E63,E8",
+      "baseline_answer": "{\"explanation\":\"The entities that were the R14 of E45 are E11 (from 1962 to 1967) and E8 (from 1964 to 1967). Sorting by end time gives E11, E8.\",\"answer\":\"E11,E8\"}",
+      "pie_answer": "E90,E8,E36,E21",
+      "baseline_correct": false,
+      "pie_correct": false
+    }
+  ]
+}

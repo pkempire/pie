@@ -1,185 +1,133 @@
 {% extends "base.html" %}
 
-{% block title %}Upload — Sales Intelligence{% endblock %}
+{% block title %}Import Data — Prism{% endblock %}
 
 {% block content %}
-<div class="space-y-12">
+<div class="max-w-2xl mx-auto space-y-8">
+    
     <!-- Header -->
     <div class="text-center">
-        <h1 class="text-3xl font-serif font-semibold tracking-tight">Upload Data</h1>
-        <p class="text-ink-500 mt-2">Import sales call transcripts and pipeline data</p>
+        <h1 class="text-3xl font-bold text-white">Import Data</h1>
+        <p class="mt-2 text-dark-400">Upload transcripts, deals, or pipeline data</p>
     </div>
     
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-        <!-- Upload Zone -->
-        <div class="lg:col-span-2">
-            <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data" id="upload-form">
-                <div class="bg-white rounded-xl p-8 shadow-soft">
-                    <!-- Drag and Drop Zone -->
-                    <div id="drop-zone" 
-                         class="relative border-2 border-dashed border-cream-300 rounded-xl p-12 text-center transition-subtle hover:border-ink-400 hover:bg-cream-50 cursor-pointer">
-                        <input type="file" name="file" id="file-input" 
-                               accept=".txt,.json,.csv" 
-                               class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
-                        
-                        <div id="upload-icon" class="mx-auto w-14 h-14 rounded-full bg-cream-100 flex items-center justify-center mb-5">
-                            <i data-lucide="upload" class="w-6 h-6 text-ink-400"></i>
-                        </div>
-                        
-                        <div id="upload-text">
-                            <p class="text-base font-medium text-ink-700 mb-1">Drag and drop your files here</p>
-                            <p class="text-sm text-ink-400">or click to browse</p>
-                        </div>
-                        
-                        <div id="file-preview" class="hidden">
-                            <div class="flex items-center justify-center space-x-3 p-4 bg-cream-50 rounded-lg">
-                                <i data-lucide="file-text" class="w-6 h-6 text-ink-500"></i>
-                                <div class="text-left">
-                                    <p id="file-name" class="text-sm font-medium text-ink-700"></p>
-                                    <p id="file-size" class="text-xs text-ink-400"></p>
-                                </div>
-                                <button type="button" id="clear-file" class="p-1 text-ink-400 hover:text-red-500 transition-subtle">
-                                    <i data-lucide="x" class="w-4 h-4"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Upload Button -->
-                    <button type="submit" id="upload-btn" disabled
-                            class="mt-6 w-full flex items-center justify-center px-6 py-3.5 bg-ink-900 text-white font-medium rounded-lg disabled:opacity-40 disabled:cursor-not-allowed hover:bg-ink-800 transition-subtle">
-                        <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
-                        Upload File
-                    </button>
-                </div>
-            </form>
-        </div>
-        
-        <!-- Supported Formats -->
-        <div class="space-y-6">
-            <div class="bg-white rounded-xl p-6 shadow-soft">
-                <h3 class="text-base font-serif font-semibold mb-5">Supported Formats</h3>
+    <!-- Upload Card -->
+    <div class="gradient-border rounded-2xl p-8">
+        <form method="POST" enctype="multipart/form-data" id="uploadForm" class="space-y-6">
+            
+            <!-- Drag & Drop Zone -->
+            <div class="relative" id="dropZone">
+                <input type="file" name="file" id="fileInput" accept=".json,.txt,.csv"
+                       class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
                 
-                <div class="space-y-3">
-                    <div class="flex items-start space-x-3 p-3 bg-cream-50 rounded-lg">
-                        <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0">
-                            <span class="text-xs font-semibold text-blue-600">.json</span>
-                        </div>
-                        <div>
-                            <p class="text-sm font-medium text-ink-700">JSON</p>
-                            <p class="text-xs text-ink-400 mt-0.5">Structured prospect data</p>
-                        </div>
+                <div class="p-12 rounded-xl border-2 border-dashed border-dark-600 hover:border-accent/50 
+                            transition-all text-center bg-dark-800/30" id="dropArea">
+                    <div class="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="upload-cloud" class="w-8 h-8 text-accent" id="uploadIcon"></i>
                     </div>
-                    
-                    <div class="flex items-start space-x-3 p-3 bg-cream-50 rounded-lg">
-                        <div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center flex-shrink-0">
-                            <span class="text-xs font-semibold text-emerald-600">.txt</span>
-                        </div>
-                        <div>
-                            <p class="text-sm font-medium text-ink-700">Text</p>
-                            <p class="text-xs text-ink-400 mt-0.5">Call transcripts and notes</p>
-                        </div>
+                    <div class="text-lg font-medium text-white mb-2" id="dropText">
+                        Drop files here or click to browse
                     </div>
-                    
-                    <div class="flex items-start space-x-3 p-3 bg-cream-50 rounded-lg">
-                        <div class="w-8 h-8 rounded-lg bg-violet-50 flex items-center justify-center flex-shrink-0">
-                            <span class="text-xs font-semibold text-violet-600">.csv</span>
-                        </div>
-                        <div>
-                            <p class="text-sm font-medium text-ink-700">CSV</p>
-                            <p class="text-xs text-ink-400 mt-0.5">CRM exports</p>
-                        </div>
-                    </div>
+                    <p class="text-sm text-dark-400">
+                        Supports JSON, TXT, and CSV files
+                    </p>
                 </div>
             </div>
             
-            <div class="bg-white rounded-xl p-6 shadow-soft">
-                <h3 class="text-sm font-medium text-ink-700 mb-4">Tips</h3>
-                <ul class="space-y-2 text-xs text-ink-500">
-                    <li class="flex items-start space-x-2">
-                        <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500 mt-0.5 flex-shrink-0"></i>
-                        <span>Max file size: 16MB</span>
-                    </li>
-                    <li class="flex items-start space-x-2">
-                        <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500 mt-0.5 flex-shrink-0"></i>
-                        <span>JSON files should include name and company</span>
-                    </li>
-                    <li class="flex items-start space-x-2">
-                        <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500 mt-0.5 flex-shrink-0"></i>
-                        <span>Text files processed by LLM extraction</span>
-                    </li>
-                </ul>
+            <!-- File Preview -->
+            <div id="filePreview" class="hidden p-4 rounded-xl bg-dark-800 border border-dark-700">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center">
+                            <i data-lucide="file-text" class="w-5 h-5 text-accent"></i>
+                        </div>
+                        <div>
+                            <div class="font-medium text-white" id="fileName">filename.json</div>
+                            <div class="text-sm text-dark-400" id="fileSize">0 KB</div>
+                        </div>
+                    </div>
+                    <button type="button" id="removeFile" 
+                            class="p-2 rounded-lg hover:bg-dark-700 text-dark-400 hover:text-white transition-all">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
             </div>
-        </div>
-    </div>
-    
-    <!-- JSON Schema Example -->
-    <div class="bg-white rounded-xl p-8 shadow-soft">
-        <div class="flex items-center justify-between mb-5">
-            <h3 class="text-base font-serif font-semibold">JSON Schema Example</h3>
-            <button onclick="copySchema()" class="flex items-center text-sm text-ink-500 hover:text-ink-700 transition-subtle">
-                <i data-lucide="copy" class="w-4 h-4 mr-1"></i>
-                Copy
+            
+            <!-- Submit -->
+            <button type="submit" id="submitBtn" disabled
+                    class="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl 
+                           bg-accent hover:bg-accent-dim disabled:bg-dark-700 disabled:text-dark-500
+                           text-white font-semibold transition-all hover:shadow-glow disabled:cursor-not-allowed">
+                <i data-lucide="upload" class="w-5 h-5"></i>
+                Upload & Process
             </button>
-        </div>
-        
-        <pre id="schema-example" class="p-5 bg-cream-50 rounded-lg text-xs text-ink-600 overflow-x-auto font-mono leading-relaxed"><code>{
-  "id": "prospect_001",
-  "name": "John Smith",
-  "company": "Acme Corp",
-  "current_stage": "qualification",
-  "rep": "Sarah Johnson",
-  "deal_value": "$50,000",
-  "created_at": "2024-01-15",
-  "last_activity": "2024-01-28",
-  "stakeholders": [
-    { "name": "John Smith", "role": "VP Engineering", "champion": true },
-    { "name": "Jane Doe", "role": "CFO" }
-  ],
-  "uncertainties": [
-    {
-      "type": "budget",
-      "description": "Q2 budget not confirmed",
-      "impact": "medium"
-    }
-  ],
-  "next_steps": [
-    { "action": "Send ROI calculator", "priority": "high" },
-    { "action": "Schedule demo with tech team", "priority": "medium" }
-  ]
-}</code></pre>
+        </form>
     </div>
     
-    <!-- Recent Uploads -->
-    <div class="bg-white rounded-xl p-8 shadow-soft">
-        <div class="flex items-center justify-between mb-6">
-            <div>
-                <h3 class="text-base font-serif font-semibold">Recent Uploads</h3>
-                <p class="text-sm text-ink-400 mt-1">Previously imported files</p>
+    <!-- Instructions -->
+    <div class="gradient-border rounded-xl p-6">
+        <h2 class="text-lg font-semibold text-white mb-4">Supported Formats</h2>
+        
+        <div class="space-y-4">
+            <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                    <span class="text-sm font-bold text-blue-400">JSON</span>
+                </div>
+                <div>
+                    <div class="font-medium text-dark-100">JSON Pipeline Export</div>
+                    <p class="text-sm text-dark-400 mt-1">
+                        Array of prospect/deal objects with name, company, stage, pain_points, objections, etc.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                    <span class="text-sm font-bold text-emerald-400">TXT</span>
+                </div>
+                <div>
+                    <div class="font-medium text-dark-100">Call Transcripts</div>
+                    <p class="text-sm text-dark-400 mt-1">
+                        Raw meeting transcripts. We'll extract entities, pain points, and signals automatically.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                    <span class="text-sm font-bold text-amber-400">CSV</span>
+                </div>
+                <div>
+                    <div class="font-medium text-dark-100">CRM Export</div>
+                    <p class="text-sm text-dark-400 mt-1">
+                        Standard CRM export with columns for contact name, company, stage, deal value.
+                    </p>
+                </div>
             </div>
         </div>
+    </div>
+    
+    <!-- API Integration -->
+    <div class="gradient-border rounded-xl p-6">
+        <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+            <i data-lucide="plug" class="w-5 h-5 text-accent"></i>
+            API Integration
+        </h2>
         
-        <div class="overflow-x-auto">
-            <table class="w-full">
-                <thead>
-                    <tr class="border-b border-cream-200">
-                        <th class="pb-3 text-left text-xs font-medium text-ink-400 uppercase tracking-wider">File</th>
-                        <th class="pb-3 text-left text-xs font-medium text-ink-400 uppercase tracking-wider">Type</th>
-                        <th class="pb-3 text-left text-xs font-medium text-ink-400 uppercase tracking-wider">Size</th>
-                        <th class="pb-3 text-left text-xs font-medium text-ink-400 uppercase tracking-wider">Uploaded</th>
-                        <th class="pb-3 text-left text-xs font-medium text-ink-400 uppercase tracking-wider">Status</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-cream-100">
-                    <tr>
-                        <td colspan="5" class="py-10 text-center text-ink-400">
-                            <i data-lucide="upload-cloud" class="w-8 h-8 mx-auto mb-3 opacity-30"></i>
-                            <p class="text-sm">No recent uploads</p>
-                            <p class="text-xs mt-1 text-ink-400">Upload files to see them here</p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <p class="text-dark-400 mb-4">
+            Connect your CRM directly for automatic sync. Coming soon:
+        </p>
+        
+        <div class="grid grid-cols-3 gap-4">
+            <div class="p-4 rounded-xl bg-dark-800/50 border border-dark-700 text-center opacity-50">
+                <span class="text-sm text-dark-400">Salesforce</span>
+            </div>
+            <div class="p-4 rounded-xl bg-dark-800/50 border border-dark-700 text-center opacity-50">
+                <span class="text-sm text-dark-400">HubSpot</span>
+            </div>
+            <div class="p-4 rounded-xl bg-dark-800/50 border border-dark-700 text-center opacity-50">
+                <span class="text-sm text-dark-400">Pipedrive</span>
+            </div>
         </div>
     </div>
 </div>
@@ -189,62 +137,55 @@
 <script>
     lucide.createIcons();
     
-    const dropZone = document.getElementById('drop-zone');
-    const fileInput = document.getElementById('file-input');
-    const uploadBtn = document.getElementById('upload-btn');
-    const uploadIcon = document.getElementById('upload-icon');
-    const uploadText = document.getElementById('upload-text');
-    const filePreview = document.getElementById('file-preview');
-    const fileName = document.getElementById('file-name');
-    const fileSize = document.getElementById('file-size');
-    const clearFile = document.getElementById('clear-file');
+    const fileInput = document.getElementById('fileInput');
+    const dropArea = document.getElementById('dropArea');
+    const dropText = document.getElementById('dropText');
+    const uploadIcon = document.getElementById('uploadIcon');
+    const filePreview = document.getElementById('filePreview');
+    const fileName = document.getElementById('fileName');
+    const fileSize = document.getElementById('fileSize');
+    const removeFile = document.getElementById('removeFile');
+    const submitBtn = document.getElementById('submitBtn');
     
-    // Drag and drop handlers
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-        dropZone.addEventListener(eventName, preventDefaults, false);
-    });
+    // File selection
+    fileInput.addEventListener('change', handleFile);
     
-    function preventDefaults(e) {
-        e.preventDefault();
-        e.stopPropagation();
+    function handleFile(e) {
+        const file = e.target.files[0];
+        if (file) {
+            fileName.textContent = file.name;
+            fileSize.textContent = formatBytes(file.size);
+            filePreview.classList.remove('hidden');
+            dropArea.classList.add('border-success/50');
+            submitBtn.disabled = false;
+        }
     }
     
-    ['dragenter', 'dragover'].forEach(eventName => {
-        dropZone.addEventListener(eventName, () => {
-            dropZone.classList.add('border-ink-400', 'bg-cream-50');
-        }, false);
+    // Remove file
+    removeFile.addEventListener('click', () => {
+        fileInput.value = '';
+        filePreview.classList.add('hidden');
+        dropArea.classList.remove('border-success/50');
+        submitBtn.disabled = true;
     });
     
-    ['dragleave', 'drop'].forEach(eventName => {
-        dropZone.addEventListener(eventName, () => {
-            dropZone.classList.remove('border-ink-400', 'bg-cream-50');
-        }, false);
+    // Drag & drop
+    ['dragenter', 'dragover'].forEach(event => {
+        dropArea.addEventListener(event, (e) => {
+            e.preventDefault();
+            dropArea.classList.add('border-accent', 'bg-accent/5');
+        });
     });
     
-    dropZone.addEventListener('drop', (e) => {
-        const files = e.dataTransfer.files;
-        if (files.length) {
-            fileInput.files = files;
-            updateFilePreview(files[0]);
-        }
+    ['dragleave', 'drop'].forEach(event => {
+        dropArea.addEventListener(event, (e) => {
+            e.preventDefault();
+            dropArea.classList.remove('border-accent', 'bg-accent/5');
+        });
     });
     
-    fileInput.addEventListener('change', (e) => {
-        if (e.target.files.length) {
-            updateFilePreview(e.target.files[0]);
-        }
-    });
-    
-    function updateFilePreview(file) {
-        fileName.textContent = file.name;
-        fileSize.textContent = formatFileSize(file.size);
-        uploadIcon.classList.add('hidden');
-        uploadText.classList.add('hidden');
-        filePreview.classList.remove('hidden');
-        uploadBtn.disabled = false;
-    }
-    
-    function formatFileSize(bytes) {
+    // Format bytes
+    function formatBytes(bytes) {
         if (bytes === 0) return '0 Bytes';
         const k = 1024;
         const sizes = ['Bytes', 'KB', 'MB', 'GB'];
@@ -252,44 +193,11 @@
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
     
-    clearFile.addEventListener('click', (e) => {
-        e.stopPropagation();
-        fileInput.value = '';
-        uploadIcon.classList.remove('hidden');
-        uploadText.classList.remove('hidden');
-        filePreview.classList.add('hidden');
-        uploadBtn.disabled = true;
+    // Form submit
+    document.getElementById('uploadForm').addEventListener('submit', function() {
+        submitBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Processing...';
+        submitBtn.disabled = true;
         lucide.createIcons();
     });
-    
-    // Form submission
-    document.getElementById('upload-form').addEventListener('submit', function() {
-        uploadBtn.disabled = true;
-        uploadBtn.innerHTML = `
-            <svg class="w-4 h-4 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-            </svg>
-            Uploading...
-        `;
-    });
-    
-    // Copy schema
-    function copySchema() {
-        const schema = document.getElementById('schema-example').textContent;
-        navigator.clipboard.writeText(schema).then(() => {
-            const btn = event.target.closest('button');
-            const originalHTML = btn.innerHTML;
-            btn.innerHTML = `
-                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                Copied
-            `;
-            setTimeout(() => {
-                btn.innerHTML = originalHTML;
-                lucide.createIcons();
-            }, 2000);
-        });
-    }
 </script>
 {% endblock %}

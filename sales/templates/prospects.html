@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Prospects — Prism{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-bold">Prospects</h1>
+            <p class="text-gray-500">Public sector sales pipeline</p>
+        </div>
+        <a href="{{ url_for('add_prospect') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+            + Add Prospect
+        </a>
+    </div>
+    
+    {% if prospects %}
+    <div class="bg-white rounded-xl border divide-y">
+        {% for p in prospects %}
+        <div class="p-5 hover:bg-gray-50 flex items-center justify-between">
+            <div class="flex-1">
+                <a href="{{ url_for('prospect_detail', prospect_id=p.id) }}" class="font-medium text-gray-900 hover:text-blue-600">
+                    {{ p.name }}
+                </a>
+                <div class="text-sm text-gray-500">{{ p.title }} at {{ p.company }}</div>
+                <div class="flex items-center gap-3 mt-2">
+                    <span class="text-xs px-2 py-1 rounded bg-gray-100 text-gray-600">{{ p.vertical }}</span>
+                    <span class="text-xs px-2 py-1 rounded {% if p.stage == 'proposal' %}bg-amber-100 text-amber-700{% elif p.stage == 'evaluation' %}bg-purple-100 text-purple-700{% else %}bg-blue-100 text-blue-700{% endif %}">
+                        {{ p.stage }}
+                    </span>
+                </div>
+            </div>
+            <div class="text-right">
+                <div class="font-semibold text-gray-900">${{ "{:,.0f}".format(p.deal_value|default(0)) }}</div>
+                <div class="text-xs text-gray-400">{{ p.updated_at[:10] if p.updated_at else '' }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-white rounded-xl border p-12 text-center">
+        <div class="text-gray-400 mb-4">No prospects yet</div>
+        <a href="{{ url_for('add_prospect') }}" class="text-blue-600 hover:underline">Add your first prospect →</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -9,7 +9,7 @@ Usage:
     python run.py --year 2025              # Only 2025+ conversations
     python run.py --no-web                 # Skip web grounding
     python run.py --no-context             # Skip sliding window context
-    python run.py --model gpt-5            # Use a different model
+    python run.py --model gpt-5-mini     # Use a different model
 """
 
 import argparse

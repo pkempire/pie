@@ -1,0 +1,122 @@
+{
+  "id": "demo001",
+  "name": "Sarah Chen",
+  "title": "Director of IT Infrastructure",
+  "company": "California Department of Transportation",
+  "email": "sarah.chen@dot.ca.gov",
+  "stage": "evaluation",
+  "deal_value": 450000,
+  "probability": 0.35,
+  "close_date": null,
+  "stakeholders": [
+    {
+      "name": "Sarah Chen",
+      "title": "Director of IT Infrastructure",
+      "role": "technical_buyer",
+      "email": null,
+      "linkedin": null,
+      "sentiment": "positive",
+      "notes": [],
+      "enriched": false,
+      "company_tenure": null,
+      "previous_companies": [],
+      "education": null
+    },
+    {
+      "name": "Michael Rodriguez",
+      "title": "CFO",
+      "role": "economic_buyer",
+      "email": null,
+      "linkedin": null,
+      "sentiment": "neutral",
+      "notes": [],
+      "enriched": false,
+      "company_tenure": null,
+      "previous_companies": [],
+      "education": null
+    },
+    {
+      "name": "Jennifer Williams",
+      "title": "CISO",
+      "role": "influencer",
+      "email": null,
+      "linkedin": null,
+      "sentiment": "positive",
+      "notes": [],
+      "enriched": false,
+      "company_tenure": null,
+      "previous_companies": [],
+      "education": null
+    }
+  ],
+  "pain_points": [
+    {
+      "description": "Legacy FileNet system costs $800K/year in maintenance",
+      "severity": "critical",
+      "category": "budget",
+      "verbatim_quote": "We're bleeding money on this 15-year-old system",
+      "source": "transcript",
+      "created_at": "2026-02-05T15:59:10.805688"
+    },
+    {
+      "description": "35,000 engineering documents scattered across 12 district offices",
+      "severity": "high",
+      "category": "technical",
+      "verbatim_quote": null,
+      "source": "transcript",
+      "created_at": "2026-02-05T15:59:10.805690"
+    },
+    {
+      "description": "FOIA requests take 3+ weeks to fulfill",
+      "severity": "high",
+      "category": "timeline",
+      "verbatim_quote": null,
+      "source": "transcript",
+      "created_at": "2026-02-05T15:59:10.805691"
+    },
+    {
+      "description": "No FedRAMP compliance for existing systems",
+      "severity": "medium",
+      "category": "technical",
+      "verbatim_quote": null,
+      "source": "transcript",
+      "created_at": "2026-02-05T15:59:10.805692"
+    }
+  ],
+  "objections": [
+    {
+      "description": "Concerned about migration timeline during construction season",
+      "status": "open",
+      "response": null,
+      "source": "transcript"
+    },
+    {
+      "description": "Previous cloud vendor had data residency issues",
+      "status": "addressed",
+      "response": "Explained Box's in-region data centers",
+      "source": "transcript"
+    }
+  ],
+  "buying_signals": [
+    "Asked about migration timeline",
+    "Requested technical architecture doc",
+    "Mentioned FY26 budget allocation",
+    "Introduced us to CISO"
+  ],
+  "company_description": "State agency responsible for design, construction, maintenance, and operation of the California State Highway System",
+  "company_industry": "Government / Transportation",
+  "company_size": "22,000 employees",
+  "company_recent_news": [
+    "Modernization initiative announced for FY26",
+    "New CIO appointed from private sector"
+  ],
+  "competitors_mentioned": [
+    "Microsoft SharePoint",
+    "FileNet",
+    "OpenText"
+  ],
+  "activities": [],
+  "created_at": "2026-02-05T15:59:10.805670",
+  "updated_at": "2026-02-05T15:59:10.805702",
+  "enriched_at": null
+}

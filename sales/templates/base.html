@@ -3,218 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Sales Intelligence{% endblock %}</title>
-    
-    <!-- Tailwind CSS -->
+    <title>{% block title %}Prism{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        cream: {
-                            50: '#FAFAF9',
-                            100: '#F5F5F4',
-                            200: '#E7E5E4',
-                            300: '#D6D3D1',
-                        },
-                        ink: {
-                            900: '#1C1917',
-                            800: '#292524',
-                            700: '#44403C',
-                            600: '#57534E',
-                            500: '#78716C',
-                            400: '#A8A29E',
-                        },
-                        accent: '#2563EB',
-                    },
-                    fontFamily: {
-                        serif: ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                    boxShadow: {
-                        'soft': '0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06)',
-                        'card': '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03)',
-                        'elevated': '0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.03)',
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-    
-    <style>
-        /* Smooth scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #D6D3D1;
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #A8A29E;
-        }
-        
-        /* Subtle transitions */
-        .transition-subtle {
-            transition: all 0.2s ease;
-        }
-        
-        /* Card hover */
-        .card-lift:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.03);
-        }
-        
-        /* Stage colors - muted palette */
-        .stage-lead { --stage-color: #78716C; }
-        .stage-discovery { --stage-color: #64748B; }
-        .stage-qualification { --stage-color: #6366F1; }
-        .stage-demo { --stage-color: #8B5CF6; }
-        .stage-evaluation { --stage-color: #A855F7; }
-        .stage-proposal { --stage-color: #EC4899; }
-        .stage-negotiation { --stage-color: #F59E0B; }
-        .stage-closed_won { --stage-color: #10B981; }
-        .stage-closed_lost { --stage-color: #EF4444; }
-        
-        /* Nav link active state */
-        .nav-link {
-            position: relative;
-        }
-        .nav-link.active::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: -1px;
-            height: 2px;
-            background: #1C1917;
-            border-radius: 1px;
-        }
-    </style>
-    
-    {% block head %}{% endblock %}
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="bg-cream-50 text-ink-900 font-sans min-h-screen antialiased">
-    <!-- Navigation -->
-    <nav class="sticky top-0 z-50 bg-cream-50/95 backdrop-blur-sm border-b border-cream-200">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="flex items-center justify-between h-16">
-                <!-- Logo -->
-                <a href="{{ url_for('dashboard') }}" class="flex items-center space-x-2">
-                    <span class="text-lg font-serif font-semibold tracking-tight">Sales Intelligence</span>
-                </a>
-                
-                <!-- Navigation Links -->
-                <div class="flex items-center space-x-8">
-                    <a href="{{ url_for('dashboard') }}" 
-                       class="nav-link text-sm font-medium transition-subtle hover:text-ink-600
-                              {{ 'active text-ink-900' if request.endpoint == 'dashboard' else 'text-ink-500' }}">
-                        Dashboard
-                    </a>
-                    <a href="{{ url_for('pipeline') }}" 
-                       class="nav-link text-sm font-medium transition-subtle hover:text-ink-600
-                              {{ 'active text-ink-900' if request.endpoint == 'pipeline' else 'text-ink-500' }}">
-                        Pipeline
-                    </a>
-                    <a href="{{ url_for('process_view') }}" 
-                       class="nav-link text-sm font-medium transition-subtle hover:text-ink-600
-                              {{ 'active text-ink-900' if request.endpoint == 'process_view' else 'text-ink-500' }}">
-                        Process
-                    </a>
-                    <a href="{{ url_for('simulation') }}" 
-                       class="nav-link text-sm font-medium transition-subtle hover:text-ink-600
-                              {{ 'active text-ink-900' if request.endpoint == 'simulation' else 'text-ink-500' }}">
-                        Simulation
-                    </a>
-                    <a href="{{ url_for('upload') }}" 
-                       class="nav-link text-sm font-medium transition-subtle hover:text-ink-600
-                              {{ 'active text-ink-900' if request.endpoint == 'upload' else 'text-ink-500' }}">
-                        Upload
-                    </a>
+<body class="bg-gray-50 min-h-screen">
+    <nav class="bg-white border-b sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex items-center justify-between h-14">
+                <div class="flex items-center gap-6">
+                    <a href="{{ url_for('dashboard') }}" class="font-bold text-lg text-blue-600">Prism</a>
+                    <div class="flex items-center gap-1">
+                        <a href="{{ url_for('dashboard') }}" class="px-3 py-1.5 rounded-lg text-sm {{ 'bg-blue-100 text-blue-700 font-medium' if request.endpoint == 'dashboard' else 'text-gray-600 hover:bg-gray-100' }}">Dashboard</a>
+                        <a href="{{ url_for('plays') }}" class="px-3 py-1.5 rounded-lg text-sm {{ 'bg-blue-100 text-blue-700 font-medium' if request.endpoint in ['plays', 'play_detail'] else 'text-gray-600 hover:bg-gray-100' }}">Plays</a>
+                        <a href="{{ url_for('stats') }}" class="px-3 py-1.5 rounded-lg text-sm {{ 'bg-blue-100 text-blue-700 font-medium' if request.endpoint == 'stats' else 'text-gray-600 hover:bg-gray-100' }}">Stats</a>
+                        <a href="{{ url_for('prospects_list') }}" class="px-3 py-1.5 rounded-lg text-sm {{ 'bg-blue-100 text-blue-700 font-medium' if request.endpoint in ['prospects_list', 'prospect_detail'] else 'text-gray-600 hover:bg-gray-100' }}">Prospects</a>
+                    </div>
                 </div>
-                
-                <!-- Refresh -->
-                <button onclick="refreshData()" class="p-2 rounded-lg text-ink-400 hover:text-ink-600 hover:bg-cream-100 transition-subtle" title="Refresh">
-                    <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                </button>
+                <a href="{{ url_for('generate_campaign') }}" class="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm hover:bg-blue-700 flex items-center gap-1">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                    Generate
+                </a>
             </div>
         </div>
     </nav>
     
-    <!-- Flash Messages -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <div class="fixed top-20 right-6 z-50 space-y-2">
+    <main class="max-w-6xl mx-auto px-4 py-6">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
                 {% for category, message in messages %}
-                    <div class="px-4 py-3 rounded-lg shadow-card bg-white border
-                                {{ 'border-emerald-200 text-emerald-800' if category == 'success' else '' }}
-                                {{ 'border-red-200 text-red-800' if category == 'error' else '' }}
-                                {{ 'border-blue-200 text-blue-800' if category == 'info' else '' }}"
-                         onclick="this.remove()">
-                        <span class="text-sm">{{ message }}</span>
-                    </div>
+                <div class="mb-4 p-3 rounded-lg {{ 'bg-green-100 text-green-800' if category == 'success' else 'bg-yellow-100 text-yellow-800' if category == 'info' else 'bg-red-100 text-red-800' }}">
+                    {{ message }}
+                </div>
                 {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
-    
-    <!-- Main Content -->
-    <main class="py-12 min-h-screen">
-        <div class="max-w-5xl mx-auto px-6">
-            {% block content %}{% endblock %}
-        </div>
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
     </main>
     
-    <!-- Footer -->
-    <footer class="border-t border-cream-200 py-8">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="flex items-center justify-between text-sm text-ink-400">
-                <span>Sales Intelligence</span>
-                <span>v1.0</span>
-            </div>
-        </div>
-    </footer>
-    
-    <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
-        
-        // Refresh data function
-        async function refreshData() {
-            const btn = event.currentTarget;
-            btn.querySelector('i').classList.add('animate-spin');
-            
-            try {
-                await fetch('/api/refresh', { method: 'POST' });
-                location.reload();
-            } catch (e) {
-                console.error('Refresh failed:', e);
-            }
-        }
-        
-        // Auto-dismiss flash messages
-        setTimeout(() => {
-            document.querySelectorAll('.fixed.top-20 > div').forEach(el => {
-                el.style.opacity = '0';
-                el.style.transition = 'opacity 0.3s';
-                setTimeout(() => el.remove(), 300);
-            });
-        }, 4000);
-    </script>
-    
+    <script>lucide.createIcons();</script>
     {% block scripts %}{% endblock %}
 </body>
 </html>

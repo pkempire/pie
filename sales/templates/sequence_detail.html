@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+
+{% block title %}{{ sequence.name }} — Prism{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto space-y-8">
+    
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-2 text-sm">
+        <a href="{{ url_for('content_library_view') }}" class="text-dark-400 hover:text-white transition-colors">Content</a>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-dark-600"></i>
+        <span class="text-dark-400">Sequences</span>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-dark-600"></i>
+        <span class="text-white">{{ sequence.name }}</span>
+    </nav>
+    
+    <!-- Header -->
+    <div class="flex items-start justify-between">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 
+                            flex items-center justify-center">
+                    <i data-lucide="workflow" class="w-5 h-5 text-purple-400"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-white">{{ sequence.name }}</h1>
+                    {% if sequence.description %}
+                    <p class="text-dark-400 text-sm mt-1">{{ sequence.description }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="flex items-center gap-3">
+            <a href="{{ url_for('simulate_sequence') }}?sequence_id={{ sequence.id }}" 
+               class="flex items-center gap-2 px-4 py-2 rounded-xl bg-accent hover:bg-accent-dim 
+                      text-white text-sm font-medium transition-all hover:shadow-glow-sm">
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+                Simulate
+            </a>
+            <form action="{{ url_for('sequence_delete', sequence_id=sequence.id) }}" method="POST" 
+                  onsubmit="return confirm('Delete this sequence?')">
+                <button type="submit" class="p-2 rounded-xl bg-dark-700 hover:bg-danger/20 text-dark-400 hover:text-danger transition-all">
+                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Stats -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="gradient-border rounded-xl p-4 text-center">
+            <div class="text-2xl font-bold text-white">{{ sequence.item_count }}</div>
+            <div class="text-sm text-dark-400">Steps</div>
+        </div>
+        <div class="gradient-border rounded-xl p-4 text-center">
+            <div class="text-2xl font-bold text-white">{{ sequence.total_duration_days }}</div>
+            <div class="text-sm text-dark-400">Days Total</div>
+        </div>
+        {% if sequence.target_stage %}
+        <div class="gradient-border rounded-xl p-4 text-center">
+            <div class="text-lg font-bold text-accent">{{ sequence.target_stage|replace('_', ' ')|title }}</div>
+            <div class="text-sm text-dark-400">Target Stage</div>
+        </div>
+        {% endif %}
+        {% if sequence.target_persona %}
+        <div class="gradient-border rounded-xl p-4 text-center">
+            <div class="text-lg font-bold text-purple-400">{{ sequence.target_persona }}</div>
+            <div class="text-sm text-dark-400">Target Persona</div>
+        </div>
+        {% endif %}
+    </div>
+    
+    <!-- Timeline -->
+    <div class="gradient-border rounded-xl p-6">
+        <h2 class="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+            <i data-lucide="list-ordered" class="w-5 h-5 text-accent"></i>
+            Sequence Timeline
+        </h2>
+        
+        <div class="relative">
+            <!-- Timeline line -->
+            <div class="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-accent via-purple-500 to-pink-500"></div>
+            
+            <div class="space-y-6">
+                {% for item in sequence.items %}
+                <div class="relative flex items-start gap-6 group">
+                    <!-- Day marker -->
+                    <div class="relative z-10 w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0
+                                {{ 'bg-accent' if loop.first else 'bg-dark-700 border border-dark-600' }}">
+                        <span class="text-sm font-bold {{ 'text-white' if loop.first else 'text-dark-300' }}">
+                            D{{ item.day_offset }}
+                        </span>
+                    </div>
+                    
+                    <!-- Content card -->
+                    <div class="flex-1 p-4 rounded-xl bg-dark-800/50 border border-dark-700 
+                                group-hover:border-accent/30 transition-all">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="px-2 py-0.5 rounded text-xs font-medium uppercase
+                                                 {{ 'bg-blue-500/20 text-blue-400' if item.type == 'email' else '' }}
+                                                 {{ 'bg-purple-500/20 text-purple-400' if item.type == 'call_script' else '' }}
+                                                 {{ 'bg-emerald-500/20 text-emerald-400' if item.type == 'case_study' else '' }}
+                                                 {{ 'bg-amber-500/20 text-amber-400' if item.type == 'objection_handler' else '' }}
+                                                 {{ 'bg-dark-600 text-dark-300' }}">
+                                        {{ item.type|replace('_', ' ') }}
+                                    </span>
+                                    {% if item.timing_description %}
+                                    <span class="text-xs text-dark-500">{{ item.timing_description }}</span>
+                                    {% endif %}
+                                </div>
+                                <h3 class="font-semibold text-white">{{ item.name }}</h3>
+                                {% if item.subject_line %}
+                                <p class="text-sm text-dark-400 mt-1">{{ item.subject_line }}</p>
+                                {% endif %}
+                            </div>
+                            
+                            <a href="{{ url_for('content_detail', content_id=item.content_id) }}" 
+                               class="p-2 rounded-lg hover:bg-dark-700 text-dark-500 hover:text-white transition-all opacity-0 group-hover:opacity-100">
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                        
+                        {% if item.claims %}
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            {% for claim in item.claims[:2] %}
+                            <span class="px-2 py-1 rounded text-xs bg-dark-700 text-dark-300">
+                                {{ claim|truncate(40) }}
+                            </span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Simulate CTA -->
+    <div class="gradient-border rounded-xl p-8 text-center">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent/20 to-purple-500/20 
+                    flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="sparkles" class="w-8 h-8 text-accent"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-white mb-2">Test This Sequence</h3>
+        <p class="text-dark-400 mb-6">Simulate how a prospect would respond to this entire sequence</p>
+        <a href="{{ url_for('simulate_sequence') }}?sequence_id={{ sequence.id }}" 
+           class="inline-flex items-center gap-2 px-6 py-3 rounded-xl 
+                  bg-gradient-to-r from-accent to-purple-500 hover:from-accent-dim hover:to-purple-600
+                  text-white font-semibold transition-all hover:shadow-glow">
+            <i data-lucide="play" class="w-5 h-5"></i>
+            Run Sequence Simulation
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    lucide.createIcons();
+</script>
+{% endblock %}

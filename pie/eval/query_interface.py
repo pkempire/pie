@@ -302,7 +302,7 @@ class QueryResult:
 def answer_query(
     query: str,
     data: dict,
-    model: str = "gpt-5-mini",
+    model: str = "gpt-4o-mini",
     use_embeddings: bool = True,
     top_k: int = TOP_K_ENTITIES,
 ) -> QueryResult:
@@ -438,7 +438,7 @@ def answer_query(
 def run_batch(
     queries_path: Path,
     data: dict,
-    model: str = "gpt-5-mini",
+    model: str = "gpt-4o-mini",
     use_embeddings: bool = True,
 ) -> list[QueryResult]:
     """
@@ -471,7 +471,7 @@ def run_batch(
 
 # ── Interactive mode ──────────────────────────────────────────────────────────
 
-def interactive(data: dict, model: str = "gpt-5-mini", use_embeddings: bool = True):
+def interactive(data: dict, model: str = "gpt-4o-mini", use_embeddings: bool = True):
     """Interactive query loop."""
     print("\n" + "=" * 60)
     print("  PIE Query Interface — Interactive Mode")
@@ -536,8 +536,8 @@ def main():
     parser.add_argument(
         "--model",
         type=str,
-        default="gpt-5-mini",
-        help="LLM model for answering (default: gpt-5-mini)",
+        default="gpt-4o-mini",
+        help="LLM model for answering (default: gpt-4o-mini)",
     )
     parser.add_argument(
         "--query", "-q",

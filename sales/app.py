@@ -1,8 +1,11 @@
 """
-Sales Intelligence Web Application
+Prism - Box Sales Campaign Intelligence
 
-Premium dark-themed dashboard for sales process intelligence.
-Features: Pipeline view, process funnel, prospect details, what-if simulation.
+PIE-powered sales intelligence:
+- Extract prospects from call transcripts (PIE extraction)
+- Enrich with web data (Brave API grounding)
+- Simulate email sequences against prospects
+- Generate personalized campaigns
 """
 
 from __future__ import annotations
@@ -13,387 +16,439 @@ import sys
 import uuid
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from dataclasses import asdict
 
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
-from werkzeug.utils import secure_filename
 
-# Add parent for imports
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from sales.process_mining import (
-    SalesProcessMiner,
-    generate_demo_pipeline,
-    SALES_STAGES,
-    STAGE_DISPLAY,
-)
-from sales.prospect_model import ProspectWorldModel
-from sales.demo_data import get_demo_prospects, get_pipeline_summary
+from sales.prospect_model import ProspectWorldModel, ProspectModel, ProspectExtractor, ProspectEnricher, PainPoint, Objection, Stakeholder, Activity
+from sales.content_model import SalesContent, ContentType, ContentTone
+from sales.interaction_simulator import InteractionSimulator, InteractionResult
 
-# Configure logging
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("sales.app")
+logger = logging.getLogger(__name__)
 
-# Flask app
 app = Flask(__name__)
-# SECURITY: Set FLASK_SECRET_KEY env var in production!
-# The default is only for local development.
-app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-only-change-in-production")
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-key-change-in-prod")
 
-# Config
-UPLOAD_FOLDER = Path(__file__).parent / "uploads"
-OUTPUT_FOLDER = Path(__file__).parent / "output"
-ALLOWED_EXTENSIONS = {"txt", "json", "csv"}
+# Data paths
+SEED_DATA_PATH = Path(__file__).parent / "seed_data" / "box_seed_data.json"
+PROSPECTS_DIR = Path(__file__).parent / "prospects"
+PROSPECTS_DIR.mkdir(exist_ok=True)
 
-UPLOAD_FOLDER.mkdir(exist_ok=True)
-OUTPUT_FOLDER.mkdir(exist_ok=True)
+# Initialize PIE components (lazy)
+_extractor = None
+_enricher = None
+_simulator = None
 
-app.config["UPLOAD_FOLDER"] = str(UPLOAD_FOLDER)
-app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024  # 16MB max
+def get_extractor():
+    global _extractor
+    if _extractor is None:
+        _extractor = ProspectExtractor()
+    return _extractor
 
-# Global state (in production, use a proper database)
-pipeline_data: List[dict] = []
-process_analysis: Dict[str, Any] = {}
-miner = SalesProcessMiner()
+def get_enricher():
+    global _enricher
+    if _enricher is None:
+        _enricher = ProspectEnricher()
+    return _enricher
 
-
-def allowed_file(filename: str) -> bool:
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
-def load_existing_prospects():
-    """Load existing prospect data from output folder or demo data."""
-    global pipeline_data
-    
-    prospects = []
-    
-    # Load individual prospect files from output folder
-    for json_file in OUTPUT_FOLDER.glob("prospect_*.json"):
-        try:
-            with open(json_file) as f:
-                data = json.load(f)
-                prospects.append(data)
-                logger.info(f"Loaded prospect: {data.get('name', 'Unknown')}")
-        except Exception as e:
-            logger.error(f"Error loading {json_file}: {e}")
-    
-    # If no custom prospects, load the rich demo data
-    if not prospects:
-        logger.info("Loading realistic demo pipeline data...")
-        prospects = get_demo_prospects()
-        summary = get_pipeline_summary()
-        logger.info(
-            f"Loaded {summary['total_deals']} deals worth ${summary['total_pipeline_value']:,} "
-            f"(weighted: ${summary['weighted_pipeline_value']:,})"
-        )
-    
-    pipeline_data = prospects
-    return prospects
+def get_simulator():
+    global _simulator
+    if _simulator is None:
+        _simulator = InteractionSimulator(model="gpt-4o-mini")
+    return _simulator
 
 
-def refresh_analysis():
-    """Refresh process mining analysis with current pipeline data."""
-    global process_analysis
-    process_analysis = miner.get_full_analysis(pipeline_data)
+def load_seed_data():
+    """Load cached Box seed data."""
+    if SEED_DATA_PATH.exists():
+        with open(SEED_DATA_PATH) as f:
+            return json.load(f)
+    return {"sales_plays": [], "outreach_stats": [], "prospects": [], "agent_config": {}}
 
 
-# Load data on startup
-load_existing_prospects()
-refresh_analysis()
+SEED_DATA = load_seed_data()
 
 
-# =============================================================================
+# ============================================================================
 # ROUTES
-# =============================================================================
+# ============================================================================
 
 @app.route("/")
 def dashboard():
-    """Main dashboard view."""
+    """Dashboard with PIE-powered insights."""
+    prospects = ProspectWorldModel.list_all()
+    
+    # Stats
+    active = [p for p in prospects if p.stage not in ['closed_won', 'closed_lost']]
+    total_value = sum(p.deal_value for p in active)
+    total_probability_weighted = sum(p.deal_value * p.probability for p in active)
+    
     return render_template(
         "dashboard.html",
-        summary=process_analysis.get("summary", {}),
-        funnel=process_analysis.get("funnel", []),
-        bottlenecks=process_analysis.get("bottlenecks", [])[:5],
-        timelines=process_analysis.get("timelines", [])[:10],
-        stage_distribution=process_analysis.get("stage_distribution", {}),
-        stages=SALES_STAGES,
-        stage_display=STAGE_DISPLAY,
+        sales_plays=SEED_DATA.get('sales_plays', []),
+        outreach_stats=SEED_DATA.get('outreach_stats', [])[:10],
+        prospects=prospects[:5],
+        total_value=total_value,
+        weighted_value=total_probability_weighted,
+        total_prospects=len(prospects),
+        total_plays=len(SEED_DATA.get('sales_plays', [])),
+        total_emails=sum(len(p.get('emails', [])) for p in SEED_DATA.get('sales_plays', [])),
     )
 
 
-@app.route("/pipeline")
-def pipeline():
-    """Pipeline view with all deals."""
-    # Group by stage
-    by_stage = {stage: [] for stage in SALES_STAGES}
-    
-    for timeline in process_analysis.get("timelines", []):
-        stage = timeline.get("current_stage", "lead")
-        if stage in by_stage:
-            by_stage[stage].append(timeline)
-    
+@app.route("/plays")
+def plays():
+    """View all sales plays."""
     return render_template(
-        "pipeline.html",
-        by_stage=by_stage,
-        stages=SALES_STAGES,
-        stage_display=STAGE_DISPLAY,
-        total_deals=len(pipeline_data),
+        "plays.html",
+        sales_plays=SEED_DATA.get('sales_plays', []),
     )
+
+
+@app.route("/play/<play_id>")
+def play_detail(play_id):
+    """View single play."""
+    play = next((p for p in SEED_DATA.get('sales_plays', []) if p['id'] == play_id), None)
+    if not play:
+        flash("Play not found", "error")
+        return redirect(url_for('plays'))
+    return render_template("play_detail.html", play=play)
+
+
+@app.route("/stats")
+def stats():
+    """Outreach statistics."""
+    return render_template(
+        "stats.html",
+        outreach_stats=SEED_DATA.get('outreach_stats', []),
+    )
+
+
+# ============================================================================
+# PROSPECTS (PIE-POWERED)
+# ============================================================================
+
+@app.route("/prospects")
+def prospects_list():
+    """List all prospects."""
+    prospects = ProspectWorldModel.list_all()
+    return render_template("prospects.html", prospects=prospects)
 
 
 @app.route("/prospect/<prospect_id>")
-def prospect_detail(prospect_id: str):
-    """Individual prospect detail view."""
-    # Find prospect
-    prospect = None
-    timeline = None
-    
-    for p in pipeline_data:
-        if p.get("id") == prospect_id:
-            prospect = p
-            break
-    
-    for t in process_analysis.get("timelines", []):
-        if t.get("prospect_id") == prospect_id:
-            timeline = t
-            break
-    
+def prospect_detail(prospect_id):
+    """Prospect detail with PIE world model."""
+    prospect = ProspectWorldModel.load(prospect_id)
     if not prospect:
         flash("Prospect not found", "error")
-        return redirect(url_for("pipeline"))
-    
-    # Get transition matrix for simulation
-    transition_matrix = process_analysis.get("transition_matrix", {})
+        return redirect(url_for('prospects_list'))
     
     return render_template(
-        "prospect_detail.html",
+        "prospect_detail.html", 
         prospect=prospect,
-        timeline=timeline,
-        transition_matrix=transition_matrix,
-        stages=SALES_STAGES,
-        stage_display=STAGE_DISPLAY,
+        sales_plays=SEED_DATA.get('sales_plays', []),
     )
 
 
-@app.route("/upload", methods=["GET", "POST"])
-def upload():
-    """Upload transcript files."""
+@app.route("/add", methods=["GET", "POST"])
+def add_prospect():
+    """Add prospect manually or from transcript."""
     if request.method == "POST":
-        if "file" not in request.files:
-            flash("No file selected", "error")
-            return redirect(request.url)
+        # Check if transcript extraction
+        transcript = request.form.get('transcript', '').strip()
         
-        file = request.files["file"]
-        
-        if file.filename == "":
-            flash("No file selected", "error")
-            return redirect(request.url)
-        
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            filepath = Path(app.config["UPLOAD_FOLDER"]) / filename
-            file.save(filepath)
-            
-            # Process the file
+        if transcript:
+            # PIE extraction
             try:
-                content = filepath.read_text()
-                
-                if filename.endswith(".json"):
-                    data = json.loads(content)
-                    if isinstance(data, list):
-                        pipeline_data.extend(data)
-                    else:
-                        pipeline_data.append(data)
-                else:
-                    # Text transcript - would need LLM extraction
-                    # For now, create a placeholder
-                    flash("Transcript uploaded. LLM extraction would process this.", "info")
-                
-                refresh_analysis()
-                flash(f"Successfully uploaded {filename}", "success")
-                
+                extractor = get_extractor()
+                prospect = extractor.extract_from_transcript(transcript)
+                flash(f"Extracted prospect: {prospect.name} from {prospect.company}", "success")
+                return redirect(url_for('prospect_detail', prospect_id=prospect.id))
             except Exception as e:
-                flash(f"Error processing file: {e}", "error")
-            
-            return redirect(url_for("dashboard"))
-        else:
-            flash("Invalid file type. Allowed: txt, json, csv", "error")
+                logger.error(f"Extraction failed: {e}")
+                flash(f"Extraction failed: {e}", "error")
+                return redirect(url_for('add_prospect'))
+        
+        # Manual add
+        prospect = ProspectWorldModel(
+            id=str(uuid.uuid4())[:8],
+            name=request.form.get('name', 'Unknown'),
+            title=request.form.get('title', ''),
+            company=request.form.get('company', ''),
+            stage=request.form.get('stage', 'lead'),
+            deal_value=float(request.form.get('deal_value', 0) or 0),
+        )
+        
+        # Parse pain points
+        pain_text = request.form.get('pain_points', '')
+        for line in pain_text.strip().split('\n'):
+            if line.strip():
+                prospect.pain_points.append(PainPoint(
+                    description=line.strip(),
+                    severity="medium",
+                    category="technical",
+                ))
+        
+        prospect.calculate_probability()
+        prospect.save()
+        flash(f"Added prospect: {prospect.name}", "success")
+        return redirect(url_for('prospect_detail', prospect_id=prospect.id))
     
-    return render_template("upload.html")
+    return render_template("add_prospect.html")
 
 
-@app.route("/simulation", methods=["GET", "POST"])
-def simulation():
-    """What-if scenario simulation."""
-    results = None
-    selected_prospect = None
+@app.route("/prospect/<prospect_id>/enrich", methods=["POST"])
+def enrich_prospect(prospect_id):
+    """Web-enrich prospect with Brave API."""
+    prospect = ProspectWorldModel.load(prospect_id)
+    if not prospect:
+        flash("Prospect not found", "error")
+        return redirect(url_for('prospects_list'))
+    
+    try:
+        enricher = get_enricher()
+        prospect = enricher.enrich_company(prospect)
+        prospect = enricher.enrich_stakeholders(prospect)
+        flash(f"Enriched {prospect.company} with web data", "success")
+    except Exception as e:
+        logger.error(f"Enrichment failed: {e}")
+        flash(f"Enrichment failed: {e}", "error")
+    
+    return redirect(url_for('prospect_detail', prospect_id=prospect_id))
+
+
+@app.route("/prospect/<prospect_id>/delete", methods=["POST"])
+def delete_prospect(prospect_id):
+    """Delete prospect."""
+    path = PROSPECTS_DIR / f"{prospect_id}.json"
+    if path.exists():
+        path.unlink()
+        flash("Prospect deleted", "success")
+    return redirect(url_for('prospects_list'))
+
+
+# ============================================================================
+# SIMULATION (PIE CORE FEATURE)
+# ============================================================================
+
+@app.route("/simulate/<prospect_id>", methods=["GET", "POST"])
+def simulate(prospect_id):
+    """Simulate email sequence against prospect."""
+    prospect = ProspectWorldModel.load(prospect_id)
+    if not prospect:
+        flash("Prospect not found", "error")
+        return redirect(url_for('prospects_list'))
+    
+    simulation_result = None
     
     if request.method == "POST":
-        prospect_id = request.form.get("prospect_id")
+        # Get email content to simulate
+        subject = request.form.get('subject', '')
+        body = request.form.get('body', '')
+        play_id = request.form.get('play_id', '')
         
-        # Find prospect timeline
-        timeline = None
-        for t in miner.deal_timelines:
-            if t.prospect_id == prospect_id:
-                timeline = t
-                break
+        if play_id:
+            # Use email from a play
+            play = next((p for p in SEED_DATA.get('sales_plays', []) if p['id'] == play_id), None)
+            if play and play.get('emails'):
+                email_idx = int(request.form.get('email_idx', 0))
+                email = play['emails'][email_idx]
+                subject = email['subject']
+                body = email['body']
         
-        if timeline:
-            selected_prospect = timeline.prospect_name
+        if subject and body:
+            # Build content model
+            content = SalesContent(
+                id=str(uuid.uuid4())[:8],
+                name=subject[:50],
+                type=ContentType.EMAIL,
+                subject_line=subject,
+                raw_content=body,
+                tone=ContentTone.PROFESSIONAL,
+            )
             
-            # Get scenario parameters
-            changes = {}
-            if request.form.get("rep_change"):
-                changes["rep_change"] = True
-            if request.form.get("timing_speedup"):
-                changes["timing_speedup"] = float(request.form.get("timing_speedup", 1.0))
-            if request.form.get("remove_objection"):
-                changes["remove_objection"] = True
-            if request.form.get("add_champion"):
-                changes["add_champion"] = True
+            # Convert ProspectWorldModel to ProspectModel for simulator
+            prospect_for_sim = ProspectModel.from_world_model(prospect)
             
-            # Run simulation
-            transition_matrix = process_analysis.get("transition_matrix", {})
-            results = miner.simulate_scenario(timeline, changes, transition_matrix)
+            try:
+                simulator = get_simulator()
+                result = simulator.simulate_interaction(prospect_for_sim, content)
+                simulation_result = result.to_dict()
+                flash("Simulation complete!", "success")
+            except Exception as e:
+                logger.error(f"Simulation failed: {e}")
+                flash(f"Simulation failed: {e}", "error")
     
     return render_template(
-        "simulation.html",
-        timelines=process_analysis.get("timelines", []),
-        results=results,
-        selected_prospect=selected_prospect,
+        "simulate.html",
+        prospect=prospect,
+        sales_plays=SEED_DATA.get('sales_plays', []),
+        simulation_result=simulation_result,
     )
 
 
-@app.route("/process")
-def process_view():
-    """Process mining visualization."""
+# ============================================================================
+# CAMPAIGN GENERATION
+# ============================================================================
+
+@app.route("/generate", methods=["GET", "POST"])
+def generate_campaign():
+    """Generate new campaign with AI."""
+    prospects = ProspectWorldModel.list_all()
+    generated = None
+    
+    if request.method == "POST":
+        persona = request.form.get('persona', '')
+        agency = request.form.get('agency', '')
+        use_case = request.form.get('use_case', 'ecm')
+        prospect_id = request.form.get('prospect_id', '')
+        
+        # Get prospect context if selected
+        prospect_context = ""
+        if prospect_id:
+            prospect = ProspectWorldModel.load(prospect_id)
+            if prospect:
+                pains = [p.description for p in prospect.pain_points[:3]]
+                prospect_context = f"""
+Target Prospect: {prospect.name}, {prospect.title} at {prospect.company}
+Stage: {prospect.stage}
+Pain Points: {'; '.join(pains)}
+"""
+        
+        # Generate with LLM
+        from pie.core.llm import LLMClient
+        llm = LLMClient()
+        
+        prompt = f"""Generate a 3-touch email sequence for Box Public Sector sales.
+
+Target: {persona or 'IT Director'}
+Agency: {agency or 'State Government'}
+Use Case: {use_case}
+{prospect_context}
+
+Box Value Props to include:
+- FedRAMP High, DoD IL4, CJIS compliance
+- Replace legacy ECM (FileNet, OpenText, Hyland)
+- Box Shield Pro (malware detection, anomaly detection)
+- Box AI and AI Agents
+- Unlimited e-signatures
+
+Generate 3 emails with increasing urgency. Return JSON:
+{{
+    "emails": [
+        {{"touch": "1st Touch", "subject": "...", "body": "..."}},
+        {{"touch": "2nd Touch", "subject": "...", "body": "..."}},
+        {{"touch": "3rd Touch", "subject": "...", "body": "..."}}
+    ]
+}}"""
+        
+        try:
+            result = llm.chat(
+                messages=[{"role": "user", "content": prompt}],
+                model="gpt-4o-mini",
+                json_mode=True
+            )
+            generated = result["content"] if isinstance(result["content"], dict) else json.loads(result["content"])
+            flash("Campaign generated!", "success")
+        except Exception as e:
+            logger.error(f"Generation failed: {e}")
+            flash(f"Generation failed: {e}", "error")
+    
     return render_template(
-        "process.html",
-        transition_matrix=process_analysis.get("transition_matrix", {}),
-        bottlenecks=process_analysis.get("bottlenecks", []),
-        funnel=process_analysis.get("funnel", []),
-        stages=SALES_STAGES,
-        stage_display=STAGE_DISPLAY,
+        "generate.html",
+        prospects=prospects,
+        agent_config=SEED_DATA.get('agent_config', {}),
+        generated=generated,
     )
 
 
-# =============================================================================
-# API ENDPOINTS
-# =============================================================================
+# ============================================================================
+# API
+# ============================================================================
 
-@app.route("/api/pipeline")
-def api_pipeline():
-    """Get pipeline data as JSON."""
-    return jsonify({
-        "success": True,
-        "data": process_analysis,
-    })
+@app.route("/api/prospects")
+def api_prospects():
+    prospects = ProspectWorldModel.list_all()
+    return jsonify([asdict(p) for p in prospects])
 
 
 @app.route("/api/prospect/<prospect_id>")
-def api_prospect(prospect_id: str):
-    """Get single prospect data."""
-    for p in pipeline_data:
-        if p.get("id") == prospect_id:
-            return jsonify({"success": True, "data": p})
+def api_prospect(prospect_id):
+    prospect = ProspectWorldModel.load(prospect_id)
+    if not prospect:
+        return jsonify({"error": "Not found"}), 404
+    return jsonify(asdict(prospect))
+
+
+@app.route("/api/extract", methods=["POST"])
+def api_extract():
+    """Extract prospect from transcript."""
+    data = request.json
+    transcript = data.get('transcript', '')
+    if not transcript:
+        return jsonify({"error": "No transcript provided"}), 400
     
-    return jsonify({"success": False, "error": "Prospect not found"}), 404
+    try:
+        extractor = get_extractor()
+        prospect = extractor.extract_from_transcript(transcript)
+        return jsonify(asdict(prospect))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 @app.route("/api/simulate", methods=["POST"])
 def api_simulate():
-    """Run simulation via API."""
-    data = request.get_json()
+    """Simulate content against prospect."""
+    data = request.json
+    prospect_id = data.get('prospect_id')
+    subject = data.get('subject', '')
+    body = data.get('body', '')
     
-    prospect_id = data.get("prospect_id")
-    changes = data.get("changes", {})
+    prospect = ProspectWorldModel.load(prospect_id)
+    if not prospect:
+        return jsonify({"error": "Prospect not found"}), 404
     
-    # Find timeline
-    timeline = None
-    for t in miner.deal_timelines:
-        if t.prospect_id == prospect_id:
-            timeline = t
-            break
+    content = SalesContent(
+        id=str(uuid.uuid4())[:8],
+        name=subject[:50],
+        type=ContentType.EMAIL,
+        subject_line=subject,
+        raw_content=body,
+        tone=ContentTone.PROFESSIONAL,
+    )
     
-    if not timeline:
-        return jsonify({"success": False, "error": "Prospect not found"}), 404
+    prospect_for_sim = ProspectModel.from_world_model(prospect)
     
-    transition_matrix = process_analysis.get("transition_matrix", {})
-    results = miner.simulate_scenario(timeline, changes, transition_matrix)
-    
-    return jsonify({"success": True, "data": results})
-
-
-@app.route("/api/refresh", methods=["POST"])
-def api_refresh():
-    """Refresh analysis."""
-    refresh_analysis()
-    return jsonify({"success": True, "message": "Analysis refreshed"})
-
-
-# =============================================================================
-# TEMPLATE FILTERS
-# =============================================================================
-
-@app.template_filter("stage_color")
-def stage_color_filter(stage: str) -> str:
-    """Return color class for a stage."""
-    colors = {
-        "lead": "slate",
-        "discovery": "blue",
-        "qualification": "indigo",
-        "demo": "violet",
-        "evaluation": "purple",
-        "proposal": "fuchsia",
-        "negotiation": "amber",
-        "closed_won": "emerald",
-        "closed_lost": "red",
-    }
-    return colors.get(stage, "gray")
-
-
-@app.template_filter("severity_color")
-def severity_color_filter(severity: str) -> str:
-    """Return color class for severity."""
-    colors = {
-        "critical": "red",
-        "high": "orange",
-        "medium": "yellow",
-        "low": "green",
-    }
-    return colors.get(severity, "gray")
-
-
-@app.template_filter("format_date")
-def format_date_filter(date_str: str) -> str:
-    """Format ISO date string."""
-    if not date_str:
-        return "—"
     try:
-        dt = datetime.fromisoformat(date_str.replace("Z", "+00:00"))
-        return dt.strftime("%b %d, %Y")
-    except:
-        return date_str
+        simulator = get_simulator()
+        result = simulator.simulate_interaction(prospect_for_sim, content)
+        return jsonify(result.to_dict())
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
-# =============================================================================
+# ============================================================================
 # MAIN
-# =============================================================================
+# ============================================================================
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    debug = os.environ.get("FLASK_ENV") == "development"
-    
     print(f"""
-╔══════════════════════════════════════════════════════════════╗
-║                                                              ║
-║   🎯  S A L E S   I N T E L L I G E N C E                   ║
-║                                                              ║
-║   Process Mining • Pipeline Analytics • Deal Intelligence    ║
-║                                                              ║
-║   → http://localhost:{port}                                    ║
-║                                                              ║
-╚══════════════════════════════════════════════════════════════╝
+╔══════════════════════════════════════════════════════════════════╗
+║  🎯 PRISM - PIE-Powered Sales Intelligence                       ║
+║                                                                  ║
+║  Features:                                                       ║
+║  • Extract prospects from transcripts (PIE)                      ║
+║  • Web enrichment (Brave API)                                    ║
+║  • Simulate sequences against prospects                          ║
+║  • Generate personalized campaigns                               ║
+║                                                                  ║
+║  Data: {len(SEED_DATA.get('sales_plays', []))} plays • {sum(len(p.get('emails', [])) for p in SEED_DATA.get('sales_plays', []))} emails • {len(SEED_DATA.get('outreach_stats', []))} sequences        ║
+║                                                                  ║
+║  → http://localhost:{port}                                         ║
+╚══════════════════════════════════════════════════════════════════╝
     """)
-    
-    app.run(host="0.0.0.0", port=port, debug=debug)
+    app.run(host="0.0.0.0", port=port, debug=True)

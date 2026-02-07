@@ -1,0 +1,101 @@
+{
+  "model": "gpt-4o-mini",
+  "samples_per_type": 2,
+  "results": {
+    "sem_before_after": {
+      "correct": 2,
+      "total": 2,
+      "errors": []
+    },
+    "sem_event_at_the_time_of_another_event": {
+      "correct": 2,
+      "total": 2,
+      "errors": []
+    },
+    "sem_event_at_time_t": {
+      "correct": 2,
+      "total": 2,
+      "errors": []
+    },
+    "sem_event_at_what_time": {
+      "correct": 2,
+      "total": 2,
+      "errors": []
+    },
+    "sem_first_last": {
+      "correct": 2,
+      "total": 2,
+      "errors": []
+    },
+    "sem_number_of_events_in_time_interval": {
+      "correct": 2,
+      "total": 2,
+      "errors": []
+    },
+    "sem_relation_duration": {
+      "correct": 2,
+      "total": 2,
+      "errors": []
+    },
+    "sem_timeline": {
+      "correct": 2,
+      "total": 2,
+      "errors": []
+    },
+    "arith_add_subtract": {
+      "correct": 2,
+      "total": 2,
+      "errors": []
+    },
+    "arith_compare": {
+      "correct": 2,
+      "total": 2,
+      "errors": []
+    },
+    "arith_duration": {
+      "correct": 0,
+      "total": 2,
+      "errors": []
+    },
+    "arith_multi_op": {
+      "correct": 0,
+      "total": 2,
+      "errors": [
+        "'set' object has no attribute 'get'",
+        "'set' object has no attribute 'get'"
+      ]
+    },
+    "arith_schedule": {
+      "correct": 1,
+      "total": 2,
+      "errors": []
+    },
+    "arith_timezone": {
+      "correct": 2,
+      "total": 2,
+      "errors": []
+    },
+    "arith_trick": {
+      "correct": 1,
+      "total": 2,
+      "errors": []
+    }
+  },
+  "totals": {
+    "semantic": {
+      "correct": 16,
+      "total": 16,
+      "accuracy": 100.0
+    },
+    "arithmetic": {
+      "correct": 8,
+      "total": 14,
+      "accuracy": 57.14
+    },
+    "overall": {
+      "correct": 24,
+      "total": 30,
+      "accuracy": 80.0
+    }
+  }
+}

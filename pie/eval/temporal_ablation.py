@@ -22,7 +22,7 @@ Usage:
     python3 -m pie.eval.temporal_ablation --dry-run
 
     # Custom model
-    python3 -m pie.eval.temporal_ablation --model gpt-5-mini
+    python3 -m pie.eval.temporal_ablation --model gpt-4o-mini
 """
 
 from __future__ import annotations
@@ -426,7 +426,7 @@ def answer_query(
     llm,
     query: TemporalQuery,
     condition: str,
-    model: str = "gpt-5-mini",
+    model: str = "gpt-4o-mini",
 ) -> str:
     """Have the LLM answer a query given context in a specific condition."""
     context = query.contexts[condition]
@@ -455,7 +455,7 @@ def judge_response(
     query: TemporalQuery,
     condition: str,
     response: str,
-    model: str = "gpt-5-mini",
+    model: str = "gpt-4o-mini",
 ) -> float:
     """
     LLM-as-judge: score the response on temporal accuracy.
@@ -503,8 +503,8 @@ def judge_response(
 
 def run_experiment(
     queries: list[TemporalQuery],
-    model: str = "gpt-5-mini",
-    judge_model: str = "gpt-5-mini",
+    model: str = "gpt-4o-mini",
+    judge_model: str = "gpt-4o-mini",
     conditions: list[str] | None = None,
 ) -> list[TemporalQuery]:
     """
@@ -684,14 +684,14 @@ def main():
     parser.add_argument(
         "--model",
         type=str,
-        default="gpt-5-mini",
-        help="LLM model for answering queries (default: gpt-5-mini)",
+        default="gpt-4o-mini",
+        help="LLM model for answering queries (default: gpt-4o-mini)",
     )
     parser.add_argument(
         "--judge-model",
         type=str,
-        default="gpt-5-mini",
-        help="LLM model for judging responses (default: gpt-5-mini)",
+        default="gpt-4o-mini",
+        help="LLM model for judging responses (default: gpt-4o-mini)",
     )
     parser.add_argument(
         "--min-transitions",

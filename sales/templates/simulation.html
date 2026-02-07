@@ -1,282 +1,219 @@
 {% extends "base.html" %}
 
-{% block title %}Simulation — Sales Intelligence{% endblock %}
+{% block title %}Deal Simulation — Prism{% endblock %}
 
 {% block content %}
-<div class="space-y-12">
+<div class="space-y-8">
+    
     <!-- Header -->
-    <div class="text-center">
-        <h1 class="text-3xl font-serif font-semibold tracking-tight">What-If Simulation</h1>
-        <p class="text-ink-500 mt-2">Model scenario changes and predict outcomes</p>
+    <div>
+        <h1 class="text-3xl font-bold text-white">Deal Simulation</h1>
+        <p class="mt-2 text-dark-400">Model scenario changes and predict deal outcomes</p>
     </div>
     
-    <!-- Simulation Form -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-        <!-- Left: Configuration -->
-        <div class="bg-white rounded-xl p-8 shadow-soft">
-            <h2 class="text-lg font-serif font-semibold mb-6">Configure Scenario</h2>
+    <!-- Setup -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Simulation Form -->
+        <div class="gradient-border rounded-xl p-6">
+            <h2 class="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+                <i data-lucide="settings-2" class="w-5 h-5 text-accent"></i>
+                Scenario Setup
+            </h2>
             
-            <form method="POST" action="{{ url_for('simulation') }}" id="simulation-form" class="space-y-6">
-                <!-- Prospect Selector -->
+            <form method="POST" class="space-y-6">
+                <!-- Prospect Selection -->
                 <div>
-                    <label class="block text-sm font-medium text-ink-700 mb-2">Select Prospect</label>
-                    <div class="relative">
-                        <select name="prospect_id" required
-                                class="w-full px-4 py-3 bg-cream-50 border border-cream-200 rounded-lg text-ink-700 appearance-none focus:outline-none focus:border-ink-300 focus:ring-1 focus:ring-ink-200 transition-subtle">
-                            <option value="">Choose a deal...</option>
-                            {% for timeline in timelines %}
-                                <option value="{{ timeline.prospect_id }}" {% if selected_prospect == timeline.prospect_name %}selected{% endif %}>
-                                    {{ timeline.prospect_name }} — {{ timeline.company|default('Unknown') }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                        <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
-                            <i data-lucide="chevron-down" class="w-4 h-4 text-ink-400"></i>
-                        </div>
-                    </div>
+                    <label class="block text-sm font-medium text-dark-300 mb-2">Select Deal</label>
+                    <select name="prospect_id" required
+                            class="w-full px-4 py-3 rounded-xl bg-dark-800 border border-dark-700 
+                                   text-white text-sm focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/20 transition-all">
+                        <option value="">Choose a deal to simulate...</option>
+                        {% for t in timelines %}
+                        <option value="{{ t.prospect_id }}" {{ 'selected' if t.prospect_name == selected_prospect else '' }}>
+                            {{ t.prospect_name }} — {{ t.company }} ({{ t.current_stage_display }})
+                        </option>
+                        {% endfor %}
+                    </select>
                 </div>
                 
-                <!-- Scenario Toggles -->
-                <div class="space-y-4">
-                    <label class="block text-sm font-medium text-ink-700">Scenario Variables</label>
+                <!-- Scenario Changes -->
+                <div>
+                    <label class="block text-sm font-medium text-dark-300 mb-3">Scenario Changes</label>
                     
-                    <!-- Rep Change -->
-                    <label class="flex items-center justify-between p-4 bg-cream-50 rounded-lg border border-cream-100 hover:border-cream-200 transition-subtle cursor-pointer group">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center">
-                                <i data-lucide="user" class="w-4 h-4 text-blue-600"></i>
-                            </div>
+                    <div class="space-y-3">
+                        <label class="flex items-center gap-3 p-4 rounded-xl bg-dark-800/50 border border-dark-700 cursor-pointer hover:border-dark-600 transition-all">
+                            <input type="checkbox" name="rep_change" class="w-5 h-5 rounded bg-dark-700 border-dark-600 text-accent focus:ring-accent/50">
                             <div>
-                                <p class="text-sm font-medium text-ink-700">Change Sales Rep</p>
-                                <p class="text-xs text-ink-400">Assign a different representative</p>
+                                <div class="font-medium text-dark-100">New Rep Assignment</div>
+                                <div class="text-xs text-dark-500">Simulate fresh approach with different rep</div>
                             </div>
-                        </div>
-                        <div class="relative">
-                            <input type="checkbox" name="rep_change" class="sr-only peer">
-                            <div class="w-10 h-6 bg-cream-200 rounded-full peer peer-checked:bg-ink-900 transition-subtle"></div>
-                            <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow peer-checked:translate-x-4 transition-subtle"></div>
-                        </div>
-                    </label>
-                    
-                    <!-- Timing Speedup -->
-                    <div class="p-4 bg-cream-50 rounded-lg border border-cream-100">
-                        <div class="flex items-center space-x-3 mb-4">
-                            <div class="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center">
-                                <i data-lucide="clock" class="w-4 h-4 text-emerald-600"></i>
-                            </div>
+                        </label>
+                        
+                        <label class="flex items-center gap-3 p-4 rounded-xl bg-dark-800/50 border border-dark-700 cursor-pointer hover:border-dark-600 transition-all">
+                            <input type="checkbox" name="remove_objection" class="w-5 h-5 rounded bg-dark-700 border-dark-600 text-accent focus:ring-accent/50">
                             <div>
-                                <p class="text-sm font-medium text-ink-700">Timing Speedup</p>
-                                <p class="text-xs text-ink-400">Accelerate deal progression</p>
+                                <div class="font-medium text-dark-100">Resolve Main Objection</div>
+                                <div class="text-xs text-dark-500">What if the primary blocker was removed?</div>
                             </div>
-                        </div>
-                        <div class="flex items-center space-x-4">
-                            <input type="range" name="timing_speedup" min="1" max="3" step="0.5" value="1" 
-                                   class="flex-1 h-1.5 bg-cream-200 rounded-full appearance-none cursor-pointer accent-ink-900"
-                                   oninput="document.getElementById('speedup-value').textContent = this.value + 'x'">
-                            <span id="speedup-value" class="text-sm font-medium text-ink-700 w-10 text-right">1x</span>
-                        </div>
-                        <div class="flex justify-between text-xs text-ink-400 mt-2 px-0.5">
-                            <span>1x</span>
-                            <span>2x</span>
-                            <span>3x</span>
+                        </label>
+                        
+                        <label class="flex items-center gap-3 p-4 rounded-xl bg-dark-800/50 border border-dark-700 cursor-pointer hover:border-dark-600 transition-all">
+                            <input type="checkbox" name="add_champion" class="w-5 h-5 rounded bg-dark-700 border-dark-600 text-accent focus:ring-accent/50">
+                            <div>
+                                <div class="font-medium text-dark-100">Add Internal Champion</div>
+                                <div class="text-xs text-dark-500">Simulate having a strong internal advocate</div>
+                            </div>
+                        </label>
+                        
+                        <div class="p-4 rounded-xl bg-dark-800/50 border border-dark-700">
+                            <div class="flex items-center justify-between mb-3">
+                                <div>
+                                    <div class="font-medium text-dark-100">Timing Speedup</div>
+                                    <div class="text-xs text-dark-500">Accelerate deal velocity</div>
+                                </div>
+                                <span class="text-sm font-mono text-accent" id="speedupValue">1.0x</span>
+                            </div>
+                            <input type="range" name="timing_speedup" min="0.5" max="2" step="0.1" value="1"
+                                   class="w-full h-2 bg-dark-700 rounded-full appearance-none cursor-pointer
+                                          [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 
+                                          [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-accent"
+                                   id="speedupSlider">
                         </div>
                     </div>
-                    
-                    <!-- Remove Objection -->
-                    <label class="flex items-center justify-between p-4 bg-cream-50 rounded-lg border border-cream-100 hover:border-cream-200 transition-subtle cursor-pointer group">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-9 h-9 rounded-lg bg-amber-50 flex items-center justify-center">
-                                <i data-lucide="message-circle-x" class="w-4 h-4 text-amber-600"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm font-medium text-ink-700">Remove Primary Objection</p>
-                                <p class="text-xs text-ink-400">Eliminate top blocker from deal</p>
-                            </div>
-                        </div>
-                        <div class="relative">
-                            <input type="checkbox" name="remove_objection" class="sr-only peer">
-                            <div class="w-10 h-6 bg-cream-200 rounded-full peer peer-checked:bg-ink-900 transition-subtle"></div>
-                            <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow peer-checked:translate-x-4 transition-subtle"></div>
-                        </div>
-                    </label>
-                    
-                    <!-- Add Champion -->
-                    <label class="flex items-center justify-between p-4 bg-cream-50 rounded-lg border border-cream-100 hover:border-cream-200 transition-subtle cursor-pointer group">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-9 h-9 rounded-lg bg-violet-50 flex items-center justify-center">
-                                <i data-lucide="star" class="w-4 h-4 text-violet-600"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm font-medium text-ink-700">Add Internal Champion</p>
-                                <p class="text-xs text-ink-400">Gain executive sponsor support</p>
-                            </div>
-                        </div>
-                        <div class="relative">
-                            <input type="checkbox" name="add_champion" class="sr-only peer">
-                            <div class="w-10 h-6 bg-cream-200 rounded-full peer peer-checked:bg-ink-900 transition-subtle"></div>
-                            <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow peer-checked:translate-x-4 transition-subtle"></div>
-                        </div>
-                    </label>
                 </div>
                 
                 <!-- Submit -->
-                <button type="submit" 
-                        class="w-full flex items-center justify-center px-6 py-3.5 bg-ink-900 text-white font-medium rounded-lg hover:bg-ink-800 transition-subtle">
-                    <i data-lucide="play" class="w-4 h-4 mr-2"></i>
+                <button type="submit"
+                        class="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl 
+                               bg-gradient-to-r from-accent to-purple-500 hover:from-accent-dim hover:to-purple-600
+                               text-white font-semibold transition-all hover:shadow-glow">
+                    <i data-lucide="play" class="w-5 h-5"></i>
                     Run Simulation
                 </button>
             </form>
         </div>
         
-        <!-- Right: Results -->
-        <div class="bg-white rounded-xl p-8 shadow-soft">
-            <h2 class="text-lg font-serif font-semibold mb-2">Simulation Results</h2>
-            <p class="text-sm text-ink-400 mb-6">{% if results %}{{ selected_prospect }}{% else %}Run a simulation to see predictions{% endif %}</p>
+        <!-- How It Works -->
+        <div class="gradient-border rounded-xl p-6">
+            <h2 class="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+                <i data-lucide="info" class="w-5 h-5 text-blue-400"></i>
+                How It Works
+            </h2>
             
-            {% if results %}
-                <!-- Results Content -->
-                <div class="space-y-6">
-                    <!-- Win Probability Change -->
-                    <div class="p-6 bg-cream-50 rounded-xl">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-sm text-ink-500">Win Probability</span>
-                            {% set prob_change = (results.new_probability|default(0) - results.original_probability|default(0)) * 100 %}
-                            <span class="px-2 py-0.5 text-xs font-medium rounded {% if prob_change > 0 %}bg-emerald-50 text-emerald-700{% elif prob_change < 0 %}bg-red-50 text-red-700{% else %}bg-cream-100 text-ink-500{% endif %}">
-                                {% if prob_change > 0 %}+{% endif %}{{ "%.1f"|format(prob_change) }}%
-                            </span>
+            <div class="space-y-6">
+                <p class="text-dark-300">
+                    Deal simulation uses historical transition data and deal patterns to model 
+                    how changes might affect win probability and timeline.
+                </p>
+                
+                <div class="space-y-4">
+                    <div class="flex items-start gap-4">
+                        <div class="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center flex-shrink-0">
+                            <span class="text-sm font-bold text-accent">1</span>
                         </div>
-                        
-                        <div class="flex items-end justify-between">
-                            <div class="text-center">
-                                <p class="text-3xl font-semibold text-ink-400">{{ "%.0f"|format((results.original_probability|default(0)) * 100) }}%</p>
-                                <p class="text-xs text-ink-400 mt-1">Current</p>
-                            </div>
-                            <div class="flex-1 flex items-center justify-center px-4">
-                                <i data-lucide="arrow-right" class="w-6 h-6 text-ink-300"></i>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-4xl font-semibold {% if prob_change > 0 %}text-emerald-600{% elif prob_change < 0 %}text-red-600{% else %}text-ink-700{% endif %}">
-                                    {{ "%.0f"|format((results.new_probability|default(0)) * 100) }}%
-                                </p>
-                                <p class="text-xs text-ink-400 mt-1">Projected</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Visual Bar -->
-                        <div class="mt-6 space-y-2">
-                            <div class="flex items-center space-x-3">
-                                <span class="text-xs text-ink-400 w-14">Before</span>
-                                <div class="flex-1 h-2 bg-cream-200 rounded-full overflow-hidden">
-                                    <div class="h-full bg-ink-300 rounded-full" style="width: {{ (results.original_probability|default(0)) * 100 }}%"></div>
-                                </div>
-                            </div>
-                            <div class="flex items-center space-x-3">
-                                <span class="text-xs text-ink-400 w-14">After</span>
-                                <div class="flex-1 h-2 bg-cream-200 rounded-full overflow-hidden">
-                                    <div class="h-full bg-ink-900 rounded-full transition-all duration-700" style="width: {{ (results.new_probability|default(0)) * 100 }}%"></div>
-                                </div>
-                            </div>
+                        <div>
+                            <div class="font-medium text-dark-100">Baseline Calculation</div>
+                            <p class="text-sm text-dark-400 mt-1">We calculate current win probability based on stage, timeline, and transition patterns.</p>
                         </div>
                     </div>
                     
-                    <!-- Impact Breakdown -->
-                    {% if results.impact_breakdown %}
+                    <div class="flex items-start gap-4">
+                        <div class="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                            <span class="text-sm font-bold text-purple-400">2</span>
+                        </div>
                         <div>
-                            <h3 class="text-sm font-medium text-ink-700 mb-3">Impact Breakdown</h3>
-                            <div class="space-y-2">
-                                {% for factor, impact in results.impact_breakdown.items() %}
-                                    <div class="flex items-center justify-between p-3 bg-cream-50 rounded-lg">
-                                        <span class="text-sm text-ink-600">{{ factor|replace('_', ' ')|title }}</span>
-                                        <span class="text-sm font-medium {% if impact > 0 %}text-emerald-600{% elif impact < 0 %}text-red-600{% else %}text-ink-500{% endif %}">
-                                            {% if impact > 0 %}+{% endif %}{{ "%.1f"|format(impact * 100) }}%
-                                        </span>
-                                    </div>
-                                {% endfor %}
-                            </div>
+                            <div class="font-medium text-dark-100">Scenario Modeling</div>
+                            <p class="text-sm text-dark-400 mt-1">Your selected changes are applied with calibrated impact factors.</p>
                         </div>
-                    {% endif %}
-                    
-                    <!-- Recommendations -->
-                    {% if results.recommendations %}
-                        <div>
-                            <h3 class="text-sm font-medium text-ink-700 mb-3">Recommendations</h3>
-                            <div class="space-y-2">
-                                {% for rec in results.recommendations %}
-                                    <div class="flex items-start space-x-3 p-3 bg-cream-50 rounded-lg">
-                                        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0"></i>
-                                        <span class="text-sm text-ink-600">{{ rec }}</span>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endif %}
-                    
-                    <!-- Confidence -->
-                    {% if results.confidence %}
-                        <div class="flex items-center justify-between p-4 bg-cream-50 rounded-lg">
-                            <span class="text-sm text-ink-500">Model Confidence</span>
-                            <div class="flex items-center space-x-2">
-                                <div class="w-20 h-1.5 bg-cream-200 rounded-full overflow-hidden">
-                                    <div class="h-full bg-ink-700 rounded-full" style="width: {{ results.confidence * 100 }}%"></div>
-                                </div>
-                                <span class="text-sm font-medium text-ink-700">{{ "%.0f"|format(results.confidence * 100) }}%</span>
-                            </div>
-                        </div>
-                    {% endif %}
-                </div>
-            {% else %}
-                <!-- Empty State -->
-                <div class="flex flex-col items-center justify-center py-16 text-ink-400">
-                    <div class="w-16 h-16 rounded-full bg-cream-100 flex items-center justify-center mb-4">
-                        <i data-lucide="sparkles" class="w-7 h-7 opacity-40"></i>
                     </div>
-                    <p class="text-sm font-medium">No results yet</p>
-                    <p class="text-xs text-ink-400 mt-1 text-center max-w-xs">
-                        Select a prospect and configure variables to see predictions.
-                    </p>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                            <span class="text-sm font-bold text-emerald-400">3</span>
+                        </div>
+                        <div>
+                            <div class="font-medium text-dark-100">Probability Adjustment</div>
+                            <p class="text-sm text-dark-400 mt-1">New win probability and timeline estimates are computed.</p>
+                        </div>
+                    </div>
                 </div>
-            {% endif %}
+            </div>
         </div>
     </div>
     
-    <!-- How It Works -->
-    <div class="bg-white rounded-xl p-8 shadow-soft">
-        <h3 class="text-lg font-serif font-semibold text-center mb-10">How It Works</h3>
+    <!-- Results -->
+    {% if results %}
+    <div class="gradient-border rounded-xl p-8 animate-fade-in">
+        <h2 class="text-xl font-semibold text-white mb-8 flex items-center gap-2">
+            <i data-lucide="bar-chart-3" class="w-6 h-6 text-accent"></i>
+            Simulation Results: {{ results.prospect_name }}
+        </h2>
         
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div class="text-center">
-                <div class="w-10 h-10 mx-auto rounded-full bg-cream-100 flex items-center justify-center mb-4">
-                    <span class="text-sm font-semibold text-ink-600">1</span>
-                </div>
-                <h4 class="text-sm font-medium text-ink-700 mb-2">Select Deal</h4>
-                <p class="text-xs text-ink-400">Choose an active deal from your pipeline</p>
+        <!-- Win Probability Comparison -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- Baseline -->
+            <div class="p-6 rounded-xl bg-dark-800/50 border border-dark-700 text-center">
+                <div class="text-sm text-dark-400 mb-2">Baseline Win Probability</div>
+                <div class="text-4xl font-bold text-white">{{ results.base_win_probability }}%</div>
+                <div class="text-sm text-dark-500 mt-2">Current likelihood</div>
             </div>
             
-            <div class="text-center">
-                <div class="w-10 h-10 mx-auto rounded-full bg-cream-100 flex items-center justify-center mb-4">
-                    <span class="text-sm font-semibold text-ink-600">2</span>
+            <!-- Arrow -->
+            <div class="flex items-center justify-center">
+                <div class="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center">
+                    <i data-lucide="arrow-right" class="w-8 h-8 text-accent"></i>
                 </div>
-                <h4 class="text-sm font-medium text-ink-700 mb-2">Configure</h4>
-                <p class="text-xs text-ink-400">Toggle variables like timing and objections</p>
             </div>
             
-            <div class="text-center">
-                <div class="w-10 h-10 mx-auto rounded-full bg-cream-100 flex items-center justify-center mb-4">
-                    <span class="text-sm font-semibold text-ink-600">3</span>
+            <!-- Modified -->
+            <div class="p-6 rounded-xl border text-center
+                        {{ 'bg-success/10 border-success/30' if results.probability_change > 0 else 'bg-danger/10 border-danger/30' if results.probability_change < 0 else 'bg-dark-800/50 border-dark-700' }}">
+                <div class="text-sm text-dark-400 mb-2">Modified Win Probability</div>
+                <div class="text-4xl font-bold {{ 'text-success' if results.probability_change > 0 else 'text-danger' if results.probability_change < 0 else 'text-white' }}">
+                    {{ results.modified_win_probability }}%
                 </div>
-                <h4 class="text-sm font-medium text-ink-700 mb-2">Simulate</h4>
-                <p class="text-xs text-ink-400">Our model predicts based on patterns</p>
+                <div class="text-sm mt-2 {{ 'text-success' if results.probability_change > 0 else 'text-danger' if results.probability_change < 0 else 'text-dark-500' }}">
+                    {{ '+' if results.probability_change > 0 else '' }}{{ results.probability_change }}% change
+                </div>
+            </div>
+        </div>
+        
+        <!-- Changes Applied -->
+        {% if results.changes_applied %}
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold text-white mb-4">Changes Applied</h3>
+            <div class="flex flex-wrap gap-3">
+                {% for change in results.changes_applied %}
+                <div class="flex items-center gap-2 px-4 py-2 rounded-xl bg-accent/10 border border-accent/30">
+                    <i data-lucide="check" class="w-4 h-4 text-accent"></i>
+                    <span class="text-sm text-dark-100">{{ change }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Timeline & Recommendation -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-6 rounded-xl bg-dark-800/50 border border-dark-700">
+                <div class="flex items-center gap-2 mb-2">
+                    <i data-lucide="calendar" class="w-5 h-5 text-amber-400"></i>
+                    <span class="font-medium text-white">Estimated Days to Close</span>
+                </div>
+                <div class="text-3xl font-bold text-white mt-2">{{ results.estimated_days_to_close }} days</div>
             </div>
             
-            <div class="text-center">
-                <div class="w-10 h-10 mx-auto rounded-full bg-cream-100 flex items-center justify-center mb-4">
-                    <span class="text-sm font-semibold text-ink-600">4</span>
+            <div class="p-6 rounded-xl bg-accent/5 border border-accent/20">
+                <div class="flex items-center gap-2 mb-2">
+                    <i data-lucide="lightbulb" class="w-5 h-5 text-accent"></i>
+                    <span class="font-medium text-white">Recommendation</span>
                 </div>
-                <h4 class="text-sm font-medium text-ink-700 mb-2">Insights</h4>
-                <p class="text-xs text-ink-400">Get probability changes and recommendations</p>
+                <p class="text-dark-200 mt-2">{{ results.recommendation }}</p>
             </div>
         </div>
     </div>
+    {% endif %}
 </div>
 {% endblock %}
 
@@ -284,26 +221,14 @@
 <script>
     lucide.createIcons();
     
-    // Handle form submission with loading state
-    document.getElementById('simulation-form').addEventListener('submit', function(e) {
-        const btn = this.querySelector('button[type="submit"]');
-        btn.disabled = true;
-        btn.innerHTML = `
-            <svg class="w-4 h-4 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-            </svg>
-            Running...
-        `;
-    });
+    // Speedup slider
+    const slider = document.getElementById('speedupSlider');
+    const value = document.getElementById('speedupValue');
     
-    // Pre-select prospect from URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const prospectId = urlParams.get('prospect_id');
-    if (prospectId) {
-        const select = document.querySelector('select[name="prospect_id"]');
-        if (select) {
-            select.value = prospectId;
-        }
+    if (slider) {
+        slider.addEventListener('input', () => {
+            value.textContent = slider.value + 'x';
+        });
     }
 </script>
 {% endblock %}

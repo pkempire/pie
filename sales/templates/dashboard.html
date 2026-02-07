@@ -1,210 +1,130 @@
 {% extends "base.html" %}
-
-{% block title %}Dashboard — Sales Intelligence{% endblock %}
+{% block title %}Dashboard — Prism{% endblock %}
 
 {% block content %}
-<div class="space-y-12">
+<div class="space-y-8">
     <!-- Header -->
-    <div class="text-center">
-        <h1 class="text-3xl font-serif font-semibold tracking-tight">Dashboard</h1>
-        <p class="text-ink-500 mt-2">Pipeline overview and key metrics</p>
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">Box Sales Intelligence</h1>
+            <p class="text-gray-500 mt-1">Campaign QA + Generator for Public Sector</p>
+        </div>
+        <a href="{{ url_for('generate_campaign') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center gap-2">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+            Generate Campaign
+        </a>
     </div>
     
-    <!-- Key Metrics -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-        <!-- Total Deals -->
-        <div class="bg-white rounded-xl p-6 shadow-soft transition-subtle card-lift">
-            <div class="text-ink-400 text-sm mb-1">Total Deals</div>
-            <div class="text-3xl font-semibold">{{ summary.total_deals|default(0) }}</div>
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-4 gap-4">
+        <div class="bg-white rounded-xl border p-5">
+            <div class="text-3xl font-bold text-blue-600">{{ total_plays }}</div>
+            <div class="text-sm text-gray-500 mt-1">Sales Plays</div>
         </div>
-        
-        <!-- Active Deals -->
-        <div class="bg-white rounded-xl p-6 shadow-soft transition-subtle card-lift">
-            <div class="text-ink-400 text-sm mb-1">Active</div>
-            <div class="text-3xl font-semibold text-emerald-600">{{ summary.active_deals|default(0) }}</div>
+        <div class="bg-white rounded-xl border p-5">
+            <div class="text-3xl font-bold text-purple-600">{{ total_emails }}</div>
+            <div class="text-sm text-gray-500 mt-1">Email Templates</div>
         </div>
-        
-        <!-- Stalled Deals -->
-        <div class="bg-white rounded-xl p-6 shadow-soft transition-subtle card-lift">
-            <div class="text-ink-400 text-sm mb-1">Stalled</div>
-            <div class="text-3xl font-semibold text-amber-600">{{ summary.stalled_deals|default(0) }}</div>
+        <div class="bg-white rounded-xl border p-5">
+            <div class="text-3xl font-bold text-green-600">{{ total_prospects }}</div>
+            <div class="text-sm text-gray-500 mt-1">Prospects</div>
         </div>
-        
-        <!-- Stall Rate -->
-        <div class="bg-white rounded-xl p-6 shadow-soft transition-subtle card-lift">
-            <div class="text-ink-400 text-sm mb-1">Stall Rate</div>
-            <div class="text-3xl font-semibold">{{ summary.stall_rate|default(0) }}%</div>
-        </div>
-    </div>
-    
-    <!-- Funnel & Distribution -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        <!-- Conversion Funnel -->
-        <div class="lg:col-span-2 bg-white rounded-xl p-8 shadow-soft">
-            <h2 class="text-lg font-serif font-semibold mb-8">Conversion Funnel</h2>
-            
-            <div class="space-y-4">
-                {% for stage in funnel %}
-                    {% if stage.stage not in ['closed_won', 'closed_lost'] %}
-                    <div class="flex items-center gap-4">
-                        <div class="w-28 text-sm text-ink-500 text-right">
-                            {{ stage.display_name }}
-                        </div>
-                        <div class="flex-1 relative h-8">
-                            <div class="absolute inset-0 bg-cream-100 rounded"></div>
-                            <div class="absolute inset-y-0 left-0 rounded transition-all duration-500"
-                                 style="width: {{ stage.width_percent|default(stage.conversion_from_lead) }}%; 
-                                        background: var(--stage-color); opacity: 0.15;">
-                            </div>
-                            <div class="absolute inset-y-0 left-0 flex items-center px-3">
-                                <span class="text-sm font-medium stage-{{ stage.stage }}" style="color: var(--stage-color);">
-                                    {{ stage.count }} deals
-                                </span>
-                            </div>
-                        </div>
-                        <div class="w-14 text-right text-sm text-ink-400">
-                            {{ stage.conversion_from_lead }}%
-                        </div>
-                    </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-            
-            <!-- Outcomes -->
-            <div class="mt-8 pt-8 border-t border-cream-200">
-                <div class="grid grid-cols-2 gap-4">
-                    {% for stage in funnel %}
-                        {% if stage.stage == 'closed_won' %}
-                        <div class="flex items-center gap-3 p-4 bg-emerald-50 rounded-lg">
-                            <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
-                                <i data-lucide="check" class="w-5 h-5 text-emerald-600"></i>
-                            </div>
-                            <div>
-                                <div class="text-2xl font-semibold text-emerald-700">{{ stage.count }}</div>
-                                <div class="text-sm text-emerald-600">Won</div>
-                            </div>
-                        </div>
-                        {% elif stage.stage == 'closed_lost' %}
-                        <div class="flex items-center gap-3 p-4 bg-red-50 rounded-lg">
-                            <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
-                                <i data-lucide="x" class="w-5 h-5 text-red-600"></i>
-                            </div>
-                            <div>
-                                <div class="text-2xl font-semibold text-red-700">{{ stage.count }}</div>
-                                <div class="text-sm text-red-600">Lost</div>
-                            </div>
-                        </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-        
-        <!-- Stage Distribution -->
-        <div class="bg-white rounded-xl p-8 shadow-soft">
-            <h2 class="text-lg font-serif font-semibold mb-8">By Stage</h2>
-            
-            <div class="space-y-4">
-                {% for stage_key, count in stage_distribution.items() %}
-                <div class="flex items-center gap-3">
-                    <div class="w-2 h-2 rounded-full stage-{{ stage_key }}" style="background: var(--stage-color);"></div>
-                    <div class="flex-1 flex items-center justify-between">
-                        <span class="text-sm text-ink-600">{{ stage_display.get(stage_key, stage_key) }}</span>
-                        <span class="text-sm font-medium">{{ count }}</span>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
+        <div class="bg-white rounded-xl border p-5">
+            <div class="text-3xl font-bold text-amber-600">${{ "{:,.0f}".format(total_value) }}</div>
+            <div class="text-sm text-gray-500 mt-1">Pipeline Value</div>
         </div>
     </div>
     
-    <!-- Bottlenecks & Recent Deals -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        
-        <!-- Bottlenecks -->
-        <div class="bg-white rounded-xl p-8 shadow-soft">
-            <h2 class="text-lg font-serif font-semibold mb-6">Process Bottlenecks</h2>
-            
-            {% if bottlenecks %}
-            <div class="space-y-3">
-                {% for bn in bottlenecks %}
-                <div class="p-4 rounded-lg {{ 'bg-red-50 border border-red-100' if bn.is_bottleneck else 'bg-cream-50' }}">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-lg flex items-center justify-center stage-{{ bn.stage }}"
-                                 style="background: color-mix(in srgb, var(--stage-color) 15%, white);">
-                                <span class="text-xs font-semibold" style="color: var(--stage-color);">{{ bn.count }}</span>
-                            </div>
-                            <div>
-                                <div class="font-medium text-sm">{{ bn.display_name }}</div>
-                                <div class="text-xs text-ink-400">
-                                    {{ bn.avg_days }}d avg · {{ bn.stall_rate }}% stalled
-                                </div>
-                            </div>
-                        </div>
-                        {% if bn.is_bottleneck %}
-                        <span class="text-xs font-medium text-red-600 bg-red-100 px-2 py-1 rounded">
-                            Bottleneck
-                        </span>
-                        {% endif %}
+    <!-- Sales Plays -->
+    <div class="bg-white rounded-xl border">
+        <div class="p-5 border-b flex items-center justify-between">
+            <h2 class="font-semibold text-lg">Sales Plays</h2>
+            <a href="{{ url_for('plays') }}" class="text-sm text-blue-600 hover:underline">View all →</a>
+        </div>
+        <div class="divide-y">
+            {% for play in sales_plays %}
+            <a href="{{ url_for('play_detail', play_id=play.id) }}" class="block p-5 hover:bg-gray-50 transition-colors">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="font-medium text-gray-900">{{ play.name }}</div>
+                        <div class="text-sm text-gray-500 mt-1">{{ play.description }}</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-lg font-semibold text-gray-900">{{ play.emails|length }}</div>
+                        <div class="text-xs text-gray-400">emails</div>
                     </div>
                 </div>
-                {% endfor %}
-            </div>
+            </a>
             {% else %}
-            <div class="text-center py-8 text-ink-400">
-                <i data-lucide="check-circle" class="w-8 h-8 mx-auto mb-2 text-emerald-400"></i>
-                <p class="text-sm">No bottlenecks detected</p>
+            <div class="p-8 text-center text-gray-400">
+                No sales plays loaded. Run seed_box_data.py to import.
             </div>
-            {% endif %}
-        </div>
-        
-        <!-- Recent Deals -->
-        <div class="bg-white rounded-xl p-8 shadow-soft">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-lg font-serif font-semibold">Recent Deals</h2>
-                <a href="{{ url_for('pipeline') }}" class="text-sm text-accent hover:underline">
-                    View all →
-                </a>
-            </div>
-            
-            <div class="space-y-3">
-                {% for timeline in timelines[:6] %}
-                <a href="{{ url_for('prospect_detail', prospect_id=timeline.prospect_id) }}" 
-                   class="block p-4 rounded-lg bg-cream-50 hover:bg-cream-100 transition-subtle">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 rounded-full bg-ink-100 flex items-center justify-center text-ink-600 text-sm font-medium">
-                                {{ timeline.prospect_name[0] }}
-                            </div>
-                            <div>
-                                <div class="font-medium text-sm">{{ timeline.prospect_name }}</div>
-                                <div class="text-xs text-ink-400">{{ timeline.company }}</div>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <span class="inline-flex px-2 py-1 rounded text-xs font-medium stage-{{ timeline.current_stage }}"
-                                  style="background: color-mix(in srgb, var(--stage-color) 12%, white); color: var(--stage-color);">
-                                {{ timeline.current_stage_display }}
-                            </span>
-                            {% if timeline.is_stalled %}
-                            <div class="mt-1 text-xs text-amber-600">
-                                Stalled {{ timeline.stall_days }}d
-                            </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                </a>
-                {% endfor %}
-            </div>
+            {% endfor %}
         </div>
     </div>
+    
+    <!-- Top Performing Sequences -->
+    <div class="bg-white rounded-xl border">
+        <div class="p-5 border-b flex items-center justify-between">
+            <h2 class="font-semibold text-lg">Top Performing Sequences</h2>
+            <a href="{{ url_for('stats') }}" class="text-sm text-blue-600 hover:underline">View all →</a>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-5 py-3">Sequence</th>
+                        <th class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-5 py-3">Owner</th>
+                        <th class="text-right text-xs font-medium text-gray-500 uppercase tracking-wider px-5 py-3">Meetings</th>
+                        <th class="text-right text-xs font-medium text-gray-500 uppercase tracking-wider px-5 py-3">Open Rate</th>
+                        <th class="text-right text-xs font-medium text-gray-500 uppercase tracking-wider px-5 py-3">Reply Rate</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y">
+                    {% for stat in outreach_stats %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-5 py-4">
+                            <div class="font-medium text-gray-900 truncate max-w-xs">{{ stat.sequence_name }}</div>
+                        </td>
+                        <td class="px-5 py-4 text-gray-500">{{ stat.owner }}</td>
+                        <td class="px-5 py-4 text-right font-semibold text-green-600">{{ stat.meetings_booked }}</td>
+                        <td class="px-5 py-4 text-right text-gray-900">{{ (stat.open_rate * 100)|round(0)|int }}%</td>
+                        <td class="px-5 py-4 text-right text-gray-900">{{ (stat.reply_rate * 100)|round(0)|int }}%</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="px-5 py-8 text-center text-gray-400">
+                            No outreach stats loaded.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Recent Prospects -->
+    {% if prospects %}
+    <div class="bg-white rounded-xl border">
+        <div class="p-5 border-b flex items-center justify-between">
+            <h2 class="font-semibold text-lg">Recent Prospects</h2>
+            <a href="{{ url_for('prospects_list') }}" class="text-sm text-blue-600 hover:underline">View all →</a>
+        </div>
+        <div class="divide-y">
+            {% for p in prospects %}
+            <a href="{{ url_for('prospect_detail', prospect_id=p.id) }}" class="flex items-center justify-between p-5 hover:bg-gray-50">
+                <div>
+                    <div class="font-medium text-gray-900">{{ p.name }}</div>
+                    <div class="text-sm text-gray-500">{{ p.company }}</div>
+                </div>
+                <div class="text-right">
+                    <div class="font-medium">${{ "{:,.0f}".format(p.deal_value|default(0)) }}</div>
+                    <div class="text-xs text-gray-400">{{ p.stage }}</div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 </div>
-{% endblock %}
-
-{% block scripts %}
-<script>
-    lucide.createIcons();
-</script>
 {% endblock %}

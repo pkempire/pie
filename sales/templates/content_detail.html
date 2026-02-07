@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block title %}{{ content.name }} — Prism{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto space-y-8">
+    
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-2 text-sm">
+        <a href="{{ url_for('content_library_view') }}" class="text-dark-400 hover:text-white transition-colors">Content</a>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-dark-600"></i>
+        <span class="text-white">{{ content.name }}</span>
+    </nav>
+    
+    <!-- Header -->
+    <div class="flex items-start justify-between">
+        <div>
+            <div class="flex items-center gap-3 mb-2">
+                <span class="px-3 py-1 rounded-lg text-xs font-medium uppercase tracking-wider
+                             {{ 'bg-blue-500/20 text-blue-400' if content.type.value == 'email' else '' }}
+                             {{ 'bg-purple-500/20 text-purple-400' if content.type.value == 'call_script' else '' }}
+                             {{ 'bg-emerald-500/20 text-emerald-400' if content.type.value == 'case_study' else '' }}
+                             {{ 'bg-amber-500/20 text-amber-400' if content.type.value == 'objection_handler' else '' }}
+                             {{ 'bg-dark-700 text-dark-400' }}">
+                    {{ content.type.value|replace('_', ' ') }}
+                </span>
+                {% if content.extracted %}
+                <span class="px-2 py-0.5 rounded-lg text-xs bg-success/20 text-success">
+                    Analyzed
+                </span>
+                {% endif %}
+            </div>
+            <h1 class="text-3xl font-bold text-white">{{ content.name }}</h1>
+            {% if content.subject_line %}
+            <p class="mt-2 text-dark-400">Subject: {{ content.subject_line }}</p>
+            {% endif %}
+        </div>
+        
+        <div class="flex items-center gap-3">
+            <a href="{{ url_for('simulate_content') }}?content_id={{ content.id }}" 
+               class="flex items-center gap-2 px-4 py-2 rounded-xl bg-accent hover:bg-accent-dim 
+                      text-white text-sm font-medium transition-all hover:shadow-glow-sm">
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+                Simulate
+            </a>
+            <form action="{{ url_for('content_delete', content_id=content.id) }}" method="POST" 
+                  onsubmit="return confirm('Delete this content?')">
+                <button type="submit" class="p-2 rounded-xl bg-dark-700 hover:bg-danger/20 text-dark-400 hover:text-danger transition-all">
+                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Content -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Main Content -->
+        <div class="lg:col-span-2 space-y-6">
+            <div class="gradient-border rounded-xl p-6">
+                <h2 class="text-lg font-semibold text-white mb-4">Content</h2>
+                <div class="p-4 rounded-xl bg-dark-800/50 border border-dark-700">
+                    <pre class="text-sm text-dark-200 whitespace-pre-wrap font-mono leading-relaxed">{{ content.raw_content }}</pre>
+                </div>
+                
+                <div class="mt-4 flex items-center gap-4 text-sm text-dark-500">
+                    <span class="flex items-center gap-1">
+                        <i data-lucide="type" class="w-4 h-4"></i>
+                        {{ content.word_count }} words
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <i data-lucide="clock" class="w-4 h-4"></i>
+                        ~{{ (content.reading_time_seconds / 60)|round(1) }} min read
+                    </span>
+                </div>
+            </div>
+            
+            <!-- Claims -->
+            {% if content.claims %}
+            <div class="gradient-border rounded-xl p-6">
+                <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <i data-lucide="target" class="w-5 h-5 text-accent"></i>
+                    Claims & Value Props
+                </h2>
+                <div class="space-y-2">
+                    {% for claim in content.claims %}
+                    <div class="flex items-start gap-3 p-3 rounded-xl bg-dark-800/50 border border-dark-700">
+                        <i data-lucide="check-circle" class="w-5 h-5 text-accent mt-0.5"></i>
+                        <span class="text-dark-200">{{ claim }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Proof Points -->
+            {% if content.proof_points %}
+            <div class="gradient-border rounded-xl p-6">
+                <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <i data-lucide="shield-check" class="w-5 h-5 text-emerald-400"></i>
+                    Proof Points
+                </h2>
+                <div class="space-y-2">
+                    {% for proof in content.proof_points %}
+                    <div class="flex items-start gap-3 p-3 rounded-xl bg-dark-800/50 border border-dark-700">
+                        <i data-lucide="award" class="w-5 h-5 text-emerald-400 mt-0.5"></i>
+                        <span class="text-dark-200">{{ proof }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="space-y-6">
+            
+            <!-- Pains Addressed -->
+            {% if content.pains_addressed %}
+            <div class="gradient-border rounded-xl p-6">
+                <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <i data-lucide="heart" class="w-5 h-5 text-pink-400"></i>
+                    Pains Addressed
+                </h2>
+                <div class="space-y-2">
+                    {% for pain in content.pains_addressed %}
+                    <div class="px-3 py-2 rounded-lg bg-pink-500/10 border border-pink-500/20 text-sm text-dark-200">
+                        {{ pain }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Objections Handled -->
+            {% if content.objections_handled %}
+            <div class="gradient-border rounded-xl p-6">
+                <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <i data-lucide="shield" class="w-5 h-5 text-amber-400"></i>
+                    Objections Handled
+                </h2>
+                <div class="space-y-2">
+                    {% for obj in content.objections_handled %}
+                    <div class="px-3 py-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-sm text-dark-200">
+                        {{ obj }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- CTA -->
+            {% if content.cta %}
+            <div class="gradient-border rounded-xl p-6">
+                <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <i data-lucide="mouse-pointer-click" class="w-5 h-5 text-blue-400"></i>
+                    Call to Action
+                </h2>
+                <div class="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                    <span class="text-dark-100">{{ content.cta }}</span>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Tone -->
+            <div class="gradient-border rounded-xl p-6">
+                <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <i data-lucide="message-square" class="w-5 h-5 text-purple-400"></i>
+                    Tone
+                </h2>
+                <span class="px-4 py-2 rounded-xl bg-purple-500/20 text-purple-400 text-sm font-medium capitalize">
+                    {{ content.tone.value if content.tone.value else content.tone }}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    lucide.createIcons();
+</script>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Sales Plays — Prism{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-bold">Sales Plays</h1>
+            <p class="text-gray-500">Email sequences from Box Public Sector</p>
+        </div>
+        <a href="{{ url_for('generate_campaign') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+            + Generate New
+        </a>
+    </div>
+    
+    <div class="grid gap-4">
+        {% for play in sales_plays %}
+        <div class="bg-white rounded-xl border hover:border-blue-200 transition-colors">
+            <div class="p-6">
+                <div class="flex items-start justify-between mb-4">
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-900">{{ play.name }}</h2>
+                        <p class="text-gray-500 mt-1">{{ play.description }}</p>
+                    </div>
+                    <div class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
+                        {{ play.emails|length }} emails
+                    </div>
+                </div>
+                
+                <div class="text-sm text-gray-400 mb-4">
+                    Source: {{ play.source_file }}
+                </div>
+                
+                <!-- Preview first 3 emails -->
+                <div class="space-y-2">
+                    {% for email in play.emails[:3] %}
+                    <div class="bg-gray-50 rounded-lg p-3">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-xs font-medium text-gray-500">{{ email.touch }}</span>
+                        </div>
+                        <div class="font-medium text-gray-900 text-sm">{{ email.subject[:60] }}{% if email.subject|length > 60 %}...{% endif %}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="mt-4">
+                    <a href="{{ url_for('play_detail', play_id=play.id) }}" 
+                       class="text-blue-600 hover:underline text-sm font-medium">
+                        View all {{ play.emails|length }} emails →
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="bg-white rounded-xl border p-12 text-center">
+            <div class="text-gray-400 mb-4">No sales plays loaded</div>
+            <p class="text-sm text-gray-500">Run <code class="bg-gray-100 px-2 py-1 rounded">python seed_box_data.py</code> to import Box data</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
