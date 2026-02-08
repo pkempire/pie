@@ -4,19 +4,46 @@ EXTRACTION_SYSTEM_PROMPT = """You are an entity and knowledge extractor for a pe
 
 You are processing conversations from a knowledge worker's ChatGPT history, organized into daily batches. Your job is to extract structured information about their world — the people, projects, tools, organizations, beliefs, decisions, and concepts that matter.
 
-## What to Extract
+## What to Extract (IN ORDER OF PRIORITY)
 
-1. **Entities**: People, projects, tools, organizations, beliefs, decisions, concepts that are meaningful to the user's life and work.
-   - For each: name, type, current state, whether it's new or matches something in the CURRENT WORLD STATE context.
-   
-2. **State Changes**: If any entity's state evolved during/because of these conversations.
-   - What changed, from what to what (if known), whether it contradicts prior known state.
-   
-3. **Relationships**: How entities relate to each other.
+### 🚨 PRIORITY 1: EVENTS (REQUIRED)
+**Every batch MUST extract at least one event if ANY user activity is mentioned.**
 
-4. **Temporal Context**: What period/phase of the user's life this belongs to.
+Events are user activities with temporal grounding:
+- Visits, trips, meetings, appointments
+- Purchases, orders, subscriptions
+- Conversations with specific people
+- Starting/finishing things
+- Decisions made on specific days
 
-5. **Significance**: How important are these conversations for understanding who this person is? 
+**Format:**
+```json
+{"name": "MoMA visit", "type": "event", "state": {"date": "2025-01-15", "description": "..."}}
+```
+
+**Date computation (MANDATORY):**
+- "today" / "just now" / "I just [verb]" → batch date
+- "yesterday" → batch date - 1
+- "last week" → batch date - 7
+- "two weeks ago" → batch date - 14
+- "last Tuesday" → most recent Tuesday before batch date
+
+If the user says "I did X" with ANY time reference, extract it as an event with computed date.
+
+### PRIORITY 2: State Changes
+If any entity's state evolved during these conversations — what changed, from what to what.
+
+### PRIORITY 3: Other Entities
+People, projects, tools, organizations, beliefs, decisions, concepts that matter long-term.
+
+### PRIORITY 4: Relationships
+How entities connect to each other.
+
+### PRIORITY 5: Temporal Context
+What period/phase of the user's life this belongs to.
+
+### PRIORITY 6: Significance
+How important are these conversations for understanding who this person is? 
    Anchor points:
    - 0.0-0.1: Trivial — debugging, one-off questions, boilerplate code
    - 0.2-0.3: Minor — routine work on existing projects, learning exercises
@@ -57,10 +84,11 @@ ONLY extract entities that represent:
 
 Ask yourself: "Would this entity matter 3 months from now for understanding this person?" If no, skip it.
 
-**Err on the side of fewer, higher-quality entities.** 5 meaningful entities are better than 20 noise entities.
+**EXCEPTION: Always extract events.** Events are the temporal backbone — without them, we can't answer "when did I...?" questions. Extract events liberally.
 
 ## Entity Types (strict — use only these)
 
+- **event**: 🚨 EXTRACT THESE FIRST — User activities with dates (visits, meetings, purchases, trips, appointments, decisions made on specific days). ALWAYS include `date` in state.
 - **person**: Named people in the user's life/work (NOT "user", "the user", "freelancers", etc.)
 - **project**: Named things being built, explored, or worked on (NOT individual files or scripts)
 - **tool**: Technologies, frameworks, languages, products used or evaluated
@@ -69,7 +97,6 @@ Ask yourself: "Would this entity matter 3 months from now for understanding this
 - **decision**: Significant choices with reasoning
 - **concept**: Ideas, fields, domains of interest or expertise
 - **period**: Life phases (only if a new period is identified)
-- **event**: User activities, appointments, visits, trips, purchases, meetings — things that happened on specific dates
 
 ## CRITICAL: Extracting Events with Dates
 

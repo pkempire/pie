@@ -6,8 +6,8 @@
 ## Streams
 
 ### Stream A: naive_rag on LongMemEval (100 questions)
-- **Progress:** ~15/100
-- **Running accuracy:** ~88%
+- **Progress:** 22/100
+- **Running accuracy:** **91%** 🔥
 - **Session:** good-seaslug
 
 ### Stream C: Extraction Quality Audit
@@ -16,8 +16,8 @@
 - See: stream_c_extraction_audit.md
 
 ### Stream D: Temporal-reasoning category (naive_rag)
-- **Progress:** ~25/133
-- **Running accuracy:** ~76%
+- **Progress:** 34/133
+- **Running accuracy:** **72%**
 - **Session:** oceanic-reef
 
 ## Key Finding: No Temporal Entities
