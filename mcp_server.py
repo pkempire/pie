@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
 """
-PIE MCP Server — lets Claude query your personal world model directly.
+PIE MCP Server — temporal awareness engine for Claude.
 
-Exposes your world model as MCP tools so any Claude instance can:
-- Search entities, get briefings, check goals, find stale items
-- Query relationships and transitions
-- Run the full dynamics engine
+Gives any LLM client (Claude Desktop, Cursor, etc.) awareness of your world:
+what projects exist, what's stale, what deadlines are approaching, how long
+since you last talked, and what deserves proactive mention.
+
+Two key operations:
+1. BEFORE conversation: get_temporal_briefing() — structured temporal context
+2. AFTER conversation: update_world() — extract entities/transitions, track threads
+
+Plus: search, entity lookup, timeline, deadlines, commitments, world stats.
 
 Usage:
-    python mcp_server.py                  # stdio mode (for Claude Desktop / Cowork)
+    python mcp_server.py                  # stdio mode (for Claude Desktop)
 
 Configure in Claude Desktop settings.json:
     "mcpServers": {
@@ -32,34 +37,44 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import TruncatedSVD
 
 # Add project root to path
-sys.path.insert(0, str(Path(__file__).parent))
+PROJECT_ROOT = Path(__file__).parent
+sys.path.insert(0, str(PROJECT_ROOT))
 
 from mcp.server.fastmcp import FastMCP
 
 from pie.core.world_model import WorldModel
 from pie.core.dynamics import TransitionDynamics
 from pie.core.models import EntityType
+from pie.temporal.briefing import TemporalBriefing
+from pie.temporal.gaps import GapAnalyzer
+from pie.temporal.threads import ThreadTracker
 
 logger = logging.getLogger("pie.mcp")
 
 # ── Initialize ────────────────────────────────────────────────────────────────
 
-WM_PATH = Path(__file__).parent / "output" / "world_model.json"
+WM_PATH = PROJECT_ROOT / "output" / "world_model.json"
+THREADS_PATH = PROJECT_ROOT / "output" / "threads.json"
+INTERACTIONS_PATH = PROJECT_ROOT / "output" / "interactions.json"
 
 mcp = FastMCP(
     "PIE — Personal Intelligence Engine",
     instructions=(
-        "You have access to Parth's personal world model — a temporal knowledge graph "
-        "built from his ChatGPT conversation history. It contains entities (projects, "
-        "tools, beliefs, decisions, goals, people, events, organizations, concepts) with "
-        "typed relationships and state transitions over time. Use these tools to understand "
-        "his context, priorities, and history when helping him."
+        "You have access to Pranay's personal world model — a temporal knowledge graph "
+        "with 4000 entities and 6700 state transitions spanning a year of his life. "
+        "IMPORTANT: Call get_temporal_briefing() at the START of every conversation to "
+        "load temporal context. Call update_world() at the END to keep the model current. "
+        "Use the temporal briefing to proactively mention relevant deadlines, stale threads, "
+        "and context — don't wait to be asked."
     ),
 )
 
 _wm: WorldModel | None = None
 _dynamics: TransitionDynamics | None = None
 _report = None
+_briefing_engine: TemporalBriefing | None = None
+_gap_analyzer: GapAnalyzer | None = None
+_thread_tracker: ThreadTracker | None = None
 
 # Semantic search index
 _tfidf: TfidfVectorizer | None = None
@@ -75,6 +90,27 @@ def _get_wm() -> WorldModel:
         if not _wm.entities:
             raise RuntimeError(f"No world model at {WM_PATH}")
     return _wm
+
+
+def _get_briefing_engine() -> TemporalBriefing:
+    global _briefing_engine
+    if _briefing_engine is None:
+        _briefing_engine = TemporalBriefing(_get_wm())
+    return _briefing_engine
+
+
+def _get_gap_analyzer() -> GapAnalyzer:
+    global _gap_analyzer
+    if _gap_analyzer is None:
+        _gap_analyzer = GapAnalyzer(INTERACTIONS_PATH)
+    return _gap_analyzer
+
+
+def _get_thread_tracker() -> ThreadTracker:
+    global _thread_tracker
+    if _thread_tracker is None:
+        _thread_tracker = ThreadTracker(THREADS_PATH)
+    return _thread_tracker
 
 
 def _get_search_index():
@@ -580,6 +616,254 @@ def query_world_model(question: str) -> str:
         "results_count": len(results),
         "results": results,
     }, indent=2, default=str)
+
+
+# ── Temporal Tools (THE NEW STUFF) ────────────────────────────────────────────
+
+
+@mcp.tool()
+def get_temporal_briefing(focus_project: str = "", current_context: str = "") -> str:
+    """Get a temporal briefing — CALL THIS AT THE START OF EVERY CONVERSATION.
+
+    Returns structured temporal context: what's active, what's stale, approaching
+    deadlines, how long since last interaction, and what deserves proactive mention.
+    This is the core tool that gives you temporal awareness.
+
+    Args:
+        focus_project: Optional project name to expand context for (e.g. "PIE", "sponsorFind")
+        current_context: Optional brief description of what the user is working on right now
+    """
+    now = time.time()
+    gap = _get_gap_analyzer()
+    tracker = _get_thread_tracker()
+    engine = _get_briefing_engine()
+
+    # Record this interaction
+    gap.record_interaction(now)
+
+    # Get temporal data
+    deadlines = tracker.get_approaching_deadlines(window_days=14)
+    commitments = tracker.get_overdue_commitments()
+
+    briefing = engine.generate_briefing(
+        ref_time=now,
+        focus_project=focus_project if focus_project else None,
+        last_interaction_time=gap.last_interaction_time,
+        approaching_deadlines=deadlines,
+        overdue_commitments=commitments,
+    )
+
+    return briefing
+
+
+@mcp.tool()
+def update_world(
+    conversation_summary: str,
+    entities_mentioned: str = "",
+    deadlines_mentioned: str = "",
+    commitments_made: str = "",
+) -> str:
+    """Update the world model after a conversation — CALL THIS AT THE END.
+
+    Records what was discussed so future briefings stay current. Also updates
+    thread tracking for deadlines and commitments.
+
+    Args:
+        conversation_summary: Brief summary of what was discussed in this conversation.
+        entities_mentioned: Comma-separated names of projects/people/tools discussed.
+        deadlines_mentioned: JSON array of deadlines: [{"topic": "...", "due_date": "...", "entity": "..."}]
+        commitments_made: JSON array of commitments: [{"what": "...", "who": "user", "due_date": "..."}]
+    """
+    tracker = _get_thread_tracker()
+    now = time.time()
+
+    # Parse entities
+    entity_names = [e.strip() for e in entities_mentioned.split(",") if e.strip()] if entities_mentioned else []
+
+    # Parse deadlines
+    parsed_deadlines = None
+    if deadlines_mentioned:
+        try:
+            parsed_deadlines = json.loads(deadlines_mentioned)
+        except json.JSONDecodeError:
+            pass
+
+    # Parse commitments
+    parsed_commitments = None
+    if commitments_made:
+        try:
+            parsed_commitments = json.loads(commitments_made)
+        except json.JSONDecodeError:
+            pass
+
+    # Update thread tracker
+    tracker.update_from_conversation(
+        mentioned_entities=entity_names,
+        new_deadlines=parsed_deadlines,
+        new_commitments=parsed_commitments,
+    )
+
+    # Touch any matching entities in the world model to update last_seen
+    wm = _get_wm()
+    touched = []
+    for name in entity_names:
+        entity = wm.find_by_name(name)
+        if entity:
+            entity.last_seen = now
+            touched.append(entity.name)
+
+    # Save world model if we touched anything
+    if touched:
+        wm.save()
+
+    result = {
+        "status": "updated",
+        "entities_touched": touched,
+        "deadlines_added": len(parsed_deadlines) if parsed_deadlines else 0,
+        "commitments_added": len(parsed_commitments) if parsed_commitments else 0,
+        "summary_recorded": conversation_summary[:200],
+    }
+
+    return json.dumps(result, indent=2)
+
+
+@mcp.tool()
+def get_approaching_deadlines(window_days: int = 14) -> str:
+    """Get deadlines approaching in the next N days.
+
+    Returns tracked deadlines and commitments, sorted by urgency.
+
+    Args:
+        window_days: How many days ahead to look (default 14)
+    """
+    tracker = _get_thread_tracker()
+    deadlines = tracker.get_approaching_deadlines(window_days)
+    overdue = tracker.get_overdue_commitments()
+
+    return json.dumps({
+        "approaching_deadlines": deadlines,
+        "overdue_commitments": overdue,
+    }, indent=2, default=str)
+
+
+@mcp.tool()
+def get_stale_threads(threshold_days: int = 14) -> str:
+    """Get active threads that haven't been mentioned recently.
+
+    These are topics that were opened but have gone quiet — potential
+    forgotten commitments or abandoned threads.
+
+    Args:
+        threshold_days: How many days of silence before a thread is "stale" (default 14)
+    """
+    tracker = _get_thread_tracker()
+    stale = tracker.get_stale_threads(threshold_days)
+
+    return json.dumps({
+        "stale_threads": stale,
+        "total_active_threads": len(tracker.get_active_threads()),
+    }, indent=2, default=str)
+
+
+@mcp.tool()
+def track_deadline(
+    topic: str,
+    due_date: str,
+    entity_name: str = "",
+    notes: str = "",
+) -> str:
+    """Explicitly track a deadline for future proactive mention.
+
+    Use this when the user mentions a deadline during conversation.
+    It will appear in future temporal briefings as it approaches.
+
+    Args:
+        topic: What the deadline is for (e.g. "API demo", "paper submission")
+        due_date: When it's due (e.g. "2026-03-20", "next Friday")
+        entity_name: Optional project/entity name this relates to
+        notes: Optional additional context
+    """
+    tracker = _get_thread_tracker()
+
+    # Try to parse the date
+    due_timestamp = None
+    try:
+        from datetime import datetime
+        # Try common formats
+        for fmt in ["%Y-%m-%d", "%Y-%m-%dT%H:%M:%S", "%m/%d/%Y"]:
+            try:
+                dt = datetime.strptime(due_date, fmt)
+                due_timestamp = dt.timestamp()
+                break
+            except ValueError:
+                continue
+    except Exception:
+        pass
+
+    thread = tracker.open_thread(
+        topic=topic,
+        entity_name=entity_name if entity_name else None,
+        deadline=due_date,
+        deadline_timestamp=due_timestamp,
+    )
+    if notes:
+        thread.notes = notes
+        tracker._save()
+
+    return json.dumps({
+        "status": "deadline_tracked",
+        "thread_id": thread.id,
+        "topic": topic,
+        "due_date": due_date,
+        "parsed_timestamp": due_timestamp,
+    }, indent=2)
+
+
+@mcp.tool()
+def track_commitment(
+    what: str,
+    due_date: str = "",
+    who: str = "user",
+) -> str:
+    """Track a commitment (something the user said they'd do).
+
+    Will appear in future briefings when the due date passes.
+
+    Args:
+        what: What was committed to (e.g. "finish integration tests")
+        due_date: When it's due (optional, e.g. "2026-03-20")
+        who: Who committed — usually "user" (default)
+    """
+    tracker = _get_thread_tracker()
+
+    due_timestamp = None
+    if due_date:
+        try:
+            from datetime import datetime
+            for fmt in ["%Y-%m-%d", "%Y-%m-%dT%H:%M:%S", "%m/%d/%Y"]:
+                try:
+                    dt = datetime.strptime(due_date, fmt)
+                    due_timestamp = dt.timestamp()
+                    break
+                except ValueError:
+                    continue
+        except Exception:
+            pass
+
+    tracker.add_commitment(
+        thread_id=None,
+        what=what,
+        who=who,
+        due_date=due_date,
+        due_timestamp=due_timestamp,
+    )
+
+    return json.dumps({
+        "status": "commitment_tracked",
+        "what": what,
+        "who": who,
+        "due_date": due_date,
+    }, indent=2)
 
 
 # ── Run ───────────────────────────────────────────────────────────────────────

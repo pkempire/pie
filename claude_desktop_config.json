@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "pie": {
+      "command": "python3",
+      "args": ["/Users/YOU/path/to/personal-intelligence-system/mcp_server.py"],
+      "env": {}
+    }
+  }
+}
