@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>PIE Benchmark Viewer</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: #0a0a0a; color: #e0e0e0; padding: 20px; }
+  h1 { color: #fff; margin-bottom: 8px; }
+  h2 { color: #a78bfa; margin: 24px 0 12px; border-bottom: 1px solid #333; padding-bottom: 4px; }
+  h3 { color: #7dd3fc; margin: 16px 0 8px; }
+  .summary { background: #1a1a2e; padding: 16px; border-radius: 8px; margin: 16px 0;
+              display: flex; gap: 24px; flex-wrap: wrap; }
+  .stat { text-align: center; }
+  .stat .num { font-size: 32px; font-weight: bold; color: #a78bfa; }
+  .stat .label { font-size: 12px; color: #888; }
+  .type-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 8px; margin: 12px 0; }
+  .type-card { background: #1e1e2e; padding: 10px; border-radius: 6px; text-align: center; }
+  .type-card .name { font-size: 12px; color: #888; }
+  .type-card .score { font-size: 20px; font-weight: bold; }
+  .convo-section { background: #111; border: 1px solid #222; border-radius: 8px;
+                    margin: 12px 0; overflow: hidden; }
+  .convo-header { background: #1a1a2e; padding: 12px 16px; cursor: pointer; display: flex;
+                   justify-content: space-between; align-items: center; }
+  .convo-header:hover { background: #222244; }
+  .convo-body { padding: 16px; display: none; }
+  .convo-body.open { display: block; }
+  .entity-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                  gap: 8px; margin: 8px 0; }
+  .entity-card { background: #1a1a2e; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #a78bfa; }
+  .entity-card.has-transitions { border-left-color: #facc15; }
+  .entity-name { font-weight: bold; color: #fff; }
+  .entity-type { font-size: 11px; color: #888; }
+  .entity-state { font-size: 12px; color: #aaa; margin-top: 4px; }
+  .entity-transitions { font-size: 11px; color: #7dd3fc; margin-top: 4px; }
+  .entity-transitions .trans { margin: 2px 0; }
+  .trans-creation { color: #4ade80; }
+  .trans-update { color: #facc15; }
+  .trans-contradiction { color: #f87171; }
+  .trans-archival { color: #888; }
+  .dynamics-box { background: #0d0d1a; padding: 12px; border-radius: 6px; margin: 8px 0;
+                   font-family: monospace; font-size: 12px; white-space: pre-wrap;
+                   max-height: 300px; overflow-y: auto; border: 1px solid #333; }
+  .extraction-log { font-family: monospace; font-size: 12px; background: #0d0d1a;
+                     padding: 8px; border-radius: 4px; margin: 8px 0; max-height: 200px;
+                     overflow-y: auto; }
+  .extraction-log .ok { color: #4ade80; }
+  .extraction-log .err { color: #f87171; }
+  .qa-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .qa-table th { text-align: left; padding: 8px; background: #1a1a2e; color: #a78bfa;
+                  border-bottom: 1px solid #333; position: sticky; top: 0; }
+  .qa-table td { padding: 8px; border-bottom: 1px solid #1a1a1a; vertical-align: top; }
+  .qa-table tr:hover { background: #111122; }
+  .pass { color: #4ade80; }
+  .fail { color: #f87171; }
+  .q-text { max-width: 300px; }
+  .ans-text { max-width: 200px; word-break: break-word; }
+  details { margin: 8px 0; }
+  details summary { cursor: pointer; color: #7dd3fc; font-size: 13px; }
+  .filter-bar { margin: 12px 0; display: flex; gap: 8px; flex-wrap: wrap; }
+  .filter-btn { background: #1e1e2e; border: 1px solid #333; color: #e0e0e0; padding: 4px 12px;
+                 border-radius: 4px; cursor: pointer; font-size: 12px; }
+  .filter-btn.active { background: #a78bfa; color: #000; border-color: #a78bfa; }
+</style></head><body>
+<h1>PIE Benchmark Viewer</h1>
+<p style="color:#888">locomo / pie_temporal / gpt-4o</p>
+
+<div class="summary">
+  <div class="stat"><div class="num">152/199</div><div class="label">Correct (rough match)</div></div>
+  <div class="stat"><div class="num">76%</div><div class="label">Accuracy</div></div>
+  <div class="stat"><div class="num">1</div><div class="label">Conversations</div></div>
+  <div class="stat"><div class="num">249</div><div class="label">Total Entities</div></div>
+  <div class="stat"><div class="num">304</div><div class="label">Total Transitions</div></div>
+</div>
+<h2>By Question Type</h2><div class="type-grid">
+<div class="type-card"><div class="name">adversarial</div><div class="score" style="color:#4ade80">48/70 (69%)</div></div>
+<div class="type-card"><div class="name">commonsense</div><div class="score" style="color:#4ade80">47/47 (100%)</div></div>
+<div class="type-card"><div class="name">multi_hop</div><div class="score" style="color:#4ade80">29/37 (78%)</div></div>
+<div class="type-card"><div class="name">single_hop</div><div class="score" style="color:#4ade80">22/32 (69%)</div></div>
+<div class="type-card"><div class="name">temporal</div><div class="score" style="color:#facc15">6/13 (46%)</div></div>
+</div>
+<h2>World Models &amp; Extraction</h2>
+<div class="convo-section">
+  <div class="convo-header" onclick="this.nextElementSibling.classList.toggle('open')">
+    <span><strong>conv-26</strong> — 249 entities, 304 transitions, 199 questions, 182.0s</span>
+    <span>▼</span>
+  </div>
+  <div class="convo-body">
+<h3>Extraction Log</h3><div class="extraction-log">
+<div class="ok">Session 1: 2,033 chars → 8 extracted, 8 new (total: 8)</div>
+<div class="ok">Session 2: 2,913 chars → 15 extracted, 13 new (total: 21)</div>
+<div class="ok">Session 3: 4,994 chars → 25 extracted, 23 new (total: 44)</div>
+<div class="ok">Session 4: 3,568 chars → 11 extracted, 9 new (total: 53)</div>
+<div class="ok">Session 5: 2,503 chars → 9 extracted, 6 new (total: 59)</div>
+<div class="ok">Session 6: 2,852 chars → 12 extracted, 9 new (total: 68)</div>
+<div class="ok">Session 7: 4,438 chars → 13 extracted, 11 new (total: 79)</div>
+<div class="ok">Session 8: 6,029 chars → 24 extracted, 21 new (total: 100)</div>
+<div class="ok">Session 9: 2,578 chars → 15 extracted, 13 new (total: 113)</div>
+<div class="ok">Session 10: 4,397 chars → 11 extracted, 9 new (total: 122)</div>
+<div class="ok">Session 11: 3,645 chars → 13 extracted, 10 new (total: 132)</div>
+<div class="ok">Session 12: 3,224 chars → 20 extracted, 17 new (total: 149)</div>
+<div class="ok">Session 13: 3,200 chars → 17 extracted, 13 new (total: 162)</div>
+<div class="ok">Session 14: 6,029 chars → 22 extracted, 17 new (total: 179)</div>
+<div class="ok">Session 15: 4,653 chars → 14 extracted, 11 new (total: 190)</div>
+<div class="ok">Session 16: 4,375 chars → 23 extracted, 17 new (total: 207)</div>
+<div class="ok">Session 17: 4,526 chars → 23 extracted, 21 new (total: 228)</div>
+<div class="ok">Session 18: 3,386 chars → 14 extracted, 9 new (total: 237)</div>
+<div class="ok">Session 19: 2,881 chars → 15 extracted, 12 new (total: 249)</div>
+</div>
+<h3>Transition Dynamics</h3>
+<div class="dynamics-box"># World Model Dynamics Report
+
+Entities: 249
+Stale: 0
+Volatile: 4
+Co-occurrences found: 20
+
+## Entity Type Dynamics
+  belief: 7 entities, 1.0 transitions avg, ~0 days between changes, 0% contradiction rate
+  concept: 217 entities, 1.1 transitions avg, ~49 days between changes, 0% contradiction rate
+  event: 20 entities, 1.1 transitions avg, ~20 days between changes, 0% contradiction rate
+  organization: 1 entities, 1.0 transitions avg, ~0 days between changes, 0% contradiction rate
+  person: 4 entities, 9.5 transitions avg, ~10 days between changes, 0% contradiction rate
+
+## Volatile Entities (high change frequency)
+  - Caroline: volatility=0.87
+  - Melanie: volatility=0.87
+  - Caroline&#x27;s support system: volatility=0.68
+  - Melanie&#x27;s support for Caroline: volatility=0.55
+
+## Transition Co-occurrences (causal signals)
+  - Caroline ↔ Melanie: 18x (lag: 0.0h, conf: 1.00)
+  - Caroline ↔ Caroline&#x27;s children: 4x (lag: 0.0h, conf: 1.00)
+  - Melanie ↔ Caroline&#x27;s children: 4x (lag: 0.0h, conf: 1.00)
+  - Caroline&#x27;s support system ↔ Caroline: 3x (lag: 0.0h, conf: 0.75)
+  - Caroline&#x27;s support system ↔ Melanie: 3x (lag: 0.0h, conf: 0.75)
+  - Melanie&#x27;s camping trip ↔ Caroline: 3x (lag: 0.0h, conf: 1.00)
+  - Melanie&#x27;s camping trip ↔ Melanie: 3x (lag: 0.0h, conf: 1.00)
+  - Caroline ↔ Melanie&#x27;s support for Caroline: 3x (lag: 0.0h, conf: 0.75)
+  - Melanie&#x27;s support for Caroline ↔ Melanie: 3x (lag: 0.0h, conf: 0.75)
+  - Caroline&#x27;s support system ↔ Caroline&#x27;s gratitude for support: 2x (lag: 0.0h, conf: 1.00)
+
+## Predicted Next Transitions
+  - Caroline&#x27;s motivation for counseling: likely update (conf: 1.00) — Last transition 111 days ago (avg interval: 6 days, volatility: 0.00)
+  - Caroline&#x27;s pride parade experience: likely update (conf: 1.00) — Last transition 69 days ago (avg interval: 25 days, volatility: 0.00)
+  - Caroline&#x27;s hiking experience: likely update (conf: 1.00) — Last transition 58 days ago (avg interval: 8 days, volatility: 0.00)
+  - Caroline&#x27;s park visit: likely update (conf: 1.00) — Last transition 39 days ago (avg interval: 15 days, volatility: 0.00)
+  - Melanie&#x27;s painting hobby: likely update (conf: 0.77) — Last transition 60 days ago (avg interval: 39 days, volatility: 0.00)
+  - Caroline&#x27;s painting inspiration: likely update (conf: 0.74) — Last transition 58 days ago (avg interval: 39 days, volatility: 0.00)
+  - Caroline&#x27;s pottery class: likely update (conf: 0.55) — Last transition 58 days ago (avg interval: 53 days, volatility: 0.00)
+  - Melanie&#x27;s pottery creation: likely update (conf: 0.33) — Last transition 39 days ago (avg interval: 59 days, volatility: 0.00)
+  - Melanie&#x27;s camping trip: likely update (conf: 0.24) — Last transition 39 days ago (avg interval: 39 days, volatility: 0.53)
+
+## Recurring Transition Patterns
+  - update → update (39x) e.g. Caroline, Caroline
+  - update → update → update (33x) e.g. Caroline, Caroline
+  - update → update → update → update (28x) e.g. Caroline, Caroline
+  - update → update → update → update → update (26x) e.g. Caroline, Caroline
+  - creation → update (16x) e.g. Caroline, Melanie</div>
+<h3>Entities (249) — 304 transitions</h3>
+<div class="entity-grid">
+<div class="entity-card has-transitions"><div class="entity-name">Caroline</div><div class="entity-type">person</div><div class="entity-state">description: One of the two speakers.</div>
+<div class="entity-transitions">
+<div class="trans trans-creation">2023-05-08 [creation] First appearance of Caroline</div>
+<div class="trans trans-update">2023-05-25 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-06-09 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-06-27 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-07-03 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-07-06 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-07-12 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-07-15 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-07-17 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-07-20 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-08-14 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-08-17 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-08-23 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-08-25 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-08-28 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-09-13 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-10-13 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-10-20 [update] One of the two speakers.</div>
+</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s LGBTQ activist group</div><div class="entity-type">concept</div><div class="entity-state">description: Joined a new LGBTQ activist group called &#x27;Connected LGBTQ Activists&#x27; on July 18, 2023.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s LGBTQ conference</div><div class="entity-type">concept</div><div class="entity-state">description: Attended an LGBTQ conference on July 10, 2023, which was a welcoming environment and allowed her to connect with others.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s LGBTQ+ pride parade experience</div><div class="entity-type">concept</div><div class="entity-state">description: Attended an LGBTQ+ pride parade on June 26, 2023, which made her feel a sense of belonging and showed her the growth of the community.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s LGBTQ+ workshop</div><div class="entity-type">concept</div><div class="entity-state">description: Attended an LGBTQ+ counseling workshop the Friday before June 27, 2023, learned about therapeutic methods and creating safe spaces for trans individuals.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s abstract painting style</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline has been trying out abstract painting as a form of self-expression.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s adoption agency interview</div><div class="entity-type">event</div><div class="entity-state">description: Caroline passed the adoption agency interviews on October 20, 2023.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s adoption agency research</div><div class="entity-type">concept</div><div class="entity-state">description: Researching adoption agencies to give a loving home to kids in need.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s adoption application</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline applied to adoption agencies to become a mom.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s adoption journey</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline is ready to adopt and provide a safe, loving home for kids who need it.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s advocacy for LGBTQ rights</div><div class="entity-type">belief</div><div class="entity-state">description: Caroline is committed to fighting for LGBTQ rights and promoting acceptance.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s anticipation for the trip</div><div class="entity-type">concept</div><div class="entity-state">description: Excited about creating memories during the upcoming trip.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s apology</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline tried to apologize to the people she encountered while hiking.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s appreciation for Melanie</div><div class="entity-type">concept</div><div class="entity-state">description: Expressed gratitude for Melanie&#x27;s friendship and support.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s appreciation for family</div><div class="entity-type">concept</div><div class="entity-state">description: Feels lucky to share special moments with her family.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s art experience</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline has been creating art since she was 17.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s art expression</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline uses painting and drawing to express her feelings and explore her gender identity.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s art focus</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline&#x27;s art represents inclusivity and diversity, speaking up for the LGBTQ+ community.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s art motivation</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline feels thankful for the support from friends, family, and mentors, which inspires her to create art.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s art theme</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline&#x27;s art expresses her trans experience and aims to help people understand the trans community.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s audience reaction</div><div class="entity-type">concept</div><div class="entity-state">description: The positive reactions of the audience during Caroline&#x27;s talk.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s beach photo</div><div class="entity-type">concept</div><div class="entity-state">description: A photo of a beach with a fence and a sunset.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s beach trip with kids</div><div class="entity-type">event</div><div class="entity-state">description: Went to the beach recently with her kids, who had a blast.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s beach visit frequency</div><div class="entity-type">concept</div><div class="entity-state">description: Usually goes to the beach once or twice a year.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s belief in love and acceptance</div><div class="entity-type">belief</div><div class="entity-state">description: Caroline believes that love and acceptance should be everyone&#x27;s right.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s biking trip</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline went biking with friends the weekend before September 13, 2023 and saw some cool stuff.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s bowl creation</div><div class="entity-type">concept</div><div class="entity-state">description: Created a bowl with a black and white flower design in her pottery class, which she is proud of.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s busy week</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline mentioned having a busy week since they last talked.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s café experience</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline had a good time at the café the weekend before September 13, 2023, which had thoughtful signs.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s camping trip memory</div><div class="entity-type">event</div><div class="entity-state">description: Remembered the camping trip 2022 when they saw the Perseid meteor shower.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s career interest</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline is looking into counseling and mental health as a career to help others who have gone through similar experiences.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s career interests</div><div class="entity-type">concept</div><div class="entity-state">description: Interested in counseling or working in mental health to support others with similar issues.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s caring heart</div><div class="entity-type">concept</div><div class="entity-state">description: Recognized by Melanie as having a caring heart for the children.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s charity race</div><div class="entity-type">event</div><div class="entity-state">description: Ran a charity race for mental health on May 20, 2023.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s childhood horseback riding</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline used to go horseback riding with her dad as a kid.</div>
+</div>
+<div class="entity-card has-transitions"><div class="entity-name">Caroline&#x27;s children</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline has two children.</div>
+<div class="entity-transitions">
+<div class="trans trans-creation">2023-05-25 [creation] First appearance of Caroline&#x27;s children</div>
+<div class="trans trans-update">2023-07-06 [update] Caroline has two children.</div>
+<div class="trans trans-update">2023-08-28 [update] Caroline has children who she took to a park for fun and exploration.</div>
+<div class="trans trans-update">2023-10-20 [update] Caroline has two children.</div>
+</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s children&#x27;s resilience</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline&#x27;s children were scared but resilient after the accident.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s chosen adoption agency</div><div class="entity-type">organization</div><div class="entity-state">description: An agency that helps LGBTQ+ folks with adoption.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s clock</div><div class="entity-type">concept</div><div class="entity-state">description: A clock with a green and yellow design.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s commitment to children</div><div class="entity-type">concept</div><div class="entity-state">description: Determined to provide a safe and loving home for the kids.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s commitment to sharing stories</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline believes in the importance of sharing experiences to promote understanding and acceptance.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s commitment to volunteering</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline plans to continue volunteering at the youth center.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s community support</div><div class="entity-type">concept</div><div class="entity-state">description: Finding a supportive community has meant a lot to Caroline.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s compliment to Melanie</div><div class="entity-type">concept</div><div class="entity-state">description: Complimented Melanie on her effort and passion in her art.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s concert experience</div><div class="entity-type">event</div><div class="entity-state">description: Caroline attended a concert where the band &#x27;Summer Sounds&#x27; played an awesome pop song.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s confidence building</div><div class="entity-type">concept</div><div class="entity-state">description: Working on building up confidence and finding positive strategies with mentee.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s council meeting</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline attended a council meeting for adoption on July 7, 2023, which was inspiring and emotional.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s counseling focus</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline is considering working with trans people to help them accept themselves and support their mental health.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s daughter&#x27;s birthday</div><div class="entity-type">event</div><div class="entity-state">description: Celebrated Caroline&#x27;s daughter&#x27;s birthday with a concert surrounded by music, joy, and the warm summer breeze.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s desire to help others</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline wants to pass on the support she received to others in need.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s determination to adopt</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline felt more determined to adopt after attending the council meeting.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s drawing of a woman in a dress</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline drew a woman in a dress representing freedom and being true to oneself.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s education plans</div><div class="entity-type">concept</div><div class="entity-state">description: Plans to continue her education and explore career options.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s emotional experience</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline felt fulfilled and powerful sharing her story with the youth.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s emotional journey</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline feels empowered by making a positive difference in someone&#x27;s life.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s emotional preparation for adoption</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline emphasizes the importance of preparing emotionally for the adoption process.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s emotional state about adoption</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline feels great about starting the adoption process.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s excitement for adoption</div><div class="entity-type">concept</div><div class="entity-state">description: Thrilled to create a family for kids who need one.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s family camping trip</div><div class="entity-type">event</div><div class="entity-state">description: Always looks forward to a family camping trip during summer.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s family importance</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline values her family greatly, especially after the accident.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s family moments</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline values time spent with family as it brings happiness.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s family volunteering</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline spent a day volunteering at a homeless shelter with her family on August 24, 2023.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s favorite book</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline&#x27;s favorite book is &#x27;Becoming Nicole&#x27; by Amy Ellis Nutt, which inspired her and gave her hope.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s favorite childhood book</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline loved reading &#x27;Charlotte&#x27;s Web&#x27; as a kid, appreciating its themes of friendship and compassion.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s favorite hobby</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline finds pottery relaxing and creative.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s feelings about parenting</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline feels excited but kinda nerve-wracking about becoming a parent.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s feelings about support group</div><div class="entity-type">concept</div><div class="entity-state">description: Felt accepted and gained courage to embrace herself after attending the support group.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s feelings about the pride parade</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline felt proud and inspired by the community at the pride parade.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s feelings during the talk</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline felt super powerful giving her talk.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s feelings while painting</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline felt liberated and empowered while painting.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s flower drawing</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline enjoys drawing flowers and appreciates nature.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s friend&#x27;s adoption experience</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline&#x27;s friend adopted 2022 and is now happy with their new child.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s friends&#x27; duration of friendship</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline has known her friends for 4 years since moving from her home country.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s friendship with Melanie</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline and Melanie support each other through their journeys.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s goal for adoption</div><div class="entity-type">concept</div><div class="entity-state">description: Aiming to give kids a loving home and feeling grateful for support.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s goal of having a family</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline&#x27;s aspiration to build her own family through adoption.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s gratitude for community</div><div class="entity-type">belief</div><div class="entity-state">description: Caroline feels thankful for the LGBTQ community for showing the importance of fighting for trans rights.</div>
+</div>
+<div class="entity-card has-transitions"><div class="entity-name">Caroline&#x27;s gratitude for support</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline expresses gratitude for the support she has received throughout her journey.</div>
+<div class="entity-transitions">
+<div class="trans trans-creation">2023-06-09 [creation] First appearance of Caroline&#x27;s gratitude for support</div>
+<div class="trans trans-update">2023-10-22 [update] Caroline expresses gratitude for the support she has received throughout her jou</div>
+</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s guitar playing</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline plays acoustic guitar, which she started about five years ago.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s hand-painted bowl</div><div class="entity-type">concept</div><div class="entity-state">description: A hand-painted bowl made by a friend for Caroline&#x27;s 18th birthday ten years ago, represents art and self-expression.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s heart painting</div><div class="entity-type">concept</div><div class="entity-state">description: A photo of a painting of a heart on a table.</div>
+</div>
+<div class="entity-card has-transitions"><div class="entity-name">Caroline&#x27;s hiking experience</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline went hiking the week before August 25, 2023 and got into a bad spot with some people.</div>
+<div class="entity-transitions">
+<div class="trans trans-creation">2023-08-17 [creation] First appearance of Caroline&#x27;s hiking experience</div>
+<div class="trans trans-update">2023-08-25 [update] Caroline went hiking the week before August 25, 2023 and got into a bad spot wit</div>
+</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s horse painting</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline created a painting of a horse on a wooden wall.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s husband and kids</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie&#x27;s husband and kids are her motivation.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s impact on mental health</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline is passionate about creating a safe, inviting place for people to grow based on her experiences with counseling and support groups.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s impact on the audience</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline inspired the audience to be better allies.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s inspiration from poetry reading</div><div class="entity-type">concept</div><div class="entity-state">description: The poetry reading inspired Caroline to create art.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s interest in pottery</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline hasn&#x27;t done pottery yet but is open to trying new art forms.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s journey impact on relationships</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline&#x27;s journey has changed her relationships, with some friends supporting her and others not.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s journey to self-acceptance</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline&#x27;s long process of finding self-acceptance.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s joy from art</div><div class="entity-type">concept</div><div class="entity-state">description: Art gives Caroline joy and helps her express her feelings.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s kids&#x27; smiles</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline felt awesome seeing her kids&#x27; smiles during the birthday celebration.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s lessons from &#x27;Becoming Nicole&#x27;</div><div class="entity-type">belief</div><div class="entity-state">description: The book taught Caroline self-acceptance, finding support, and that tough times don&#x27;t last.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s library contents</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline&#x27;s library will include lots of kids&#x27; books, classics, stories from different cultures, and educational books.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s library creation</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline is creating a library for when she has kids, looking forward to reading to them.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s me-time activities</div><div class="entity-type">concept</div><div class="entity-state">description: Carving out time each day for running, reading, or playing the violin.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s memory of Pride fest</div><div class="entity-type">concept</div><div class="entity-state">description: Had a blast at the Pride fest 2022 with supportive friends.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s mental health career plans</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline is looking into counseling and mental health jobs to help others.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s mental health work</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline is looking into counseling or mental health work, passionate about helping people and making a positive impact.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s mentee</div><div class="entity-type">person</div><div class="entity-state">description: Mentors a transgender teen.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s mentee&#x27;s reaction</div><div class="entity-type">concept</div><div class="entity-state">description: Mentee&#x27;s face lit up when they saw the support at the pride event.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s mentor for adoption advice</div><div class="entity-type">person</div><div class="entity-state">description: Caroline contacted her mentor for advice on adoption.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s mentoring experience</div><div class="entity-type">concept</div><div class="entity-state">description: Mentoring is going great, met amazing young folks and supported them.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s mentorship program</div><div class="entity-type">concept</div><div class="entity-state">description: Joined a mentorship program for LGBTQ youth.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s message in her drawing</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline&#x27;s drawing stands for freedom and embracing her womanhood.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s mood booster</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline saw someone drawing on the ground, which made her happy.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s motivation</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline is motivated to help promote understanding and acceptance.</div>
+</div>
+<div class="entity-card has-transitions"><div class="entity-name">Caroline&#x27;s motivation for counseling</div><div class="entity-type">concept</div><div class="entity-state">description: Inspired by the pride parade experience to use her story to help others, considering a career in counseling and mental health.</div>
+<div class="entity-transitions">
+<div class="trans trans-creation">2023-06-27 [creation] First appearance of Caroline&#x27;s motivation for counseling</div>
+<div class="trans trans-update">2023-07-03 [update] Inspired by the pride parade experience to use her story to help others, conside</div>
+</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s motivation for mental health support</div><div class="entity-type">belief</div><div class="entity-state">description: Caroline struggled with mental health and wants to provide support to others based on her own positive experiences.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s mural significance</div><div class="entity-type">concept</div><div class="entity-state">description: The rainbow flag mural reflects the courage and strength of the trans community for Caroline.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s museum visit</div><div class="entity-type">event</div><div class="entity-state">description: Caroline took her children to the museum, where they enjoyed the dinosaur exhibit.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s music preference</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline loves live music and finds it uplifting.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s necklace</div><div class="entity-type">concept</div><div class="entity-state">description: A necklace with a cross and a heart, a gift from Caroline&#x27;s grandma in Sweden, symbolizes love, faith, and strength.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s new shoes</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline got new pink running shoes.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s ongoing adventure</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline believes life is about learning and exploring.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s painting</div><div class="entity-type">concept</div><div class="entity-state">description: A painting with the word &#x27;happiness&#x27; painted on it.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s painting description</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline&#x27;s painting captures the sunset with vivid colors.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s painting for the art show</div><div class="entity-type">concept</div><div class="entity-state">description: Painting with a blue and yellow design.</div>
+</div>
+<div class="entity-card has-transitions"><div class="entity-name">Caroline&#x27;s painting inspiration</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline painted a sunset after visiting the beach the week before August 25, 2023.</div>
+<div class="entity-transitions">
+<div class="trans trans-creation">2023-07-17 [creation] First appearance of Caroline&#x27;s painting inspiration</div>
+<div class="trans trans-update">2023-08-25 [update] Caroline painted a sunset after visiting the beach the week before August 25, 20</div>
+</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s painting inspired by sunsets</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline painted a sunset with a pink sky the week before October 13, 2023, which makes her feel calm.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s painting meaning</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline&#x27;s painting represents her path as a trans woman, with red and blue symbolizing the binary gender system.</div>
+</div>
+<div class="entity-card has-transitions"><div class="entity-name">Caroline&#x27;s park visit</div><div class="entity-type">event</div><div class="entity-state">description: Caroline had a good time at the park.</div>
+<div class="entity-transitions">
+<div class="trans trans-creation">2023-08-28 [creation] First appearance of Caroline&#x27;s park visit</div>
+<div class="trans trans-update">2023-09-13 [update] Caroline had a good time at the park.</div>
+</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s pet Oscar</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline has a guinea pig named Oscar.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s pets</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline has a dog named Luna and a cat named Oliver, who bring joy to her life.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s photo of family picnic</div><div class="entity-type">concept</div><div class="entity-state">description: A photo of Melanie and her husband sitting on a blanket eating food.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s photo of wedding day</div><div class="entity-type">concept</div><div class="entity-state">description: A photo of Melanie in her wedding dress holding a bouquet.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s photo with friends</div><div class="entity-type">concept</div><div class="entity-state">description: A photo of Caroline with friends taken the week before June 09, 2023.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s piano learning</div><div class="entity-type">concept</div><div class="entity-state">description: Currently learning to play the piano as a creative outlet.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s picnic</div><div class="entity-type">event</div><div class="entity-state">description: Caroline had a picnic with her friends and family the week before July 06, 2023.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s poetry reading details</div><div class="entity-type">concept</div><div class="entity-state">description: The poetry reading featured transgender people sharing their stories.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s poetry reading experience</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline attended a transgender poetry reading the Friday before October 13, 2023 that was powerful and empowering.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s pottery as self-expression</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline uses pottery for self-expression and peace.</div>
+</div>
+<div class="entity-card has-transitions"><div class="entity-name">Caroline&#x27;s pottery class</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline made a plate in pottery class on August 24, 2023.</div>
+<div class="entity-transitions">
+<div class="trans trans-creation">2023-07-03 [creation] First appearance of Caroline&#x27;s pottery class</div>
+<div class="trans trans-update">2023-08-25 [update] Caroline made a plate in pottery class on August 24, 2023.</div>
+</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s pottery injury</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline got hurt September 2023 and had to take a break from pottery.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s pride event</div><div class="entity-type">concept</div><div class="entity-state">description: Attended an LGBT pride event June 2023.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s pride event experience</div><div class="entity-type">concept</div><div class="entity-state">description: The pride event was encouraging, surrounded by love and acceptance.</div>
+</div>
+<div class="entity-card has-transitions"><div class="entity-name">Caroline&#x27;s pride parade experience</div><div class="entity-type">event</div><div class="entity-state">description: Attended a pride parade on August 11, 2023, which was filled with energy and love.</div>
+<div class="entity-transitions">
+<div class="trans trans-creation">2023-07-20 [creation] First appearance of Caroline&#x27;s pride parade experience</div>
+<div class="trans trans-update">2023-08-14 [update] Attended a pride parade on August 11, 2023, which was filled with energy and lov</div>
+</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s rainbow sidewalk</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline found a vibrant rainbow sidewalk in her neighborhood for Pride Month.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s reaction to Melanie&#x27;s pottery</div><div class="entity-type">concept</div><div class="entity-state">description: Expressed excitement to see Melanie&#x27;s pottery project.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s reading habit</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline has been reading a book recommended by Melanie.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s recent painting</div><div class="entity-type">concept</div><div class="entity-state">description: A painting titled &#x27;Embracing Identity&#x27; that symbolizes comfort and love in being oneself.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s recent painting with kids</div><div class="entity-type">concept</div><div class="entity-state">description: Finished another painting with her kids similar to their last one.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s red and blue painting</div><div class="entity-type">concept</div><div class="entity-state">description: A photo of a painting on an easel with a red and blue background.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s reflection on transition</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline&#x27;s reflection on her growth since starting her transition.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s required documents for adoption</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline mentions gathering documents like references, financial info, and medical checks for adoption.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s research tips for adoption</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline suggests doing research and finding an adoption agency or lawyer.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s running routine</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline has been running longer distances to de-stress since their last chat.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s school event</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline&#x27;s school event where she talked about her transgender journey and encouraged students to get involved in the LGBTQ community.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s self-care journey</div><div class="entity-type">concept</div><div class="entity-state">description: Realizing the importance of self-care to better look after her family.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s self-discovery through art</div><div class="entity-type">concept</div><div class="entity-state">description: Art has allowed Caroline to explore her transition and changing body, helping her accept imperfections.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s self-portrait</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline painted a self-portrait with a blue face the week before August 23, 2023.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s serious sign</div><div class="entity-type">concept</div><div class="entity-state">description: A photo of a sign posted on a door stating that someone is not being able to leave.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s significant song</div><div class="entity-type">concept</div><div class="entity-state">description: The song &#x27;Brave&#x27; by Sara Bareilles holds deep meaning for Caroline.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s single parent challenge</div><div class="entity-type">concept</div><div class="entity-state">description: Acknowledging the challenges of being a single parent but feeling up for it.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s son accident</div><div class="entity-type">event</div><div class="entity-state">description: Caroline&#x27;s son got into an accident during a road trip on October 14, 2023.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s son&#x27;s condition</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline&#x27;s son was okay after the accident.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s stained glass inspiration</div><div class="entity-type">concept</div><div class="entity-state">description: The stained glass window was made for a local church and represents growth and change.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s stained glass window</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline made a stained glass window to symbolize discovering true potential.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s strength and inspiration</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline is seen as strong and inspiring for her journey and willingness to help others.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s struggles</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline shared her struggles during her journey.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s suggestion for summer outing</div><div class="entity-type">concept</div><div class="entity-state">description: Proposed a family outing or a special plan for just the two of them this summer.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s summer camping plans</div><div class="entity-type">event</div><div class="entity-state">description: Thinking about going camping in June 2023.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s support for LGBTQ rights</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline promotes LGBTQ rights and wants to live authentically.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s support group</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline attended an adoption advice/assistance group for help.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s support group experience</div><div class="entity-type">concept</div><div class="entity-state">description: Attended an LGBTQ support group on May 7, 2023, which was powerful and inspiring.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s support network</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline&#x27;s support network has been amazing, providing love, guidance, and acceptance during her transition.</div>
+</div>
+<div class="entity-card has-transitions"><div class="entity-name">Caroline&#x27;s support system</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline received invaluable support from friends, family, and role models during her transition.</div>
+<div class="entity-transitions">
+<div class="trans trans-creation">2023-06-09 [creation] First appearance of Caroline&#x27;s support system</div>
+<div class="trans trans-update">2023-08-17 [update] Feels grateful for people around her who accept and support her.</div>
+<div class="trans trans-update">2023-10-20 [update] Caroline&#x27;s family provides her with strength and support.</div>
+<div class="trans trans-update">2023-10-22 [update] Caroline received invaluable support from friends, family, and role models durin</div>
+</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s talent show project</div><div class="entity-type">event</div><div class="entity-state">description: Caroline is looking forward to a talent show for the kids September 2023.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s thoughts on LGBTQ rights</div><div class="entity-type">concept</div><div class="entity-state">description: Realized the need for more work on LGBTQ rights after her hiking experience.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s thoughts on joy</div><div class="entity-type">concept</div><div class="entity-state">description: Believes surrounding ourselves with things that bring joy is important.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s tough breakup</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline mentioned a tough breakup that her friends supported her through.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s transgender journey</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline&#x27;s personal experience of transitioning over the past three years (since 2020).</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s transition experience</div><div class="entity-type">concept</div><div class="entity-state">description: Creating art was important to Caroline during her transition, helping her understand and accept herself.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s transition support</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline&#x27;s friends and family have been instrumental in her transition, helping her accept and grow into her true self.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s trip to Grand Canyon</div><div class="entity-type">event</div><div class="entity-state">description: Caroline&#x27;s family enjoyed their trip to the Grand Canyon.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s unique paths</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline acknowledges that everyone has unique paths and emphasizes the importance of sharing them.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s upcoming LGBTQ art show</div><div class="entity-type">concept</div><div class="entity-state">description: Having an LGBTQ art show August 2023 featuring her paintings.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s upcoming transgender conference</div><div class="entity-type">concept</div><div class="entity-state">description: Attending a transgender conference in July 2023 to meet others in the community and learn about advocacy.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s view on art</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline believes painting helps her explore her identity and is therapeutic.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s view on life&#x27;s struggles</div><div class="entity-type">concept</div><div class="entity-state">description: Agrees that life is tough but worth it when we have things that make us happy.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s vision for the future</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline&#x27;s hope to create a safe and loving home for children who need it.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s volunteering</div><div class="entity-type">event</div><div class="entity-state">description: Caroline volunteered at an LGBTQ+ youth center, finding it gratifying to support young people.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s volunteering inspiration</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline is inspired by her work making a difference for the LGBTQ+ community.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s weekend activities</div><div class="entity-type">concept</div><div class="entity-state">description: Had a quiet weekend after camping with family two weekends before July 17, 2023.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s youngest child&#x27;s first steps</div><div class="entity-type">event</div><div class="entity-state">description: Remembers the day her youngest took her first steps.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Matt Patterson concert</div><div class="entity-type">event</div><div class="entity-state">description: Concert by Matt Patterson, known for his amazing voice and songs.</div>
+</div>
+<div class="entity-card has-transitions"><div class="entity-name">Melanie</div><div class="entity-type">person</div><div class="entity-state">description: One of the two speakers.</div>
+<div class="entity-transitions">
+<div class="trans trans-creation">2023-05-08 [creation] First appearance of Melanie</div>
+<div class="trans trans-update">2023-05-25 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-06-09 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-06-27 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-07-03 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-07-06 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-07-12 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-07-15 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-07-17 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-07-20 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-08-14 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-08-17 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-08-23 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-08-25 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-08-28 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-09-13 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-10-13 [update] One of the two speakers.</div>
+<div class="trans trans-update">2023-10-20 [update] One of the two speakers.</div>
+</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s agreement to plan</div><div class="entity-type">concept</div><div class="entity-state">description: Agreed to plan something special for the summer.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s appreciation for Caroline</div><div class="entity-type">concept</div><div class="entity-state">description: Acknowledged Caroline&#x27;s support and friendship.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s art journey</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie has been into art for seven years (since 2016), focusing on painting and pottery.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s bonding experience</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie bonded with her kids while painting and discussing nature.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s bowl design</div><div class="entity-type">concept</div><div class="entity-state">description: Created a bowl with a colorful design to catch the eye and make people smile.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s campfire experience</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie roasted marshmallows and shared stories around the campfire.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s camping experience</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie enjoys bonding over stories, campfires, and nature during camping.</div>
+</div>
+<div class="entity-card has-transitions"><div class="entity-name">Melanie&#x27;s camping trip</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie went camping with her kids a few weeks before September 13, 2023, exploring the forest and hiking.</div>
+<div class="entity-transitions">
+<div class="trans trans-creation">2023-06-27 [creation] First appearance of Melanie&#x27;s camping trip</div>
+<div class="trans trans-update">2023-07-15 [update] Melanie went on a camping trip in the forest with her family.</div>
+<div class="trans trans-update">2023-09-13 [update] Melanie went camping with her kids a few weeks before September 13, 2023, explor</div>
+</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s camping trips</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie loves camping trips with her family.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s children</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie has 2 younger kids who love nature.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s connection to art</div><div class="entity-type">concept</div><div class="entity-state">description: Feels a strong connection to art, which is a huge learning experience for her.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s encouragement</div><div class="entity-type">concept</div><div class="entity-state">description: Expressing support and admiration for Caroline&#x27;s plans.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s family</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie feels lucky to have her family, who bring her joy and love.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s family activities</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie&#x27;s family enjoys hiking in the mountains and exploring forests together.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s family camping</div><div class="entity-type">event</div><div class="entity-state">description: Melanie shared a photo of her family camping at the beach, which brings them closer.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s family moments</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie cherishes family moments that make life awesome.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s family photo</div><div class="entity-type">concept</div><div class="entity-state">description: A photo of Melanie&#x27;s family standing in front of a waterfall.</div>
+</div>
+<div class="entity-card has-transitions"><div class="entity-name">Melanie&#x27;s family support</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie&#x27;s family helps her during tough times.</div>
+<div class="entity-transitions">
+<div class="trans trans-creation">2023-07-15 [creation] First appearance of Melanie&#x27;s family support</div>
+<div class="trans trans-update">2023-10-20 [update] Melanie&#x27;s family helps her during tough times.</div>
+</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s favorite art</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie&#x27;s favorite type of art is painting landscapes and still life.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s favorite color</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie&#x27;s favorite color is blue, which makes her feel relaxed.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s favorite memories</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie cherishes memories of exploring nature and spending time with family.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s favorite music</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie enjoys both classical music like Bach and Mozart, and modern music like Ed Sheeran&#x27;s &#x27;Perfect&#x27;.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s favorite wedding memory</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie&#x27;s favorite part of her wedding was marrying her partner and promising to be together forever.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s feelings about Caroline&#x27;s adoption journey</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie wishes Caroline the best on her adoption journey.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s feelings about her painting</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie wanted her painting to have a serene vibe while still having vibrant colors.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s feelings about painting</div><div class="entity-type">concept</div><div class="entity-state">description: Painting helps her express her feelings and be creative.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s feelings at the pride parade</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie felt proud and grateful at the pride parade, enjoying the vibes and sense of community.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s figurines</div><div class="entity-type">concept</div><div class="entity-state">description: Figurines bought by Melanie on October 21, 2023, that remind her of family love.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s flower appreciation</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie appreciates small things in life, including lovely flowers.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s flower meanings</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie believes sunflowers mean warmth and happiness, while roses stand for love and beauty.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s instrument</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie plays the clarinet, which she started when she was young.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s kids excitement</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie enjoys seeing her kids get excited about learning new things in nature.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s kids&#x27; excitement</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie&#x27;s kids loved the pottery workshop and were excited to get their hands dirty.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s latest painting</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie and her kids painted a sunset with a palm tree the weekend before July 15, 2023.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s marriage duration</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie has been married for 5 years (since 2018).</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s mental health priority</div><div class="entity-type">belief</div><div class="entity-state">description: Mental health is important to Melanie, and she has seen improvements.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s new pet Bailey</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie got another cat named Bailey.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s ongoing adventure</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie agrees that life is about learning and exploring.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s painting as an outlet</div><div class="entity-type">concept</div><div class="entity-state">description: Uses painting as a fun way to express feelings and relax after a long day.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s painting experience</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie has been busy painting.</div>
+</div>
+<div class="entity-card has-transitions"><div class="entity-name">Melanie&#x27;s painting hobby</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie loves painting animals and finds it peaceful.</div>
+<div class="entity-transitions">
+<div class="trans trans-creation">2023-07-15 [creation] First appearance of Melanie&#x27;s painting hobby</div>
+<div class="trans trans-update">2023-08-23 [update] Melanie loves painting animals and finds it peaceful.</div>
+</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s painting of a lake sunrise</div><div class="entity-type">concept</div><div class="entity-state">description: Painted a lake sunrise in 2022, which is special to her.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s painting with blue background</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie painted an abstract piece with blue streaks to show tranquility.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s pet Oliver</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie has a cat named Oliver.</div>
+</div>
+<div class="entity-card has-transitions"><div class="entity-name">Melanie&#x27;s pottery creation</div><div class="entity-type">concept</div><div class="entity-state">description: A photo of a group of bowls and a starfish on a white surface.</div>
+<div class="entity-transitions">
+<div class="trans trans-creation">2023-07-15 [creation] First appearance of Melanie&#x27;s pottery creation</div>
+<div class="trans trans-update">2023-09-13 [update] A photo of a group of bowls and a starfish on a white surface.</div>
+</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s pottery project</div><div class="entity-type">concept</div><div class="entity-state">description: Finished another pottery project and offered to show a picture.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s pottery significance</div><div class="entity-type">concept</div><div class="entity-state">description: Pottery is a huge part of Melanie&#x27;s life, helping her express her emotions and bringing her joy.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s pottery workshop</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie took her kids to a pottery workshop on July 7, 2023, where they made their own pots.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s pride parade experience</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie attended a pride parade a few weeks before July 15, 2023 and felt accepted and happy.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s recent outdoor activity</div><div class="entity-type">event</div><div class="entity-state">description: Melanie and her family went for a walk on a trail on October 19, 2023.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s relaxation method</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie finds peace and serenity in nature.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s response to Caroline&#x27;s art</div><div class="entity-type">concept</div><div class="entity-state">description: Expressed excitement about Caroline&#x27;s art and praised its vivid colors.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s running benefits</div><div class="entity-type">belief</div><div class="entity-state">description: Melanie finds running great for her mental health and mood.</div>
+</div>
+<div class="entity-card has-transitions"><div class="entity-name">Melanie&#x27;s support for Caroline</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie expresses happiness and admiration for Caroline&#x27;s journey.</div>
+<div class="entity-transitions">
+<div class="trans trans-creation">2023-08-14 [creation] First appearance of Melanie&#x27;s support for Caroline</div>
+<div class="trans trans-update">2023-08-23 [update] Melanie expresses support for Caroline and encourages her.</div>
+<div class="trans trans-update">2023-09-13 [update] Melanie expresses pride in Caroline for being her true self.</div>
+<div class="trans trans-update">2023-10-22 [update] Melanie expresses happiness and admiration for Caroline&#x27;s journey.</div>
+</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s transition</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie transitioned and joined the transgender community.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s transition experience</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie realized the courage to transition and felt free expressing herself authentically.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s upcoming art projects</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie is planning a few paintings inspired by autumn.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s view on art</div><div class="entity-type">concept</div><div class="entity-state">description: Considers art a sanctuary and a source of comfort.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s volunteering praise</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline praised Melanie for her volunteering efforts.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s wedding decor</div><div class="entity-type">concept</div><div class="entity-state">description: Flowers were an important part of Melanie&#x27;s wedding decor, reminding her of that special day.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s wedding dress</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie wore a wedding dress on her wedding day.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Melanie&#x27;s wedding experience</div><div class="entity-type">concept</div><div class="entity-state">description: Melanie&#x27;s wedding day was full of love and joy, with everyone they love present.</div>
+</div>
+</div>
+<h3>Questions (199)</h3>
+<table class="qa-table"><tr><th>✓</th><th>Type</th><th>Question</th><th>Gold</th><th>Predicted</th><th>Time</th></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Caroline go to the LGBTQ support group?</td><td class="ans-text">7 May 2023</td><td class="ans-text">Caroline attended the LGBTQ support group on May 7, 2023.</td><td>2.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Melanie paint a sunrise?</td><td class="ans-text">2022</td><td class="ans-text">Melanie painted a lake sunrise in 2022.</td><td>0.7s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>temporal</td><td class="q-text">What fields would Caroline be likely to pursue in her educaton?</td><td class="ans-text">Psychology, counseling certification</td><td class="ans-text">Counseling and mental health.</td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">What did Caroline research?</td><td class="ans-text">Adoption agencies</td><td class="ans-text">Caroline researched adoption, suggesting doing research and finding an adoption agency or lawyer.</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What is Caroline&#x27;s identity?</td><td class="ans-text">Transgender woman</td><td class="ans-text">Caroline&#x27;s identity is explored through her art, particularly painting, which helps her express her </td><td>1.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Melanie run a charity race?</td><td class="ans-text">The sunday before 25 May 2023</td><td class="ans-text">Caroline (not Melanie) ran a charity race for mental health on May 20, 2023.</td><td>1.2s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When is Melanie planning on going camping?</td><td class="ans-text">June 2023</td><td class="ans-text">Melanie is not currently planning a future camping trip. She went camping with her kids a few weeks </td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">What is Caroline&#x27;s relationship status?</td><td class="ans-text">Single</td><td class="ans-text">Caroline is likely single, as she mentioned a tough breakup that her friends supported her through.</td><td>1.6s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Caroline give a speech at a school?</td><td class="ans-text">The week before 9 June 2023</td><td class="ans-text">Caroline gave a speech at a school event where she talked about her transgender journey and encourag</td><td>1.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Caroline meet up with her friends, family, and mentors?</td><td class="ans-text">The week before 9 June 2023</td><td class="ans-text">Caroline met up with her friends, family, and mentors the week before July 6, 2023, during a picnic.</td><td>1.5s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">How long has Caroline had her current group of friends for?</td><td class="ans-text">4 years</td><td class="ans-text">Caroline has known her current group of friends for 4 years since moving from her home country.</td><td>1.2s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">Where did Caroline move from 4 years ago?</td><td class="ans-text">Sweden</td><td class="ans-text">Sweden</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">How long ago was Caroline&#x27;s 18th birthday?</td><td class="ans-text">10 years ago</td><td class="ans-text">Caroline&#x27;s 18th birthday was ten years ago.</td><td>1.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">What career path has Caroline decided to persue?</td><td class="ans-text">counseling or mental health for Transgender people</td><td class="ans-text">Caroline is considering a career in counseling and mental health to help others, particularly focusi</td><td>1.4s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>temporal</td><td class="q-text">Would Caroline still want to pursue counseling as a career if she hadn&#x27;t received support growing up?</td><td class="ans-text">Likely no</td><td class="ans-text">Caroline&#x27;s desire to pursue counseling as a career is deeply rooted in the support she received from</td><td>2.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">What activities does Melanie partake in?</td><td class="ans-text">pottery, camping, painting, swimming</td><td class="ans-text">Hiking, exploring forests, painting animals, camping, playing the clarinet, running, pottery, and wa</td><td>1.7s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Melanie sign up for a pottery class?</td><td class="ans-text">2 July 2023</td><td class="ans-text">The context does not mention Melanie signing up for a pottery class. However, Melanie took her kids </td><td>1.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When is Caroline going to the transgender conference?</td><td class="ans-text">July 2023</td><td class="ans-text">July 2023</td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">Where has Melanie camped?</td><td class="ans-text">beach, mountains, forest</td><td class="ans-text">Melanie has camped in the forest and at the beach.</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">What do Melanie&#x27;s kids like?</td><td class="ans-text">dinosaurs, nature</td><td class="ans-text">Melanie&#x27;s kids like nature, learning new things in nature, and getting their hands dirty at activiti</td><td>1.1s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Melanie go to the museum?</td><td class="ans-text">5 July 2023</td><td class="ans-text">Melanie did not go to the museum; it was Caroline who took her children to the museum.</td><td>1.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Caroline have a picnic?</td><td class="ans-text">The week before 6 July 2023</td><td class="ans-text">Caroline had a picnic with her friends and family the week before July 06, 2023.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>temporal</td><td class="q-text">Would Caroline likely have Dr. Seuss books on her bookshelf?</td><td class="ans-text">Yes, since she collects classic children&#x27;s books</td><td class="ans-text">Yes, Caroline would likely have Dr. Seuss books on her bookshelf, as her library includes lots of ki</td><td>1.6s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What books has Melanie read?</td><td class="ans-text">&quot;Nothing is Impossible&quot;, &quot;Charlotte&#x27;s Web&quot;</td><td class="ans-text">The context does not provide specific information about books Melanie has read. However, Caroline ha</td><td>1.4s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What does Melanie do to destress?</td><td class="ans-text">Running, pottery</td><td class="ans-text">Melanie destresses by painting, which she uses as a fun way to express her feelings and relax after </td><td>1.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Caroline go to the LGBTQ conference?</td><td class="ans-text">10 July 2023</td><td class="ans-text">July 10, 2023</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Melanie read the book &quot;nothing is impossible&quot;?</td><td class="ans-text">2022</td><td class="ans-text">The context does not mention Melanie reading the book &quot;Nothing is Impossible.&quot;</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>temporal</td><td class="q-text">Would Caroline pursue writing as a career option?</td><td class="ans-text">LIkely no; though she likes reading, she wants to be a counselor</td><td class="ans-text">Caroline is not currently pursuing writing as a career option. Her career interests are focused on c</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Caroline go to the adoption meeting?</td><td class="ans-text">The friday before 15 July 2023</td><td class="ans-text">Caroline attended a council meeting for adoption on July 7, 2023.</td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Melanie go to the pottery workshop?</td><td class="ans-text">The Friday before 15 July 2023</td><td class="ans-text">Melanie went to the pottery workshop on July 7, 2023.</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>temporal</td><td class="q-text">Would Melanie be considered a member of the LGBTQ community?</td><td class="ans-text">Likely no, she does not refer to herself as part of it</td><td class="ans-text">Yes, Melanie would be considered a member of the LGBTQ community as she transitioned and joined the </td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Melanie go camping in June?</td><td class="ans-text">The week before 27 June 2023</td><td class="ans-text">Melanie did not go camping in June. Caroline was thinking about going camping in June 2023. Melanie </td><td>1.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">What LGBTQ+ events has Caroline participated in?</td><td class="ans-text">Pride parade, school speech, support group</td><td class="ans-text">Caroline has participated in an LGBTQ+ pride parade on June 26, 2023, an LGBTQ counseling workshop t</td><td>1.2s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Caroline go to a pride parade during the summer?</td><td class="ans-text">The week before 3 July 2023</td><td class="ans-text">Caroline attended a pride parade on June 26, 2023, and another on August 11, 2023.</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What events has Caroline participated in to help children?</td><td class="ans-text">Mentoring program, school speech</td><td class="ans-text">Caroline has participated in volunteering at an LGBTQ+ youth center and is looking forward to a tale</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Melanie go camping in July?</td><td class="ans-text">two weekends before 17 July 2023</td><td class="ans-text">Melanie went camping in July on July 15, 2023.</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Caroline join a mentorship program?</td><td class="ans-text">The weekend before 17 July 2023</td><td class="ans-text">The specific date when Caroline joined a mentorship program is not provided. However, she is involve</td><td>1.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">What did Melanie paint recently?</td><td class="ans-text">sunset</td><td class="ans-text">Melanie recently painted a sunset with a palm tree the weekend before July 15, 2023.</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">What activities has Melanie done with her family?</td><td class="ans-text">Pottery, painting, camping, museum, swimming, hiking</td><td class="ans-text">Hiking in the mountains, exploring forests, camping trips, painting, walking on a trail, and attendi</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">In what ways is Caroline participating in the LGBTQ community?</td><td class="ans-text">Joining activist group, going to pride parades, participating in an art show, mentoring program</td><td class="ans-text">Caroline is participating in the LGBTQ community by joining the &#x27;Connected LGBTQ Activists&#x27; group, a</td><td>1.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">How many times has Melanie gone to the beach in 2023?</td><td class="ans-text">2</td><td class="ans-text">Melanie went to the beach at least once in 2023, as she shared a photo of her family camping at the </td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Caroline join a new activist group?</td><td class="ans-text">The Tuesday before 20 July 2023</td><td class="ans-text">July 18, 2023</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>temporal</td><td class="q-text">Would Melanie be more interested in going to a national park or a theme park?</td><td class="ans-text">National park; she likes the outdoors</td><td class="ans-text">Melanie would be more interested in going to a national park, as she enjoys hiking, exploring forest</td><td>1.5s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">What kind of art does Caroline make?</td><td class="ans-text">abstract art</td><td class="ans-text">Caroline creates art that expresses her trans experience, focuses on inclusivity and diversity, and </td><td>2.6s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When is Melanie&#x27;s daughter&#x27;s birthday?</td><td class="ans-text">13 August</td><td class="ans-text">The context does not provide information about Melanie&#x27;s daughter&#x27;s birthday. However, it mentions C</td><td>1.2s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Caroline attend a pride parade in August?</td><td class="ans-text">The Friday before 14 August 2023</td><td class="ans-text">Caroline attended a pride parade on August 11, 2023.</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>temporal</td><td class="q-text">Would Melanie be considered an ally to the transgender community?</td><td class="ans-text">Yes, she is supportive</td><td class="ans-text">Yes, Melanie would be considered an ally to the transgender community. She expresses happiness and a</td><td>1.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">Who supports Caroline when she has a negative experience?</td><td class="ans-text">Her mentors, family, and friends</td><td class="ans-text">Caroline receives support from her friends, family, and role models during negative experiences.</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What types of pottery have Melanie and her kids made?</td><td class="ans-text">bowls, cup</td><td class="ans-text">Melanie and her kids have made pots during a pottery workshop.</td><td>1.3s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Caroline and Melanie go to a pride fesetival together?</td><td class="ans-text">2022</td><td class="ans-text">Caroline and Melanie did not attend a pride festival together according to the provided information.</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>temporal</td><td class="q-text">What would Caroline&#x27;s political leaning likely be?</td><td class="ans-text">Liberal</td><td class="ans-text">Caroline&#x27;s political leaning would likely be progressive, as she promotes LGBTQ rights, believes in </td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">What has Melanie painted?</td><td class="ans-text">Horse, sunset, sunrise</td><td class="ans-text">Melanie has painted animals, an abstract piece with blue streaks, a sunset with a palm tree, and a l</td><td>1.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">What are Melanie&#x27;s pets&#x27; names?</td><td class="ans-text">Oliver, Luna, Bailey</td><td class="ans-text">Oliver and Bailey.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Caroline apply to adoption agencies?</td><td class="ans-text">The week of 23 August 2023</td><td class="ans-text">The specific date when Caroline applied to adoption agencies is not mentioned, but she passed the ad</td><td>1.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Caroline draw a self-portrait?</td><td class="ans-text">The week before 23 August 2023</td><td class="ans-text">Caroline drew a self-portrait the week before August 23, 2023.</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What subject have Caroline and Melanie both painted?</td><td class="ans-text">Sunsets</td><td class="ans-text">Animals</td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">What symbols are important to Caroline?</td><td class="ans-text">Rainbow flag, transgender symbol</td><td class="ans-text">Important symbols to Caroline include a stained glass window symbolizing discovering true potential,</td><td>1.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Caroline encounter people on a hike and have a negative experience?</td><td class="ans-text">The week before 25 August 2023</td><td class="ans-text">Caroline encountered people on a hike and had a negative experience the week before August 25, 2023.</td><td>1.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Melanie make a plate in pottery class?</td><td class="ans-text">24 August 2023</td><td class="ans-text">Melanie did not make a plate in pottery class; it was Caroline who made a plate in pottery class on </td><td>1.5s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>temporal</td><td class="q-text">Would Caroline be considered religious?</td><td class="ans-text">Somewhat, but not extremely religious</td><td class="ans-text">Caroline might be considered religious as she has a necklace with a cross, symbolizing faith, which </td><td>1.2s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">What instruments does Melanie play?</td><td class="ans-text">clarinet and violin</td><td class="ans-text">Melanie plays the clarinet.</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What musical artists/bands has Melanie seen?</td><td class="ans-text">Summer Sounds, Matt Patterson</td><td class="ans-text">The context does not mention any specific musical artists or bands that Melanie has seen. However, s</td><td>1.7s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Melanie go to the park?</td><td class="ans-text">27 August 2023</td><td class="ans-text">The context does not mention Melanie going to the park. However, Melanie and her family went for a w</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When is Caroline&#x27;s youth center putting on a talent show?</td><td class="ans-text">September 2023</td><td class="ans-text">September 2023</td><td>1.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>temporal</td><td class="q-text">Would Melanie likely enjoy the song &quot;The Four Seasons&quot; by Vivaldi?</td><td class="ans-text">Yes; it&#x27;s classical music</td><td class="ans-text">Yes, Melanie would likely enjoy &quot;The Four Seasons&quot; by Vivaldi, as she appreciates classical music li</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">What are some changes Caroline has faced during her transition journey?</td><td class="ans-text">Changes to her body, losing unsupportive friends</td><td class="ans-text">Caroline has faced changes in her relationships, with some friends supporting her and others not. Sh</td><td>1.4s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What does Melanie do with her family on hikes?</td><td class="ans-text">Roast marshmallows, tell stories</td><td class="ans-text">Melanie and her family enjoy hiking in the mountains and exploring forests together.</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Caroline go biking with friends?</td><td class="ans-text">The weekend before 13 September 2023</td><td class="ans-text">Caroline went biking with friends the weekend before September 13, 2023.</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">How long has Melanie been practicing art?</td><td class="ans-text">Since 2016</td><td class="ans-text">Melanie has been practicing art for seven years, since 2016.</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>temporal</td><td class="q-text">What personality traits might Melanie say Caroline has?</td><td class="ans-text">Thoughtful, authentic, driven</td><td class="ans-text">Melanie might say Caroline has a caring heart, as she recognized Caroline for having a caring heart </td><td>2.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">What transgender-specific events has Caroline attended?</td><td class="ans-text">Poetry reading, conference</td><td class="ans-text">Caroline has attended a transgender conference in July 2023, a transgender poetry reading the Friday</td><td>1.2s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What book did Melanie read from Caroline&#x27;s suggestion?</td><td class="ans-text">&quot;Becoming Nicole&quot;</td><td class="ans-text">Caroline (not Melanie) has been reading a book recommended by Melanie.</td><td>1.6s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Melanie&#x27;s friend adopt a child?</td><td class="ans-text">2022</td><td class="ans-text">Caroline&#x27;s friend adopted a child in 2022.</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Melanie get hurt?</td><td class="ans-text">September 2023</td><td class="ans-text">The context does not provide any information about Melanie getting hurt.</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Melanie&#x27;s family go on a roadtrip?</td><td class="ans-text">The weekend before 20 October 2023</td><td class="ans-text">The context does not specifically mention a road trip taken by Melanie&#x27;s family. However, Melanie&#x27;s </td><td>1.2s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">How many children does Melanie have?</td><td class="ans-text">3</td><td class="ans-text">Melanie has 2 younger kids.</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">When did Melanie go on a hike after the roadtrip?</td><td class="ans-text">19 October 2023</td><td class="ans-text">Melanie went for a walk on a trail with her family on October 19, 2023.</td><td>1.2s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>temporal</td><td class="q-text">Would Melanie go on another roadtrip soon?</td><td class="ans-text">Likely no; since this one went badly</td><td class="ans-text">Melanie likely would go on another road trip soon, as she enjoys exploring nature and spending time </td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">What items has Melanie bought?</td><td class="ans-text">Figurines, shoes</td><td class="ans-text">Melanie bought figurines on October 21, 2023, that remind her of family love.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Caroline pass the adoption interview?</td><td class="ans-text">The Friday before 22 October 2023</td><td class="ans-text">Caroline passed the adoption agency interviews on October 20, 2023.</td><td>1.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Melanie buy the figurines?</td><td class="ans-text">21 October 2023</td><td class="ans-text">Melanie bought the figurines on October 21, 2023.</td><td>0.7s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>temporal</td><td class="q-text">Would Caroline want to move back to her home country soon?</td><td class="ans-text">No; she&#x27;s in the process of adopting children.</td><td class="ans-text">There is no indication that Caroline wants to move back to her home country soon. Her focus is on bu</td><td>1.6s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What did the charity race raise awareness for?</td><td class="ans-text">mental health</td><td class="ans-text">The charity race raised awareness for mental health.</td><td>0.7s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What did Melanie realize after the charity race?</td><td class="ans-text">self-care is important</td><td class="ans-text">Caroline (not Melanie) ran the charity race and realized the importance of mental health awareness.</td><td>1.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">How does Melanie prioritize self-care?</td><td class="ans-text">by carving out some me-time each day for activities like running, reading, or playing the violin</td><td class="ans-text">Melanie prioritizes self-care by finding peace and serenity in nature, painting animals, appreciatin</td><td>1.1s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What are Caroline&#x27;s plans for the summer?</td><td class="ans-text">researching adoption agencies</td><td class="ans-text">Caroline&#x27;s plans for the summer include thinking about going camping in June 2023, proposing a famil</td><td>1.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What type of individuals does the adoption agency Caroline is considering support?</td><td class="ans-text">LGBTQ+ individuals</td><td class="ans-text">The adoption agency Caroline is considering supports LGBTQ+ individuals.</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">Why did Caroline choose the adoption agency?</td><td class="ans-text">because of their inclusivity and support for LGBTQ+ individuals</td><td class="ans-text">Caroline chose the adoption agency because it helps LGBTQ+ folks with adoption.</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What is Caroline excited about in the adoption process?</td><td class="ans-text">creating a family for kids who need one</td><td class="ans-text">Caroline is excited about starting the adoption process, becoming a parent, and creating a family fo</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What does Melanie think about Caroline&#x27;s decision to adopt?</td><td class="ans-text">she thinks Caroline is doing something amazing and will be an awesome mom</td><td class="ans-text">Melanie wishes Caroline the best on her adoption journey and expresses happiness and admiration for </td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">How long have Mel and her husband been married?</td><td class="ans-text">Mel and her husband have been married for 5 years.</td><td class="ans-text">Melanie and her husband have been married for 5 years since 2018.</td><td>1.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What does Caroline&#x27;s necklace symbolize?</td><td class="ans-text">love, faith, and strength</td><td class="ans-text">Caroline&#x27;s necklace symbolizes love, faith, and strength.</td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What country is Caroline&#x27;s grandma from?</td><td class="ans-text">Sweden</td><td class="ans-text">Sweden</td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What was grandma&#x27;s gift to Caroline?</td><td class="ans-text">necklace</td><td class="ans-text">A necklace with a cross and a heart.</td><td>0.7s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What is Melanie&#x27;s hand-painted bowl a reminder of?</td><td class="ans-text">art and self-expression</td><td class="ans-text">Melanie&#x27;s hand-painted bowl is not mentioned, but Caroline has a hand-painted bowl made by a friend </td><td>4.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What did Melanie and her family do while camping?</td><td class="ans-text">explored nature, roasted marshmallows, and went on a hike</td><td class="ans-text">Melanie and her family bonded over stories, campfires, and nature, roasted marshmallows, and shared </td><td>3.6s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What kind of counseling and mental health services is Caroline interested in pursuing?</td><td class="ans-text">working with trans people, helping them accept themselves and supporting their mental health</td><td class="ans-text">Caroline is interested in pursuing counseling and mental health services focused on helping others w</td><td>1.3s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What workshop did Caroline attend recently?</td><td class="ans-text">LGBTQ+ counseling workshop</td><td class="ans-text">Caroline attended a transgender poetry reading the Friday before October 13, 2023.</td><td>1.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What was discussed in the LGBTQ+ counseling workshop?</td><td class="ans-text">therapeutic methods and how to best work with trans people</td><td class="ans-text">The LGBTQ+ counseling workshop attended by Caroline discussed therapeutic methods and creating safe </td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What motivated Caroline to pursue counseling?</td><td class="ans-text">her own journey and the support she received, and how counseling improved her life</td><td class="ans-text">Caroline was motivated to pursue counseling by her experience at the pride parade, which inspired he</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What kind of place does Caroline want to create for people?</td><td class="ans-text">a safe and inviting place for people to grow</td><td class="ans-text">Caroline wants to create a safe and inviting place for people to grow, based on her experiences with</td><td>1.2s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">Did Melanie make the black and white bowl in the photo?</td><td class="ans-text">Yes</td><td class="ans-text">No, Caroline (not Melanie) created a bowl with a black and white flower design in her pottery class.</td><td>1.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What kind of books does Caroline have in her library?</td><td class="ans-text">kids&#x27; books - classics, stories from different cultures, educational books</td><td class="ans-text">Caroline&#x27;s library includes lots of kids&#x27; books, classics, stories from different cultures, and educ</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What was Melanie&#x27;s favorite book from her childhood?</td><td class="ans-text">&quot;Charlotte&#x27;s Web&quot;</td><td class="ans-text">The context does not provide information about Melanie&#x27;s favorite book from her childhood. However, </td><td>1.1s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What book did Caroline recommend to Melanie?</td><td class="ans-text">&quot;Becoming Nicole&quot;</td><td class="ans-text">The context does not specify a book that Caroline recommended to Melanie. However, Caroline has been</td><td>1.2s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What did Caroline take away from the book &quot;Becoming Nicole&quot;?</td><td class="ans-text">Lessons on self-acceptance and finding support</td><td class="ans-text">Caroline learned self-acceptance, the importance of finding support, and that tough times don&#x27;t last</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What are the new shoes that Melanie got used for?</td><td class="ans-text">Running</td><td class="ans-text">Caroline (not Melanie) got new pink running shoes.</td><td>0.7s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What is Melanie&#x27;s reason for getting into running?</td><td class="ans-text">To de-stress and clear her mind</td><td class="ans-text">Melanie finds running great for her mental health and mood.</td><td>0.6s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What does Melanie say running has been great for?</td><td class="ans-text">Her mental health</td><td class="ans-text">Melanie says running has been great for her mental health and mood.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What did Mel and her kids make during the pottery workshop?</td><td class="ans-text">pots</td><td class="ans-text">Melanie and her kids made their own pots during the pottery workshop on July 7, 2023.</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What kind of pot did Mel and her kids make with clay?</td><td class="ans-text">a cup with a dog face on it</td><td class="ans-text">Melanie and her kids made their own pots during a pottery workshop on July 7, 2023.</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What creative project do Mel and her kids do together besides pottery?</td><td class="ans-text">painting</td><td class="ans-text">Melanie and her kids paint together, as they painted a sunset with a palm tree the weekend before Ju</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What did Mel and her kids paint in their latest project in July 2023?</td><td class="ans-text">a sunset with a palm tree</td><td class="ans-text">Melanie and her kids painted a sunset with a palm tree the weekend before July 15, 2023.</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What did Caroline see at the council meeting for adoption?</td><td class="ans-text">many people wanting to create loving homes for children in need</td><td class="ans-text">Caroline found the council meeting for adoption inspiring and emotional.</td><td>1.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What do sunflowers represent according to Caroline?</td><td class="ans-text">warmth and happiness</td><td class="ans-text">Sunflowers represent warmth and happiness according to Melanie, not Caroline.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">Why are flowers important to Melanie?</td><td class="ans-text">They remind her to appreciate the small moments and were a part of her wedding decor</td><td class="ans-text">Flowers are important to Melanie because they were a significant part of her wedding decor, remindin</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What inspired Caroline&#x27;s painting for the art show?</td><td class="ans-text">visiting an LGBTQ center and wanting to capture unity and strength</td><td class="ans-text">Caroline&#x27;s painting for the art show was inspired by a blue and yellow design.</td><td>1.3s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">How often does Melanie go to the beach with her kids?</td><td class="ans-text">once or twice a year</td><td class="ans-text">Melanie&#x27;s beach visits are not specifically mentioned, but she shared a photo of her family camping </td><td>1.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What did Melanie and her family see during their camping trip last year?</td><td class="ans-text">Perseid meteor shower</td><td class="ans-text">Caroline (not Melanie) remembered the camping trip in 2022 when they saw the Perseid meteor shower.</td><td>1.4s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">How did Melanie feel while watching the meteor shower?</td><td class="ans-text">in awe of the universe</td><td class="ans-text">Caroline (not Melanie) remembered the camping trip in 2022 when they saw the Perseid meteor shower.</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">Whose birthday did Melanie celebrate recently?</td><td class="ans-text">Melanie&#x27;s daughter</td><td class="ans-text">Caroline&#x27;s daughter&#x27;s birthday.</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">Who performed at the concert at Melanie&#x27;s daughter&#x27;s birthday?</td><td class="ans-text">Matt Patterson</td><td class="ans-text">Caroline&#x27;s daughter&#x27;s birthday was celebrated with a concert, but the performer is not specified.</td><td>1.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">Why did Melanie choose to use colors and patterns in her pottery project?</td><td class="ans-text">She wanted to catch the eye and make people smile.</td><td class="ans-text">Melanie chose to use colors and patterns in her pottery project to create a colorful design that cat</td><td>1.2s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What pet does Caroline have?</td><td class="ans-text">guinea pig</td><td class="ans-text">Caroline has a guinea pig named Oscar, a dog named Luna, and a cat named Oliver.</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What pets does Melanie have?</td><td class="ans-text">Two cats and a dog</td><td class="ans-text">Melanie has two cats named Oliver and Bailey.</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">Where did Oliver hide his bone once?</td><td class="ans-text">In Melanie&#x27;s slipper</td><td class="ans-text">Oliver is a cat, not a dog, so he would not hide a bone.</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What activity did Caroline used to do with her dad?</td><td class="ans-text">Horseback riding</td><td class="ans-text">Caroline used to go horseback riding with her dad as a kid.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What did Caroline make for a local church?</td><td class="ans-text">a stained glass window</td><td class="ans-text">Caroline made a stained glass window for a local church.</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What did Caroline find in her neighborhood during her walk?</td><td class="ans-text">a rainbow sidewalk</td><td class="ans-text">Caroline found a vibrant rainbow sidewalk in her neighborhood for Pride Month.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">Which song motivates Caroline to be courageous?</td><td class="ans-text">Brave by Sara Bareilles</td><td class="ans-text">The song &#x27;Brave&#x27; by Sara Bareilles motivates Caroline to be courageous.</td><td>1.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">Which  classical musicians does Melanie enjoy listening to?</td><td class="ans-text">Bach and Mozart</td><td class="ans-text">Bach and Mozart.</td><td>1.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">Who is Melanie a fan of in terms of modern music?</td><td class="ans-text">Ed Sheeran</td><td class="ans-text">Ed Sheeran</td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">How long has Melanie been creating art?</td><td class="ans-text">7 years</td><td class="ans-text">Melanie has been creating art for seven years, since 2016.</td><td>1.5s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What precautionary sign did Melanie see at the café?</td><td class="ans-text">A sign stating that someone is not being able to leave</td><td class="ans-text">Caroline (not Melanie) saw thoughtful signs at the café the weekend before September 13, 2023.</td><td>1.2s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What advice does Caroline give for getting started with adoption?</td><td class="ans-text">Do research, find an adoption agency or lawyer, gather necessary documents, and prepare emotionally.</td><td class="ans-text">Caroline advises doing research and finding an adoption agency or lawyer.</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What setback did Melanie face in October 2023?</td><td class="ans-text">She got hurt and had to take a break from pottery.</td><td class="ans-text">Melanie did not face any setbacks in October 2023. Instead, she engaged in positive activities such </td><td>1.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What does Melanie do to keep herself busy during her pottery break?</td><td class="ans-text">Read a book and paint.</td><td class="ans-text">Melanie keeps herself busy with painting, which she uses as a fun way to express her feelings and re</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What painting did Melanie show to Caroline on October 13, 2023?</td><td class="ans-text">A painting inspired by sunsets with a pink sky.</td><td class="ans-text">The context does not specify a painting that Melanie showed to Caroline on October 13, 2023. However</td><td>1.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What kind of painting did Caroline share with Melanie on October 13, 2023?</td><td class="ans-text">An abstract painting with blue streaks on a wall.</td><td class="ans-text">Caroline shared a painting inspired by sunsets with a pink sky, which she painted the week before Oc</td><td>2.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What was the poetry reading that Caroline attended about?</td><td class="ans-text">It was a transgender poetry reading where transgender people shared their stories.</td><td class="ans-text">The poetry reading that Caroline attended featured transgender people sharing their stories.</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What did the posters at the poetry reading say?</td><td class="ans-text">&quot;Trans Lives Matter&quot;</td><td class="ans-text">The context does not provide specific information about what the posters at the poetry reading said.</td><td>1.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What does Caroline&#x27;s drawing symbolize for her?</td><td class="ans-text">Freedom and being true to herself.</td><td class="ans-text">Caroline&#x27;s drawing symbolizes freedom, embracing her womanhood, and being true to oneself.</td><td>1.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">How do Melanie and Caroline describe their journey through life together?</td><td class="ans-text">An ongoing adventure of learning and growing.</td><td class="ans-text">Melanie and Caroline describe their journey through life as one of learning and exploring, supportin</td><td>1.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What happened to Melanie&#x27;s son on their road trip?</td><td class="ans-text">He got into an accident</td><td class="ans-text">Caroline&#x27;s son (not Melanie&#x27;s) got into an accident during a road trip on October 14, 2023, but he w</td><td>1.6s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">How did Melanie&#x27;s son handle the accident?</td><td class="ans-text">He was scared but reassured by his family</td><td class="ans-text">Caroline&#x27;s son (not Melanie&#x27;s) was involved in an accident during a road trip on October 14, 2023, a</td><td>1.4s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">How did Melanie feel about her family after the accident?</td><td class="ans-text">They are important and mean the world to her</td><td class="ans-text">Melanie feels lucky to have her family, who bring her joy and love.</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">How did Melanie&#x27;s children handle the accident?</td><td class="ans-text">They were scared but resilient</td><td class="ans-text">Caroline&#x27;s children, not Melanie&#x27;s, were scared but resilient after the accident.</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">How did Melanie feel after the accident?</td><td class="ans-text">Grateful and thankful for her family</td><td class="ans-text">Caroline (not Melanie) felt that her children were scared but resilient after the accident, and she </td><td>1.4s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What was Melanie&#x27;s reaction to her children enjoying the Grand Canyon?</td><td class="ans-text">She was happy and thankful</td><td class="ans-text">Melanie&#x27;s children did not visit the Grand Canyon; it was Caroline&#x27;s family who enjoyed their trip t</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What do Melanie&#x27;s family give her?</td><td class="ans-text">Strength and motivation</td><td class="ans-text">Melanie&#x27;s family gives her support during tough times, joy, and love.</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">How did Melanie feel about her family supporting her?</td><td class="ans-text">She appreciated them a lot</td><td class="ans-text">Melanie feels lucky to have her family, who bring her joy and love, and she cherishes the support th</td><td>1.2s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What did Melanie do after the road trip to relax?</td><td class="ans-text">Went on a nature walk or hike</td><td class="ans-text">Melanie used painting as a fun way to express her feelings and relax after a long day.</td><td>1.2s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What did Caroline realize after her charity race?</td><td class="ans-text"></td><td class="ans-text">Caroline realized the importance of mental health awareness after her charity race.</td><td>1.2s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What are Melanie&#x27;s plans for the summer with respect to adoption?</td><td class="ans-text"></td><td class="ans-text">Melanie does not have any plans related to adoption for the summer. The adoption journey is associat</td><td>1.5s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What type of individuals does the adoption agency Melanie is considering support?</td><td class="ans-text"></td><td class="ans-text">Caroline (not Melanie) is considering an adoption agency that supports LGBTQ+ individuals.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">Why did Melanie choose the adoption agency?</td><td class="ans-text"></td><td class="ans-text">Caroline (not Melanie) chose the adoption agency because it helps LGBTQ+ folks with adoption.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What is Melanie excited about in her adoption process?</td><td class="ans-text"></td><td class="ans-text">Melanie is not involved in an adoption process; it is Caroline who is excited about starting the ado</td><td>1.7s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What does Melanie&#x27;s necklace symbolize?</td><td class="ans-text"></td><td class="ans-text">Caroline&#x27;s necklace, not Melanie&#x27;s, symbolizes love, faith, and strength.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What country is Melanie&#x27;s grandma from?</td><td class="ans-text"></td><td class="ans-text">The context does not provide information about Melanie&#x27;s grandma&#x27;s country. However, Caroline&#x27;s gran</td><td>1.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What was grandma&#x27;s gift to Melanie?</td><td class="ans-text"></td><td class="ans-text">Caroline&#x27;s grandma gave a necklace with a cross and a heart to Caroline, not Melanie.</td><td>1.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What was grandpa&#x27;s gift to Caroline?</td><td class="ans-text"></td><td class="ans-text">Caroline&#x27;s grandma, not grandpa, gave her a necklace with a cross and a heart, symbolizing love, fai</td><td>1.2s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What is Caroline&#x27;s hand-painted bowl a reminder of?</td><td class="ans-text"></td><td class="ans-text">Caroline&#x27;s hand-painted bowl is a reminder of art and self-expression.</td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What did Caroline and her family do while camping?</td><td class="ans-text"></td><td class="ans-text">Caroline and her family went camping during the summer, which is an activity she always looks forwar</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What kind of counseling and mental health services is Melanie interested in pursuing?</td><td class="ans-text"></td><td class="ans-text">Caroline (not Melanie) is interested in pursuing counseling and mental health services, focusing on </td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What kind of counseling workshop did Melanie attend recently?</td><td class="ans-text"></td><td class="ans-text">Caroline (not Melanie) attended an LGBTQ+ counseling workshop the Friday before June 27, 2023, where</td><td>1.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What motivated Melanie to pursue counseling?</td><td class="ans-text"></td><td class="ans-text">Melanie is not motivated to pursue counseling; it is Caroline who is considering a career in counsel</td><td>1.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What kind of place does Melanie want to create for people?</td><td class="ans-text"></td><td class="ans-text">Caroline (not Melanie) wants to create a safe and loving home for children who need it.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">Did Caroline make the black and white bowl in the photo?</td><td class="ans-text">No</td><td class="ans-text">No, Caroline did not make the black and white bowl in the photo. She created a bowl with a black and</td><td>1.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What are the new shoes that Caroline got used for?</td><td class="ans-text"></td><td class="ans-text">Caroline&#x27;s new pink running shoes are used for running.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What is Caroline&#x27;s reason for getting into running?</td><td class="ans-text"></td><td class="ans-text">Caroline has been running longer distances to de-stress since their last chat.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What does Caroline say running has been great for?</td><td class="ans-text"></td><td class="ans-text">Caroline has been running longer distances to de-stress.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What did Melanie see at the council meeting for adoption?</td><td class="ans-text"></td><td class="ans-text">Melanie did not attend the council meeting for adoption; it was Caroline who attended and found it i</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What inspired Melanie&#x27;s painting for the art show?</td><td class="ans-text"></td><td class="ans-text">Melanie&#x27;s painting for the art show was inspired by her desire to create a serene vibe with vibrant </td><td>2.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What inspired Caroline&#x27;s sculpture for the art show?</td><td class="ans-text"></td><td class="ans-text">The context does not mention a sculpture by Caroline for the art show. However, Caroline&#x27;s art is ge</td><td>1.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">How often does Caroline go to the beach with her kids?</td><td class="ans-text"></td><td class="ans-text">Caroline usually goes to the beach once or twice a year with her kids.</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What did Caroline and her family see during their camping trip last year?</td><td class="ans-text"></td><td class="ans-text">Caroline and her family saw the Perseid meteor shower during their camping trip in 2022.</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">How did Caroline feel while watching the meteor shower?</td><td class="ans-text"></td><td class="ans-text">Caroline felt a sense of awe and wonder while watching the Perseid meteor shower during the camping </td><td>1.2s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">Why did Caroline choose to use colors and patterns in her pottery project?</td><td class="ans-text"></td><td class="ans-text">Caroline uses pottery for self-expression and peace, and she finds it relaxing and creative. Her art</td><td>2.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">Is Oscar Melanie&#x27;s pet?</td><td class="ans-text">No</td><td class="ans-text">No, Oscar is Caroline&#x27;s pet. Melanie has a cat named Oliver and another cat named Bailey.</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">Where did Oscar hide his bone once?</td><td class="ans-text"></td><td class="ans-text">Oscar is a guinea pig, not a dog, so he wouldn&#x27;t hide a bone.</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What activity did Melanie used to do with her dad?</td><td class="ans-text"></td><td class="ans-text">Caroline (not Melanie) used to go horseback riding with her dad as a kid.</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What did Melanie make for a local church?</td><td class="ans-text"></td><td class="ans-text">Caroline (not Melanie) made a stained glass window for a local church, representing growth and chang</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What did Melanie find in her neighborhood during her walk?</td><td class="ans-text"></td><td class="ans-text">Melanie did not find anything specific in her neighborhood during her walk; it was Caroline who foun</td><td>1.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">Which song motivates Melanie to be courageous?</td><td class="ans-text"></td><td class="ans-text">The song &#x27;Brave&#x27; by Sara Bareilles holds deep meaning for Caroline, not Melanie.</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What type of instrument does Caroline play?</td><td class="ans-text"></td><td class="ans-text">Caroline plays the acoustic guitar.</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">Which classical musicians does Caroline enjoy listening to?</td><td class="ans-text"></td><td class="ans-text">Caroline&#x27;s classical music preferences are not mentioned, but Melanie enjoys classical music like Ba</td><td>1.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">Who is Caroline a fan of in terms of modern music?</td><td class="ans-text"></td><td class="ans-text">Caroline is a fan of live music in general, but there is no specific mention of her being a fan of a</td><td>1.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What precautionary sign did Caroline see at the café?</td><td class="ans-text"></td><td class="ans-text">Caroline saw thoughtful signs at the café the weekend before September 13, 2023.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What setback did Caroline face recently?</td><td class="ans-text"></td><td class="ans-text">Caroline&#x27;s son got into an accident during a road trip on October 14, 2023.</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What does Caroline do to keep herself busy during her pottery break?</td><td class="ans-text"></td><td class="ans-text">Caroline keeps herself busy with painting and drawing, which she uses to express her feelings and ex</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What was the poetry reading that Melanie attended about?</td><td class="ans-text"></td><td class="ans-text">Caroline (not Melanie) attended a transgender poetry reading the Friday before October 13, 2023, whi</td><td>1.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What happened to Caroline&#x27;s son on their road trip?</td><td class="ans-text"></td><td class="ans-text">Caroline&#x27;s son got into an accident during a road trip on October 14, 2023.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">How did Caroline&#x27;s son handle the accident?</td><td class="ans-text"></td><td class="ans-text">Caroline&#x27;s son was okay after the accident and, along with Caroline&#x27;s other children, was scared but</td><td>1.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">How did Caroline feel about her family after the accident?</td><td class="ans-text"></td><td class="ans-text">Caroline valued her family greatly, especially after the accident.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">How did Caroline&#x27;s children handle the accident?</td><td class="ans-text"></td><td class="ans-text">Caroline&#x27;s children were scared but resilient after the accident.</td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">How did Caroline feel after the accident?</td><td class="ans-text"></td><td class="ans-text">Caroline valued her family greatly, especially after the accident.</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What was Caroline&#x27;s reaction to her children enjoying the Grand Canyon?</td><td class="ans-text"></td><td class="ans-text">Caroline&#x27;s family enjoyed their trip to the Grand Canyon.</td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What did Caroline do after the road trip to relax?</td><td class="ans-text"></td><td class="ans-text">Caroline has been running longer distances to de-stress since their last chat.</td><td>1.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What does Caroline love most about camping with her family?</td><td class="ans-text"></td><td class="ans-text">Caroline loves creating special moments and memories with her family during camping trips.</td><td>1.4s</td></tr>
+</table>
+</div></div>
+</body></html>

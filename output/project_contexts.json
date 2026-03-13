@@ -1,0 +1,1064 @@
+{
+  "lucid_academy": {
+    "entity": {
+      "id": "6434c45d-a275-45bd-a1ec-7513402d8025",
+      "name": "Lucid Academy",
+      "type": "project",
+      "state": {
+        "description": "recommended primary focus; concrete execution checklist provided (single offer, weekly sales cadence, minimal marketing, SOPs for delivery).",
+        "founding_date": "2023-08",
+        "team_size": 6,
+        "students": 115,
+        "completion_rate": "95%+",
+        "revenue": "$40k+ (net)",
+        "growth": "35% MoM",
+        "website": "lucid-education.com",
+        "status": "recommended_focus",
+        "phase": "planning / curriculum design",
+        "last_updated": "2025-02-05",
+        "current_goals": [
+          "Create personalized EC Blueprints for students",
+          "Build research & internship matching pipelines",
+          "Offer competition/Olympiad training and project-to-competition guidance",
+          "Run a student startup/incubator track",
+          "Add college application / publishing support and cohort-based mentorship"
+        ],
+        "motivation": "Parents/students report difficulty prioritizing and planning high-impact ECs; opportunity to increase program value and justify premium pricing.",
+        "date": "2025-02-09",
+        "location": "chat conversation",
+        "focus": [
+          "AI",
+          "data science",
+          "extracurricular strategy"
+        ],
+        "audience": "high school / early college builders, aspiring founders",
+        "positioning_notes": "emphasize high-ticket/elite mentorship rather than 'EdTech' or generic 'coding academy'",
+        "current_phase": "positioning and messaging refinement",
+        "origin": "explicit emphasis introduced/clarified in today's messaging conversation",
+        "state": "early prototyping",
+        "app_deadline": "2025-03-08T00:00:00-05:00",
+        "target_audience": "High school students with basic Python",
+        "scale": "125+ alumni referenced; ~2k+ parent signups on site",
+        "current_focus": "evaluating business model; leaning toward hybrid agency + talent-placement pipeline",
+        "stage": "incubation / concept-to-early-build",
+        "duration": "8 weeks",
+        "weekly_hours": 10,
+        "format": "\u224850% live instruction, 50% project work",
+        "learning_philosophy": "Build-first \u2192 introduce lightweight ML theory \u2192 deeper transformer/LLM internals later",
+        "dates": {
+          "start": "2025-06-22",
+          "end": "2025-08-14"
+        },
+        "capacity": "Limited to 25 students",
+        "investment": "$2,400",
+        "application_deadline": "2025-05-15",
+        "core_features": [
+          "Personalized Discovery (audit) Agent",
+          "AI Automation Marketplace (cards for micro-projects)",
+          "Project Tutorials / 1-click deployment",
+          "Paid implementation / Book a Builder"
+        ],
+        "mvp_timeline_estimate": "MVP Discovery Agent in ~2 weeks, marketplace initial listings in 3\u20134 weeks (as per PRD)",
+        "deliverable": "SOP document / playbook",
+        "scope": "Admissions, onboarding, marketing, content, partnerships, hiring, ops",
+        "purpose": "differentiate by outcome and shipping rather than passive learning",
+        "metrics": "Reported 70% reduction in instructor review time; 92% student satisfaction for 1-on-1 level feedback; in talks to white-label with online bootcamps",
+        "funding_needed": 10000,
+        "time_horizon": "short-term",
+        "notes": "Assistant provided pros/cons and best-practice tips (formalize F&F loans, watch fees/slippage for fintech/cards, margin risk exposure, use revenue-based financing only with recurring revenue).",
+        "short_term_target": "Close cohort-1 (20 paid seats \u00d7 $2.5k = $50k) by 2025-06-24",
+        "one_year_target": "$1M ARR by 2026-05-25",
+        "linkedin_description": "Lucid Academy empowers ambitious high school students to master AI through hands-on projects, research mentorship, and startup-building\u2014bridging the gap between theory and real-world impact.",
+        "maturity": "mission / public description drafted",
+        "next_steps": [
+          "Decide single offer and start date",
+          "Write 1-page offer doc and Stripe/deposit flow",
+          "Run 100 warm outreach messages to past leads / parents / partners",
+          "Close deposits and systematize onboarding / delivery SOPs"
+        ],
+        "subscribers": 600,
+        "business_model": "free core curriculum + paid execution engine (decision being considered)",
+        "state_details": "Essay revised to 611 words; specific grammatical and stylistic edits enumerated.",
+        "priority": "high"
+      }
+    },
+    "timeline": [
+      {
+        "summary": "Updated from 2025-07-26 batch",
+        "type": "update"
+      },
+      {
+        "summary": "Updated from 2025-07-26 batch",
+        "type": "update"
+      },
+      {
+        "summary": "Updated from 2025-08-05-1 batch",
+        "type": "update"
+      },
+      {
+        "summary": "Project name changed following a trademark cease-and-desist; public identity moved from 'Science Fai",
+        "type": "update"
+      },
+      {
+        "summary": "Fields updated: description, status, next_steps",
+        "type": "update"
+      },
+      {
+        "summary": "User explored and sketched a new business model variant: free selective apprenticeship that feeds a ",
+        "type": "update"
+      },
+      {
+        "summary": "Fields updated: description, status, priority, next_steps",
+        "type": "update"
+      },
+      {
+        "summary": "Elevated to recommended single focus for 60\u201390 days by assistant (highest-probability path to predic",
+        "type": "update"
+      }
+    ],
+    "related": [
+      {
+        "name": "API RAG & Open-Source Library Integration",
+        "type": "project"
+      },
+      {
+        "name": "TeenLife Media",
+        "type": "organization"
+      },
+      {
+        "name": "Macaroni KID / Hulafrog / MommyPoppins (local family newsletters)",
+        "type": "organization"
+      },
+      {
+        "name": "Summer 2025 Cohort start",
+        "type": "event"
+      },
+      {
+        "name": "Optimized Lucid Academy application (chat session)",
+        "type": "event"
+      },
+      {
+        "name": "Resume review (Parth Kocheta)",
+        "type": "event"
+      },
+      {
+        "name": "Lucid Academy",
+        "type": "organization"
+      },
+      {
+        "name": "Lucid Labs",
+        "type": "organization"
+      },
+      {
+        "name": "Personal website rewrite",
+        "type": "project"
+      },
+      {
+        "name": "Science Near Me",
+        "type": "organization"
+      },
+      {
+        "name": "sponsorFind",
+        "type": "project"
+      },
+      {
+        "name": "Guide to Cursor",
+        "type": "tool"
+      }
+    ],
+    "temporal": {
+      "status": "fading",
+      "silence_days": 27.9,
+      "rhythm_days": 5.8,
+      "transitions": 62
+    }
+  },
+  "sponsorfind": {
+    "entity": {
+      "id": "66b38cff-c90d-4f12-baad-357c31c5d3e3",
+      "name": "sponsorFind",
+      "type": "project",
+      "state": {
+        "description": "positioned as recommended fast cashflow engine with explicit 14\u201330 day outbound sprint steps to book paid sprints or lead-list sales.",
+        "code_location": "/Users/parthkocheta/Documents/sponsorFind/sponsorFind/",
+        "components": [
+          "sponsors_final.py (Streamlit UI)",
+          "sponsors_processing.py (batch processing / LLM calls)"
+        ],
+        "data_scale": "29M rows -> 150K+ relevant",
+        "brands": 3000,
+        "creators": 7000,
+        "creator_followers_reached": 300000,
+        "front_end": "Streamlit",
+        "nlp_pipeline": "two-pass LLM (GPT) parsing",
+        "status": "recommended_as_quick_cashflow_option",
+        "data_assets": "brands/creators/YouTube ad spend database (existing)",
+        "current_phase": "MVP definition / pitch preparation",
+        "traction": "paid beta partnerships with 3 creators (150k+ followers) \u2014 reported in chat",
+        "next_step": "refine pitch & application for Ship It; build/demo MVP during sprint",
+        "current_focus": "monetization via agency sales; build scraping agents for IG/TikTok; brand-first data collection to avoid full sponsor-detection problem",
+        "relationship": "asset/feature being explored for sponsorFind",
+        "matches_existing": "sponsorFind",
+        "date": "2025-04-26",
+        "location": null,
+        "current_capabilities": [
+          "search brands",
+          "estimate monthly ad spend",
+          "track creator-brand collabs"
+        ],
+        "next_steps": [
+          "demo outreach",
+          "market positioning around revenue/lead signals",
+          "platform expansion (IG/TikTok)"
+        ],
+        "pricing_targets": " ~$500/mo for mid-size agencies; $2K\u2013$5K+/mo for larger agencies; lead delivery and API access as enterprise upsells",
+        "data_sample": "sample dataset linked in drafted email (placeholder in draft)",
+        "monetization": "one-off data packages or subscription",
+        "priority": "high",
+        "date_referenced": "2025-05-06",
+        "metrics": "Largest searchable corpus claimed (millions of rows), partnerships with creators (~300k avg followers), early revenue from creator management, shifting GTM to agencies",
+        "stage": "productization / pre-revenue -> early sales experiments",
+        "possible_uses": [
+          "API for lead feeds",
+          "Predictive media-buying",
+          "Creator finance analytics product"
+        ],
+        "short_term_target": "Ship public beta by 2025-06-24",
+        "kpi_short_term": "50 MAU, \u22653 paying agencies",
+        "monetization_paths": [
+          "agency (managed campaigns $2K\u20135K+/month)",
+          "SaaS ($99\u2013$299/mo + % on deals)",
+          "lead packs ($500+/week)",
+          "creator financing / revenue-share"
+        ],
+        "dependencies": "Availability and cleanliness of existing dataset",
+        "ICP_target": "influencer-marketing / creator-economy agencies and boutique growth agencies",
+        "data_source": "raw spreadsheets (user-provided)",
+        "last_active": "2025-08-09",
+        "competitor_noted": "sponsorships.so",
+        "positioning_refined": "focus on early signals / deal-origination (surface brands starting influencer campaigns + AI-generated media kits) rather than broad historical analytics",
+        "outreach_email_draft": "Cold-email to Superbloom refined: concise subject/body emphasizing exclusive influencer-intel (2\u20133 punchy bullets: vet creators, spot brands launching campaigns early, data-driven pitch materials). Binary CTA offered: 15-min call OR sample dataset focused on health/wellness.",
+        "email_subject_options": [
+          "Helping Superbloom win more wellness clients",
+          "Early signals: health & wellness brands just launching influencer campaigns",
+          "Tracking 100\u2019s of brands scaling to 6-figure influencer budgets",
+          "How Superbloom can spot brand budgets before competitors do"
+        ],
+        "email_cta_options": [
+          "15-minute call next week",
+          "Send a short sample dataset focused on health & wellness"
+        ],
+        "branding_candidates": [
+          "BrandSignal",
+          "CreatorGraph",
+          "CampaignRadar",
+          "InfluenceIQ",
+          "SignalFlow",
+          "Lumeo",
+          "Kairo"
+        ],
+        "outreach_email_draft_refined": "Refined a Superbloom-targeted cold outreach email (subject options, bullets, binary CTA). Assistant produced a cleaner, skim-friendly version for agency outreach.",
+        "last_outreach_target": "Superbloom",
+        "last_updated": "2025-08-22",
+        "last_activity": "2025-10-25",
+        "landing_page_url": "https://talon-koala-35509285.figma.site/",
+        "business_model": "clarified: sell realtime influencer/brand-spend intelligence as warm leads to influencer agencies / UGC agencies (agency-facing data product)",
+        "current_state": "LinkedIn one-line drafted; draft claimed dataset covering ~3,000+ brands and ~7,000 creators and earlier note of parsing 29M YouTube videos."
+      }
+    },
+    "timeline": [
+      {
+        "summary": "Fields updated: outreach_email_draft_refined, last_outreach_target, last_updated",
+        "type": "update"
+      },
+      {
+        "summary": "Outreach email draft refined for Superbloom; subject/options and a binary CTA were produced for agen",
+        "type": "update"
+      },
+      {
+        "summary": "Fields updated: description, status, last_activity",
+        "type": "update"
+      },
+      {
+        "summary": "Fields updated: landing_page_url, business_model",
+        "type": "update"
+      },
+      {
+        "summary": "New landing page mockup published and business-model preference reiterated (sell realtime warm leads",
+        "type": "update"
+      },
+      {
+        "summary": "Fields updated: description, current_state",
+        "type": "update"
+      },
+      {
+        "summary": "Fields updated: description, status, priority",
+        "type": "update"
+      },
+      {
+        "summary": "Raised in priority as the top quick-cash option (Hermes/SponsorFind outbound) for near-term revenue;",
+        "type": "update"
+      }
+    ],
+    "related": [
+      {
+        "name": "SponsorFind product roadmap (phase strategy)",
+        "type": "decision"
+      },
+      {
+        "name": "API RAG & Open-Source Library Integration",
+        "type": "project"
+      },
+      {
+        "name": "Generate near-term cash events (book calls / collect deposits)",
+        "type": "goal"
+      },
+      {
+        "name": "Cold-Email Autopilot",
+        "type": "tool"
+      },
+      {
+        "name": "AI value props for property managers",
+        "type": "concept"
+      },
+      {
+        "name": "GenAI / LLM interests & experiences (profile summary)",
+        "type": "concept"
+      },
+      {
+        "name": "Resume review (Parth Kocheta)",
+        "type": "event"
+      },
+      {
+        "name": "Multi-agent AI systems & business automation (exploration area)",
+        "type": "concept"
+      },
+      {
+        "name": "Lucid Academy",
+        "type": "organization"
+      },
+      {
+        "name": "Lucid Labs",
+        "type": "organization"
+      },
+      {
+        "name": "Guide to Cursor",
+        "type": "tool"
+      },
+      {
+        "name": "Instant AI Marketing Audit (MVP)",
+        "type": "project"
+      }
+    ],
+    "temporal": {
+      "status": "dormant",
+      "silence_days": 27.9,
+      "rhythm_days": 5.7,
+      "transitions": 65
+    }
+  },
+  "lucid_labs": {
+    "entity": {
+      "id": "733595db-8e7b-42c6-93c8-e117ee42d66e",
+      "name": "Lucid Labs",
+      "type": "organization",
+      "state": {
+        "description": "recent_assets_added includes 'Figma Make landing-page content prompts (agent-first)' and last_action_date set to 2026-01-31",
+        "model_details": "2-week sprints, weekly meetings, 10 dev hours/week per client, onboarding into education program",
+        "priority": "top",
+        "status": "active / candidate flagship",
+        "date_referenced": "2025-05-06",
+        "one_year_target": "$250k gross by 2026-05-25",
+        "stage": "operational / early productization",
+        "business_model_elements": [
+          "2-week scoped sprints (flat fee)",
+          "AI Dev Trial Program (no-risk client trials -> conversion)",
+          "Monthly subscription retainers",
+          "White-label & custom builds"
+        ],
+        "date": "2025-06-18",
+        "location": null,
+        "maturity": "early-stage; go-to-market assets created (marketing + product packaging)",
+        "notes": "User discussing pitching Lucid Labs as a pathway to productizing common agency workflows.",
+        "offerings": "AI automations, agent workflows, template automation kits",
+        "role": "operational / commercial vehicle",
+        "activity": "actively being developed / updated in recent conversations (2025-06-30)",
+        "pipeline": "services \u2192 platform \u2192 AgentOS",
+        "value_prop": "high-value vertical agents via app workflow logs; data collection is the moat",
+        "initial_MVP": "website + flyer shipped overnight",
+        "early_traction_note": "user-reported revenue/participation (mentioned but to be used sparingly in narrative)",
+        "last_activity_date": "2025-07-24",
+        "offers_added": [
+          "Inbound Leads on Autopilot (B2B lead gen: sourcing, enrichment, personalized outreach, booked calls)",
+          "AI Appointment Setter (auto-triage + scheduling of inbound inquiries)",
+          "Support Deflection Copilot (ingest KB, draft answers, auto-tag + escalation)",
+          "Content Engine (1 long video -> 30 shorts + captions/hooks + scheduling)",
+          "Internal Ops Copilot (SOP automation: Gmail/Sheets/Slack/Calendar connectors + approvals UI)",
+          "RAG Knowledge Base (document ingestion + citation-backed answers + confidence gating)",
+          "AI QA + Code Migration Fixer (detect deprecated API usage, suggest patches, CI integration)"
+        ],
+        "positioning": "lane-A / near-term revenue menu (buyer-ready, price/timeline CTAs included)",
+        "next_actions_recommended": "pick one offer, build outbound kit (2-sentence offer + single CTA), create 25-50 lead list, start messaging cadence",
+        "recent_assets_added": [
+          "Figma Make landing-page content prompts (agent-first, installable-growth-system messaging)"
+        ],
+        "last_action_date": "2026-01-31"
+      }
+    },
+    "timeline": [
+      {
+        "summary": "Updated from 2025-07-23-2 batch",
+        "type": "update"
+      },
+      {
+        "summary": "Moved from long-standing idea to overnight MVP (website + flyer) during a Christmas-Eve work session",
+        "type": "update"
+      },
+      {
+        "summary": "Updated from 2025-07-23-3 batch",
+        "type": "update"
+      },
+      {
+        "summary": "Updated from 2025-07-24 batch",
+        "type": "update"
+      },
+      {
+        "summary": "Fields updated: offers_added, positioning, next_actions_recommended",
+        "type": "update"
+      },
+      {
+        "summary": "Added a concrete, buyer-ready offer menu (7 discrete offers with outcomes, deliverables, timelines, ",
+        "type": "update"
+      },
+      {
+        "summary": "Fields updated: recent_assets_added, last_action_date",
+        "type": "update"
+      },
+      {
+        "summary": "Added content asset: Figma Make landing-page prompts tailored to an agent-first 'installed growth sy",
+        "type": "update"
+      }
+    ],
+    "related": [
+      {
+        "name": "Pulse\u2011Fi manuscript / non-contact vital-sign sensing project",
+        "type": "project"
+      },
+      {
+        "name": "Lucid Pod",
+        "type": "concept"
+      },
+      {
+        "name": "ArcitechtAI (Architecting Agent)",
+        "type": "project"
+      },
+      {
+        "name": "YC @ University of Maryland \u2014 talk & office-hours signup (attendance)",
+        "type": "event"
+      },
+      {
+        "name": "Memory vs Search/Recall",
+        "type": "concept"
+      },
+      {
+        "name": "Marketplace of micro-projects (freelancer listings)",
+        "type": "concept"
+      },
+      {
+        "name": "Lucid Academy",
+        "type": "organization"
+      },
+      {
+        "name": "Lucid Labs",
+        "type": "organization"
+      },
+      {
+        "name": "Guide to Cursor",
+        "type": "tool"
+      },
+      {
+        "name": "Pain-point ledger / business idea distillation",
+        "type": "concept"
+      },
+      {
+        "name": "sponsorFind",
+        "type": "project"
+      },
+      {
+        "name": "AI automation agency",
+        "type": "project"
+      }
+    ],
+    "temporal": {
+      "status": "active",
+      "silence_days": 0.6,
+      "rhythm_days": 7.0,
+      "transitions": 41
+    }
+  },
+  "pulse_fi": {
+    "entity": {
+      "id": "be2f114d-e24f-45ef-973c-9a558d0eddaf",
+      "name": "Pulse-Fi (Pulse\u2011Fi / Whisper \u2014 WiFi CSI vital-sign monitoring)",
+      "type": "project",
+      "state": {
+        "description": "kosmos_research_prompt created (2026-01-24); research_questions_summary added",
+        "last_activity": "2025-12-13",
+        "mvp_features": [
+          "Respiratory rate",
+          "Heart rate & heart-rate variability (HRV)",
+          "Sleep-apnea events",
+          "Real-time fall detection",
+          "Gait speed & sit-to-stand timing",
+          "Bed-exit / wandering alerts"
+        ],
+        "phase2_features": [
+          "Daily activity volume & step count",
+          "Posture-change quality (sit-to-stand power)",
+          "Room-level localization & occupancy",
+          "Sleep-stage distribution & limb-movement detection"
+        ],
+        "r_and_d_roadmap": [
+          "Gesture control / in-air handwriting",
+          "Full 3D pose / emotion inference (low clinical ROI; long-term)"
+        ],
+        "target_markets": [
+          "Consumer eldercare (adult-children notifications)",
+          "Nursing homes / long-term care facilities"
+        ],
+        "status": "concept / part of PhD work",
+        "stage": "early pilot / go-to-market preparation; booking-first-call funnel chosen over pre-orders",
+        "last_updated": "2025-08-03",
+        "notable_assets": [
+          "landing page plan",
+          "demo video script",
+          "Book-a-Call funnel decision"
+        ],
+        "recent_assets": [
+          "/mnt/data/pulsefi_diagrams/PulseFi_Patent_Diagrams.pdf",
+          "/mnt/data/pulsefi_diagrams/PulseFi_Diagrams_All_Assets.zip"
+        ],
+        "current_phase": "marketing / launch video creation",
+        "creative_direction": "story-driven (emotional mini-film)",
+        "uses_tool": "Veo 3 for video generation",
+        "models_targeted": "three saved PyTorch HR models (sequence lengths 80, 400, 2400)",
+        "batch_size": 64,
+        "location": "Google Colab Pro (T4, High-RAM)",
+        "fundraising_target_usd": 500000,
+        "fundraising_stage": "pre-seed (seeking $500k for pilots/validation)",
+        "materials_ready": [
+          "2 peer-reviewed papers",
+          "filed patent",
+          "working demo",
+          "pilot protocol",
+          "BAA/MSA",
+          "1-pager",
+          "90s demo"
+        ],
+        "implemented_in_code": true,
+        "behavior": [
+          "train once per seed on combined envs",
+          "test same weights on each of 3 envs (with ablations) before moving to next seed",
+          "per-seed checkpoint saving under save_dir/seed{SEED}/..."
+        ],
+        "fall_detection_method": "single-antenna unsupervised amplitude-only pipeline selected (burst trigger + post-event persistence + anomaly scoring)",
+        "market_headline": "$100B+ U.S. home-care / AgeTech framing added to investor-facing materials",
+        "bom_options": [
+          "Cloud inference: ~$49 BOM (pay-as-you-go compute)",
+          "Local SBC: ~$99 BOM (privacy-max, no outbound connectivity)"
+        ],
+        "saas_pricing_tiers": {
+          "1-5_rooms_monthly": 30,
+          "6-20_rooms_monthly": 26,
+          "21-50_rooms_monthly": 22,
+          "home_plan_monthly": 10
+        },
+        "margins": {
+          "hardware_gross_margin_est": "50-65%",
+          "saas_gross_margin_est": "85-90%"
+        },
+        "unit_economics_note": "CAC-payback framing clarified: <6 months payback claim conditioned on per-room CAC \u2264 $50 and no hardware subsidy",
+        "modeling_approach": "User decided to favor a front-end-heavy, deterministic, LSTM-free real-time pipeline (SVD/clutter removal \u2192 amplitude + phase-velocity streams \u2192 band-pass/Welch PSD \u2192 harmonic fusion \u2192 motion-aware tracker (Kalman or Viterbi)) for runtime-constrained deployment; dual-antenna AX2xx upgrade path (Intel AX210 / AX200 + external antennas) planned as higher-quality data source.",
+        "deployment": "Clarified device-per-room strategy using a single Intel AX210 module per room (AX210 in-hand / intended on-device NIC), explicitly relying on multipath from the AX210 capture rather than piggybacking on a home's existing APs.",
+        "patent_status": "user-reported: 15 USPTO provisional patent applications filed (reported during admissions-update discussion)",
+        "pitch_review_suggestions": "Assistant recommended conservative wording and explicit qualifiers for public/pitch claims: replace imprecise/highly rounded accuracy claims (e.g., '99.9% within 1.5 BPM') with dataset- and window-specific figures (example: '99.69% at 30 s on EHealth; 96.8% at 30 s on ESP-HR-CSI'), remove or avoid a specific '$30 Raspberry Pi' BOM price in messaging (use 'commodity Raspberry-Pi-class SBCs / ESP32-class MCUs' instead), and add explicit limitations: environment diversity, ground-truth device differences (Galaxy Watch 4 vs ECG), and single-person focus / no multi-person attribution yet.",
+        "next_action_recommended": "Update investor / interview copy to quote exact MAE/window numbers, remove exact low-dollar BOM claims, and add short limitations paragraph (env diversity, ground-truth, single-person focus).",
+        "pitch_deck_signal_slide": "Decision to include a 'Signal & Social Proof' slide (frame as signal, not traction) showing press and community interest; include Hacker News hero metric and conversion-row guidance (press->waitlist/pilot).",
+        "selected_press_logos_for_deck": [
+          "universityofcalifornia.edu (UCSC/UC flagship)",
+          "Tom's Hardware",
+          "Hackaday",
+          "MedicalXpress"
+        ],
+        "hacker_news_metrics": {
+          "points": 455,
+          "comments": 260,
+          "date": "2025-09-04"
+        },
+        "patent_diagrams_created": [
+          "PulseFi_Patent_Diagrams_PROPER.pdf (vector, /mnt/data)",
+          "PulseFi_patent_figures_v2.pdf (vector, /mnt/data)",
+          "PNG exports: fig1_geometry_v2.png, fig2_single_chain_hw_v2.png, fig3_single_chain_pipeline_v2.png, fig4_multi_hw_v2.png, fig5_multi_processing_v2.png, fig6_fall_v2.png, fig7_gait_v2.png, fig8_software_v2.png (all /mnt/data)"
+        ],
+        "recent_media_coverage": [
+          {
+            "outlet": "Yahoo (syndicated)",
+            "date": "2025-09-06"
+          },
+          {
+            "outlet": "CNET",
+            "date": "2025-09-08"
+          },
+          {
+            "outlet": "Tom's Hardware",
+            "date": "2025-09-06"
+          },
+          {
+            "outlet": "Interesting Engineering",
+            "date": "2025-09-02"
+          },
+          {
+            "outlet": "Earth.com",
+            "date": "2025-09-03"
+          }
+        ],
+        "traction": "6 inbound licensing inquiries (staged: ~3 NDA discussions, ~2 pilot-scoping conversations, ~1 LOI draft) and 5 research collaborators expressing interest in co-development / pilot support",
+        "license_interest": "Cairns Health referenced PulseFi alongside Echo Sense as the sensing tech under consideration for an exclusive healthcare/RPM license (noted 2025-09-28)",
+        "apnea_labeling_issue": "Found per-sample\u2192window mismatch in generator/stratification; recommended and provided window-level labeling patch implementations (majority/fraction rule, center-sample, exclude boundary windows, or seq-to-seq).",
+        "publications_note": "User provided explicit publication entries / venues: IEEE DCOSS-IoT '25 (first-author) and an IEEE T-MBE manuscript (first-author) and preprint link; these publication details were added to the draft research supplement.",
+        "recent_assets_added": [
+          "/mnt/data/merged_csi_with_vitals.csv",
+          "/mnt/data/merged_mobile_csi_with_vitals.csv"
+        ],
+        "label_mapping_method_applied": "per-sample -> second mapping: assign CSI sample at time t the label for interval [floor(t), floor(t)+1) (label_second = floor(t)+1).",
+        "merge_coverage_stats": {
+          "stationary": {
+            "total_rows": 28161,
+            "labeled_rows": 27775,
+            "unlabeled_rows": 386,
+            "coverage_pct": 98.63
+          },
+          "mobile": {
+            "total_rows": 15057,
+            "labeled_rows": 15057,
+            "unlabeled_rows": 0,
+            "coverage_pct": 100.0
+          }
+        },
+        "discovered_model_bundle": "user attempted to load heart_rate_pca20_model.pth; bundle contains model_state_dict, scaler (StandardScaler), pca_reducer (PCA -> 20), and sequence_length metadata = 275; training preprocessing: abs -> DC remove -> 3rd-order Butterworth bandpass [0.8,2.17] Hz -> Savitzky-Golay (window_length=11, polyorder=2); label = last timestep; stride=1",
+        "inference_mismatch_note": "Test data uses 128 complex subcarriers (~256 ints/row) and an observed ~90.9 Hz sampling; training expected pre-PCA input dimensionality of 191 amplitudes and effective fs_target = sequence_length / 5s (55 Hz for seq_len=275). Interpolating subcarriers/time degraded performance; recommendation: either capture with the same NIC/firmware/CSI extractor or refit scaler+PCA (and ideally fine-tune the LSTM) for this capture chain.",
+        "resume_exclusion_requested": true,
+        "manuscript_submission_status": "preparing submission to IEEE Transactions on Human-Machine Systems (T-HMS); revising manuscript to incorporate out-of-field feedback (clarify per-packet CSI pipeline, Fig.1 callouts, stride/normalization definitions, soften amplitude claims)",
+        "next_submission_recommendations": [
+          "IEEE Journal of Biomedical and Health Informatics (J-BHI)",
+          "Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies (IMWUT / UbiComp)",
+          "IEEE Internet of Things Journal (IoT-J)",
+          "IEEE Transactions on Instrumentation and Measurement (TIM)",
+          "IEEE Transactions on Human-Machine Systems (T-HMS)",
+          "ACM Transactions on Computing for Healthcare (ACM TCH)",
+          "IEEE Sensors Journal"
+        ],
+        "recommended_actions_for_resubmission": "add stronger real-world/clinical validation, tone down high-accuracy claims, add gold-standard comparisons and ecological recordings per venue guidance",
+        "used_in_MIT_supplemental": true,
+        "media_reach_ranking": [
+          "Yahoo",
+          "MSN",
+          "CNET",
+          "Earth.com",
+          "Live Science",
+          "Tom's Hardware",
+          "ZDNET",
+          "Notebookcheck",
+          "XDA Developers",
+          "IEEE Spectrum"
+        ],
+        "media_ranking_date": "2025-11-05",
+        "residency_prompt_draft_created": "2025-11-05",
+        "regulatory_path": "Clarified 510(k)-focused regulatory approach: target Class II 510(k) (likely 21 CFR 870.2300 'cardiac monitor') with predicates such as Xandar Kardian XK300, Circadia C200, or Sleepiz; clinical deployments with Harvard/MGH can be used to support a 510(k) if trials are designed/run to FDA expectations (IDE/GCP/IRB, pre-specified endpoints) and preceded by a Q-Submission (pre-sub).",
+        "recent_action": "Wrote and executed a Python merge script (pandas.merge_asof) to align 1 Hz vitals (spo2, pr, rr, pi) with ~70+ Hz Wi\u2011Fi CSI samples; converted label file to MM:SS CSV (t_sec, spo2, pr, rr, pi) and produced merged CSI+vitals CSV.",
+        "manuscript_revision_status": "in revision (citation pruning)",
+        "manuscript_citation_pruning": "LaTeX analysis run on 2025-11-17; ~30 singleton single-use citation keys identified as candidates to drop or merge; grouped suggestions produced by section for surgical trimming.",
+        "paper_full_text_views": 2400,
+        "views_time_series": {
+          "2025-09": 1550,
+          "2025-10": 650,
+          "2025-11_to_date": 200
+        },
+        "ground_truth_sensor_evaluation": "Evaluated pulse oximeter hardware options (Masimo, Nonin, BerryMed) as candidate ground-truth sources for vitals collection. Summary recommendation: prefer Nonin OEM integration (pleth stream + on-host RR derivation) for an open integration path; Masimo provides device-computed RRp but is closed and likely requires reverse-engineering or vendor partnership.",
+        "new_invitation": "Received invitation to present at Edge AI & Vision Innovation Forum (San Jose); opportunity to co-present with collaborator (Katia) and leverage industry networking and signal for fundraising/partnerships.",
+        "recent_media_coverage_added": [
+          "Live Science",
+          "TechSpot"
+        ],
+        "ownership_clarified": "Ownership clarified by user: PulseFi is the user's younger brother's project, not Parth's.",
+        "presentation_scheduled": "2025-12-09",
+        "presentation_preparation": "assistant provided recommended talk orientation and structure (audience: senior edge-AI engineers/product leaders; recommended 25% problem/market, 40% system/pipeline + validation, 20% productization/deployment, 15% roadmap/partnership asks); sample titles and an abstract were supplied.",
+        "fda_accuracy_guidance": "Clarified that the FDA does not require a blanket '5% MAPE' for home vital-sign monitors. For clinical/medical-grade devices FDA reviews commonly reference consensus standards that specify absolute or RMS error bounds (examples: ECG heart-rate meters often target within \u00b15 bpm or \u00b110%; PPG-derived pulse rate specs often report RMSD \u2264 ~3 bpm; respiratory-rate validations commonly aim for RMSD \u2248 1\u20132 breaths/min). Home-use adds human-factors/usability constraints but not a looser accuracy bar for medical-purpose devices; consumer/wellness devices may escape strict FDA accuracy enforcement if positioned outside medical claims.",
+        "development_contract_negotiation": "in progress (draft Development & Integration Agreement between PulseFi Inc. and Cairns Health)",
+        "proposed_contract_value_usd": 750000,
+        "proposed_payment_schedule_summary": "Week1 kickoff 20% ($150k); Weeks2-6 M1 25% ($187.5k); Weeks7-10 M2 20% ($150k); Weeks11-14 M3 20% ($150k); Weeks15-16 M4 10% ($75k; suggested split 4A/4B = $37.5k each); Week17 final handoff 5% ($37.5k).",
+        "proposed_royalty_structure": "Ask = 3% of Monthly Recurring Profit (MRP) or equivalent MRP-based fee; negotiation expectation = likely settle nearer 1.5%-2% unless exclusivity/IP terms are strong.",
+        "proposed_minimum_guarantee_schedule": "Ramped floor: $0/mo first 6 months after commercial launch; $2,500/mo months 7\u201318; $5,000/mo month 19 onward.",
+        "clinical_validation_sites_and_timing": "Clinical validation block planned ~month 3: deployment/validation at Mayo Clinic and Mass General Brigham (MGB).",
+        "milestone_timeline_weeks": "Week 1 kickoff; Weeks 2\u20136 Milestone 1 (single-person HR/RR); Weeks 7\u201310 Milestone 2 (presence/activity/context); Weeks 11\u201314 Milestone 3 (WiFi+radar integration); Weeks 15\u201316 Milestone 4 (deployment + validation); Week 17 final hardening/handoff.",
+        "deployment_hardware_note": "AX200 recommended as a practical prototyping/productization alternative to AX210; assistant recommended x86 mini-PCs (Intel N100/N150 / NUC/Minisforum/Beelink class with M.2 Key-E) or UP Squared Pro (native M.2 Key-E) for stable AX200/AX210 integration. Advised against Raspberry Pi for productization due to driver/PCIe/M.2 issues.",
+        "founder_share_transfer_date": "2025-12-06",
+        "founder_purchaser": "Pranay Kocheta",
+        "manuscript_issue": "Mis-referenced figures and tables discovered in the uploaded PDF: Savitzky\u2013Golay reference -> Fig.4 mismatch; Fig.6 references should point to Fig.5; Fig.7 missing; Table VII referenced incorrectly for EHealth HR/window-size (should cite Table I). Recommendation: correct figure/table cross-references in manuscript before submission/revision.",
+        "manuscript_review_timing_note": "Added expectation note based on today's query: target first-review for IEEE T-HMS \u224810 weeks (stated), but author-reported first-decision times can be much longer (examples ~9 months). This affects submission timing/expectations for the PulseFi manuscript being prepared for IEEE T-HMS.",
+        "development_contract_status": "user-reported: $500,000 development contract/executed agreement to deploy PulseFi into elderly-care over coming months (reported during admissions-update discussion)",
+        "patent_strategy": "platform patent (edge single-RX amplitude-only CSI sensing with structured denoising + lightweight temporal ML) as umbrella; dependent application patents planned for: vitals+apnea (HR/BR/HRV), fall detection, sleep/staging, ECG/arrhythmia reconstruction & detection, gait / long-term cognitive-health (HRV+sleep+gait) multimodal model; single-antenna embodiments emphasized to expand scope",
+        "patent_disclosure_status": "multiple 1-page invention-disclosure drafts produced (phase-stabilization / amplitude-only pipeline variants; vitals-specific gated-fusion angle), attorney asked to assemble list of inventions; user requested broad prior-art sweep focused on ML/AI twists",
+        "patent_prior_art_search_requested": true,
+        "nda_signed": {
+          "by": "Pranay Kocheta",
+          "date": "2025-01-16",
+          "counterparty": "CLINICOMP INTERNATIONAL, INC."
+        },
+        "kosmos_research_prompt": "created (master prompt linking PulseFi research goals to Kosmos AI Scientist)",
+        "kosmos_research_prompt_date": "2026-01-24",
+        "research_questions_summary": "Ranked, Kosmos-ready research threads produced across: (A) physics & hardware constraints (multipath advantage, antenna config, bandwidth/frequency tradeoffs, placement/occlusion), (B) signal-extraction (phase sanitization, motion decomposition, artifact isolation, time-frequency choices, packet-rate requirements), (C) model architecture & training (DSP vs deep models, self-supervised pretraining, transfer/calibration needs, uncertainty estimation, multi-task learning), and (D) deployment/calibration (zero-touch onboarding, quality gating, false-alarm economics, MVP scope)."
+      }
+    },
+    "timeline": [
+      {
+        "summary": "Fields updated: patent_status, development_contract_status",
+        "type": "update"
+      },
+      {
+        "summary": "User reported that 15 USPTO provisional patent applications have been filed and that a $500,000 deve",
+        "type": "contradiction"
+      },
+      {
+        "summary": "Fields updated: patent_strategy, patent_disclosure_status, patent_prior_art_search_requested",
+        "type": "update"
+      },
+      {
+        "summary": "Added an explicit patenting strategy and started producing invention-disclosure drafts; requested an",
+        "type": "update"
+      },
+      {
+        "summary": "Fields updated: nda_signed",
+        "type": "update"
+      },
+      {
+        "summary": "Recorded existence of an NDA signed on January 16, 2025 by Pranay Kocheta with CLINICOMP INTERNATION",
+        "type": "update"
+      },
+      {
+        "summary": "Fields updated: kosmos_research_prompt, kosmos_research_prompt_date, research_questions_summary",
+        "type": "update"
+      },
+      {
+        "summary": "Created a Kosmos-oriented master research prompt and a ranked set of Kosmos-ready research questions",
+        "type": "update"
+      }
+    ],
+    "related": [
+      {
+        "name": "Pulse-Fi (Pulse\u2011Fi / Whisper \u2014 WiFi CSI vital-sign monitoring)",
+        "type": "project"
+      },
+      {
+        "name": "MIT application",
+        "type": "decision"
+      },
+      {
+        "name": "Harvard supplementals",
+        "type": "goal"
+      },
+      {
+        "name": "Admissions update about PulseFi",
+        "type": "event"
+      },
+      {
+        "name": "Pulse-Fi launch video script revision",
+        "type": "event"
+      },
+      {
+        "name": "Merged vitals with CSI (merge script & CSV)",
+        "type": "event"
+      },
+      {
+        "name": "Pulse-Fi MVP must-have features",
+        "type": "decision"
+      },
+      {
+        "name": "Pranay Kocheta",
+        "type": "person"
+      },
+      {
+        "name": "LLM for WiFi Localization",
+        "type": "project"
+      },
+      {
+        "name": "Nayan",
+        "type": "person"
+      },
+      {
+        "name": "Photodiode audio-ADC / 'make it audio' PPG workflow",
+        "type": "concept"
+      },
+      {
+        "name": "Manuscript citation-reduction LaTeX analysis",
+        "type": "event"
+      }
+    ],
+    "temporal": {
+      "status": "dormant",
+      "silence_days": 7.1,
+      "rhythm_days": 2.0,
+      "transitions": 102
+    }
+  },
+  "hermes": {
+    "entity": {
+      "id": "87448a28-242d-4378-ac65-48106a4c12bc",
+      "name": "Hermes (working product name \u2014 prompt\u2192campaign cold-email tool)",
+      "type": "project",
+      "state": {
+        "description": "Prospecting / GTM product one-liner drafted for LinkedIn (turns a short product brief into outreach/campaign assets).",
+        "features_proposed": "Exa-based lead discovery, enrichment, campaign templates, AI-driven writing, fast UX, analytics/deliverability",
+        "branding_notes": "Hermes / Talaria / Hermes-shoe (winged sandal) visual motif under consideration; user prefers 'Hermes shoe' as logo.",
+        "commercial_thesis": "Huge timesaver for sales/recruiting; monetization via SaaS seats, credits, templates, enterprise integrations",
+        "domain": "cold-email automation / growth tooling",
+        "phase": "ideation",
+        "next_steps": "prioritize core use-case and define MVP stack",
+        "last_activity": "2025-11-08",
+        "date": "2025-07-10",
+        "status": "idea / early exploration",
+        "naming_preference": "verb-driven (SendHermes.ai / SendHermes.com style)",
+        "next_action": "domain availability + price scan",
+        "logo_prompt": "Iterative logo/icon prompts created (initial minimalist black/white version, followed by a requested color/gradiant/depth variant). User requested a more detailed, colorful, premium-feel winged-sandal icon for Hermes AI.",
+        "creative_assets": "Detailed 48-second launch storyboard (6 scenes, ~8s each) with beat-by-beat visuals, motion, audio cues, and narration draft produced; production-ready directions for animator/editor.",
+        "positioning": "clarified as AI-native messaging / lead-gen (not a general GTM planner); resume-ready product description / single-bullet writeup produced",
+        "last_updated": "2025-09-30",
+        "workflow_description": "Assistant drafted a polished product/marketing description positioning Hermes as an 'AI GTM Engineer' that accepts natural-language prompts and produces full-stack GTM output (research \u2192 strategy \u2192 execution \u2192 iteration).",
+        "backend_stack": "Detailed backend stack / tech choices added (Node.js/TypeScript API + Python workers, Fastify, LangGraph orchestration, Docker on GCP Cloud Run, Terraform, Postgres/Supabase + pgvector, Redis (BullMQ), GCS for artifacts, OpenAI primary with Anthropic fallback, MCP servers for modular tools, Playwright via Browserbase for scraping/automation, OpenTelemetry/Sentry for observability, GitHub Actions CI).",
+        "template_naming_options": "Assistant-proposed a shortlist of canonical names for reusable campaign templates (recommended: 'Hermes Blueprints' or 'Hermes Playbooks' for a strategic/productized tone; 'Hermes Spells' or 'Hermes Recipes' for a creative/AI-personality tone).",
+        "last_interaction_date": "2025-10-08",
+        "evaluation_framework": "added Hermes-specific tool-use evaluation framework (task/trace/call metrics, scoring rubric, logging JSON schema, gold-trace approach, fault-injection tests) and recommended instrumentation for per-call logging",
+        "recommended_architecture": "hybrid MCP: hosted MCP servers for SaaS connectors (Gmail/Calendar/CRMs/etc.) plus an optional local MCP workspace pack for on-device/private resources; hosted-first for outbound GTM scaling, local pack as privacy add-on",
+        "design_assets": "full landing-page copy + web-design prompt produced; trimmed design prompt to <=5000 characters; clarified Hermes scope as a browser-based cold-outbound tool (no knowledge-graph/Drive/Notion sync claims)",
+        "next_steps_suggested": "offered one-file React/Tailwind implementation from spec",
+        "design_assets_added": "Ghibli-style Hermes logo prompt / generated-image request (1024x1024) created",
+        "current_state": "LinkedIn one-line drafted; code present in GitHub (user repos)."
+      }
+    },
+    "timeline": [
+      {
+        "summary": "Assistant produced and added a Hermes-specific tool-use evaluation framework: metrics, scoring rubri",
+        "type": "update"
+      },
+      {
+        "summary": "Fields updated: recommended_architecture, last_activity",
+        "type": "update"
+      },
+      {
+        "summary": "Assistant and user discussion produced an explicit architecture recommendation: a hybrid MCP approac",
+        "type": "update"
+      },
+      {
+        "summary": "Fields updated: last_activity, design_assets, next_steps_suggested",
+        "type": "update"
+      },
+      {
+        "summary": "Design and copy deliverables produced and product scope clarified in-canonical messaging (cold-outbo",
+        "type": "update"
+      },
+      {
+        "summary": "Fields updated: last_activity, design_assets_added",
+        "type": "update"
+      },
+      {
+        "summary": "Design asset activity: user generated a Ghibli-style Hermes logo prompt/images; project last_activit",
+        "type": "update"
+      },
+      {
+        "summary": "Fields updated: description, current_state",
+        "type": "update"
+      }
+    ],
+    "related": [
+      {
+        "name": "Build autonomous GTM / growth AI agents",
+        "type": "goal"
+      },
+      {
+        "name": "Career alignment: Applied AI / Product & RAG roles",
+        "type": "belief"
+      },
+      {
+        "name": "Instantly (cold email platform)",
+        "type": "tool"
+      },
+      {
+        "name": "Hermes AI launch video storyboard session",
+        "type": "event"
+      },
+      {
+        "name": "GenAI / LLM interests & experiences (profile summary)",
+        "type": "concept"
+      },
+      {
+        "name": "Hermes landing-page & web-design prompt created",
+        "type": "event"
+      },
+      {
+        "name": "MCP (Model Context Protocol)",
+        "type": "tool"
+      },
+      {
+        "name": "Lucid Academy",
+        "type": "organization"
+      },
+      {
+        "name": "sponsorFind",
+        "type": "project"
+      },
+      {
+        "name": "Tool-use evaluation framework",
+        "type": "concept"
+      },
+      {
+        "name": "Frontier LLM training pipeline & architectures",
+        "type": "concept"
+      },
+      {
+        "name": "AI Innovators (program)",
+        "type": "project"
+      }
+    ],
+    "temporal": {
+      "status": "dead",
+      "silence_days": 56.5,
+      "rhythm_days": 4.5,
+      "transitions": 36
+    }
+  },
+  "pie": {
+    "entity": {
+      "id": "132bd928-10c2-4828-a8bb-61f281572611",
+      "name": "Personal Intelligence Engine (PIE)",
+      "type": "project",
+      "state": {
+        "description": "last_activity = 2025-12-27",
+        "phase": "ideation \u2192 MVP planning",
+        "primary_goals": [
+          "own & edit your context/memories",
+          "plug that context into any LLM",
+          "visualize evolution of thinking",
+          "proactive agentic features (connect dots)"
+        ],
+        "stage": "draft produced; user requested rewrite into their voice + additional deep web research and visuals",
+        "key_components": [
+          "MCP server",
+          "vector DB",
+          "graph DB",
+          "FastAPI",
+          "Streamlit UI"
+        ],
+        "next_step": "Deep literature & tool research into state-of-the-art LLM memory architectures and produce a concrete Python-based functional demo plan (prototype) focused on agent memory for unstructured, stream-of-consciousness chat. Priorities: recursive folder/project structuring, MCP (Context Manager) server integration, ingestion connectors (ChatGPT export, Drive, notes), and evaluation plan (LongMemEval + demo tasks).",
+        "status": "planning \u2192 short-term prototype sprint (move toward implementation)",
+        "alignment": "Personal Operating Systems / LifeOS for founders",
+        "goals": "dynamic linking, retrieval, agentic support for thinking",
+        "last_activity": "2025-12-27",
+        "current_focus": "MVP pipeline (Claude Code orchestration, Obsidian vault, FAISS + SQLite index) with future roadmap to a KG + multihop GraphRAG",
+        "priority": "high",
+        "last_active": "2025-08-09",
+        "ingestion_model": "Added concrete event-based ingestion design: keep raw conversations immutable; break chats into segments; emit time-series 'mention events' (conversation_id, segment_index, timestamp, exact_span_text, project_id/idea_id/tool_id, event_type); two-pass extraction per segment = (A) deterministic regex/heuristic exact-string extraction for domains/CamelCase/URLs, (B) LLM-structured pass that is given a sliding window of recent catalog entries to link segments to existing projects/ideas; build/update master catalog and use chronological sliding-window clustering to induce ontology; prefer a knowledge-graph / catalog+events view over blind vector-only RAG for high-specificity project matching.",
+        "privacy_rubric": "Added / clarified preference: keep raw, sensitive personal data (identity, precise location history, private communications, health records, biometrics, full behavioral logs, long-term memory corpus) under user control (local vault / end-to-end encrypted). Share only purpose-limited, derived signals with apps; support selective, revocable slices for external tools."
+      }
+    },
+    "timeline": [
+      {
+        "summary": "Fields updated: privacy_rubric",
+        "type": "update"
+      },
+      {
+        "summary": "Clarified and incorporated a concrete privacy/data-ownership rubric favoring local control of raw se",
+        "type": "update"
+      },
+      {
+        "summary": "Fields updated: next_step, status",
+        "type": "update"
+      },
+      {
+        "summary": "Next-step concretized from 'define 3-month MVP' to building a portable Context Manager (MCP) with hy",
+        "type": "update"
+      },
+      {
+        "summary": "Fields updated: next_step",
+        "type": "update"
+      },
+      {
+        "summary": "Next-step clarified to deep research + produce a Python-based functional prototype plan focused on a",
+        "type": "update"
+      },
+      {
+        "summary": "Fields updated: last_activity",
+        "type": "update"
+      },
+      {
+        "summary": "Project activity noted on the agent-memory paper and a fresh agent-memory discussion; updated last_a",
+        "type": "update"
+      }
+    ],
+    "related": [
+      {
+        "name": "Mem.ai",
+        "type": "tool"
+      },
+      {
+        "name": "Pulse-Fi (Pulse\u2011Fi / Whisper \u2014 WiFi CSI vital-sign monitoring)",
+        "type": "project"
+      },
+      {
+        "name": "LLM Agents and Alternatives discussion",
+        "type": "event"
+      },
+      {
+        "name": "Belief: natural-language headless browser agents are the future interface",
+        "type": "belief"
+      },
+      {
+        "name": "Perplexity Comet",
+        "type": "tool"
+      },
+      {
+        "name": "MCP (Model Context Protocol)",
+        "type": "tool"
+      },
+      {
+        "name": "Lucid Academy",
+        "type": "organization"
+      },
+      {
+        "name": "Lucid Labs",
+        "type": "organization"
+      },
+      {
+        "name": "GitHub - neo4j/neo4j",
+        "type": "tool"
+      },
+      {
+        "name": "Guide to Cursor",
+        "type": "tool"
+      },
+      {
+        "name": "Claude (Anthropic)",
+        "type": "tool"
+      },
+      {
+        "name": "Decision: event-based mention-events + master catalog (knowledge-graph) over vector-only RAG",
+        "type": "decision"
+      }
+    ],
+    "temporal": {
+      "status": "fading",
+      "silence_days": 35.6,
+      "rhythm_days": 5.8,
+      "transitions": 36
+    }
+  }
+}

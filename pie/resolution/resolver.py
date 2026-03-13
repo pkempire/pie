@@ -74,17 +74,20 @@ class EntityResolver:
             
             # Intra-batch dedup: if this resolved as "new", check against
             # other new entities already resolved in this batch
-            if result.action == "new":
+            if result.action == "create":
                 from pie.core.world_model import _normalize, _fuzzy_ratio
                 norm_name = _normalize(entity.name)
                 
                 merged = False
                 for known_name, idx in batch_new_names.items():
                     score = _fuzzy_ratio(entity.name, resolved[idx].extracted.name)
-                    # Also check containment
+                    # Containment check with safety: min 4 chars, word-like
                     norm_known = _normalize(resolved[idx].extracted.name)
-                    if norm_name in norm_known or norm_known in norm_name:
-                        score = max(score, 0.90)
+                    shorter_len = min(len(norm_name), len(norm_known))
+                    longer_len = max(len(norm_name), len(norm_known))
+                    if shorter_len >= 4 and shorter_len / longer_len >= 0.3:
+                        if norm_name in norm_known or norm_known in norm_name:
+                            score = max(score, 0.87)
                     
                     if score >= 0.85 and entity.type == resolved[idx].extracted.type:
                         logger.info(f"  Intra-batch dedup: '{entity.name}' -> '{resolved[idx].extracted.name}' (score={score:.2f})")
@@ -128,33 +131,56 @@ class EntityResolver:
     
     def _resolve_single(self, extracted: ExtractedEntity) -> ResolvedEntity:
         """Resolve a single extracted entity."""
-        
+
         # If the extraction LLM already identified a match, try that first
         if extracted.matches_existing:
             existing = self.world_model.find_by_name(extracted.matches_existing)
             if existing:
-                self._resolution_stats["extraction_hint_matches"] += 1
-                return ResolvedEntity(
-                    extracted=extracted,
-                    matched_entity_id=existing.id,
-                    action="update",
-                    match_method="extraction_hint",
-                    match_score=1.0,
-                )
-        
-        # Tier 1: String match
+                # TYPE GUARD: extraction hints can be wrong, especially with
+                # accumulated aliases pointing to the wrong entity.
+                types_match = extracted.type == existing.type.value
+                if types_match:
+                    self._resolution_stats["extraction_hint_matches"] += 1
+                    return ResolvedEntity(
+                        extracted=extracted,
+                        matched_entity_id=existing.id,
+                        action="update",
+                        match_method="extraction_hint",
+                        match_score=1.0,
+                    )
+                else:
+                    # Cross-type hint — don't blindly trust.
+                    # Verify via LLM before accepting.
+                    logger.info(
+                        f"  Extraction hint cross-type: '{extracted.name}' ({extracted.type}) "
+                        f"hinted at '{existing.name}' ({existing.type.value}) — LLM verify"
+                    )
+                    is_match = self._llm_verify_match(extracted, existing)
+                    if is_match:
+                        self._resolution_stats["extraction_hint_matches"] += 1
+                        return ResolvedEntity(
+                            extracted=extracted,
+                            matched_entity_id=existing.id,
+                            action="update",
+                            match_method="extraction_hint_verified",
+                            match_score=0.9,
+                        )
+                    # Fall through to normal resolution if LLM says no
+
+        # Tier 1: String match — ALWAYS filter by type (no exceptions for concepts)
         string_matches = self.world_model.find_by_string_match(
             name=extracted.name,
             threshold=self.config.string_match_threshold,
-            entity_type=extracted.type if extracted.type != "concept" else None,
+            entity_type=extracted.type,
         )
-        
+
         if string_matches:
             best_entity, best_score = string_matches[0]
-            if best_score >= 0.90:
-                # Very high confidence string match — accept without further verification
+            types_match = extracted.type == best_entity.type.value
+
+            if best_score >= 0.95:
+                # Near-exact name match — accept regardless of type
                 self._resolution_stats["string_matches"] += 1
-                # Add the extracted name as alias if different
                 if extracted.name.lower() != best_entity.name.lower():
                     self.world_model.add_alias(best_entity.id, extracted.name)
                 return ResolvedEntity(
@@ -164,6 +190,36 @@ class EntityResolver:
                     match_method="string",
                     match_score=best_score,
                 )
+            elif best_score >= 0.90 and types_match:
+                # High confidence + same type — accept
+                self._resolution_stats["string_matches"] += 1
+                if extracted.name.lower() != best_entity.name.lower():
+                    self.world_model.add_alias(best_entity.id, extracted.name)
+                return ResolvedEntity(
+                    extracted=extracted,
+                    matched_entity_id=best_entity.id,
+                    action="update",
+                    match_method="string",
+                    match_score=best_score,
+                )
+            elif best_score >= 0.90 and not types_match:
+                # High string match but cross-type — escalate to LLM
+                logger.info(
+                    f"  String match cross-type: '{extracted.name}' ({extracted.type}) "
+                    f"vs '{best_entity.name}' ({best_entity.type.value}) score={best_score:.2f} — LLM verify"
+                )
+                is_match = self._llm_verify_match(extracted, best_entity)
+                if is_match:
+                    self._resolution_stats["llm_matches"] += 1
+                    if extracted.name.lower() != best_entity.name.lower():
+                        self.world_model.add_alias(best_entity.id, extracted.name)
+                    return ResolvedEntity(
+                        extracted=extracted,
+                        matched_entity_id=best_entity.id,
+                        action="update",
+                        match_method="string+llm",
+                        match_score=best_score,
+                    )
             elif best_score >= self.config.string_match_threshold:
                 # Good string match but not perfect — could be a different entity with similar name
                 # Fall through to embedding check for confirmation
@@ -191,7 +247,7 @@ class EntityResolver:
             if embedding_matches:
                 best_entity, best_sim = embedding_matches[0]
                 
-                if best_sim >= self.config.embedding_ambiguous_threshold:
+                if best_sim >= self.config.embedding_accept_threshold:
                     # High similarity — but verify if types differ (common source of false merges)
                     types_match = extracted.type == best_entity.type.value
                     if types_match or not getattr(self.config, 'require_llm_for_cross_type', True):
@@ -221,7 +277,7 @@ class EntityResolver:
                                 match_score=best_sim,
                             )
                 
-                elif best_sim >= self.config.embedding_similarity_threshold:
+                elif best_sim >= self.config.embedding_reject_threshold:
                     # Ambiguous zone — need LLM verification (Tier 3)
                     # Combine with string match evidence if available
                     string_score = string_matches[0][1] if string_matches else 0
@@ -264,33 +320,50 @@ class EntityResolver:
         )
     
     def _llm_verify_match(self, extracted: ExtractedEntity, candidate: Entity) -> bool:
-        """Ask the LLM to verify if an extracted entity matches an existing one."""
+        """Ask the LLM to verify if an extracted entity matches an existing one.
+
+        Uses a strict prompt that defaults to "no" for ambiguous cases.
+        """
         state_desc_new = extracted.state.get("description", str(extracted.state)) if isinstance(extracted.state, dict) else str(extracted.state)
         state_desc_existing = candidate.current_state.get("description", str(candidate.current_state))
-        
-        prompt = f"""Are these the same entity? Answer with just "yes" or "no".
+
+        # Limit alias display to prevent prompt bloat from corrupted entities
+        aliases_display = ', '.join(candidate.aliases[:5]) if candidate.aliases else 'none'
+        if len(candidate.aliases) > 5:
+            aliases_display += f" (+{len(candidate.aliases) - 5} more)"
+
+        prompt = f"""Are Entity A and Entity B referring to the SAME real-world thing?
+
+IMPORTANT: Only answer "yes" if they are clearly the same entity — same name, same concept, same project, same person. Two things that are merely RELATED (e.g., "React" and "React Native", "Python" and "PyTorch") are NOT the same entity. If the entity types differ (e.g., one is a "tool" and one is a "concept"), that's strong evidence they are DIFFERENT entities.
+
+When in doubt, answer "no". It is much better to create a duplicate than to merge unrelated things.
 
 Entity A (newly extracted):
 - Name: {extracted.name}
 - Type: {extracted.type}
-- State: {state_desc_new}
+- Description: {state_desc_new[:500]}
 
 Entity B (existing in knowledge graph):
 - Name: {candidate.name}
 - Type: {candidate.type.value}
-- Aliases: {', '.join(candidate.aliases) if candidate.aliases else 'none'}
-- State: {state_desc_existing}
+- First 5 aliases: {aliases_display}
+- Description: {state_desc_existing[:500]}
 
-Same entity? (yes/no)"""
+Answer with ONLY "yes" or "no":"""
 
         try:
             result = self.llm.chat(
                 messages=[{"role": "user", "content": prompt}],
-                model="gpt-5-nano",  # cheap model for binary classification
+                model="gpt-4o-mini",
                 temperature=0.0,
             )
             answer = result["content"].strip().lower()
-            return answer.startswith("yes")
+            is_match = answer.startswith("yes")
+            if is_match:
+                logger.info(f"  LLM verified match: '{extracted.name}' <-> '{candidate.name}'")
+            else:
+                logger.info(f"  LLM rejected match: '{extracted.name}' <-> '{candidate.name}'")
+            return is_match
         except Exception as e:
             logger.warning(f"LLM verify failed: {e}")
-            return False
+            return False  # Default to "no" on failure

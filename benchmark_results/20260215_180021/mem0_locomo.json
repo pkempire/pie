@@ -1,0 +1,413 @@
+{
+  "provider": "mem0",
+  "benchmark": "locomo",
+  "accuracy": 27.0,
+  "total": 50,
+  "by_category": {
+    "multi_hop": 6.25,
+    "temporal": 71.42857142857143,
+    "single_hop": 36.8421052631579
+  },
+  "results": [
+    {
+      "question": "When did Caroline go to the LGBTQ support group?",
+      "gold": "7 May 2023",
+      "hypothesis": "Caroline went to the LGBTQ support group on 2026-02-12.",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 16803
+    },
+    {
+      "question": "When did Melanie paint a sunrise?",
+      "gold": "2022",
+      "hypothesis": "There is no specific memory indicating that Melanie painted a sunrise. Caroline has been busy painting and recently created a piece capturing sunset colors after visiting the beach. If you're referrin",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 2405
+    },
+    {
+      "question": "What fields would Caroline be likely to pursue in her educaton?",
+      "gold": "Psychology, counseling certification",
+      "hypothesis": "Considering Caroline's interests and goals, she might be likely to pursue fields such as:\n\n1. **Art and Design**: Given her love for drawing flowers and her willingness to try new forms of art like po",
+      "score": 0.5,
+      "category": "temporal",
+      "latency_ms": 7789
+    },
+    {
+      "question": "What did Caroline research?",
+      "gold": "Adoption agencies",
+      "hypothesis": "Caroline doesn't seem to have explicitly mentioned any specific research topics. However, given her love for reading and curiosity about others, particularly Melanie's motivation for running, she may ",
+      "score": 0.0,
+      "category": "single_hop",
+      "latency_ms": 1984
+    },
+    {
+      "question": "What is Caroline's identity?",
+      "gold": "Transgender woman",
+      "hypothesis": "Caroline has transitioned to a new gender identity and is proudly living as her true self.",
+      "score": 0.5,
+      "category": "single_hop",
+      "latency_ms": 1082
+    },
+    {
+      "question": "When did Melanie run a charity race?",
+      "gold": "The sunday before 25 May 2023",
+      "hypothesis": "You haven't mentioned a specific date for when Melanie ran a charity race. You have mentioned that Caroline ran a charity race for mental health on February 5, 2026, and that you're curious about Mela",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 2024
+    },
+    {
+      "question": "When is Melanie planning on going camping?",
+      "gold": "June 2023",
+      "hypothesis": "I'm not aware of any specific camping plans for Melanie. However, considering that you're planning a family outing or special summer plan with Melanie for summer 2026, that might be a perfect opportun",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 2688
+    },
+    {
+      "question": "What is Caroline's relationship status?",
+      "gold": "Single",
+      "hypothesis": "Caroline seems to be single, as she has mentioned going through a tough breakup.",
+      "score": 1.0,
+      "category": "single_hop",
+      "latency_ms": 2017
+    },
+    {
+      "question": "When did Caroline give a speech at a school?",
+      "gold": "The week before 9 June 2023",
+      "hypothesis": "Caroline gave a speech at a school event last week.",
+      "score": 0.5,
+      "category": "multi_hop",
+      "latency_ms": 1132
+    },
+    {
+      "question": "When did Caroline meet up with her friends, family, and mentors?",
+      "gold": "The week before 9 June 2023",
+      "hypothesis": "Caroline met up with her friends last weekend, February 11-12, 2026, when they went biking.",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 1415
+    },
+    {
+      "question": "How long has Caroline had her current group of friends for?",
+      "gold": "4 years",
+      "hypothesis": "Caroline has known her current group of friends for 4 years.",
+      "score": 1.0,
+      "category": "multi_hop",
+      "latency_ms": 1084
+    },
+    {
+      "question": "Where did Caroline move from 4 years ago?",
+      "gold": "Sweden",
+      "hypothesis": "I'm sorry, but I don't have information on where Caroline moved from 4 years ago.",
+      "score": 0.0,
+      "category": "single_hop",
+      "latency_ms": 1150
+    },
+    {
+      "question": "How long ago was Caroline's 18th birthday?",
+      "gold": "10 years ago",
+      "hypothesis": "Caroline's 18th birthday was on February 13, 2016. As of now, it is 2023, so her 18th birthday was 7 years ago.",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 1466
+    },
+    {
+      "question": "What career path has Caroline decided to persue?",
+      "gold": "counseling or mental health for Transgender people",
+      "hypothesis": "Caroline hasn't specified a particular career path yet. She's excited about continuing her education and exploring different career options. It seems like she's in the research phase, considering vari",
+      "score": 0.0,
+      "category": "single_hop",
+      "latency_ms": 1694
+    },
+    {
+      "question": "Would Caroline still want to pursue counseling as a career if she hadn't received support growing up",
+      "gold": "Likely no",
+      "hypothesis": "It's difficult to say for certain, but it's possible that Caroline's desire to pursue a career in counseling is strongly influenced by the positive impact her support network had on her life. The guid",
+      "score": 1.0,
+      "category": "temporal",
+      "latency_ms": 2925
+    },
+    {
+      "question": "What activities does Melanie partake in?",
+      "gold": "pottery, camping, painting, swimming",
+      "hypothesis": "Melanie is involved in creative activities, such as pottery, which you are interested in seeing. Additionally, she enjoys running, and Caroline is curious about her motivation for this. She also value",
+      "score": 0.5,
+      "category": "single_hop",
+      "latency_ms": 2203
+    },
+    {
+      "question": "When did Melanie sign up for a pottery class?",
+      "gold": "2 July 2023",
+      "hypothesis": "I'm not sure when Melanie signed up for a pottery class, but it sounds like she has been working on some wonderful pottery projects. You wanted to see her pottery project, and Caroline loves her potte",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 3110
+    },
+    {
+      "question": "When is Caroline going to the transgender conference?",
+      "gold": "July 2023",
+      "hypothesis": "Caroline attended an LGBTQ conference, which included aspects related to her transgender journey, on February 11, 2026. She was excited to meet others and learn about advocacy during this conference.",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 1633
+    },
+    {
+      "question": "Where has Melanie camped?",
+      "gold": "beach, mountains, forest",
+      "hypothesis": "I'm not sure where Melanie has camped, as we haven't discussed specific camping locations. However, if you're planning to explore nature together, maybe you can ask her about her past camping experien",
+      "score": 0.0,
+      "category": "single_hop",
+      "latency_ms": 2425
+    },
+    {
+      "question": "What do Melanie's kids like?",
+      "gold": "dinosaurs, nature",
+      "hypothesis": "You haven't mentioned specific interests or preferences of Melanie's kids yet. It might be helpful to chat with Melanie directly to learn more about what her kids enjoy. Given that kids often find joy",
+      "score": 0.0,
+      "category": "single_hop",
+      "latency_ms": 3486
+    },
+    {
+      "question": "When did Melanie go to the museum?",
+      "gold": "5 July 2023",
+      "hypothesis": "There is no specific information about Melanie visiting a museum from your shared memories. However, you visited MoMA on February 5, 2026. Perhaps you and Melanie could discuss planning a museum trip ",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 4201
+    },
+    {
+      "question": "When did Caroline have a picnic?",
+      "gold": "The week before 6 July 2023",
+      "hypothesis": "Caroline had a picnic last week.",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 1040
+    },
+    {
+      "question": "Would Caroline likely have Dr. Seuss books on her bookshelf?",
+      "gold": "Yes, since she collects classic children's books",
+      "hypothesis": "Yes, it's likely that Caroline would have Dr. Seuss books on her bookshelf. Given her love for children's literature, as indicated by her collection of kids' books including classics, Dr. Seuss classi",
+      "score": 1.0,
+      "category": "temporal",
+      "latency_ms": 2229
+    },
+    {
+      "question": "What books has Melanie read?",
+      "gold": "\"Nothing is Impossible\", \"Charlotte's Web\"",
+      "hypothesis": "I'm not sure which specific books Melanie has read since you haven't mentioned them. However, since you and Melanie are planning a trip and you love reading, perhaps you could discuss books during the",
+      "score": 0.0,
+      "category": "single_hop",
+      "latency_ms": 2410
+    },
+    {
+      "question": "What does Melanie do to destress?",
+      "gold": "Running, pottery",
+      "hypothesis": "Melanie seems to engage in creative outlets to destress, such as working on pottery projects. Art and creativity are important to her as a means of self-expression and growth, which likely contribute ",
+      "score": 0.5,
+      "category": "single_hop",
+      "latency_ms": 2416
+    },
+    {
+      "question": "When did Caroline go to the LGBTQ conference?",
+      "gold": "10 July 2023",
+      "hypothesis": "Caroline attended an LGBTQ conference on 2026-02-11.",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 1164
+    },
+    {
+      "question": "When did Melanie read the book \"nothing is impossible\"?",
+      "gold": "2022",
+      "hypothesis": "Based on what I know, there's no information about whether or when Melanie read the book \"Nothing is Impossible.\" Would you like any other assistance or have more details to share about Melanie's inte",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 2561
+    },
+    {
+      "question": "Would Caroline pursue writing as a career option?",
+      "gold": "LIkely no; though she likes reading, she wants to be a counselor",
+      "hypothesis": "It's possible that Caroline might consider pursuing writing as a career option, given her love for reading and interest in creative activities like art and poetry. Her motivation to use her story to h",
+      "score": 0.5,
+      "category": "temporal",
+      "latency_ms": 3636
+    },
+    {
+      "question": "When did Caroline go to the adoption meeting?",
+      "gold": "The friday before 15 July 2023",
+      "hypothesis": "Caroline attended a council meeting for adoption on 2026-02-11.",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 1127
+    },
+    {
+      "question": "When did Melanie go to the pottery workshop?",
+      "gold": "The Friday before 15 July 2023",
+      "hypothesis": "I don't have the exact date of when Melanie went to the pottery workshop, but I do know that you are interested in her pottery project and that Caroline loves her pottery bowls. If you want to find ou",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 2678
+    },
+    {
+      "question": "Would Melanie be considered a member of the LGBTQ community?",
+      "gold": "Likely no, she does not refer to herself as part of it",
+      "hypothesis": "Based on the memories provided, there is no specific information to determine whether Melanie identifies as a member of the LGBTQ community. User's memories highlight Melanie's creativity and their cl",
+      "score": 0.5,
+      "category": "temporal",
+      "latency_ms": 2869
+    },
+    {
+      "question": "When did Melanie go camping in June?",
+      "gold": "The week before 27 June 2023",
+      "hypothesis": "I'm sorry, but based on your previous entries, I don't have specific information about when Melanie went camping in June. If it's important, you might want to ask her directly or check with someone wh",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 2760
+    },
+    {
+      "question": "What LGBTQ+ events has Caroline participated in?",
+      "gold": "Pride parade, school speech, support group",
+      "hypothesis": "Caroline has participated in several LGBTQ+ events, including:\n\n1. Regular meetings and events with 'Connected LGBTQ Activists'.\n2. An LGBTQ school event where she encouraged student involvement and d",
+      "score": 1.0,
+      "category": "single_hop",
+      "latency_ms": 2865
+    },
+    {
+      "question": "When did Caroline go to a pride parade during the summer?",
+      "gold": "The week before 3 July 2023",
+      "hypothesis": "Based on your memories, Caroline did not attend a pride parade during the summer. She attended pride events in January 2026 and on February 12, 2026, but there is no mention of a summer pride parade.",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 1846
+    },
+    {
+      "question": "What events has Caroline participated in to help children?",
+      "gold": "Mentoring program, school speech",
+      "hypothesis": "Caroline is putting together a talent show for kids in March 2026. She is looking forward to seeing the kids have fun and feel pride in their performances. Her involvement in organizing this event ali",
+      "score": 0.0,
+      "category": "single_hop",
+      "latency_ms": 10378
+    },
+    {
+      "question": "When did Melanie go camping in July?",
+      "gold": "two weekends before 17 July 2023",
+      "hypothesis": "You haven't mentioned the specific dates when Melanie went camping in July. You might want to check with Melanie or Caroline for the exact details.",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 1531
+    },
+    {
+      "question": "When did Caroline join a mentorship program?",
+      "gold": "The weekend before 17 July 2023",
+      "hypothesis": "Caroline joined a mentorship program for LGBTQ youth on February 5, 2026.",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 1127
+    },
+    {
+      "question": "What did Melanie paint recently?",
+      "gold": "sunset",
+      "hypothesis": "Recently, Melanie painted a piece that Caroline described as having beautiful colors and a chilled-out sunset vibe.",
+      "score": 1.0,
+      "category": "single_hop",
+      "latency_ms": 2018
+    },
+    {
+      "question": "What activities has Melanie done with her family?",
+      "gold": "Pottery, painting, camping, museum, swimming, hiking",
+      "hypothesis": "You haven't mentioned any specific activities that Melanie has done with her family, but you did propose a family outing or special summer plan with her for summer 2026 to catch up and explore nature.",
+      "score": 0.0,
+      "category": "single_hop",
+      "latency_ms": 2642
+    },
+    {
+      "question": "In what ways is Caroline participating in the LGBTQ community?",
+      "gold": "Joining activist group, going to pride parades, participating in an art show, mentoring program",
+      "hypothesis": "Caroline is actively participating in the LGBTQ community through several meaningful ways. She is a member of 'Connected LGBTQ Activists', where she attends regular meetings and helps plan events and ",
+      "score": 0.5,
+      "category": "single_hop",
+      "latency_ms": 7886
+    },
+    {
+      "question": "How many times has Melanie gone to the beach in 2023?",
+      "gold": "2",
+      "hypothesis": "I'm sorry, I don't have that information about Melanie's activities in 2023.",
+      "score": 0.0,
+      "category": "single_hop",
+      "latency_ms": 1570
+    },
+    {
+      "question": "When did Caroline join a new activist group?",
+      "gold": "The Tuesday before 20 July 2023",
+      "hypothesis": "Caroline joined a new LGBTQ activist group on 2026-02-07.",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 1128
+    },
+    {
+      "question": "Would Melanie be more interested in going to a national park or a theme park?",
+      "gold": "National park; she likes the outdoors",
+      "hypothesis": "Based on your shared interests and the appreciation for exploring nature, Melanie might be more inclined to enjoy a trip to a national park. Your plans for a family outing to explore nature together s",
+      "score": 0.5,
+      "category": "temporal",
+      "latency_ms": 2384
+    },
+    {
+      "question": "What kind of art does Caroline make?",
+      "gold": "abstract art",
+      "hypothesis": "Caroline creates various types of art, primarily focusing on painting and drawing. She has been creating art since she was about 17 and is recently exploring abstract painting. Caroline finds art a po",
+      "score": 0.5,
+      "category": "single_hop",
+      "latency_ms": 2607
+    },
+    {
+      "question": "When is Melanie's daughter's birthday?",
+      "gold": "13 August",
+      "hypothesis": "I'm sorry, I don't have any information about Melanie's daughter or her birthday.",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 1407
+    },
+    {
+      "question": "When did Caroline attend a pride parade in August?",
+      "gold": "The Friday before 14 August 2023",
+      "hypothesis": "There is no record of Caroline attending a pride parade in August. The most recent pride parade she attended was on February 12, 2026.",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 2318
+    },
+    {
+      "question": "Would Melanie be considered an ally to the transgender community?",
+      "gold": "Yes, she is supportive",
+      "hypothesis": "Based on what you\u2019ve shared, it seems likely that Melanie is considered an ally to the transgender community. You've mentioned that you're thankful for her support and encouragement, and it sounds lik",
+      "score": 1.0,
+      "category": "temporal",
+      "latency_ms": 3673
+    },
+    {
+      "question": "Who supports Caroline when she has a negative experience?",
+      "gold": "Her mentors, family, and friends",
+      "hypothesis": "Caroline is supported by her friends, family, and mentors when she faces negative experiences. She receives love, guidance, and acceptance from her support network, which has been crucial in helping h",
+      "score": 1.0,
+      "category": "single_hop",
+      "latency_ms": 1942
+    },
+    {
+      "question": "What types of pottery have Melanie and her kids made?",
+      "gold": "bowls, cup",
+      "hypothesis": "Melanie and her kids have been quite creative with their pottery projects. They've made various types, including bowls and possibly other items that showcase Melanie's love for colors and patterns. Si",
+      "score": 0.5,
+      "category": "single_hop",
+      "latency_ms": 2869
+    },
+    {
+      "question": "When did Caroline and Melanie go to a pride fesetival together?",
+      "gold": "2022",
+      "hypothesis": "Caroline and her transgender teen mentee attended an LGBT pride event together in January 2026.",
+      "score": 0.0,
+      "category": "multi_hop",
+      "latency_ms": 1212
+    }
+  ]
+}

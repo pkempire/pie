@@ -1,0 +1,56 @@
+{
+  "config": {
+    "benchmarks": [
+      "locomo"
+    ],
+    "baselines": [
+      "naive_rag"
+    ],
+    "subset": 3,
+    "model": "gpt-4o",
+    "extraction_model": "gpt-4o-mini",
+    "judge_model": "gpt-4o"
+  },
+  "results": {
+    "locomo": {
+      "naive_rag": {
+        "summary": {
+          "overall": {
+            "accuracy": 62.5,
+            "total": 4,
+            "total_score": 2.5
+          },
+          "by_category": {
+            "multi_hop": {
+              "accuracy": 66.7,
+              "count": 3,
+              "score": 2.0
+            },
+            "temporal": {
+              "accuracy": 50.0,
+              "count": 1,
+              "score": 0.5
+            }
+          }
+        },
+        "timestamp": "2026-02-06T11:50:53.836099+00:00",
+        "raw_count": 4
+      }
+    }
+  },
+  "comparison": {
+    "benchmarks": {
+      "locomo": "LoCoMo"
+    },
+    "baselines": {
+      "naive_rag": "naive_rag"
+    },
+    "matrix": {
+      "locomo": {
+        "naive_rag": 62.5
+      }
+    }
+  },
+  "timestamp": "2026-02-06T11:50:53.836707+00:00",
+  "total_time_seconds": 7.780343055725098
+}

@@ -1,0 +1,2527 @@
+[
+  {
+    "session_index": 0,
+    "session_id": "conv-49_session_0",
+    "input_chars": 2330,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 May 18, 2023 at 13:47]\nEvan: Hey Evan, good to see you! What's new since we last met? Anything cool happening?\nEvan: Hey Sam! Good to see you! Yeah, I just got back from a trip with my family in my new Prius.\nEvan: Wow, not bad, what happened to the old one? Where'd you go, by the way?\n[Image: a photo of a person's feet on a car dashboard as the sun sets]\nEvan: My old prius broke down, dec",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's new car",
+          "type": "concept",
+          "state": {
+            "description": "Evan's new Prius broke down."
+          }
+        },
+        {
+          "name": "Evan's old car",
+          "type": "concept",
+          "state": {
+            "description": "Old Prius broke down, decided to get it repaired and sold."
+          }
+        },
+        {
+          "name": "Evan's family trip",
+          "type": "concept",
+          "state": {
+            "description": "Went to the Rockies with family."
+          }
+        },
+        {
+          "name": "Evan's hiking experience",
+          "type": "concept",
+          "state": {
+            "description": "Hiked the trails in the Rockies the week before May 18, 2023."
+          }
+        },
+        {
+          "name": "Evan's childhood hiking memory",
+          "type": "concept",
+          "state": {
+            "description": "Hiked with dad when he was ten, a special memory."
+          }
+        },
+        {
+          "name": "Evan's hobby: painting",
+          "type": "concept",
+          "state": {
+            "description": "Thinking about trying painting as a new hobby."
+          }
+        },
+        {
+          "name": "Sam's hobby: watercolor painting",
+          "type": "concept",
+          "state": {
+            "description": "Started watercolor painting a few years back."
+          }
+        },
+        {
+          "name": "Sam's friend",
+          "type": "person",
+          "state": {
+            "description": "Friend who got Sam into watercolor painting and gave advice."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 10,
+    "total_entities": 10
+  },
+  {
+    "session_index": 1,
+    "session_id": "conv-49_session_1",
+    "input_chars": 2673,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 May 24, 2023 at 19:11]\nEvan: Hey Sam, good to hear from you! Since we last talked, lots has been happening! Last weekend, I took my family on a road trip to Jasper. It was amazing! We drove through the Icefields Parkway and the glaciers and lakes were gorgeous. I got a shot of a glacier, check it out!\n[Image: a photo of a person holding a book in front of a lake]\nEvan: Hey Evan, looks amaz",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's road trip to Jasper",
+          "type": "concept",
+          "state": {
+            "description": "Evan took his family on a road trip to Jasper, driving through the Icefields Parkway, experiencing gorgeous glaciers and lakes."
+          }
+        },
+        {
+          "name": "Evan's cabin experience",
+          "type": "concept",
+          "state": {
+            "description": "Evan's road trip included a cozy cabin surrounded by mountains and forests, providing a peaceful retreat."
+          }
+        },
+        {
+          "name": "Sam's health check-up",
+          "type": "concept",
+          "state": {
+            "description": "Sam had a check-up with his doctor a few days ago, and the weight result was eye-opening."
+          }
+        },
+        {
+          "name": "Evan's fitness routine",
+          "type": "concept",
+          "state": {
+            "description": "Evan stays in shape by hitting the gym and taking his car out for a spin."
+          }
+        },
+        {
+          "name": "Sam's interest in painting",
+          "type": "concept",
+          "state": {
+            "description": "Sam wants to try painting as a calming activity."
+          }
+        },
+        {
+          "name": "Evan's painting experience",
+          "type": "concept",
+          "state": {
+            "description": "Evan has been painting for a few years, finding it helps him find peace."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 8,
+    "entities_new": 6,
+    "total_entities": 16
+  },
+  {
+    "session_index": 2,
+    "session_id": "conv-49_session_2",
+    "input_chars": 2643,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 June 06, 2023 at 15:55]\nEvan: Hey Sam! Long time no talk! How're you doing? Life's been quite the rollercoaster lately. I had a health scare last week \u2013 a sudden heart palpitation incident that really shook me up. It's been a serious wake-up call about my lifestyle.\n[Image: a photo of a person holding a bottle of medicine in their hand]\nEvan: Hey Evan, great hearing from you! Sorry about t",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's health scare",
+          "type": "concept",
+          "state": {
+            "description": "Evan had a health scare the week before November 21, 2023 and went to the hospital, but it was a misunderstanding."
+          }
+        },
+        {
+          "name": "Evan's diet changes",
+          "type": "concept",
+          "state": {
+            "description": "Evan is trying to eat less processed food and sugary snacks."
+          }
+        },
+        {
+          "name": "Evan's favorite snack",
+          "type": "concept",
+          "state": {
+            "description": "Evan loves ginger snaps."
+          }
+        },
+        {
+          "name": "Sam's diet habits",
+          "type": "concept",
+          "state": {
+            "description": "Sam is still enjoying soda and candy, despite knowing it's not the best habit."
+          }
+        },
+        {
+          "name": "Evan's health advice",
+          "type": "concept",
+          "state": {
+            "description": "Evan suggested Sam swap soda for flavored seltzer water and try dark chocolate with high cocoa content instead of candy."
+          }
+        },
+        {
+          "name": "Evan's support for Sam",
+          "type": "concept",
+          "state": {
+            "description": "Evan expresses pride and support for Sam's accomplishments."
+          }
+        },
+        {
+          "name": "Evan's workout motivation",
+          "type": "concept",
+          "state": {
+            "description": "Evan believes exercise clears the mind and is excited to help Sam get started with basic exercises."
+          }
+        },
+        {
+          "name": "Evan's supermarket experience",
+          "type": "concept",
+          "state": {
+            "description": "Evan had a frustrating experience at the supermarket where the self-checkout machines were all broken."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 8,
+    "total_entities": 24
+  },
+  {
+    "session_index": 3,
+    "session_id": "conv-49_session_3",
+    "input_chars": 2778,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 July 27, 2023 at 10:52]\nEvan: Hey Evan, I need to talk to you. My friends were mocking my weight last Friday and it hurt. That made me realize I need to make changes.\nEvan: Hey Sam, sorry about that. Don't worry, progress takes time. Let's work on it together.\nEvan: Thanks for the support, Evan. I'm working on my health and getting active!\nEvan: That's great, Sam! I struggled with my healt",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's weight mocking incident",
+          "type": "concept",
+          "state": {
+            "description": "Evan was mocked by friends about his weight on July 21, 2023."
+          }
+        },
+        {
+          "name": "Evan's health commitment",
+          "type": "concept",
+          "state": {
+            "description": "Evan is working on his health and getting active."
+          }
+        },
+        {
+          "name": "Evan's gym membership",
+          "type": "concept",
+          "state": {
+            "description": "Evan has a gym membership card as a reminder of his commitment to health."
+          }
+        },
+        {
+          "name": "Evan's dietary changes",
+          "type": "concept",
+          "state": {
+            "description": "Evan made dietary changes by cutting down on sugary snacks and eating more veggies and fruit."
+          }
+        },
+        {
+          "name": "Sam's dietary changes",
+          "type": "concept",
+          "state": {
+            "description": "Sam is reducing soda and candy intake."
+          }
+        },
+        {
+          "name": "Evan's snack suggestion",
+          "type": "concept",
+          "state": {
+            "description": "Evan suggests flavored seltzer with air-popped popcorn or fruit as low-calorie snacks."
+          }
+        },
+        {
+          "name": "Evan's current novel",
+          "type": "concept",
+          "state": {
+            "description": "Evan is reading 'The Great Gatsby'."
+          }
+        },
+        {
+          "name": "Sam's exercise plan",
+          "type": "concept",
+          "state": {
+            "description": "Sam plans to start going to the gym and exercising regularly starting July 28, 2023."
+          }
+        },
+        {
+          "name": "Evan's support",
+          "type": "concept",
+          "state": {
+            "description": "Evan reassured Sam that his support means a lot and that he is there for him."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 9,
+    "total_entities": 33
+  },
+  {
+    "session_index": 4,
+    "session_id": "conv-49_session_4",
+    "input_chars": 3572,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 August 07, 2023 at 19:52]\nEvan: Hey Sam, how's it going? Last week I went on a trip to Canada and something unreal happened - I met this awesome Canadian woman and it was like something out of a movie. She's incredible and being with her makes me feel alive.\n[Image: a photography of a couple walking through the snow holding hands]\nEvan: Congrats Evan! She must be something special! Being w",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's trip to Canada",
+          "type": "event",
+          "state": {
+            "description": "Evan went on a trip to Canada the week before August 07, 2023, where he met an incredible Canadian woman."
+          }
+        },
+        {
+          "name": "Evan's health issues",
+          "type": "health",
+          "state": {
+            "description": "Evan has been experiencing health issues that are affecting his quality of life."
+          }
+        },
+        {
+          "name": "Evan's favorite cookies",
+          "type": "food",
+          "state": {
+            "description": "Evan's weakness is ginger snaps."
+          }
+        },
+        {
+          "name": "Evan's healthy journey",
+          "type": "health",
+          "state": {
+            "description": "Evan has been prioritizing his health for two years (since 2021)."
+          }
+        },
+        {
+          "name": "Evan's fitness watch",
+          "type": "item",
+          "state": {
+            "description": "Evan uses a fitness watch that tracks his progress and motivates him."
+          }
+        },
+        {
+          "name": "Evan's motivation",
+          "type": "hobby",
+          "state": {
+            "description": "Evan is motivated by a thirst for adventure on interesting hikes."
+          }
+        },
+        {
+          "name": "Evan's bonsai tree",
+          "type": "item",
+          "state": {
+            "description": "Evan has a bonsai tree that symbolizes strength and resilience."
+          }
+        },
+        {
+          "name": "Evan's resilience philosophy",
+          "type": "belief",
+          "state": {
+            "description": "Evan believes that little things matter and build resilience over time."
+          }
+        },
+        {
+          "name": "Evan's consistency philosophy",
+          "type": "belief",
+          "state": {
+            "description": "Evan believes that consistency and perseverance will help achieve goals."
+          }
+        },
+        {
+          "name": "Sam's children",
+          "type": "family",
+          "state": {
+            "description": "Sam has children who bring him joy."
+          }
+        },
+        {
+          "name": "Sam's motivation",
+          "type": "hobby",
+          "state": {
+            "description": "Sam is motivated by various personal goals."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 11,
+    "total_entities": 44
+  },
+  {
+    "session_index": 5,
+    "session_id": "conv-49_session_5",
+    "input_chars": 3031,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 August 13, 2023 at 16:09]\nEvan: Hey Sam, long time no talk! Hope you're doing great. I just got back from a rad vacay with my new SO in Canada. Tried some awesome activities too - think hiking, biking... all that cool stuff. We loved exploring the outdoors together, it was so awesome!\n[Image: a photo of a tent pitched up in a grassy field]\nEvan: Hey Evan! Good to hear from you. Wow, Canada",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's vacation",
+          "type": "concept",
+          "state": {
+            "description": "Just got back from a vacation in Canada with his new significant other, enjoying activities like hiking and biking."
+          }
+        },
+        {
+          "name": "Evan's outdoor activities",
+          "type": "concept",
+          "state": {
+            "description": "Enjoyed exploring the outdoors during the vacation."
+          }
+        },
+        {
+          "name": "Sam's health challenges",
+          "type": "concept",
+          "state": {
+            "description": "Has been facing some health issues lately."
+          }
+        },
+        {
+          "name": "Sam's motivational quote",
+          "type": "concept",
+          "state": {
+            "description": "Quote: 'Don't fear it, just take the first step. It's been helping me move forward to healthier habits!'"
+          }
+        },
+        {
+          "name": "Evan's keys search",
+          "type": "concept",
+          "state": {
+            "description": "Has been searching for his keys for the last half hour."
+          }
+        },
+        {
+          "name": "Sam's dream",
+          "type": "concept",
+          "state": {
+            "description": "Had an amazing dream about soaring over skyscrapers."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 8,
+    "entities_new": 6,
+    "total_entities": 50
+  },
+  {
+    "session_index": 6,
+    "session_id": "conv-49_session_6",
+    "input_chars": 2860,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 August 15, 2023 at 16:20]\nEvan: Hey Sam, what's up? It's been a few days since we talked. How have you been? Life's been tough lately - my son had a soccer accident last Saturday and hurt his ankle, it was tough seeing him hurt! I just been looking after him and taking him to the doctor. As a dad, it's hard to watch your kid go through something like that.\n[Image: a photography of a person",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's son soccer accident",
+          "type": "event",
+          "state": {
+            "description": "Evan's son had a soccer accident on August 12, 2023, and hurt his ankle."
+          }
+        },
+        {
+          "name": "Evan's son's ankle condition",
+          "type": "health",
+          "state": {
+            "description": "Evan's son's ankle is getting better but still sore."
+          }
+        },
+        {
+          "name": "Evan's role as a dad",
+          "type": "belief",
+          "state": {
+            "description": "Evan finds it hard to watch his son go through tough situations."
+          }
+        },
+        {
+          "name": "Sam's tough week",
+          "type": "event",
+          "state": {
+            "description": "Sam had a tough week leading up to August 15, 2023."
+          }
+        },
+        {
+          "name": "Sam's doctor's appointment",
+          "type": "event",
+          "state": {
+            "description": "Sam had a doctor's appointment that served as a wake-up call to take better care of himself."
+          }
+        },
+        {
+          "name": "Sam's cooking class",
+          "type": "event",
+          "state": {
+            "description": "Sam is taking a cooking class to learn how to make healthier meals."
+          }
+        },
+        {
+          "name": "Sam's new recipes",
+          "type": "hobby",
+          "state": {
+            "description": "Sam has learned awesome recipes in his cooking class."
+          }
+        },
+        {
+          "name": "Evan's interest in healthy meals",
+          "type": "preference",
+          "state": {
+            "description": "Evan wants to eat healthy and is looking for recipes with more vegetables."
+          }
+        },
+        {
+          "name": "Sam's roasted vegetable recipe",
+          "type": "recipe",
+          "state": {
+            "description": "Sam has a tasty and easy roasted vegetable recipe to share."
+          }
+        },
+        {
+          "name": "Evan's health concerns",
+          "type": "health",
+          "state": {
+            "description": "Evan has been feeling a mix of emotions, somewhat concerned about his health."
+          }
+        },
+        {
+          "name": "Evan's motivation for positive changes",
+          "type": "belief",
+          "state": {
+            "description": "Evan is motivated to make positive changes in his life."
+          }
+        },
+        {
+          "name": "Evan's encouragement to Sam",
+          "type": "belief",
+          "state": {
+            "description": "Evan encourages Sam to keep moving forward slowly and take small steps."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 12,
+    "total_entities": 62
+  },
+  {
+    "session_index": 7,
+    "session_id": "conv-49_session_7",
+    "input_chars": 4540,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 August 19, 2023 at 18:17]\nEvan: Hey Evan, some big news: I'm on a diet and living healthier! Been tough, but I'm determined.\n[Image: a photo of a bowl of spinach, avocado, and strawberries]\nEvan: Wow, Sam, that's great news! Making changes to live healthier can be challenging, how has it been going?\nEvan: It's tough, but I'm sticking with it.\nEvan: Nice work, Sam! Proud of you sticking to ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's diet",
+          "type": "concept",
+          "state": {
+            "description": "Evan is limiting himself to just two ginger snaps a day."
+          }
+        },
+        {
+          "name": "Evan's energy levels",
+          "type": "concept",
+          "state": {
+            "description": "Evan has noticed more energy and less sluggishness after eating."
+          }
+        },
+        {
+          "name": "Evan's favorite recipe",
+          "type": "concept",
+          "state": {
+            "description": "Evan loves a flavorful and healthy grilled chicken and veggie stir-fry recipe."
+          }
+        },
+        {
+          "name": "Evan's painting classes",
+          "type": "concept",
+          "state": {
+            "description": "Evan started taking painting classes a few days ago and is enjoying them."
+          }
+        },
+        {
+          "name": "Evan's inspiration for painting",
+          "type": "concept",
+          "state": {
+            "description": "Evan was inspired to start painting after a friend gave him a painting."
+          }
+        },
+        {
+          "name": "Evan's painting style",
+          "type": "concept",
+          "state": {
+            "description": "Evan aims to capture the vibe of nature in his paintings, conveying the peacefulness of being outdoors."
+          }
+        },
+        {
+          "name": "Evan's favorite painting subject",
+          "type": "concept",
+          "state": {
+            "description": "Evan loves painting landscapes."
+          }
+        },
+        {
+          "name": "Evan's recent painting",
+          "type": "concept",
+          "state": {
+            "description": "Evan created a painting of a sunset over the ocean."
+          }
+        },
+        {
+          "name": "Evan's road trip memories",
+          "type": "concept",
+          "state": {
+            "description": "Evan enjoys being in nature, which brings back memories of road tripping in his trusty car."
+          }
+        },
+        {
+          "name": "Evan's skiing experience",
+          "type": "concept",
+          "state": {
+            "description": "Evan went skiing in Banff July 2023 and had a lot of fun."
+          }
+        },
+        {
+          "name": "Evan's winter activities",
+          "type": "concept",
+          "state": {
+            "description": "Evan enjoys skiing, snowboarding, and ice skating."
+          }
+        },
+        {
+          "name": "Sam's winter activities",
+          "type": "concept",
+          "state": {
+            "description": "Sam is interested in skiing but is unsure if his body can take it."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 12,
+    "total_entities": 74
+  },
+  {
+    "session_index": 8,
+    "session_id": "conv-49_session_8",
+    "input_chars": 3207,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 August 27, 2023 at 10:18]\nEvan: Hey Evan! Exciting news: I started a new diet and exercise routine last Monday and it's made a huge difference. I feel great! What about you, what changes have you made recently?\nEvan: Wow, Sam, great! Glad your new diet/exercise is going well. As for me, I've hit a sore spot lately. Twisted my knee last Friday and it's really painful, so it's been tough to ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's diet",
+          "type": "concept",
+          "state": {
+            "description": "Started a new diet last Monday, made a huge difference in how he feels."
+          }
+        },
+        {
+          "name": "Evan's exercise routine",
+          "type": "concept",
+          "state": {
+            "description": "Evan is getting regular exercise as part of prioritizing his health."
+          }
+        },
+        {
+          "name": "Evan's knee injury",
+          "type": "concept",
+          "state": {
+            "description": "Evan had a setback the week before October 06, 2023 due to a knee injury while playing basketball with kids."
+          }
+        },
+        {
+          "name": "Evan's physical therapy plans",
+          "type": "concept",
+          "state": {
+            "description": "Plans to get an appointment for physical therapy for his knee."
+          }
+        },
+        {
+          "name": "Evan's swimming activity",
+          "type": "concept",
+          "state": {
+            "description": "Keeping it low-key and swimming to stay active."
+          }
+        },
+        {
+          "name": "Evan's road trip",
+          "type": "concept",
+          "state": {
+            "description": "Took a road trip to the Rocky Mountains July 2023, enjoyed stunning scenery."
+          }
+        },
+        {
+          "name": "Evan's interest in nature",
+          "type": "concept",
+          "state": {
+            "description": "Loves being surrounded by nature, finds it tranquil and refreshing."
+          }
+        },
+        {
+          "name": "Evan's hiking plans",
+          "type": "concept",
+          "state": {
+            "description": "Evan and Sam plan to go on a hike together soon."
+          }
+        },
+        {
+          "name": "Sam's diet and exercise",
+          "type": "concept",
+          "state": {
+            "description": "Started a new diet and exercise routine recently."
+          }
+        },
+        {
+          "name": "Sam's concern for Evan",
+          "type": "concept",
+          "state": {
+            "description": "Expressed concern for Evan's knee injury and offered help."
+          }
+        },
+        {
+          "name": "Evan's book",
+          "type": "concept",
+          "state": {
+            "description": "Reading a book that gets better with every page."
+          }
+        },
+        {
+          "name": "Evan's recommendation for hiking",
+          "type": "concept",
+          "state": {
+            "description": "Suggested going for more hikes as a calming and fun activity."
+          }
+        },
+        {
+          "name": "Sam's interest in road trips",
+          "type": "concept",
+          "state": {
+            "description": "Loves being surrounded by nature and is interested in road trips."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 15,
+    "entities_new": 12,
+    "total_entities": 86
+  },
+  {
+    "session_index": 9,
+    "session_id": "conv-49_session_9",
+    "input_chars": 2524,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 September 11, 2023 at 09:28]\nEvan: Hey Sam! Long time no talk! Hope all is good. What have I been doing these past few weeks?\n[Image: a photo of a painting of a sunset over a body of water]\nEvan: Hey Evan! Nice to hear from you. Life has been an up and down ride. Have you seen the pic I posted of my before and after body as a result of the diet? Working to motivate others to make better ch",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's diet",
+          "type": "concept",
+          "state": {
+            "description": "Evan is making healthier choices as part of his diet."
+          }
+        },
+        {
+          "name": "Evan's cravings",
+          "type": "concept",
+          "state": {
+            "description": "Evan experiences cravings for sugary drinks and snacks due to stress, boredom, or comfort."
+          }
+        },
+        {
+          "name": "Evan's painting hobby",
+          "type": "concept",
+          "state": {
+            "description": "Evan finds painting to be a calming hobby that helps him de-stress."
+          }
+        },
+        {
+          "name": "Sam's diet",
+          "type": "concept",
+          "state": {
+            "description": "Sam is trying to make healthier choices but struggles with cravings."
+          }
+        },
+        {
+          "name": "Sam's cravings",
+          "type": "concept",
+          "state": {
+            "description": "Sam has cravings for sugary drinks and snacks, which he finds challenging."
+          }
+        },
+        {
+          "name": "Sam's interest in painting",
+          "type": "concept",
+          "state": {
+            "description": "Sam wants to try painting as a calming activity."
+          }
+        },
+        {
+          "name": "Evan's painting supplies recommendation",
+          "type": "concept",
+          "state": {
+            "description": "Evan recommends acrylic paints, brushes, a canvas/paper, and a palette for painting."
+          }
+        },
+        {
+          "name": "Painting session plan",
+          "type": "concept",
+          "state": {
+            "description": "Evan and Sam plan to have a painting session next Saturday."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 6,
+    "total_entities": 92
+  },
+  {
+    "session_index": 10,
+    "session_id": "conv-49_session_10",
+    "input_chars": 3585,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 October 06, 2023 at 20:57]\nEvan: Hey Evan, long time no see! I've started eating healthier - what's new with you? Picked up any new hobbies?\n[Image: a photography of a bowl of fruit with a striped cloth]\nEvan: Hey Sam! That's awesome about your healthier eating! For me, I had a setback last week - messed up my knee playing b-ball with the kids. It's been tough to stay active since. I reall",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's healthy eating",
+          "type": "concept",
+          "state": {
+            "description": "Evan has started eating healthier."
+          }
+        },
+        {
+          "name": "Evan's knee injury",
+          "type": "concept",
+          "state": {
+            "description": "Evan had a setback the week before October 06, 2023 due to a knee injury while playing basketball with kids."
+          }
+        },
+        {
+          "name": "Evan's physical therapy",
+          "type": "concept",
+          "state": {
+            "description": "Evan is undergoing physical therapy which has helped some with his knee."
+          }
+        },
+        {
+          "name": "Evan's indoor hobby",
+          "type": "concept",
+          "state": {
+            "description": "Evan enjoys watercolor painting as a way to relax."
+          }
+        },
+        {
+          "name": "Evan's recent adventure",
+          "type": "concept",
+          "state": {
+            "description": "Evan helped a lost tourist find their way and took an unexpected tour around the city."
+          }
+        },
+        {
+          "name": "Evan's sunset painting inspiration",
+          "type": "concept",
+          "state": {
+            "description": "Evan's sunset painting was inspired by a vacation a few years back."
+          }
+        },
+        {
+          "name": "Evan's cactus painting inspiration",
+          "type": "concept",
+          "state": {
+            "description": "Evan's cactus painting was inspired by a road trip September 2023."
+          }
+        },
+        {
+          "name": "Evan's self-expression through art",
+          "type": "concept",
+          "state": {
+            "description": "Evan expresses himself through painting, reflecting good memories or places he wants to go."
+          }
+        },
+        {
+          "name": "Sam's drawing hobby",
+          "type": "concept",
+          "state": {
+            "description": "Sam is learning how to draw."
+          }
+        },
+        {
+          "name": "Sam's writing hobby",
+          "type": "concept",
+          "state": {
+            "description": "Sam enjoys writing as a therapeutic way to express feelings."
+          }
+        },
+        {
+          "name": "Sam's phone issue",
+          "type": "concept",
+          "state": {
+            "description": "Sam has been frustrated with his new phone's navigation app malfunctioning."
+          }
+        },
+        {
+          "name": "Sam's journal writing",
+          "type": "concept",
+          "state": {
+            "description": "Sam writes in his journal to express his innermost thoughts and feelings."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 11,
+    "total_entities": 103
+  },
+  {
+    "session_index": 11,
+    "session_id": "conv-49_session_11",
+    "input_chars": 2424,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 October 08, 2023 at 15:09]\nEvan: Hey Evan, hope you're doing okay. I wanted to chat about something that's been bothering me lately... I went for a check-up Monday and my doc said my weight's a serious health risk - if I don't make changes soon, it can get worse. I know I made jokes about it, but it's really hitting me. Been having a hard time.\nEvan: Hey Sam, tough news. Yeah, our health c",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's health risk",
+          "type": "concept",
+          "state": {
+            "description": "Evan went for a check-up on October 2, 2023, and was informed by his doctor that his weight is a serious health risk."
+          }
+        },
+        {
+          "name": "Evan's weight change",
+          "type": "concept",
+          "state": {
+            "description": "Evan is aware that if he doesn't make changes soon regarding his weight, it can get worse."
+          }
+        },
+        {
+          "name": "Evan's weightlifting experience",
+          "type": "concept",
+          "state": {
+            "description": "Evan started lifting weights one year ago and has seen some gains."
+          }
+        },
+        {
+          "name": "Sam's interest in weightlifting",
+          "type": "concept",
+          "state": {
+            "description": "Sam expressed interest in getting into weightlifting."
+          }
+        },
+        {
+          "name": "Evan's advice on weightlifting",
+          "type": "concept",
+          "state": {
+            "description": "Evan advised Sam to start with good form and technique, find a trainer, and begin with something small."
+          }
+        },
+        {
+          "name": "Evan's encouragement",
+          "type": "concept",
+          "state": {
+            "description": "Evan encouraged Sam to stay consistent with his workout routine and to keep him posted on his progress."
+          }
+        },
+        {
+          "name": "Evan's belief in Sam",
+          "type": "concept",
+          "state": {
+            "description": "Evan expressed belief in Sam's ability to improve his health and encouraged him to stay positive."
+          }
+        },
+        {
+          "name": "Evan's support",
+          "type": "concept",
+          "state": {
+            "description": "Evan reassured Sam that his support means a lot and that he is there for him."
+          }
+        },
+        {
+          "name": "Evan's motivational words",
+          "type": "concept",
+          "state": {
+            "description": "Evan motivated Sam to believe in his abilities and stay motivated."
+          }
+        },
+        {
+          "name": "Evan's patience advice",
+          "type": "concept",
+          "state": {
+            "description": "Evan advised Sam to be patient with himself as he works on his health."
+          }
+        },
+        {
+          "name": "Evan's commitment to progress",
+          "type": "concept",
+          "state": {
+            "description": "Evan emphasized the importance of progress and encouraged Sam to keep pushing on."
+          }
+        },
+        {
+          "name": "Evan's farewell",
+          "type": "concept",
+          "state": {
+            "description": "Evan said goodbye to Sam, encouraging him to take it slow."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 11,
+    "total_entities": 114
+  },
+  {
+    "session_index": 12,
+    "session_id": "conv-49_session_12",
+    "input_chars": 2240,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 October 14, 2023 at 16:07]\nEvan: Hey Sam, how's it going? Been a while since we talked. Hope all is good.\n[Image: a photography of a painting of a person on a cliff]\nEvan: Hey Evan! It's been a rough week - I gave in and bought some unhealthy snacks. I feel kinda guilty. How's it going for you? That painting is awesome! Did you paint it?\n[Image: a photo of a person holding a box of sodas i",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's unhealthy snacks",
+          "type": "concept",
+          "state": {
+            "description": "Evan bought some unhealthy snacks and feels guilty about it."
+          }
+        },
+        {
+          "name": "Evan's painting",
+          "type": "concept",
+          "state": {
+            "description": "Evan created a painting reflecting a mix of emotions: sad, mad, and hopeful."
+          }
+        },
+        {
+          "name": "Evan's work stress",
+          "type": "concept",
+          "state": {
+            "description": "Evan is dealing with work stress and trying to stay motivated."
+          }
+        },
+        {
+          "name": "Evan's outdoor hobby suggestion",
+          "type": "concept",
+          "state": {
+            "description": "Evan suggested kayaking as a way to de-stress."
+          }
+        },
+        {
+          "name": "Evan's kayaking interest",
+          "type": "concept",
+          "state": {
+            "description": "Evan is considering trying kayaking for exercise and enjoyment of nature."
+          }
+        },
+        {
+          "name": "Evan's kayaking trip",
+          "type": "concept",
+          "state": {
+            "description": "Evan and a friend are planning to kayak on a lake."
+          }
+        },
+        {
+          "name": "Evan's kayaking location",
+          "type": "concept",
+          "state": {
+            "description": "Evan is traveling through Lake Tahoe for kayaking."
+          }
+        },
+        {
+          "name": "Sam's work stress",
+          "type": "concept",
+          "state": {
+            "description": "Sam is dealing with work stress."
+          }
+        },
+        {
+          "name": "Sam's kayaking plans",
+          "type": "concept",
+          "state": {
+            "description": "Sam is looking forward to kayaking in Lake Tahoe."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 9,
+    "total_entities": 123
+  },
+  {
+    "session_index": 13,
+    "session_id": "conv-49_session_13",
+    "input_chars": 2808,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 October 17, 2023 at 13:50]\nEvan: Hey Evan! I've been missing our chats. I had quite the health scare last weekend - ended up in the ER with a severe stomachache. Turns out, it was gastritis, which was pretty alarming. It was a wake-up call for me to start prioritizing my health, like adopting a more nutritious diet and getting regular exercise. On top of that, my phone's been giving me a h",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's health scare",
+          "type": "concept",
+          "state": {
+            "description": "Evan had a health scare the weekend before October 17, 2023, ended up in the ER with a severe stomachache, diagnosed with gastritis."
+          }
+        },
+        {
+          "name": "Evan's diet change",
+          "type": "concept",
+          "state": {
+            "description": "Evan is adopting a more nutritious diet after his health scare."
+          }
+        },
+        {
+          "name": "Evan's exercise routine",
+          "type": "concept",
+          "state": {
+            "description": "Evan is getting regular exercise as part of prioritizing his health."
+          }
+        },
+        {
+          "name": "Evan's phone issues",
+          "type": "concept",
+          "state": {
+            "description": "Evan's phone has been giving him a hard time, adding to his stress."
+          }
+        },
+        {
+          "name": "Evan's fitness focus",
+          "type": "concept",
+          "state": {
+            "description": "Evan has been focusing on fitness, which has been beneficial for his overall well-being."
+          }
+        },
+        {
+          "name": "Evan's lost tourist encounters",
+          "type": "concept",
+          "state": {
+            "description": "Evan has had multiple encounters with lost tourists, becoming the go-to person for tourists in need."
+          }
+        },
+        {
+          "name": "Evan's fitness tips",
+          "type": "concept",
+          "state": {
+            "description": "Evan suggests setting goals for exercise, finding enjoyable activities, and getting a buddy for motivation."
+          }
+        },
+        {
+          "name": "Evan's hiking plans",
+          "type": "concept",
+          "state": {
+            "description": "Evan and Sam plan to go on a hike together soon."
+          }
+        },
+        {
+          "name": "Evan's gym visit",
+          "type": "concept",
+          "state": {
+            "description": "Evan was at the gym October 16, 2023 and is gaining strength."
+          }
+        },
+        {
+          "name": "Evan's appreciation for nature",
+          "type": "concept",
+          "state": {
+            "description": "Evan believes hiking is a great way to bond with nature and push themselves."
+          }
+        },
+        {
+          "name": "Sam's support",
+          "type": "concept",
+          "state": {
+            "description": "Sam provides emotional support to Evan during his health struggles."
+          }
+        },
+        {
+          "name": "Evan's commitment to support Sam",
+          "type": "concept",
+          "state": {
+            "description": "Evan assures Sam that he is always there to support him."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 9,
+    "total_entities": 132
+  },
+  {
+    "session_index": 14,
+    "session_id": "conv-49_session_14",
+    "input_chars": 2054,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 October 25, 2023 at 14:56]\nEvan: Morning, Evan. I've been trying to keep up with my new health routine, but it's tough. My family's really pushing for it, and I feel so pressured.\nEvan: I hear you, Sam. It's important to have people who encourage you, but not stress you out. By the way, I just got back from my morning walk. It really helps to start the day actively.\nEvan: Yeah, it's easier",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's health routine",
+          "type": "concept",
+          "state": {
+            "description": "Evan is trying to keep up with a new health routine, feeling pressured by family."
+          }
+        },
+        {
+          "name": "Evan's morning walk",
+          "type": "concept",
+          "state": {
+            "description": "Evan goes for a morning walk to start the day actively."
+          }
+        },
+        {
+          "name": "Evan's support system",
+          "type": "concept",
+          "state": {
+            "description": "Evan appreciates having a great support system."
+          }
+        },
+        {
+          "name": "Evan's impatience with results",
+          "type": "concept",
+          "state": {
+            "description": "Evan sometimes gets impatient with himself when wanting fast results."
+          }
+        },
+        {
+          "name": "Evan's progress philosophy",
+          "type": "concept",
+          "state": {
+            "description": "Evan believes that progress takes time and to take it one step at a time."
+          }
+        },
+        {
+          "name": "Evan's past health phase",
+          "type": "concept",
+          "state": {
+            "description": "Evan went through a health phase two years ago, changing his diet and starting to walk regularly."
+          }
+        },
+        {
+          "name": "Evan's focus on well-being",
+          "type": "concept",
+          "state": {
+            "description": "Evan started focusing more on well-being rather than quick results."
+          }
+        },
+        {
+          "name": "Evan's mindset transformation",
+          "type": "concept",
+          "state": {
+            "description": "Evan transformed by changing his mindset and letting go of pressure."
+          }
+        },
+        {
+          "name": "Evan's sense of freedom",
+          "type": "concept",
+          "state": {
+            "description": "Evan wants to feel a sense of freedom similar to what he has achieved."
+          }
+        },
+        {
+          "name": "Evan's celebration of small victories",
+          "type": "concept",
+          "state": {
+            "description": "Evan encourages celebrating small victories in the health journey."
+          }
+        },
+        {
+          "name": "Sam's support",
+          "type": "concept",
+          "state": {
+            "description": "Sam expresses appreciation for Evan's support in his health journey."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 10,
+    "total_entities": 142
+  },
+  {
+    "session_index": 15,
+    "session_id": "conv-49_session_15",
+    "input_chars": 3810,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 November 09, 2023 at 21:13]\nEvan: Hey Evan! Hope you're doing good. Got some good news to share - I'm a Weight Watchers coach in my group now! It's a pretty big accomplishment for me, feel really proud.\nEvan: Congrats Sam! That's awesome! I'm super proud of you. Becoming a Weight Watchers coach is a big deal. Keep going!\nEvan: Thanks, Evan! Appreciate your support. It's been a journey, and",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's job",
+          "type": "concept",
+          "state": {
+            "description": "unemployed due to downsizing"
+          }
+        },
+        {
+          "name": "Evan's vintage guitar",
+          "type": "concept",
+          "state": {
+            "description": "1968 Kustom K-200A vintage guitar received as a gift from a close friend."
+          }
+        },
+        {
+          "name": "Evan's sunset spot",
+          "type": "concept",
+          "state": {
+            "description": "A peaceful place close to Evan's home where he often goes to relax and unwind."
+          }
+        },
+        {
+          "name": "Sam's job",
+          "type": "concept",
+          "state": {
+            "description": "Weight Watchers coach in his group."
+          }
+        },
+        {
+          "name": "Sam's health journey",
+          "type": "concept",
+          "state": {
+            "description": "On a quest for better health, becoming a Weight Watchers coach is a significant step."
+          }
+        },
+        {
+          "name": "Evan's support for Sam",
+          "type": "concept",
+          "state": {
+            "description": "Evan expresses pride and support for Sam's accomplishments."
+          }
+        },
+        {
+          "name": "Evan's personal challenges",
+          "type": "concept",
+          "state": {
+            "description": "Evan has faced personal challenges since the last conversation."
+          }
+        },
+        {
+          "name": "Evan's favorite beach spot",
+          "type": "concept",
+          "state": {
+            "description": "A favorite spot by the beach where Evan enjoys watching sunsets."
+          }
+        },
+        {
+          "name": "Evan's sunset photo",
+          "type": "concept",
+          "state": {
+            "description": "A photo of a sunset taken the Friday before November 09, 2023 at Evan's favorite beach spot."
+          }
+        },
+        {
+          "name": "Evan's plan to visit sunset spot",
+          "type": "concept",
+          "state": {
+            "description": "Evan and Sam plan to visit the sunset spot together December 2023."
+          }
+        },
+        {
+          "name": "Evan's emotional state",
+          "type": "concept",
+          "state": {
+            "description": "Evan is keeping his spirits up and staying hopeful despite recent job loss."
+          }
+        },
+        {
+          "name": "Sam's support for Evan",
+          "type": "concept",
+          "state": {
+            "description": "Sam expresses happiness and support for Evan's marriage and upcoming honeymoon."
+          }
+        },
+        {
+          "name": "Evan's appreciation for Sam",
+          "type": "concept",
+          "state": {
+            "description": "Evan expresses gratitude for Sam's support."
+          }
+        },
+        {
+          "name": "Evan's excitement for future plans",
+          "type": "concept",
+          "state": {
+            "description": "Evan is excited about exploring the sunset spot with Sam."
+          }
+        },
+        {
+          "name": "Evan's emotional resilience",
+          "type": "concept",
+          "state": {
+            "description": "Evan finds peace in nature, especially during tough times."
+          }
+        },
+        {
+          "name": "Evan's friendship with Sam",
+          "type": "concept",
+          "state": {
+            "description": "Evan values his friendship with Sam and their supportive relationship."
+          }
+        },
+        {
+          "name": "Sam's encouragement",
+          "type": "concept",
+          "state": {
+            "description": "Sam encourages Evan to stay positive and offers to be there for him."
+          }
+        },
+        {
+          "name": "Evan's last job loss",
+          "type": "concept",
+          "state": {
+            "description": "Evan lost his job October 2023."
+          }
+        },
+        {
+          "name": "Evan's job search",
+          "type": "concept",
+          "state": {
+            "description": "Evan is currently on the hunt for a new job."
+          }
+        },
+        {
+          "name": "Evan's personal challenges",
+          "type": "concept",
+          "state": {
+            "description": "Evan has faced personal challenges since the last conversation."
+          }
+        },
+        {
+          "name": "Evan's motivation as a coach",
+          "type": "concept",
+          "state": {
+            "description": "Being a Weight Watchers coach will help Sam stay motivated and help others."
+          }
+        }
+      ],
+      "state_changes": [
+        {
+          "entity_name": "Evan's job",
+          "what_changed": "employment status",
+          "old_state": "employed",
+          "new_state": "unemployed due to downsizing",
+          "is_contradiction": false
+        }
+      ],
+      "relationships": []
+    },
+    "entities_found": 21,
+    "entities_new": 19,
+    "total_entities": 161
+  },
+  {
+    "session_index": 16,
+    "session_id": "conv-49_session_16",
+    "input_chars": 3435,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 November 21, 2023 at 19:30]\nEvan: Hey Ev! Long time no chat. How's it going? Hope all is well.\nEvan: Hey Sam, good to hear from you! Life's been a wild ride lately. Last week, I had a health scare and had to go to the hospital. They found something suspicious during a check-up, which freaked me out. Thankfully, it was all a misunderstanding, but it made me realize how important it is to ke",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's health scare",
+          "type": "concept",
+          "state": {
+            "description": "Evan had a health scare the week before November 21, 2023 and went to the hospital, but it was a misunderstanding."
+          }
+        },
+        {
+          "name": "Evan's realization about health",
+          "type": "concept",
+          "state": {
+            "description": "Evan realized the importance of keeping an eye on his health after the health scare."
+          }
+        },
+        {
+          "name": "Sam's discomfort",
+          "type": "concept",
+          "state": {
+            "description": "Sam has been dealing with discomfort that limits his movement."
+          }
+        },
+        {
+          "name": "Sam's diet changes",
+          "type": "concept",
+          "state": {
+            "description": "Sam has been trying to make changes to his diet."
+          }
+        },
+        {
+          "name": "Evan's fitness routine",
+          "type": "concept",
+          "state": {
+            "description": "Evan stays in shape by hitting the gym and taking his car out for a spin."
+          }
+        },
+        {
+          "name": "Sam's fitness goals",
+          "type": "concept",
+          "state": {
+            "description": "Sam's fitness goals have been hard to reach."
+          }
+        },
+        {
+          "name": "Evan's childhood island",
+          "type": "concept",
+          "state": {
+            "description": "Evan grew up on a small island that he considers his happy place."
+          }
+        },
+        {
+          "name": "Evan's appreciation for tranquil times",
+          "type": "concept",
+          "state": {
+            "description": "Evan finds peace and serenity in his childhood island."
+          }
+        },
+        {
+          "name": "Evan's supportive friendship with Sam",
+          "type": "concept",
+          "state": {
+            "description": "Evan values his supportive friendship with Sam during tough times."
+          }
+        },
+        {
+          "name": "Evan's full name",
+          "type": "person",
+          "state": {
+            "description": "Evan is one of the two speakers."
+          }
+        },
+        {
+          "name": "Sam's full name",
+          "type": "person",
+          "state": {
+            "description": "Sam is one of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 9,
+    "total_entities": 170
+  },
+  {
+    "session_index": 17,
+    "session_id": "conv-49_session_17",
+    "input_chars": 2156,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 December 05, 2023 at 20:16]\nEvan: Hey Sam, good to hear from you. I've hit a bit of a snag - my new Prius, the one I just bought, broke down. It's a bit of a stressor since I rely on it for my active lifestyle and road trips. It's frustrating when new things go awry so soon.\nEvan: Hey Evan, that's rough. Dealing with a new car breaking down is such a hassle, especially when it's your main ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's new car",
+          "type": "concept",
+          "state": {
+            "description": "Evan's new Prius broke down."
+          }
+        },
+        {
+          "name": "Evan's active lifestyle",
+          "type": "concept",
+          "state": {
+            "description": "Evan relies on his car for an active lifestyle and road trips."
+          }
+        },
+        {
+          "name": "Evan's Weight Watchers meeting",
+          "type": "concept",
+          "state": {
+            "description": "Evan attended a Weight Watchers meeting on December 4, 2023."
+          }
+        },
+        {
+          "name": "Evan's smoothie bowl",
+          "type": "concept",
+          "state": {
+            "description": "Evan enjoyed a smoothie bowl after the Weight Watchers meeting."
+          }
+        },
+        {
+          "name": "Evan's yoga plans",
+          "type": "concept",
+          "state": {
+            "description": "Evan is considering trying yoga for stress relief and flexibility."
+          }
+        },
+        {
+          "name": "Sam's support",
+          "type": "concept",
+          "state": {
+            "description": "Sam has been supportive of Evan's new endeavors."
+          }
+        },
+        {
+          "name": "Evan's flexibility improvement",
+          "type": "concept",
+          "state": {
+            "description": "Evan has improved flexibility and stress levels through yoga."
+          }
+        },
+        {
+          "name": "Evan's plans for yoga",
+          "type": "concept",
+          "state": {
+            "description": "Evan plans to try yoga based on Sam's suggestion."
+          }
+        },
+        {
+          "name": "Evan's stress from car issues",
+          "type": "concept",
+          "state": {
+            "description": "Evan feels stressed due to the car breaking down."
+          }
+        },
+        {
+          "name": "Evan's opportunity for new activities",
+          "type": "concept",
+          "state": {
+            "description": "Evan sees the car breakdown as an opportunity to explore new activities."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 8,
+    "total_entities": 178
+  },
+  {
+    "session_index": 18,
+    "session_id": "conv-49_session_18",
+    "input_chars": 2406,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 December 09, 2023 at 13:45]\nEvan: Hey Sam, hope you're doing good. Wanted to share some amazing news - my partner is pregnant! We're so excited! It's been a while since we had a kiddo around.\nEvan: Congrats, Ev! That's great news! Parenthood is so amazing. How are you feeling about it?\nEvan: So excited and a bit nervous! It's been a while since I had a toddler around but I'm really looking",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's partner's pregnancy",
+          "type": "concept",
+          "state": {
+            "description": "Evan's partner is pregnant, and they are excited about it."
+          }
+        },
+        {
+          "name": "Evan's first child",
+          "type": "concept",
+          "state": {
+            "description": "Evan remembers the joy of when his first child was born."
+          }
+        },
+        {
+          "name": "Evan's family memories collage",
+          "type": "concept",
+          "state": {
+            "description": "A collage of family memories including birthdays, holidays, and vacations."
+          }
+        },
+        {
+          "name": "Evan's family motto",
+          "type": "concept",
+          "state": {
+            "description": "The family's motto is 'Bring it on Home', emphasizing togetherness."
+          }
+        },
+        {
+          "name": "Evan's family reunion plans",
+          "type": "concept",
+          "state": {
+            "description": "Evan is planning a big family reunion next summer."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 7,
+    "entities_new": 5,
+    "total_entities": 183
+  },
+  {
+    "session_index": 19,
+    "session_id": "conv-49_session_19",
+    "input_chars": 2528,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 December 17, 2023 at 18:48]\nEvan: Hey Sam, what's up? Long time no see, huh? Lots has happened.\nEvan: Hey Evan! Long time no see. I'm doing okay, been through a few bumps. How about you?\nEvan: It's not easy for us right now, my son had an accident last Tuesday, he fell off his bike and it was rough. But he's doing better now. How are you dealing with all this?\n[Image: a photo of a young bo",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's son accident",
+          "type": "event",
+          "state": {
+            "description": "Evan's son had an accident last Tuesday, fell off his bike, but is doing better now."
+          }
+        },
+        {
+          "name": "Evan's hobby hiking",
+          "type": "hobby",
+          "state": {
+            "description": "Evan used to love hiking, but hasn't had the chance to do it in a while."
+          }
+        },
+        {
+          "name": "Evan's weight struggle",
+          "type": "health",
+          "state": {
+            "description": "Evan is struggling with his weight, which is affecting his confidence."
+          }
+        },
+        {
+          "name": "Evan's painting",
+          "type": "art",
+          "state": {
+            "description": "Evan finished a contemporary figurative painting emphasizing emotional state through expressive brushwork and vibrant colors."
+          }
+        },
+        {
+          "name": "Evan's friend",
+          "type": "person",
+          "state": {
+            "description": "A close friend of Evan who helped him get his painting published in the exhibition."
+          }
+        },
+        {
+          "name": "Sam's coping methods",
+          "type": "concept",
+          "state": {
+            "description": "Sam has been thinking about ways to cope with challenges after their last conversation."
+          }
+        },
+        {
+          "name": "Sam's comfort zone",
+          "type": "concept",
+          "state": {
+            "description": "Sam finds it tough to break out of his comfort zone."
+          }
+        },
+        {
+          "name": "Sam's emotional state",
+          "type": "health",
+          "state": {
+            "description": "Sam is dealing with challenges and has been through a few bumps."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 7,
+    "total_entities": 190
+  },
+  {
+    "session_index": 20,
+    "session_id": "conv-49_session_20",
+    "input_chars": 3459,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 December 26, 2023 at 16:25]\nEvan: Hey Evan! Long time no see, how's it going?\nEvan: Hey Sam! Long time no see! Been up and down lately, got married last week - how about you?\n[Image: a photography of a bride and groom kissing in front of a tree]\nEvan: Congratulations, Evan! Is that the woman from Canada?\nEvan: Yes, that's her, I don't know why we didn't get married before, because I was in",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's marriage",
+          "type": "event",
+          "state": {
+            "description": "Evan got married on December 19, 2023."
+          }
+        },
+        {
+          "name": "Evan's wife",
+          "type": "person",
+          "state": {
+            "description": "Evan's wife is from Canada."
+          }
+        },
+        {
+          "name": "Evan's belief in love at first sight",
+          "type": "belief",
+          "state": {
+            "description": "Evan believes in love at first sight, feeling a spark when he first saw his wife."
+          }
+        },
+        {
+          "name": "Evan's morning running",
+          "type": "hobby",
+          "state": {
+            "description": "Evan enjoys running in the mornings to clear his head."
+          }
+        },
+        {
+          "name": "Evan's painting",
+          "type": "concept",
+          "state": {
+            "description": "Evan created a painting reflecting a mix of emotions: sad, mad, and hopeful."
+          }
+        },
+        {
+          "name": "Evan's second painting",
+          "type": "concept",
+          "state": {
+            "description": "Evan painted a second piece with a sense of joy and freedom."
+          }
+        },
+        {
+          "name": "Sam's painting interest",
+          "type": "hobby",
+          "state": {
+            "description": "Sam sketches occasionally but hasn't created anything remarkable yet."
+          }
+        },
+        {
+          "name": "Evan's lost keys",
+          "type": "item",
+          "state": {
+            "description": "Evan has lost his keys again, which has become a weekly ritual."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 7,
+    "total_entities": 197
+  },
+  {
+    "session_index": 21,
+    "session_id": "conv-49_session_21",
+    "input_chars": 2877,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 December 31, 2023 at 11:00]\nEvan: Hey Evan! I\u2019m really getting into this healthier lifestyle\u2014just took my friends on an epic hiking trip last Friday!\n[Image: a photography of a man standing on a rock looking out over a valley]\nEvan: Hey Sam! That\u2019s fantastic\u2014nothing like a good hike to feel alive. We took the Prius for a long drive to the mountains last weekend. It was perfect until we got",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's healthier lifestyle",
+          "type": "concept",
+          "state": {
+            "description": "Evan is getting into a healthier lifestyle."
+          }
+        },
+        {
+          "name": "Evan's hiking trip",
+          "type": "event",
+          "state": {
+            "description": "Evan took friends on an epic hiking trip on December 29, 2023."
+          }
+        },
+        {
+          "name": "Evan's car",
+          "type": "concept",
+          "state": {
+            "description": "Evan took a Prius for a long drive to the mountains."
+          }
+        },
+        {
+          "name": "Evan's accident",
+          "type": "event",
+          "state": {
+            "description": "Evan's group got into a minor accident on the way back from the mountains."
+          }
+        },
+        {
+          "name": "Evan's marriage announcement",
+          "type": "event",
+          "state": {
+            "description": "Evan announced his marriage to his extended family on January 5, 2024."
+          }
+        },
+        {
+          "name": "Evan's work friends",
+          "type": "person",
+          "state": {
+            "description": "Evan's work friends have been a great support."
+          }
+        },
+        {
+          "name": "Evan's healthy snacks",
+          "type": "concept",
+          "state": {
+            "description": "Evan has been trying new healthy snacks."
+          }
+        },
+        {
+          "name": "Evan's cookie recipe",
+          "type": "concept",
+          "state": {
+            "description": "Evan has a recipe for awesome cookies."
+          }
+        },
+        {
+          "name": "Evan's energy balls recipe",
+          "type": "concept",
+          "state": {
+            "description": "Evan discovered a recipe for energy balls."
+          }
+        },
+        {
+          "name": "Evan's taste preference",
+          "type": "concept",
+          "state": {
+            "description": "Evan enjoys the taste of energy balls."
+          }
+        },
+        {
+          "name": "Evan's self-checkout issues",
+          "type": "concept",
+          "state": {
+            "description": "Evan has regular issues with the self-checkout at the store."
+          }
+        },
+        {
+          "name": "Sam's response to Evan's marriage",
+          "type": "concept",
+          "state": {
+            "description": "Sam expressed that Evan's work friends were thrilled to hear about his marriage."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 12,
+    "total_entities": 209
+  },
+  {
+    "session_index": 22,
+    "session_id": "conv-49_session_22",
+    "input_chars": 4337,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 January 06, 2024 at 13:32]\nEvan: Hey Sam, guess what? My partner and I told our extended fam about our marriage yesterday \u2013 it was so special! We've been totally overwhelmed by all their love and support.\n[Image: a photo of a man and a woman standing on a rocky beach]\nEvan: Congrats on the news, Evan! You two look so happy in the pic. These moments make life so wonderful; super stoked for ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's marriage announcement",
+          "type": "concept",
+          "state": {
+            "description": "Evan announced his marriage to his extended family on January 5, 2024."
+          }
+        },
+        {
+          "name": "Evan's partner",
+          "type": "person",
+          "state": {
+            "description": "Evan's partner who went snowshoeing with him."
+          }
+        },
+        {
+          "name": "Evan's family support",
+          "type": "concept",
+          "state": {
+            "description": "Evan feels overwhelmed by the love and support from his family regarding his marriage."
+          }
+        },
+        {
+          "name": "Evan's family get-together",
+          "type": "event",
+          "state": {
+            "description": "Evan is having a family get-together on January 6, 2024, enjoying homemade lasagna."
+          }
+        },
+        {
+          "name": "Evan's diet",
+          "type": "concept",
+          "state": {
+            "description": "Evan is limiting himself to just two ginger snaps a day."
+          }
+        },
+        {
+          "name": "Evan's cousin's wedding",
+          "type": "event",
+          "state": {
+            "description": "Evan shared a photo from his cousin's wedding, which he found super special."
+          }
+        },
+        {
+          "name": "Evan's honeymoon plans",
+          "type": "event",
+          "state": {
+            "description": "Evan and his partner are going to Canada for their honeymoon in February 2024."
+          }
+        },
+        {
+          "name": "Evan's honeymoon activities",
+          "type": "concept",
+          "state": {
+            "description": "Evan plans to ski, try local cuisine, and enjoy beautiful views during his honeymoon."
+          }
+        },
+        {
+          "name": "Evan's poutine experience",
+          "type": "concept",
+          "state": {
+            "description": "Evan plans to try poutine during his honeymoon in Canada."
+          }
+        },
+        {
+          "name": "Sam's support for Evan",
+          "type": "concept",
+          "state": {
+            "description": "Sam expresses happiness and support for Evan's marriage and upcoming honeymoon."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 7,
+    "total_entities": 216
+  },
+  {
+    "session_index": 23,
+    "session_id": "conv-49_session_23",
+    "input_chars": 3878,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 January 10, 2024 at 00:17]\nEvan: Hey Sam, hope you're doing good. Something funny happened last night.\nEvan: Hey Evan, what's up? What happened? Let me know.\nEvan: Yesterday I went out with my friends and had a bit too much to drink. I ended up doing something I regret and it involved someone's roses.\nEvan: What's up with that incident? All good now?\nEvan: Oof, Sam, so embarrassing! I had ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's embarrassing incident",
+          "type": "concept",
+          "state": {
+            "description": "Had a pee accident near some roses after drinking too much."
+          }
+        },
+        {
+          "name": "Evan's partner",
+          "type": "person",
+          "state": {
+            "description": "Evan's partner who went snowshoeing with him."
+          }
+        },
+        {
+          "name": "Evan's snowshoeing experience",
+          "type": "concept",
+          "state": {
+            "description": "Tried snowshoeing with partner, found it surprisingly fun."
+          }
+        },
+        {
+          "name": "Sam's meal plan",
+          "type": "concept",
+          "state": {
+            "description": "Made a meal plan and workout schedule to stay healthy."
+          }
+        },
+        {
+          "name": "Sam's doctor appointment",
+          "type": "concept",
+          "state": {
+            "description": "Plans to make an appointment with the doctor for advice."
+          }
+        },
+        {
+          "name": "Sam's diet advice",
+          "type": "concept",
+          "state": {
+            "description": "Planning to ask the doctor about a balanced diet plan."
+          }
+        },
+        {
+          "name": "Sam's exercise advice",
+          "type": "concept",
+          "state": {
+            "description": "Planning to ask the doctor about low-impact exercises."
+          }
+        },
+        {
+          "name": "Evan's salad inspiration",
+          "type": "concept",
+          "state": {
+            "description": "Got the salad idea from a nearby restaurant."
+          }
+        },
+        {
+          "name": "Evan's exercise tips",
+          "type": "concept",
+          "state": {
+            "description": "Suggested swimming, yoga, and walking as low-impact exercises."
+          }
+        },
+        {
+          "name": "Evan's motivation from The Godfather",
+          "type": "concept",
+          "state": {
+            "description": "Watched The Godfather and felt motivated to keep up with his routine."
+          }
+        },
+        {
+          "name": "Evan's yoga benefits",
+          "type": "concept",
+          "state": {
+            "description": "Yoga has helped Evan with stress and flexibility."
+          }
+        },
+        {
+          "name": "Evan's beach walks",
+          "type": "concept",
+          "state": {
+            "description": "Enjoys going on beach walks for exercise and relaxation."
+          }
+        },
+        {
+          "name": "Sam's recurring dream",
+          "type": "concept",
+          "state": {
+            "description": "Had a recurring dream about flying over skyscrapers."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 15,
+    "entities_new": 12,
+    "total_entities": 228
+  },
+  {
+    "session_index": 24,
+    "session_id": "conv-49_session_24",
+    "input_chars": 3205,
+    "input_preview": "[Speakers: Evan and Sam]\nUse their FULL NAMES (Evan, Sam) in entity names, never abbreviations.\n\n[Session \u2014 January 11, 2024 at 21:37]\nEvan: Hey Evan, been a few days since we last chatted. Hope you're doing OK. A lot's happened since then. Got issues with my health, it's been rough. Feels like this weight's keeping me from fully living. Trying to stay positive, not easy.\nEvan: Hey Sam, sorry to hear about your health. It's tough when it gets in the way of life. You're being positive, but rememb",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Evan's health issues",
+          "type": "concept",
+          "state": {
+            "description": "Evan has been experiencing health issues that are affecting his quality of life."
+          }
+        },
+        {
+          "name": "Evan's positive attitude",
+          "type": "concept",
+          "state": {
+            "description": "Evan is trying to stay positive despite his health challenges."
+          }
+        },
+        {
+          "name": "Evan's embarrassing night",
+          "type": "concept",
+          "state": {
+            "description": "Evan had to apologize to his partner for an embarrassing drunken night."
+          }
+        },
+        {
+          "name": "Evan's partner's reaction",
+          "type": "concept",
+          "state": {
+            "description": "Evan's partner was not thrilled about the rose bushes incident but understood it was an accident."
+          }
+        },
+        {
+          "name": "Evan's low-impact exercises",
+          "type": "concept",
+          "state": {
+            "description": "Evan has not found any low-impact exercises he enjoys."
+          }
+        },
+        {
+          "name": "Evan's car rides",
+          "type": "concept",
+          "state": {
+            "description": "Evan has been enjoying car rides lately to relax and enjoy the view."
+          }
+        },
+        {
+          "name": "Evan's nature experience",
+          "type": "concept",
+          "state": {
+            "description": "Evan finds being in nature helps him relax and get fresh air away from the city."
+          }
+        },
+        {
+          "name": "Evan's camping trip",
+          "type": "concept",
+          "state": {
+            "description": "Evan took a memorable camping trip last summer where he enjoyed an amazing sunset."
+          }
+        },
+        {
+          "name": "Evan's kayaking experience",
+          "type": "concept",
+          "state": {
+            "description": "Evan had a great time kayaking and watching the sunset last summer."
+          }
+        },
+        {
+          "name": "Evan's nature rejuvenation",
+          "type": "concept",
+          "state": {
+            "description": "Evan believes being outdoors rejuvenates the mind and body."
+          }
+        },
+        {
+          "name": "Evan's spring photo",
+          "type": "concept",
+          "state": {
+            "description": "Evan took a photo last spring that reminded him of the beauty of nature during tough times."
+          }
+        },
+        {
+          "name": "Evan's appreciation for small things",
+          "type": "concept",
+          "state": {
+            "description": "Evan emphasizes the importance of finding joy in small moments."
+          }
+        },
+        {
+          "name": "Sam's support",
+          "type": "person",
+          "state": {
+            "description": "Sam provides emotional support to Evan during his health struggles."
+          }
+        },
+        {
+          "name": "Evan",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Sam",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 15,
+    "entities_new": 11,
+    "total_entities": 239
+  }
+]

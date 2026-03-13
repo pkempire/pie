@@ -1,0 +1,2809 @@
+[
+  {
+    "session_index": 0,
+    "session_id": "conv-42_session_0",
+    "input_chars": 2193,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 January 21, 2022 at 19:31]\nJoanna: Hey Joanna! Long time no see! What's up? Anything fun going on?\nJoanna: Hey Nate! Long time no see! I've been working on a project lately - it's been pretty cool. What about you - any fun projects or hobbies?\nJoanna: Hey Joanna! That's cool! I won my first video game tournament last week - so exciting!\nJoanna: Wow Nate! Congrats on winning! Tell me ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's hobby: writing",
+          "type": "concept",
+          "state": {
+            "description": "Joanna enjoys writing as a hobby."
+          }
+        },
+        {
+          "name": "Joanna's hobby: reading",
+          "type": "concept",
+          "state": {
+            "description": "Joanna enjoys reading as a hobby."
+          }
+        },
+        {
+          "name": "Joanna's hobby: watching movies",
+          "type": "concept",
+          "state": {
+            "description": "Joanna enjoys watching movies as a hobby."
+          }
+        },
+        {
+          "name": "Joanna's hobby: exploring nature",
+          "type": "concept",
+          "state": {
+            "description": "Joanna enjoys exploring nature as a hobby."
+          }
+        },
+        {
+          "name": "Nate's hobby: playing video games",
+          "type": "concept",
+          "state": {
+            "description": "Nate enjoys playing video games as a hobby."
+          }
+        },
+        {
+          "name": "Nate's hobby: watching movies",
+          "type": "concept",
+          "state": {
+            "description": "Nate enjoys watching movies as a hobby."
+          }
+        },
+        {
+          "name": "Nate's video game tournament win",
+          "type": "event",
+          "state": {
+            "description": "Nate won his first video game tournament on January 14, 2022."
+          }
+        },
+        {
+          "name": "Nate's favorite video game",
+          "type": "concept",
+          "state": {
+            "description": "Nate's favorite video game is Counter-Strike: Global Offensive."
+          }
+        },
+        {
+          "name": "Joanna's favorite movie genres",
+          "type": "concept",
+          "state": {
+            "description": "Joanna enjoys dramas and emotionally-driven films."
+          }
+        },
+        {
+          "name": "Nate's favorite movie genres",
+          "type": "concept",
+          "state": {
+            "description": "Nate loves fantasy and sci-fi movies."
+          }
+        },
+        {
+          "name": "Joanna's favorite movie recommendation",
+          "type": "concept",
+          "state": {
+            "description": "Joanna recommends a romantic drama about memory and relationships."
+          }
+        },
+        {
+          "name": "Joanna's movie watching history",
+          "type": "event",
+          "state": {
+            "description": "Joanna first watched the recommended movie around January 21, 2019."
+          }
+        },
+        {
+          "name": "Joanna's physical copy of the movie",
+          "type": "item",
+          "state": {
+            "description": "Joanna has a physical copy of the recommended movie."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 15,
+    "entities_new": 15,
+    "total_entities": 15
+  },
+  {
+    "session_index": 1,
+    "session_id": "conv-42_session_1",
+    "input_chars": 3541,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 January 23, 2022 at 14:01]\nJoanna: Hey Nate! Haven't talked in a few days. Crazy things happened to me!\nJoanna: Hi Joanna! Long time no see! What's been going on? You sound excited!\nJoanna: Woo! I finally finished my first full screenplay and printed it last Friday. I've been working on for a while, such a relief to have it all done!\n[Image: a photography of a book with a page of tex",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's screenplay",
+          "type": "concept",
+          "state": {
+            "description": "Joanna wrote a few bits for a screenplay that appeared on the big screen on June 4, 2022."
+          }
+        },
+        {
+          "name": "Joanna's film festival plans",
+          "type": "concept",
+          "state": {
+            "description": "Joanna plans to submit her screenplay to film festivals to attract producers and directors."
+          }
+        },
+        {
+          "name": "Joanna's turtles",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has turtles that bring her peace and require little care."
+          }
+        },
+        {
+          "name": "Joanna's allergy",
+          "type": "health",
+          "state": {
+            "description": "Allergic to turtles."
+          }
+        },
+        {
+          "name": "Joanna's hobbies",
+          "type": "hobby",
+          "state": {
+            "description": "Joanna engages in her hobbies to find peace and happiness."
+          }
+        },
+        {
+          "name": "Joanna's feelings about writing",
+          "type": "belief",
+          "state": {
+            "description": "Joanna believes writing helps her express herself and create wild worlds with awesome characters."
+          }
+        },
+        {
+          "name": "Nate's encouragement",
+          "type": "belief",
+          "state": {
+            "description": "Nate encourages Joanna to keep pushing forward despite her setbacks."
+          }
+        },
+        {
+          "name": "Nate's social activities",
+          "type": "concept",
+          "state": {
+            "description": "Nate has started hanging out with people outside of his usual circle at a tournament."
+          }
+        },
+        {
+          "name": "Nate's competitive relationships",
+          "type": "concept",
+          "state": {
+            "description": "Nate tends to stick around the more chill competitors at the tournament."
+          }
+        },
+        {
+          "name": "Nate's attitude towards winning",
+          "type": "belief",
+          "state": {
+            "description": "Nate plays for fun and does not expect to win big at the tournament."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 10,
+    "total_entities": 25
+  },
+  {
+    "session_index": 2,
+    "session_id": "conv-42_session_2",
+    "input_chars": 2894,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 February 07, 2022 at 09:27]\nJoanna: Hey Nate, long time no see! The screenplay I sent in to the film festival has been on my mind all day everyday. I keep bouncing between crazy emotions like relief, excitement and worry! Fingers crossed a producer or director falls in love with it and it ends up on the big screen - that would be awesome!\nJoanna: Hey Joanna! It is a big deal! I'm sur",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's screenplay",
+          "type": "concept",
+          "state": {
+            "description": "Screenplay submitted to a film festival, causing mixed emotions of relief, excitement, and worry."
+          }
+        },
+        {
+          "name": "Nate's support",
+          "type": "concept",
+          "state": {
+            "description": "Nate reminds Joanna that she has people cheering her on from the sidelines."
+          }
+        },
+        {
+          "name": "Nate's coconut milk ice cream",
+          "type": "concept",
+          "state": {
+            "description": "Nate's coconut milk ice cream is smooth, creamy, and dairy-free."
+          }
+        },
+        {
+          "name": "Nate's favorite snack",
+          "type": "concept",
+          "state": {
+            "description": "Nate's new favorite snack is coconut milk ice cream."
+          }
+        },
+        {
+          "name": "Nate's dairy-free dessert flavors",
+          "type": "concept",
+          "state": {
+            "description": "Nate enjoys coconut milk, chocolate, and mixed berry flavors for dairy-free desserts."
+          }
+        },
+        {
+          "name": "Joanna's dairy-free chocolate cake",
+          "type": "concept",
+          "state": {
+            "description": "Joanna loves making a dairy-free chocolate cake with raspberries."
+          }
+        },
+        {
+          "name": "Joanna's cooking skills",
+          "type": "concept",
+          "state": {
+            "description": "Joanna is talented in cooking and enjoys experimenting in the kitchen."
+          }
+        },
+        {
+          "name": "Joanna's movie recommendation",
+          "type": "concept",
+          "state": {
+            "description": "Recommended 'Little Women' to Nate."
+          }
+        },
+        {
+          "name": "Joanna's movie list",
+          "type": "concept",
+          "state": {
+            "description": "Joanna plans to add 'Little Women' to her list of movies to watch."
+          }
+        },
+        {
+          "name": "Joanna's conversation with Nate",
+          "type": "person",
+          "state": {
+            "description": "Joanna, one of the two speakers in the conversation."
+          }
+        },
+        {
+          "name": "Nate's conversation with Joanna",
+          "type": "person",
+          "state": {
+            "description": "Nate, one of the two speakers in the conversation."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 10,
+    "total_entities": 35
+  },
+  {
+    "session_index": 3,
+    "session_id": "conv-42_session_3",
+    "input_chars": 2292,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 February 25, 2022 at 13:07]\nJoanna: Hey Joanna! Sorry I haven't been around. I made my friend some ice cream and they loved it!\nJoanna: No worries, Nate! Glad to hear it. What flavor did you make?\nJoanna: I whipped up some chocolate and vanilla swirl.\n[Image: a photo of a person holding a chocolate and vanilla ice cream cone]\nJoanna: That looks delicious! Unfortunately, I can't have ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's ice cream making",
+          "type": "concept",
+          "state": {
+            "description": "Joanna made ice cream for her friend, who loved it."
+          }
+        },
+        {
+          "name": "Joanna's ice cream flavor",
+          "type": "concept",
+          "state": {
+            "description": "Joanna made chocolate and vanilla swirl ice cream."
+          }
+        },
+        {
+          "name": "Joanna's dairy allergy",
+          "type": "concept",
+          "state": {
+            "description": "Joanna cannot have dairy."
+          }
+        },
+        {
+          "name": "Joanna's dairy-free recipe request",
+          "type": "concept",
+          "state": {
+            "description": "Joanna asked Nate for a dairy-free ice cream recipe."
+          }
+        },
+        {
+          "name": "Nate's dairy-free recipe",
+          "type": "concept",
+          "state": {
+            "description": "Nate knows a recipe using coconut milk."
+          }
+        },
+        {
+          "name": "Joanna's dessert enthusiasm",
+          "type": "concept",
+          "state": {
+            "description": "Joanna is keen to try Nate's recipe and loves desserts."
+          }
+        },
+        {
+          "name": "Joanna's screenplay writing",
+          "type": "concept",
+          "state": {
+            "description": "Joanna started writing a new screenplay while waiting for feedback on her first one."
+          }
+        },
+        {
+          "name": "Joanna's new screenplay theme",
+          "type": "concept",
+          "state": {
+            "description": "The new screenplay is about a thirty-year-old woman on a journey of self-discovery after a loss."
+          }
+        },
+        {
+          "name": "Joanna's main character",
+          "type": "concept",
+          "state": {
+            "description": "The main character in Joanna's screenplay deals with loss and self-discovery."
+          }
+        },
+        {
+          "name": "Joanna's screenplay inspiration",
+          "type": "concept",
+          "state": {
+            "description": "Joanna's screenplay was inspired by her personal experiences."
+          }
+        },
+        {
+          "name": "Nate's support for Joanna",
+          "type": "concept",
+          "state": {
+            "description": "Expressed support and encouragement for Joanna's projects."
+          }
+        },
+        {
+          "name": "Joanna's hopes for her screenplay",
+          "type": "concept",
+          "state": {
+            "description": "Joanna hopes her screenplay gets noticed and makes it to the screen."
+          }
+        },
+        {
+          "name": "Nate's encouragement for Joanna",
+          "type": "concept",
+          "state": {
+            "description": "Nate wishes Joanna good luck with her screenplay."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 15,
+    "entities_new": 13,
+    "total_entities": 48
+  },
+  {
+    "session_index": 4,
+    "session_id": "conv-42_session_4",
+    "input_chars": 3262,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 March 18, 2022 at 18:59]\nJoanna: Hey Nate, it's been a minute! I wrapped up my second script, and the feels have been wild. Sometimes I'm so relieved, but other times I just feel anxious about what comes next. It's a mix of excitement and terror, thinking about my work getting noticed and hitting the big screen.\nJoanna: Hey Joanna! Awesome to hear from you! Congrats on wrapping up a ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's second script",
+          "type": "concept",
+          "state": {
+            "description": "Joanna wrapped up her second script, feeling a mix of excitement and anxiety about it getting noticed."
+          }
+        },
+        {
+          "name": "Joanna's pets",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has pets, referred to as 'little dudes', who got a new tank."
+          }
+        },
+        {
+          "name": "Joanna's allergy",
+          "type": "concept",
+          "state": {
+            "description": "Joanna is allergic to cockroaches."
+          }
+        },
+        {
+          "name": "Joanna's research for script",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has been doing research and networking non-stop for her script."
+          }
+        },
+        {
+          "name": "Nate's support",
+          "type": "concept",
+          "state": {
+            "description": "Nate provides support to Joanna throughout her script process."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 7,
+    "entities_new": 3,
+    "total_entities": 51
+  },
+  {
+    "session_index": 5,
+    "session_id": "conv-42_session_5",
+    "input_chars": 1926,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 March 24, 2022 at 13:43]\nJoanna: Hey Joanna! Long time no talk, how's it going? Crazy stuff's been happening since we last chatted.\nJoanna: Hey Nate! Been quite a ride - in a good way - had an audition yesterday for a writing gig.\nJoanna: Congrats! How did it go? Are you excited?\nJoanna: Thanks, Nate! It went alright. Mixed emotions - definitely excited but also a bit anxious. Keep t",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's audition",
+          "type": "event",
+          "state": {
+            "description": "Audition for a writing gig on March 23, 2022"
+          }
+        },
+        {
+          "name": "Joanna's mixed emotions",
+          "type": "concept",
+          "state": {
+            "description": "Feeling excited but also a bit anxious about the audition"
+          }
+        },
+        {
+          "name": "Joanna's video game tournament",
+          "type": "event",
+          "state": {
+            "description": "Joanna has been practicing for her next video game tournament."
+          }
+        },
+        {
+          "name": "Joanna's writing advice",
+          "type": "concept",
+          "state": {
+            "description": "Advice to read lots, try different genres, and practice writing to improve"
+          }
+        },
+        {
+          "name": "Nate's support",
+          "type": "concept",
+          "state": {
+            "description": "Offering support and encouragement to Joanna regarding her writing and audition"
+          }
+        },
+        {
+          "name": "Joanna's bookshelf",
+          "type": "concept",
+          "state": {
+            "description": "A bookshelf filled with books and magazines for writing inspiration"
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": [
+        {
+          "source": "Joanna's audition",
+          "target": "Nate's support",
+          "type": "supports",
+          "description": "Nate offers support to Joanna regarding her audition"
+        },
+        {
+          "source": "Joanna's writing advice",
+          "target": "Joanna's audition",
+          "type": "related_to",
+          "description": "Joanna gives writing advice to herself in the context of her audition"
+        }
+      ]
+    },
+    "entities_found": 6,
+    "entities_new": 5,
+    "total_entities": 56
+  },
+  {
+    "session_index": 6,
+    "session_id": "conv-42_session_6",
+    "input_chars": 1455,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 April 15, 2022 at 19:37]\nJoanna: Hey Jo, guess what I did? Dyed my hair last week - come see!\nJoanna: Wow, Nate! Can't wait to see it. Must feel so liberating! How're you feeling?\nJoanna: I'm so stoked about it! Check it out!\n[Image: a photography of a man with purple hair and glasses taking a selfie]\nJoanna: Wow, your new hair color looks amazing! What made you choose that shade? Te",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's hair color",
+          "type": "concept",
+          "state": {
+            "description": "Dyed hair bright and bold purple color"
+          }
+        },
+        {
+          "name": "Joanna's hiking experience",
+          "type": "concept",
+          "state": {
+            "description": "Went hiking and found amazing trails in her town, considers herself an expert hiker."
+          }
+        },
+        {
+          "name": "Joanna's writing projects",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has been busy with writing projects, which have become a huge part of her life."
+          }
+        },
+        {
+          "name": "Nate's support",
+          "type": "concept",
+          "state": {
+            "description": "Nate offered support to Joanna regarding her projects"
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 6,
+    "entities_new": 3,
+    "total_entities": 59
+  },
+  {
+    "session_index": 7,
+    "session_id": "conv-42_session_7",
+    "input_chars": 2901,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 April 17, 2022 at 18:44]\nJoanna: Hey Joanna! Haven't talked with you in a while - how's it going?\nJoanna: Hey Nate! Great to hear from you. I've been reading a lot in the past week! There's a lot of good books I forgot I owned.\nJoanna: Sounds fun! I probably also have loads of books I haven't read in years. Sounds like a blast from the past!\nJoanna: It really is! On a different note,",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's reading habits",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has been reading a lot in the past week and rediscovered many good books she owns."
+          }
+        },
+        {
+          "name": "Joanna's hometown hiking trail",
+          "type": "concept",
+          "state": {
+            "description": "Joanna found an awesome hiking trail in her hometown that she described as gorgeous."
+          }
+        },
+        {
+          "name": "Nate's hiking interest",
+          "type": "concept",
+          "state": {
+            "description": "Nate is not really into hiking but is curious to see what the trail looks like."
+          }
+        },
+        {
+          "name": "Joanna's appreciation for nature",
+          "type": "concept",
+          "state": {
+            "description": "Joanna is a huge fan of nature and finds it inspiring."
+          }
+        },
+        {
+          "name": "Joanna's pets",
+          "type": "concept",
+          "state": {
+            "description": "Joanna spends time with her pets, which helps her take a break from reality."
+          }
+        },
+        {
+          "name": "Joanna's hobbies",
+          "type": "concept",
+          "state": {
+            "description": "Joanna engages in her hobbies to find peace and happiness."
+          }
+        },
+        {
+          "name": "Joanna's turtles",
+          "type": "concept",
+          "state": {
+            "description": "Joanna loves her turtles and enjoys watching them play."
+          }
+        },
+        {
+          "name": "Nate's ice cream",
+          "type": "concept",
+          "state": {
+            "description": "Nate makes dairy-free ice cream that Joanna admires."
+          }
+        },
+        {
+          "name": "Joanna's lactose intolerance",
+          "type": "concept",
+          "state": {
+            "description": "Joanna is lactose intolerant and is trying out dairy-free options."
+          }
+        },
+        {
+          "name": "Joanna's ice cream recipe",
+          "type": "concept",
+          "state": {
+            "description": "Joanna is experimenting with flavors and made colorful bowls of coconut milk ice cream."
+          }
+        },
+        {
+          "name": "Joanna's cooking plans",
+          "type": "concept",
+          "state": {
+            "description": "Joanna plans to try making the ice cream tonight."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 8,
+    "total_entities": 67
+  },
+  {
+    "session_index": 8,
+    "session_id": "conv-42_session_8",
+    "input_chars": 3429,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 April 21, 2022 at 19:44]\nJoanna: Hey Nate! Long time no talk! I wanted to tell ya I just joined a writers group. It's unbelievable--such inspirational people who really get my writing. I'm feeling so motivated and supported, it's like I finally belong somewhere!\n[Image: a photo of a notebook with a notepad and a piece of paper]\nJoanna: Hey Joanna! That's awesome! Having a supportive ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's writers group",
+          "type": "concept",
+          "state": {
+            "description": "Joanna just joined a writers group with inspirational people who support her writing."
+          }
+        },
+        {
+          "name": "Joanna's project 'Finding Home'",
+          "type": "concept",
+          "state": {
+            "description": "Joanna is working on a script called 'Finding Home' about a girl on a journey to find her true home."
+          }
+        },
+        {
+          "name": "Nate's gaming tournament",
+          "type": "concept",
+          "state": {
+            "description": "Nate has a gaming tournament May 2022, which will be his 4th one."
+          }
+        },
+        {
+          "name": "Joanna's acting experience",
+          "type": "concept",
+          "state": {
+            "description": "Joanna had an interesting time on stage during her first play, where she forgot her lines."
+          }
+        },
+        {
+          "name": "Joanna's passion for writing",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has a passion for writing and is inspired by stories about finding courage."
+          }
+        },
+        {
+          "name": "Joanna's interest in acting",
+          "type": "concept",
+          "state": {
+            "description": "Joanna considers going back to acting someday."
+          }
+        },
+        {
+          "name": "Joanna's favorite movie genres",
+          "type": "concept",
+          "state": {
+            "description": "Joanna enjoys dramas and emotionally-driven films."
+          }
+        },
+        {
+          "name": "Nate's favorite movie genres",
+          "type": "concept",
+          "state": {
+            "description": "Nate loves fantasy and sci-fi movies."
+          }
+        },
+        {
+          "name": "Nate's video game creativity",
+          "type": "concept",
+          "state": {
+            "description": "Nate expresses his creativity and passion through playing video games."
+          }
+        },
+        {
+          "name": "Nate's favorite fantasy or sci-fi trilogy",
+          "type": "concept",
+          "state": {
+            "description": "Nate's favorite trilogy features impressive world building, battles, and storytelling."
+          }
+        },
+        {
+          "name": "Joanna's favorite book series",
+          "type": "concept",
+          "state": {
+            "description": "Joanna loves a book series that has adventures, magic, and great characters."
+          }
+        },
+        {
+          "name": "Nate's book recommendation",
+          "type": "concept",
+          "state": {
+            "description": "Nate recommends a fantasy book series with awesome battles and interesting characters."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 10,
+    "total_entities": 77
+  },
+  {
+    "session_index": 9,
+    "session_id": "conv-42_session_9",
+    "input_chars": 2514,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 May 02, 2022 at 11:54]\nJoanna: Hey Nate, how's it going? I took your reccomendation and watched \"The Lord of the Rings\" Trilogy last night! It was awesome!\n[Image: a photo of a person holding a book openhemer]\nJoanna: Glad to hear you enjoyed it! It's probably the greatest trilogy of all time! As for me, life's been ok, just taking care of this.\n[Image: a photo of a gaming room with ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's gaming focus",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has been focusing on gaming, practicing a lot and winning tournaments."
+          }
+        },
+        {
+          "name": "Joanna's tournament win",
+          "type": "concept",
+          "state": {
+            "description": "Joanna won her second gaming tournament the week before May 02, 2022."
+          }
+        },
+        {
+          "name": "Joanna's game played",
+          "type": "concept",
+          "state": {
+            "description": "Joanna usually plays CS:GO but participated in a local Street Fighter tournament."
+          }
+        },
+        {
+          "name": "Joanna's dessert recipe testing",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has been testing out dairy-free dessert recipes for friends and family."
+          }
+        },
+        {
+          "name": "Joanna's cake",
+          "type": "concept",
+          "state": {
+            "description": "Joanna made a dairy-free vanilla cake with strawberry filling and coconut cream frosting."
+          }
+        },
+        {
+          "name": "Joanna's cooking hobby",
+          "type": "concept",
+          "state": {
+            "description": "Joanna loves experimenting in the kitchen and finds cooking and baking to be her creative outlets."
+          }
+        },
+        {
+          "name": "Nate's compliment on Joanna's dessert",
+          "type": "concept",
+          "state": {
+            "description": "Nate complimented Joanna on her talent for making dairy-free desserts."
+          }
+        },
+        {
+          "name": "Nate's gaming room",
+          "type": "concept",
+          "state": {
+            "description": "Nate has a gaming room that Joanna praised."
+          }
+        },
+        {
+          "name": "Nate's recommendation",
+          "type": "concept",
+          "state": {
+            "description": "Nate recommended coconut to Joanna for her dessert."
+          }
+        },
+        {
+          "name": "Joanna's age",
+          "type": "person",
+          "state": {
+            "description": "Joanna's age is not mentioned."
+          }
+        },
+        {
+          "name": "Nate's age",
+          "type": "person",
+          "state": {
+            "description": "Nate's age is not mentioned."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 11,
+    "total_entities": 88
+  },
+  {
+    "session_index": 10,
+    "session_id": "conv-42_session_10",
+    "input_chars": 2310,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 May 12, 2022 at 15:35]\nJoanna: Hey Nate! Great to hear from you! Quite a week since we last talked - something awesome happened to me!\nJoanna: Hey Jo! Great hearing from you! What happened?\nJoanna: I went hiking and found some more amazing trails in my town. It was such an awesome experience! I think I am an expert hiker now.\nJoanna: Sounds great, Jo! Happy you had an awesome experie",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's hiking experience",
+          "type": "concept",
+          "state": {
+            "description": "Went hiking and found amazing trails in her town, considers herself an expert hiker."
+          }
+        },
+        {
+          "name": "Joanna's photo at Whispering Falls",
+          "type": "concept",
+          "state": {
+            "description": "Took a photo at a location called Whispering Falls, described it as peaceful and serene."
+          }
+        },
+        {
+          "name": "Joanna's inspiration from nature",
+          "type": "concept",
+          "state": {
+            "description": "Nature inspires Joanna and calms her, making her feel like a different person."
+          }
+        },
+        {
+          "name": "Joanna's creative thoughts while hiking",
+          "type": "concept",
+          "state": {
+            "description": "Feels inspired to write a whole movie when in beautiful places."
+          }
+        },
+        {
+          "name": "Nate's thoughts while hiking",
+          "type": "concept",
+          "state": {
+            "description": "Gets deep in thought about his life or new recipes while hiking."
+          }
+        },
+        {
+          "name": "Joanna's screenplay plans",
+          "type": "concept",
+          "state": {
+            "description": "Plans to think of a drama and publish her own screenplay."
+          }
+        },
+        {
+          "name": "Nate's invitation to hike",
+          "type": "concept",
+          "state": {
+            "description": "Invited Joanna to join him on the trails."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 9,
+    "entities_new": 6,
+    "total_entities": 94
+  },
+  {
+    "session_index": 11,
+    "session_id": "conv-42_session_11",
+    "input_chars": 2733,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 May 20, 2022 at 19:49]\nJoanna: Hey Joanna! How've you been? Been a busy week since we talked.\nJoanna: Hey Nate! Just finished something - pretty wild journey!\nJoanna: Way to go! I just got a new addition to the family, this is Max!\n[Image: a photo of a dog laying on a couch in a living room]\nJoanna: Wow, he's adorable! How long have you had him? I can see why you're thrilled!\nJoanna:",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's new pet Max",
+          "type": "concept",
+          "state": {
+            "description": "Adopted dog named Max, full of energy and joy."
+          }
+        },
+        {
+          "name": "Joanna's allergy",
+          "type": "concept",
+          "state": {
+            "description": "Allergies prevent Joanna from getting a pet."
+          }
+        },
+        {
+          "name": "Joanna's coping methods",
+          "type": "concept",
+          "state": {
+            "description": "Writing and creative projects help Joanna through tough times."
+          }
+        },
+        {
+          "name": "Joanna's supportive friends",
+          "type": "concept",
+          "state": {
+            "description": "Joanna is grateful for her supportive friends."
+          }
+        },
+        {
+          "name": "Joanna's writing project",
+          "type": "concept",
+          "state": {
+            "description": "Joanna's third writing project about loss, identity, and connection."
+          }
+        },
+        {
+          "name": "Joanna's writing themes",
+          "type": "concept",
+          "state": {
+            "description": "Joanna writes about sadness and loss, drawing from personal experiences."
+          }
+        },
+        {
+          "name": "Nate's support for Joanna",
+          "type": "concept",
+          "state": {
+            "description": "Nate expresses pride in Joanna's writing and encourages her."
+          }
+        },
+        {
+          "name": "Joanna's journey in writing",
+          "type": "concept",
+          "state": {
+            "description": "Joanna feels proud of her writing journey and the personal topics she explores."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 6,
+    "total_entities": 100
+  },
+  {
+    "session_index": 12,
+    "session_id": "conv-42_session_12",
+    "input_chars": 2805,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 May 25, 2022 at 15:00]\nJoanna: Hey Jo! Been ages since we last talked. Here's something cool that happened the other day - I took Max for a walk and ran into this super nice couple who had a dog. It turns out they live close by. We decided to do doggy playdates, which is awesome considering we all need friends for our pets.\nJoanna: Hey Nate! Great to hear from you. Sounds like a nice",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's dog Max",
+          "type": "concept",
+          "state": {
+            "description": "Joanna's dog named Max, enjoys playdates with other dogs."
+          }
+        },
+        {
+          "name": "Joanna's new friends",
+          "type": "concept",
+          "state": {
+            "description": "A couple who live close by and have a dog, decided to do doggy playdates."
+          }
+        },
+        {
+          "name": "Joanna's stuffed animal gift",
+          "type": "concept",
+          "state": {
+            "description": "A stuffed animal given to Joanna by Nate as a reminder of good vibes."
+          }
+        },
+        {
+          "name": "Joanna's screenplay",
+          "type": "concept",
+          "state": {
+            "description": "Joanna is finishing her screenplay and values Nate's opinion on it."
+          }
+        },
+        {
+          "name": "Nate's support",
+          "type": "concept",
+          "state": {
+            "description": "Nate expresses support for Joanna and her screenplay."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 7,
+    "entities_new": 3,
+    "total_entities": 103
+  },
+  {
+    "session_index": 13,
+    "session_id": "conv-42_session_13",
+    "input_chars": 2956,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 June 03, 2022 at 17:44]\nJoanna: Nate, after finishing my screenplay I got a rejection letter from a major company. It really bummed me out.\nJoanna: Sorry to hear that, Joanna. Rejection stinks, but it doesn't mean you're not talented. Don't give up on your dreams!\nJoanna: Thanks, Nate. It can feel like a step back sometimes. But I appreciate your kind words and encouragement.\nJoanna:",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's screenplay rejection",
+          "type": "concept",
+          "state": {
+            "description": "Joanna received a rejection letter from a major company after finishing her screenplay."
+          }
+        },
+        {
+          "name": "Joanna's video game tournament victory",
+          "type": "concept",
+          "state": {
+            "description": "Joanna won a regional video game tournament the week before June 03, 2022."
+          }
+        },
+        {
+          "name": "Nate's encouragement",
+          "type": "person",
+          "state": {
+            "description": "Nate encouraged Joanna after her screenplay rejection."
+          }
+        },
+        {
+          "name": "Nate's gaming skills",
+          "type": "person",
+          "state": {
+            "description": "Nate was recognized for his gaming skills after winning a tournament."
+          }
+        },
+        {
+          "name": "Nate's weekend plans",
+          "type": "concept",
+          "state": {
+            "description": "Nate plans to relax and recharge with a long walk and some reading."
+          }
+        },
+        {
+          "name": "Joanna's gaming party",
+          "type": "concept",
+          "state": {
+            "description": "Joanna is organizing a gaming party two weekends later."
+          }
+        },
+        {
+          "name": "Nate's custom controller decorations",
+          "type": "concept",
+          "state": {
+            "description": "Nate is getting custom controller decorations for his gaming party guests."
+          }
+        },
+        {
+          "name": "Joanna's support for Nate",
+          "type": "person",
+          "state": {
+            "description": "Joanna expressed support for Nate's gaming tournament and party."
+          }
+        },
+        {
+          "name": "Nate's friends from the tournament",
+          "type": "person",
+          "state": {
+            "description": "Nate met some new friends at the tournament who wanted to hang out later."
+          }
+        },
+        {
+          "name": "Joanna's hiking plans",
+          "type": "concept",
+          "state": {
+            "description": "Joanna is going hiking with buddies to a new trail with a waterfall."
+          }
+        },
+        {
+          "name": "Joanna's appreciation for Nate",
+          "type": "person",
+          "state": {
+            "description": "Joanna appreciates Nate's support and willingness to share recipes."
+          }
+        },
+        {
+          "name": "Nate's old friends and teammates",
+          "type": "person",
+          "state": {
+            "description": "Nate plans to invite old friends and teammates from other tournaments to his gaming party."
+          }
+        },
+        {
+          "name": "Joanna's connection with fellow gamers",
+          "type": "concept",
+          "state": {
+            "description": "Joanna enjoys connecting with fellow gamers at tournaments."
+          }
+        },
+        {
+          "name": "Joanna's frustration with rejection",
+          "type": "concept",
+          "state": {
+            "description": "Joanna felt disheartened by the generic rejection letter without feedback."
+          }
+        },
+        {
+          "name": "Nate's confidence boost",
+          "type": "concept",
+          "state": {
+            "description": "Nate felt a huge confidence boost from winning the tournament."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 15,
+    "entities_new": 14,
+    "total_entities": 117
+  },
+  {
+    "session_index": 14,
+    "session_id": "conv-42_session_14",
+    "input_chars": 2555,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 June 05, 2022 at 14:12]\nJoanna: Hey Nate! Yesterday was crazy cool - I wrote a few bits for a screenplay that appeared on the big screen yesterday! It was nerve-wracking but so inspiring to see my words come alive!\n[Image: a photo of a spider - man poster hanging on a wall]\nJoanna: Congrats, Joanna! Seeing your hard work pay off like that must've felt amazing. I bet it was scary too,",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's screenplay",
+          "type": "concept",
+          "state": {
+            "description": "Joanna wrote a few bits for a screenplay that appeared on the big screen on June 4, 2022."
+          }
+        },
+        {
+          "name": "Joanna's favorite superhero",
+          "type": "concept",
+          "state": {
+            "description": "Joanna's favorite superhero is Spider-Man."
+          }
+        },
+        {
+          "name": "Nate's favorite superhero",
+          "type": "concept",
+          "state": {
+            "description": "Nate's favorite superhero is Iron Man."
+          }
+        },
+        {
+          "name": "Nate's Iron Man figure",
+          "type": "concept",
+          "state": {
+            "description": "Nate has an Iron Man figure that reminds him to keep working on his goals."
+          }
+        },
+        {
+          "name": "Joanna's cork board",
+          "type": "concept",
+          "state": {
+            "description": "Joanna's cork board is full of inspiring quotes and pictures for motivation and creativity."
+          }
+        },
+        {
+          "name": "Joanna's family picture",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has a picture of her family on her cork board that reminds her of their love and encouragement."
+          }
+        },
+        {
+          "name": "Joanna's recommendation for a cork board",
+          "type": "concept",
+          "state": {
+            "description": "Joanna recommends Nate to start a cork board of his own."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 9,
+    "entities_new": 6,
+    "total_entities": 123
+  },
+  {
+    "session_index": 15,
+    "session_id": "conv-42_session_15",
+    "input_chars": 1728,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 June 24, 2022 at 10:55]\nJoanna: Hey Nate, long time no see! How have you been? I just got done submitting my recent screenplay to a film contest just to see how others might like it!\nJoanna: That's really cool Joanna! I hope it does well, and I've been doing great! The gaming party was a great success! We even played some Chess afterward just for fun.\nJoanna: Nice! Did your friends l",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's screenplay submission",
+          "type": "concept",
+          "state": {
+            "description": "Joanna submitted her recent screenplay to a film contest."
+          }
+        },
+        {
+          "name": "Nate's gaming party",
+          "type": "concept",
+          "state": {
+            "description": "Nate hosted a gaming party that was a great success."
+          }
+        },
+        {
+          "name": "Nate's chess game",
+          "type": "concept",
+          "state": {
+            "description": "Nate and friends played chess after the gaming party."
+          }
+        },
+        {
+          "name": "Nate's controller accessories feedback",
+          "type": "concept",
+          "state": {
+            "description": "Most of Nate's friends liked the controller accessories."
+          }
+        },
+        {
+          "name": "Nate's gaming party attendance",
+          "type": "concept",
+          "state": {
+            "description": "7 people attended Nate's gaming party."
+          }
+        },
+        {
+          "name": "Nate's gaming party future plans",
+          "type": "concept",
+          "state": {
+            "description": "6 attendees expressed interest in having another gaming party July 2022."
+          }
+        },
+        {
+          "name": "Joanna's vegan ice cream",
+          "type": "concept",
+          "state": {
+            "description": "Joanna made vegan ice cream the Friday before June 24, 2022 and shared it with her vegan diet group."
+          }
+        },
+        {
+          "name": "Joanna's vegan diet group",
+          "type": "concept",
+          "state": {
+            "description": "Joanna shared her vegan ice cream with people in her vegan diet group."
+          }
+        },
+        {
+          "name": "Joanna's family weekend plans",
+          "type": "concept",
+          "state": {
+            "description": "Joanna plans to make vegan ice cream for her family the weekend of June 24, 2022."
+          }
+        },
+        {
+          "name": "Joanna's gratitude to Nate",
+          "type": "concept",
+          "state": {
+            "description": "Joanna expressed gratitude to Nate for his support."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 10,
+    "total_entities": 133
+  },
+  {
+    "session_index": 16,
+    "session_id": "conv-42_session_16",
+    "input_chars": 3243,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 July 10, 2022 at 14:34]\nJoanna: Hey Joanna, check this out! I won my fourth video game tournament on Friday! It was awesome competing and showing off my skills - and the victory was indescribable. I'm really proud that I can make money doing what I love. This one was online!\n[Image: a photo of a television screen showing a trophy and a trophy]\nJoanna: Congrats, Nate! That's awesome! ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's video game tournament wins",
+          "type": "concept",
+          "state": {
+            "description": "Joanna won her fourth video game tournament on July 8, 2022."
+          }
+        },
+        {
+          "name": "Joanna's road trip for research",
+          "type": "concept",
+          "state": {
+            "description": "Joanna took a road trip for research for her next movie while Nate was winning."
+          }
+        },
+        {
+          "name": "Joanna's road trip destination",
+          "type": "concept",
+          "state": {
+            "description": "Joanna went to Woodhaven, a small town in the Midwest."
+          }
+        },
+        {
+          "name": "Joanna's experience in Woodhaven",
+          "type": "concept",
+          "state": {
+            "description": "Joanna saw lovely scenery and historic buildings in Woodhaven."
+          }
+        },
+        {
+          "name": "Joanna's library visit",
+          "type": "concept",
+          "state": {
+            "description": "Joanna checked out the library in Woodhaven, which had a cool old book collection."
+          }
+        },
+        {
+          "name": "Joanna's discovery of a book",
+          "type": "concept",
+          "state": {
+            "description": "Joanna found a super cool book from the 1900s with stories and sketches."
+          }
+        },
+        {
+          "name": "Joanna's inspiration for her next script",
+          "type": "concept",
+          "state": {
+            "description": "Joanna was inspired by the interesting past of Woodhaven and its cool people."
+          }
+        },
+        {
+          "name": "Joanna's new script",
+          "type": "concept",
+          "state": {
+            "description": "Joanna is excited about her new script, which is different from her previous work."
+          }
+        },
+        {
+          "name": "Joanna's recent book project",
+          "type": "concept",
+          "state": {
+            "description": "Joanna started on a book recently since her movie did well."
+          }
+        },
+        {
+          "name": "Joanna's book themes",
+          "type": "concept",
+          "state": {
+            "description": "Joanna's book explores themes of loss, redemption, and forgiveness."
+          }
+        },
+        {
+          "name": "Joanna's first publishing attempt",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has never tried publishing a book before, but this might be her first."
+          }
+        },
+        {
+          "name": "Nate's encouragement",
+          "type": "person",
+          "state": {
+            "description": "Nate supports Joanna in her writing journey and believes in her talent."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 11,
+    "total_entities": 144
+  },
+  {
+    "session_index": 17,
+    "session_id": "conv-42_session_17",
+    "input_chars": 2782,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 August 14, 2022 at 18:12]\nJoanna: Hey Nate, long time no talk! I've been busy with writing projects and really going all out with it. It's been the best thing ever - a mix of highs and lows - and my journal's pretty much my rock. Writing's such a huge part of me now.\n[Image: a photo of a notebook with a bunch of stickers on it]\nJoanna: Hey Joanna! Great to hear it! It's amazing how m",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's writing projects",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has been busy with writing projects, which have become a huge part of her life."
+          }
+        },
+        {
+          "name": "Joanna's journal",
+          "type": "concept",
+          "state": {
+            "description": "Joanna's journal serves as her rock and a means of expression."
+          }
+        },
+        {
+          "name": "Joanna's writing as solace",
+          "type": "concept",
+          "state": {
+            "description": "Writing has become an escape for Joanna and a way to express her feelings."
+          }
+        },
+        {
+          "name": "Joanna's recent letter",
+          "type": "concept",
+          "state": {
+            "description": "Joanna received a letter from someone who found comfort in her online blog post about a hard moment in her life."
+          }
+        },
+        {
+          "name": "Joanna's impact through writing",
+          "type": "concept",
+          "state": {
+            "description": "Joanna feels inspired knowing her writing can make a difference in others' lives."
+          }
+        },
+        {
+          "name": "Nate's teaching",
+          "type": "concept",
+          "state": {
+            "description": "Nate started teaching people how to make dairy-free desserts."
+          }
+        },
+        {
+          "name": "Nate's love for coconut milk ice cream",
+          "type": "concept",
+          "state": {
+            "description": "Joanna loves Nate's coconut milk ice cream, describing it as creamy and rich."
+          }
+        },
+        {
+          "name": "Joanna's family baking plans",
+          "type": "concept",
+          "state": {
+            "description": "Joanna plans to surprise her family with a new dairy-free dessert recipe."
+          }
+        },
+        {
+          "name": "Joanna's appreciation for Nate",
+          "type": "concept",
+          "state": {
+            "description": "Joanna appreciates Nate's support and willingness to share recipes."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 7,
+    "total_entities": 151
+  },
+  {
+    "session_index": 18,
+    "session_id": "conv-42_session_18",
+    "input_chars": 3423,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 August 22, 2022 at 10:57]\nJoanna: Woah Joanna, I won an international tournament yesterday! It was wild. Gaming has brought me so much success and now I'm able to make a living at something I'm passionate about - I'm loving it.\nJoanna: Congrats, Nate! So proud of you for winning that tournament, that's awesome! Must feel great to turn your passion into a career.\nJoanna: I'm really st",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Nate's international tournament win",
+          "type": "event",
+          "state": {
+            "description": "Nate won an international gaming tournament on August 21, 2022."
+          }
+        },
+        {
+          "name": "Joanna's pets",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has pets, referred to as 'little dudes', who got a new tank."
+          }
+        },
+        {
+          "name": "Joanna's writers group feedback",
+          "type": "event",
+          "state": {
+            "description": "Joanna shared her book with her writers group and received great feedback."
+          }
+        },
+        {
+          "name": "Joanna's weekend plans",
+          "type": "plans",
+          "state": {
+            "description": "Joanna plans to chill with her pets over the weekend."
+          }
+        },
+        {
+          "name": "Nate's weekend plans",
+          "type": "plans",
+          "state": {
+            "description": "Nate plans to relax and recharge with a long walk and some reading."
+          }
+        },
+        {
+          "name": "Joanna's mental health approach",
+          "type": "belief",
+          "state": {
+            "description": "Joanna believes that taking breaks and looking after herself are important for her inspiration and mental health."
+          }
+        },
+        {
+          "name": "Joanna's book recommendation",
+          "type": "concept",
+          "state": {
+            "description": "Joanna recommends finding a fantasy book series to read through."
+          }
+        },
+        {
+          "name": "Nate's book recommendation",
+          "type": "concept",
+          "state": {
+            "description": "Nate recommends a fantasy book series with awesome battles and interesting characters."
+          }
+        },
+        {
+          "name": "Joanna's dessert celebration",
+          "type": "event",
+          "state": {
+            "description": "Joanna celebrated her writers group feedback by making a delicious treat."
+          }
+        },
+        {
+          "name": "Joanna's balance philosophy",
+          "type": "belief",
+          "state": {
+            "description": "Joanna believes that balance is key to being more creative and happier."
+          }
+        },
+        {
+          "name": "Joanna's full name",
+          "type": "person",
+          "state": {
+            "description": "Joanna is one of the two speakers."
+          }
+        },
+        {
+          "name": "Nate's full name",
+          "type": "person",
+          "state": {
+            "description": "Nate is one of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 9,
+    "total_entities": 160
+  },
+  {
+    "session_index": 19,
+    "session_id": "conv-42_session_19",
+    "input_chars": 2908,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 September 05, 2022 at 18:03]\nJoanna: Hey Joanna! Long time no talk. So much has happened. Look how cute they are! Hanging with them has been a big help, especially recently. Speaking of which, I just had a letdown in a video game tourney - I didn't do too great, even though I tried. It was a setback, but I'm trying to stay positive.\n[Image: a photography of two turtles sitting on a r",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's setback in video game tourney",
+          "type": "concept",
+          "state": {
+            "description": "Joanna had a letdown in a video game tournament and didn't perform well."
+          }
+        },
+        {
+          "name": "Joanna's recipe revision",
+          "type": "concept",
+          "state": {
+            "description": "Joanna revised one of her old recipes and made a cake."
+          }
+        },
+        {
+          "name": "Joanna's dessert recipe tweaking",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has been tweaking a dessert recipe to make it yummier and more accessible."
+          }
+        },
+        {
+          "name": "Joanna's flavor experimentation",
+          "type": "concept",
+          "state": {
+            "description": "Joanna is experimenting with flavors like chocolate, raspberry, and coconut."
+          }
+        },
+        {
+          "name": "Joanna's lactose intolerance",
+          "type": "concept",
+          "state": {
+            "description": "Joanna is lactose intolerant and is trying out dairy-free options."
+          }
+        },
+        {
+          "name": "Joanna's dairy-free chocolate coconut cupcakes",
+          "type": "concept",
+          "state": {
+            "description": "Joanna made dairy-free chocolate coconut cupcakes with raspberry frosting."
+          }
+        },
+        {
+          "name": "Joanna's variety of desserts",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has been making cookies, pies, cakes, and other desserts that work for everyone's diets."
+          }
+        },
+        {
+          "name": "Joanna's baking invitation",
+          "type": "concept",
+          "state": {
+            "description": "Joanna invited Nate to join her in baking and cooking."
+          }
+        },
+        {
+          "name": "Joanna's tips for dairy-free baking",
+          "type": "concept",
+          "state": {
+            "description": "Joanna suggested using dairy-free margarine or coconut oil instead of butter for dairy-free baking."
+          }
+        },
+        {
+          "name": "Nate's encouragement",
+          "type": "person",
+          "state": {
+            "description": "Nate encouraged Joanna and shared ideas for dairy-free baking."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 8,
+    "total_entities": 168
+  },
+  {
+    "session_index": 20,
+    "session_id": "conv-42_session_20",
+    "input_chars": 3519,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 September 14, 2022 at 13:43]\nJoanna: Hey Nate, long time no see! My laptop crashed last week and I lost all my work - super frustrating! As a writer, my laptop is like half of my lifeline so losing all progress was like a major blow.\nJoanna: Hey Joanna, sorry to hear about that. Losing so much progress must be really frustrating. Did you manage to recover anything? Maybe consider bac",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's laptop crash",
+          "type": "concept",
+          "state": {
+            "description": "Joanna's laptop crashed the week before September 14, 2022, resulting in the loss of all her work."
+          }
+        },
+        {
+          "name": "Joanna's profession",
+          "type": "concept",
+          "state": {
+            "description": "Joanna is a writer."
+          }
+        },
+        {
+          "name": "Joanna's external drive",
+          "type": "concept",
+          "state": {
+            "description": "Joanna now has an external drive for backups."
+          }
+        },
+        {
+          "name": "Nate's cooking show",
+          "type": "concept",
+          "state": {
+            "description": "Nate taught vegan ice cream recipes on his own cooking show last Monday."
+          }
+        },
+        {
+          "name": "Nate's favorite dish from the show",
+          "type": "concept",
+          "state": {
+            "description": "Nate's favorite dish from the show is coconut milk ice cream."
+          }
+        },
+        {
+          "name": "Nate's coconut milk ice cream",
+          "type": "concept",
+          "state": {
+            "description": "Nate's coconut milk ice cream is smooth, creamy, and dairy-free."
+          }
+        },
+        {
+          "name": "Joanna's dairy-free dessert",
+          "type": "concept",
+          "state": {
+            "description": "Joanna made a delicious dessert with almond milk the Friday before September 14, 2022."
+          }
+        },
+        {
+          "name": "Joanna's favorite dairy-free dessert",
+          "type": "concept",
+          "state": {
+            "description": "Joanna's favorite dairy-free treat is a chocolate raspberry tart."
+          }
+        },
+        {
+          "name": "Joanna's chocolate raspberry tart",
+          "type": "concept",
+          "state": {
+            "description": "Joanna's chocolate raspberry tart has an almond flour crust, chocolate ganache, and fresh raspberries."
+          }
+        },
+        {
+          "name": "Joanna's dairy-free chocolate cake",
+          "type": "concept",
+          "state": {
+            "description": "Joanna loves making a dairy-free chocolate cake with raspberries."
+          }
+        },
+        {
+          "name": "Joanna's chocolate cake recipe",
+          "type": "concept",
+          "state": {
+            "description": "Joanna's chocolate cake is made with almond flour, coconut oil, chocolate, and raspberries."
+          }
+        },
+        {
+          "name": "Joanna's blueberry dessert",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has a dessert made with blueberries, coconut milk, and a gluten-free crust."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 10,
+    "total_entities": 178
+  },
+  {
+    "session_index": 21,
+    "session_id": "conv-42_session_21",
+    "input_chars": 3425,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 October 06, 2022 at 11:15]\nJoanna: Hey Nate, hi! Yesterday, I tried my newest dairy-free recipe and it was a winner with my family! Mixing and matching flavors is fun and I'm always trying new things. How about you?\n[Image: a photo of a tart with raspberries on a white plate]\nJoanna: Hey Joanna! That tart looks yummy! Lately, I've been doing great - I won a really big video game tour",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's dairy-free recipe",
+          "type": "concept",
+          "state": {
+            "description": "Newest dairy-free recipe that was a winner with Joanna's family."
+          }
+        },
+        {
+          "name": "Nate's video game tournament",
+          "type": "concept",
+          "state": {
+            "description": "Won a big video game tournament in late September 2022."
+          }
+        },
+        {
+          "name": "Nate's earnings from tournament",
+          "type": "concept",
+          "state": {
+            "description": "Made a significant amount of money from the tournament."
+          }
+        },
+        {
+          "name": "Nate's plans for earnings",
+          "type": "concept",
+          "state": {
+            "description": "Saved some earnings but unsure what to do with it."
+          }
+        },
+        {
+          "name": "Nate's movie watching",
+          "type": "concept",
+          "state": {
+            "description": "Enjoys watching movies and games."
+          }
+        },
+        {
+          "name": "Joanna's movie recommendation",
+          "type": "concept",
+          "state": {
+            "description": "Recommended 'Little Women' to Nate."
+          }
+        },
+        {
+          "name": "Joanna's book writing",
+          "type": "concept",
+          "state": {
+            "description": "Finished writing her book in late September 2022 after many late nights and edits."
+          }
+        },
+        {
+          "name": "Nate's support for Joanna",
+          "type": "concept",
+          "state": {
+            "description": "Nate expresses pride in Joanna's accomplishments and offers support."
+          }
+        },
+        {
+          "name": "Nate's encouragement drawing",
+          "type": "concept",
+          "state": {
+            "description": "Created a drawing for Joanna to provide encouragement."
+          }
+        },
+        {
+          "name": "Joanna's bookmark",
+          "type": "concept",
+          "state": {
+            "description": "Finished a cute bookmark for a lady at her writing club."
+          }
+        },
+        {
+          "name": "Joanna's love for DIYs",
+          "type": "concept",
+          "state": {
+            "description": "Joanna loves DIY projects."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 9,
+    "total_entities": 187
+  },
+  {
+    "session_index": 22,
+    "session_id": "conv-42_session_22",
+    "input_chars": 4905,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 October 09, 2022 at 10:58]\nJoanna: Hey Joanna, it's been a couple days since we last talked. Something exciting happened last Friday. I went to a game convention and met new people who weren't from my normal circle. It was a bit overwhelming but it reminded me of the good times gaming can bring.\n[Image: a photo of a man standing in front of a table with board games]\nJoanna: Hey Nate!",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's game convention experience",
+          "type": "concept",
+          "state": {
+            "description": "Attended a game convention on October 7, 2022, met new people and made friends who share her interests."
+          }
+        },
+        {
+          "name": "Joanna's favorite board game",
+          "type": "concept",
+          "state": {
+            "description": "Loves the board game Catan, a strategy game where players build settlements and trade resources."
+          }
+        },
+        {
+          "name": "Joanna's escape through games",
+          "type": "concept",
+          "state": {
+            "description": "Plays games as an escape from life struggles and prefers a chill atmosphere."
+          }
+        },
+        {
+          "name": "Joanna's favorite movie",
+          "type": "concept",
+          "state": {
+            "description": "Recently watched 'Inception', rated 9 or 10 out of 10."
+          }
+        },
+        {
+          "name": "Joanna's favorite video game",
+          "type": "concept",
+          "state": {
+            "description": "Currently playing 'Cyberpunk 2077', known for its futuristic setting and gameplay."
+          }
+        },
+        {
+          "name": "Joanna's living room setup advice",
+          "type": "concept",
+          "state": {
+            "description": "Recommends a fluffy couch for multiple people, a weighted blanket, and dimmable lights for a comfy living room."
+          }
+        },
+        {
+          "name": "Nate's response to Joanna's convention experience",
+          "type": "person",
+          "state": {
+            "description": "Encouraged Joanna about meeting new people and stepping outside comfort zones."
+          }
+        },
+        {
+          "name": "Nate's favorite movie",
+          "type": "concept",
+          "state": {
+            "description": "Watched a classic movie recently that was gripping and had great actors."
+          }
+        },
+        {
+          "name": "Nate's living room comfort",
+          "type": "concept",
+          "state": {
+            "description": "Expressed appreciation for a comfy living room setup."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 9,
+    "total_entities": 196
+  },
+  {
+    "session_index": 23,
+    "session_id": "conv-42_session_23",
+    "input_chars": 2327,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 October 21, 2022 at 14:01]\nJoanna: Hey Joanna, what's been up? Haven't seen you since we last talked.\nJoanna: Hey Nate! I have been revising and perfecting the recipe I made for my family and it turned out really tasty. What's been happening with you?\nJoanna: Hey Joanna! That's cool. I've been getting so stressed lately because of my tournament progress - tough competitors - but my t",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's recipe",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has been revising and perfecting a recipe for her family that turned out really tasty."
+          }
+        },
+        {
+          "name": "Joanna's tournament stress",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has been getting stressed lately because of her tournament progress and tough competitors."
+          }
+        },
+        {
+          "name": "Joanna's pet turtles",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has turtles that cheer her up."
+          }
+        },
+        {
+          "name": "Joanna's stuffed animal Tilly",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has a stuffed animal dog named Tilly, which she received from Nate."
+          }
+        },
+        {
+          "name": "Joanna's allergy",
+          "type": "concept",
+          "state": {
+            "description": "Joanna used to have a dog back in Michigan but had to get rid of her due to an allergy."
+          }
+        },
+        {
+          "name": "Joanna's video game tournament",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has been practicing for her next video game tournament."
+          }
+        },
+        {
+          "name": "Joanna's production company rejection",
+          "type": "concept",
+          "state": {
+            "description": "Joanna experienced a setback with another rejection from a production company."
+          }
+        },
+        {
+          "name": "Nate's encouragement",
+          "type": "concept",
+          "state": {
+            "description": "Nate encourages Joanna to keep pushing forward despite her setbacks."
+          }
+        },
+        {
+          "name": "Nate's support",
+          "type": "concept",
+          "state": {
+            "description": "Nate reminds Joanna that she has people cheering her on from the sidelines."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 5,
+    "total_entities": 201
+  },
+  {
+    "session_index": 24,
+    "session_id": "conv-42_session_24",
+    "input_chars": 4037,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 October 25, 2022 at 20:16]\nJoanna: Hey Joanna, what's been up since we last chatted? How's it going?\nJoanna: Hey Nate! Another movie script that I contributed to was shown on the big screen last Sunday for the first time! It was such a surreal experience to see everything come together. I felt a mix of emotions, but overall, it was a satisfying moment. I've been waiting for this for ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's movie script",
+          "type": "concept",
+          "state": {
+            "description": "Joanna is writing a love story movie script with lots of challenges."
+          }
+        },
+        {
+          "name": "Joanna's character visuals",
+          "type": "concept",
+          "state": {
+            "description": "Visuals of characters created by Joanna to help bring them alive in her head for better writing."
+          }
+        },
+        {
+          "name": "Joanna's inspiration for characters",
+          "type": "concept",
+          "state": {
+            "description": "Joanna gets ideas for her characters from people she knows, things she sees, and her imagination."
+          }
+        },
+        {
+          "name": "Joanna's turtles",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has two turtles that she took out for a walk."
+          }
+        },
+        {
+          "name": "Joanna's turtles' diet",
+          "type": "concept",
+          "state": {
+            "description": "Joanna's turtles eat a combination of vegetables, fruits, and insects."
+          }
+        },
+        {
+          "name": "Joanna's favorite turtle food",
+          "type": "concept",
+          "state": {
+            "description": "Joanna loves seeing her turtles eat fruit, which makes them excited."
+          }
+        },
+        {
+          "name": "Joanna's turtles' personalities",
+          "type": "concept",
+          "state": {
+            "description": "Joanna's turtles have different personalities; one is adventurous and the other is more reserved."
+          }
+        },
+        {
+          "name": "Nate's turtles knowledge",
+          "type": "person",
+          "state": {
+            "description": "Nate expressed surprise at how interesting turtles can be after learning about Joanna's turtles."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 7,
+    "total_entities": 208
+  },
+  {
+    "session_index": 25,
+    "session_id": "conv-42_session_25",
+    "input_chars": 3551,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 November 04, 2022 at 15:56]\nJoanna: Wow, Nate, I'm on fire! I just set up meetings with movie producers \u2014 my dreams are comin' true!\nJoanna: Wow Joanna, nice work! How did it go with those producer meetings?\nJoanna: Thanks, Nate! The meetings went really well. I felt confident discussing my script and vision and they seemed interested and excited. They loved the elements of self-disc",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's meetings with movie producers",
+          "type": "concept",
+          "state": {
+            "description": "Joanna set up meetings with movie producers and felt confident discussing her script and vision."
+          }
+        },
+        {
+          "name": "Joanna's feelings about the meetings",
+          "type": "concept",
+          "state": {
+            "description": "Joanna felt hopeful and inspired after the meetings, which were validating."
+          }
+        },
+        {
+          "name": "Joanna's early writings",
+          "type": "concept",
+          "state": {
+            "description": "Joanna found old notebooks with her early writings and appreciated how far she has come."
+          }
+        },
+        {
+          "name": "Joanna's favorite early story",
+          "type": "concept",
+          "state": {
+            "description": "Joanna remembers a story from when she was 10 about a brave little turtle who explored the world."
+          }
+        },
+        {
+          "name": "Joanna's passion for writing",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has a passion for writing and is inspired by stories about finding courage."
+          }
+        },
+        {
+          "name": "Joanna's project",
+          "type": "concept",
+          "state": {
+            "description": "Joanna is working on a challenging but fulfilling project."
+          }
+        },
+        {
+          "name": "Nate's gaming passion",
+          "type": "concept",
+          "state": {
+            "description": "Nate has been helping friends reset their high scores at an international tournament."
+          }
+        },
+        {
+          "name": "Joanna's ice cream",
+          "type": "concept",
+          "state": {
+            "description": "Joanna made lactose-free ice cream with coconut milk."
+          }
+        },
+        {
+          "name": "Joanna's recipe sharing",
+          "type": "concept",
+          "state": {
+            "description": "Joanna plans to bring some of her recipes to share desserts with Nate."
+          }
+        },
+        {
+          "name": "Joanna's chocolate and raspberry cake",
+          "type": "concept",
+          "state": {
+            "description": "Nate has been wanting to try Joanna's chocolate and raspberry cake."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 9,
+    "total_entities": 217
+  },
+  {
+    "session_index": 26,
+    "session_id": "conv-42_session_26",
+    "input_chars": 6029,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 November 07, 2022 at 20:10]\nJoanna: Hey Joanna! Hope you\u2019re doing alright. Crazy thing happened - I was in the final of a big Valorant tournament last Saturday, and I won! It was the best feeling to see my name as the champion. Tournaments really bring out strong emotions in me.\nJoanna: Hey Nate! Congrats on winning the tournament - that's awesome! I know you must have been buzzing! ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's Valorant tournament win",
+          "type": "event",
+          "state": {
+            "description": "Joanna won a big Valorant tournament on October 29, 2022."
+          }
+        },
+        {
+          "name": "Joanna's presentation for producers",
+          "type": "event",
+          "state": {
+            "description": "Joanna finished a presentation for producers on November 4, 2022."
+          }
+        },
+        {
+          "name": "Joanna's movie script",
+          "type": "concept",
+          "state": {
+            "description": "Joanna is writing a love story movie script with lots of challenges."
+          }
+        },
+        {
+          "name": "Joanna's turtles",
+          "type": "pet",
+          "state": {
+            "description": "Joanna has turtles that bring her joy and are calming to watch."
+          }
+        },
+        {
+          "name": "Joanna's happiness source",
+          "type": "concept",
+          "state": {
+            "description": "Creating stories and watching them come alive gives Joanna happiness and fulfillment."
+          }
+        },
+        {
+          "name": "Joanna's script submissions",
+          "type": "event",
+          "state": {
+            "description": "Joanna submitted a few more scripts for consideration on the week of October 30, 2022."
+          }
+        },
+        {
+          "name": "Joanna's equipment upgrade",
+          "type": "event",
+          "state": {
+            "description": "Joanna upgraded her gaming equipment at home."
+          }
+        },
+        {
+          "name": "Joanna's gaming setup",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has a dedicated gaming setup for practice and competition."
+          }
+        },
+        {
+          "name": "Nate's favorite game",
+          "type": "concept",
+          "state": {
+            "description": "Nate is currently playing 'Xeonoblade Chronicles', a fantasy RPG."
+          }
+        },
+        {
+          "name": "Nate's Nintendo game preference",
+          "type": "preference",
+          "state": {
+            "description": "Nate is a big fan of Nintendo games."
+          }
+        },
+        {
+          "name": "Nate's brother's letter",
+          "type": "item",
+          "state": {
+            "description": "Nate's brother wrote him cute notes during their childhood."
+          }
+        },
+        {
+          "name": "Nate's childhood memories",
+          "type": "concept",
+          "state": {
+            "description": "Nate treasures childhood memories and finds them powerful."
+          }
+        },
+        {
+          "name": "Nate's memorable day at the park",
+          "type": "event",
+          "state": {
+            "description": "Nate had a special day taking his pets to the park."
+          }
+        },
+        {
+          "name": "Nate's memory writing",
+          "type": "event",
+          "state": {
+            "description": "Nate started writing down some of his favorite memories."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 16,
+    "entities_new": 12,
+    "total_entities": 229
+  },
+  {
+    "session_index": 27,
+    "session_id": "conv-42_session_27",
+    "input_chars": 5048,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 November 09, 2022 at 17:54]\nJoanna: Hey Joanna, what a wild week! My game tournament got pushed back, so I tried out some cooking. Look at this homemade coconut ice cream! The sprinkles kinda changed the color this time around.\n[Image: a photo of a person scooping a scoop of ice cream into a pan]\nJoanna: Hey Nate, that looks yummy! Wish I could try it, but I can't right now. How did ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's cooking experiment",
+          "type": "concept",
+          "state": {
+            "description": "Tried out cooking homemade coconut ice cream with sprinkles."
+          }
+        },
+        {
+          "name": "Joanna's game tournament outcome",
+          "type": "concept",
+          "state": {
+            "description": "Did not make it to the finals in the last game tournament."
+          }
+        },
+        {
+          "name": "Joanna's future gaming plans",
+          "type": "concept",
+          "state": {
+            "description": "Thinking of joining a new gaming team after the next tournament."
+          }
+        },
+        {
+          "name": "Joanna's script project",
+          "type": "concept",
+          "state": {
+            "description": "Worked hard on a script and pitched it to producers, who liked it."
+          }
+        },
+        {
+          "name": "Joanna's writing motivation",
+          "type": "concept",
+          "state": {
+            "description": "Feels inspired and can't stop writing."
+          }
+        },
+        {
+          "name": "Joanna's new project",
+          "type": "concept",
+          "state": {
+            "description": "Working on a suspenseful thriller set in a small Midwestern town."
+          }
+        },
+        {
+          "name": "Nate's gaming content creation",
+          "type": "concept",
+          "state": {
+            "description": "Creating gaming content for YouTube."
+          }
+        },
+        {
+          "name": "Nate's inspiration for gaming videos",
+          "type": "concept",
+          "state": {
+            "description": "Inspired by being a fan of gaming videos and wanting to connect with others."
+          }
+        },
+        {
+          "name": "Nate's advice on video creation",
+          "type": "concept",
+          "state": {
+            "description": "Advised to watch other people's videos to understand audience preferences."
+          }
+        },
+        {
+          "name": "Joanna's sunset photo",
+          "type": "concept",
+          "state": {
+            "description": "Took a photo of a sunset on a hike near Fort Wayne last summer."
+          }
+        },
+        {
+          "name": "Joanna's new turtle",
+          "type": "concept",
+          "state": {
+            "description": "Got a third turtle after seeing one at a pet store."
+          }
+        },
+        {
+          "name": "Joanna's turtle joy",
+          "type": "concept",
+          "state": {
+            "description": "Turtles bring her joy and peace."
+          }
+        },
+        {
+          "name": "Joanna's allergy",
+          "type": "concept",
+          "state": {
+            "description": "Allergic to turtles."
+          }
+        },
+        {
+          "name": "Joanna's plan to visit Nate",
+          "type": "concept",
+          "state": {
+            "description": "Plans to visit Nate and watch the turtles."
+          }
+        },
+        {
+          "name": "Nate's support for Joanna",
+          "type": "concept",
+          "state": {
+            "description": "Expressed support and encouragement for Joanna's projects."
+          }
+        },
+        {
+          "name": "Joanna's full name",
+          "type": "person",
+          "state": {
+            "description": "Joanna is one of the two speakers."
+          }
+        },
+        {
+          "name": "Nate's full name",
+          "type": "person",
+          "state": {
+            "description": "Nate is one of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 17,
+    "entities_new": 13,
+    "total_entities": 242
+  },
+  {
+    "session_index": 28,
+    "session_id": "conv-42_session_28",
+    "input_chars": 2511,
+    "input_preview": "[Speakers: Joanna and Nate]\nUse their FULL NAMES (Joanna, Nate) in entity names, never abbreviations.\n\n[Session \u2014 November 11, 2022 at 00:06]\nJoanna: Nate, can you believe it? I'm finally filming my own movie from the road-trip script!\n[Image: a photo of a person holding a clap board with a dog sleeping in a dog bed]\nJoanna: Congrats, Joanna! Not surprised at all that your hard work paid off. Must feel awesome to see your script come alive in a movie! Pretty cool when something you love brings s",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Joanna's movie",
+          "type": "concept",
+          "state": {
+            "description": "Filming her own movie based on a road-trip script."
+          }
+        },
+        {
+          "name": "Joanna's turtles",
+          "type": "concept",
+          "state": {
+            "description": "Joanna has turtles that bring her peace and require little care."
+          }
+        },
+        {
+          "name": "Joanna's ice cream recipe",
+          "type": "concept",
+          "state": {
+            "description": "Joanna is experimenting with flavors and made colorful bowls of coconut milk ice cream."
+          }
+        },
+        {
+          "name": "Nate's compliment to Joanna",
+          "type": "concept",
+          "state": {
+            "description": "Nate congratulated Joanna on her movie and expressed excitement about her success."
+          }
+        },
+        {
+          "name": "Nate's beach trip",
+          "type": "concept",
+          "state": {
+            "description": "Nate took his turtles to the beach in Tampa on November 10, 2022."
+          }
+        },
+        {
+          "name": "Joanna's moment on set",
+          "type": "concept",
+          "state": {
+            "description": "An actor complimented Joanna on her script, which excited her."
+          }
+        },
+        {
+          "name": "Joanna's feelings about turtles",
+          "type": "concept",
+          "state": {
+            "description": "Joanna loves having turtles around as they make her feel calm."
+          }
+        },
+        {
+          "name": "Joanna's enjoyment of ice cream",
+          "type": "concept",
+          "state": {
+            "description": "Joanna enjoys the colorful and flavorful coconut milk ice cream she made."
+          }
+        },
+        {
+          "name": "Joanna",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Nate",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 6,
+    "total_entities": 248
+  }
+]

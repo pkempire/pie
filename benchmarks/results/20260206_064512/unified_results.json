@@ -1,0 +1,71 @@
+{
+  "config": {
+    "benchmarks": [
+      "locomo"
+    ],
+    "baselines": [
+      "naive_rag"
+    ],
+    "subset": null,
+    "model": "gpt-4o",
+    "extraction_model": "gpt-4o-mini",
+    "judge_model": "gpt-4o"
+  },
+  "results": {
+    "locomo": {
+      "naive_rag": {
+        "summary": {
+          "overall": {
+            "accuracy": 57.9,
+            "total": 1986,
+            "total_score": 1149.5
+          },
+          "by_category": {
+            "adversarial": {
+              "accuracy": 79.8,
+              "count": 841,
+              "score": 671.5
+            },
+            "commonsense": {
+              "accuracy": 26.1,
+              "count": 446,
+              "score": 116.5
+            },
+            "multi_hop": {
+              "accuracy": 49.7,
+              "count": 321,
+              "score": 159.5
+            },
+            "single_hop": {
+              "accuracy": 59.2,
+              "count": 282,
+              "score": 167.0
+            },
+            "temporal": {
+              "accuracy": 36.5,
+              "count": 96,
+              "score": 35.0
+            }
+          }
+        },
+        "timestamp": "2026-02-06T13:20:35.684652+00:00",
+        "raw_count": 1986
+      }
+    }
+  },
+  "comparison": {
+    "benchmarks": {
+      "locomo": "LoCoMo"
+    },
+    "baselines": {
+      "naive_rag": "naive_rag"
+    },
+    "matrix": {
+      "locomo": {
+        "naive_rag": 57.9
+      }
+    }
+  },
+  "timestamp": "2026-02-06T13:20:35.685604+00:00",
+  "total_time_seconds": 5723.230544805527
+}

@@ -1,0 +1,27 @@
+{
+  "overall": {
+    "accuracy": 80.0,
+    "total": 5,
+    "total_score": 4.0
+  },
+  "by_category": {
+    "multi_hop": {
+      "accuracy": 100.0,
+      "count": 2,
+      "score": 2.0
+    },
+    "single_hop": {
+      "accuracy": 75.0,
+      "count": 2,
+      "score": 1.5
+    },
+    "temporal": {
+      "accuracy": 50.0,
+      "count": 1,
+      "score": 0.5
+    }
+  },
+  "baseline": "naive_rag",
+  "benchmark": "locomo",
+  "timestamp": "2026-02-07T03:36:00.059476+00:00"
+}

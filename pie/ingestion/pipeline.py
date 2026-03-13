@@ -67,10 +67,11 @@ class IngestionPipeline:
         limit_conversations: int | None = None,
         save_every: int = 10,
         skip_batches: int = 0,
+        start_date: str | None = None,
     ):
         """
         Run the full ingestion pipeline.
-        
+
         Args:
             conversations_path: Path to conversations.json (defaults to config)
             year_min: Override minimum year filter
@@ -78,6 +79,7 @@ class IngestionPipeline:
             limit_conversations: Only parse first N conversations
             save_every: Save world model every N batches
             skip_batches: Skip the first N batches (for resuming)
+            start_date: Only process batches on or after this date (YYYY-MM-DD)
         """
         path = conversations_path or self.config.conversations_path
         year = year_min or self.config.ingestion.year_min
@@ -97,6 +99,11 @@ class IngestionPipeline:
         batches = group_into_daily_batches(conversations)
         logger.info(f"Grouped into {len(batches)} daily batches")
         
+        if start_date:
+            before = len(batches)
+            batches = [b for b in batches if b.date >= start_date]
+            logger.info(f"  (--start-date {start_date}: skipped {before - len(batches)} batches, {len(batches)} remaining)")
+
         if skip_batches:
             batches = batches[skip_batches:]
             logger.info(f"  (skipping first {skip_batches} batches, resuming from batch {skip_batches + 1})")
@@ -105,6 +112,10 @@ class IngestionPipeline:
             batches = batches[:limit_batches]
             logger.info(f"  (limited to {limit_batches} batches for testing)")
         
+        # Phase 2.5: Recompute embeddings for entities loaded from JSON
+        # (embeddings aren't persisted to keep JSON size reasonable)
+        self._recompute_missing_embeddings()
+
         # Phase 3: Process each batch chronologically
         total = len(batches)
         t0 = time.time()
@@ -147,7 +158,10 @@ class IngestionPipeline:
         
         # Final save
         self.world_model.save()
-        
+
+        # ── Compute dynamics: importance, staleness, volatility ──
+        self._compute_dynamics()
+
         total_time = time.time() - t0
         self._print_summary(total_time)
     
@@ -212,7 +226,7 @@ class IngestionPipeline:
         # Step 5: Web ground new entities
         if self.config.use_web_grounding:
             for r in resolved:
-                if r.action == "create" and r.extracted.type in self.config.resolution.web_ground_entity_types:
+                if r.action == "create" and r.extracted.type in self.config.resolution.web_ground_types:
                     grounding = self.web_grounder.ground(r.extracted)
                     if grounding.verified:
                         r.web_grounding = {
@@ -315,22 +329,42 @@ class IngestionPipeline:
             elif r.action == "update" and r.matched_entity_id:
                 existing = self.world_model.get_entity(r.matched_entity_id)
                 if existing:
-                    self.world_model.update_entity_state(
-                        entity_id=r.matched_entity_id,
-                        new_state=state,
-                        source_conversation_id=convo_ids[0] if convo_ids else "",
-                        timestamp=batch_timestamp,
-                        trigger_summary=f"Updated from {batch.date} batch",
-                    )
+                    # Skip if state is empty (entity mentioned but nothing changed)
+                    if state and any(v for v in state.values() if v):
+                        # Build a meaningful trigger summary from changed fields
+                        changed_keys = [
+                            k for k in state
+                            if str(state.get(k, "")).strip() and
+                            str(existing.current_state.get(k, "")).strip() != str(state[k]).strip()
+                        ]
+                        if changed_keys:
+                            trigger = f"Fields updated: {', '.join(changed_keys[:5])}"
+                        else:
+                            trigger = f"Updated from {batch.date} batch"
+
+                        self.world_model.update_entity_state(
+                            entity_id=r.matched_entity_id,
+                            new_state=state,
+                            source_conversation_id=convo_ids[0] if convo_ids else "",
+                            timestamp=batch_timestamp,
+                            trigger_summary=trigger,
+                        )
+                    # Always update last_seen even if no state change
+                    existing.last_seen = max(existing.last_seen, batch_timestamp)
                     name_to_id[r.extracted.name.lower()] = r.matched_entity_id
                     if existing.name:
                         name_to_id[existing.name.lower()] = r.matched_entity_id
         
         # Apply state changes
+        # NOTE: We look up by name_to_id first (batch-local, type-safe)
+        # before falling back to find_by_name (which searches aliases and
+        # can cross entity boundaries if aliases are wrong).
         for sc in extraction.state_changes:
-            entity = self.world_model.find_by_name(sc.entity_name)
-            if not entity and sc.entity_name.lower() in name_to_id:
+            entity = None
+            if sc.entity_name.lower() in name_to_id:
                 entity = self.world_model.get_entity(name_to_id[sc.entity_name.lower()])
+            if not entity:
+                entity = self.world_model.find_by_name(sc.entity_name)
             
             if entity:
                 self.world_model.update_entity_state(
@@ -365,6 +399,83 @@ class IngestionPipeline:
         entity = self.world_model.find_by_name(name)
         return entity.id if entity else None
     
+    def _recompute_missing_embeddings(self):
+        """Recompute embeddings for entities that don't have them.
+
+        Embeddings are NOT saved in the JSON (too large), so after loading
+        from disk all entities have embedding=None.  Without embeddings,
+        Tier 2 resolution is completely dead — the resolver can only use
+        string matching, which was the primary cause of bad merges.
+
+        This method batch-computes embeddings at pipeline start so Tier 2
+        works properly on resumed runs.
+        """
+        missing = self.world_model.get_entities_without_embeddings()
+        if not missing:
+            return
+
+        logger.info(f"Recomputing embeddings for {len(missing)} entities (Tier 2 resolution)...")
+
+        BATCH_SIZE = 100
+        computed = 0
+        for i in range(0, len(missing), BATCH_SIZE):
+            batch = missing[i:i + BATCH_SIZE]
+            texts = []
+            for e in batch:
+                desc = e.current_state.get("description", str(e.current_state))
+                texts.append(f"{e.name} ({e.type.value}): {desc}")
+
+            try:
+                embeddings = self.llm.embed(texts)
+                for entity, emb in zip(batch, embeddings):
+                    self.world_model.set_entity_embedding(entity.id, emb)
+                computed += len(batch)
+                if (i + BATCH_SIZE) % 500 < BATCH_SIZE:
+                    logger.info(f"  ... {computed}/{len(missing)} embeddings computed")
+            except Exception as e:
+                logger.warning(f"  Embedding batch {i}-{i+BATCH_SIZE} failed: {e}")
+                continue
+
+        logger.info(f"  Computed {computed} embeddings. Tier 2 resolution ready.")
+
+    def _compute_dynamics(self):
+        """Run dynamics analysis and write importance scores to entities."""
+        from pie.core.dynamics import TransitionDynamics
+        import math
+
+        logger.info("Computing entity dynamics (importance, staleness, volatility)...")
+        dynamics = TransitionDynamics(self.world_model)
+        report = dynamics.analyze()
+
+        # Write importance to entities using transition-based signal:
+        #   importance = log2(1 + transitions) * recency_weight
+        # recency_weight decays from 1.0 (last transition = now) to ~0.2 (very stale)
+        updated = 0
+        for eid, profile in report.entity_profiles.items():
+            entity = self.world_model.entities.get(eid)
+            if not entity:
+                continue
+
+            # Base importance from transition count (log scale)
+            base = math.log2(1 + profile.total_transitions) / 8.0  # normalize: 256 transitions → 1.0
+            base = min(base, 1.0)
+
+            # Recency weight: 1.0 if fresh, decays toward 0.2
+            recency = 1.0 - 0.8 * profile.staleness_score
+
+            entity.importance = round(base * recency, 4)
+            updated += 1
+
+        logger.info(
+            f"  Dynamics: {updated} entities scored, "
+            f"{len(report.stale_entities)} stale, "
+            f"{len(report.volatile_entities)} volatile, "
+            f"{len(report.cooccurrences)} co-occurrences"
+        )
+
+        # Save with importance scores
+        self.world_model.save()
+
     def _print_summary(self, total_time: float):
         """Print final summary after ingestion."""
         logger.info("\n" + "=" * 60)

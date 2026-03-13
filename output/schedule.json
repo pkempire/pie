@@ -1,0 +1,43 @@
+{
+  "wakeups": [
+    {
+      "id": "8dd58166",
+      "created_at": 1771293580.1818242,
+      "trigger_at": 1771552780.1817636,
+      "entity_id": null,
+      "entity_name": "sponsorFind",
+      "message": "Check if sponsorFind agency emails got any replies",
+      "context": "",
+      "priority": "high",
+      "status": "pending",
+      "fired_at": null,
+      "result": null
+    },
+    {
+      "id": "9d068068",
+      "created_at": 1771293580.2493446,
+      "trigger_at": 1771379980.2493272,
+      "entity_id": null,
+      "entity_name": "Lucid Academy",
+      "message": "Review Lucid Academy offer doc draft",
+      "context": "",
+      "priority": "normal",
+      "status": "pending",
+      "fired_at": null,
+      "result": null
+    }
+  ],
+  "predictions": [
+    {
+      "entity_id": "",
+      "entity_name": "Lucid Labs",
+      "prediction": "Will close first sprint client",
+      "expected_by": 1772503180.300815,
+      "confidence": 0.4,
+      "reasoning": "",
+      "based_on": "manual",
+      "status": "predicted"
+    }
+  ],
+  "last_saved": 1771293580.3009646
+}

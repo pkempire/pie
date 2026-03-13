@@ -1,0 +1,1108 @@
+[
+  {
+    "question_id": "conv-44_q0",
+    "question_type": "multi_hop",
+    "question": "Which year did Audrey adopt the first three of her dogs?",
+    "answer": "2020",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q1",
+    "question_type": "multi_hop",
+    "question": "When did Andrew start his new job as a financial analyst?",
+    "answer": "The week before March 27, 2023",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q2",
+    "question_type": "single_hop",
+    "question": "What kind of indoor activities has Andrew pursued with his girlfriend?",
+    "answer": "boardgames, volunteering at pet shelter, wine tasting, growing flowers",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q3",
+    "question_type": "single_hop",
+    "question": "What kind of places have Andrew and his girlfriend checked out around the city?",
+    "answer": "cafes, new places to eat, open space for hikes, pet shelter, wine tasting event, park",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q4",
+    "question_type": "multi_hop",
+    "question": "When did Audrey make muffins for herself?",
+    "answer": "The week of April 3rd to 9th",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q5",
+    "question_type": "multi_hop",
+    "question": "When did Audrey see a hummingbird?",
+    "answer": "first week of May 2023",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q6",
+    "question_type": "multi_hop",
+    "question": "When did Audrey adopt Pixie?",
+    "answer": "around April 2, 2023",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q7",
+    "question_type": "multi_hop",
+    "question": "How many years passed between Audrey adopting Pixie and her other three dogs?",
+    "answer": "three years",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q8",
+    "question_type": "multi_hop",
+    "question": "Did Andrew have a pet dog during March 2023?",
+    "answer": "No",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q9",
+    "question_type": "single_hop",
+    "question": "What kind of classes or groups has Audrey joined to take better care of her dogs?",
+    "answer": "positive reinforcement training workshop to bond with pets, dog training course, agility training course, grooming course, dog-owners group",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q10",
+    "question_type": "multi_hop",
+    "question": "When did Audrey's positive reinforcement training course for dogs take place?",
+    "answer": "June, 2023",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q11",
+    "question_type": "multi_hop",
+    "question": "When did Andrew go rock climbing?",
+    "answer": "June 11, 2023",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q12",
+    "question_type": "single_hop",
+    "question": "What outdoor activities has Andrew done other than hiking in nature?",
+    "answer": "rock climbing, fishing, camping",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q13",
+    "question_type": "multi_hop",
+    "question": "When did Audrey move to a new place?",
+    "answer": "June 2023",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q14",
+    "question_type": "single_hop",
+    "question": "What is something that Andrew really misses while working in the city?",
+    "answer": "being in nature",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q15",
+    "question_type": "single_hop",
+    "question": "What is a shared frustration regarding dog ownership for Audrey and Andrew?",
+    "answer": "Not being able to find pet friendly spots.",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q16",
+    "question_type": "multi_hop",
+    "question": "When is Andrew going to go hiking with Audrey?",
+    "answer": "August",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q17",
+    "question_type": "single_hop",
+    "question": "How many times did Audrey and Andew plan to hike together?",
+    "answer": "three times",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q18",
+    "question_type": "single_hop",
+    "question": "Where did Audrey get Pixie from?",
+    "answer": "breeder",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q19",
+    "question_type": "temporal",
+    "question": "What is an indoor activity that Andrew would enjoy doing while make his dog happy?",
+    "answer": "cook dog treats",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q20",
+    "question_type": "temporal",
+    "question": "Which meat does Audrey prefer eating more than others?",
+    "answer": "chicken",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q21",
+    "question_type": "single_hop",
+    "question": "What are the classes that Audrey took for her dogs to?",
+    "answer": "Positive reinforcement training class for bonding, dog training course, agility class",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q22",
+    "question_type": "multi_hop",
+    "question": "Where did Andrew go during the first weekend of August 2023?",
+    "answer": "camping with girlfriend",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q23",
+    "question_type": "single_hop",
+    "question": "What are some problems that Andrew faces before he adopted Toby?",
+    "answer": "Finding the right dog and pet-friendly apartments close to open spaces",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q24",
+    "question_type": "single_hop",
+    "question": "Did Audrey and Andrew grow up with a pet dog?",
+    "answer": "Yes",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q25",
+    "question_type": "multi_hop",
+    "question": "When did Andrew and his girlfriend go fishing?",
+    "answer": "weekend before August 24, 2023",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q26",
+    "question_type": "single_hop",
+    "question": "What is the biggest stressor in Andrew's life besides not being able to hike frequently?",
+    "answer": "work",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q27",
+    "question_type": "single_hop",
+    "question": "How does Andrew feel about his current work?",
+    "answer": "Stressful",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q28",
+    "question_type": "single_hop",
+    "question": "What is something that Audrey often dresses up her dogs with?",
+    "answer": "Hats",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q29",
+    "question_type": "single_hop",
+    "question": "What are the names of Audrey's dogs?",
+    "answer": "Pepper, Precious, Panda, and Pixie",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q30",
+    "question_type": "multi_hop",
+    "question": "When is Andrew planning to go to the beach with his girlfriend?",
+    "answer": "November 2023",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q31",
+    "question_type": "single_hop",
+    "question": "What has Andrew done with his dogs?",
+    "answer": "Taking walks and hiking",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q32",
+    "question_type": "single_hop",
+    "question": "What kind of tattoo does Audrey have on her arm?",
+    "answer": "Tattoos of her four dogs.",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q33",
+    "question_type": "temporal",
+    "question": "What can Andrew potentially do to improve his stress and accomodate his living situation with his dogs?",
+    "answer": "Change to a hybrid or remote job so he can move away from the city to the suburbs to have a larger living space and be closer to nature.",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q34",
+    "question_type": "multi_hop",
+    "question": "How many months passed between Andrew adopting Toby and Buddy?",
+    "answer": "three months",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q35",
+    "question_type": "single_hop",
+    "question": "What are the names of Andrew's dogs?",
+    "answer": "Toby, Scout, Buddy",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q36",
+    "question_type": "single_hop",
+    "question": "What are some foods that Audrey likes eating?",
+    "answer": "chicken pot pie, chicken roast, blueberry muffins, sushi",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q37",
+    "question_type": "multi_hop",
+    "question": "When did Audrey get into an accident in the park?",
+    "answer": "between October 19 and 24, 2023",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q38",
+    "question_type": "multi_hop",
+    "question": "When did Andrew and his girlfriend go on a wine tasting trip?",
+    "answer": "the weekend before October 24, 2023",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q39",
+    "question_type": "single_hop",
+    "question": "What did Audrey get wtih having so many dogs?",
+    "answer": "Companionship",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q40",
+    "question_type": "single_hop",
+    "question": "What is a good place for dogs to run around freely and meet new friends?",
+    "answer": "The dog park",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q41",
+    "question_type": "single_hop",
+    "question": "What are the breeds of Audrey's dogs?",
+    "answer": "Mongrel mixed with Lab for Pepper and Panda. Mongrel mixed with Chihuahua for Precious and Pixie.",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q42",
+    "question_type": "single_hop",
+    "question": "What technique is Audrey using to discipline her dogs?",
+    "answer": "Positive reinforcement",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q43",
+    "question_type": "temporal",
+    "question": "Which US state do Audrey and Andrew potentially live in?",
+    "answer": "Minnesota",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q44",
+    "question_type": "temporal",
+    "question": "Which national park could Audrey and Andrew be referring to in their conversations?",
+    "answer": "Voyageurs National Park",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q45",
+    "question_type": "multi_hop",
+    "question": "How many pets will Andrew have, as of December 2023?",
+    "answer": "three",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q46",
+    "question_type": "multi_hop",
+    "question": "How many pets did Andrew have, as of September 2023?",
+    "answer": "one",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q47",
+    "question_type": "multi_hop",
+    "question": "How many months passed between Andrew adopting Buddy and Scout",
+    "answer": "one month",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q48",
+    "question_type": "single_hop",
+    "question": "What does Andrew view his pets as?",
+    "answer": "Family",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q49",
+    "question_type": "single_hop",
+    "question": "What does Audrey view her pets as?",
+    "answer": "Family",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q50",
+    "question_type": "single_hop",
+    "question": "What is a skill that Audrey learned to take care of her dogs?",
+    "answer": "Grooming",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q51",
+    "question_type": "single_hop",
+    "question": "What items has Audrey bought or made for her dogs?",
+    "answer": "dog tags, toys, dog beds, collars",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q52",
+    "question_type": "temporal",
+    "question": "What is something that Andrew could do to make birdwatching hobby to fit in his city schedule?",
+    "answer": "Install a bird feeder outside where he can see the birds without going outdoors.",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q53",
+    "question_type": "temporal",
+    "question": "What is a career that Andrew could potentially pursue with his love for animals and nature?",
+    "answer": "Park ranger or a similar position working for the National Park Services.",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q54",
+    "question_type": "single_hop",
+    "question": "What activity do Audrey's dogs like to do in the dog park?",
+    "answer": "Play fetch with ball and frisbee, run around and meet other dogs",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q55",
+    "question_type": "multi_hop",
+    "question": "When did Andrew make his dogs a fun indoor area?",
+    "answer": "few days before November 22, 2023",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q56",
+    "question_type": "single_hop",
+    "question": "Has Andrew moved into a new apartment for his dogs?",
+    "answer": "No",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q57",
+    "question_type": "multi_hop",
+    "question": "When did Andrew adopt Scout?",
+    "answer": "few days before November 2023",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q58",
+    "question_type": "multi_hop",
+    "question": "What did Audrey eat for dinner on October 24, 2023?",
+    "answer": "sushi",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q59",
+    "question_type": "multi_hop",
+    "question": "How long has it been since Andrew adopted his first pet, as of November 2023?",
+    "answer": "4 months",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q60",
+    "question_type": "single_hop",
+    "question": "How many dogs does Andrew have?",
+    "answer": "3",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q61",
+    "question_type": "adversarial",
+    "question": "Which specific type of bird mesmerizes Andrew?",
+    "answer": "Eagles",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q62",
+    "question_type": "adversarial",
+    "question": "What did Andrew express missing about exploring nature trails with his family's dog?",
+    "answer": "The peaceful moments",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q63",
+    "question_type": "adversarial",
+    "question": "What kind of pastries did Andrew and his girlfriend have at the cafe?",
+    "answer": "croissants, muffins, and tarts",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q64",
+    "question_type": "adversarial",
+    "question": "What kind of flowers does Audrey have a tattoo of?",
+    "answer": "sunflowers",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q65",
+    "question_type": "adversarial",
+    "question": "What does Audrey do during dog playdates in the park?",
+    "answer": "chat with people while dogs make new friends",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q66",
+    "question_type": "adversarial",
+    "question": "What type of dog was Andrew looking to adopt based on his living space?",
+    "answer": "smaller dog",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q67",
+    "question_type": "adversarial",
+    "question": "Where does Andrew want to live to give their dog a large, open space to run around?",
+    "answer": "near a park or woods",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q68",
+    "question_type": "adversarial",
+    "question": "Why did Audrey sign up for a workshop about bonding with pets?",
+    "answer": "Strengthen the bond with her pets",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q69",
+    "question_type": "adversarial",
+    "question": "How did Audrey hear about the workshop on bonding with pets?",
+    "answer": "Saw a workshop flyer at the local pet store",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q70",
+    "question_type": "adversarial",
+    "question": "What type of training was the workshop Audrey signed up for in May 2023?",
+    "answer": "Positive reinforcement training",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q71",
+    "question_type": "adversarial",
+    "question": "How did Audrey describe she dog he met at the pet store?",
+    "answer": "Friendly and playful",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q72",
+    "question_type": "adversarial",
+    "question": "Why did Audrey think positive reinforcement training is important for pets?",
+    "answer": "To have pets learn how to behave in a positive way",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q73",
+    "question_type": "adversarial",
+    "question": "What challenge is Andrew facing in their search for a pet?",
+    "answer": "Finding a pet-friendly spot in the city",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q74",
+    "question_type": "adversarial",
+    "question": "How does Andrew feel about their search for a pet-friendly place?",
+    "answer": "Discouraged but determined",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q75",
+    "question_type": "adversarial",
+    "question": "What outdoor activities does Andrew plan on trying after the rock climbing class?",
+    "answer": "kayaking and bungee jumping",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q76",
+    "question_type": "adversarial",
+    "question": "How long does Audrey typically walk her dogs for?",
+    "answer": "about an hour",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q77",
+    "question_type": "adversarial",
+    "question": "What did Audrey set up in the backyard for their dogs on June 26, 2023?",
+    "answer": "a doggy play area with agility stuff and toys",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q78",
+    "question_type": "adversarial",
+    "question": "What did Audrey and her friends stumble across during a hike a few years back, as mentioned on June 26, 2023?",
+    "answer": "a stunning lake in the mountains",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q79",
+    "question_type": "adversarial",
+    "question": "What is Audrey's favorite recipe that she shares with Andrew on 3 July, 2023?",
+    "answer": "Chicken Pot Pie",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q80",
+    "question_type": "adversarial",
+    "question": "What dish is one of Audrey's favorite dishes that includes garlic and is shared with Andrew on 3 July, 2023?",
+    "answer": "Roasted Chicken",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q81",
+    "question_type": "adversarial",
+    "question": "What did Andrew and his GF do on the Monday before July 24, 2023?",
+    "answer": "volunteered at a pet shelter",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q82",
+    "question_type": "adversarial",
+    "question": "What is the name of Audrey's childhood dog?",
+    "answer": "Max",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q83",
+    "question_type": "adversarial",
+    "question": "What special memories does Audrey have with her childhood dog, Max?",
+    "answer": "Long walks in the neighborhood, exploring new paths, sharing worries and hopes",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q84",
+    "question_type": "adversarial",
+    "question": "What are some of the personalities of Audrey's four fur babies?",
+    "answer": "oldest is relaxed, second is playful, third can be naughty but loves cuddles, youngest is full of life",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q85",
+    "question_type": "adversarial",
+    "question": "What type of classes did Audrey start with her pups recently on 4 August, 2023?",
+    "answer": "Agility classes",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q86",
+    "question_type": "adversarial",
+    "question": "How often does Audrey take her pups to the park for practice?",
+    "answer": "Twice a week",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q87",
+    "question_type": "adversarial",
+    "question": "How long did the trail hike that Audrey went on with her pups take?",
+    "answer": "Two hours",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q88",
+    "question_type": "adversarial",
+    "question": "What advice did Audrey give to Andrew regarding grooming Toby?",
+    "answer": "Grooming slowly and gently, paying attention to sensitive areas like ears and paws. And remember to stay patient and positive throughout the grooming process.",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q89",
+    "question_type": "adversarial",
+    "question": "What is essential to keep the dogs looking good according to Audrey?",
+    "answer": "Daily brushing, regular baths, nail trims, and lots of love",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q90",
+    "question_type": "adversarial",
+    "question": "What did Audrey organize with the neighbors' dogs?",
+    "answer": "a doggy playdate",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q91",
+    "question_type": "adversarial",
+    "question": "What did Audrey do to give her dogs extra comfort as the weather cooled down?",
+    "answer": "Got new beds for them",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q92",
+    "question_type": "adversarial",
+    "question": "How does Audrey describe the new beds for her dogs?",
+    "answer": "Super cozy and comfy",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q93",
+    "question_type": "adversarial",
+    "question": "How did Audrey calm down her dog after the leash incident?",
+    "answer": "Petted, hugged, spoke calmly and slowly walked the dog",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q94",
+    "question_type": "adversarial",
+    "question": "How often does Audrey take her dogs for walks?",
+    "answer": "Multiple times a day",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q95",
+    "question_type": "adversarial",
+    "question": "What kind of flowers does Audrey take care of?",
+    "answer": "Peruvian Lilies",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q96",
+    "question_type": "adversarial",
+    "question": "What did Andrew learn from reading books about ecological systems?",
+    "answer": "about animals, plants, and ecosystems and how they work together",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q97",
+    "question_type": "adversarial",
+    "question": "What did Andrew suggest as a way to reduce carbon footprint?",
+    "answer": "biking or using public transport",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q98",
+    "question_type": "adversarial",
+    "question": "How does Andrew suggest helping the planet while also training the body?",
+    "answer": "by biking",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q99",
+    "question_type": "adversarial",
+    "question": "What did Audrey do with her pups over the weekend before 4th October, 2023?",
+    "answer": "Took them to the beach",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q100",
+    "question_type": "adversarial",
+    "question": "What was the reason Audrey couldn't walk her dogs for a period of time?",
+    "answer": "Knee injury",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q101",
+    "question_type": "adversarial",
+    "question": "What type of jewelry does Audrey make?",
+    "answer": "Jewelry made from recycled objects",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q102",
+    "question_type": "adversarial",
+    "question": "Why does Audrey make jewelry out of recycled objects?",
+    "answer": "To show love for creativity and sustainability",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q103",
+    "question_type": "adversarial",
+    "question": "What organization does Audrey donate a portion of his profits to?",
+    "answer": "Animal shelter",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q104",
+    "question_type": "adversarial",
+    "question": "How does Audrey help out the animal shelter?",
+    "answer": "By donating a portion of his profits frmo selling jwelery",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q105",
+    "question_type": "adversarial",
+    "question": "What type of games do Audrey's dogs like to play at the park?",
+    "answer": "Fetch and Frisbee",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q106",
+    "question_type": "adversarial",
+    "question": "What did Audrey make to thank her neighbors?",
+    "answer": "Goodies",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q107",
+    "question_type": "adversarial",
+    "question": "How do Audrey's dogs react to snow?",
+    "answer": "Confused",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q108",
+    "question_type": "adversarial",
+    "question": "How does Audrey describe her dogs' response to snow?",
+    "answer": "They definitely prefer nice, sunny days in the grass.",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q109",
+    "question_type": "adversarial",
+    "question": "What kind of experiences are Audrey's dogs the best companions for?",
+    "answer": "Exploring the great outdoors",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q110",
+    "question_type": "adversarial",
+    "question": "What activity do Andrew and Buddy enjoy doing together?",
+    "answer": "Walking",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q111",
+    "question_type": "adversarial",
+    "question": "What do Andrew and Buddy like doing on walks?",
+    "answer": "Checking out new hiking trails",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q112",
+    "question_type": "adversarial",
+    "question": "What cuisine did Andrew recently try at a new spot in town?",
+    "answer": "sushi",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q113",
+    "question_type": "adversarial",
+    "question": "Which type of sushi did Audrey suggest trying first to someone new to sushi?",
+    "answer": "California or salmon roll",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q114",
+    "question_type": "adversarial",
+    "question": "What type of date is Andrew going on Sunday?",
+    "answer": "picnic date",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q115",
+    "question_type": "adversarial",
+    "question": "What did Andrew and Audrey plan to do on the Saturday after October 28, 2023?",
+    "answer": "Go hiking",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q116",
+    "question_type": "adversarial",
+    "question": "What aspect of autumn does Andrew find beautiful?",
+    "answer": "The autumn colors",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q117",
+    "question_type": "adversarial",
+    "question": "What did Audrey do in November 2023 to better take care of her dogs?",
+    "answer": "Joined a dog owners group",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q118",
+    "question_type": "adversarial",
+    "question": "How often does Audrey meet up with other dog owners for tips and playdates?",
+    "answer": "Once a week",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q119",
+    "question_type": "adversarial",
+    "question": "What did Audrey share to show ways to keep dogs active in the city?",
+    "answer": "photography of a basket full of stuffed animals",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q120",
+    "question_type": "adversarial",
+    "question": "What type of activities does Audrey suggest for mental stimulation of the dogs?",
+    "answer": "puzzles, training, hide-and-seek",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q121",
+    "question_type": "adversarial",
+    "question": "What is Andrew planning to do with Scout, Toby, and Buddy?",
+    "answer": "Take them to a nearby park",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q122",
+    "question_type": "adversarial",
+    "question": "What did Andrew get for Scout to create a safe and fun space for them?",
+    "answer": "essentials like a bed, toys, and puppy pads",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q123",
+    "question_type": "commonsense",
+    "question": "Which specific type of bird mesmerizes Audrey?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q124",
+    "question_type": "commonsense",
+    "question": "What kind of flowers does Andrew have a tattoo of?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q125",
+    "question_type": "commonsense",
+    "question": "What type of dog was Audrey looking to adopt based on her living space?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q126",
+    "question_type": "commonsense",
+    "question": "Why did Audrey sign up for a workshop about car maintenance?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q127",
+    "question_type": "commonsense",
+    "question": "How did Andrew hear about the workshop on bonding with pets?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q128",
+    "question_type": "commonsense",
+    "question": "What type of training was the workshop Andrew signed up for in May 2023?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q129",
+    "question_type": "commonsense",
+    "question": "How did Andrew describe the dog he met at the pet store?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q130",
+    "question_type": "commonsense",
+    "question": "What challenge is Audrey facing in their search for a pet?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q131",
+    "question_type": "commonsense",
+    "question": "What indoor activities does Andrew plan on trying after the rock climbing class?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q132",
+    "question_type": "commonsense",
+    "question": "What did Andrew set up in the backyard for their dogs on June 26, 2023?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q133",
+    "question_type": "commonsense",
+    "question": "What did Audrey and her GF do on the Monday before July 24, 2023?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q134",
+    "question_type": "commonsense",
+    "question": "What is the name of Andrew's childhood dog?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q135",
+    "question_type": "commonsense",
+    "question": "What special memories does Andrew have with his childhood dog, Max?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q136",
+    "question_type": "commonsense",
+    "question": "What are some of the personalities of Andrew's four fur babies?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q137",
+    "question_type": "commonsense",
+    "question": "What type of classes did Andrew start with his pups recently on 4 August, 2023?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q138",
+    "question_type": "commonsense",
+    "question": "What is essential to keep the dogs looking good according to Andrew?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q139",
+    "question_type": "commonsense",
+    "question": "What did Audrey organize with the neighbors' cats?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q140",
+    "question_type": "commonsense",
+    "question": "What did Andrew do to give his dogs extra comfort as the weather cooled down?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q141",
+    "question_type": "commonsense",
+    "question": "How does Andrew describe the new beds for his dogs?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q142",
+    "question_type": "commonsense",
+    "question": "How did Andrew calm down his dog after the leash incident?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q143",
+    "question_type": "commonsense",
+    "question": "How often does Andrew take his dogs for walks?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q144",
+    "question_type": "commonsense",
+    "question": "What kind of vegetables does Audrey take care of?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q145",
+    "question_type": "commonsense",
+    "question": "What did Andrew learn from reading books about economic systems?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q146",
+    "question_type": "commonsense",
+    "question": "What was the reason Andrew couldn't walk his dogs for a period of time?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q147",
+    "question_type": "commonsense",
+    "question": "What type of jewelry does Andrew make?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q148",
+    "question_type": "commonsense",
+    "question": "Why does Andrew make jewelry out of recycled objects?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q149",
+    "question_type": "commonsense",
+    "question": "What type of games do Andrew's dogs like to play at the park?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q150",
+    "question_type": "commonsense",
+    "question": "What did Andrew make to thank his neighbors?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q151",
+    "question_type": "commonsense",
+    "question": "How do Andrew's dogs react to snow?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q152",
+    "question_type": "commonsense",
+    "question": "How does Andrew describe his dogs' response to snow?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q153",
+    "question_type": "commonsense",
+    "question": "What kind of experiences are Audrey's cats the best companions for?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q154",
+    "question_type": "commonsense",
+    "question": "What activity do Audrey and Buddy enjoy doing together?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q155",
+    "question_type": "commonsense",
+    "question": "What type of drink did Andrew recently try at a new spot in town?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q156",
+    "question_type": "commonsense",
+    "question": "Which type of pizza did Audrey suggest trying first to someone new to Italian cuisine?",
+    "answer": "",
+    "sample_id": "conv-44"
+  },
+  {
+    "question_id": "conv-44_q157",
+    "question_type": "commonsense",
+    "question": "How often does Andrew meet up with other dog owners for tips and playdates?",
+    "answer": "",
+    "sample_id": "conv-44"
+  }
+]

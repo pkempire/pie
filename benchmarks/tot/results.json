@@ -1,0 +1,98 @@
+{
+  "model": "gpt-5-mini",
+  "samples_per_type": 10,
+  "results": {
+    "sem_before_after": {
+      "correct": 9,
+      "total": 10,
+      "errors": []
+    },
+    "sem_event_at_the_time_of_another_event": {
+      "correct": 10,
+      "total": 10,
+      "errors": []
+    },
+    "sem_event_at_time_t": {
+      "correct": 10,
+      "total": 10,
+      "errors": []
+    },
+    "sem_event_at_what_time": {
+      "correct": 10,
+      "total": 10,
+      "errors": []
+    },
+    "sem_first_last": {
+      "correct": 10,
+      "total": 10,
+      "errors": []
+    },
+    "sem_number_of_events_in_time_interval": {
+      "correct": 10,
+      "total": 10,
+      "errors": []
+    },
+    "sem_relation_duration": {
+      "correct": 10,
+      "total": 10,
+      "errors": []
+    },
+    "sem_timeline": {
+      "correct": 10,
+      "total": 10,
+      "errors": []
+    },
+    "arith_add_subtract": {
+      "correct": 5,
+      "total": 10,
+      "errors": []
+    },
+    "arith_compare": {
+      "correct": 2,
+      "total": 10,
+      "errors": []
+    },
+    "arith_duration": {
+      "correct": 3,
+      "total": 10,
+      "errors": []
+    },
+    "arith_multi_op": {
+      "correct": 9,
+      "total": 10,
+      "errors": []
+    },
+    "arith_schedule": {
+      "correct": 6,
+      "total": 10,
+      "errors": []
+    },
+    "arith_timezone": {
+      "correct": 9,
+      "total": 10,
+      "errors": []
+    },
+    "arith_trick": {
+      "correct": 0,
+      "total": 10,
+      "errors": []
+    }
+  },
+  "totals": {
+    "semantic": {
+      "correct": 79,
+      "total": 80,
+      "accuracy": 98.75
+    },
+    "arithmetic": {
+      "correct": 34,
+      "total": 70,
+      "accuracy": 48.57
+    },
+    "overall": {
+      "correct": 113,
+      "total": 150,
+      "accuracy": 75.33
+    }
+  }
+}

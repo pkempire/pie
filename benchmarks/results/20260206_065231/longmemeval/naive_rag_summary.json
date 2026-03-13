@@ -1,0 +1,17 @@
+{
+  "overall": {
+    "accuracy": 80.0,
+    "total": 5,
+    "total_score": 4.0
+  },
+  "by_category": {
+    "single-session-user": {
+      "accuracy": 80.0,
+      "count": 5,
+      "score": 4.0
+    }
+  },
+  "baseline": "naive_rag",
+  "timestamp": "2026-02-06T11:53:02.347945+00:00",
+  "num_results": 5
+}

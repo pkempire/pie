@@ -1,0 +1,2958 @@
+[
+  {
+    "session_index": 0,
+    "session_id": "conv-50_session_0",
+    "input_chars": 2529,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 March 23, 2023 at 11:53]\nCalvin: Hey Dave! Nice to meet you! How's it going since we talked?\nCalvin: Hey Calvin! Nice to meet you too! Things have been going well since we last talked. I attended this awesome event recently. It was like a car lover's paradise! They had so many classic cars on show, I was in awe. I even had the opportunity to speak with some of the owners and hear the",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's event",
+          "type": "concept",
+          "state": {
+            "description": "Attended a car lover's paradise event with classic cars on show."
+          }
+        },
+        {
+          "name": "Calvin's life change",
+          "type": "concept",
+          "state": {
+            "description": "Recently had a big life change and moved into a new mansion."
+          }
+        },
+        {
+          "name": "Calvin's interest in Japanese culture",
+          "type": "concept",
+          "state": {
+            "description": "Loving getting to know Japanese culture"
+          }
+        },
+        {
+          "name": "Calvin's travel plans to Japan",
+          "type": "concept",
+          "state": {
+            "description": "Planning to travel to Japan in April 2023."
+          }
+        },
+        {
+          "name": "Calvin's accommodation in Japan",
+          "type": "concept",
+          "state": {
+            "description": "Found an awesome place to stay in Japan through his agent."
+          }
+        },
+        {
+          "name": "Calvin's plans in Japan",
+          "type": "concept",
+          "state": {
+            "description": "Calvin looks forward to trying food and experiencing culture in Japan."
+          }
+        },
+        {
+          "name": "Calvin's duration in Japan",
+          "type": "concept",
+          "state": {
+            "description": "Planning to stay in Japan for a few months."
+          }
+        },
+        {
+          "name": "Calvin's park visits",
+          "type": "concept",
+          "state": {
+            "description": "Spending lots of time at a beautiful park, which is calming."
+          }
+        },
+        {
+          "name": "Dave's response to Calvin's event",
+          "type": "person",
+          "state": {
+            "description": "Expressed excitement about Calvin's event and congratulated him on his life change."
+          }
+        },
+        {
+          "name": "Dave's interest in Calvin's trip",
+          "type": "person",
+          "state": {
+            "description": "Showed interest in Calvin's plans for Japan and offered to help with recommendations."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 12,
+    "total_entities": 12
+  },
+  {
+    "session_index": 1,
+    "session_id": "conv-50_session_1",
+    "input_chars": 2980,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 March 26, 2023 at 16:45]\nCalvin: Hey Dave, been a few days, so I wanted to let you in on some cool news.  I just got a new car and it's amazing! Finally owning a luxury car was a dream come true and I'm so stoked.\nCalvin: Woohoo, Calvin! Congrats on the new car! How's it driving?\nCalvin: Nice car! It's an amazing ride - super smooth and real powerful. Like a rockstar behind the wheel",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's new car",
+          "type": "concept",
+          "state": {
+            "description": "Calvin just got a new luxury car, which he describes as amazing and a dream come true."
+          }
+        },
+        {
+          "name": "Calvin's car driving experience",
+          "type": "concept",
+          "state": {
+            "description": "Calvin describes the car as super smooth and powerful, feeling like a rockstar behind the wheel."
+          }
+        },
+        {
+          "name": "Calvin's car photo",
+          "type": "concept",
+          "state": {
+            "description": "Calvin shared a photo of his new red sports car parked on the side of the road."
+          }
+        },
+        {
+          "name": "Calvin's music festival experience",
+          "type": "concept",
+          "state": {
+            "description": "Felt alive at the festival with great energy, music, and crowd"
+          }
+        },
+        {
+          "name": "Calvin's favorite band at the festival",
+          "type": "concept",
+          "state": {
+            "description": "Calvin's favorite performance at the festival was by Aerosmith, which he found incredible."
+          }
+        },
+        {
+          "name": "Calvin's concert photo",
+          "type": "concept",
+          "state": {
+            "description": "Calvin took a photo of Aerosmith performing at the festival."
+          }
+        },
+        {
+          "name": "Calvin's experience seeing Aerosmith live",
+          "type": "concept",
+          "state": {
+            "description": "Calvin saw Aerosmith live and described it as an amazing experience."
+          }
+        },
+        {
+          "name": "Calvin's studio sessions",
+          "type": "concept",
+          "state": {
+            "description": "Calvin had a few studio sessions the week before March 26, 2023 and is excited to collaborate on new tunes."
+          }
+        },
+        {
+          "name": "Dave's music festival experience",
+          "type": "concept",
+          "state": {
+            "description": "Dave attended a music festival in Boston the weekend before March 26, 2023, enjoying the electric atmosphere."
+          }
+        },
+        {
+          "name": "Dave's favorite band at the festival",
+          "type": "concept",
+          "state": {
+            "description": "Dave's favorite band at the festival was Aerosmith."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 10,
+    "total_entities": 22
+  },
+  {
+    "session_index": 2,
+    "session_id": "conv-50_session_2",
+    "input_chars": 3151,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 April 20, 2023 at 16:15]\nCalvin: Hey Dave! Long time no see. I just went to an awesome music thingy in Tokyo - so cool!\nCalvin: Hey Calvin! Great to hear from you. How was the music thingy in Tokyo? See any cool bands?\nCalvin: Hey Dave! The festival in Tokyo was awesome! Didn't see any bands, but met lots of talented artists and industry people. Totally enriching!\nCalvin: Wow, Calvin",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's music festival in Tokyo",
+          "type": "event",
+          "state": {
+            "description": "Attended a music festival in Tokyo, met talented artists and industry professionals."
+          }
+        },
+        {
+          "name": "Calvin's advice from producer",
+          "type": "belief",
+          "state": {
+            "description": "Received advice from a producer to stay true to himself and sound unique."
+          }
+        },
+        {
+          "name": "Calvin's dream of touring",
+          "type": "concept",
+          "state": {
+            "description": "Dreaming of touring the world, performing for different people and connecting with them."
+          }
+        },
+        {
+          "name": "Calvin's upcoming trip to Boston",
+          "type": "event",
+          "state": {
+            "description": "Upcoming trip to Boston after finishing the Frank Ocean tour."
+          }
+        },
+        {
+          "name": "Calvin's interest in auto engineering",
+          "type": "hobby",
+          "state": {
+            "description": "Interested in auto engineering, enjoys classic cars and their restoration."
+          }
+        },
+        {
+          "name": "Calvin's car show visit",
+          "type": "event",
+          "state": {
+            "description": "Calvin attended a car show on October 6, 2023, where he saw awesome cars and car mods."
+          }
+        },
+        {
+          "name": "Calvin's red sports car",
+          "type": "item",
+          "state": {
+            "description": "Owns a red sports car that he put a lot of work into."
+          }
+        },
+        {
+          "name": "Dave's busy schedule",
+          "type": "concept",
+          "state": {
+            "description": "Dave has been busy with rehearsals and traveling."
+          }
+        },
+        {
+          "name": "Dave's favorite food spots in Boston",
+          "type": "concept",
+          "state": {
+            "description": "Excited to show Calvin his favorite food spots in Boston."
+          }
+        },
+        {
+          "name": "Calvin's appreciation for Boston's music scene",
+          "type": "belief",
+          "state": {
+            "description": "Looking forward to exploring Boston's music scene."
+          }
+        },
+        {
+          "name": "Calvin's photo of Boston",
+          "type": "item",
+          "state": {
+            "description": "Received a photo of Boston's skyline."
+          }
+        },
+        {
+          "name": "Calvin's photo of a green mustang",
+          "type": "item",
+          "state": {
+            "description": "Sent a photo of a green mustang parked in a field."
+          }
+        },
+        {
+          "name": "Calvin's photo of his red sports car",
+          "type": "item",
+          "state": {
+            "description": "Sent a photo of his red sports car on display at a show."
+          }
+        },
+        {
+          "name": "Calvin's connection with Dave",
+          "type": "relationship",
+          "state": {
+            "description": "Calvin and Dave are friends who plan to meet in Boston."
+          }
+        },
+        {
+          "name": "Calvin's excitement for Boston",
+          "type": "concept",
+          "state": {
+            "description": "Calvin is excited to try out the food and explore Boston with Dave."
+          }
+        },
+        {
+          "name": "Calvin's learning experience",
+          "type": "concept",
+          "state": {
+            "description": "Learned a lot and found the experience at the festival inspiring."
+          }
+        },
+        {
+          "name": "Calvin's motivation from advice",
+          "type": "belief",
+          "state": {
+            "description": "Motivated by the advice received to think about the direction of his music."
+          }
+        },
+        {
+          "name": "Calvin's connection with music professionals",
+          "type": "relationship",
+          "state": {
+            "description": "Connected with music industry professionals at the festival."
+          }
+        },
+        {
+          "name": "Dave's anticipation for Calvin's visit",
+          "type": "concept",
+          "state": {
+            "description": "Dave is looking forward to showing Calvin around Boston."
+          }
+        },
+        {
+          "name": "Calvin's excitement for performances",
+          "type": "concept",
+          "state": {
+            "description": "Excited about potential performances in Boston."
+          }
+        },
+        {
+          "name": "Calvin's connection with the audience",
+          "type": "belief",
+          "state": {
+            "description": "Calvin feels a powerful connection with the crowd during performances."
+          }
+        },
+        {
+          "name": "Calvin's appreciation for music advice",
+          "type": "belief",
+          "state": {
+            "description": "Values the advice received from professionals in the music industry."
+          }
+        },
+        {
+          "name": "Calvin's experience at the festival",
+          "type": "event",
+          "state": {
+            "description": "Found the festival experience enriching."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 23,
+    "entities_new": 23,
+    "total_entities": 45
+  },
+  {
+    "session_index": 3,
+    "session_id": "conv-50_session_3",
+    "input_chars": 4103,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 May 01, 2023 at 18:24]\nCalvin: Hey Calvin, long time no see! A lot's been happening since we last talked. Guess what? I finally opened my own car maintenance shop! It's so satisfying to have a spot to work on cars - it's like a dream come true! Take a look at the photo.\n[Image: a photo of a car dealership with cars parked in front of it]\nCalvin: Wow Dave! Congrats on opening your own",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's car maintenance shop",
+          "type": "organization",
+          "state": {
+            "description": "Calvin opened his own car maintenance shop."
+          }
+        },
+        {
+          "name": "Calvin's passion for classic cars",
+          "type": "belief",
+          "state": {
+            "description": "Calvin is passionate about classic cars and dreams of working on them."
+          }
+        },
+        {
+          "name": "Calvin's restoration project",
+          "type": "concept",
+          "state": {
+            "description": "Calvin restored a classic car 2022."
+          }
+        },
+        {
+          "name": "Calvin's shop services",
+          "type": "concept",
+          "state": {
+            "description": "Calvin works on all kinds of cars, from regular maintenance to full restorations of classic cars."
+          }
+        },
+        {
+          "name": "Calvin's satisfaction in work",
+          "type": "belief",
+          "state": {
+            "description": "Calvin finds working on cars rewarding and satisfying."
+          }
+        },
+        {
+          "name": "Calvin's necklace",
+          "type": "item",
+          "state": {
+            "description": "Calvin received a gold necklace with a diamond pendant as a gift from another artist."
+          }
+        },
+        {
+          "name": "Dave's support for Calvin",
+          "type": "belief",
+          "state": {
+            "description": "Dave encourages Calvin to keep dreaming and pursuing his passion."
+          }
+        },
+        {
+          "name": "Dave's hard work",
+          "type": "belief",
+          "state": {
+            "description": "Dave's hard work and talent deserve recognition."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 8,
+    "total_entities": 53
+  },
+  {
+    "session_index": 4,
+    "session_id": "conv-50_session_4",
+    "input_chars": 3049,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 May 03, 2023 at 13:16]\nCalvin: Hey Calvin! Long time no talk. How's it going? Crazy news - I'm teaming up with a local garage. Take a look at what we working on together!\n[Image: a photo of a car being worked on in a garage]\nCalvin: Hey Dave, great to hear from you! That's awesome news about teaming up with a local garage. Super inspiring seeing you follow your passion. Congratulatio",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's job",
+          "type": "concept",
+          "state": {
+            "description": "Musician on tour with Frank Ocean"
+          }
+        },
+        {
+          "name": "Calvin's passion",
+          "type": "concept",
+          "state": {
+            "description": "Following his passion for auto engineering"
+          }
+        },
+        {
+          "name": "Calvin's project",
+          "type": "concept",
+          "state": {
+            "description": "Calvin is transforming a Japanese mansion into a recording studio."
+          }
+        },
+        {
+          "name": "Calvin's dream",
+          "type": "concept",
+          "state": {
+            "description": "Calvin's dream is to have a space for creating music with other artists."
+          }
+        },
+        {
+          "name": "Calvin's relaxation method",
+          "type": "concept",
+          "state": {
+            "description": "Long drives in his car help him relax"
+          }
+        },
+        {
+          "name": "Calvin's hobby",
+          "type": "concept",
+          "state": {
+            "description": "Loves working on music projects to chill out."
+          }
+        },
+        {
+          "name": "Calvin's interest in Japanese culture",
+          "type": "concept",
+          "state": {
+            "description": "Loving getting to know Japanese culture"
+          }
+        },
+        {
+          "name": "Calvin's music creativity",
+          "type": "concept",
+          "state": {
+            "description": "Feeling stuck with music creativity"
+          }
+        },
+        {
+          "name": "Dave's advice on creativity",
+          "type": "concept",
+          "state": {
+            "description": "Immerse in concerts or favorite albums to jumpstart inspiration"
+          }
+        },
+        {
+          "name": "Calvin's gratitude",
+          "type": "concept",
+          "state": {
+            "description": "Appreciates Dave's help and advice on exploring new things"
+          }
+        },
+        {
+          "name": "Calvin's determination",
+          "type": "concept",
+          "state": {
+            "description": "Calvin emphasizes the importance of hard work and determination in reaching goals."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 10,
+    "total_entities": 63
+  },
+  {
+    "session_index": 5,
+    "session_id": "conv-50_session_5",
+    "input_chars": 2735,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 May 16, 2023 at 11:50]\nCalvin: Hey Dave! Long time no chat! Lots has gone down since we last caught up.\nCalvin: Hey Calvin! Long time no chat! How's everything been going since we last caught up?\nCalvin: Hey Dave, not everything has been going smoothly. I had an incident last week where my place got flooded, but thankfully, I managed to save my music gear and favorite microphone. It'",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's incident with flooding",
+          "type": "concept",
+          "state": {
+            "description": "Calvin's place got flooded the week before May 16, 2023, but he managed to save his music gear and favorite microphone."
+          }
+        },
+        {
+          "name": "Calvin's music gear",
+          "type": "concept",
+          "state": {
+            "description": "Calvin saved his music gear during the flooding incident."
+          }
+        },
+        {
+          "name": "Calvin's favorite microphone",
+          "type": "concept",
+          "state": {
+            "description": "Calvin saved his favorite microphone during the flooding incident."
+          }
+        },
+        {
+          "name": "Calvin's insurance claim",
+          "type": "concept",
+          "state": {
+            "description": "Calvin is waiting on insurance to kick in so he can start repairs on his flooded place."
+          }
+        },
+        {
+          "name": "Calvin's music studio",
+          "type": "concept",
+          "state": {
+            "description": "Calvin's music studio looks great and he is trying out new ideas."
+          }
+        },
+        {
+          "name": "Calvin's upcoming performance",
+          "type": "concept",
+          "state": {
+            "description": "Calvin accepted an invitation to perform at an upcoming show in Boston."
+          }
+        },
+        {
+          "name": "Dave's car shop",
+          "type": "concept",
+          "state": {
+            "description": "Dave opened his car shop the week before May 16, 2023 and invited friends over to celebrate."
+          }
+        },
+        {
+          "name": "Calvin's support for Dave",
+          "type": "concept",
+          "state": {
+            "description": "Calvin encourages Dave to keep pursuing his passion."
+          }
+        },
+        {
+          "name": "Dave's excitement about his car shop",
+          "type": "concept",
+          "state": {
+            "description": "Dave is excited about his journey with the new car shop."
+          }
+        },
+        {
+          "name": "Calvin's trip to Tokyo",
+          "type": "concept",
+          "state": {
+            "description": "Calvin took a picture of the Tokyo skyline last night."
+          }
+        },
+        {
+          "name": "Calvin's photo of Tokyo",
+          "type": "concept",
+          "state": {
+            "description": "Calvin took a stunning photo of the Tokyo skyline at night."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 11,
+    "total_entities": 74
+  },
+  {
+    "session_index": 6,
+    "session_id": "conv-50_session_6",
+    "input_chars": 3538,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 May 31, 2023 at 18:06]\nCalvin: Hey Dave! Been ages since we chatted. So much has gone down. Touring with Frank Ocean last week was wild. Tokyo was unreal -- the crowd was insane. I felt so alive when performing, can't find the words to express it.\nCalvin: Wow, that's awesome, Cal! I bet it was an incredible experience. Congrats! Look what I've been up to recently, that's my neighbor'",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's recent tour",
+          "type": "event",
+          "state": {
+            "description": "Touring with Frank Ocean in Tokyo the week before May 31, 2023, May 2023."
+          }
+        },
+        {
+          "name": "Calvin's performance experience",
+          "type": "concept",
+          "state": {
+            "description": "Had an amazing experience touring with a well-known artist, performing in Japan."
+          }
+        },
+        {
+          "name": "Calvin's neighbor's car",
+          "type": "item",
+          "state": {
+            "description": "Neighbor's car that Calvin helped fix the engine."
+          }
+        },
+        {
+          "name": "Calvin's hobby of fixing cars",
+          "type": "hobby",
+          "state": {
+            "description": "Fixing cars helps Calvin chill and clear his head."
+          }
+        },
+        {
+          "name": "Calvin's passion for fixing things",
+          "type": "hobby",
+          "state": {
+            "description": "Calvin is passionate about fixing up things, giving him a sense of achievement."
+          }
+        },
+        {
+          "name": "Calvin's feeling of accomplishment",
+          "type": "concept",
+          "state": {
+            "description": "Calvin feels powerful and happy when transforming something that doesn't work into something that runs smoothly."
+          }
+        },
+        {
+          "name": "Calvin's love for performing live",
+          "type": "hobby",
+          "state": {
+            "description": "Performing live fuels Calvin's soul and gives him a rush."
+          }
+        },
+        {
+          "name": "Calvin's upcoming performance in Boston",
+          "type": "event",
+          "state": {
+            "description": "Calvin is excited to perform in Boston during the tour with Frank Ocean."
+          }
+        },
+        {
+          "name": "Dave's support for Calvin",
+          "type": "concept",
+          "state": {
+            "description": "Dave expresses support for Calvin's performance in Boston."
+          }
+        },
+        {
+          "name": "Calvin's connection with the audience",
+          "type": "concept",
+          "state": {
+            "description": "Calvin feels a powerful connection with the crowd during performances."
+          }
+        },
+        {
+          "name": "Calvin's therapeutic experience with music",
+          "type": "concept",
+          "state": {
+            "description": "Calvin believes music brings people together and creates a great atmosphere."
+          }
+        },
+        {
+          "name": "Calvin's anticipation for Boston's music scene",
+          "type": "concept",
+          "state": {
+            "description": "Calvin is eager to experience the music scene in Boston."
+          }
+        },
+        {
+          "name": "Dave's opinion on Boston's music scene",
+          "type": "concept",
+          "state": {
+            "description": "Dave thinks Boston's music scene is awesome with talented musicians."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 15,
+    "entities_new": 11,
+    "total_entities": 85
+  },
+  {
+    "session_index": 7,
+    "session_id": "conv-50_session_7",
+    "input_chars": 2902,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 June 09, 2023 at 14:31]\nCalvin: Hey Dave! Met with the creative team for my album yesterday. It was a long session, but awesome to see everything coming together.\nCalvin: Hey Cal! Sounds great that your album's coming along. Are you feeling good about it? Here's a pic I just took.\n[Image: a photography of a pond with a boat in it surrounded by trees]\nCalvin: Dave, thanks for checking",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's album meeting",
+          "type": "concept",
+          "state": {
+            "description": "Met with the creative team for his album on June 8, 2023."
+          }
+        },
+        {
+          "name": "Calvin's studio",
+          "type": "concept",
+          "state": {
+            "description": "Wonderful studio where Calvin is working on his album."
+          }
+        },
+        {
+          "name": "Calvin's weekend parks exploration",
+          "type": "concept",
+          "state": {
+            "description": "Exploring parks on weekends to relax."
+          }
+        },
+        {
+          "name": "Calvin's Boston visit",
+          "type": "concept",
+          "state": {
+            "description": "Plans to visit Boston in July 2023."
+          }
+        },
+        {
+          "name": "Calvin's weekend walks",
+          "type": "concept",
+          "state": {
+            "description": "Loves taking walks on weekends to recharge."
+          }
+        },
+        {
+          "name": "Calvin's hiking plans",
+          "type": "concept",
+          "state": {
+            "description": "Keen to go hiking to de-stress."
+          }
+        },
+        {
+          "name": "Calvin's trip to mountainous region",
+          "type": "concept",
+          "state": {
+            "description": "Booked a trip to a mountainous region in July 2023."
+          }
+        },
+        {
+          "name": "Dave's parks in Boston",
+          "type": "concept",
+          "state": {
+            "description": "Dave remembers the parks in Boston are amazing."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 8,
+    "total_entities": 93
+  },
+  {
+    "session_index": 8,
+    "session_id": "conv-50_session_8",
+    "input_chars": 3185,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 June 21, 2023 at 15:15]\nCalvin: Hi Dave! Nice to hear from you. Since last chat, some things have happened. I had a lil car accident last Friday, kinda upsetting but no one was hurt. I've been dealing with insurance and repairs - taking up a lot of time and energy. Look at this photo!\n[Image: a photo of a red car with a black rim parked on a sidewalk]\nCalvin: Sorry to hear about the ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's car accident",
+          "type": "event",
+          "state": {
+            "description": "Calvin had a car accident on June 16, 2023, but no one was hurt."
+          }
+        },
+        {
+          "name": "Calvin's insurance process",
+          "type": "concept",
+          "state": {
+            "description": "The insurance process was a hassle, taking a week to sort out."
+          }
+        },
+        {
+          "name": "Calvin's car repair cost",
+          "type": "concept",
+          "state": {
+            "description": "The cost of repairs was not too bad."
+          }
+        },
+        {
+          "name": "Calvin's mechanic",
+          "type": "person",
+          "state": {
+            "description": "The mechanic is skilled and knowledgeable, working on Calvin's car."
+          }
+        },
+        {
+          "name": "Calvin's view from living room",
+          "type": "concept",
+          "state": {
+            "description": "Calvin has a view of a small town with a mountain in the background from his living room."
+          }
+        },
+        {
+          "name": "Calvin's future trip to Japan",
+          "type": "event",
+          "state": {
+            "description": "Calvin plans to visit a small town in Japan after his tour with Frank Ocean."
+          }
+        },
+        {
+          "name": "Calvin's skiing experience",
+          "type": "concept",
+          "state": {
+            "description": "Calvin has not tried skiing before but is interested in giving it a try."
+          }
+        },
+        {
+          "name": "Dave's rock band",
+          "type": "concept",
+          "state": {
+            "description": "Dave recently joined a rock band and has been practicing guitar."
+          }
+        },
+        {
+          "name": "Calvin's guitar playing",
+          "type": "concept",
+          "state": {
+            "description": "Calvin thinks playing guitar in a rock band is awesome."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 9,
+    "total_entities": 102
+  },
+  {
+    "session_index": 9,
+    "session_id": "conv-50_session_9",
+    "input_chars": 3205,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 July 07, 2023 at 19:56]\nCalvin: Hey Calvin, how's the car doing after the crash? You were stoked to get back on the road, right?\nCalvin: Hey Dave! Thanks for checking in. It's all good now, the car's fixed and going strong. Nothing better than cruising around - it's the best! Look at how my car looks right now. How've you been? Anything new?\n[Image: a photography of a red sports car ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's car status",
+          "type": "concept",
+          "state": {
+            "description": "Calvin's car is fixed and going strong after the crash."
+          }
+        },
+        {
+          "name": "Calvin's activity with friends",
+          "type": "concept",
+          "state": {
+            "description": "Calvin has arranged regular walks with friends in the park."
+          }
+        },
+        {
+          "name": "Calvin's favorite hangout spot",
+          "type": "concept",
+          "state": {
+            "description": "Calvin's favorite spot for hanging out is a park."
+          }
+        },
+        {
+          "name": "Calvin's Japanese mansion",
+          "type": "concept",
+          "state": {
+            "description": "Calvin lives in a Japanese mansion with an epic cityscape view."
+          }
+        },
+        {
+          "name": "Calvin's view from mansion",
+          "type": "concept",
+          "state": {
+            "description": "Calvin enjoys awe-inspiring views of city lights from his mansion."
+          }
+        },
+        {
+          "name": "Calvin's plans in Japan",
+          "type": "concept",
+          "state": {
+            "description": "Calvin looks forward to trying food and experiencing culture in Japan."
+          }
+        },
+        {
+          "name": "Calvin's music collaborations",
+          "type": "concept",
+          "state": {
+            "description": "Had great collaborations recently and his album is almost finished."
+          }
+        },
+        {
+          "name": "Dave's interest in Japan",
+          "type": "concept",
+          "state": {
+            "description": "Dave has never been to Japan but is keen to go one day."
+          }
+        },
+        {
+          "name": "Dave's music taste",
+          "type": "concept",
+          "state": {
+            "description": "Dave is hooked on Japanese music."
+          }
+        },
+        {
+          "name": "Calvin's excitement for music clips",
+          "type": "concept",
+          "state": {
+            "description": "Calvin will share clips of his music collaborations when ready."
+          }
+        },
+        {
+          "name": "Calvin's work",
+          "type": "concept",
+          "state": {
+            "description": "Calvin is currently busy with work."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 10,
+    "total_entities": 112
+  },
+  {
+    "session_index": 10,
+    "session_id": "conv-50_session_10",
+    "input_chars": 3202,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 July 21, 2023 at 18:38]\nCalvin: Hey Cal, been ages since we spoke! Guess what? I just got back from a road trip with my friends - we saw some stunning countryside. It was such a lovely break from the corporate mayhem. Driving on those winding roads, taking in the views, and chatting with my friends recharged me totally - reminds me why I love cars so much. What did you end up doing?\n",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's road trip",
+          "type": "concept",
+          "state": {
+            "description": "Calvin just got back from a road trip with friends, enjoying stunning countryside views."
+          }
+        },
+        {
+          "name": "Calvin's passion for cars",
+          "type": "concept",
+          "state": {
+            "description": "Calvin views working on cars as a passion and a form of therapy."
+          }
+        },
+        {
+          "name": "Calvin's project",
+          "type": "concept",
+          "state": {
+            "description": "Calvin is transforming a Japanese mansion into a recording studio."
+          }
+        },
+        {
+          "name": "Calvin's dream",
+          "type": "concept",
+          "state": {
+            "description": "Calvin's dream is to have a space for creating music with other artists."
+          }
+        },
+        {
+          "name": "Calvin's music creation",
+          "type": "concept",
+          "state": {
+            "description": "Calvin has been experimenting with different music genres and adding electronic elements."
+          }
+        },
+        {
+          "name": "Calvin's self-discovery process",
+          "type": "concept",
+          "state": {
+            "description": "Calvin's music experimentation is an exciting process of self-discovery and growth."
+          }
+        },
+        {
+          "name": "Calvin's motivation",
+          "type": "concept",
+          "state": {
+            "description": "Calvin is motivated by creating music that connects with people and brings joy."
+          }
+        },
+        {
+          "name": "Dave's support for Calvin",
+          "type": "concept",
+          "state": {
+            "description": "Dave expresses support for Calvin's music journey and encourages him to keep pushing forward."
+          }
+        },
+        {
+          "name": "Calvin's future plans",
+          "type": "concept",
+          "state": {
+            "description": "Calvin plans to explore and grow his brand after the tour"
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 6,
+    "total_entities": 118
+  },
+  {
+    "session_index": 11,
+    "session_id": "conv-50_session_11",
+    "input_chars": 3036,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 August 03, 2023 at 13:12]\nCalvin: Hey Dave, long time no see! I just took my Ferrari for a service and it was so stressful. I'm kinda attached to it. Can you relate? What kind of hobbies give you a feeling of being restored?\nCalvin: Hey Calvin, I understand the stress of getting a car serviced. Fixing cars is like therapy for me. Growing up working on cars with my dad, refurbishing t",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's car",
+          "type": "concept",
+          "state": {
+            "description": "Calvin's Ferrari, which he is attached to and recently took for service."
+          }
+        },
+        {
+          "name": "Calvin's hobby",
+          "type": "concept",
+          "state": {
+            "description": "Calvin's interest in cars and the stress associated with getting them serviced."
+          }
+        },
+        {
+          "name": "Dave's hobby",
+          "type": "concept",
+          "state": {
+            "description": "Working on cars, specifically restoring a Ford Mustang found in a junkyard."
+          }
+        },
+        {
+          "name": "Dave's childhood memories",
+          "type": "concept",
+          "state": {
+            "description": "Fond memories of working on cars with his dad, including restoring an old car."
+          }
+        },
+        {
+          "name": "Calvin's trip to Ferrari dealership",
+          "type": "concept",
+          "state": {
+            "description": "Calvin's visit to the Ferrari dealership where he saw many amazing cars."
+          }
+        },
+        {
+          "name": "Calvin's music goals",
+          "type": "concept",
+          "state": {
+            "description": "Calvin's plan to expand his brand worldwide, grow his fanbase, and work with global artists."
+          }
+        },
+        {
+          "name": "Calvin's performance",
+          "type": "concept",
+          "state": {
+            "description": "Calvin's recent performance with his band, showcasing his dedication to music."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 9,
+    "entities_new": 6,
+    "total_entities": 124
+  },
+  {
+    "session_index": 12,
+    "session_id": "conv-50_session_12",
+    "input_chars": 3069,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 August 11, 2023 at 17:22]\nCalvin: Hey Calvin, been ages! Guess what? I got picked for a car mod workshop. Gonna get better at it and learn something new! Look at the cars I'm working with right now. \n[Image: a photography of a man standing in front of a car on a lift]\nCalvin: Wow Dave, that's awesome! Congrats on being picked for the car mod workshop. It's a great opportunity to take",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's car mod workshop",
+          "type": "concept",
+          "state": {
+            "description": "Calvin got picked for a car mod workshop to improve his skills in auto engineering."
+          }
+        },
+        {
+          "name": "Calvin's passion for auto engineering",
+          "type": "concept",
+          "state": {
+            "description": "Calvin has always wanted to learn auto engineering and work on building a custom car."
+          }
+        },
+        {
+          "name": "Calvin's current car project",
+          "type": "concept",
+          "state": {
+            "description": "Calvin is working on a classic muscle car, doing engine swaps, suspension modifications, and learning about body modifications."
+          }
+        },
+        {
+          "name": "Calvin's car modifications",
+          "type": "concept",
+          "state": {
+            "description": "Calvin is giving a classic muscle car a modern twist."
+          }
+        },
+        {
+          "name": "Calvin's music studio setup",
+          "type": "concept",
+          "state": {
+            "description": "Calvin has a high-quality sound system in his music studio."
+          }
+        },
+        {
+          "name": "Dave's car mod workshop",
+          "type": "concept",
+          "state": {
+            "description": "Dave was picked for a car mod workshop to enhance his skills."
+          }
+        },
+        {
+          "name": "Dave's enthusiasm for car modifications",
+          "type": "concept",
+          "state": {
+            "description": "Dave is excited about customizing cars and showing his style."
+          }
+        },
+        {
+          "name": "Dave's current car project",
+          "type": "concept",
+          "state": {
+            "description": "Dave is working on a silver Corvette with a modern vibe and classic muscle car style."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 8,
+    "total_entities": 132
+  },
+  {
+    "session_index": 13,
+    "session_id": "conv-50_session_13",
+    "input_chars": 2685,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 August 14, 2023 at 00:35]\nCalvin: Hey Cal, how's it going? Something cool happened since last we talked - I got to go to a car workshop in San Francisco! So cool to dive into the world of car restoration and see all the different techniques. People were really passionate and dedicated - truly inspiring!\nCalvin: Hey Dave! That's awesome! Car workshops sound totally cool and inspiring.",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's car workshop experience",
+          "type": "concept",
+          "state": {
+            "description": "Attended a car workshop in San Francisco, learning about car restoration techniques."
+          }
+        },
+        {
+          "name": "Calvin's performance experience",
+          "type": "concept",
+          "state": {
+            "description": "Had an amazing experience touring with a well-known artist, performing in Japan."
+          }
+        },
+        {
+          "name": "Calvin's Tokyo show",
+          "type": "concept",
+          "state": {
+            "description": "Performed in Tokyo, where the audience sang along to his song, creating a magical moment."
+          }
+        },
+        {
+          "name": "Calvin's passion for music",
+          "type": "concept",
+          "state": {
+            "description": "Calvin considers music his passion and purpose."
+          }
+        },
+        {
+          "name": "Dave's car restoration project",
+          "type": "concept",
+          "state": {
+            "description": "Restoring a car, currently in a beat-up condition, with hopes to finish by the end of September 2023."
+          }
+        },
+        {
+          "name": "Calvin's support for Dave",
+          "type": "concept",
+          "state": {
+            "description": "Expressed support and encouragement for Dave's car restoration project."
+          }
+        },
+        {
+          "name": "Calvin's full name",
+          "type": "person",
+          "state": {
+            "description": "Calvin, one of the two speakers."
+          }
+        },
+        {
+          "name": "Dave's full name",
+          "type": "person",
+          "state": {
+            "description": "Dave, one of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 8,
+    "entities_new": 6,
+    "total_entities": 138
+  },
+  {
+    "session_index": 14,
+    "session_id": "conv-50_session_14",
+    "input_chars": 2493,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 August 22, 2023 at 11:06]\nCalvin: Hey Calvin! Haven't talked in a while! Last Friday I had a card-night with my friends, it was so much fun. We laughed and had a great time! Take a look at the photo!\n[Image: a photography of a group of men sitting at a table with playing cards]\nCalvin: Hey Dave! Great to hear from you, card night sounds like a blast! Always love having fun with frien",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's card night",
+          "type": "event",
+          "state": {
+            "description": "Card night with friends on August 18, 2023, had a lot of fun."
+          }
+        },
+        {
+          "name": "Calvin's collaboration with Frank Ocean",
+          "type": "event",
+          "state": {
+            "description": "Calvin met Frank Ocean at a festival in August 2022, leading to a collaboration."
+          }
+        },
+        {
+          "name": "Calvin's meeting with Frank Ocean",
+          "type": "event",
+          "state": {
+            "description": "Met Frank Ocean at a music festival in Tokyo."
+          }
+        },
+        {
+          "name": "Calvin's mansion studio",
+          "type": "location",
+          "state": {
+            "description": "Recorded a song in the studio at Calvin's mansion."
+          }
+        },
+        {
+          "name": "Calvin's Tokyo experience",
+          "type": "event",
+          "state": {
+            "description": "Incredible experience at a music festival in Tokyo."
+          }
+        },
+        {
+          "name": "Calvin's festival performance",
+          "type": "event",
+          "state": {
+            "description": "Performed at a festival with buzzing energy and an upbeat crowd."
+          }
+        },
+        {
+          "name": "Calvin's upcoming tour",
+          "type": "event",
+          "state": {
+            "description": "Calvin is excited about his upcoming tour"
+          }
+        },
+        {
+          "name": "Calvin's podcast",
+          "type": "event",
+          "state": {
+            "description": "Recorded a podcast discussing the rapidly evolving rap industry on August 21, 2023."
+          }
+        },
+        {
+          "name": "Dave's excitement for Calvin",
+          "type": "emotion",
+          "state": {
+            "description": "Dave is excited for Calvin's collaboration with Frank Ocean."
+          }
+        },
+        {
+          "name": "Calvin's friendship with Dave",
+          "type": "relationship",
+          "state": {
+            "description": "Calvin and Dave are friends who enjoy catching up."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 10,
+    "total_entities": 148
+  },
+  {
+    "session_index": 15,
+    "session_id": "conv-50_session_15",
+    "input_chars": 3550,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 August 31, 2023 at 14:55]\nCalvin: Hey Calvin! Long time no chat! How was the end of your tour? I bet it was amazing!\n[Image: a photo of a crowd of people at a concert with their hands in the air]\nCalvin: Hey Dave! The tour was amazing! I was so pumped from all the energy from the audience. This pic totally captures how I felt. Such an amazing time!\n[Image: a photo of a crowd of peopl",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's tour experience",
+          "type": "concept",
+          "state": {
+            "description": "Calvin described his tour as amazing, feeling pumped from the audience's energy."
+          }
+        },
+        {
+          "name": "Calvin's video shoot",
+          "type": "concept",
+          "state": {
+            "description": "Calvin started shooting a video for his new album the weekend before August 31, 2023."
+          }
+        },
+        {
+          "name": "Calvin's video shoot location",
+          "type": "concept",
+          "state": {
+            "description": "The video shoot is taking place in Miami on an awesome beach."
+          }
+        },
+        {
+          "name": "Calvin's guitar",
+          "type": "concept",
+          "state": {
+            "description": "Calvin has a custom guitar made by a Japanese artist friend, featuring an octopus design."
+          }
+        },
+        {
+          "name": "Calvin's guitar significance",
+          "type": "concept",
+          "state": {
+            "description": "The guitar represents Calvin's love for art and the sea, and it holds stories of his journey and friendships."
+          }
+        },
+        {
+          "name": "Calvin's guitar customization",
+          "type": "concept",
+          "state": {
+            "description": "Calvin customized his guitar with a shiny purple finish to give it a unique look."
+          }
+        },
+        {
+          "name": "Calvin's music style",
+          "type": "concept",
+          "state": {
+            "description": "Calvin values staying true to himself and being unique in his music."
+          }
+        },
+        {
+          "name": "Dave's support",
+          "type": "person",
+          "state": {
+            "description": "Dave expressed his willingness to support Calvin with props for the video."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 8,
+    "total_entities": 156
+  },
+  {
+    "session_index": 16,
+    "session_id": "conv-50_session_16",
+    "input_chars": 1655,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 September 02, 2023 at 09:19]\nCalvin: Hey Calvin! Been a while, what's up? I'm tied up with car stuff lately, yesterday I came back from San Francsico with some great insights and knowledge on car modification that I want to share with you! Changing things around, and giving an old car a new life - so satisfying!\nCalvin: Hey Dave! Nice to hear from you. That's cool! I totally understa",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's car activities",
+          "type": "concept",
+          "state": {
+            "description": "Tied up with car stuff, focusing on car modification."
+          }
+        },
+        {
+          "name": "Calvin's trip from San Francisco",
+          "type": "concept",
+          "state": {
+            "description": "Returned from San Francisco with insights on car modification."
+          }
+        },
+        {
+          "name": "Calvin's satisfaction from fixing cars",
+          "type": "concept",
+          "state": {
+            "description": "Feels satisfaction from giving an old car a new life."
+          }
+        },
+        {
+          "name": "Calvin's sense of purpose",
+          "type": "concept",
+          "state": {
+            "description": "Feels a sense of purpose from fixing cars."
+          }
+        },
+        {
+          "name": "Calvin's impact on others",
+          "type": "concept",
+          "state": {
+            "description": "Feels like making a difference when fixing someone's car."
+          }
+        },
+        {
+          "name": "Calvin's pride in helping others",
+          "type": "concept",
+          "state": {
+            "description": "Proud of making a difference and seeing relief in others."
+          }
+        },
+        {
+          "name": "Calvin's flight to Boston",
+          "type": "concept",
+          "state": {
+            "description": "Booked a flight ticket to Boston the week before September 02, 2023."
+          }
+        },
+        {
+          "name": "Calvin's excitement for Boston trip",
+          "type": "concept",
+          "state": {
+            "description": "Excited about the upcoming trip to Boston."
+          }
+        },
+        {
+          "name": "Dave's pride in helping others",
+          "type": "concept",
+          "state": {
+            "description": "Encouraged by Calvin for bringing joy to others."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 9,
+    "total_entities": 165
+  },
+  {
+    "session_index": 17,
+    "session_id": "conv-50_session_17",
+    "input_chars": 2689,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 September 13, 2023 at 10:56]\nCalvin: Hey Dave! Sorry it took me so long to get back to you. Crazy times since we talked! My album finally dropped on the 11th and it was a wild feeling. Everyone's been loving it and it's motivated me to keep going.\nCalvin: Hey Calvin! Congrats on your album release - that's awesome! Has it been overwhelming or inspiring?\nCalvin: Thanks, Dave! It's bee",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's album release date",
+          "type": "concept",
+          "state": {
+            "description": "Calvin's album dropped on September 11, 2023"
+          }
+        },
+        {
+          "name": "Calvin's album reception",
+          "type": "concept",
+          "state": {
+            "description": "Calvin's album has been well-received and loved by everyone"
+          }
+        },
+        {
+          "name": "Calvin's motivation",
+          "type": "concept",
+          "state": {
+            "description": "Calvin feels motivated to keep making music due to positive feedback from his album"
+          }
+        },
+        {
+          "name": "Calvin's reason for making music",
+          "type": "concept",
+          "state": {
+            "description": "Calvin got into music to make a difference and share his own story"
+          }
+        },
+        {
+          "name": "Calvin's upcoming tour",
+          "type": "concept",
+          "state": {
+            "description": "Calvin is excited about his upcoming tour"
+          }
+        },
+        {
+          "name": "Calvin's future plans",
+          "type": "concept",
+          "state": {
+            "description": "Calvin plans to explore and grow his brand after the tour"
+          }
+        },
+        {
+          "name": "Calvin's visit to Dave",
+          "type": "concept",
+          "state": {
+            "description": "Calvin plans to visit Dave in Boston to check out his garage"
+          }
+        },
+        {
+          "name": "Dave's garage",
+          "type": "concept",
+          "state": {
+            "description": "Dave has a garage with cool cars and a Coca-Cola sign"
+          }
+        },
+        {
+          "name": "Calvin's hobbies",
+          "type": "concept",
+          "state": {
+            "description": "Calvin enjoys creating music and is excited about his upcoming projects"
+          }
+        },
+        {
+          "name": "Calvin's support from Dave",
+          "type": "concept",
+          "state": {
+            "description": "Dave supports Calvin's music career and encourages him to keep creating"
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 7,
+    "total_entities": 172
+  },
+  {
+    "session_index": 18,
+    "session_id": "conv-50_session_18",
+    "input_chars": 2512,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 September 15, 2023 at 00:13]\nCalvin: Hey Calvin! Long time no talk! Got some cool news to share - last night was a blast! My band and I were jamming and the music just kept flowing. We had so much fun rehearsing! Also, last weekend, I had the opportunity to attend a rock concert here in Boston. Just take a look at what an amazing atmosphere it was!\n[Image: a photography of a band per",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's band rehearsal",
+          "type": "concept",
+          "state": {
+            "description": "Calvin had a jam session with his band where they had a lot of fun rehearsing."
+          }
+        },
+        {
+          "name": "Calvin's rock concert",
+          "type": "concept",
+          "state": {
+            "description": "Calvin attended a rock concert in Boston on September 9, 2023."
+          }
+        },
+        {
+          "name": "Calvin's favorite Disney movie",
+          "type": "concept",
+          "state": {
+            "description": "Calvin's favorite Disney movie is Ratatouille, which teaches about following your dreams."
+          }
+        },
+        {
+          "name": "Dave's car hobby",
+          "type": "concept",
+          "state": {
+            "description": "Dave is restoring a vintage car."
+          }
+        },
+        {
+          "name": "Dave's car restoration",
+          "type": "concept",
+          "state": {
+            "description": "Dave found a car in bad shape the week before November 02, 2023 and spent ages restoring it."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 7,
+    "entities_new": 5,
+    "total_entities": 177
+  },
+  {
+    "session_index": 19,
+    "session_id": "conv-50_session_19",
+    "input_chars": 2733,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 September 22, 2023 at 20:57]\nCalvin: Hey Calvin, good to catch up again! Had a tough time with my car project. Worked on the engine of the vintage Mustang, thought I'd fixed it, but when I started it up, heard a weird noise. So disappointing after putting so much work in. Take a look at the engine!\n[Image: a photography of a car engine with a small engine]\nCalvin: Hey Dave, sorry to ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's car project",
+          "type": "concept",
+          "state": {
+            "description": "Calvin is working on a car project that he shared a picture of."
+          }
+        },
+        {
+          "name": "Calvin's vintage Mustang",
+          "type": "concept",
+          "state": {
+            "description": "A vintage Mustang that Calvin is working on."
+          }
+        },
+        {
+          "name": "Calvin's summer drive",
+          "type": "concept",
+          "state": {
+            "description": "An unforgettable drive during a summer day with the wind blowing through his hair."
+          }
+        },
+        {
+          "name": "Calvin's trip to Japan",
+          "type": "concept",
+          "state": {
+            "description": "An incredible trip to Japan, appreciating the culture and people."
+          }
+        },
+        {
+          "name": "Calvin's childhood song",
+          "type": "concept",
+          "state": {
+            "description": "A song by Tupac and Dr. Dre called 'California Love' that brings back memories from a road trip with his dad."
+          }
+        },
+        {
+          "name": "Dave's response to Calvin's car project",
+          "type": "concept",
+          "state": {
+            "description": "Dave expressed sympathy for Calvin's car troubles."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 8,
+    "entities_new": 6,
+    "total_entities": 183
+  },
+  {
+    "session_index": 20,
+    "session_id": "conv-50_session_20",
+    "input_chars": 3441,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 October 04, 2023 at 14:44]\nCalvin: Hey Dave! Yesterday I met with some incredible artists in Boston and we talked about working together. It was such an inspiring and exciting experience - they all have individual styles and I'm stoked to collaborate with them on new music.\nCalvin: Awesome, Calvin! Connecting with all those talented artists must have been an inspiring experience. Can",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's meeting with artists",
+          "type": "concept",
+          "state": {
+            "description": "Met with incredible artists in Boston to discuss collaboration on new music."
+          }
+        },
+        {
+          "name": "Calvin's mutual friend",
+          "type": "person",
+          "state": {
+            "description": "A mutual friend who arranged the meeting with the artists."
+          }
+        },
+        {
+          "name": "Calvin's hobby",
+          "type": "concept",
+          "state": {
+            "description": "Loves working on music projects to chill out."
+          }
+        },
+        {
+          "name": "Dave's hobby",
+          "type": "concept",
+          "state": {
+            "description": "Working on cars, specifically restoring a Ford Mustang found in a junkyard."
+          }
+        },
+        {
+          "name": "Calvin's appreciation for Dave's work",
+          "type": "concept",
+          "state": {
+            "description": "Calvin admires Dave's ability to restore cars and bring them back to life."
+          }
+        },
+        {
+          "name": "Calvin's satisfaction with car restoration",
+          "type": "concept",
+          "state": {
+            "description": "Calvin finds it satisfying to bring old cars back to life."
+          }
+        },
+        {
+          "name": "Calvin's dirty hands",
+          "type": "concept",
+          "state": {
+            "description": "Calvin's hands are stained with grease after a day in the garage."
+          }
+        },
+        {
+          "name": "Calvin's pride in transformation",
+          "type": "concept",
+          "state": {
+            "description": "Calvin feels proud and fulfilled transforming old, beat-up items into something beautiful."
+          }
+        },
+        {
+          "name": "Calvin's belief in small successes",
+          "type": "concept",
+          "state": {
+            "description": "Calvin believes that small successes contribute to a sense of accomplishment and joy."
+          }
+        },
+        {
+          "name": "Calvin's motivation from progress",
+          "type": "concept",
+          "state": {
+            "description": "Calvin finds motivation in seeing progress in projects and personal growth."
+          }
+        },
+        {
+          "name": "Calvin's determination",
+          "type": "concept",
+          "state": {
+            "description": "Calvin emphasizes the importance of hard work and determination in reaching goals."
+          }
+        },
+        {
+          "name": "Calvin's encouragement to Dave",
+          "type": "concept",
+          "state": {
+            "description": "Offers support and positivity to Dave, reminding him of his value"
+          }
+        },
+        {
+          "name": "Calvin's farewell to Dave",
+          "type": "concept",
+          "state": {
+            "description": "Calvin wishes Dave all the best until they meet again."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 15,
+    "entities_new": 10,
+    "total_entities": 193
+  },
+  {
+    "session_index": 21,
+    "session_id": "conv-50_session_21",
+    "input_chars": 2598,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 October 08, 2023 at 15:13]\nCalvin: Hey Calvin! What\u2019s up? Last Friday I went to the car show. I saw some awesome cars and got to mess with car mods! There were so many cool machines around, it was so much fun! Take a look at this beautiful car!\n[Image: a photography of two men looking at a car engine]\nCalvin: Hey Dave, that sounds awesome! I'm into the rush of awesome cars. Can't wai",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's car show visit",
+          "type": "event",
+          "state": {
+            "description": "Calvin attended a car show on October 6, 2023, where he saw awesome cars and car mods."
+          }
+        },
+        {
+          "name": "Calvin's modified car",
+          "type": "concept",
+          "state": {
+            "description": "Calvin restored and modified a red sports car, adding a custom exhaust and performance upgrades."
+          }
+        },
+        {
+          "name": "Calvin's passion for cars",
+          "type": "belief",
+          "state": {
+            "description": "Calvin views working on cars as a passion and a form of therapy."
+          }
+        },
+        {
+          "name": "Calvin's childhood garage experience",
+          "type": "memory",
+          "state": {
+            "description": "Calvin spent hours in his dad's garage tinkering with engines as a child."
+          }
+        },
+        {
+          "name": "Calvin's career in car restoration",
+          "type": "career",
+          "state": {
+            "description": "Calvin works in car restoration, taking broken cars and making them awesome."
+          }
+        },
+        {
+          "name": "Calvin's support for Dave",
+          "type": "relationship",
+          "state": {
+            "description": "Calvin expresses support and encouragement for Dave's passion and career."
+          }
+        },
+        {
+          "name": "Dave's car restoration passion",
+          "type": "belief",
+          "state": {
+            "description": "Dave is passionate about restoring cars and finds it satisfying."
+          }
+        },
+        {
+          "name": "Dave's childhood experience with cars",
+          "type": "memory",
+          "state": {
+            "description": "Dave has been interested in cars since he was a kid."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 5,
+    "total_entities": 198
+  },
+  {
+    "session_index": 22,
+    "session_id": "conv-50_session_22",
+    "input_chars": 3857,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 October 15, 2023 at 09:39]\nCalvin: Hey Cal, miss ya! Crazy rollercoaster week. A competing car maintenance shop snagged a deal we were trying to secure for months and it made me feel kinda bummed out. You know, I put in so much effort at work, but it feels like nothing. Am I wasting my time?\nCalvin: Hey Dave, sorry to hear that. It can be discouraging when you feel like your hard wor",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's job",
+          "type": "concept",
+          "state": {
+            "description": "Works at a car maintenance shop"
+          }
+        },
+        {
+          "name": "Calvin's feelings about work",
+          "type": "concept",
+          "state": {
+            "description": "Feels bummed out about losing a deal after putting in a lot of effort"
+          }
+        },
+        {
+          "name": "Calvin's motivation strategy",
+          "type": "concept",
+          "state": {
+            "description": "Reminds himself of his passion for goals, relies on helpful people, and takes breaks to recharge"
+          }
+        },
+        {
+          "name": "Calvin's recent activity",
+          "type": "concept",
+          "state": {
+            "description": "Just got back from a music festival"
+          }
+        },
+        {
+          "name": "Calvin's music festival experience",
+          "type": "concept",
+          "state": {
+            "description": "Felt alive at the festival with great energy, music, and crowd"
+          }
+        },
+        {
+          "name": "Calvin's festival photo",
+          "type": "concept",
+          "state": {
+            "description": "Photo of the main stage with a crowd watching a band"
+          }
+        },
+        {
+          "name": "Calvin's festival headliner",
+          "type": "concept",
+          "state": {
+            "description": "The Fireworks headlined the festival"
+          }
+        },
+        {
+          "name": "Calvin's admiration for The Fireworks",
+          "type": "concept",
+          "state": {
+            "description": "Heard great things about The Fireworks and enjoyed their performance"
+          }
+        },
+        {
+          "name": "Calvin's belief in Dave",
+          "type": "concept",
+          "state": {
+            "description": "Believes in Dave's abilities and encourages him to keep pushing"
+          }
+        },
+        {
+          "name": "Dave's job satisfaction",
+          "type": "concept",
+          "state": {
+            "description": "Loves connecting with the crowd through music and repairing things"
+          }
+        },
+        {
+          "name": "Dave's feelings about music",
+          "type": "concept",
+          "state": {
+            "description": "Feels music brings people together and is fulfilling"
+          }
+        },
+        {
+          "name": "Dave's new car",
+          "type": "concept",
+          "state": {
+            "description": "Recently got a new Ferrari, described as a masterpiece on wheels"
+          }
+        },
+        {
+          "name": "Calvin's reaction to Dave's Ferrari",
+          "type": "concept",
+          "state": {
+            "description": "Congratulated Dave on his new Ferrari and expressed excitement for thrilling rides"
+          }
+        },
+        {
+          "name": "Calvin's encouragement to Dave",
+          "type": "concept",
+          "state": {
+            "description": "Offers support and positivity to Dave, reminding him of his value"
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 16,
+    "entities_new": 11,
+    "total_entities": 209
+  },
+  {
+    "session_index": 23,
+    "session_id": "conv-50_session_23",
+    "input_chars": 4368,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 October 19, 2023 at 10:11]\nCalvin: Hey Dave! Been a few days since we talked, but lots happened. Started touring with Frank Ocean and it's been amazing - so much energy from the crowd, such a connection when I'm on stage - unreal! Take a look at how I performed on stage, that was awesome!\n[Image: a photo of a band performing on stage with bright lights]\nCalvin: Congrats, Calvin! That",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's tour with Frank Ocean",
+          "type": "concept",
+          "state": {
+            "description": "Calvin started touring with Frank Ocean, experiencing amazing energy from the crowd."
+          }
+        },
+        {
+          "name": "Calvin's performance energy",
+          "type": "concept",
+          "state": {
+            "description": "Calvin feels a strong connection with the crowd when performing on stage."
+          }
+        },
+        {
+          "name": "Calvin's collaboration with Frank Ocean",
+          "type": "concept",
+          "state": {
+            "description": "Calvin met Frank Ocean at a festival in August 2022, leading to a collaboration."
+          }
+        },
+        {
+          "name": "Calvin's concert in Tokyo",
+          "type": "concept",
+          "state": {
+            "description": "Calvin performed in Tokyo, where the crowd energy was described as nuts."
+          }
+        },
+        {
+          "name": "Calvin's excitement for Tokyo",
+          "type": "concept",
+          "state": {
+            "description": "Calvin is excited to visit Tokyo November 2023 after the tour ends."
+          }
+        },
+        {
+          "name": "Calvin's interest in Shibuya Crossing",
+          "type": "concept",
+          "state": {
+            "description": "Calvin is excited to explore Shibuya Crossing, likening it to Tokyo's Times Square."
+          }
+        },
+        {
+          "name": "Calvin's interest in Shinjuku",
+          "type": "concept",
+          "state": {
+            "description": "Calvin is excited to explore Shinjuku during his visit to Tokyo."
+          }
+        },
+        {
+          "name": "Calvin's food experience in Tokyo",
+          "type": "concept",
+          "state": {
+            "description": "Calvin is looking forward to trying ramen in Tokyo."
+          }
+        },
+        {
+          "name": "Dave's excitement for Calvin's show",
+          "type": "concept",
+          "state": {
+            "description": "Dave is excited to attend one of Calvin's shows."
+          }
+        },
+        {
+          "name": "Dave's interest in Tokyo",
+          "type": "concept",
+          "state": {
+            "description": "Dave dreams of visiting Tokyo and is interested in its people, culture, and food."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 9,
+    "total_entities": 218
+  },
+  {
+    "session_index": 24,
+    "session_id": "conv-50_session_24",
+    "input_chars": 5627,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 October 23, 2023 at 14:17]\nCalvin: Hey Calvin, how's the tour with Frank Ocean? I was pondering our chat the other day about fame and its impact on relationships. It must be awesome but it must have its own struggles too. How are you juggling your job plus your personal life?\nCalvin: The tour's been incredible! Performing and connecting with the crowd has been so energizing. Yeah, fa",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's job",
+          "type": "concept",
+          "state": {
+            "description": "Musician on tour with Frank Ocean"
+          }
+        },
+        {
+          "name": "Calvin's support system",
+          "type": "concept",
+          "state": {
+            "description": "Strong support system including friends and team"
+          }
+        },
+        {
+          "name": "Calvin's perspective on world events",
+          "type": "concept",
+          "state": {
+            "description": "Staying connected and informed about world events is important to Calvin"
+          }
+        },
+        {
+          "name": "Calvin's music inspiration",
+          "type": "concept",
+          "state": {
+            "description": "Inspired by struggles people go through, influencing his music"
+          }
+        },
+        {
+          "name": "Calvin's music as therapy",
+          "type": "concept",
+          "state": {
+            "description": "Calvin uses music as a way to express himself and work through emotions"
+          }
+        },
+        {
+          "name": "Calvin's hobby: working on cars",
+          "type": "concept",
+          "state": {
+            "description": "Calvin enjoys working on cars as a form of self-expression"
+          }
+        },
+        {
+          "name": "Calvin's car restoration experience",
+          "type": "concept",
+          "state": {
+            "description": "Calvin has been fascinated with machines since age ten and started working on cars after finding an old car in a neighbor's garage"
+          }
+        },
+        {
+          "name": "Calvin's car project",
+          "type": "concept",
+          "state": {
+            "description": "Currently working on a new car restoration project after selling a restored car to a collector 2022"
+          }
+        },
+        {
+          "name": "Calvin's car restoration challenge",
+          "type": "concept",
+          "state": {
+            "description": "Calvin finds car restoration challenging but rewarding, requiring patience and attention to detail"
+          }
+        },
+        {
+          "name": "Calvin's concert experience",
+          "type": "concept",
+          "state": {
+            "description": "Calvin had memorable experiences at concerts September 2023, enjoying the energy and connection with the crowd"
+          }
+        },
+        {
+          "name": "Dave's perspective on concerts",
+          "type": "concept",
+          "state": {
+            "description": "Dave believes concerts create a cool vibe and unforgettable moments"
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 9,
+    "total_entities": 227
+  },
+  {
+    "session_index": 25,
+    "session_id": "conv-50_session_25",
+    "input_chars": 2953,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 October 25, 2023 at 20:25]\nCalvin: Hey Dave! Long time no talk! I had a great time yesterday, and visited some sights in Boston with a high school friend. It was really fun and eye-opening.\nCalvin: Hey Calvin! Good to hear from you! Sounds like you had a blast in Boston - so much to do there! One of my favorites there is great for chilling and admiring nature. BTW, something cool I w",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's Boston trip",
+          "type": "concept",
+          "state": {
+            "description": "Calvin visited sights in Boston with a high school friend on October 24, 2023."
+          }
+        },
+        {
+          "name": "Dave's conference in Detroit",
+          "type": "concept",
+          "state": {
+            "description": "Dave attended a conference in Detroit recently and learned a lot."
+          }
+        },
+        {
+          "name": "Calvin's car project",
+          "type": "concept",
+          "state": {
+            "description": "Calvin is working on a car project that he shared a picture of."
+          }
+        },
+        {
+          "name": "Dave's interest in cars",
+          "type": "concept",
+          "state": {
+            "description": "Dave has been interested in cars since he was 10 years old when his dad took him to his first car show."
+          }
+        },
+        {
+          "name": "Dave's job",
+          "type": "concept",
+          "state": {
+            "description": "Dave is an automotive engineer."
+          }
+        },
+        {
+          "name": "Calvin's music performance",
+          "type": "concept",
+          "state": {
+            "description": "Calvin performed with someone he admires and shared a picture of the event."
+          }
+        },
+        {
+          "name": "Calvin's passion for music",
+          "type": "concept",
+          "state": {
+            "description": "Calvin considers music his passion and purpose."
+          }
+        },
+        {
+          "name": "Calvin's and Dave's journey",
+          "type": "concept",
+          "state": {
+            "description": "Calvin and Dave are on a journey of pursuing their passions and inspiring each other."
+          }
+        },
+        {
+          "name": "Calvin's support for Dave",
+          "type": "concept",
+          "state": {
+            "description": "Calvin encourages Dave to keep pursuing his passion."
+          }
+        },
+        {
+          "name": "Dave's support for Calvin",
+          "type": "concept",
+          "state": {
+            "description": "Dave encourages Calvin to keep dreaming and pursuing his passion."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 6,
+    "total_entities": 233
+  },
+  {
+    "session_index": 26,
+    "session_id": "conv-50_session_26",
+    "input_chars": 2296,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 October 29, 2023 at 10:49]\nCalvin: Hey Dave! Since we last talked, I went to a networking event to meet more artists. So cool! The people I met will help me build up my fan base. Super excited about what it could lead to. You? Anything new since we last spoke?\nCalvin: Hey Calvin! That's cool that you've been networking with other artists. Nice! I've been getting into photography rece",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's networking event",
+          "type": "concept",
+          "state": {
+            "description": "Attended a networking event to meet more artists to build up his fan base."
+          }
+        },
+        {
+          "name": "Calvin's excitement about networking",
+          "type": "concept",
+          "state": {
+            "description": "Super excited about the potential outcomes of networking with artists."
+          }
+        },
+        {
+          "name": "Dave's photography hobby",
+          "type": "concept",
+          "state": {
+            "description": "Getting into photography and taking amazing shots of places."
+          }
+        },
+        {
+          "name": "Dave's sunset photo",
+          "type": "concept",
+          "state": {
+            "description": "Captured a magnificent sunset in Boston."
+          }
+        },
+        {
+          "name": "Dave's clock tower photo",
+          "type": "concept",
+          "state": {
+            "description": "Took a stunning picture of a clock tower in Boston September 2023."
+          }
+        },
+        {
+          "name": "Dave's talent in photography",
+          "type": "concept",
+          "state": {
+            "description": "Photography helps him capture and appreciate the beauty of nature."
+          }
+        },
+        {
+          "name": "Dave's car project",
+          "type": "concept",
+          "state": {
+            "description": "Finished restoring his car, and it looks amazing."
+          }
+        },
+        {
+          "name": "Calvin's music collaborations",
+          "type": "concept",
+          "state": {
+            "description": "Had great collaborations recently and his album is almost finished."
+          }
+        },
+        {
+          "name": "Calvin's previews for Dave",
+          "type": "concept",
+          "state": {
+            "description": "Plans to send Dave some previews of his album soon."
+          }
+        },
+        {
+          "name": "Calvin's full name",
+          "type": "person",
+          "state": {
+            "description": "Calvin, one of the two speakers."
+          }
+        },
+        {
+          "name": "Dave's full name",
+          "type": "person",
+          "state": {
+            "description": "Dave, one of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 8,
+    "total_entities": 241
+  },
+  {
+    "session_index": 27,
+    "session_id": "conv-50_session_27",
+    "input_chars": 6029,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 November 02, 2023 at 17:46]\nCalvin: Hey Dave! It's been a while! Crazy stuff has been happening. Last week I threw a small party at my Japanese house for my new album. It was amazing, so much love from my fam and friends! Take a look at the photo of the party in the mansion, it was so energizing!\n[Image: a photography of a group of people sitting in a room with a projector screen]\nCa",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's album release party",
+          "type": "event",
+          "state": {
+            "description": "Calvin threw a small party at his Japanese house for his new album on October 26, 2023."
+          }
+        },
+        {
+          "name": "Calvin's family support",
+          "type": "concept",
+          "state": {
+            "description": "Calvin received a lot of love and support from his family and friends at the album release party."
+          }
+        },
+        {
+          "name": "Calvin's blog",
+          "type": "concept",
+          "state": {
+            "description": "Calvin started a blog to share his passion for car mods."
+          }
+        },
+        {
+          "name": "Calvin's motivation",
+          "type": "concept",
+          "state": {
+            "description": "Calvin is motivated by creating music that connects with people and brings joy."
+          }
+        },
+        {
+          "name": "Dave's blog success",
+          "type": "concept",
+          "state": {
+            "description": "Dave's blog has inspired others to start their own DIY projects."
+          }
+        },
+        {
+          "name": "Dave's car restoration",
+          "type": "concept",
+          "state": {
+            "description": "Dave found a car in bad shape the week before November 02, 2023 and spent ages restoring it."
+          }
+        },
+        {
+          "name": "Dave's rock band logo",
+          "type": "concept",
+          "state": {
+            "description": "Dave created a logo for his rock band."
+          }
+        },
+        {
+          "name": "Calvin's studio setup",
+          "type": "concept",
+          "state": {
+            "description": "Calvin has a stunning studio setup for his music production."
+          }
+        },
+        {
+          "name": "Calvin's relaxation room",
+          "type": "concept",
+          "state": {
+            "description": "Calvin has a cozy room with a TV for relaxation."
+          }
+        },
+        {
+          "name": "Calvin's TV watching habits",
+          "type": "concept",
+          "state": {
+            "description": "Calvin usually watches music videos, concerts, and documentaries about artists."
+          }
+        },
+        {
+          "name": "Calvin's notebook",
+          "type": "concept",
+          "state": {
+            "description": "Calvin uses a notebook to write lyrics and notes."
+          }
+        },
+        {
+          "name": "Dave's music listening habits",
+          "type": "concept",
+          "state": {
+            "description": "Dave listens to vinyl to relax and stay on track while working on cars."
+          }
+        },
+        {
+          "name": "Calvin's age",
+          "type": "demographics",
+          "state": {
+            "description": "Calvin is 28 years old."
+          }
+        },
+        {
+          "name": "Dave's age",
+          "type": "demographics",
+          "state": {
+            "description": "Dave is 30 years old."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 16,
+    "entities_new": 12,
+    "total_entities": 253
+  },
+  {
+    "session_index": 28,
+    "session_id": "conv-50_session_28",
+    "input_chars": 3351,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 November 13, 2023 at 21:15]\nCalvin: Hey Dave, I invited my old high school buddy to see me perform in Boston! It was insane. It got me thinking about how far I've come and reminded me how important relationships are in this biz. Felt so good!\nCalvin: Whoa, that's great Calvin! Seeing your old friend must have brought back so many memories. It's awesome to have someone who's been ther",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's high school buddy",
+          "type": "person",
+          "state": {
+            "description": "Calvin invited his old high school buddy to see him perform in Boston."
+          }
+        },
+        {
+          "name": "Calvin's nostalgia",
+          "type": "concept",
+          "state": {
+            "description": "Calvin felt nostalgic remembering the days of freestyling and talking about getting famous."
+          }
+        },
+        {
+          "name": "Calvin's supportive friend",
+          "type": "person",
+          "state": {
+            "description": "Calvin's friend has been a great support and encouragement in his journey."
+          }
+        },
+        {
+          "name": "Calvin's artist development",
+          "type": "concept",
+          "state": {
+            "description": "Calvin believes having supportive people is key for his growth as an artist."
+          }
+        },
+        {
+          "name": "Calvin's collaboration with young musicians",
+          "type": "concept",
+          "state": {
+            "description": "Calvin has been supporting some young musicians from a music program."
+          }
+        },
+        {
+          "name": "Calvin's impact on young musicians",
+          "type": "concept",
+          "state": {
+            "description": "Calvin is making a difference by nurturing the passion of the next generation of musicians."
+          }
+        },
+        {
+          "name": "Calvin's music studio",
+          "type": "concept",
+          "state": {
+            "description": "Calvin's music studio looks great and he is trying out new ideas."
+          }
+        },
+        {
+          "name": "Calvin's new sounds",
+          "type": "concept",
+          "state": {
+            "description": "Calvin is having fun trying out new sounds and pushing the boundaries in his music."
+          }
+        },
+        {
+          "name": "Calvin's growth as an artist",
+          "type": "concept",
+          "state": {
+            "description": "Calvin believes growing and evolving is key for any artist."
+          }
+        },
+        {
+          "name": "Dave's encouragement",
+          "type": "person",
+          "state": {
+            "description": "Dave congratulated Calvin on his gala attendance and upcoming performance."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 9,
+    "total_entities": 262
+  },
+  {
+    "session_index": 29,
+    "session_id": "conv-50_session_29",
+    "input_chars": 4184,
+    "input_preview": "[Speakers: Calvin and Dave]\nUse their FULL NAMES (Calvin, Dave) in entity names, never abbreviations.\n\n[Session \u2014 November 17, 2023 at 10:54]\nCalvin: Hey Calvin, long time no talk! A lot has happened. I've taken up photography and it's been great - been taking pics of the scenery around here which is really cool.\nCalvin: Hey Dave, it's great to hear from you! Can't wait to see your pics. I went to a fancy gala in Boston yesterday and met some interesting people. Check out this pic of me and the ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Calvin's hobby: photography",
+          "type": "concept",
+          "state": {
+            "description": "Calvin has taken up photography and enjoys taking pictures of the scenery."
+          }
+        },
+        {
+          "name": "Calvin's gala attendance",
+          "type": "event",
+          "state": {
+            "description": "Calvin attended a fancy gala in Boston on November 16, 2023."
+          }
+        },
+        {
+          "name": "Calvin's interesting chat",
+          "type": "concept",
+          "state": {
+            "description": "Calvin had an interesting chat with an artist about music and art."
+          }
+        },
+        {
+          "name": "Calvin's new vintage camera",
+          "type": "item",
+          "state": {
+            "description": "Calvin bought a new vintage camera in November 2023."
+          }
+        },
+        {
+          "name": "Calvin's photography subjects",
+          "type": "concept",
+          "state": {
+            "description": "Calvin loves capturing the beauty of nature, including sunsets, beaches, and waves."
+          }
+        },
+        {
+          "name": "Calvin's serene photo",
+          "type": "item",
+          "state": {
+            "description": "Calvin took a photo of a peaceful scene with rocks and a waterfall."
+          }
+        },
+        {
+          "name": "Calvin's Japanese garden photo",
+          "type": "item",
+          "state": {
+            "description": "Calvin shot a beautiful picture in a Japanese garden."
+          }
+        },
+        {
+          "name": "Calvin's upcoming performance",
+          "type": "event",
+          "state": {
+            "description": "Calvin accepted an invitation to perform at an upcoming show in Boston."
+          }
+        },
+        {
+          "name": "Dave's encouragement",
+          "type": "concept",
+          "state": {
+            "description": "Dave congratulated Calvin on his gala attendance and upcoming performance."
+          }
+        },
+        {
+          "name": "Calvin",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Dave",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 7,
+    "total_entities": 269
+  }
+]

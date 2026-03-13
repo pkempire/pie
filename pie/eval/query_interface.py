@@ -213,10 +213,20 @@ def retrieve_entities_by_embedding(
             needs_embedding_texts.append(text)
 
     if needs_embedding_texts:
+        # Batch in chunks of 100 to avoid API limits
+        BATCH_SIZE = 100
         try:
-            embeddings = llm_client.embed(needs_embedding_texts)
-            for eid, emb in zip(needs_embedding, embeddings):
-                entities[eid]["_computed_embedding"] = emb
+            for i in range(0, len(needs_embedding_texts), BATCH_SIZE):
+                batch_texts = needs_embedding_texts[i:i+BATCH_SIZE]
+                batch_ids = needs_embedding[i:i+BATCH_SIZE]
+                # Filter out empty texts
+                valid = [(eid, txt) for eid, txt in zip(batch_ids, batch_texts) if txt.strip()]
+                if not valid:
+                    continue
+                valid_ids, valid_texts = zip(*valid)
+                embeddings = llm_client.embed(list(valid_texts))
+                for eid, emb in zip(valid_ids, embeddings):
+                    entities[eid]["_computed_embedding"] = emb
         except Exception as e:
             logger.warning(f"Batch embedding failed: {e}")
 
@@ -310,12 +320,17 @@ def answer_query(
     Full query pipeline:
       1. Retrieve relevant entities
       2. Compile semantic temporal context
-      3. Ask LLM to answer
+      3. Ask an LLM to answer using the compiled context
     """
-    from pie.core.llm import LLMClient
-
     t0 = time.time()
-    llm = LLMClient()
+    llm = None
+    try:
+        from pie.core.llm import LLMClient
+        llm = LLMClient()
+    except (ImportError, Exception) as e:
+        logger.warning(f"LLM client unavailable ({e}), will return raw context")
+        use_embeddings = False
+
     now = time.time()
 
     entities_data = data.get("entities", {})
@@ -325,10 +340,10 @@ def answer_query(
     # Step 1: Retrieve relevant entities
     retrieval_method = "embedding"
     try:
-        if use_embeddings:
+        if use_embeddings and llm is not None:
             retrieved = retrieve_entities_by_embedding(query, data, llm, top_k=top_k)
         else:
-            raise RuntimeError("Embeddings disabled")
+            raise RuntimeError("Embeddings disabled or LLM unavailable")
     except Exception as e:
         logger.warning(f"Embedding retrieval failed ({e}), falling back to name match")
         retrieved = retrieve_entities_by_name(query, data, top_k=top_k)
@@ -380,8 +395,8 @@ def answer_query(
             now=now,
         )
 
-        # Respect context cap
-        if total_chars + len(part) > MAX_CONTEXT_CHARS:
+        # Respect context cap (but always include at least the first entity)
+        if total_chars + len(part) > MAX_CONTEXT_CHARS and context_parts:
             break
 
         context_parts.append(part)
@@ -390,35 +405,41 @@ def answer_query(
 
     compiled_context = "\n\n".join(context_parts)
 
-    # Step 3: Ask LLM
-    messages = [
-        {
-            "role": "system",
-            "content": (
-                "You are a personal knowledge assistant. You answer questions about "
-                "the user's world — their projects, people, decisions, beliefs, and "
-                "how things have changed over time.\n\n"
-                "Use ONLY the provided context to answer. The context includes "
-                "temporal information (when things happened, how they evolved, change "
-                "velocity). Use this temporal information in your answer.\n\n"
-                "If the context doesn't contain enough information to answer, say so. "
-                "Don't make up information."
-            ),
-        },
-        {
-            "role": "user",
-            "content": (
-                f"Context from world model:\n\n{compiled_context}\n\n"
-                f"---\n\nQuestion: {query}"
-            ),
-        },
-    ]
+    # Step 3: Ask LLM (or return raw context if LLM unavailable)
+    if llm is not None:
+        messages = [
+            {
+                "role": "system",
+                "content": (
+                    "You are a personal knowledge assistant. You answer questions about "
+                    "the user's world — their projects, people, decisions, beliefs, and "
+                    "how things have changed over time.\n\n"
+                    "Use ONLY the provided context to answer. The context includes "
+                    "temporal information (when things happened, how they evolved, change "
+                    "velocity). Use this temporal information in your answer.\n\n"
+                    "If the context doesn't contain enough information to answer, say so. "
+                    "Don't make up information."
+                ),
+            },
+            {
+                "role": "user",
+                "content": (
+                    f"Context from world model:\n\n{compiled_context}\n\n"
+                    f"---\n\nQuestion: {query}"
+                ),
+            },
+        ]
 
-    try:
-        result = llm.chat(messages=messages, model=model, max_tokens=500)
-        answer = result["content"]
-    except Exception as e:
-        answer = f"Error generating answer: {e}"
+        try:
+            result = llm.chat(messages=messages, model=model, max_tokens=2000)
+            answer = result["content"] or ""
+            if not answer.strip():
+                answer = f"[Model returned empty response — showing raw context]\n\n{compiled_context}"
+        except Exception as e:
+            answer = f"Error generating answer: {e}"
+    else:
+        # No LLM available — return compiled context directly
+        answer = f"[LLM unavailable — showing raw context for {len(entity_names)} matched entities]\n\n{compiled_context}"
 
     latency = (time.time() - t0) * 1000
 

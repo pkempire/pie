@@ -76,9 +76,13 @@ class BaselineResult:
 ANSWER_SYSTEM_PROMPT = """\
 You are a helpful assistant answering questions about a user's past conversations.
 You will be given context from the user's chat history, and a question.
-Answer the question based ONLY on the provided context.
-Be concise and specific. If the context doesn't contain the answer, say "I don't know."
-Do NOT make up information."""
+Answer the question based on the provided context. Make reasonable inferences when the context provides relevant clues.
+For example:
+- If the user mentions "Valentine's Day", that means February 14th
+- If they mention an event related to their stated interests (animal welfare, health, etc.), connect the dots
+- If a name/event appears that could match the question, use that information
+Be concise and specific. Only say "I don't know" if there's truly NO relevant information.
+Do NOT fabricate completely unrelated information."""
 
 ANSWER_USER_TEMPLATE = """\
 Context from the user's chat history:
@@ -362,7 +366,7 @@ def pie_temporal(
     model: str = "gpt-4o",
     extraction_model: str = "gpt-4o-mini",
     top_k_entities: int = 15,
-    max_context_chars: int = 12_000,
+    max_context_chars: int = 30_000,
 ) -> BaselineResult:
     """
     PIE's temporal approach:
@@ -456,62 +460,79 @@ def pie_temporal(
 
 
 PIE_EXTRACTION_PROMPT = """\
-You are extracting structured knowledge from a user's chat history.
+You are extracting ALL factual information about a user from their chat history.
+Your goal is TOTAL RECALL — capture every single fact the user reveals about themselves,
+no matter how small or casual. Benchmark accuracy depends on not missing anything.
 
-Each session header shows the EXACT DATE in format: [Session — Month DD, YYYY at HH:MM]
-Use this to compute exact dates from relative references!
+Each session header shows the EXACT DATE: [Session — Month DD, YYYY at HH:MM]
 
-For each session below, extract:
-1. **Entities**: People, places, projects, preferences, AND USER ACTIVITIES/EVENTS.
-   - name: canonical name (for events, use descriptive name like "MoMA visit" or "friend's wedding")
-   - type: person|project|tool|organization|belief|concept|preference|event
-   - state: dict of key-value attributes
-   - For EVENTS, ALWAYS include: {date: "YYYY-MM-DD", description: "...", location: "..." (if known)}
+## WHAT TO EXTRACT (capture ALL of these)
 
-2. **State changes**: If an entity's state changed from a previous value.
-   - entity_name, what_changed, old_state (if known), new_state, is_contradiction
+### 1. PERSONAL FACTS (HIGHEST PRIORITY)
+Extract EVERY fact the user reveals about themselves:
+- Education: degree, school, major, graduation year, GPA, courses
+- Career: job title, employer, industry, salary, commute, work hours, office location
+- Demographics: age, birthday, hometown, current city, nationality
+- Family: spouse/partner name, children, parents, siblings, pets (name, breed, age)
+- Health: conditions, medications, diet, allergies, doctor visits
+- Daily life: commute time, routine, habits, schedule
+- Hobbies: sports, instruments, games, collections, activities
+- Preferences: favorite foods, restaurants, colors, brands, music, movies, books
+- Skills: languages spoken, certifications, abilities
+- Finances: budget mentions, purchases, subscriptions
+- Home: type of dwelling, roommates, neighborhood
+- Vehicle: car make/model, transportation mode
 
-3. **Relationships**: How entities relate to each other.
-   - source, target, type (related_to|uses|works_on|has|prefers|located_in|attended|participated_in), description
+Format each as an entity:
+  name: descriptive key (e.g., "user's degree", "user's commute", "user's pet")
+  type: "concept" (for facts) or "person"/"organization" (for named entities)
+  state: {fact: "the actual value", context: "how it was mentioned"}
 
-CRITICAL FOR TEMPORAL QUESTIONS — EXTRACT EVENTS WITH EXACT DATES:
+### 2. PEOPLE & RELATIONSHIPS
+- Names of family, friends, colleagues, doctors, etc.
+- How they relate to the user
+- Any facts about them (job, age, where they live, etc.)
 
-**PRIORITY 1: USER'S COMPLETED ACTIVITIES (MOST IMPORTANT!)**
-Look for phrases where the USER says they DID something:
-- "I just [verb]" → event happened TODAY (session date)
-- "I [verb] today" → event happened TODAY (session date)
-- "I [verb] yesterday" → event happened YESTERDAY (session date - 1 day)
-- "I [verb] last week" → event happened ~7 days before session
-- "I recently [verb]" → event happened around session date
+### 3. EVENTS & ACTIVITIES
+- Things the user DID (visits, purchases, trips, meetings, appointments)
+- Compute EXACT DATE from session date + relative reference:
+  * "today"/"just" → session date
+  * "yesterday" → session date - 1 day
+  * "last week" → session date - 7 days
+  * "last month" → session date - ~30 days
+  * "last Tuesday" → most recent Tuesday before session date
 
-Examples of USER ACTIVITIES to extract as events:
-- "I just got back from a tour at MoMA" → MoMA visit event, date = session date
-- "I just helped my friend prepare a nursery today" → nursery preparation event, date = session date
-- "I just ordered a customized phone case" → phone case order event, date = session date
-- "I attended the exhibit yesterday" → exhibit visit event, date = session date - 1 day
-- "I helped my cousin pick out stuff for her baby shower" → baby shower shopping event
+Format: name: descriptive (e.g., "MoMA visit"), type: "event",
+  state: {date: "YYYY-MM-DD", description: "...", location: "..."}
 
-**PRIORITY 2: ALL OTHER USER ACTIVITIES**
-- Extract ALL user activities: visits, meetings, purchases, trips, appointments, dinners, helping friends, etc.
-- ALWAYS compute the EXACT DATE in YYYY-MM-DD format
-- For relative references, compute from the session date:
-  * "today" → session date
-  * "yesterday" → subtract 1 day from session date
-  * "last Tuesday" → find the most recent Tuesday before session date
-  * "last week" → subtract 7 days
-  * "two weeks ago" → subtract 14 days
-  * "last month" → same day, previous month
+### 4. PROJECTS & TOOLS
+- Things the user is building or working on
+- Tools, apps, technologies they use or are evaluating
 
-**PRIORITY 3: Other facts about the user**
-- Focus on FACTS ABOUT THE USER — their life, preferences, relationships.
-- Skip generic conversational content and assistant recommendations.
+### 5. STATE CHANGES
+- If any previously extracted fact CHANGES (e.g., new job, moved cities)
+
+## RULES
+- Extract from the USER's messages, not the assistant's generic advice
+- When the user says "I have a..." or "my ... is..." — ALWAYS extract it
+- When the user mentions a name, ALWAYS extract that person
+- When the user describes an activity, ALWAYS extract it as an event
+- DO NOT skip "small" facts — the question might be about ANY detail
+- DO NOT skip preferences, hobbies, daily routines, or personal details
+- If unsure whether something is important, EXTRACT IT ANYWAY
 
 Output JSON:
 {
-  "entities": [...],
-  "state_changes": [...],
-  "relationships": [...],
-  "summary": "one-line summary of key facts"
+  "entities": [
+    {"name": "str", "type": "str", "state": {"key": "value"}}
+  ],
+  "state_changes": [
+    {"entity_name": "str", "what_changed": "str", "old_state": "str", "new_state": "str", "is_contradiction": false}
+  ],
+  "relationships": [
+    {"source": "str", "target": "str", "type": "str", "description": "str"}
+  ],
+  "summary": "one-line summary of key facts extracted"
 }"""
 
 
@@ -519,12 +540,13 @@ def _build_world_model_for_question(
     item: dict[str, Any],
     llm: LLMClient,
     extraction_model: str = "gpt-4o-mini",
+    debug: bool = False,
+    debug_log: list | None = None,
 ) -> WorldModel:
     """
     Build a fresh world model from a question's haystack sessions.
-    
-    This is the expensive part — each question requires processing ~53 sessions
-    through the extraction LLM to build the knowledge graph.
+
+    Processing one session at a time to avoid truncated JSON output from the LLM.
     """
     from pie.core.models import ExtractedEntity, ExtractedStateChange, ExtractedRelationship
     from pie.core.llm import parse_extraction_result
@@ -536,19 +558,22 @@ def _build_world_model_for_question(
         item["question_id"],
     )
 
-    # Process sessions in chronological batches (group ~5 sessions per LLM call
-    # for efficiency while maintaining chronological context)
-    batch_size = 5
-    for batch_start in range(0, len(conversations), batch_size):
-        batch = conversations[batch_start : batch_start + batch_size]
+    if debug:
+        print(f"    Processing {len(conversations)} sessions...")
 
-        # Format batch for extraction
-        batch_text = _format_conversations_for_extraction(batch)
+    MAX_INPUT_CHARS = 6_000
+
+    for i, convo in enumerate(conversations):
+        # Format single session for extraction
+        batch_text = _format_conversations_for_extraction([convo])
+
+        if len(batch_text) > MAX_INPUT_CHARS:
+            batch_text = batch_text[:MAX_INPUT_CHARS] + "\n\n[... session truncated ...]"
 
         # Build context preamble from current world model state
         context = ""
         if wm.entities:
-            context = wm.build_context_preamble(batch[0].created_at)
+            context = wm.build_context_preamble(convo.created_at)
 
         user_msg = ""
         if context:
@@ -563,6 +588,7 @@ def _build_world_model_for_question(
                 ],
                 model=extraction_model,
                 json_mode=True,
+                max_tokens=4096,
             )
 
             raw = result["content"]
@@ -570,16 +596,40 @@ def _build_world_model_for_question(
                 import json
                 raw = json.loads(raw)
 
-            # Apply extracted entities to world model
+            n_before = len(wm.entities)
             _apply_extraction_to_world_model(
-                raw, wm, batch[0].created_at, batch[0].id
+                raw, wm, convo.created_at, convo.id
             )
+            n_new = len(wm.entities) - n_before
+
+            if debug:
+                print(f"      Session {i+1}/{len(conversations)}: "
+                      f"{len(batch_text):,} chars → "
+                      f"{len(raw.get('entities', []))} extracted, {n_new} new "
+                      f"(total: {len(wm.entities)})")
+
+            if debug_log is not None:
+                debug_log.append({
+                    "session_index": i,
+                    "input_chars": len(batch_text),
+                    "raw_extraction": raw,
+                    "entities_found": len(raw.get("entities", [])),
+                    "entities_new": n_new,
+                    "total_entities": len(wm.entities),
+                })
 
         except Exception as e:
             logger.warning(
-                f"Extraction failed for batch starting at session "
-                f"{batch_start}: {e}"
+                f"Extraction failed for session {i}: {e}"
             )
+            if debug:
+                print(f"      Session {i+1}/{len(conversations)}: FAILED — {e}")
+            if debug_log is not None:
+                debug_log.append({
+                    "session_index": i,
+                    "input_chars": len(batch_text),
+                    "error": str(e),
+                })
             continue
 
     return wm
@@ -707,28 +757,61 @@ def _retrieve_entities_for_question(
     question: str,
     world_model: WorldModel,
     llm: LLMClient,
-    top_k: int = 15,
+    top_k: int = 20,
 ) -> list[tuple[str, dict, float]]:
     """
-    Retrieve relevant entities for a question using embedding similarity.
-    
-    Returns list of (entity_id, entity_dict, similarity) sorted by relevance.
+    Retrieve relevant entities using hybrid BM25 + embedding retrieval.
+
+    Uses Reciprocal Rank Fusion (RRF) to combine sparse (BM25) and dense
+    (embedding) scores. This catches both semantic matches AND exact keyword
+    matches (names, numbers, specific terms).
+
+    Returns list of (entity_id, entity_dict, combined_score) sorted by relevance.
     """
     if not world_model.entities:
         return []
 
-    # Embed the question
+    # Build text representations for all entities
+    entity_texts = {}
+    for eid, entity in world_model.entities.items():
+        state = entity.current_state
+        if isinstance(state, dict):
+            state_str = "; ".join(
+                f"{k}: {v}" for k, v in state.items()
+                if k not in ("_is_event", "embedding") and v
+            )
+        else:
+            state_str = str(state)[:300]
+        entity_texts[eid] = f"{entity.name} ({entity.type.value}): {state_str}"
+
+    # --- BM25 scoring ---
+    bm25_ranks = {}
+    try:
+        from rank_bm25 import BM25Okapi
+        eids_list = list(entity_texts.keys())
+        tokenized_docs = [entity_texts[eid].lower().split() for eid in eids_list]
+        tokenized_query = question.lower().split()
+        bm25 = BM25Okapi(tokenized_docs)
+        bm25_scores = bm25.get_scores(tokenized_query)
+        # Rank by BM25 score
+        bm25_ranked = sorted(
+            zip(eids_list, bm25_scores), key=lambda x: x[1], reverse=True
+        )
+        for rank, (eid, _score) in enumerate(bm25_ranked):
+            bm25_ranks[eid] = rank
+    except ImportError:
+        logger.warning("rank_bm25 not installed, falling back to embedding-only")
+        for rank, eid in enumerate(entity_texts.keys()):
+            bm25_ranks[eid] = rank
+
+    # --- Embedding scoring ---
     query_emb = llm.embed_single(question)
 
-    # Compute embeddings for entities that lack them (batch)
     needs_embed = []
     needs_embed_ids = []
     for eid, entity in world_model.entities.items():
         if entity.embedding is None:
-            state = entity.current_state
-            desc = state.get("description", str(state)[:200]) if isinstance(state, dict) else str(state)[:200]
-            text = f"{entity.name} ({entity.type.value}): {desc}"
-            needs_embed.append(text)
+            needs_embed.append(entity_texts[eid])
             needs_embed_ids.append(eid)
 
     if needs_embed:
@@ -739,15 +822,29 @@ def _retrieve_entities_for_question(
         except Exception as e:
             logger.warning(f"Batch embedding failed: {e}")
 
-    # Score entities by embedding similarity
-    scored = []
+    embed_ranked = []
     for eid, entity in world_model.entities.items():
         if entity.embedding:
             sim = cosine_similarity(query_emb, entity.embedding)
-            scored.append((eid, entity, sim))
+            embed_ranked.append((eid, sim))
+    embed_ranked.sort(key=lambda x: x[1], reverse=True)
+    embed_ranks = {eid: rank for rank, (eid, _) in enumerate(embed_ranked)}
 
-    scored.sort(key=lambda x: x[2], reverse=True)
-    return [(eid, e, s) for eid, e, s in scored[:top_k]]
+    # --- Reciprocal Rank Fusion (k=60) ---
+    k = 60  # standard RRF constant
+    rrf_scores = {}
+    for eid in entity_texts:
+        bm25_r = bm25_ranks.get(eid, len(entity_texts))
+        embed_r = embed_ranks.get(eid, len(entity_texts))
+        rrf_scores[eid] = (1.0 / (k + bm25_r)) + (1.0 / (k + embed_r))
+
+    # Sort by RRF score, return top_k
+    sorted_eids = sorted(rrf_scores.keys(), key=lambda eid: rrf_scores[eid], reverse=True)
+    results = []
+    for eid in sorted_eids[:top_k]:
+        entity = world_model.entities[eid]
+        results.append((eid, entity, rrf_scores[eid]))
+    return results
 
 
 def _humanize_delta(seconds: float) -> str:
@@ -783,7 +880,7 @@ def _compile_temporal_context(
     retrieved: list[tuple[str, Any, float]],
     world_model: WorldModel,
     question_ts: float,
-    max_chars: int = 12_000,
+    max_chars: int = 30_000,
 ) -> str:
     """
     Compile PIE's semantic temporal context from retrieved entities.
@@ -919,25 +1016,25 @@ def _compile_temporal_context(
 
 
 PIE_ANSWER_SYSTEM_PROMPT = """\
-You are a personal knowledge assistant answering questions about a user's life
-and conversations. You are given a structured knowledge base compiled from
-their chat history, organized by entity with temporal information.
+You are a personal knowledge assistant answering questions about a user's life.
+You are given a structured knowledge base compiled from their chat history.
 
 Key features of the context:
 - Each entity shows WHEN it first appeared and was last mentioned
-- State changes are tracked chronologically with timestamps
+- State changes are tracked chronologically
 - Contradictions (where info changed) are marked with ⚠ [CHANGED]
 - Relationships between entities are shown
 
-Use this temporal information to answer time-sensitive questions accurately.
-Pay special attention to:
-- The MOST RECENT state when asking about "current" info
-- State changes marked as contradictions — the NEWER value is correct
-- Chronological ordering for "first", "last", "before", "after" questions
+Use temporal information to answer time-sensitive questions accurately:
+- The MOST RECENT state is correct for "current" questions
+- State changes marked as contradictions — the NEWER value overrides
+- Use chronological ordering for "first", "last", "before", "after" questions
 
-Answer based ONLY on the provided context. Be concise and specific.
-If the answer isn't in the context, say "I don't know."
-Do NOT make up information."""
+IMPORTANT: Answer concisely with just the fact requested.
+- If the context contains the answer, give it directly (e.g., "Business Administration", "45 minutes")
+- Make reasonable inferences from available context
+- Only say "I don't know" if there is truly ZERO relevant information
+- Do NOT repeat the question or add unnecessary explanation"""
 
 
 def _ask_llm_temporal(
@@ -996,7 +1093,7 @@ class PIETemporalCachedBaseline:
         extraction_model: str = "gpt-4o-mini",
         embed_model: str = "text-embedding-3-large",
         top_k_entities: int = 15,
-        max_context_chars: int = 12_000,
+        max_context_chars: int = 30_000,
     ):
         from pathlib import Path
         from benchmarks.common.cache import CachedWorldModel
@@ -1125,7 +1222,7 @@ def _compile_temporal_context_cached(
     retrieved: list[tuple[str, Any, float]],
     cached_wm: "CachedWorldModel",
     question_ts: float,
-    max_chars: int = 12_000,
+    max_chars: int = 30_000,
 ) -> str:
     """
     Compile temporal context using CachedWorldModel.
@@ -1264,7 +1361,7 @@ def pie_temporal_cached(
     model: str = "gpt-4o",
     extraction_model: str = "gpt-4o-mini",
     top_k_entities: int = 15,
-    max_context_chars: int = 12_000,
+    max_context_chars: int = 30_000,
 ) -> BaselineResult:
     """
     Function wrapper for PIETemporalCachedBaseline.

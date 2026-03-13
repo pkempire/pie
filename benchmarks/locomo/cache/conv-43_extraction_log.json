@@ -1,0 +1,3237 @@
+[
+  {
+    "session_index": 0,
+    "session_id": "conv-43_session_0",
+    "input_chars": 2704,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 May 21, 2023 at 19:48]\nTim: Hey Tim, nice to meet you! What's up? Anything new happening?\nTim: Hey John! Great to meet you. Been discussing collaborations for a Harry Potter fan project I am working on - super excited! Anything interesting happening for you?\nTim: That's great! I just signed with a new team - excited for the season!\nTim: Woohoo! Congrats on the new team. Which team did you ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's new team",
+          "type": "organization",
+          "state": {
+            "description": "Signed with the Minnesota Wolves for the upcoming season."
+          }
+        },
+        {
+          "name": "Tim's position",
+          "type": "concept",
+          "state": {
+            "description": "Shooting guard for the Minnesota Wolves."
+          }
+        },
+        {
+          "name": "Tim's season opener",
+          "type": "event",
+          "state": {
+            "description": "Season opener for the Minnesota Wolves is on May 28, 2023."
+          }
+        },
+        {
+          "name": "Tim's goal",
+          "type": "concept",
+          "state": {
+            "description": "Goal to improve shooting percentage during the season."
+          }
+        },
+        {
+          "name": "Tim's pre-season challenge",
+          "type": "concept",
+          "state": {
+            "description": "Fitting into the new team's style of play was a challenge."
+          }
+        },
+        {
+          "name": "Tim's Harry Potter fan project",
+          "type": "concept",
+          "state": {
+            "description": "Collaborating on a Harry Potter fan project with a friend."
+          }
+        },
+        {
+          "name": "Tim's collaboration topics",
+          "type": "concept",
+          "state": {
+            "description": "Discussing characters, spells, and magical creatures from the Harry Potter universe."
+          }
+        },
+        {
+          "name": "Tim's visit to Harry Potter related places",
+          "type": "event",
+          "state": {
+            "description": "Visited a Harry Potter related place in London a few years ago."
+          }
+        },
+        {
+          "name": "John's Harry Potter fan project",
+          "type": "concept",
+          "state": {
+            "description": "Working on a Harry Potter fan project and discussing ideas with a friend."
+          }
+        },
+        {
+          "name": "John's places to visit",
+          "type": "concept",
+          "state": {
+            "description": "Visiting Harry Potter related places is on John's to-do list."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 12,
+    "total_entities": 12
+  },
+  {
+    "session_index": 1,
+    "session_id": "conv-43_session_1",
+    "input_chars": 3027,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 June 15, 2023 at 17:08]\nTim: Last night I joined a fantasy literature forum and had a great talk about my fave books. It was so enriching!\nTim: Wow, great to hear that you had a blast talking books! It's cool to connect with others who share your passion. On a different note, exciting things are happening--I'm exploring endorsement opportunities. Thinking about the possibilities pumps me u",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's fantasy literature forum",
+          "type": "concept",
+          "state": {
+            "description": "Joined a fantasy literature forum and had a great talk about favorite books on June 14, 2023."
+          }
+        },
+        {
+          "name": "Tim's endorsement opportunities",
+          "type": "concept",
+          "state": {
+            "description": "Exploring endorsement opportunities with brands."
+          }
+        },
+        {
+          "name": "Tim's excitement about endorsements",
+          "type": "concept",
+          "state": {
+            "description": "Feeling pumped about the possibilities of working with brands."
+          }
+        },
+        {
+          "name": "Tim's potential brand collaborations",
+          "type": "concept",
+          "state": {
+            "description": "Considering collaborations with sports brands like Nike and Under Armour."
+          }
+        },
+        {
+          "name": "Tim's values and interests",
+          "type": "concept",
+          "state": {
+            "description": "Open to exploring brands that align with his values and interests."
+          }
+        },
+        {
+          "name": "Tim's book collection",
+          "type": "concept",
+          "state": {
+            "description": "Has a collection of books displayed on a bookshelf."
+          }
+        },
+        {
+          "name": "Tim's picture from MinaLima",
+          "type": "concept",
+          "state": {
+            "description": "A picture from MinaLima, creators of props for the Harry Potter films."
+          }
+        },
+        {
+          "name": "Tim's reminders of the wizarding world",
+          "type": "concept",
+          "state": {
+            "description": "Has lots of reminders of the wizarding world to escape reality."
+          }
+        },
+        {
+          "name": "Tim's future visits to HP spots",
+          "type": "concept",
+          "state": {
+            "description": "Plans to visit more places related to the Harry Potter world."
+          }
+        },
+        {
+          "name": "Tim's recent basketball game",
+          "type": "concept",
+          "state": {
+            "description": "Played in a basketball game recently."
+          }
+        },
+        {
+          "name": "Tim's performance in the game",
+          "type": "concept",
+          "state": {
+            "description": "Felt awesome playing at the game."
+          }
+        },
+        {
+          "name": "John's support for Tim",
+          "type": "person",
+          "state": {
+            "description": "John expresses support for Tim and encourages him to believe in himself."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 12,
+    "total_entities": 24
+  },
+  {
+    "session_index": 2,
+    "session_id": "conv-43_session_2",
+    "input_chars": 5363,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 July 16, 2023 at 16:21]\nTim: Hey Tim! Good to see you again. So much has happened in the last month - on and off the court. Last week I scored 40 points, my highest ever, and it feels like all my hard work's paying off.\n[Image: a photography of a score board with a clock and a phone]\nTim: Congrats on your achievement! I'm so proud of you. Last week, I had a nice chat with a Harry Potter fa",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's highest score",
+          "type": "concept",
+          "state": {
+            "description": "Tim scored 40 points in a basketball game, his highest ever."
+          }
+        },
+        {
+          "name": "Tim's chat with Harry Potter fan",
+          "type": "concept",
+          "state": {
+            "description": "Tim had a nice chat with a Harry Potter fan in California."
+          }
+        },
+        {
+          "name": "Tim's game atmosphere",
+          "type": "concept",
+          "state": {
+            "description": "The atmosphere during Tim's game was electric."
+          }
+        },
+        {
+          "name": "Tim's celebration after the game",
+          "type": "concept",
+          "state": {
+            "description": "Tim and his teammates celebrated at a restaurant after their game."
+          }
+        },
+        {
+          "name": "Tim's second family through sport",
+          "type": "concept",
+          "state": {
+            "description": "Tim feels a strong bond with his teammates, describing them as a second family."
+          }
+        },
+        {
+          "name": "Tim's endorsement progress",
+          "type": "concept",
+          "state": {
+            "description": "Tim is making progress with endorsements and has talked to some big names."
+          }
+        },
+        {
+          "name": "Tim's endorsement with Nike",
+          "type": "concept",
+          "state": {
+            "description": "Tim signed a deal with Nike for basketball shoes and gear."
+          }
+        },
+        {
+          "name": "Tim's potential sponsorship with Gatorade",
+          "type": "concept",
+          "state": {
+            "description": "Tim is in talks with Gatorade about a potential sponsorship."
+          }
+        },
+        {
+          "name": "Tim's dream brand Under Armour",
+          "type": "concept",
+          "state": {
+            "description": "Tim has always liked Under Armour and would love to work with them."
+          }
+        },
+        {
+          "name": "Tim's upcoming game in Seattle",
+          "type": "concept",
+          "state": {
+            "description": "Tim is excited for his game in Seattle August 2023."
+          }
+        },
+        {
+          "name": "Tim's love for Seattle",
+          "type": "concept",
+          "state": {
+            "description": "Tim loves the energy, diversity, and awesome food of Seattle."
+          }
+        },
+        {
+          "name": "Tim's favorite seafood",
+          "type": "concept",
+          "state": {
+            "description": "Tim enjoys trying local seafood in Seattle."
+          }
+        },
+        {
+          "name": "Tim's beach memory",
+          "type": "concept",
+          "state": {
+            "description": "Tim had an awesome summer surfing with friends."
+          }
+        },
+        {
+          "name": "Tim's surfing experience",
+          "type": "concept",
+          "state": {
+            "description": "Tim started surfing five years ago and loves the connection to nature."
+          }
+        },
+        {
+          "name": "Tim's connection to nature",
+          "type": "concept",
+          "state": {
+            "description": "Tim feels a strong connection to nature while surfing."
+          }
+        },
+        {
+          "name": "Tim's escape through reading",
+          "type": "concept",
+          "state": {
+            "description": "Tim finds escape and freedom in reading fantasy books."
+          }
+        },
+        {
+          "name": "Tim's blissful moments",
+          "type": "concept",
+          "state": {
+            "description": "Tim experiences bliss when he finds activities that make him happy."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 19,
+    "entities_new": 17,
+    "total_entities": 41
+  },
+  {
+    "session_index": 3,
+    "session_id": "conv-43_session_3",
+    "input_chars": 1818,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 August 02, 2023 at 16:17]\nTim: Hey John! How've you been? Something awesome happened - I'm writing articles about fantasy novels for an online mag. It's so rewarding!\nTim: Hey Tim! Congrats on the opportunity to write about what you're into! How did it happen?\nTim: Thanks! I found this opportunity on a fantasy lit forum and thought it'd be perfect since I love fantasy. I shared my ideas wi",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's job",
+          "type": "concept",
+          "state": {
+            "description": "Writing articles about fantasy novels for an online magazine"
+          }
+        },
+        {
+          "name": "Tim's opportunity source",
+          "type": "concept",
+          "state": {
+            "description": "Found the writing opportunity on a fantasy literature forum"
+          }
+        },
+        {
+          "name": "Tim's favorite genre",
+          "type": "concept",
+          "state": {
+            "description": "Loves fantasy novels"
+          }
+        },
+        {
+          "name": "Tim's article topics",
+          "type": "concept",
+          "state": {
+            "description": "Writing about different fantasy novels, studying characters, themes, and making book recommendations"
+          }
+        },
+        {
+          "name": "Tim's favorite books",
+          "type": "concept",
+          "state": {
+            "description": "Tim loves to read good books, with a favorite series being Harry Potter."
+          }
+        },
+        {
+          "name": "Tim's inspiring book",
+          "type": "concept",
+          "state": {
+            "description": "Reading an inspiring book that reminds him to keep dreaming"
+          }
+        },
+        {
+          "name": "John's trivia contest experience",
+          "type": "concept",
+          "state": {
+            "description": "Participated in a Harry Potter trivia contest at a charity event with Anthony"
+          }
+        },
+        {
+          "name": "Anthony's involvement",
+          "type": "person",
+          "state": {
+            "description": "John's friend who participated in the trivia contest"
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 8,
+    "total_entities": 49
+  },
+  {
+    "session_index": 4,
+    "session_id": "conv-43_session_4",
+    "input_chars": 2785,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 August 09, 2023 at 10:29]\nTim: Hey John! Long time no see! Been super busy lately. Guess what? Just skyped with that Harry Potter fan I met in CA and had a great time. We talked characters and maybe collab-ing - so cool to talk to someone who gets it. You? Anything new going on?\nTim: Hi Tim! Nice to hear from you. Glad you could reconnect. As for me, lots of stuff happened since we last ta",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's basketball game",
+          "type": "event",
+          "state": {
+            "description": "Tim's team won a close basketball game against another team on December 9, 2023."
+          }
+        },
+        {
+          "name": "Tim's team bond",
+          "type": "concept",
+          "state": {
+            "description": "Tim feels that the bond with his basketball team is strong and makes all the hard work worth it."
+          }
+        },
+        {
+          "name": "Tim's supportive team",
+          "type": "concept",
+          "state": {
+            "description": "Tim describes his basketball team as a family away from home that motivates and supports each other."
+          }
+        },
+        {
+          "name": "Tim's hobbies",
+          "type": "concept",
+          "state": {
+            "description": "Tim enjoys spending time with his basketball team and values the bond they share."
+          }
+        },
+        {
+          "name": "Tim's reading preference",
+          "type": "concept",
+          "state": {
+            "description": "Tim appreciates reading fantasy books that captivate him and transport him to another world."
+          }
+        },
+        {
+          "name": "Tim's current book",
+          "type": "concept",
+          "state": {
+            "description": "Tim is currently reading 'The Name of the Wind' by Patrick Rothfuss."
+          }
+        },
+        {
+          "name": "John's basketball game experience",
+          "type": "event",
+          "state": {
+            "description": "John had a crazy intense basketball game the week before August 09, 2023 where they won by a tight score."
+          }
+        },
+        {
+          "name": "John's adrenaline rush",
+          "type": "concept",
+          "state": {
+            "description": "John felt an adrenaline rush from scoring the last basket in the game."
+          }
+        },
+        {
+          "name": "John's team support",
+          "type": "concept",
+          "state": {
+            "description": "John values the support from his basketball team, which feels like a family."
+          }
+        },
+        {
+          "name": "John's reading preference",
+          "type": "concept",
+          "state": {
+            "description": "John enjoys reading fantasy books."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 10,
+    "total_entities": 59
+  },
+  {
+    "session_index": 5,
+    "session_id": "conv-43_session_5",
+    "input_chars": 4399,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 August 11, 2023 at 13:08]\nTim: Hey Tim, sorry I missed you. Been a crazy few days. Took a trip to a new place - it's been amazing. Love the energy there.\nTim: Hey John, no worries! I get how life can be busy. Where did you go? Glad you had a great time! Exploring new places can be so inspiring and fun. I recently went to an event and it was fantastic. Being with other fans who love it too ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's trip to Chicago",
+          "type": "concept",
+          "state": {
+            "description": "Tim took a trip to Chicago, which he found amazing and full of energy."
+          }
+        },
+        {
+          "name": "Tim's event experience",
+          "type": "concept",
+          "state": {
+            "description": "Tim attended an event that was fantastic, being with other fans made it special."
+          }
+        },
+        {
+          "name": "Tim's article writing",
+          "type": "concept",
+          "state": {
+            "description": "Tim has been writing more articles, combining his love for reading and sharing stories."
+          }
+        },
+        {
+          "name": "Tim's latest article",
+          "type": "concept",
+          "state": {
+            "description": "Tim's latest article is about his experiences and stories."
+          }
+        },
+        {
+          "name": "Tim's favorite book",
+          "type": "concept",
+          "state": {
+            "description": "Harry Potter is his favorite book, known for its immersive world."
+          }
+        },
+        {
+          "name": "Tim's basketball shoes",
+          "type": "concept",
+          "state": {
+            "description": "Tim's lucky basketball shoes symbolize resilience and determination, having been with him through many experiences."
+          }
+        },
+        {
+          "name": "Tim's basketball journey",
+          "type": "concept",
+          "state": {
+            "description": "Tim has been playing basketball since he was ten, inspired by watching NBA games with his dad."
+          }
+        },
+        {
+          "name": "Tim's college scholarship",
+          "type": "concept",
+          "state": {
+            "description": "Tim earned a college scholarship for basketball after playing through middle and high school."
+          }
+        },
+        {
+          "name": "Tim's basketball career goal",
+          "type": "concept",
+          "state": {
+            "description": "Tim's number one goal is to win a championship and make a difference through charity."
+          }
+        },
+        {
+          "name": "Tim's charity work",
+          "type": "concept",
+          "state": {
+            "description": "Tim is teaming up with a local organization to help disadvantaged kids with sports and school."
+          }
+        },
+        {
+          "name": "John's support for Tim",
+          "type": "person",
+          "state": {
+            "description": "John expresses support for Tim's charity work and encourages him."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 10,
+    "total_entities": 69
+  },
+  {
+    "session_index": 6,
+    "session_id": "conv-43_session_6",
+    "input_chars": 3178,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 August 17, 2023 at 19:54]\nTim: Hey Tim! We had a wild few days since we talked. I met back up with my teammates on the 15th after my trip and it was amazing! Everyone missed me. The atmosphere was electric and I felt so welcome being back with them. I'm so lucky to be a part of this team!\nTim: Wow, John, that sounds amazing! I'm so happy they gave you a warm welcome back. It's such a speci",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's trip",
+          "type": "concept",
+          "state": {
+            "description": "Tim met back up with his teammates on August 15, 2023 after a trip."
+          }
+        },
+        {
+          "name": "Tim's teammates",
+          "type": "person",
+          "state": {
+            "description": "Tim has new teammates with whom he shares a love for basketball."
+          }
+        },
+        {
+          "name": "Tim's feelings about his team",
+          "type": "belief",
+          "state": {
+            "description": "Tim feels lucky to be a part of his team and appreciated their warm welcome."
+          }
+        },
+        {
+          "name": "Tim's love for basketball",
+          "type": "belief",
+          "state": {
+            "description": "Tim shares a love for basketball with his teammates, creating a special bond."
+          }
+        },
+        {
+          "name": "Tim's sense of belonging",
+          "type": "belief",
+          "state": {
+            "description": "Tim felt a sense of belonging at an event July 2023 where everyone shared the same love for basketball."
+          }
+        },
+        {
+          "name": "Tim's upcoming book conference",
+          "type": "event",
+          "state": {
+            "description": "Tim hopes to attend a book conference in September 2023."
+          }
+        },
+        {
+          "name": "Tim's basketball autographed ball",
+          "type": "item",
+          "state": {
+            "description": "Tim received a basketball signed by his teammates as a sign of friendship."
+          }
+        },
+        {
+          "name": "Tim's motivation from teammates",
+          "type": "belief",
+          "state": {
+            "description": "Tim finds comfort and motivation from the support and bond with his teammates."
+          }
+        },
+        {
+          "name": "John's appreciation for Tim's experience",
+          "type": "belief",
+          "state": {
+            "description": "John expresses happiness for Tim's warm welcome back to his team."
+          }
+        },
+        {
+          "name": "John's interest in Tim's plans",
+          "type": "belief",
+          "state": {
+            "description": "John asks Tim about his exciting plans or events coming up."
+          }
+        },
+        {
+          "name": "Tim's bond with teammates",
+          "type": "belief",
+          "state": {
+            "description": "Tim values the bond and support from his teammates."
+          }
+        },
+        {
+          "name": "Tim's journey in basketball",
+          "type": "belief",
+          "state": {
+            "description": "Tim reflects on his journey in basketball and the motivation it provides."
+          }
+        },
+        {
+          "name": "Tim's goals",
+          "type": "belief",
+          "state": {
+            "description": "Tim is motivated to reach his goals with the support of his friends."
+          }
+        },
+        {
+          "name": "Tim's support system",
+          "type": "belief",
+          "state": {
+            "description": "Tim believes having supportive people around is like having a cheer team."
+          }
+        },
+        {
+          "name": "Tim's strength from support",
+          "type": "belief",
+          "state": {
+            "description": "Tim feels encouraged to give his all and never give up due to the support from his teammates."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 17,
+    "entities_new": 15,
+    "total_entities": 84
+  },
+  {
+    "session_index": 7,
+    "session_id": "conv-43_session_7",
+    "input_chars": 6029,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 August 21, 2023 at 16:29]\nTim: Hey Tim! Long time no talk. Hope you're doing great. Crazy things have been going on in my life. Just the other day, I found a new gym to stay on my b-ball game. Staying fit is essential to surviving pro ball, so I had to find something that fits the bill. Finding the right spot was tough but here we are!\n[Image: a photo of a gym with a basketball court and c",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's gym",
+          "type": "concept",
+          "state": {
+            "description": "Found a new gym to stay fit and improve basketball skills."
+          }
+        },
+        {
+          "name": "Tim's workout plan",
+          "type": "concept",
+          "state": {
+            "description": "A schedule that includes both basketball training and strength training."
+          }
+        },
+        {
+          "name": "Tim's strength training benefits",
+          "type": "concept",
+          "state": {
+            "description": "Strength training builds muscle, increases power, prevents injuries, and improves basketball performance."
+          }
+        },
+        {
+          "name": "Tim's confidence in basketball",
+          "type": "concept",
+          "state": {
+            "description": "Incorporating strength training improved shooting accuracy, agility, and speed, boosting confidence."
+          }
+        },
+        {
+          "name": "Tim's piano learning",
+          "type": "concept",
+          "state": {
+            "description": "Started learning how to play the piano, finding it satisfying despite the learning curve."
+          }
+        },
+        {
+          "name": "Tim's favorite piano song",
+          "type": "concept",
+          "state": {
+            "description": "Favorite song to play on the piano is a theme from 'Harry Potter and the Philosopher's Stone'."
+          }
+        },
+        {
+          "name": "Tim's favorite movie",
+          "type": "concept",
+          "state": {
+            "description": "Tim's favorite movie is Lord of the Rings."
+          }
+        },
+        {
+          "name": "Tim's family time",
+          "type": "concept",
+          "state": {
+            "description": "Cherishes family moments, especially during gatherings."
+          }
+        },
+        {
+          "name": "Tim's Thanksgiving traditions",
+          "type": "concept",
+          "state": {
+            "description": "Thanksgiving involves prepping a feast, sharing gratitude, and watching movies."
+          }
+        },
+        {
+          "name": "Tim's favorite Thanksgiving movie",
+          "type": "concept",
+          "state": {
+            "description": "Enjoys watching 'Home Alone' during Thanksgiving."
+          }
+        },
+        {
+          "name": "Tim's holiday movies",
+          "type": "concept",
+          "state": {
+            "description": "Watches 'Elf' and 'The Santa Clause' during the holidays."
+          }
+        },
+        {
+          "name": "Tim's Christmas tree",
+          "type": "concept",
+          "state": {
+            "description": "Decorated a Harry Potter themed Christmas tree."
+          }
+        },
+        {
+          "name": "John's school focus",
+          "type": "concept",
+          "state": {
+            "description": "Focusing on school and reading fantasy books."
+          }
+        },
+        {
+          "name": "John's piano learning",
+          "type": "concept",
+          "state": {
+            "description": "Started learning how to play the piano."
+          }
+        },
+        {
+          "name": "John's favorite songs on piano",
+          "type": "concept",
+          "state": {
+            "description": "Loves playing different songs on the piano, especially a movie theme."
+          }
+        },
+        {
+          "name": "John's family gatherings",
+          "type": "concept",
+          "state": {
+            "description": "Family gets together often, cherishing those moments."
+          }
+        },
+        {
+          "name": "John's Thanksgiving traditions",
+          "type": "concept",
+          "state": {
+            "description": "Enjoys prepping the feast and watching movies during Thanksgiving."
+          }
+        },
+        {
+          "name": "John's favorite Thanksgiving movie",
+          "type": "concept",
+          "state": {
+            "description": "Enjoys watching 'Home Alone' during Thanksgiving."
+          }
+        },
+        {
+          "name": "John's holiday movies",
+          "type": "concept",
+          "state": {
+            "description": "Watches 'Elf' and 'The Santa Clause' during the holidays."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 21,
+    "entities_new": 19,
+    "total_entities": 103
+  },
+  {
+    "session_index": 8,
+    "session_id": "conv-43_session_8",
+    "input_chars": 2425,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 August 26, 2023 at 18:59]\nTim: Hey John, this week's been really busy for me. Assignments and exams are overwhelming. I'm not giving up though! I'm trying to find a way to juggle studying with my fantasy reading hobby. How have you been?\n[Image: a photo of a stack of books on a table]\nTim: Hey Tim! I know the stress of exams and homework, but you got this! I'm doing OK, cheers for asking. ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's busy week",
+          "type": "concept",
+          "state": {
+            "description": "Tim has had a busy week with overwhelming assignments and exams."
+          }
+        },
+        {
+          "name": "Tim's hobby",
+          "type": "concept",
+          "state": {
+            "description": "Tim's hobby is fantasy reading."
+          }
+        },
+        {
+          "name": "John's family visit",
+          "type": "concept",
+          "state": {
+            "description": "John visited home the week before August 26, 2023 and caught up with family and old friends."
+          }
+        },
+        {
+          "name": "John's childhood memories",
+          "type": "concept",
+          "state": {
+            "description": "John reminisced about childhood while talking with family and friends."
+          }
+        },
+        {
+          "name": "Tim's interest in sports",
+          "type": "concept",
+          "state": {
+            "description": "Tim has never been part of a sports team."
+          }
+        },
+        {
+          "name": "Tim's love for reading",
+          "type": "concept",
+          "state": {
+            "description": "Tim loves reading and fantasy novels, enjoying different magical worlds."
+          }
+        },
+        {
+          "name": "Tim's travel interest",
+          "type": "concept",
+          "state": {
+            "description": "Tim loves traveling to experience different kinds of magic."
+          }
+        },
+        {
+          "name": "John's trip to New York City",
+          "type": "concept",
+          "state": {
+            "description": "John visited New York City and enjoyed exploring the city and trying restaurants."
+          }
+        },
+        {
+          "name": "Tim's travel plans to NYC",
+          "type": "concept",
+          "state": {
+            "description": "Tim is adding New York City to his travel list."
+          }
+        },
+        {
+          "name": "Tim's excitement for NYC",
+          "type": "concept",
+          "state": {
+            "description": "Tim is excited to visit NYC and experience its culture and food."
+          }
+        },
+        {
+          "name": "Tim's gratitude for support",
+          "type": "concept",
+          "state": {
+            "description": "Tim expressed gratitude for John's support."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 11,
+    "total_entities": 114
+  },
+  {
+    "session_index": 9,
+    "session_id": "conv-43_session_9",
+    "input_chars": 2123,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 August 31, 2023 at 14:52]\nTim: Hey John, it's been a few days! I got a no for a summer job I wanted which wasn't great but I'm staying positive. On your NYC trip, did you have any troubles? How did you handle them?\nTim: Hey Tim! Sorry to hear about the job, but your positivity will help you find something great! My trip went okay - I had some trouble figuring out the subway at first, but t",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's summer job application",
+          "type": "concept",
+          "state": {
+            "description": "Tim applied for a summer job but received a rejection."
+          }
+        },
+        {
+          "name": "Tim's positivity",
+          "type": "belief",
+          "state": {
+            "description": "Tim is staying positive despite the job rejection."
+          }
+        },
+        {
+          "name": "John's NYC trip",
+          "type": "concept",
+          "state": {
+            "description": "John had some trouble figuring out the subway during his NYC trip, but it became easy after receiving help."
+          }
+        },
+        {
+          "name": "Tim's presentation",
+          "type": "concept",
+          "state": {
+            "description": "Tim gave a presentation in class, feeling nervous but accomplished afterward."
+          }
+        },
+        {
+          "name": "Tim's cooking hobby",
+          "type": "concept",
+          "state": {
+            "description": "Tim has been trying out cooking recipes."
+          }
+        },
+        {
+          "name": "Tim's soup recipe",
+          "type": "concept",
+          "state": {
+            "description": "Tim made a tasty soup without a specific recipe, using sage for flavor."
+          }
+        },
+        {
+          "name": "Tim's spice experimentation",
+          "type": "hobby",
+          "state": {
+            "description": "Tim enjoys experimenting with spices in cooking."
+          }
+        },
+        {
+          "name": "Tim's trip to Universal Studios",
+          "type": "event",
+          "state": {
+            "description": "Tim is planning a trip to Universal Studios in September 2023."
+          }
+        },
+        {
+          "name": "John's bucket list",
+          "type": "concept",
+          "state": {
+            "description": "Universal Studios is on John's bucket list."
+          }
+        },
+        {
+          "name": "Tim's excitement for Harry Potter",
+          "type": "belief",
+          "state": {
+            "description": "Tim is excited for the Harry Potter attractions at Universal Studios."
+          }
+        },
+        {
+          "name": "Tim's safe trip assurance",
+          "type": "belief",
+          "state": {
+            "description": "Tim assures John that he will have a safe trip."
+          }
+        },
+        {
+          "name": "Tim's full name",
+          "type": "person",
+          "state": {
+            "description": "Tim is one of the two speakers."
+          }
+        },
+        {
+          "name": "John's full name",
+          "type": "person",
+          "state": {
+            "description": "John is one of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 13,
+    "total_entities": 127
+  },
+  {
+    "session_index": 10,
+    "session_id": "conv-43_session_10",
+    "input_chars": 4555,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 September 21, 2023 at 20:17]\nTim: Hey Tim, been a while! How ya been?\nTim: Hey John! Great to hear from you. Been busy with things, how about you?\nTim: Yeah, something cool happened! I attended a local restaurant with some new teammates last week. It was great getting to know them better.\nTim: Good support is essential. How do you feel about them?\nTim: They're great friends. We connected o",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's basketball career",
+          "type": "concept",
+          "state": {
+            "description": "Tim loves playing professional basketball, finds it challenging and fulfilling, and enjoys the support from fans and teammates."
+          }
+        },
+        {
+          "name": "Tim's goals on the court",
+          "type": "concept",
+          "state": {
+            "description": "Tim is focusing on better shooting and being a consistent performer to help his team."
+          }
+        },
+        {
+          "name": "Tim's goals off the court",
+          "type": "concept",
+          "state": {
+            "description": "Tim is looking into endorsements and building his brand for life after basketball."
+          }
+        },
+        {
+          "name": "Tim's thoughts on life after basketball",
+          "type": "concept",
+          "state": {
+            "description": "Tim wants to use his platform to inspire others, possibly start a foundation, and engage in charity work."
+          }
+        },
+        {
+          "name": "Tim's book recommendation",
+          "type": "concept",
+          "state": {
+            "description": "Tim recommends a fantasy novel by Patrick Rothfuss for traveling."
+          }
+        },
+        {
+          "name": "Tim's bookshelf",
+          "type": "concept",
+          "state": {
+            "description": "Tim has reorganized his bookshelf and has many favorite fantasy books."
+          }
+        },
+        {
+          "name": "John's suggestion for trip destination",
+          "type": "concept",
+          "state": {
+            "description": "John suggests Edinburgh, Scotland as a potential trip destination for its magical vibe and history."
+          }
+        },
+        {
+          "name": "Tim's teammates",
+          "type": "concept",
+          "state": {
+            "description": "Tim has new teammates with whom he shares a love for basketball."
+          }
+        },
+        {
+          "name": "Tim's practice photo",
+          "type": "concept",
+          "state": {
+            "description": "Tim snapped a photo during practice showing a beautiful sunset on the court."
+          }
+        },
+        {
+          "name": "Tim's favorite book",
+          "type": "concept",
+          "state": {
+            "description": "Tim's favorite book is 'The Alchemist', which he found thought-provoking."
+          }
+        },
+        {
+          "name": "Tim's appreciation for support",
+          "type": "concept",
+          "state": {
+            "description": "Tim appreciates John's support and encouragement."
+          }
+        },
+        {
+          "name": "Tim's upcoming team trip",
+          "type": "concept",
+          "state": {
+            "description": "Tim's team is planning a trip October 2023 to explore a new city."
+          }
+        },
+        {
+          "name": "Tim's gratitude for basketball",
+          "type": "concept",
+          "state": {
+            "description": "Tim feels grateful for his basketball career and the opportunities it provides."
+          }
+        },
+        {
+          "name": "Tim's advice on endorsements",
+          "type": "concept",
+          "state": {
+            "description": "Tim advises to choose endorsements that align with personal values and feel authentic."
+          }
+        },
+        {
+          "name": "Tim's birthday",
+          "type": "concept",
+          "state": {
+            "description": "Tim's birthday is not mentioned in the conversation."
+          }
+        },
+        {
+          "name": "Tim's age",
+          "type": "concept",
+          "state": {
+            "description": "Tim's age is not mentioned in the conversation."
+          }
+        },
+        {
+          "name": "Tim's hometown",
+          "type": "concept",
+          "state": {
+            "description": "Tim's photo of a tranquil forest is from near his hometown."
+          }
+        },
+        {
+          "name": "John's age",
+          "type": "concept",
+          "state": {
+            "description": "John's age is not mentioned in the conversation."
+          }
+        },
+        {
+          "name": "John's hometown",
+          "type": "concept",
+          "state": {
+            "description": "John's hometown is not mentioned in the conversation."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 21,
+    "entities_new": 17,
+    "total_entities": 144
+  },
+  {
+    "session_index": 11,
+    "session_id": "conv-43_session_11",
+    "input_chars": 4400,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 October 02, 2023 at 15:00]\nTim: Hey John! Awesome catchin' up with you! A lot's changed since last time.\n[Image: a photo of a bookcase filled with dvds and games]\nTim: Hey, Tim! Good to hear from you. Anyway, a lot has been going on with me. My girlfriend and I had an amazing and emotional wedding ceremony last week.\n[Image: a photo of a wedding ceremony in a greenhouse with people taking ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's wedding ceremony",
+          "type": "event",
+          "state": {
+            "description": "Tim had an amazing and emotional wedding ceremony on September 25, 2023."
+          }
+        },
+        {
+          "name": "Tim's wedding venue",
+          "type": "concept",
+          "state": {
+            "description": "Tim's wedding ceremony took place in a lovely greenhouse."
+          }
+        },
+        {
+          "name": "Tim's hiking club friends",
+          "type": "person",
+          "state": {
+            "description": "Tim's friends from the hiking club attended his wedding."
+          }
+        },
+        {
+          "name": "Tim's favorite wedding memory",
+          "type": "concept",
+          "state": {
+            "description": "Tim's favorite memory from the wedding was seeing his bride walking down the aisle."
+          }
+        },
+        {
+          "name": "Tim's first dance",
+          "type": "event",
+          "state": {
+            "description": "Tim had his first dance at a cozy restaurant with music and candlelight."
+          }
+        },
+        {
+          "name": "Tim's bookshelf",
+          "type": "concept",
+          "state": {
+            "description": "Tim has a bookshelf filled with his favorite fantasy novels."
+          }
+        },
+        {
+          "name": "Tim's favorite fantasy novels",
+          "type": "concept",
+          "state": {
+            "description": "Tim enjoys fantasy novels because they fire up his imagination and provide an escape from reality."
+          }
+        },
+        {
+          "name": "John's basketball team",
+          "type": "concept",
+          "state": {
+            "description": "John's basketball team engages in team dinners, outings, and games to strengthen their unity."
+          }
+        },
+        {
+          "name": "John's favorite basketball player",
+          "type": "person",
+          "state": {
+            "description": "John's favorite basketball player is LeBron James."
+          }
+        },
+        {
+          "name": "John's admiration for LeBron",
+          "type": "concept",
+          "state": {
+            "description": "John admires LeBron James for his work ethic and dedication to the game."
+          }
+        },
+        {
+          "name": "John's experience meeting LeBron",
+          "type": "event",
+          "state": {
+            "description": "John has met LeBron James a few times and found it to be a wild experience."
+          }
+        },
+        {
+          "name": "John's experience watching LeBron play",
+          "type": "event",
+          "state": {
+            "description": "John had the opportunity to see LeBron James play live."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 11,
+    "total_entities": 155
+  },
+  {
+    "session_index": 12,
+    "session_id": "conv-43_session_12",
+    "input_chars": 2878,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 October 13, 2023 at 13:50]\nTim: Hey John! It's been ages since we last talked. Guess what? Last week I went to a Harry Potter conference in the UK - it was incredible! There were so many people who shared the same love of HP as me, it was like a magical family. I felt so inspired and like I got a new lease of life. I love how my passion for fantasy stuff brings me closer to people from all",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's Harry Potter conference",
+          "type": "event",
+          "state": {
+            "description": "Attended a Harry Potter conference in the UK on October 6, 2023."
+          }
+        },
+        {
+          "name": "Tim's passion for fantasy",
+          "type": "concept",
+          "state": {
+            "description": "Tim loves how his passion for fantasy connects him with people from all over the world."
+          }
+        },
+        {
+          "name": "Tim's basketball team",
+          "type": "organization",
+          "state": {
+            "description": "Tim's basketball team has been playing wild games and recently won against a top team."
+          }
+        },
+        {
+          "name": "Tim's trophy",
+          "type": "item",
+          "state": {
+            "description": "Tim's basketball team won a trophy during the season."
+          }
+        },
+        {
+          "name": "John's basketball team",
+          "type": "organization",
+          "state": {
+            "description": "John is part of a basketball team that faced tough opponents."
+          }
+        },
+        {
+          "name": "Tim's new shoes",
+          "type": "item",
+          "state": {
+            "description": "Tim is looking for new shoes after the games and received a recommendation for comfortable shoes."
+          }
+        },
+        {
+          "name": "Tim's motivation",
+          "type": "concept",
+          "state": {
+            "description": "Tim feels motivated and ready to keep pushing for his goals."
+          }
+        },
+        {
+          "name": "John's support",
+          "type": "concept",
+          "state": {
+            "description": "John provides encouragement and support to Tim."
+          }
+        },
+        {
+          "name": "Tim's appreciation for support",
+          "type": "concept",
+          "state": {
+            "description": "Tim appreciates John's support and encouragement."
+          }
+        },
+        {
+          "name": "Tim's commitment to self-belief",
+          "type": "concept",
+          "state": {
+            "description": "Tim is committed to staying filled with self-belief."
+          }
+        },
+        {
+          "name": "Tim's future plans",
+          "type": "concept",
+          "state": {
+            "description": "Tim plans to keep chasing his dreams."
+          }
+        },
+        {
+          "name": "Tim's conversation with John",
+          "type": "event",
+          "state": {
+            "description": "Tim and John had a conversation on October 13, 2023."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 10,
+    "total_entities": 165
+  },
+  {
+    "session_index": 13,
+    "session_id": "conv-43_session_13",
+    "input_chars": 3232,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 October 17, 2023 at 13:50]\nTim: Hey Tim! Long time no talk - a lot has been going on since then!\nTim: Hey John! Long time no see! Can't wait to catch up and hear all about what you've been up to.\nTim: Seems like forever since we caught up! I'm now mentoring the younger players on my team. It's super rewarding and I'm loving sharing my skills and knowledge with them. It's also a great way f",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's mentoring role",
+          "type": "concept",
+          "state": {
+            "description": "Tim is mentoring younger players on his team, which he finds rewarding."
+          }
+        },
+        {
+          "name": "Tim's mentoring experience",
+          "type": "concept",
+          "state": {
+            "description": "Tim enjoys sharing his skills and knowledge with younger players."
+          }
+        },
+        {
+          "name": "Tim's mentoring challenges",
+          "type": "concept",
+          "state": {
+            "description": "Tim faces challenges in mentoring due to the different personalities of the players."
+          }
+        },
+        {
+          "name": "Tim's impact on players",
+          "type": "concept",
+          "state": {
+            "description": "Tim feels fulfilled watching the younger players develop and reach their goals."
+          }
+        },
+        {
+          "name": "Tim's role model status",
+          "type": "concept",
+          "state": {
+            "description": "Some younger players see Tim as a mentor, which he finds rewarding."
+          }
+        },
+        {
+          "name": "Tim's trust and admiration from players",
+          "type": "concept",
+          "state": {
+            "description": "Tim feels great to have the trust and admiration of the young athletes he mentors."
+          }
+        },
+        {
+          "name": "Tim's photo of sunset",
+          "type": "concept",
+          "state": {
+            "description": "Tim took a photo of a sunset over a mountain range last summer."
+          }
+        },
+        {
+          "name": "Tim's trip to Smoky Mountains",
+          "type": "concept",
+          "state": {
+            "description": "Tim visited the Smoky Mountains 2022 and found it incredible."
+          }
+        },
+        {
+          "name": "Tim's school balance",
+          "type": "concept",
+          "state": {
+            "description": "Tim is busy with studies but finds time to relax with books."
+          }
+        },
+        {
+          "name": "Tim's current reading",
+          "type": "concept",
+          "state": {
+            "description": "Tim is currently reading a book that he is totally hooked on."
+          }
+        },
+        {
+          "name": "John's school status",
+          "type": "concept",
+          "state": {
+            "description": "John is doing good in school, busy with studies but finding time to relax."
+          }
+        },
+        {
+          "name": "John's reading habits",
+          "type": "concept",
+          "state": {
+            "description": "John has been reading as usual, enjoying fantasy worlds and storylines"
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 12,
+    "total_entities": 177
+  },
+  {
+    "session_index": 14,
+    "session_id": "conv-43_session_14",
+    "input_chars": 6029,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 October 21, 2023 at 17:51]\nTim: Hey John! Haven't talked to you in a bit but wanted to let you know I read this awesome book about castles in the UK. It was so interesting and blew me away! I dream of visiting them one day.\nTim: Hey Tim! Great to hear from you. Learning about different cultures and seeing historical architecture fascinates me. Visiting castles is really on my bucket list. ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's book about castles",
+          "type": "concept",
+          "state": {
+            "description": "An awesome book about castles in the UK that Tim read."
+          }
+        },
+        {
+          "name": "Tim's dream of visiting castles",
+          "type": "concept",
+          "state": {
+            "description": "Tim dreams of visiting castles in the UK one day."
+          }
+        },
+        {
+          "name": "Tim's interest in historical architecture",
+          "type": "concept",
+          "state": {
+            "description": "Tim is fascinated by learning about different cultures and seeing historical architecture."
+          }
+        },
+        {
+          "name": "Tim's fantasy writing",
+          "type": "concept",
+          "state": {
+            "description": "Tim is in the middle of writing a fantasy novel."
+          }
+        },
+        {
+          "name": "Tim's writing inspiration",
+          "type": "concept",
+          "state": {
+            "description": "Tim's creativity is inspired by books, movies, and real-life experiences."
+          }
+        },
+        {
+          "name": "Tim's inspiration from J.K. Rowling",
+          "type": "concept",
+          "state": {
+            "description": "Tim finds J.K. Rowling's writing captivating and inspiring."
+          }
+        },
+        {
+          "name": "Tim's favorite J.K. Rowling quote",
+          "type": "concept",
+          "state": {
+            "description": "Tim's favorite quote is 'Turn on the light - happiness hides in the darkest of times.'"
+          }
+        },
+        {
+          "name": "Tim's motivational quotes on whiteboard",
+          "type": "concept",
+          "state": {
+            "description": "Tim wrote motivational quotes and strategies on a whiteboard to stay focused."
+          }
+        },
+        {
+          "name": "Tim's plaque reminder",
+          "type": "concept",
+          "state": {
+            "description": "Tim keeps a plaque on his desk as a reminder to believe in himself."
+          }
+        },
+        {
+          "name": "Tim's motivation during challenges",
+          "type": "concept",
+          "state": {
+            "description": "Tim is motivated by his teammates' belief in him and his desire to improve."
+          }
+        },
+        {
+          "name": "Tim's support network",
+          "type": "concept",
+          "state": {
+            "description": "Tim has a strong support network that includes friends and family."
+          }
+        },
+        {
+          "name": "Tim's family support",
+          "type": "concept",
+          "state": {
+            "description": "Tim's family is always there for him."
+          }
+        },
+        {
+          "name": "Tim's favorite activities with family",
+          "type": "concept",
+          "state": {
+            "description": "Tim enjoys movies, dinner out, road trips, hiking, and playing board games with family."
+          }
+        },
+        {
+          "name": "Tim's chill time",
+          "type": "concept",
+          "state": {
+            "description": "Tim enjoys cuddling up with a good book during his chill time."
+          }
+        },
+        {
+          "name": "Tim's cooking therapy",
+          "type": "concept",
+          "state": {
+            "description": "Tim finds cooking to be therapeutic and a way to be creative."
+          }
+        },
+        {
+          "name": "Tim's favorite recipe",
+          "type": "concept",
+          "state": {
+            "description": "Tim's favorite recipe is honey garlic chicken with roasted vegetables."
+          }
+        },
+        {
+          "name": "John's interest in historical architecture",
+          "type": "concept",
+          "state": {
+            "description": "John is fascinated by learning about different cultures and seeing historical architecture."
+          }
+        },
+        {
+          "name": "John's support for Tim",
+          "type": "concept",
+          "state": {
+            "description": "John supports Tim's writing and encourages him."
+          }
+        },
+        {
+          "name": "John's motivational quotes",
+          "type": "concept",
+          "state": {
+            "description": "John writes motivational quotes and strategies on a whiteboard."
+          }
+        },
+        {
+          "name": "John's supportive friends and family",
+          "type": "concept",
+          "state": {
+            "description": "John has friends and family who support him."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 22,
+    "entities_new": 19,
+    "total_entities": 196
+  },
+  {
+    "session_index": 15,
+    "session_id": "conv-43_session_15",
+    "input_chars": 3368,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 November 06, 2023 at 11:41]\nTim: Hey John, long time no see! Hope you've been doing well. Since we last chat, some stuff's happened. Last week, I had a huge writing issue - got stuck on a plot twist and couldn't find my way out. It was crazy frustrating, but I kept pushing and eventually got the ideas flowing again.\nTim: Hey Tim! Awesome to hear from you. Yeah, I get how that would've been",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's writing issue",
+          "type": "concept",
+          "state": {
+            "description": "Tim experienced a huge writing issue the week before November 06, 2023 where he got stuck on a plot twist."
+          }
+        },
+        {
+          "name": "Tim's basketball game",
+          "type": "concept",
+          "state": {
+            "description": "Tim had a memorable basketball game 2022 where his team was trailing in the 4th quarter but managed to overturn the deficit."
+          }
+        },
+        {
+          "name": "Tim's favorite player",
+          "type": "person",
+          "state": {
+            "description": "Tim's favorite player is LeBron James, who inspired him with an epic block in Game 7 of the '16 Finals."
+          }
+        },
+        {
+          "name": "Tim's European vacation",
+          "type": "concept",
+          "state": {
+            "description": "Tim and his wife are going on a short European vacation."
+          }
+        },
+        {
+          "name": "John's recommendation for castles",
+          "type": "concept",
+          "state": {
+            "description": "John recommended visiting castles in Europe as they are magical."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 7,
+    "entities_new": 4,
+    "total_entities": 200
+  },
+  {
+    "session_index": 16,
+    "session_id": "conv-43_session_16",
+    "input_chars": 2850,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 November 11, 2023 at 15:36]\nTim: Hey Tim! Great to chat again. So much has happened!\nTim: Hey John! Great chatting with you as always. What's been happening lately? I've been reading as usual.\n[Image: a photo of a book with a picture of a storm of swords]\nTim: My wife and I were road tripping out on the European coastline, and it was amazing! The views were spectacular, and we had lots of ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's wife",
+          "type": "person",
+          "state": {
+            "description": "Tim's spouse, accompanied him on a road trip along the European coastline"
+          }
+        },
+        {
+          "name": "Tim's road trip",
+          "type": "concept",
+          "state": {
+            "description": "Road trip along the European coastline with spectacular views and bonding experiences"
+          }
+        },
+        {
+          "name": "Tim's favorite fantasy series",
+          "type": "concept",
+          "state": {
+            "description": "Tim has read another popular fantasy series that he enjoys."
+          }
+        },
+        {
+          "name": "Tim's favorite fantasy show",
+          "type": "concept",
+          "state": {
+            "description": "A fantasy show that Tim enjoys, referred to as 'That'"
+          }
+        },
+        {
+          "name": "John's reading habits",
+          "type": "concept",
+          "state": {
+            "description": "John has been reading as usual, enjoying fantasy worlds and storylines"
+          }
+        },
+        {
+          "name": "Tim's mental break philosophy",
+          "type": "concept",
+          "state": {
+            "description": "Tim believes taking a break from life helps recharge and gain new perspectives"
+          }
+        },
+        {
+          "name": "Tim's balance philosophy",
+          "type": "concept",
+          "state": {
+            "description": "Tim emphasizes the importance of finding balance in life, both mentally and physically"
+          }
+        },
+        {
+          "name": "Tim's support for John",
+          "type": "concept",
+          "state": {
+            "description": "Tim expresses support for John's injury and wishes him a speedy recovery."
+          }
+        },
+        {
+          "name": "Tim's appreciation for nature",
+          "type": "concept",
+          "state": {
+            "description": "Tim finds nature powerful and beautiful, feeling humbled by its sights"
+          }
+        },
+        {
+          "name": "Tim's escape through books and movies",
+          "type": "concept",
+          "state": {
+            "description": "Tim enjoys how books and movies provide an escape from reality, allowing for mental breaks"
+          }
+        },
+        {
+          "name": "Tim's perspective on life's challenges",
+          "type": "concept",
+          "state": {
+            "description": "Tim believes taking time for oneself helps tackle life's challenges with a new outlook"
+          }
+        },
+        {
+          "name": "Tim's friendship with John",
+          "type": "person",
+          "state": {
+            "description": "Tim and John are friends who support each other."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 11,
+    "total_entities": 211
+  },
+  {
+    "session_index": 17,
+    "session_id": "conv-43_session_17",
+    "input_chars": 1929,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 November 16, 2023 at 15:59]\nTim: Hey John! Hope you're doing good. Guess what? I went to a castle during my trip to the UK last Friday and it was unbelievable! The architecture and the history were amazing!\n[Image: a photo of a castle with a river running through it]\nTim: Hey Tim! That's awesome! Yeah, it was really cool. Oh man, it's been a tough week for me with this injury. But I'm stay",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's trip to the UK",
+          "type": "concept",
+          "state": {
+            "description": "Tim went to a castle during his trip to the UK on November 10, 2023."
+          }
+        },
+        {
+          "name": "Tim's injury",
+          "type": "concept",
+          "state": {
+            "description": "Tim injured himself not long ago, causing him to miss some games."
+          }
+        },
+        {
+          "name": "Tim's exam preparation",
+          "type": "concept",
+          "state": {
+            "description": "Tim is swamped with exams and is putting in his best effort to prepare."
+          }
+        },
+        {
+          "name": "Tim's study technique",
+          "type": "concept",
+          "state": {
+            "description": "Tim breaks up his studying into smaller parts, studying for 25 minutes and then taking a 5-minute break."
+          }
+        },
+        {
+          "name": "John's injury",
+          "type": "concept",
+          "state": {
+            "description": "John has been dealing with an injury."
+          }
+        },
+        {
+          "name": "Tim's motivation technique",
+          "type": "concept",
+          "state": {
+            "description": "Tim visualizes his goals and success to stay focused and motivated during studying."
+          }
+        },
+        {
+          "name": "Tim's support for John",
+          "type": "concept",
+          "state": {
+            "description": "Tim expresses support for John's injury and wishes him a speedy recovery."
+          }
+        },
+        {
+          "name": "Tim's dislike for being off the court",
+          "type": "concept",
+          "state": {
+            "description": "Tim hates not being able to play on the court due to his injury."
+          }
+        },
+        {
+          "name": "Tim's optimism",
+          "type": "concept",
+          "state": {
+            "description": "Tim is feeling optimistic about his exam preparation."
+          }
+        },
+        {
+          "name": "Tim's friendship with John",
+          "type": "person",
+          "state": {
+            "description": "Tim and John are friends who support each other."
+          }
+        },
+        {
+          "name": "John's friendship with Tim",
+          "type": "person",
+          "state": {
+            "description": "John and Tim are friends who support each other."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 9,
+    "total_entities": 220
+  },
+  {
+    "session_index": 18,
+    "session_id": "conv-43_session_18",
+    "input_chars": 4815,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 November 21, 2023 at 10:22]\nTim: Hey John! Haven't talked in a bit, how ya been? Hope your injury is feeling better.\nTim: Hey Tim! Thanks for checking in. It's been tough, but I'm staying positive and taking it slow. How about you? How have you been?\nTim: I've been swamped with studies and projects, but last week I had a setback. I tried writing a story based on my experiences in the UK, b",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's studies",
+          "type": "concept",
+          "state": {
+            "description": "Working on studies while being part of the travel club."
+          }
+        },
+        {
+          "name": "Tim's setback with storytelling",
+          "type": "concept",
+          "state": {
+            "description": "Tim faced a setback while trying to write a story based on his experiences in the UK."
+          }
+        },
+        {
+          "name": "Tim's basketball challenge",
+          "type": "concept",
+          "state": {
+            "description": "Tim had a major challenge last season when he hurt his ankle, requiring time off and physical therapy."
+          }
+        },
+        {
+          "name": "Tim's recovery focus",
+          "type": "concept",
+          "state": {
+            "description": "Tim stayed focused on his recovery and worked hard to strengthen his body after his ankle injury."
+          }
+        },
+        {
+          "name": "Tim's passion for basketball",
+          "type": "concept",
+          "state": {
+            "description": "Basketball has been a significant part of Tim's life, allowing him to express himself and pursue his passions."
+          }
+        },
+        {
+          "name": "Tim's love for writing and reading",
+          "type": "concept",
+          "state": {
+            "description": "Tim's motivation comes from his love for writing and reading."
+          }
+        },
+        {
+          "name": "Tim's favorite book genre",
+          "type": "concept",
+          "state": {
+            "description": "Tim loves non-fiction books about personal development and mindset."
+          }
+        },
+        {
+          "name": "Tim's impact book",
+          "type": "concept",
+          "state": {
+            "description": "Tim recently read a book about how small changes can make big differences."
+          }
+        },
+        {
+          "name": "Tim's reread of 'The Alchemist'",
+          "type": "concept",
+          "state": {
+            "description": "Tim recently finished rereading 'The Alchemist', which inspired him to follow his dreams."
+          }
+        },
+        {
+          "name": "John's injury",
+          "type": "concept",
+          "state": {
+            "description": "John has been dealing with an injury."
+          }
+        },
+        {
+          "name": "John's basketball challenge",
+          "type": "concept",
+          "state": {
+            "description": "John faced tough times while playing basketball, including messing up during a big game."
+          }
+        },
+        {
+          "name": "John's favorite books",
+          "type": "concept",
+          "state": {
+            "description": "John's favorite books include Harry Potter and Game of Thrones."
+          }
+        },
+        {
+          "name": "John's reading interests",
+          "type": "concept",
+          "state": {
+            "description": "John enjoys reading fantasy stories and books on growth and psychology."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 15,
+    "entities_new": 12,
+    "total_entities": 232
+  },
+  {
+    "session_index": 19,
+    "session_id": "conv-43_session_19",
+    "input_chars": 5510,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 December 01, 2023 at 09:52]\nTim: Hey John! It's been ages since we last chatted. I had a tough exam last week that had me doubting myself. But instead of giving up, I turned it into a learning experience. I studied hard and it showed me how resilient and determined I can be. Here's a pic of my success \ud83d\udc4d\n[Image: a photo of a notepad with a note and pen on it]\nTim: Hi Tim! Congrats on your s",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's exam",
+          "type": "concept",
+          "state": {
+            "description": "Tim had a tough exam on November 24, 2023."
+          }
+        },
+        {
+          "name": "Tim's resilience",
+          "type": "concept",
+          "state": {
+            "description": "Tim turned his exam experience into a learning opportunity, showing resilience and determination."
+          }
+        },
+        {
+          "name": "Tim's yoga practice",
+          "type": "concept",
+          "state": {
+            "description": "Tim practices yoga to improve strength, flexibility, focus, and balance."
+          }
+        },
+        {
+          "name": "Tim's favorite yoga pose",
+          "type": "concept",
+          "state": {
+            "description": "Tim enjoys practicing Warrior II pose."
+          }
+        },
+        {
+          "name": "Tim's yoga pose duration",
+          "type": "concept",
+          "state": {
+            "description": "Tim typically holds his yoga poses for 30-60 seconds."
+          }
+        },
+        {
+          "name": "Tim's bookshelf",
+          "type": "concept",
+          "state": {
+            "description": "Tim has reorganized his bookshelf and has many favorite fantasy books."
+          }
+        },
+        {
+          "name": "Tim's favorite book",
+          "type": "concept",
+          "state": {
+            "description": "Tim's favorite book is The Hobbit."
+          }
+        },
+        {
+          "name": "Tim's favorite fantasy series",
+          "type": "concept",
+          "state": {
+            "description": "Tim has read another popular fantasy series that he enjoys."
+          }
+        },
+        {
+          "name": "Tim's hometown",
+          "type": "concept",
+          "state": {
+            "description": "Tim's photo of a tranquil forest is from near his hometown."
+          }
+        },
+        {
+          "name": "Tim's summer camping trip",
+          "type": "concept",
+          "state": {
+            "description": "Tim went camping last summer in the mountains."
+          }
+        },
+        {
+          "name": "Tim's favorite part of camping",
+          "type": "concept",
+          "state": {
+            "description": "Tim loved chilling and taking in the beauty of nature while camping."
+          }
+        },
+        {
+          "name": "Tim's Rocky Mountains trip",
+          "type": "concept",
+          "state": {
+            "description": "Tim's trip to the Rocky Mountains 2022 was stunning."
+          }
+        },
+        {
+          "name": "John's yoga practice",
+          "type": "concept",
+          "state": {
+            "description": "John is trying out yoga to gain strength and flexibility."
+          }
+        },
+        {
+          "name": "John's encouragement",
+          "type": "concept",
+          "state": {
+            "description": "John provides encouragement and support to Tim in pursuing his dreams."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 16,
+    "entities_new": 10,
+    "total_entities": 242
+  },
+  {
+    "session_index": 20,
+    "session_id": "conv-43_session_20",
+    "input_chars": 3533,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 December 06, 2023 at 17:34]\nTim: Hey John! Haven't talked in a few days, wanted to let you know I joined a travel club! Always been interested in different cultures and countries and I'm excited to check it out. Can't wait to meet new people and learn about what makes them unique!\n[Image: a photo of a map of westendell on a wall]\nTim: Hey Tim! That's cool! I love learning about different c",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's travel club membership",
+          "type": "concept",
+          "state": {
+            "description": "Joined a travel club to learn about different cultures and meet new people."
+          }
+        },
+        {
+          "name": "Tim's interest in cultures",
+          "type": "belief",
+          "state": {
+            "description": "Always been interested in different cultures and countries."
+          }
+        },
+        {
+          "name": "John's professional basketball career",
+          "type": "concept",
+          "state": {
+            "description": "Playing professional basketball for just under a year."
+          }
+        },
+        {
+          "name": "John's growth as a player",
+          "type": "concept",
+          "state": {
+            "description": "Improving overall game, securing endorsement deals, and learning to market himself."
+          }
+        },
+        {
+          "name": "Tim's studies",
+          "type": "concept",
+          "state": {
+            "description": "Working on studies while being part of the travel club."
+          }
+        },
+        {
+          "name": "Tim's new skill",
+          "type": "concept",
+          "state": {
+            "description": "Recently started learning to play the violin."
+          }
+        },
+        {
+          "name": "Tim's music genres",
+          "type": "belief",
+          "state": {
+            "description": "Mostly into classical music, keen to try jazz and film scores."
+          }
+        },
+        {
+          "name": "Tim's piano playing duration",
+          "type": "concept",
+          "state": {
+            "description": "Been playing the piano for about four months."
+          }
+        },
+        {
+          "name": "John's trophy achievement",
+          "type": "concept",
+          "state": {
+            "description": "Won a trophy, feeling great about the achievement after hard work."
+          }
+        },
+        {
+          "name": "John's motivational strategies",
+          "type": "concept",
+          "state": {
+            "description": "Motivating teammates by showing care, celebrating achievements, and providing constructive feedback."
+          }
+        },
+        {
+          "name": "Tim's appreciation for advice",
+          "type": "belief",
+          "state": {
+            "description": "Appreciates the advice on creating a constructive atmosphere and inspiring others."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 10,
+    "total_entities": 252
+  },
+  {
+    "session_index": 21,
+    "session_id": "conv-43_session_21",
+    "input_chars": 3226,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 December 08, 2023 at 19:42]\nTim: Hey John! Long time no see! I just got back from the coolest Harry Potter party. Met lots of awesome people who were into the same stuff as me, had so much fun!\nTim: Hey Tim! Sounds awesome! So glad you had a blast at the Harry Potter party. Last August I told you about my fun time at a charity event with Harry Potter trivia. Love being with people who are ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's Harry Potter party",
+          "type": "event",
+          "state": {
+            "description": "Tim attended a Harry Potter party where he met many people who share his interests."
+          }
+        },
+        {
+          "name": "Tim's Gryffindor scarf",
+          "type": "item",
+          "state": {
+            "description": "Tim wore a Gryffindor scarf to the Harry Potter party."
+          }
+        },
+        {
+          "name": "Tim's basketball team",
+          "type": "concept",
+          "state": {
+            "description": "Tim's basketball team has been playing wild games and recently won against a top team."
+          }
+        },
+        {
+          "name": "Tim's camaraderie",
+          "type": "concept",
+          "state": {
+            "description": "Tim values the camaraderie built with his basketball team both on and off the court."
+          }
+        },
+        {
+          "name": "Tim's current book",
+          "type": "item",
+          "state": {
+            "description": "Tim is currently reading 'Dune' by Frank Herbert."
+          }
+        },
+        {
+          "name": "Tim's last read",
+          "type": "item",
+          "state": {
+            "description": "Tim recently finished 'A Dance with Dragons' by George R. R. Martin."
+          }
+        },
+        {
+          "name": "John's charity event",
+          "type": "event",
+          "state": {
+            "description": "John attended a charity event with Harry Potter trivia last August."
+          }
+        },
+        {
+          "name": "John's basketball team",
+          "type": "concept",
+          "state": {
+            "description": "John's basketball team engages in team dinners, outings, and games to strengthen their unity."
+          }
+        },
+        {
+          "name": "John's current book",
+          "type": "item",
+          "state": {
+            "description": "John is reading a series about the power of friendship and loyalty."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 6,
+    "total_entities": 258
+  },
+  {
+    "session_index": 22,
+    "session_id": "conv-43_session_22",
+    "input_chars": 2755,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 December 11, 2023 at 20:28]\nTim: Hey Tim, great to see you! Any new success stories?\n[Image: a photo of two women standing next to a banner with sales pros written on it]\nTim: Hey John, I had a tough time with my English lit class. Did an analysis on this series and I think it went ok!\nTim: Thanks! It's a bummer about your English lit class, but you did your best. By the way, I had a caree",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's English lit class experience",
+          "type": "concept",
+          "state": {
+            "description": "Had a tough time with English lit class, did an analysis that went ok."
+          }
+        },
+        {
+          "name": "Tim's career-high assists",
+          "type": "concept",
+          "state": {
+            "description": "Achieved a career-high in assists on December 8, 2023, during a big game against a rival."
+          }
+        },
+        {
+          "name": "Tim's memorable game",
+          "type": "concept",
+          "state": {
+            "description": "Favorite game was when down 10 in the 4th quarter, hit a buzzer-beater shot to win."
+          }
+        },
+        {
+          "name": "Tim's childhood basketball practice",
+          "type": "concept",
+          "state": {
+            "description": "Practiced basketball outside for hours as a child, dreaming of playing in big games."
+          }
+        },
+        {
+          "name": "Tim's passion for basketball",
+          "type": "concept",
+          "state": {
+            "description": "Basketball has been a significant part of Tim's life, allowing him to express himself and pursue his passions."
+          }
+        },
+        {
+          "name": "John's encouragement",
+          "type": "person",
+          "state": {
+            "description": "John provides encouragement and support to Tim in pursuing his dreams."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 8,
+    "entities_new": 4,
+    "total_entities": 262
+  },
+  {
+    "session_index": 23,
+    "session_id": "conv-43_session_23",
+    "input_chars": 2621,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 December 16, 2023 at 15:37]\nTim: Hey John, catch up time! What've you been up to? Any good b-ball games lately?\nTim: Hey Tim! Nice to talk again. The b-ball games have been crazy. We had a real battle against another team last week. It was close until the final buzzer but we got the win.\n[Image: a photo of a group of women's basketball players holding up a trophy]\nTim: Congrats, John! That",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's basketball game",
+          "type": "concept",
+          "state": {
+            "description": "Tim's team won a close basketball game against another team on December 9, 2023."
+          }
+        },
+        {
+          "name": "Tim's injury",
+          "type": "concept",
+          "state": {
+            "description": "Tim injured himself not long ago, causing him to miss some games."
+          }
+        },
+        {
+          "name": "Tim's rehab routine",
+          "type": "concept",
+          "state": {
+            "description": "Tim does physical therapy exercises every day to aid his recovery."
+          }
+        },
+        {
+          "name": "Tim's milestone moment",
+          "type": "concept",
+          "state": {
+            "description": "On December 15, 2023, Tim was able to jog a bit with no pain."
+          }
+        },
+        {
+          "name": "Tim's get-together",
+          "type": "concept",
+          "state": {
+            "description": "Tim hosted a small get-together with friends and family to celebrate his recovery."
+          }
+        },
+        {
+          "name": "John's basketball game",
+          "type": "concept",
+          "state": {
+            "description": "John's basketball games have been intense, with a recent close win."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 8,
+    "entities_new": 4,
+    "total_entities": 266
+  },
+  {
+    "session_index": 24,
+    "session_id": "conv-43_session_24",
+    "input_chars": 2459,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 December 19, 2023 at 10:04]\nTim: Hey John, been a while since we chatted. How's it going?\nTim: Yo Tim! Great to hear from you. Things have been wild! Last week I got this amazing deal with a renowned outdoor gear company. So pumped!\n[Image: a photography of a man with a backpack and a backpack walking down a path]\nTim: That's awesome about the deal! I'm curious, what kind of gear did you e",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's outdoor gear deal",
+          "type": "concept",
+          "state": {
+            "description": "Tim got an amazing deal with a renowned outdoor gear company."
+          }
+        },
+        {
+          "name": "Tim's hiking gear",
+          "type": "concept",
+          "state": {
+            "description": "Tim received awesome hiking stuff and outdoor gear."
+          }
+        },
+        {
+          "name": "Tim's photoshoot location",
+          "type": "concept",
+          "state": {
+            "description": "The photoshoot took place in a gorgeous forest."
+          }
+        },
+        {
+          "name": "Tim's photoshoot outcome",
+          "type": "concept",
+          "state": {
+            "description": "The photoshoot went really well with epic shots."
+          }
+        },
+        {
+          "name": "Tim's mood in nature",
+          "type": "concept",
+          "state": {
+            "description": "Nature puts Tim in a great mood and energizes him."
+          }
+        },
+        {
+          "name": "Tim's favorite hiking spot",
+          "type": "concept",
+          "state": {
+            "description": "Tim stumbled across a peaceful spot while hiking, drawn by the soothing sound of the river."
+          }
+        },
+        {
+          "name": "Tim's recent court performance",
+          "type": "concept",
+          "state": {
+            "description": "Tim's team has been putting in a lot of work and achieving their goals."
+          }
+        },
+        {
+          "name": "Tim's last scrimmage",
+          "type": "concept",
+          "state": {
+            "description": "Tim's team gave it their all during the week before December 19, 2023's scrimmage."
+          }
+        },
+        {
+          "name": "Tim's team growth areas",
+          "type": "concept",
+          "state": {
+            "description": "The most growth in Tim's team has been in communication and bonding."
+          }
+        },
+        {
+          "name": "John's support for Tim",
+          "type": "person",
+          "state": {
+            "description": "John expresses support for Tim and encourages him to believe in himself."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 9,
+    "total_entities": 275
+  },
+  {
+    "session_index": 25,
+    "session_id": "conv-43_session_25",
+    "input_chars": 5512,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 December 26, 2023 at 15:35]\nTim: Hey Tim! Great to hear from you. My week's been busy - I started doing seminars, helping people with their sports and marketing. It's been awesome!\n[Image: a photo of a basketball court with a crowd of people watching]\nTim: Hey John! Sounds awesome! Congrats on how far you've come. How did it go?\nTim: Thanks! The seminars went really well. All the aspiring ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's seminars",
+          "type": "concept",
+          "state": {
+            "description": "Tim started doing seminars to help people with sports and marketing."
+          }
+        },
+        {
+          "name": "Tim's reading",
+          "type": "concept",
+          "state": {
+            "description": "Tim has been reading stories from travelers to plan his next adventure."
+          }
+        },
+        {
+          "name": "Tim's adventure book",
+          "type": "concept",
+          "state": {
+            "description": "Tim found a book with tons of travel stories."
+          }
+        },
+        {
+          "name": "Tim's Himalayas trek story",
+          "type": "concept",
+          "state": {
+            "description": "Tim read a story about two hikers who trekked through the Himalayas."
+          }
+        },
+        {
+          "name": "Tim's travel agency visit",
+          "type": "concept",
+          "state": {
+            "description": "Tim visited a travel agency to see the requirements for his next dream trip."
+          }
+        },
+        {
+          "name": "Tim's support for gender equality",
+          "type": "concept",
+          "state": {
+            "description": "Tim is a huge fan of Emma Watson, who supports gender equality."
+          }
+        },
+        {
+          "name": "Tim's advocacy inspiration",
+          "type": "concept",
+          "state": {
+            "description": "Tim is inspired by Emma Watson's women's rights advocacy."
+          }
+        },
+        {
+          "name": "Tim's charity event",
+          "type": "concept",
+          "state": {
+            "description": "Tim spoke at a charity event to support causes he believes in."
+          }
+        },
+        {
+          "name": "Tim's youth sports support",
+          "type": "concept",
+          "state": {
+            "description": "Tim supports youth sports and fights for fair chances in sports for underserved communities."
+          }
+        },
+        {
+          "name": "Tim's basketball camp",
+          "type": "concept",
+          "state": {
+            "description": "Tim organized a basketball camp for kids in his hometown last summer."
+          }
+        },
+        {
+          "name": "Tim's favorite books",
+          "type": "concept",
+          "state": {
+            "description": "Tim loves to read good books, with a favorite series being Harry Potter."
+          }
+        },
+        {
+          "name": "Tim's movie fandom",
+          "type": "concept",
+          "state": {
+            "description": "Tim is a fan of the Harry Potter movies and enjoys watching them."
+          }
+        },
+        {
+          "name": "Tim's movie marathons",
+          "type": "concept",
+          "state": {
+            "description": "Tim enjoys having movie marathons with friends."
+          }
+        },
+        {
+          "name": "Tim's favorite movie genre",
+          "type": "concept",
+          "state": {
+            "description": "Tim is a huge fan of epic adventures and magical worlds."
+          }
+        },
+        {
+          "name": "Tim's favorite movie",
+          "type": "concept",
+          "state": {
+            "description": "Tim's favorite movie is Lord of the Rings."
+          }
+        },
+        {
+          "name": "Tim's excitement for new fantasy series",
+          "type": "concept",
+          "state": {
+            "description": "Tim is excited about a new fantasy TV series coming out January 2024."
+          }
+        },
+        {
+          "name": "Tim's favorite new show",
+          "type": "concept",
+          "state": {
+            "description": "Tim is excited to watch 'The Wheel of Time', based on a book series he loves."
+          }
+        },
+        {
+          "name": "John's seminars",
+          "type": "concept",
+          "state": {
+            "description": "John has been doing seminars and has made significant progress."
+          }
+        },
+        {
+          "name": "John's travel ideas",
+          "type": "concept",
+          "state": {
+            "description": "John is looking for travel ideas and has read some stories."
+          }
+        },
+        {
+          "name": "John's movie watching",
+          "type": "concept",
+          "state": {
+            "description": "John enjoys watching movies and comparing them to the books."
+          }
+        },
+        {
+          "name": "John's movie genre preference",
+          "type": "concept",
+          "state": {
+            "description": "John enjoys epic adventures and magical worlds."
+          }
+        },
+        {
+          "name": "John's favorite series",
+          "type": "concept",
+          "state": {
+            "description": "John is a fan of the Harry Potter series."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 24,
+    "entities_new": 20,
+    "total_entities": 295
+  },
+  {
+    "session_index": 26,
+    "session_id": "conv-43_session_26",
+    "input_chars": 6029,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 January 02, 2024 at 17:26]\nTim: Hi John, how's it going? Interesting things have happened since we last talked - I joined a group of globetrotters who are into the same stuff as me. It's been awesome getting to know them and hear about their trips.\n[Image: a photo of a man standing on a fence in front of a leaning tower]\nTim: Hey Tim! Cool to hear about your globetrotting group! Must be gr",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's globetrotting group",
+          "type": "concept",
+          "state": {
+            "description": "Joined a group of globetrotters who share similar interests in travel."
+          }
+        },
+        {
+          "name": "John's trip to Italy",
+          "type": "event",
+          "state": {
+            "description": "Visited Italy in December 2023 and enjoyed the food, history, and architecture."
+          }
+        },
+        {
+          "name": "Tim's language studies",
+          "type": "concept",
+          "state": {
+            "description": "Learning German, finds it tough but fun."
+          }
+        },
+        {
+          "name": "John's language studies",
+          "type": "concept",
+          "state": {
+            "description": "Knows a bit of German and Spanish, finds it helpful for travel."
+          }
+        },
+        {
+          "name": "Tim's favorite book",
+          "type": "concept",
+          "state": {
+            "description": "Harry Potter is his favorite book, known for its immersive world."
+          }
+        },
+        {
+          "name": "John's favorite fantasy movie",
+          "type": "concept",
+          "state": {
+            "description": "Lord of the Rings is his favorite fantasy film, appreciates the adventure and characters."
+          }
+        },
+        {
+          "name": "Tim's favorite fantasy movie",
+          "type": "concept",
+          "state": {
+            "description": "Star Wars is his favorite fantasy film, finds it timeless."
+          }
+        },
+        {
+          "name": "Tim's favorite character from LOTR",
+          "type": "concept",
+          "state": {
+            "description": "Aragorn, admires his growth and leadership."
+          }
+        },
+        {
+          "name": "Tim's painting inspiration",
+          "type": "concept",
+          "state": {
+            "description": "A painting of Aragorn in his room serves as a reminder to be a leader."
+          }
+        },
+        {
+          "name": "Tim's map of Middle-earth",
+          "type": "concept",
+          "state": {
+            "description": "A map from LOTR that helps him explore different realms."
+          }
+        },
+        {
+          "name": "Tim's travel preference",
+          "type": "concept",
+          "state": {
+            "description": "Loves traveling as a way to learn about different cultures."
+          }
+        },
+        {
+          "name": "John's travel preference",
+          "type": "concept",
+          "state": {
+            "description": "Enjoys traveling and appreciates iconic landmarks like the Eiffel Tower."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 11,
+    "total_entities": 306
+  },
+  {
+    "session_index": 27,
+    "session_id": "conv-43_session_27",
+    "input_chars": 2128,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 January 07, 2024 at 17:24]\nTim: Hey John, long time no talk. On Friday, I got great news - I'm finally in the study abroad program I applied for! Next month, I'm off to Ireland for a semester.\nTim: Congrats, Tim! That's amazing news. So, where are you going to stay?\nTim: Thanks! I'm gonna stay in Galway, it's great for its arts and Irish music. This place has such a vibrant atmosphere.\n[Im",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's study abroad program",
+          "type": "concept",
+          "state": {
+            "description": "Tim is in the study abroad program he applied for, starting in February 2024."
+          }
+        },
+        {
+          "name": "Tim's destination for study abroad",
+          "type": "concept",
+          "state": {
+            "description": "Tim is going to Galway, Ireland for a semester."
+          }
+        },
+        {
+          "name": "Tim's interest in Irish music",
+          "type": "concept",
+          "state": {
+            "description": "Tim is excited about the vibrant atmosphere in Galway, known for its arts and Irish music."
+          }
+        },
+        {
+          "name": "Tim's exploration plans",
+          "type": "concept",
+          "state": {
+            "description": "Tim is excited to explore nature while in Galway."
+          }
+        },
+        {
+          "name": "Tim's visit to The Cliffs of Moher",
+          "type": "concept",
+          "state": {
+            "description": "Tim wants to visit The Cliffs of Moher for its amazing ocean views and cliffs."
+          }
+        },
+        {
+          "name": "Tim's benefit basketball game",
+          "type": "event",
+          "state": {
+            "description": "Tim held a benefit basketball game on December 31, 2023."
+          }
+        },
+        {
+          "name": "Tim's basketball game success",
+          "type": "concept",
+          "state": {
+            "description": "The benefit basketball game was a total success, raising money for charity."
+          }
+        },
+        {
+          "name": "Tim's current book",
+          "type": "concept",
+          "state": {
+            "description": "Tim is currently reading 'The Name of the Wind' by Patrick Rothfuss."
+          }
+        },
+        {
+          "name": "John's interest in Tim's book",
+          "type": "concept",
+          "state": {
+            "description": "John is interested in reading 'The Name of the Wind' after Tim's recommendation."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 8,
+    "total_entities": 314
+  },
+  {
+    "session_index": 28,
+    "session_id": "conv-43_session_28",
+    "input_chars": 2284,
+    "input_preview": "[Speakers: Tim and John]\nUse their FULL NAMES (Tim, John) in entity names, never abbreviations.\n\n[Session \u2014 January 12, 2024 at 13:41]\nTim: Hey John! How's it going? Hope all is good.\nTim: Hey Tim! Things have been good. Something exciting happened recently for me. What about you? How's everything going?\nTim: Cool news! I'm trying to get my head around the visa requirements for some places I want to visit. It's kind of overwhelming but I'm excited! What have you been up to?\nTim: Last week was wi",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Tim's visa research",
+          "type": "concept",
+          "state": {
+            "description": "Researching visa requirements for countries Tim wants to visit."
+          }
+        },
+        {
+          "name": "Tim's endorsement deal",
+          "type": "concept",
+          "state": {
+            "description": "Received an endorsement with a popular beverage company."
+          }
+        },
+        {
+          "name": "Tim's sense of accomplishment",
+          "type": "concept",
+          "state": {
+            "description": "Feeling that hard work paid off after signing the endorsement deal."
+          }
+        },
+        {
+          "name": "Tim's travel dreams",
+          "type": "concept",
+          "state": {
+            "description": "Taking initiative towards making travel dreams a reality."
+          }
+        },
+        {
+          "name": "Tim's travel recommendation",
+          "type": "concept",
+          "state": {
+            "description": "Recommends Barcelona as a must-visit city."
+          }
+        },
+        {
+          "name": "John's excitement",
+          "type": "concept",
+          "state": {
+            "description": "Excited about Tim's future adventures."
+          }
+        },
+        {
+          "name": "John's gratitude",
+          "type": "concept",
+          "state": {
+            "description": "Thanks Tim for the travel suggestion."
+          }
+        },
+        {
+          "name": "Tim",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 9,
+    "entities_new": 7,
+    "total_entities": 321
+  }
+]

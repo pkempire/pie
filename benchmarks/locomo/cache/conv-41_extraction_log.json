@@ -1,0 +1,3214 @@
+[
+  {
+    "session_index": 0,
+    "session_id": "conv-41_session_0",
+    "input_chars": 2078,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 December 17, 2022 at 11:01]\nJohn: Hey John! Long time no see! What's up?\nJohn: Hey Maria! Good to see you. Just got back from a family road trip yesterday, it was fun! Anything exciting happening for you?\nJohn: Been busy volunteering at the homeless shelter and keeping fit. Just started doing aerial yoga, it's great. Have you tried any other cool workout classes?\nJohn: Woah, Maria, tha",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's family road trip",
+          "type": "concept",
+          "state": {
+            "description": "Family road trip to Oregon when John was younger"
+          }
+        },
+        {
+          "name": "John's volunteering",
+          "type": "concept",
+          "state": {
+            "description": "John is volunteering as a mentor for a local school."
+          }
+        },
+        {
+          "name": "John's aerial yoga",
+          "type": "concept",
+          "state": {
+            "description": "Enjoys aerial yoga as a way to switch off and focus on his body"
+          }
+        },
+        {
+          "name": "John's kickboxing",
+          "type": "concept",
+          "state": {
+            "description": "Doing kickboxing, it's giving him a lot of energy."
+          }
+        },
+        {
+          "name": "John's political aspirations",
+          "type": "concept",
+          "state": {
+            "description": "John decided to run for office again to make a difference in his community."
+          }
+        },
+        {
+          "name": "John's political focus",
+          "type": "concept",
+          "state": {
+            "description": "Passionate about improving education and infrastructure in the community."
+          }
+        },
+        {
+          "name": "John's childhood experience",
+          "type": "concept",
+          "state": {
+            "description": "Saw how lack of education and crumbling infrastructure affected his neighborhood growing up."
+          }
+        },
+        {
+          "name": "John's school funding initiative",
+          "type": "concept",
+          "state": {
+            "description": "Believes schools and infrastructure should be funded properly."
+          }
+        },
+        {
+          "name": "John's next move in politics",
+          "type": "concept",
+          "state": {
+            "description": "Planning to chat with local leaders and organizations to gather support and ideas."
+          }
+        },
+        {
+          "name": "Maria's encouragement",
+          "type": "person",
+          "state": {
+            "description": "Maria encourages John to explore organizations that align with his beliefs."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 12,
+    "total_entities": 12
+  },
+  {
+    "session_index": 1,
+    "session_id": "conv-41_session_1",
+    "input_chars": 4372,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 December 22, 2022 at 18:10]\nJohn: Hey John, been a few days since we chatted. In the meantime, I donated my old car to a homeless shelter I volunteer at yesterday. How's the campaign going? I'm keen to hearabout it.\nJohn: Hi Maria! It's been an interesting ride so far. I've been networking with some people to get their input.\nJohn: That's awesome, John! Networking is great for gaining ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's old car donation",
+          "type": "concept",
+          "state": {
+            "description": "Donated old car to a homeless shelter he volunteers at on December 21, 2022"
+          }
+        },
+        {
+          "name": "John's networking efforts",
+          "type": "concept",
+          "state": {
+            "description": "Networking with people to gain input for a campaign"
+          }
+        },
+        {
+          "name": "John's passion for education",
+          "type": "concept",
+          "state": {
+            "description": "Motivated to make education better in his area after hearing inspiring stories"
+          }
+        },
+        {
+          "name": "John's family support",
+          "type": "concept",
+          "state": {
+            "description": "John's family has been his rock, providing encouragement and reminding him he's not alone."
+          }
+        },
+        {
+          "name": "John's family activities",
+          "type": "concept",
+          "state": {
+            "description": "John's family enjoys outdoor activities, board games, and movie nights."
+          }
+        },
+        {
+          "name": "Maria's family activities",
+          "type": "concept",
+          "state": {
+            "description": "Spends time with friends watching movies, hiking, and having game nights"
+          }
+        },
+        {
+          "name": "John's family dinner",
+          "type": "concept",
+          "state": {
+            "description": "Had a fun dinner with family, making pizzas together"
+          }
+        },
+        {
+          "name": "Maria's peach cobbler",
+          "type": "concept",
+          "state": {
+            "description": "Made peach cobbler recently"
+          }
+        },
+        {
+          "name": "John's taekwondo practice",
+          "type": "concept",
+          "state": {
+            "description": "Going off to do taekwondo"
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 9,
+    "total_entities": 21
+  },
+  {
+    "session_index": 2,
+    "session_id": "conv-41_session_2",
+    "input_chars": 3049,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 January 01, 2023 at 20:30]\nJohn: Hey Maria, great to chat again! I joined a service-focused online group last week and it's been an emotional ride. Everyone there is incredible with their own inspiring stories. They've opened my eyes to new perspectives, and I'm feeling a sense of connection and purpose with them.\n[Image: a photo of a man sitting on a bed using a laptop]\nJohn: Wow, Joh",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's online group",
+          "type": "concept",
+          "state": {
+            "description": "Joined a service-focused online group that has been an emotional ride."
+          }
+        },
+        {
+          "name": "John's community experience",
+          "type": "concept",
+          "state": {
+            "description": "Feeling a sense of connection and purpose with the group."
+          }
+        },
+        {
+          "name": "John's community events",
+          "type": "concept",
+          "state": {
+            "description": "Held events including visiting a homeless shelter to give out food and supplies."
+          }
+        },
+        {
+          "name": "John's toy drive",
+          "type": "concept",
+          "state": {
+            "description": "Organized a toy drive for kids in need."
+          }
+        },
+        {
+          "name": "John's future projects",
+          "type": "concept",
+          "state": {
+            "description": "Brainstorming projects to help underserved communities with education, mentorship, job training, and resume building."
+          }
+        },
+        {
+          "name": "John's military aptitude test",
+          "type": "concept",
+          "state": {
+            "description": "failed"
+          }
+        },
+        {
+          "name": "John's beach photo",
+          "type": "concept",
+          "state": {
+            "description": "Took a photo at the beach December 2022 while watching the sunset."
+          }
+        },
+        {
+          "name": "Maria's support",
+          "type": "person",
+          "state": {
+            "description": "Maria provides emotional support to John during his job search."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [
+        {
+          "entity_name": "John's military aptitude test",
+          "what_changed": "status",
+          "old_state": "passed",
+          "new_state": "failed",
+          "is_contradiction": true
+        }
+      ],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 8,
+    "total_entities": 29
+  },
+  {
+    "session_index": 3,
+    "session_id": "conv-41_session_3",
+    "input_chars": 3513,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 January 09, 2023 at 19:06]\nJohn: Hey John, great news - I'm now friends with one of my fellow volunteers! We both love helping others. How have you been since we last chatted?\nJohn: Hey Maria, I've been busy with work and family, but last week I had an unexpected incident on my way home. It reminded me how life can throw unexpected troubles our way.\n[Image: a photo of a car with a brok",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's friendship with fellow volunteer",
+          "type": "concept",
+          "state": {
+            "description": "John is now friends with one of his fellow volunteers, and they both love helping others."
+          }
+        },
+        {
+          "name": "John's unexpected incident",
+          "type": "concept",
+          "state": {
+            "description": "John had an unexpected incident on his way home the week before January 09, 2023."
+          }
+        },
+        {
+          "name": "John's resilience",
+          "type": "concept",
+          "state": {
+            "description": "John felt relieved and grateful to make it through the incident without further issues."
+          }
+        },
+        {
+          "name": "John's calming activity",
+          "type": "concept",
+          "state": {
+            "description": "John likes to look at the sunset to calm down during tough times."
+          }
+        },
+        {
+          "name": "John's political goals",
+          "type": "concept",
+          "state": {
+            "description": "John has been looking into local politics, talking to community leaders, and understanding the needs of the neighborhood."
+          }
+        },
+        {
+          "name": "John's community meeting",
+          "type": "concept",
+          "state": {
+            "description": "John is getting people together to discuss potential solutions for the flood impact."
+          }
+        },
+        {
+          "name": "Maria's support for John",
+          "type": "concept",
+          "state": {
+            "description": "Expresses admiration for John's perseverance and achievements."
+          }
+        },
+        {
+          "name": "Maria's notes on local politics",
+          "type": "concept",
+          "state": {
+            "description": "Maria has been taking notes about local politics in her notebook."
+          }
+        },
+        {
+          "name": "John's gratitude towards Maria",
+          "type": "concept",
+          "state": {
+            "description": "John thanks Maria for her support and ideas for the community."
+          }
+        },
+        {
+          "name": "John's teamwork with Maria",
+          "type": "concept",
+          "state": {
+            "description": "John and Maria agree that working together can bring positive changes to the neighborhood."
+          }
+        },
+        {
+          "name": "John's appreciation for teamwork",
+          "type": "concept",
+          "state": {
+            "description": "John appreciates the support and teamwork in their efforts."
+          }
+        },
+        {
+          "name": "Maria's role as a supportive friend",
+          "type": "concept",
+          "state": {
+            "description": "Maria enjoys helping John and feels they make a great team."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 12,
+    "total_entities": 41
+  },
+  {
+    "session_index": 4,
+    "session_id": "conv-41_session_4",
+    "input_chars": 3250,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 January 28, 2023 at 13:17]\nJohn: Hey Maria, since we last spoke I went to that community mtg. It was really interesting hearing everyone's worries and how it affects our area. It made me realize how crucial the upgrades are, especially for the kids. I'm really upset seeing the state of our education. How do you think we can make things better?\n[Image: a photo of a wooden floor with a w",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's community meeting experience",
+          "type": "concept",
+          "state": {
+            "description": "Attended a community meeting that highlighted concerns affecting the area, particularly regarding education."
+          }
+        },
+        {
+          "name": "John's view on education",
+          "type": "belief",
+          "state": {
+            "description": "Believes education is crucial for a successful society and is upset about the state of education."
+          }
+        },
+        {
+          "name": "John's volunteering experience",
+          "type": "concept",
+          "state": {
+            "description": "Volunteered at a homeless shelter and received a medal for his efforts."
+          }
+        },
+        {
+          "name": "John's aunt's influence",
+          "type": "person",
+          "state": {
+            "description": "John's aunt inspired him to volunteer, as she believed in helping others."
+          }
+        },
+        {
+          "name": "John's impactful moment with a child",
+          "type": "concept",
+          "state": {
+            "description": "Had a touching moment with a lonely 8-year-old girl at the shelter, providing her comfort and companionship."
+          }
+        },
+        {
+          "name": "John's childhood doll",
+          "type": "concept",
+          "state": {
+            "description": "Remembers having a doll in childhood that provided comfort, reminding him to look out for others."
+          }
+        },
+        {
+          "name": "Maria's view on education",
+          "type": "belief",
+          "state": {
+            "description": "Agrees with John that the state of education is sad and advocates for more funding and resources for schools."
+          }
+        },
+        {
+          "name": "Maria's volunteering impact",
+          "type": "concept",
+          "state": {
+            "description": "Maria feels blessed to know the people at the shelter and sees them as family."
+          }
+        },
+        {
+          "name": "Maria's support for kindness",
+          "type": "belief",
+          "state": {
+            "description": "Believes in the importance of spreading kindness and support to make a difference."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 9,
+    "total_entities": 50
+  },
+  {
+    "session_index": 5,
+    "session_id": "conv-41_session_5",
+    "input_chars": 4092,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 February 05, 2023 at 14:33]\nJohn: Hey John! Long time no talk. I just wanted to let you know I challenged myself last Friday and did a charity event. It was great! I truly felt the power of our collective effort to help people in need, so heartwarming.\nJohn: Wow, Maria! Truly inspiring! It's so cool to see how our community can make a difference. How did it feel to be part of that even",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's charity event",
+          "type": "concept",
+          "state": {
+            "description": "Participated in a charity event on February 3, 2023, serving meals and helping people in need."
+          }
+        },
+        {
+          "name": "Maria's charity event",
+          "type": "concept",
+          "state": {
+            "description": "Organized a charity event that involved serving meals and connecting with individuals in need."
+          }
+        },
+        {
+          "name": "John's motivation for politics",
+          "type": "belief",
+          "state": {
+            "description": "Strong urge to serve his country and community, running for office to make an impact."
+          }
+        },
+        {
+          "name": "David's story",
+          "type": "concept",
+          "state": {
+            "description": "Had a conversation with David at the charity event, learning about his hardships."
+          }
+        },
+        {
+          "name": "John's support for David",
+          "type": "concept",
+          "state": {
+            "description": "Linked David with a nearby organization that offers housing and support for homeless individuals."
+          }
+        },
+        {
+          "name": "Maria's childhood money problems",
+          "type": "concept",
+          "state": {
+            "description": "Experienced money problems in childhood and had to rely on help from her aunt."
+          }
+        },
+        {
+          "name": "John's food drive involvement",
+          "type": "concept",
+          "state": {
+            "description": "Started helping out with a food drive for individuals who lost their jobs."
+          }
+        },
+        {
+          "name": "John's inspiration for food drive",
+          "type": "belief",
+          "state": {
+            "description": "Inspired to act after seeing the effect of unemployment on neighbors."
+          }
+        },
+        {
+          "name": "Maria's response to John's food drive",
+          "type": "concept",
+          "state": {
+            "description": "Expressed interest in helping with networking or future events related to the food drive."
+          }
+        },
+        {
+          "name": "John's appreciation for Maria's support",
+          "type": "concept",
+          "state": {
+            "description": "Expressed gratitude for Maria's friendship and support."
+          }
+        },
+        {
+          "name": "Maria's friendship with John",
+          "type": "concept",
+          "state": {
+            "description": "Considers John a great friend and is always there for him."
+          }
+        },
+        {
+          "name": "John's community food drive",
+          "type": "concept",
+          "state": {
+            "description": "Initiated a community food drive to help those affected by unemployment."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 12,
+    "total_entities": 62
+  },
+  {
+    "session_index": 6,
+    "session_id": "conv-41_session_6",
+    "input_chars": 2828,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 February 25, 2023 at 20:55]\nJohn: Hey John, how's it going? Just wanted to give you the heads up on what's been happening lately- I took a creative writing class recently, and it was super enlightening!\nJohn: Hey Maria! Wanted to let you know that I'm running for office again. It's been a wild ride, but I'm more excited than ever! How have you been?\n[Image: a photo of a crowd of people",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's creative writing class",
+          "type": "concept",
+          "state": {
+            "description": "Recently took a creative writing class that was enlightening"
+          }
+        },
+        {
+          "name": "John's political campaign",
+          "type": "concept",
+          "state": {
+            "description": "Running for office again, excited about the opportunity to make a positive impact"
+          }
+        },
+        {
+          "name": "John's volunteering",
+          "type": "concept",
+          "state": {
+            "description": "Volunteering at a homeless shelter, finding it rewarding"
+          }
+        },
+        {
+          "name": "John's inspiration from Jean",
+          "type": "concept",
+          "state": {
+            "description": "Met a woman named Jean while volunteering, who remained optimistic despite her struggles"
+          }
+        },
+        {
+          "name": "Jean's struggles",
+          "type": "concept",
+          "state": {
+            "description": "Went through a divorce, lost her job, and became homeless, yet values kindness and gratitude"
+          }
+        },
+        {
+          "name": "Maria's volunteering",
+          "type": "concept",
+          "state": {
+            "description": "Volunteered at the shelter front desk, helping people receive food and beds"
+          }
+        },
+        {
+          "name": "John's colleague Rob",
+          "type": "person",
+          "state": {
+            "description": "Invited John to a beginner's yoga class"
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 9,
+    "entities_new": 6,
+    "total_entities": 68
+  },
+  {
+    "session_index": 7,
+    "session_id": "conv-41_session_7",
+    "input_chars": 4367,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 March 06, 2023 at 18:03]\nJohn: Hey John, I haven't talked to you in a while. Last week, my grandma passed away and it's been really hard. I'm trying to stay positive, but it's tough. How're you doing?\n[Image: a photo of a bride and groom walking down the street]\nJohn: So sorry to hear about your loss, Maria. I'm here for you if you need anything. I'm doing well, I just had a picnic wit",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's grandma",
+          "type": "person",
+          "state": {
+            "description": "John's grandmother passed away the week before March 06, 2023, which has been hard for him."
+          }
+        },
+        {
+          "name": "John's family",
+          "type": "concept",
+          "state": {
+            "description": "John's family includes him, his wife, and their kids."
+          }
+        },
+        {
+          "name": "John's son Kyle",
+          "type": "person",
+          "state": {
+            "description": "John's one-year-old son, named Kyle."
+          }
+        },
+        {
+          "name": "John's parenting experience",
+          "type": "concept",
+          "state": {
+            "description": "John describes parenting as a wild ride full of ups and downs, but the love and happiness outweigh it all."
+          }
+        },
+        {
+          "name": "John's park visits",
+          "type": "concept",
+          "state": {
+            "description": "John takes his kids to the park a few times a week for family bonding."
+          }
+        },
+        {
+          "name": "John's family activities",
+          "type": "concept",
+          "state": {
+            "description": "John enjoys coming up with activities for his family, like walks, picnics, and finding events."
+          }
+        },
+        {
+          "name": "John's violin concert",
+          "type": "concept",
+          "state": {
+            "description": "John found a violin concert the week before March 06, 2023 that his family enjoyed."
+          }
+        },
+        {
+          "name": "John's trip to England",
+          "type": "concept",
+          "state": {
+            "description": "John was mesmerized by the castles during his trip to England a few years ago."
+          }
+        },
+        {
+          "name": "John's painting",
+          "type": "concept",
+          "state": {
+            "description": "John made a painting inspired by the castles he saw in England."
+          }
+        },
+        {
+          "name": "John's aptitude test",
+          "type": "concept",
+          "state": {
+            "description": "John retook the aptitude test the week before March 06, 2023 with great results."
+          }
+        },
+        {
+          "name": "John's desire to serve",
+          "type": "concept",
+          "state": {
+            "description": "John feels drawn to serve his country."
+          }
+        },
+        {
+          "name": "John's support system",
+          "type": "concept",
+          "state": {
+            "description": "John relies on friends and family for support during tough times."
+          }
+        },
+        {
+          "name": "Maria's volunteering",
+          "type": "concept",
+          "state": {
+            "description": "Maria volunteers at a homeless shelter and has built connections there."
+          }
+        },
+        {
+          "name": "Maria's approach to connections",
+          "type": "concept",
+          "state": {
+            "description": "Maria builds connections by listening and showing compassion."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 16,
+    "entities_new": 12,
+    "total_entities": 80
+  },
+  {
+    "session_index": 8,
+    "session_id": "conv-41_session_8",
+    "input_chars": 2850,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 April 02, 2023 at 09:36]\nJohn: Hey John, long time no see! I've been taking a poetry class lately to help me put my feelings into words. It's been a rough ride, but it's been good. How have you been?\nJohn: Hey Maria! Awesome to hear from you. Sounds like a great way to delve into your feelings. Since we spoke last, I've had quite the adventure!\n\n[Image: a photo of a certificate of comp",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's poetry class",
+          "type": "concept",
+          "state": {
+            "description": "John has been taking a poetry class to help express his feelings."
+          }
+        },
+        {
+          "name": "John's degree completion",
+          "type": "concept",
+          "state": {
+            "description": "John graduated from his degree program on March 26, 2023."
+          }
+        },
+        {
+          "name": "John's future plans",
+          "type": "concept",
+          "state": {
+            "description": "John is considering going into policymaking due to his degree and passion for making a positive impact."
+          }
+        },
+        {
+          "name": "John's interests in policymaking",
+          "type": "concept",
+          "state": {
+            "description": "John is particularly interested in improving education and infrastructure."
+          }
+        },
+        {
+          "name": "John's community involvement",
+          "type": "concept",
+          "state": {
+            "description": "John's experiences in community meetings have shaped his views on education and infrastructure challenges."
+          }
+        },
+        {
+          "name": "John's dedication to solutions",
+          "type": "concept",
+          "state": {
+            "description": "John is committed to putting his words into action and finding solutions to community issues."
+          }
+        },
+        {
+          "name": "Maria's support for John",
+          "type": "concept",
+          "state": {
+            "description": "Maria expresses encouragement and support for John's efforts."
+          }
+        },
+        {
+          "name": "John and Maria's volunteering experience",
+          "type": "concept",
+          "state": {
+            "description": "John and Maria volunteered together 2022, which was a fulfilling experience."
+          }
+        },
+        {
+          "name": "John's commitment to community impact",
+          "type": "concept",
+          "state": {
+            "description": "John believes that their actions can make a significant impact on the community."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 8,
+    "total_entities": 88
+  },
+  {
+    "session_index": 9,
+    "session_id": "conv-41_session_9",
+    "input_chars": 3787,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 April 07, 2023 at 00:24]\nJohn: Hey Maria, I'm so excited to tell you I started a weekend yoga class with a colleague - it's awesome! I feel great, both mentally and physically after each session. I'd been wanting to try yoga for a while and finally took the plunge. Simple stretching and breathing is having such a positive effect on my wellbeing. And the instructor is great too.\nJohn: W",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's weekend yoga class",
+          "type": "concept",
+          "state": {
+            "description": "Started a weekend yoga class with a colleague, focusing on simple stretching and breathing."
+          }
+        },
+        {
+          "name": "John's yoga instructor",
+          "type": "person",
+          "state": {
+            "description": "The instructor ensures proper poses and encourages listening to our bodies, creating a relaxed environment."
+          }
+        },
+        {
+          "name": "John's yoga class type",
+          "type": "concept",
+          "state": {
+            "description": "Beginner yoga class focusing on fundamentals like poses and breathing."
+          }
+        },
+        {
+          "name": "John's feelings after yoga",
+          "type": "concept",
+          "state": {
+            "description": "Feels great, relaxed, and more connected after each yoga session."
+          }
+        },
+        {
+          "name": "John's daily routine",
+          "type": "concept",
+          "state": {
+            "description": "Yoga is now part of John's daily routine for physical benefits and mindfulness."
+          }
+        },
+        {
+          "name": "John's 5K charity run",
+          "type": "event",
+          "state": {
+            "description": "Organized a 5K charity run in the neighborhood to help veterans and their families."
+          }
+        },
+        {
+          "name": "John's volunteering experience",
+          "type": "event",
+          "state": {
+            "description": "Volunteered at a career fair at a local school, witnessing the impact of lack of resources on kids' dreams."
+          }
+        },
+        {
+          "name": "John's inspirational sign",
+          "type": "concept",
+          "state": {
+            "description": "The sign at the volunteering event says, 'Always look on the bright side of life'."
+          }
+        },
+        {
+          "name": "Maria's encouragement",
+          "type": "person",
+          "state": {
+            "description": "Maria encourages John for his efforts in yoga and charity work."
+          }
+        },
+        {
+          "name": "John's age",
+          "type": "demographics",
+          "state": {
+            "description": "Age not specified."
+          }
+        },
+        {
+          "name": "Maria's age",
+          "type": "demographics",
+          "state": {
+            "description": "Age not specified."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 9,
+    "total_entities": 97
+  },
+  {
+    "session_index": 10,
+    "session_id": "conv-41_session_10",
+    "input_chars": 3567,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 April 10, 2023 at 18:13]\nJohn: Hey Maria, haven't talked for a few days. Had a wild week, my car broke down last Fri on my way to work. Trying to get it fixed but it's tough & putting a strain on my wallet. Staying positive & looking for a solution though.\nJohn: Aww John, bummer about that. No doubt it's been tough, but I'm impressed by how positive you're being. Keep it up - tough tim",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's car trouble",
+          "type": "concept",
+          "state": {
+            "description": "John's car broke down on April 7, 2023, causing financial strain."
+          }
+        },
+        {
+          "name": "John's positive outlook",
+          "type": "concept",
+          "state": {
+            "description": "John focuses on finding silver linings in tough times."
+          }
+        },
+        {
+          "name": "John's road trip",
+          "type": "concept",
+          "state": {
+            "description": "John took a road trip in 2022 to the Pacific Northwest, exploring national parks."
+          }
+        },
+        {
+          "name": "John's talks at the homeless shelter",
+          "type": "concept",
+          "state": {
+            "description": "John gave talks at a homeless shelter he volunteers at, receiving compliments from other volunteers."
+          }
+        },
+        {
+          "name": "John's cross necklace",
+          "type": "concept",
+          "state": {
+            "description": "John bought a cross necklace to feel closer to his faith."
+          }
+        },
+        {
+          "name": "Maria's volunteering impact",
+          "type": "concept",
+          "state": {
+            "description": "Maria feels blessed to know the people at the shelter and sees them as family."
+          }
+        },
+        {
+          "name": "Maria's meal organization",
+          "type": "concept",
+          "state": {
+            "description": "Maria helped organize a meal for shelter residents, creating a sense of comfort and community."
+          }
+        },
+        {
+          "name": "Maria's community sense",
+          "type": "concept",
+          "state": {
+            "description": "Maria feels a strong sense of community and joy from helping others."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 7,
+    "total_entities": 104
+  },
+  {
+    "session_index": 11,
+    "session_id": "conv-41_session_11",
+    "input_chars": 3950,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 April 18, 2023 at 19:34]\nJohn: Hey Maria, hope you're doing okay. Since we chatted last, I've been blogging about politics and the government. It's been a really satisfying experience and I care about making a real impact. We need way better education and infrastructure and I know firsthand how this impacts neighborhoods.\nJohn: Hey John, glad to hear you're fired up about something! Bl",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's blogging about politics",
+          "type": "concept",
+          "state": {
+            "description": "John has been blogging about politics and the government since their last chat."
+          }
+        },
+        {
+          "name": "John's goal for blogging",
+          "type": "concept",
+          "state": {
+            "description": "John aims to raise awareness and start conversations to create positive change through his blog."
+          }
+        },
+        {
+          "name": "John's focus on education reform",
+          "type": "concept",
+          "state": {
+            "description": "John has been focusing on education reform as a key policy in his blogging."
+          }
+        },
+        {
+          "name": "John's focus on infrastructure development",
+          "type": "concept",
+          "state": {
+            "description": "John has been focusing on infrastructure development as a key policy in his blogging."
+          }
+        },
+        {
+          "name": "John's feedback on blog posts",
+          "type": "concept",
+          "state": {
+            "description": "John has received good feedback on his blog posts so far."
+          }
+        },
+        {
+          "name": "John's convention experience",
+          "type": "concept",
+          "state": {
+            "description": "John attended a convention with his colleagues March 2023, focusing on using tech for good."
+          }
+        },
+        {
+          "name": "John's feeling at the convention",
+          "type": "concept",
+          "state": {
+            "description": "John felt inspired and empowered by the energy and ideas shared at the convention."
+          }
+        },
+        {
+          "name": "John's trip plans",
+          "type": "concept",
+          "state": {
+            "description": "John is planning a trip to the East Coast."
+          }
+        },
+        {
+          "name": "Maria's volunteering",
+          "type": "concept",
+          "state": {
+            "description": "Maria is still volunteering at the homeless shelter."
+          }
+        },
+        {
+          "name": "Maria's experience at the homeless shelter",
+          "type": "concept",
+          "state": {
+            "description": "Maria finds her volunteering experience rewarding but acknowledges the overwhelming need for help."
+          }
+        },
+        {
+          "name": "John's encouragement to Maria",
+          "type": "concept",
+          "state": {
+            "description": "John encourages Maria by acknowledging her dedication and the impact of small acts of kindness."
+          }
+        },
+        {
+          "name": "Maria's belief in kindness",
+          "type": "concept",
+          "state": {
+            "description": "Maria believes that little acts of kindness can have a big effect."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 11,
+    "total_entities": 115
+  },
+  {
+    "session_index": 12,
+    "session_id": "conv-41_session_12",
+    "input_chars": 5839,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 May 04, 2023 at 15:18]\nJohn: Hey Maria! Long time no see! Tons has gone down since then!\nJohn: Hey John! Nice to hear from you. What's new with you?\nJohn: I just started going to boot camps with my fam last month. It's good for bonding and getting fit.\nJohn: Sounds awesome, John! Working out together is a great way of bonding as a family. Have you noticed any changes in your fitness si",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's boot camp attendance",
+          "type": "concept",
+          "state": {
+            "description": "Started going to boot camps with family in April 2023 for bonding and fitness."
+          }
+        },
+        {
+          "name": "John's fitness energy",
+          "type": "concept",
+          "state": {
+            "description": "Noticed increased energy, strength, and endurance since starting boot camps."
+          }
+        },
+        {
+          "name": "John's family workout frequency",
+          "type": "concept",
+          "state": {
+            "description": "Works out together three times a week."
+          }
+        },
+        {
+          "name": "John's family support",
+          "type": "concept",
+          "state": {
+            "description": "Family supports each other during boot camp workouts and provides emotional support."
+          }
+        },
+        {
+          "name": "Maria's family dinner",
+          "type": "concept",
+          "state": {
+            "description": "Made dinner with her mom on May 3, 2023."
+          }
+        },
+        {
+          "name": "John's apple pie",
+          "type": "concept",
+          "state": {
+            "description": "Made an apple pie for the kids on May 3, 2023."
+          }
+        },
+        {
+          "name": "Maria's favorite dessert",
+          "type": "concept",
+          "state": {
+            "description": "Favorite dessert is banana split sundae, enjoyed after volunteering."
+          }
+        },
+        {
+          "name": "Maria's balance in life",
+          "type": "concept",
+          "state": {
+            "description": "Finds balance through physical, emotional, and mental self-care."
+          }
+        },
+        {
+          "name": "John's solo trip to Spain",
+          "type": "concept",
+          "state": {
+            "description": "Took a solo trip to Spain in 2022, which was a transformative experience."
+          }
+        },
+        {
+          "name": "John's lesson from solo trip",
+          "type": "concept",
+          "state": {
+            "description": "Learned the importance of valuing different perspectives and trusting life."
+          }
+        },
+        {
+          "name": "John's surfing experience",
+          "type": "concept",
+          "state": {
+            "description": "Tried surfing for the first time during his trip, learned about perseverance."
+          }
+        },
+        {
+          "name": "John's mindset on growth",
+          "type": "concept",
+          "state": {
+            "description": "Believes in pushing boundaries for personal growth and self-exploration."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 11,
+    "total_entities": 126
+  },
+  {
+    "session_index": 13,
+    "session_id": "conv-41_session_13",
+    "input_chars": 4090,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 May 06, 2023 at 17:04]\nJohn: Hey Maria, great to chat again! A lot has happened since we last spoke. Last week, I decided to run for office again - even though I haven't been successful before. I guess I can't let go of my dream to make a difference in my community. Can you believe it? Feels like a dream come true!\n[Image: a photo of a poster on a bulletin board with a man smiling]\nJoh",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's political aspirations",
+          "type": "concept",
+          "state": {
+            "description": "John decided to run for office again to make a difference in his community."
+          }
+        },
+        {
+          "name": "Maria's support for John",
+          "type": "concept",
+          "state": {
+            "description": "Maria expresses pride in John's determination to make a difference."
+          }
+        },
+        {
+          "name": "Maria's charity work",
+          "type": "concept",
+          "state": {
+            "description": "Maria is busy at the shelter preparing for a fundraiser."
+          }
+        },
+        {
+          "name": "Maria's church involvement",
+          "type": "concept",
+          "state": {
+            "description": "Maria joined a nearby church to feel closer to a community and her faith."
+          }
+        },
+        {
+          "name": "John's reflection on life",
+          "type": "concept",
+          "state": {
+            "description": "John is taking time to reflect and find balance in his life."
+          }
+        },
+        {
+          "name": "John's power cut experience",
+          "type": "concept",
+          "state": {
+            "description": "John experienced a power cut that highlighted the need for infrastructure upgrades."
+          }
+        },
+        {
+          "name": "John's concerns about roadways",
+          "type": "concept",
+          "state": {
+            "description": "John noted that the roadways are full of potholes and need improvements."
+          }
+        },
+        {
+          "name": "John's community project idea",
+          "type": "concept",
+          "state": {
+            "description": "John is thinking about starting a community project regarding infrastructure."
+          }
+        },
+        {
+          "name": "Maria's agreement to help",
+          "type": "concept",
+          "state": {
+            "description": "Maria agrees to work with John to get the community involved in improving infrastructure."
+          }
+        },
+        {
+          "name": "John's focus on housing",
+          "type": "concept",
+          "state": {
+            "description": "John emphasizes the importance of fighting for better housing and living conditions."
+          }
+        },
+        {
+          "name": "Maria's commitment to affordable housing",
+          "type": "concept",
+          "state": {
+            "description": "Maria believes everyone should have access to affordable housing."
+          }
+        },
+        {
+          "name": "John's old area",
+          "type": "concept",
+          "state": {
+            "description": "John wants to work on improving his old area, West County."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 10,
+    "total_entities": 136
+  },
+  {
+    "session_index": 14,
+    "session_id": "conv-41_session_14",
+    "input_chars": 2865,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 May 20, 2023 at 19:38]\nJohn: Hey Maria, how's it going? Been real busy tackling a project to support military veterans. Trying to get a petition going, it's pretty rewarding but kinda stressful. How are you?\nJohn: Hey John, I'm good. Sorry to hear it's been rough. How did you decide to take on that project?\nJohn: Hi Maria, thanks for asking. I've always been passionate about veterans a",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's project for military veterans",
+          "type": "concept",
+          "state": {
+            "description": "Project to support military veterans, involving a petition and community engagement."
+          }
+        },
+        {
+          "name": "John's passion for veterans",
+          "type": "belief",
+          "state": {
+            "description": "John has always been passionate about veterans and their rights."
+          }
+        },
+        {
+          "name": "John's appreciation for veterans",
+          "type": "belief",
+          "state": {
+            "description": "John wants to show appreciation for what veterans have done for the community."
+          }
+        },
+        {
+          "name": "John's small party with veterans",
+          "type": "event",
+          "state": {
+            "description": "A small party organized by John to invite veterans to share their stories."
+          }
+        },
+        {
+          "name": "John's impact on veterans",
+          "type": "concept",
+          "state": {
+            "description": "John aims to help make veterans' lives better through his project."
+          }
+        },
+        {
+          "name": "Maria's support for John's project",
+          "type": "belief",
+          "state": {
+            "description": "Maria expresses her support for John's project to help veterans."
+          }
+        },
+        {
+          "name": "Maria's involvement in community projects",
+          "type": "belief",
+          "state": {
+            "description": "Maria is enthusiastic about making a difference in the community."
+          }
+        },
+        {
+          "name": "John's ring-toss tournament plans",
+          "type": "event",
+          "state": {
+            "description": "John is planning a ring-toss tournament for a homeless shelter's fundraiser in May 2023."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 8,
+    "total_entities": 144
+  },
+  {
+    "session_index": 15,
+    "session_id": "conv-41_session_15",
+    "input_chars": 2662,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 May 25, 2023 at 13:24]\nJohn: Hey Maria, I've been busy doing the petition I started - it's tricky but it's been cool getting back in touch with my buddies and gaining support. I got this picture of my workmates when we went on a hiking trip, they really make me keep going! What have you been up to? Anything new with your charity?\n[Image: a photo of a group of people and a dog standing ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's petition",
+          "type": "concept",
+          "state": {
+            "description": "John started a petition to gain support and reconnect with friends."
+          }
+        },
+        {
+          "name": "John's hiking trip",
+          "type": "concept",
+          "state": {
+            "description": "John went on a hiking trip with workmates."
+          }
+        },
+        {
+          "name": "Maria's charity work",
+          "type": "concept",
+          "state": {
+            "description": "Maria is busy at the shelter preparing for a fundraiser."
+          }
+        },
+        {
+          "name": "Maria's fundraiser",
+          "type": "concept",
+          "state": {
+            "description": "Maria's fundraiser is scheduled for the week of May 29, 2023."
+          }
+        },
+        {
+          "name": "Maria's fundraiser goal",
+          "type": "concept",
+          "state": {
+            "description": "Maria aims to raise enough money to cover basic needs for the homeless."
+          }
+        },
+        {
+          "name": "John's offer to help Maria",
+          "type": "concept",
+          "state": {
+            "description": "John offered to help with Maria's fundraiser."
+          }
+        },
+        {
+          "name": "Maria's chili cook-off event",
+          "type": "concept",
+          "state": {
+            "description": "Maria is organizing a chili cook-off at her fundraiser."
+          }
+        },
+        {
+          "name": "John's family beach photo",
+          "type": "concept",
+          "state": {
+            "description": "John shared a photo of his family at the beach."
+          }
+        },
+        {
+          "name": "John's motivation",
+          "type": "concept",
+          "state": {
+            "description": "John feels motivated by Maria's encouraging words."
+          }
+        },
+        {
+          "name": "Maria's appreciation for moments",
+          "type": "concept",
+          "state": {
+            "description": "Maria appreciates little moments that give her hope."
+          }
+        },
+        {
+          "name": "John's support for Maria",
+          "type": "concept",
+          "state": {
+            "description": "John expresses his support for Maria's efforts."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 10,
+    "total_entities": 154
+  },
+  {
+    "session_index": 16,
+    "session_id": "conv-41_session_16",
+    "input_chars": 2491,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 June 03, 2023 at 11:51]\nJohn: Hey Maria, long time no talk! Life's been pretty wild lately. The toughest thing to deal with is that we had to say goodbye to Max. He was such an important part of our family for 10 years and it's so hard to think he's not here wagging that tail anymore.\nJohn: John, I'm sorry to hear about Max. It can be tough to lose a pet - they're like family. How have",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's pet Max",
+          "type": "concept",
+          "state": {
+            "description": "John's dog Max, who brought him lots of joy."
+          }
+        },
+        {
+          "name": "John's coping mechanism",
+          "type": "concept",
+          "state": {
+            "description": "Finding comfort in memories of Max and the good times shared"
+          }
+        },
+        {
+          "name": "John's lesson from Max",
+          "type": "concept",
+          "state": {
+            "description": "Learned about unconditional love and loyalty from Max"
+          }
+        },
+        {
+          "name": "John's plan to adopt a rescue dog",
+          "type": "concept",
+          "state": {
+            "description": "Considering adopting a rescue dog to teach kids responsibility and compassion"
+          }
+        },
+        {
+          "name": "Maria's volunteering",
+          "type": "concept",
+          "state": {
+            "description": "Volunteers at a local dog shelter once a month"
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 7,
+    "entities_new": 4,
+    "total_entities": 158
+  },
+  {
+    "session_index": 17,
+    "session_id": "conv-41_session_17",
+    "input_chars": 3582,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 June 12, 2023 at 14:47]\nJohn: Hey John, how're you doing? I'm sorry about Max. Losing a pet is tough. Some friends from church and I went camping last weekend - it was a blast! Just something nice to take my mind off things. Anything fun in your life lately?\n[Image: a photo of a group of men sitting around a campfire]\nJohn: Hey Maria, thanks for your kind words. It's still tough, but I",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's pet Max",
+          "type": "concept",
+          "state": {
+            "description": "John's pet dog named Max who passed away"
+          }
+        },
+        {
+          "name": "John's camping trip",
+          "type": "concept",
+          "state": {
+            "description": "Camping trip with friends from church on June 3, 2023"
+          }
+        },
+        {
+          "name": "John's mountaineering trip",
+          "type": "concept",
+          "state": {
+            "description": "Mountaineering trip with workmates the week before June 12, 2023, reached the summit with stunning views"
+          }
+        },
+        {
+          "name": "John's family road trip",
+          "type": "concept",
+          "state": {
+            "description": "Family road trip to Oregon when John was younger"
+          }
+        },
+        {
+          "name": "John's peaceful moments",
+          "type": "concept",
+          "state": {
+            "description": "Finding peace through moments to himself and favorite tunes"
+          }
+        },
+        {
+          "name": "John's aerial yoga",
+          "type": "concept",
+          "state": {
+            "description": "Enjoys aerial yoga as a way to switch off and focus on his body"
+          }
+        },
+        {
+          "name": "Maria's favorite yoga pose",
+          "type": "concept",
+          "state": {
+            "description": "Enjoys upside-down poses in yoga that make her feel free and light"
+          }
+        },
+        {
+          "name": "Maria's family day at the park",
+          "type": "concept",
+          "state": {
+            "description": "Had an awesome day at the park with family, kids enjoyed the playground"
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 5,
+    "total_entities": 163
+  },
+  {
+    "session_index": 18,
+    "session_id": "conv-41_session_18",
+    "input_chars": 4991,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 June 16, 2023 at 19:20]\nJohn: Hey John, been good since we talked? I got some great news to share - I joined a gym last week! It's been super positive - I'm sticking to my workout routine and the people are awesome. The atmosphere is so welcoming.\nJohn: Congrats, Maria! Sounds like it's been a great experience. Having a positive environment and supportive people can really help with mo",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's gym membership",
+          "type": "concept",
+          "state": {
+            "description": "Joined a gym on June 9, 2023, and is sticking to a workout routine."
+          }
+        },
+        {
+          "name": "John's fitness goals",
+          "type": "concept",
+          "state": {
+            "description": "Wants to get stronger and improve endurance, trying kundalini yoga."
+          }
+        },
+        {
+          "name": "John's promotion",
+          "type": "concept",
+          "state": {
+            "description": "Promoted to assistant manager, a stepping stone for bigger things."
+          }
+        },
+        {
+          "name": "John's trophy",
+          "type": "concept",
+          "state": {
+            "description": "A trophy commemorating his journey and obstacles overcome."
+          }
+        },
+        {
+          "name": "John's challenges",
+          "type": "concept",
+          "state": {
+            "description": "Faced hurdles including tech issues, workplace challenges, and self-doubt."
+          }
+        },
+        {
+          "name": "John's support system",
+          "type": "concept",
+          "state": {
+            "description": "Received support from family and friends during tough times."
+          }
+        },
+        {
+          "name": "John's work hours",
+          "type": "concept",
+          "state": {
+            "description": "Usually works during regular hours but sometimes brings work home."
+          }
+        },
+        {
+          "name": "John's work-life balance",
+          "type": "concept",
+          "state": {
+            "description": "Organizes time to balance work and important personal moments."
+          }
+        },
+        {
+          "name": "John's beach memory",
+          "type": "concept",
+          "state": {
+            "description": "Special vacation in California with a gorgeous sunset and family stroll."
+          }
+        },
+        {
+          "name": "Maria's beach memory",
+          "type": "concept",
+          "state": {
+            "description": "Vacation in Florida with amazing colors and feelings of gratitude with family."
+          }
+        },
+        {
+          "name": "Maria's family",
+          "type": "concept",
+          "state": {
+            "description": "Values time spent with family and creating memories."
+          }
+        },
+        {
+          "name": "Maria's fitness goals",
+          "type": "concept",
+          "state": {
+            "description": "Wants to improve fitness and is trying kundalini yoga."
+          }
+        },
+        {
+          "name": "Maria's support for John",
+          "type": "concept",
+          "state": {
+            "description": "Expresses admiration for John's perseverance and achievements."
+          }
+        },
+        {
+          "name": "John's age",
+          "type": "concept",
+          "state": {
+            "description": "Age not specified."
+          }
+        },
+        {
+          "name": "Maria's age",
+          "type": "concept",
+          "state": {
+            "description": "Age not specified."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 17,
+    "entities_new": 11,
+    "total_entities": 174
+  },
+  {
+    "session_index": 19,
+    "session_id": "conv-41_session_19",
+    "input_chars": 2841,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 June 27, 2023 at 00:21]\nJohn: Hey John, long time no talk! A lot has happened since then. I've been struggling, but I'm focusing on the positive and relying on my friends and fam for support.\nJohn: Hey Maria, sorry to hear that. That's rough, but it's great that you're focusing on the positive. Having support from your loved ones can make a big difference. How have they been helping yo",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's support system",
+          "type": "concept",
+          "state": {
+            "description": "John relies on friends and family for support during tough times."
+          }
+        },
+        {
+          "name": "John's family support",
+          "type": "concept",
+          "state": {
+            "description": "John's family has been his rock, providing encouragement and reminding him he's not alone."
+          }
+        },
+        {
+          "name": "John's live music event",
+          "type": "event",
+          "state": {
+            "description": "John attended a live music event with his family the week before June 27, 2023, which was filled with energy and fun."
+          }
+        },
+        {
+          "name": "Maria's volunteering experience",
+          "type": "concept",
+          "state": {
+            "description": "Maria volunteers at a shelter, which makes her feel great to help others."
+          }
+        },
+        {
+          "name": "Maria's special memory at the shelter",
+          "type": "concept",
+          "state": {
+            "description": "Maria met someone special at the shelter who laughed while she was playing with kids, uplifting the atmosphere."
+          }
+        },
+        {
+          "name": "Maria's impact through kindness",
+          "type": "concept",
+          "state": {
+            "description": "Maria spreads kindness and positivity through her actions, making a difference in the world."
+          }
+        },
+        {
+          "name": "John's appreciation for family",
+          "type": "concept",
+          "state": {
+            "description": "John appreciates moments with family that remind him to value his loved ones."
+          }
+        },
+        {
+          "name": "John's positive outlook",
+          "type": "concept",
+          "state": {
+            "description": "John focuses on finding silver linings in tough times."
+          }
+        },
+        {
+          "name": "John's joy in making a difference",
+          "type": "concept",
+          "state": {
+            "description": "John finds joy in making a difference in others' lives."
+          }
+        },
+        {
+          "name": "Maria's impact recognition",
+          "type": "concept",
+          "state": {
+            "description": "Maria feels appreciated for the impact she makes through her kindness."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 7,
+    "total_entities": 181
+  },
+  {
+    "session_index": 20,
+    "session_id": "conv-41_session_20",
+    "input_chars": 3792,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 July 03, 2023 at 20:43]\nJohn: Hey John, long time no see! Sorry I didn't get back to you sooner... So much has happened! Check out these kids I met at the shelter!\n[Image: a photo of three children sitting on a step smiling]\nJohn: Hey Maria! Good to hear from you. Those little ones are adorable, any updates on them? How have you been?\nJohn: Hey John! They were great, their smiles warme",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's car accident",
+          "type": "event",
+          "state": {
+            "description": "A car ran a red light and hit John, but thankfully everyone is okay."
+          }
+        },
+        {
+          "name": "John's cousin's housing situation",
+          "type": "concept",
+          "state": {
+            "description": "John is helping his cousin find a new place after she had to leave in a hurry."
+          }
+        },
+        {
+          "name": "John's cousin's stress",
+          "type": "health",
+          "state": {
+            "description": "John's cousin is experiencing stress from having to find a new place quickly."
+          }
+        },
+        {
+          "name": "John's volunteering",
+          "type": "hobby",
+          "state": {
+            "description": "John loves volunteering and feels it makes a positive impact."
+          }
+        },
+        {
+          "name": "John's participation in veterans' rights event",
+          "type": "event",
+          "state": {
+            "description": "John participated in a marching event for veterans' rights."
+          }
+        },
+        {
+          "name": "John's respect for military",
+          "type": "belief",
+          "state": {
+            "description": "John has always had great respect for the military and wants to show support."
+          }
+        },
+        {
+          "name": "Maria's kindness",
+          "type": "belief",
+          "state": {
+            "description": "Maria appreciates kindness and compassion, believing they matter in challenging times."
+          }
+        },
+        {
+          "name": "Laura's gratitude letter",
+          "type": "event",
+          "state": {
+            "description": "Laura, a shelter resident, wrote a letter expressing gratitude for the impact made on her life."
+          }
+        },
+        {
+          "name": "John's appreciation for Maria",
+          "type": "belief",
+          "state": {
+            "description": "John expresses gratitude to Maria for her kind words and inspiration."
+          }
+        },
+        {
+          "name": "John's motivation from activism",
+          "type": "belief",
+          "state": {
+            "description": "John feels motivated by being around others who share the same values and passion for activism."
+          }
+        },
+        {
+          "name": "John's friendship with Maria",
+          "type": "relationship",
+          "state": {
+            "description": "John and Maria have a supportive friendship."
+          }
+        },
+        {
+          "name": "John's photo of children",
+          "type": "concept",
+          "state": {
+            "description": "John shared a photo of three children he met at the shelter."
+          }
+        },
+        {
+          "name": "John's photo of damaged car",
+          "type": "concept",
+          "state": {
+            "description": "John shared a photo of a damaged car that was involved in the accident."
+          }
+        },
+        {
+          "name": "John's photo of houses",
+          "type": "concept",
+          "state": {
+            "description": "John shared a photo of a row of houses while discussing his cousin's housing situation."
+          }
+        },
+        {
+          "name": "John's photo of portable homes",
+          "type": "concept",
+          "state": {
+            "description": "John shared a photo of white portable homes in a parking lot."
+          }
+        },
+        {
+          "name": "John's photo of badge and flag",
+          "type": "concept",
+          "state": {
+            "description": "John shared a photo of a badge and a flag on a table related to the veterans' rights event."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 18,
+    "entities_new": 15,
+    "total_entities": 196
+  },
+  {
+    "session_index": 21,
+    "session_id": "conv-41_session_21",
+    "input_chars": 3541,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 July 05, 2023 at 18:59]\nJohn: Since the last chat, I've been thinking about how education and infrastructure shape communities. It's so sad how they can stunt growth in neighborhoods, but it also drives me to do what I can to make it better.\nJohn: I totally agree. They play a crucial role in shaping communities. It's unfortunate to witness the negative effects when they are lacking, bu",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's family motivation",
+          "type": "concept",
+          "state": {
+            "description": "John's family motivates him and reminds him why he is striving for change."
+          }
+        },
+        {
+          "name": "John's daughter Sara's birthday trip",
+          "type": "event",
+          "state": {
+            "description": "Trip taken 2022 for John\u2019s daughter Sara's birthday."
+          }
+        },
+        {
+          "name": "John's sources of inspiration",
+          "type": "concept",
+          "state": {
+            "description": "John is inspired by chatting to people, volunteering, and listening to music."
+          }
+        },
+        {
+          "name": "John's exercise and friends motivation",
+          "type": "concept",
+          "state": {
+            "description": "John is inspired by his family, exercise, and spending time with friends."
+          }
+        },
+        {
+          "name": "John's weekly sunset walks",
+          "type": "event",
+          "state": {
+            "description": "John sees sunsets at least once a week during his walks."
+          }
+        },
+        {
+          "name": "John's nature appreciation photo",
+          "type": "concept",
+          "state": {
+            "description": "Photo of a sunset over the ocean with a sailboat, reminding John to take a break and appreciate nature."
+          }
+        },
+        {
+          "name": "Maria's park walks",
+          "type": "concept",
+          "state": {
+            "description": "Maria has been taking regular 'me-time' walks at the park nearby."
+          }
+        },
+        {
+          "name": "Maria's impact from walks",
+          "type": "concept",
+          "state": {
+            "description": "Maria's regular walks have made a big impact on her."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 8,
+    "total_entities": 204
+  },
+  {
+    "session_index": 22,
+    "session_id": "conv-41_session_22",
+    "input_chars": 2252,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 July 07, 2023 at 18:29]\nJohn: Maria, since we talked, it's been tough. My old area was hit by a nasty flood last week. The infrastructure wasn't great so lots of homes were ruined. It's reminding me we need to fix things up in our community.\nJohn: Sorry to hear about what happened in your area, John. That must have been tough for you and everyone there. Is there anything I can do to he",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's flood experience",
+          "type": "concept",
+          "state": {
+            "description": "John's area was hit by a nasty flood on June 30, 2023, causing lots of homes to be ruined."
+          }
+        },
+        {
+          "name": "Maria's support offer",
+          "type": "concept",
+          "state": {
+            "description": "Maria offered to help John with the flood situation."
+          }
+        },
+        {
+          "name": "John's community meeting",
+          "type": "concept",
+          "state": {
+            "description": "John is getting people together to discuss potential solutions for the flood impact."
+          }
+        },
+        {
+          "name": "Maria's determination",
+          "type": "concept",
+          "state": {
+            "description": "John praised Maria's determination to help improve the community."
+          }
+        },
+        {
+          "name": "John's commitment to community",
+          "type": "concept",
+          "state": {
+            "description": "John is committed to helping others and making a difference in the community."
+          }
+        },
+        {
+          "name": "Maria's friendship",
+          "type": "concept",
+          "state": {
+            "description": "Maria is a supportive friend to John."
+          }
+        },
+        {
+          "name": "John's dinner plans",
+          "type": "concept",
+          "state": {
+            "description": "John is going to have dinner with friends from the gym."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 9,
+    "entities_new": 6,
+    "total_entities": 210
+  },
+  {
+    "session_index": 23,
+    "session_id": "conv-41_session_23",
+    "input_chars": 2819,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 July 17, 2023 at 15:34]\nJohn: Hey Maria, last week was really eye-opening. I visited a veteran's hospital and met some amazing people. It made me appreciate what we have and the need to give back.\nJohn: Wow, John! That sounds awesome. It's so important to appreciate and support those who served in the military. Did you learn anything cool during your visit?\nJohn: I heard some cool stor",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's visit to veteran's hospital",
+          "type": "concept",
+          "state": {
+            "description": "Visited a veteran's hospital and met inspiring people, which made him appreciate the need to give back."
+          }
+        },
+        {
+          "name": "John's encounter with Samuel",
+          "type": "concept",
+          "state": {
+            "description": "Heard inspiring and heartbreaking stories from an elderly veteran named Samuel."
+          }
+        },
+        {
+          "name": "John's military aspiration",
+          "type": "concept",
+          "state": {
+            "description": "Reminded of his desire to join the military after hearing veterans' stories."
+          }
+        },
+        {
+          "name": "John's organization involvement",
+          "type": "concept",
+          "state": {
+            "description": "Part of an organization that supports veterans, feeling like a family with passionate people."
+          }
+        },
+        {
+          "name": "John's picnic with friends",
+          "type": "concept",
+          "state": {
+            "description": "Had a picnic with friends from church the weekend before July 17, 2023, playing games and enjoying food."
+          }
+        },
+        {
+          "name": "Games played at John's picnic",
+          "type": "concept",
+          "state": {
+            "description": "Played charades and a scavenger hunt during the picnic."
+          }
+        },
+        {
+          "name": "John's plans for kids' activities",
+          "type": "concept",
+          "state": {
+            "description": "Thinking of setting up fun activities like arts and crafts for his kids."
+          }
+        },
+        {
+          "name": "John's community event",
+          "type": "concept",
+          "state": {
+            "description": "Attended a community event June 2023 with arts and crafts and fun activities for families."
+          }
+        },
+        {
+          "name": "John's philosophy on life",
+          "type": "concept",
+          "state": {
+            "description": "Believes in the importance of making connections and enjoying life's simpler moments."
+          }
+        },
+        {
+          "name": "John's view on kindness",
+          "type": "concept",
+          "state": {
+            "description": "Believes that little acts of kindness can have a big effect and is committed to spreading positivity."
+          }
+        },
+        {
+          "name": "Maria's agreement with John",
+          "type": "person",
+          "state": {
+            "description": "Agrees with John on the importance of making connections and enjoying life."
+          }
+        },
+        {
+          "name": "Maria's encouragement of positivity",
+          "type": "person",
+          "state": {
+            "description": "Supports John's view on spreading positivity and making a difference."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 12,
+    "total_entities": 222
+  },
+  {
+    "session_index": 24,
+    "session_id": "conv-41_session_24",
+    "input_chars": 2890,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 July 22, 2023 at 18:21]\nJohn: Hi Maria! It's so good to talk again. A lot has changed since last time. I'm really enjoying my new job. My team has been super encouraging and inspiring.\n[Image: a photo of a group of people posing for a picture]\nJohn: Hey John, glad work is going well! Having a good team is so important. I had a great experience last weekend hiking with my church  friend",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's job",
+          "type": "concept",
+          "state": {
+            "description": "Part of the fire-fighting brigade, excited to help the community"
+          }
+        },
+        {
+          "name": "Maria's hiking experience",
+          "type": "concept",
+          "state": {
+            "description": "Maria had a great experience hiking with her church friends the weekend before July 22, 2023."
+          }
+        },
+        {
+          "name": "Maria's hiking motivation",
+          "type": "concept",
+          "state": {
+            "description": "Maria wanted to make connections, laugh together, and take in nature's beauty during her hike."
+          }
+        },
+        {
+          "name": "Maria's best moment from the hike",
+          "type": "concept",
+          "state": {
+            "description": "Reaching the top of the hike was amazing for Maria, with a breathtaking view."
+          }
+        },
+        {
+          "name": "Maria's next adventure plans",
+          "type": "concept",
+          "state": {
+            "description": "Maria plans to explore more and volunteer at shelters in August 2023."
+          }
+        },
+        {
+          "name": "Maria's yoga studio",
+          "type": "concept",
+          "state": {
+            "description": "Maria goes to a chill yoga studio with awesome instructors."
+          }
+        },
+        {
+          "name": "Yoga studio classes",
+          "type": "concept",
+          "state": {
+            "description": "The yoga studio offers a variety of classes including yoga, kickboxing, and circuit training."
+          }
+        },
+        {
+          "name": "John's weight training experience",
+          "type": "concept",
+          "state": {
+            "description": "John has done weight training, which he found challenging but peaceful."
+          }
+        },
+        {
+          "name": "John's baking plans",
+          "type": "concept",
+          "state": {
+            "description": "John is off to bake some cakes."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 9,
+    "total_entities": 231
+  },
+  {
+    "session_index": 25,
+    "session_id": "conv-41_session_25",
+    "input_chars": 2862,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 July 31, 2023 at 13:59]\nJohn: Hey John, I'm doing ok - hope you are too. Some interesting stuff has been going on; last week I dropped off that stuff I baked at the homeless shelter. It was great and I'm more motivated than ever to help people.\nJohn: Hey Maria, that's awesome! I'm really inspired by your drive to make a difference. You mentioned your work at the homeless shelter last t",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's motivation to help people",
+          "type": "concept",
+          "state": {
+            "description": "John is motivated to help people after dropping off baked goods at the homeless shelter."
+          }
+        },
+        {
+          "name": "John's fire-fighting brigade membership",
+          "type": "concept",
+          "state": {
+            "description": "John joined a fire-fighting brigade to give back to his community."
+          }
+        },
+        {
+          "name": "John's first call-out",
+          "type": "event",
+          "state": {
+            "description": "John's first call-out with the fire brigade was on July 30, 2023."
+          }
+        },
+        {
+          "name": "John's rescue mission experience",
+          "type": "event",
+          "state": {
+            "description": "During a rescue mission, John helped save a family from a burning building."
+          }
+        },
+        {
+          "name": "John's bond with fire brigade team",
+          "type": "concept",
+          "state": {
+            "description": "John feels a strong bond with his fire brigade team, similar to his time in the military."
+          }
+        },
+        {
+          "name": "Maria's work at the homeless shelter",
+          "type": "concept",
+          "state": {
+            "description": "Maria works at a homeless shelter and inspires John to help others."
+          }
+        },
+        {
+          "name": "Maria's photography of volunteering",
+          "type": "concept",
+          "state": {
+            "description": "Maria took a photo while volunteering, showing a group of people around a table with food."
+          }
+        },
+        {
+          "name": "John's past military experience",
+          "type": "concept",
+          "state": {
+            "description": "John feels a bond with his fire brigade team reminiscent of his time in the military."
+          }
+        },
+        {
+          "name": "John's adrenaline rush during rescue",
+          "type": "concept",
+          "state": {
+            "description": "John experienced an adrenaline rush during the rescue mission."
+          }
+        },
+        {
+          "name": "John's feelings about community service",
+          "type": "concept",
+          "state": {
+            "description": "John finds community service fulfilling and meaningful."
+          }
+        },
+        {
+          "name": "John's baking for the homeless",
+          "type": "event",
+          "state": {
+            "description": "John baked goods and dropped them off at the homeless shelter."
+          }
+        },
+        {
+          "name": "John's supportive team",
+          "type": "concept",
+          "state": {
+            "description": "John appreciates the supportive nature of his fire brigade team."
+          }
+        },
+        {
+          "name": "Maria's positivity",
+          "type": "concept",
+          "state": {
+            "description": "Maria is committed to being positive and making a difference."
+          }
+        },
+        {
+          "name": "John's appreciation for Maria",
+          "type": "concept",
+          "state": {
+            "description": "John appreciates Maria's efforts and encourages her to continue making a difference."
+          }
+        },
+        {
+          "name": "John's feelings about helping others",
+          "type": "concept",
+          "state": {
+            "description": "John feels great about helping others and finds it inspiring."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 17,
+    "entities_new": 14,
+    "total_entities": 245
+  },
+  {
+    "session_index": 26,
+    "session_id": "conv-41_session_26",
+    "input_chars": 2481,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 August 03, 2023 at 18:20]\nJohn: Hey Maria, hope you're doing OK. I had to share something cool with you - I asked family and friends to join the virtual support group I am a part of and be advocates for the military. It's been awesome seeing so many people coming together to back the courageous people serving our nation.\nJohn: Wow, John! Way to go helping veterans! I'm doing my part to",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's virtual support group",
+          "type": "concept",
+          "state": {
+            "description": "John is part of a virtual support group advocating for the military."
+          }
+        },
+        {
+          "name": "Maria's volunteering at homeless shelter",
+          "type": "concept",
+          "state": {
+            "description": "Maria volunteers at a homeless shelter, which she started about a year ago."
+          }
+        },
+        {
+          "name": "Maria's motivation for volunteering",
+          "type": "concept",
+          "state": {
+            "description": "Maria was motivated to volunteer after witnessing a family struggling on the streets."
+          }
+        },
+        {
+          "name": "Cindy's note",
+          "type": "concept",
+          "state": {
+            "description": "A heartfelt expression of gratitude written by Cindy, a resident at the shelter."
+          }
+        },
+        {
+          "name": "John's kids' experience at military memorial",
+          "type": "concept",
+          "state": {
+            "description": "John's kids were awestruck and humbled during a visit to a military memorial the week before August 03, 2023."
+          }
+        },
+        {
+          "name": "John's belief in teaching kids about veterans",
+          "type": "belief",
+          "state": {
+            "description": "John believes it's important to teach kids to respect and appreciate those who served."
+          }
+        },
+        {
+          "name": "Maria's admiration for John",
+          "type": "belief",
+          "state": {
+            "description": "Maria admires John's efforts in helping veterans."
+          }
+        },
+        {
+          "name": "John's appreciation for teamwork",
+          "type": "belief",
+          "state": {
+            "description": "John appreciates the support and teamwork in their efforts."
+          }
+        },
+        {
+          "name": "John Doe",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria Smith",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 9,
+    "total_entities": 254
+  },
+  {
+    "session_index": 27,
+    "session_id": "conv-41_session_27",
+    "input_chars": 2513,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 August 05, 2023 at 17:19]\nJohn: Hey Maria, great chatting with you again! Crazy thing happened since we last talked. I lost my job at the mechanical engineering company. They tanked and it's been really rough. Never saw this coming.\nJohn: Sorry to hear about your job, John. I can only imagine how tough it must be. How are you holding up?\nJohn: Thanks for your care, Maria. It's been tou",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's job loss",
+          "type": "concept",
+          "state": {
+            "description": "unemployed"
+          }
+        },
+        {
+          "name": "John's job search",
+          "type": "concept",
+          "state": {
+            "description": "John is looking for opportunities in the tech industry."
+          }
+        },
+        {
+          "name": "John's potential new job",
+          "type": "concept",
+          "state": {
+            "description": "John may have found a job at a tech company that needs his mechanical skills for their hardware team."
+          }
+        },
+        {
+          "name": "Maria's community work",
+          "type": "concept",
+          "state": {
+            "description": "Maria took up community work with friends from church on August 4, 2023."
+          }
+        },
+        {
+          "name": "John's volunteer experience",
+          "type": "concept",
+          "state": {
+            "description": "2022, John helped renovate a rundown community center in his hometown."
+          }
+        },
+        {
+          "name": "John's hometown",
+          "type": "concept",
+          "state": {
+            "description": "John's hometown is where he helped renovate the community center."
+          }
+        },
+        {
+          "name": "John's adaptability",
+          "type": "concept",
+          "state": {
+            "description": "John is recognized for being adaptable in his job search."
+          }
+        },
+        {
+          "name": "Maria's support",
+          "type": "concept",
+          "state": {
+            "description": "Maria provides emotional support to John during his job search."
+          }
+        },
+        {
+          "name": "John's motivation",
+          "type": "concept",
+          "state": {
+            "description": "John feels motivated by Maria's encouraging words."
+          }
+        },
+        {
+          "name": "John's community impact",
+          "type": "concept",
+          "state": {
+            "description": "John feels satisfied witnessing the positive impact of his volunteer work."
+          }
+        },
+        {
+          "name": "John's mechanical engineering background",
+          "type": "concept",
+          "state": {
+            "description": "John has a background in mechanical engineering."
+          }
+        },
+        {
+          "name": "Maria's friendship",
+          "type": "person",
+          "state": {
+            "description": "Maria is a supportive friend to John."
+          }
+        },
+        {
+          "name": "John's full name",
+          "type": "person",
+          "state": {
+            "description": "John is one of the two speakers."
+          }
+        },
+        {
+          "name": "Maria's full name",
+          "type": "person",
+          "state": {
+            "description": "Maria is one of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [
+        {
+          "entity_name": "John's job loss",
+          "what_changed": "status",
+          "old_state": "employed",
+          "new_state": "unemployed",
+          "is_contradiction": false
+        }
+      ],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 11,
+    "total_entities": 265
+  },
+  {
+    "session_index": 28,
+    "session_id": "conv-41_session_28",
+    "input_chars": 3323,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 August 09, 2023 at 20:06]\nJohn: Hey John, what's been going on? I just wanted to check in. Last week was wild - I volunteered at the homeless shelter and they gave me a medal! It was humbling and I'm really glad I could help.\n[Image: a photography of a medal hanging from a tree with a ribbon]\nJohn: Hey Maria! Congrats on the recognition! It's really touching to see how much you're doin",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's volunteering experience",
+          "type": "concept",
+          "state": {
+            "description": "Volunteered at a homeless shelter and received a medal for his efforts."
+          }
+        },
+        {
+          "name": "John's community event participation",
+          "type": "concept",
+          "state": {
+            "description": "Participated in a community event to raise money for a good cause with a great turnout."
+          }
+        },
+        {
+          "name": "John's 5K charity run",
+          "type": "concept",
+          "state": {
+            "description": "Organized a 5K charity run in the neighborhood to help veterans and their families."
+          }
+        },
+        {
+          "name": "John's event organization efforts",
+          "type": "concept",
+          "state": {
+            "description": "Coordinated with sponsors and the city to organize the charity run."
+          }
+        },
+        {
+          "name": "John's challenges in event organization",
+          "type": "concept",
+          "state": {
+            "description": "Faced difficulties in getting sponsors but ultimately succeeded."
+          }
+        },
+        {
+          "name": "John's work with domestic abuse organization",
+          "type": "concept",
+          "state": {
+            "description": "Worked with a local organization to raise awareness and funds for victims of domestic abuse."
+          }
+        },
+        {
+          "name": "Maria's recognition",
+          "type": "concept",
+          "state": {
+            "description": "Received recognition for her efforts in helping the community."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 9,
+    "entities_new": 5,
+    "total_entities": 270
+  },
+  {
+    "session_index": 29,
+    "session_id": "conv-41_session_29",
+    "input_chars": 3727,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 August 11, 2023 at 00:10]\nJohn: Hey John! Long time no talk! Guess what - I got a puppy two weeks ago! Her name's Coco and she's adorable.\n[Image: a photo of a white dog laying in the grass with a baseball]\nJohn: Wow, Maria! Coco looks so adorable! She seems so happy in that photo. How's it been having her around?\nJohn: Thanks, John! It really brings joy to my life; she's always there ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's puppy Coco",
+          "type": "concept",
+          "state": {
+            "description": "John got a puppy named Coco two weeks before August 11, 2023, and she is adorable."
+          }
+        },
+        {
+          "name": "John's pet Max",
+          "type": "concept",
+          "state": {
+            "description": "John's dog Max, who brought him lots of joy."
+          }
+        },
+        {
+          "name": "John's camping trip with Max",
+          "type": "concept",
+          "state": {
+            "description": "John and Max had a camping trip last summer where they hiked, swam, and made great memories."
+          }
+        },
+        {
+          "name": "John's feelings about impact",
+          "type": "concept",
+          "state": {
+            "description": "John feels like he is not making much of an impact and is questioning his decisions and goals."
+          }
+        },
+        {
+          "name": "John's exploration of options",
+          "type": "concept",
+          "state": {
+            "description": "John has been exploring options to positively affect people and the world."
+          }
+        },
+        {
+          "name": "John's plan to volunteer",
+          "type": "concept",
+          "state": {
+            "description": "John is considering joining local organizations or volunteering programs to make a difference."
+          }
+        },
+        {
+          "name": "Maria's encouragement",
+          "type": "person",
+          "state": {
+            "description": "Maria encourages John to explore organizations that align with his beliefs."
+          }
+        },
+        {
+          "name": "John's appreciation for Maria",
+          "type": "person",
+          "state": {
+            "description": "John expresses gratitude to Maria for her kind words and inspiration."
+          }
+        },
+        {
+          "name": "John's reflection on nature",
+          "type": "concept",
+          "state": {
+            "description": "John reflects on how nature helps him reset his mind and spirit."
+          }
+        },
+        {
+          "name": "John's recent tough times",
+          "type": "concept",
+          "state": {
+            "description": "John mentions that there have been some tough times lately."
+          }
+        },
+        {
+          "name": "John's desire to make a difference",
+          "type": "concept",
+          "state": {
+            "description": "John wants to positively affect people and the world."
+          }
+        },
+        {
+          "name": "John's list of organizations",
+          "type": "concept",
+          "state": {
+            "description": "John plans to make a list of organizations that suit his beliefs."
+          }
+        },
+        {
+          "name": "John's positive mindset",
+          "type": "concept",
+          "state": {
+            "description": "John aims to keep spreading positivity."
+          }
+        },
+        {
+          "name": "John Doe",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria Smith",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 15,
+    "entities_new": 10,
+    "total_entities": 280
+  },
+  {
+    "session_index": 30,
+    "session_id": "conv-41_session_30",
+    "input_chars": 3334,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 August 13, 2023 at 15:14]\nJohn: Hi Maria, since we last chatted, I'm volunteering as a mentor for a local school. It's really rewarding to see how much I can help these students.\n[Image: a photo of a group of people sitting around a table]\nJohn: Wow, John! You're doing great things. Kudos for helping kids learn. On another note, I just adopted this cute pup from a shelter last week. Sh",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's volunteering",
+          "type": "concept",
+          "state": {
+            "description": "John is volunteering as a mentor for a local school."
+          }
+        },
+        {
+          "name": "Maria's adopted dog",
+          "type": "concept",
+          "state": {
+            "description": "Maria adopted a cute black puppy from a shelter."
+          }
+        },
+        {
+          "name": "Maria's dog Shadow",
+          "type": "concept",
+          "state": {
+            "description": "Maria's puppy is named Shadow, full of energy and brings joy."
+          }
+        },
+        {
+          "name": "John's childhood pets",
+          "type": "concept",
+          "state": {
+            "description": "John did not have any pets growing up."
+          }
+        },
+        {
+          "name": "John's mentoring program progress",
+          "type": "concept",
+          "state": {
+            "description": "John's students are making great progress in their confidence and skills."
+          }
+        },
+        {
+          "name": "Maria's puppy training",
+          "type": "concept",
+          "state": {
+            "description": "Maria's puppy is learning commands and house training."
+          }
+        },
+        {
+          "name": "John's family",
+          "type": "concept",
+          "state": {
+            "description": "John's family includes him, his wife, and their kids."
+          }
+        },
+        {
+          "name": "John's family activities",
+          "type": "concept",
+          "state": {
+            "description": "John's family enjoys outdoor activities, board games, and movie nights."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 5,
+    "total_entities": 285
+  },
+  {
+    "session_index": 31,
+    "session_id": "conv-41_session_31",
+    "input_chars": 2782,
+    "input_preview": "[Speakers: John and Maria]\nUse their FULL NAMES (John, Maria) in entity names, never abbreviations.\n\n[Session \u2014 August 16, 2023 at 11:08]\nJohn: Hey Maria! Guess what? I'm now part of the fire-fighting brigade. I'm super excited to be involved and help out my community!\nJohn: Wow John, that's impressive! You're really enthusiastic about making a change. How's your experience been so far?\nJohn: I was impressed with their dedication and how well they worked together. Just being around them was so i",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "John's job",
+          "type": "concept",
+          "state": {
+            "description": "Part of the fire-fighting brigade, excited to help the community"
+          }
+        },
+        {
+          "name": "John's experience with the fire-fighting brigade",
+          "type": "concept",
+          "state": {
+            "description": "Impressed with the dedication and teamwork of the brigade members"
+          }
+        },
+        {
+          "name": "John's community service impact",
+          "type": "concept",
+          "state": {
+            "description": "Raised donations including canned food, toiletries, and clothes for the local fire station"
+          }
+        },
+        {
+          "name": "John's sense of purpose",
+          "type": "concept",
+          "state": {
+            "description": "Feels a sense of purpose and passion from being involved in community service"
+          }
+        },
+        {
+          "name": "John's donation impact",
+          "type": "concept",
+          "state": {
+            "description": "Donations helped acquire a brand new fire truck"
+          }
+        },
+        {
+          "name": "Maria's volunteering",
+          "type": "concept",
+          "state": {
+            "description": "Volunteered at the shelter front desk, helping people receive food and beds"
+          }
+        },
+        {
+          "name": "Maria's impact on others",
+          "type": "concept",
+          "state": {
+            "description": "Felt good seeing smiles on people's faces when they received help"
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        },
+        {
+          "name": "Maria",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 9,
+    "entities_new": 5,
+    "total_entities": 290
+  }
+]

@@ -1,0 +1,1395 @@
+[
+  {
+    "question_id": "conv-26_q0",
+    "question_type": "multi_hop",
+    "question": "When did Caroline go to the LGBTQ support group?",
+    "answer": "7 May 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q1",
+    "question_type": "multi_hop",
+    "question": "When did Melanie paint a sunrise?",
+    "answer": "2022",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q2",
+    "question_type": "temporal",
+    "question": "What fields would Caroline be likely to pursue in her educaton?",
+    "answer": "Psychology, counseling certification",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q3",
+    "question_type": "single_hop",
+    "question": "What did Caroline research?",
+    "answer": "Adoption agencies",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q4",
+    "question_type": "single_hop",
+    "question": "What is Caroline's identity?",
+    "answer": "Transgender woman",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q5",
+    "question_type": "multi_hop",
+    "question": "When did Melanie run a charity race?",
+    "answer": "The sunday before 25 May 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q6",
+    "question_type": "multi_hop",
+    "question": "When is Melanie planning on going camping?",
+    "answer": "June 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q7",
+    "question_type": "single_hop",
+    "question": "What is Caroline's relationship status?",
+    "answer": "Single",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q8",
+    "question_type": "multi_hop",
+    "question": "When did Caroline give a speech at a school?",
+    "answer": "The week before 9 June 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q9",
+    "question_type": "multi_hop",
+    "question": "When did Caroline meet up with her friends, family, and mentors?",
+    "answer": "The week before 9 June 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q10",
+    "question_type": "multi_hop",
+    "question": "How long has Caroline had her current group of friends for?",
+    "answer": "4 years",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q11",
+    "question_type": "single_hop",
+    "question": "Where did Caroline move from 4 years ago?",
+    "answer": "Sweden",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q12",
+    "question_type": "multi_hop",
+    "question": "How long ago was Caroline's 18th birthday?",
+    "answer": "10 years ago",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q13",
+    "question_type": "single_hop",
+    "question": "What career path has Caroline decided to persue?",
+    "answer": "counseling or mental health for Transgender people",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q14",
+    "question_type": "temporal",
+    "question": "Would Caroline still want to pursue counseling as a career if she hadn't received support growing up?",
+    "answer": "Likely no",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q15",
+    "question_type": "single_hop",
+    "question": "What activities does Melanie partake in?",
+    "answer": "pottery, camping, painting, swimming",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q16",
+    "question_type": "multi_hop",
+    "question": "When did Melanie sign up for a pottery class?",
+    "answer": "2 July 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q17",
+    "question_type": "multi_hop",
+    "question": "When is Caroline going to the transgender conference?",
+    "answer": "July 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q18",
+    "question_type": "single_hop",
+    "question": "Where has Melanie camped?",
+    "answer": "beach, mountains, forest",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q19",
+    "question_type": "single_hop",
+    "question": "What do Melanie's kids like?",
+    "answer": "dinosaurs, nature",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q20",
+    "question_type": "multi_hop",
+    "question": "When did Melanie go to the museum?",
+    "answer": "5 July 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q21",
+    "question_type": "multi_hop",
+    "question": "When did Caroline have a picnic?",
+    "answer": "The week before 6 July 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q22",
+    "question_type": "temporal",
+    "question": "Would Caroline likely have Dr. Seuss books on her bookshelf?",
+    "answer": "Yes, since she collects classic children's books",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q23",
+    "question_type": "single_hop",
+    "question": "What books has Melanie read?",
+    "answer": "\"Nothing is Impossible\", \"Charlotte's Web\"",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q24",
+    "question_type": "single_hop",
+    "question": "What does Melanie do to destress?",
+    "answer": "Running, pottery",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q25",
+    "question_type": "multi_hop",
+    "question": "When did Caroline go to the LGBTQ conference?",
+    "answer": "10 July 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q26",
+    "question_type": "multi_hop",
+    "question": "When did Melanie read the book \"nothing is impossible\"?",
+    "answer": "2022",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q27",
+    "question_type": "temporal",
+    "question": "Would Caroline pursue writing as a career option?",
+    "answer": "LIkely no; though she likes reading, she wants to be a counselor",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q28",
+    "question_type": "multi_hop",
+    "question": "When did Caroline go to the adoption meeting?",
+    "answer": "The friday before 15 July 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q29",
+    "question_type": "multi_hop",
+    "question": "When did Melanie go to the pottery workshop?",
+    "answer": "The Friday before 15 July 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q30",
+    "question_type": "temporal",
+    "question": "Would Melanie be considered a member of the LGBTQ community?",
+    "answer": "Likely no, she does not refer to herself as part of it",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q31",
+    "question_type": "multi_hop",
+    "question": "When did Melanie go camping in June?",
+    "answer": "The week before 27 June 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q32",
+    "question_type": "single_hop",
+    "question": "What LGBTQ+ events has Caroline participated in?",
+    "answer": "Pride parade, school speech, support group",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q33",
+    "question_type": "multi_hop",
+    "question": "When did Caroline go to a pride parade during the summer?",
+    "answer": "The week before 3 July 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q34",
+    "question_type": "single_hop",
+    "question": "What events has Caroline participated in to help children?",
+    "answer": "Mentoring program, school speech",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q35",
+    "question_type": "multi_hop",
+    "question": "When did Melanie go camping in July?",
+    "answer": "two weekends before 17 July 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q36",
+    "question_type": "multi_hop",
+    "question": "When did Caroline join a mentorship program?",
+    "answer": "The weekend before 17 July 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q37",
+    "question_type": "single_hop",
+    "question": "What did Melanie paint recently?",
+    "answer": "sunset",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q38",
+    "question_type": "single_hop",
+    "question": "What activities has Melanie done with her family?",
+    "answer": "Pottery, painting, camping, museum, swimming, hiking",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q39",
+    "question_type": "single_hop",
+    "question": "In what ways is Caroline participating in the LGBTQ community?",
+    "answer": "Joining activist group, going to pride parades, participating in an art show, mentoring program",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q40",
+    "question_type": "single_hop",
+    "question": "How many times has Melanie gone to the beach in 2023?",
+    "answer": "2",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q41",
+    "question_type": "multi_hop",
+    "question": "When did Caroline join a new activist group?",
+    "answer": "The Tuesday before 20 July 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q42",
+    "question_type": "temporal",
+    "question": "Would Melanie be more interested in going to a national park or a theme park?",
+    "answer": "National park; she likes the outdoors",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q43",
+    "question_type": "single_hop",
+    "question": "What kind of art does Caroline make?",
+    "answer": "abstract art",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q44",
+    "question_type": "multi_hop",
+    "question": "When is Melanie's daughter's birthday?",
+    "answer": "13 August",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q45",
+    "question_type": "multi_hop",
+    "question": "When did Caroline attend a pride parade in August?",
+    "answer": "The Friday before 14 August 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q46",
+    "question_type": "temporal",
+    "question": "Would Melanie be considered an ally to the transgender community?",
+    "answer": "Yes, she is supportive",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q47",
+    "question_type": "single_hop",
+    "question": "Who supports Caroline when she has a negative experience?",
+    "answer": "Her mentors, family, and friends",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q48",
+    "question_type": "single_hop",
+    "question": "What types of pottery have Melanie and her kids made?",
+    "answer": "bowls, cup",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q49",
+    "question_type": "multi_hop",
+    "question": "When did Caroline and Melanie go to a pride fesetival together?",
+    "answer": "2022",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q50",
+    "question_type": "temporal",
+    "question": "What would Caroline's political leaning likely be?",
+    "answer": "Liberal",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q51",
+    "question_type": "single_hop",
+    "question": "What has Melanie painted?",
+    "answer": "Horse, sunset, sunrise",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q52",
+    "question_type": "single_hop",
+    "question": "What are Melanie's pets' names?",
+    "answer": "Oliver, Luna, Bailey",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q53",
+    "question_type": "multi_hop",
+    "question": "When did Caroline apply to adoption agencies?",
+    "answer": "The week of 23 August 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q54",
+    "question_type": "multi_hop",
+    "question": "When did Caroline draw a self-portrait?",
+    "answer": "The week before 23 August 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q55",
+    "question_type": "single_hop",
+    "question": "What subject have Caroline and Melanie both painted?",
+    "answer": "Sunsets",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q56",
+    "question_type": "single_hop",
+    "question": "What symbols are important to Caroline?",
+    "answer": "Rainbow flag, transgender symbol",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q57",
+    "question_type": "multi_hop",
+    "question": "When did Caroline encounter people on a hike and have a negative experience?",
+    "answer": "The week before 25 August 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q58",
+    "question_type": "multi_hop",
+    "question": "When did Melanie make a plate in pottery class?",
+    "answer": "24 August 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q59",
+    "question_type": "temporal",
+    "question": "Would Caroline be considered religious?",
+    "answer": "Somewhat, but not extremely religious",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q60",
+    "question_type": "single_hop",
+    "question": "What instruments does Melanie play?",
+    "answer": "clarinet and violin",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q61",
+    "question_type": "single_hop",
+    "question": "What musical artists/bands has Melanie seen?",
+    "answer": "Summer Sounds, Matt Patterson",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q62",
+    "question_type": "multi_hop",
+    "question": "When did Melanie go to the park?",
+    "answer": "27 August 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q63",
+    "question_type": "multi_hop",
+    "question": "When is Caroline's youth center putting on a talent show?",
+    "answer": "September 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q64",
+    "question_type": "temporal",
+    "question": "Would Melanie likely enjoy the song \"The Four Seasons\" by Vivaldi?",
+    "answer": "Yes; it's classical music",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q65",
+    "question_type": "single_hop",
+    "question": "What are some changes Caroline has faced during her transition journey?",
+    "answer": "Changes to her body, losing unsupportive friends",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q66",
+    "question_type": "single_hop",
+    "question": "What does Melanie do with her family on hikes?",
+    "answer": "Roast marshmallows, tell stories",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q67",
+    "question_type": "multi_hop",
+    "question": "When did Caroline go biking with friends?",
+    "answer": "The weekend before 13 September 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q68",
+    "question_type": "multi_hop",
+    "question": "How long has Melanie been practicing art?",
+    "answer": "Since 2016",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q69",
+    "question_type": "temporal",
+    "question": "What personality traits might Melanie say Caroline has?",
+    "answer": "Thoughtful, authentic, driven",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q70",
+    "question_type": "single_hop",
+    "question": "What transgender-specific events has Caroline attended?",
+    "answer": "Poetry reading, conference",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q71",
+    "question_type": "single_hop",
+    "question": "What book did Melanie read from Caroline's suggestion?",
+    "answer": "\"Becoming Nicole\"",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q72",
+    "question_type": "multi_hop",
+    "question": "When did Melanie's friend adopt a child?",
+    "answer": "2022",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q73",
+    "question_type": "multi_hop",
+    "question": "When did Melanie get hurt?",
+    "answer": "September 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q74",
+    "question_type": "multi_hop",
+    "question": "When did Melanie's family go on a roadtrip?",
+    "answer": "The weekend before 20 October 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q75",
+    "question_type": "single_hop",
+    "question": "How many children does Melanie have?",
+    "answer": "3",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q76",
+    "question_type": "single_hop",
+    "question": "When did Melanie go on a hike after the roadtrip?",
+    "answer": "19 October 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q77",
+    "question_type": "temporal",
+    "question": "Would Melanie go on another roadtrip soon?",
+    "answer": "Likely no; since this one went badly",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q78",
+    "question_type": "single_hop",
+    "question": "What items has Melanie bought?",
+    "answer": "Figurines, shoes",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q79",
+    "question_type": "multi_hop",
+    "question": "When did Caroline pass the adoption interview?",
+    "answer": "The Friday before 22 October 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q80",
+    "question_type": "multi_hop",
+    "question": "When did Melanie buy the figurines?",
+    "answer": "21 October 2023",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q81",
+    "question_type": "temporal",
+    "question": "Would Caroline want to move back to her home country soon?",
+    "answer": "No; she's in the process of adopting children.",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q82",
+    "question_type": "adversarial",
+    "question": "What did the charity race raise awareness for?",
+    "answer": "mental health",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q83",
+    "question_type": "adversarial",
+    "question": "What did Melanie realize after the charity race?",
+    "answer": "self-care is important",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q84",
+    "question_type": "adversarial",
+    "question": "How does Melanie prioritize self-care?",
+    "answer": "by carving out some me-time each day for activities like running, reading, or playing the violin",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q85",
+    "question_type": "adversarial",
+    "question": "What are Caroline's plans for the summer?",
+    "answer": "researching adoption agencies",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q86",
+    "question_type": "adversarial",
+    "question": "What type of individuals does the adoption agency Caroline is considering support?",
+    "answer": "LGBTQ+ individuals",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q87",
+    "question_type": "adversarial",
+    "question": "Why did Caroline choose the adoption agency?",
+    "answer": "because of their inclusivity and support for LGBTQ+ individuals",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q88",
+    "question_type": "adversarial",
+    "question": "What is Caroline excited about in the adoption process?",
+    "answer": "creating a family for kids who need one",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q89",
+    "question_type": "adversarial",
+    "question": "What does Melanie think about Caroline's decision to adopt?",
+    "answer": "she thinks Caroline is doing something amazing and will be an awesome mom",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q90",
+    "question_type": "adversarial",
+    "question": "How long have Mel and her husband been married?",
+    "answer": "Mel and her husband have been married for 5 years.",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q91",
+    "question_type": "adversarial",
+    "question": "What does Caroline's necklace symbolize?",
+    "answer": "love, faith, and strength",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q92",
+    "question_type": "adversarial",
+    "question": "What country is Caroline's grandma from?",
+    "answer": "Sweden",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q93",
+    "question_type": "adversarial",
+    "question": "What was grandma's gift to Caroline?",
+    "answer": "necklace",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q94",
+    "question_type": "adversarial",
+    "question": "What is Melanie's hand-painted bowl a reminder of?",
+    "answer": "art and self-expression",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q95",
+    "question_type": "adversarial",
+    "question": "What did Melanie and her family do while camping?",
+    "answer": "explored nature, roasted marshmallows, and went on a hike",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q96",
+    "question_type": "adversarial",
+    "question": "What kind of counseling and mental health services is Caroline interested in pursuing?",
+    "answer": "working with trans people, helping them accept themselves and supporting their mental health",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q97",
+    "question_type": "adversarial",
+    "question": "What workshop did Caroline attend recently?",
+    "answer": "LGBTQ+ counseling workshop",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q98",
+    "question_type": "adversarial",
+    "question": "What was discussed in the LGBTQ+ counseling workshop?",
+    "answer": "therapeutic methods and how to best work with trans people",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q99",
+    "question_type": "adversarial",
+    "question": "What motivated Caroline to pursue counseling?",
+    "answer": "her own journey and the support she received, and how counseling improved her life",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q100",
+    "question_type": "adversarial",
+    "question": "What kind of place does Caroline want to create for people?",
+    "answer": "a safe and inviting place for people to grow",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q101",
+    "question_type": "adversarial",
+    "question": "Did Melanie make the black and white bowl in the photo?",
+    "answer": "Yes",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q102",
+    "question_type": "adversarial",
+    "question": "What kind of books does Caroline have in her library?",
+    "answer": "kids' books - classics, stories from different cultures, educational books",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q103",
+    "question_type": "adversarial",
+    "question": "What was Melanie's favorite book from her childhood?",
+    "answer": "\"Charlotte's Web\"",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q104",
+    "question_type": "adversarial",
+    "question": "What book did Caroline recommend to Melanie?",
+    "answer": "\"Becoming Nicole\"",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q105",
+    "question_type": "adversarial",
+    "question": "What did Caroline take away from the book \"Becoming Nicole\"?",
+    "answer": "Lessons on self-acceptance and finding support",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q106",
+    "question_type": "adversarial",
+    "question": "What are the new shoes that Melanie got used for?",
+    "answer": "Running",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q107",
+    "question_type": "adversarial",
+    "question": "What is Melanie's reason for getting into running?",
+    "answer": "To de-stress and clear her mind",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q108",
+    "question_type": "adversarial",
+    "question": "What does Melanie say running has been great for?",
+    "answer": "Her mental health",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q109",
+    "question_type": "adversarial",
+    "question": "What did Mel and her kids make during the pottery workshop?",
+    "answer": "pots",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q110",
+    "question_type": "adversarial",
+    "question": "What kind of pot did Mel and her kids make with clay?",
+    "answer": "a cup with a dog face on it",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q111",
+    "question_type": "adversarial",
+    "question": "What creative project do Mel and her kids do together besides pottery?",
+    "answer": "painting",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q112",
+    "question_type": "adversarial",
+    "question": "What did Mel and her kids paint in their latest project in July 2023?",
+    "answer": "a sunset with a palm tree",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q113",
+    "question_type": "adversarial",
+    "question": "What did Caroline see at the council meeting for adoption?",
+    "answer": "many people wanting to create loving homes for children in need",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q114",
+    "question_type": "adversarial",
+    "question": "What do sunflowers represent according to Caroline?",
+    "answer": "warmth and happiness",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q115",
+    "question_type": "adversarial",
+    "question": "Why are flowers important to Melanie?",
+    "answer": "They remind her to appreciate the small moments and were a part of her wedding decor",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q116",
+    "question_type": "adversarial",
+    "question": "What inspired Caroline's painting for the art show?",
+    "answer": "visiting an LGBTQ center and wanting to capture unity and strength",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q117",
+    "question_type": "adversarial",
+    "question": "How often does Melanie go to the beach with her kids?",
+    "answer": "once or twice a year",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q118",
+    "question_type": "adversarial",
+    "question": "What did Melanie and her family see during their camping trip last year?",
+    "answer": "Perseid meteor shower",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q119",
+    "question_type": "adversarial",
+    "question": "How did Melanie feel while watching the meteor shower?",
+    "answer": "in awe of the universe",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q120",
+    "question_type": "adversarial",
+    "question": "Whose birthday did Melanie celebrate recently?",
+    "answer": "Melanie's daughter",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q121",
+    "question_type": "adversarial",
+    "question": "Who performed at the concert at Melanie's daughter's birthday?",
+    "answer": "Matt Patterson",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q122",
+    "question_type": "adversarial",
+    "question": "Why did Melanie choose to use colors and patterns in her pottery project?",
+    "answer": "She wanted to catch the eye and make people smile.",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q123",
+    "question_type": "adversarial",
+    "question": "What pet does Caroline have?",
+    "answer": "guinea pig",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q124",
+    "question_type": "adversarial",
+    "question": "What pets does Melanie have?",
+    "answer": "Two cats and a dog",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q125",
+    "question_type": "adversarial",
+    "question": "Where did Oliver hide his bone once?",
+    "answer": "In Melanie's slipper",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q126",
+    "question_type": "adversarial",
+    "question": "What activity did Caroline used to do with her dad?",
+    "answer": "Horseback riding",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q127",
+    "question_type": "adversarial",
+    "question": "What did Caroline make for a local church?",
+    "answer": "a stained glass window",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q128",
+    "question_type": "adversarial",
+    "question": "What did Caroline find in her neighborhood during her walk?",
+    "answer": "a rainbow sidewalk",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q129",
+    "question_type": "adversarial",
+    "question": "Which song motivates Caroline to be courageous?",
+    "answer": "Brave by Sara Bareilles",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q130",
+    "question_type": "adversarial",
+    "question": "Which  classical musicians does Melanie enjoy listening to?",
+    "answer": "Bach and Mozart",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q131",
+    "question_type": "adversarial",
+    "question": "Who is Melanie a fan of in terms of modern music?",
+    "answer": "Ed Sheeran",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q132",
+    "question_type": "adversarial",
+    "question": "How long has Melanie been creating art?",
+    "answer": "7 years",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q133",
+    "question_type": "adversarial",
+    "question": "What precautionary sign did Melanie see at the caf\u00e9?",
+    "answer": "A sign stating that someone is not being able to leave",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q134",
+    "question_type": "adversarial",
+    "question": "What advice does Caroline give for getting started with adoption?",
+    "answer": "Do research, find an adoption agency or lawyer, gather necessary documents, and prepare emotionally.",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q135",
+    "question_type": "adversarial",
+    "question": "What setback did Melanie face in October 2023?",
+    "answer": "She got hurt and had to take a break from pottery.",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q136",
+    "question_type": "adversarial",
+    "question": "What does Melanie do to keep herself busy during her pottery break?",
+    "answer": "Read a book and paint.",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q137",
+    "question_type": "adversarial",
+    "question": "What painting did Melanie show to Caroline on October 13, 2023?",
+    "answer": "A painting inspired by sunsets with a pink sky.",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q138",
+    "question_type": "adversarial",
+    "question": "What kind of painting did Caroline share with Melanie on October 13, 2023?",
+    "answer": "An abstract painting with blue streaks on a wall.",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q139",
+    "question_type": "adversarial",
+    "question": "What was the poetry reading that Caroline attended about?",
+    "answer": "It was a transgender poetry reading where transgender people shared their stories.",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q140",
+    "question_type": "adversarial",
+    "question": "What did the posters at the poetry reading say?",
+    "answer": "\"Trans Lives Matter\"",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q141",
+    "question_type": "adversarial",
+    "question": "What does Caroline's drawing symbolize for her?",
+    "answer": "Freedom and being true to herself.",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q142",
+    "question_type": "adversarial",
+    "question": "How do Melanie and Caroline describe their journey through life together?",
+    "answer": "An ongoing adventure of learning and growing.",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q143",
+    "question_type": "adversarial",
+    "question": "What happened to Melanie's son on their road trip?",
+    "answer": "He got into an accident",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q144",
+    "question_type": "adversarial",
+    "question": "How did Melanie's son handle the accident?",
+    "answer": "He was scared but reassured by his family",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q145",
+    "question_type": "adversarial",
+    "question": "How did Melanie feel about her family after the accident?",
+    "answer": "They are important and mean the world to her",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q146",
+    "question_type": "adversarial",
+    "question": "How did Melanie's children handle the accident?",
+    "answer": "They were scared but resilient",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q147",
+    "question_type": "adversarial",
+    "question": "How did Melanie feel after the accident?",
+    "answer": "Grateful and thankful for her family",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q148",
+    "question_type": "adversarial",
+    "question": "What was Melanie's reaction to her children enjoying the Grand Canyon?",
+    "answer": "She was happy and thankful",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q149",
+    "question_type": "adversarial",
+    "question": "What do Melanie's family give her?",
+    "answer": "Strength and motivation",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q150",
+    "question_type": "adversarial",
+    "question": "How did Melanie feel about her family supporting her?",
+    "answer": "She appreciated them a lot",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q151",
+    "question_type": "adversarial",
+    "question": "What did Melanie do after the road trip to relax?",
+    "answer": "Went on a nature walk or hike",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q152",
+    "question_type": "commonsense",
+    "question": "What did Caroline realize after her charity race?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q153",
+    "question_type": "commonsense",
+    "question": "What are Melanie's plans for the summer with respect to adoption?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q154",
+    "question_type": "commonsense",
+    "question": "What type of individuals does the adoption agency Melanie is considering support?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q155",
+    "question_type": "commonsense",
+    "question": "Why did Melanie choose the adoption agency?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q156",
+    "question_type": "commonsense",
+    "question": "What is Melanie excited about in her adoption process?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q157",
+    "question_type": "commonsense",
+    "question": "What does Melanie's necklace symbolize?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q158",
+    "question_type": "commonsense",
+    "question": "What country is Melanie's grandma from?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q159",
+    "question_type": "commonsense",
+    "question": "What was grandma's gift to Melanie?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q160",
+    "question_type": "commonsense",
+    "question": "What was grandpa's gift to Caroline?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q161",
+    "question_type": "commonsense",
+    "question": "What is Caroline's hand-painted bowl a reminder of?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q162",
+    "question_type": "commonsense",
+    "question": "What did Caroline and her family do while camping?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q163",
+    "question_type": "commonsense",
+    "question": "What kind of counseling and mental health services is Melanie interested in pursuing?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q164",
+    "question_type": "commonsense",
+    "question": "What kind of counseling workshop did Melanie attend recently?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q165",
+    "question_type": "commonsense",
+    "question": "What motivated Melanie to pursue counseling?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q166",
+    "question_type": "commonsense",
+    "question": "What kind of place does Melanie want to create for people?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q167",
+    "question_type": "commonsense",
+    "question": "Did Caroline make the black and white bowl in the photo?",
+    "answer": "No",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q168",
+    "question_type": "commonsense",
+    "question": "What are the new shoes that Caroline got used for?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q169",
+    "question_type": "commonsense",
+    "question": "What is Caroline's reason for getting into running?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q170",
+    "question_type": "commonsense",
+    "question": "What does Caroline say running has been great for?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q171",
+    "question_type": "commonsense",
+    "question": "What did Melanie see at the council meeting for adoption?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q172",
+    "question_type": "commonsense",
+    "question": "What inspired Melanie's painting for the art show?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q173",
+    "question_type": "commonsense",
+    "question": "What inspired Caroline's sculpture for the art show?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q174",
+    "question_type": "commonsense",
+    "question": "How often does Caroline go to the beach with her kids?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q175",
+    "question_type": "commonsense",
+    "question": "What did Caroline and her family see during their camping trip last year?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q176",
+    "question_type": "commonsense",
+    "question": "How did Caroline feel while watching the meteor shower?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q177",
+    "question_type": "commonsense",
+    "question": "Why did Caroline choose to use colors and patterns in her pottery project?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q178",
+    "question_type": "commonsense",
+    "question": "Is Oscar Melanie's pet?",
+    "answer": "No",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q179",
+    "question_type": "commonsense",
+    "question": "Where did Oscar hide his bone once?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q180",
+    "question_type": "commonsense",
+    "question": "What activity did Melanie used to do with her dad?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q181",
+    "question_type": "commonsense",
+    "question": "What did Melanie make for a local church?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q182",
+    "question_type": "commonsense",
+    "question": "What did Melanie find in her neighborhood during her walk?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q183",
+    "question_type": "commonsense",
+    "question": "Which song motivates Melanie to be courageous?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q184",
+    "question_type": "commonsense",
+    "question": "What type of instrument does Caroline play?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q185",
+    "question_type": "commonsense",
+    "question": "Which classical musicians does Caroline enjoy listening to?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q186",
+    "question_type": "commonsense",
+    "question": "Who is Caroline a fan of in terms of modern music?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q187",
+    "question_type": "commonsense",
+    "question": "What precautionary sign did Caroline see at the caf\u00e9?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q188",
+    "question_type": "commonsense",
+    "question": "What setback did Caroline face recently?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q189",
+    "question_type": "commonsense",
+    "question": "What does Caroline do to keep herself busy during her pottery break?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q190",
+    "question_type": "commonsense",
+    "question": "What was the poetry reading that Melanie attended about?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q191",
+    "question_type": "commonsense",
+    "question": "What happened to Caroline's son on their road trip?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q192",
+    "question_type": "commonsense",
+    "question": "How did Caroline's son handle the accident?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q193",
+    "question_type": "commonsense",
+    "question": "How did Caroline feel about her family after the accident?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q194",
+    "question_type": "commonsense",
+    "question": "How did Caroline's children handle the accident?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q195",
+    "question_type": "commonsense",
+    "question": "How did Caroline feel after the accident?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q196",
+    "question_type": "commonsense",
+    "question": "What was Caroline's reaction to her children enjoying the Grand Canyon?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q197",
+    "question_type": "commonsense",
+    "question": "What did Caroline do after the road trip to relax?",
+    "answer": "",
+    "sample_id": "conv-26"
+  },
+  {
+    "question_id": "conv-26_q198",
+    "question_type": "commonsense",
+    "question": "What does Caroline love most about camping with her family?",
+    "answer": "",
+    "sample_id": "conv-26"
+  }
+]

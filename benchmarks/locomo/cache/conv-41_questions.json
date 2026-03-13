@@ -1,0 +1,1353 @@
+[
+  {
+    "question_id": "conv-41_q0",
+    "question_type": "multi_hop",
+    "question": "Who did Maria have dinner with on May 3, 2023?",
+    "answer": "her mother",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q1",
+    "question_type": "multi_hop",
+    "question": "When did Maria donate her car?",
+    "answer": "21 December 2022",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q2",
+    "question_type": "single_hop",
+    "question": "What martial arts has John done?",
+    "answer": "Kickboxing, Taekwondo",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q3",
+    "question_type": "single_hop",
+    "question": "What type of volunteering have John and Maria both done?",
+    "answer": "Volunteering at a homeless shelter",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q4",
+    "question_type": "multi_hop",
+    "question": "When did John join the online support group?",
+    "answer": "The week before 1 January 2023",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q5",
+    "question_type": "multi_hop",
+    "question": "When did Maria go to the beach?",
+    "answer": "December 2022",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q6",
+    "question_type": "single_hop",
+    "question": "Where has Maria made friends?",
+    "answer": "homeless shelter, gym, church",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q7",
+    "question_type": "single_hop",
+    "question": "What items des John mention having as a child?",
+    "answer": "A doll, a film camera",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q8",
+    "question_type": "temporal",
+    "question": "What might John's financial status be?",
+    "answer": "Middle-class or wealthy",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q9",
+    "question_type": "single_hop",
+    "question": "Who gave Maria's family money when she was younger and her family was going through tough times?",
+    "answer": "Her aunt",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q10",
+    "question_type": "multi_hop",
+    "question": "When did Maria meet Jean?",
+    "answer": "February 24, 2023",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q11",
+    "question_type": "single_hop",
+    "question": "What people has Maria met and helped while volunteering?",
+    "answer": "David, Jean, Cindy, Laura",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q12",
+    "question_type": "single_hop",
+    "question": "What test has John taken multiple times?",
+    "answer": "The military aptitude test",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q13",
+    "question_type": "multi_hop",
+    "question": "When did Maria's grandmother pass away?",
+    "answer": "The week before 6 March 2023",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q14",
+    "question_type": "temporal",
+    "question": "Would John be considered a patriotic person?",
+    "answer": "Yes",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q15",
+    "question_type": "single_hop",
+    "question": "What writing classes has Maria taken?",
+    "answer": "Poetry, creative writing",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q16",
+    "question_type": "multi_hop",
+    "question": "When did John get his degree?",
+    "answer": "The week before 2 April 2023",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q17",
+    "question_type": "temporal",
+    "question": "What might John's degree be in?",
+    "answer": "Political science, Public administration, Public affairs",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q18",
+    "question_type": "single_hop",
+    "question": "Who did John go to yoga with?",
+    "answer": "Rob",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q19",
+    "question_type": "single_hop",
+    "question": "What damages have happened to John's car?",
+    "answer": "Broken windshield, Car broke down",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q20",
+    "question_type": "multi_hop",
+    "question": "When did John take a road trip to the Pacific Northwest?",
+    "answer": "2022",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q21",
+    "question_type": "single_hop",
+    "question": "What areas of the U.S. has John been to or is planning to go to?",
+    "answer": "Pacific northwest, east coast",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q22",
+    "question_type": "multi_hop",
+    "question": "When did John go to a convention with colleagues?",
+    "answer": "March 2023",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q23",
+    "question_type": "single_hop",
+    "question": "What desserts has Maria made?",
+    "answer": "Banana split sundae, Peach cobbler",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q24",
+    "question_type": "multi_hop",
+    "question": "When did John start boot camp with his family?",
+    "answer": "April.2023",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q25",
+    "question_type": "single_hop",
+    "question": "What European countries has Maria been to?",
+    "answer": "Spain, England",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q26",
+    "question_type": "single_hop",
+    "question": "What has Maria done to feel closer to her faith?",
+    "answer": "Join a local church, buy a cross necklace",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q27",
+    "question_type": "multi_hop",
+    "question": "When did John have a party with veterans?",
+    "answer": "The Friday before 20 May 2023",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q28",
+    "question_type": "single_hop",
+    "question": "What causes does John feel passionate about supporting?",
+    "answer": "Veterans, schools, infrastructure",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q29",
+    "question_type": "single_hop",
+    "question": "What events is Maria planning for the homeless shelter funraiser?",
+    "answer": "Chili cook-off, ring-toss tournament",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q30",
+    "question_type": "single_hop",
+    "question": "What shelters does Maria volunteer at?",
+    "answer": "The homeless shelter, the dog shelter",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q31",
+    "question_type": "multi_hop",
+    "question": "When did John get his dog Max?",
+    "answer": "In 2013",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q32",
+    "question_type": "single_hop",
+    "question": "What outdoor activities has John done with his colleagues?",
+    "answer": "Hiking, mountaineering",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q33",
+    "question_type": "single_hop",
+    "question": "What types of yoga has Maria practiced?",
+    "answer": "Aerial, kundalini",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q34",
+    "question_type": "multi_hop",
+    "question": "When did Maria join a gym?",
+    "answer": "The week before 16 June 2023",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q35",
+    "question_type": "single_hop",
+    "question": "What states has Maria vacationed at?",
+    "answer": "Oregon, Florida",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q36",
+    "question_type": "single_hop",
+    "question": "What music events has John attended?",
+    "answer": "Live music event, violin concert",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q37",
+    "question_type": "single_hop",
+    "question": "What events for veterans has John participated in?",
+    "answer": "Petition, march, party, visiting veterans hospital, 5K charity run",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q38",
+    "question_type": "multi_hop",
+    "question": "When did Maria get in a car accident?",
+    "answer": "July 2, 2023",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q39",
+    "question_type": "temporal",
+    "question": "Around which US holiday did Maria get into a car accident?",
+    "answer": "Independence Day",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q40",
+    "question_type": "single_hop",
+    "question": "What are the names of John's children?",
+    "answer": "Kyle, Sara",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q41",
+    "question_type": "temporal",
+    "question": "Does John live close to a beach or the mountains?",
+    "answer": "beach",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q42",
+    "question_type": "single_hop",
+    "question": "What area was hit by a flood?",
+    "answer": "West County",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q43",
+    "question_type": "multi_hop",
+    "question": "When was John's old area hit with a flood?",
+    "answer": "The week before 7 July 2023",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q44",
+    "question_type": "single_hop",
+    "question": "What activities has Maria done with her church friends?",
+    "answer": "Hiking, picnic, volunteer work",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q45",
+    "question_type": "temporal",
+    "question": "Would John be open to moving to another country?",
+    "answer": "No, he has goals specifically in the U.S. like joining the military and running for office.",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q46",
+    "question_type": "multi_hop",
+    "question": "When did Maria go hiking with her church friends?",
+    "answer": "The weekend before 22 July 2023",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q47",
+    "question_type": "single_hop",
+    "question": "What exercises has John done?",
+    "answer": "Weight training, Circuit training, Kickboxing, yoga",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q48",
+    "question_type": "multi_hop",
+    "question": "When did John have his first firefighter call-out?",
+    "answer": "The sunday before 3` July 2023",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q49",
+    "question_type": "single_hop",
+    "question": "What food item did Maria drop off at the homeless shelter?",
+    "answer": "Cakes",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q50",
+    "question_type": "temporal",
+    "question": "What attributes describe John?",
+    "answer": "Selfless, family-oriented, passionate, rational",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q51",
+    "question_type": "multi_hop",
+    "question": "When did Maria start volunteering at the homeless shelter?",
+    "answer": "Around August 2022",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q52",
+    "question_type": "single_hop",
+    "question": "Who have written notes of gratitude to Maria?",
+    "answer": "Cindy, Laura",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q53",
+    "question_type": "multi_hop",
+    "question": "When did John help renovate his hometown community center?",
+    "answer": "2022",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q54",
+    "question_type": "multi_hop",
+    "question": "When did Maria take up community work with her church friends?",
+    "answer": "August 4, 2023",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q55",
+    "question_type": "multi_hop",
+    "question": "When did Maria receive a medal from the homeless shelter?",
+    "answer": "The week before 9 August 2023",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q56",
+    "question_type": "multi_hop",
+    "question": "When did John participate in a 5K charity run?",
+    "answer": "first weekend of August 2023",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q57",
+    "question_type": "single_hop",
+    "question": "What causes has John done events for?",
+    "answer": "Toy drive, Community food drive, veterans, domestic violence",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q58",
+    "question_type": "multi_hop",
+    "question": "When did Maria get Coco?",
+    "answer": "Two weeks before 11 August 2023",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q59",
+    "question_type": "multi_hop",
+    "question": "When did John go on a camping trip with Max?",
+    "answer": "The summer of 2022",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q60",
+    "question_type": "single_hop",
+    "question": "What are Maria's dogs' names?",
+    "answer": "Coco, Shadow",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q61",
+    "question_type": "multi_hop",
+    "question": "When did Maria adopt Shadow?",
+    "answer": "The week before 13 August 2023",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q62",
+    "question_type": "single_hop",
+    "question": "How many dogs has Maria adopted from the dog shelter she volunteers at?",
+    "answer": "two",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q63",
+    "question_type": "multi_hop",
+    "question": "How many weeks passed between Maria adopting Coco and Shadow?",
+    "answer": "two weeks",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q64",
+    "question_type": "temporal",
+    "question": "What job might Maria pursue in the future?",
+    "answer": "Shelter coordinator, Counselor",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q65",
+    "question_type": "adversarial",
+    "question": "What is John's main focus in local politics?",
+    "answer": "Improving education and infrastructure",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q66",
+    "question_type": "adversarial",
+    "question": "What sparked John's interest in improving education and infrastructure in the community?",
+    "answer": "Seeing how lack of education and crumbling infrastructure affected his neighborhood while growing up.",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q67",
+    "question_type": "adversarial",
+    "question": "How did the extra funding help the school shown in the photo shared by John?",
+    "answer": "Enabled needed repairs and renovations, making the learning environment safer and more modern for students.",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q68",
+    "question_type": "adversarial",
+    "question": "What type of workout class did Maria start doing in December 2023?",
+    "answer": "aerial yoga",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q69",
+    "question_type": "adversarial",
+    "question": "What did Maria donate to a homeless shelter in December 2023?",
+    "answer": "old car",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q70",
+    "question_type": "adversarial",
+    "question": "What kind of meal did John and his family make together in the photo shared by John?",
+    "answer": "pizza",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q71",
+    "question_type": "adversarial",
+    "question": "What kind of online group did John join?",
+    "answer": "service-focused online group",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q72",
+    "question_type": "adversarial",
+    "question": "What kind of activities did John and his mates from the online group do as part of their service efforts?",
+    "answer": "gave out food and supplies at a homeless shelter, organized a toy drive for kids in need",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q73",
+    "question_type": "adversarial",
+    "question": "Who inspired Maria to start volunteering?",
+    "answer": "Her aunt",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q74",
+    "question_type": "adversarial",
+    "question": "Why did Maria sit with the little girl at the shelter event in February 2023?",
+    "answer": "The girl seemed sad and had no other family",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q75",
+    "question_type": "adversarial",
+    "question": "What did Jean go through before meeting Maria?",
+    "answer": "divorce, job loss, homelessness",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q76",
+    "question_type": "adversarial",
+    "question": "Why did John decide to run for office again?",
+    "answer": "saw the impact he could make in the community through politics",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q77",
+    "question_type": "adversarial",
+    "question": "What activity did John's colleague, Rob, invite him to?",
+    "answer": "beginner's yoga class",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q78",
+    "question_type": "adversarial",
+    "question": "What is the name of John's one-year-old child?",
+    "answer": "Kyle",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q79",
+    "question_type": "adversarial",
+    "question": "How often does John take his kids to the park?",
+    "answer": "A few times a week",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q80",
+    "question_type": "adversarial",
+    "question": "What did Maria make for her home to remind her of a trip to England?",
+    "answer": "painting of a castle on a hill",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q81",
+    "question_type": "adversarial",
+    "question": "Where did Maria get the idea for the castle shadow box in her home?",
+    "answer": "England",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q82",
+    "question_type": "adversarial",
+    "question": "What did John receive a certificate for?",
+    "answer": "completion of a university degree",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q83",
+    "question_type": "adversarial",
+    "question": "What areas is John particularly interested in for policymaking?",
+    "answer": "education and infrastructure",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q84",
+    "question_type": "adversarial",
+    "question": "What did Maria participate in last weekend before April 10, 2023?",
+    "answer": "a 5K charity run",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q85",
+    "question_type": "adversarial",
+    "question": "What event did John volunteer at last weekend?",
+    "answer": "career fair at a local school",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q86",
+    "question_type": "adversarial",
+    "question": "What did John do that put a strain on his wallet?",
+    "answer": "His car broke down",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q87",
+    "question_type": "adversarial",
+    "question": "Where did John explore on a road trip last year?",
+    "answer": "Pacific Northwest",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q88",
+    "question_type": "adversarial",
+    "question": "What topic has John been blogging about recently?",
+    "answer": "politics and the government",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q89",
+    "question_type": "adversarial",
+    "question": "Why did John start blogging about politics and policies?",
+    "answer": "raise awareness and start conversations to create positive change",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q90",
+    "question_type": "adversarial",
+    "question": "What was the focus of John's recent research and writing on his blog?",
+    "answer": "education reform and infrastructure development",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q91",
+    "question_type": "multi_hop",
+    "question": "What did John attend with his colleagues in March 2023?",
+    "answer": "a tech-for-good convention",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q92",
+    "question_type": "adversarial",
+    "question": "How often does John work out with his family?",
+    "answer": "Three times a week",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q93",
+    "question_type": "adversarial",
+    "question": "How has John's fitness improved since starting boot camps with his family?",
+    "answer": "More energy, gains in strength and endurance",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q94",
+    "question_type": "adversarial",
+    "question": "What kind of food did Maria have on her dinner spread iwth her mother?",
+    "answer": "Salads, sandwiches, homemade desserts",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q95",
+    "question_type": "adversarial",
+    "question": "What activity did Maria and her mom do together in May 2023?",
+    "answer": "Made dinner together",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q96",
+    "question_type": "adversarial",
+    "question": "What did Maria do to feel closer to a community and her faith?",
+    "answer": "joined a nearby church",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q97",
+    "question_type": "adversarial",
+    "question": "Why did Maria join a nearby church recently?",
+    "answer": "to feel closer to a community and her faith",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q98",
+    "question_type": "adversarial",
+    "question": "What did John host for the veterans in May 2023 as part of the project?",
+    "answer": "a small party to share their stories",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q99",
+    "question_type": "adversarial",
+    "question": "What did John and the veterans do during the small party?",
+    "answer": "share stories and make connections",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q100",
+    "question_type": "adversarial",
+    "question": "What emotions did John feel during the small party with the veterans?",
+    "answer": "heartwarming",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q101",
+    "question_type": "adversarial",
+    "question": "What event is Maria getting ready for at the shelter on May 25, 2023?",
+    "answer": "fundraiser",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q102",
+    "question_type": "adversarial",
+    "question": "What does Maria need to spread the word about for the fundraiser for the volunteer shelter?",
+    "answer": "chili cook-off",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q103",
+    "question_type": "adversarial",
+    "question": "What was the name of the pet that John had to say goodbye to on 3 June, 2023?",
+    "answer": "Max",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q104",
+    "question_type": "adversarial",
+    "question": "How long was Max a part of John's family?",
+    "answer": "10 years",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q105",
+    "question_type": "adversarial",
+    "question": "How does John plan to honor the memories of his beloved pet?",
+    "answer": "By considering adopting a rescue dog",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q106",
+    "question_type": "adversarial",
+    "question": "What important values does John want to teach his kids through adopting a rescue dog?",
+    "answer": "Responsibility and compassion",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q107",
+    "question_type": "adversarial",
+    "question": "What new activity did Maria start recently, as mentioned on 3 June, 2023?",
+    "answer": "volunteering at a local dog shelter once a month",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q108",
+    "question_type": "adversarial",
+    "question": "What did Maria say it was like being at the waterfall in Oregon?",
+    "answer": "Like being in a fairy tale",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q109",
+    "question_type": "adversarial",
+    "question": "What does Maria say she feels when doing upside-down yoga poses?",
+    "answer": "Free and light",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q110",
+    "question_type": "adversarial",
+    "question": "What exciting news did Maria share on 16 June, 2023?",
+    "answer": "joined a gym",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q111",
+    "question_type": "adversarial",
+    "question": "What yoga activity has Maria been trying to improve her strength and endurance?",
+    "answer": "kundalini yoga",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q112",
+    "question_type": "adversarial",
+    "question": "What did John recently get promoted to?",
+    "answer": "assistant manager",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q113",
+    "question_type": "adversarial",
+    "question": "What was one of the biggest challenges John faced in his journey to becoming assistant manager?",
+    "answer": "self-doubt",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q114",
+    "question_type": "adversarial",
+    "question": "How does John describe the support he received during his journey to becoming assistant manager?",
+    "answer": "having support at home and his own grit",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q115",
+    "question_type": "adversarial",
+    "question": "What kind of event did John and his family attend in June 2023?",
+    "answer": "live music event",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q116",
+    "question_type": "adversarial",
+    "question": "Why did Maria need to help her cousin find a new place to live?",
+    "answer": "Her cousin had to leave and find a new place in a hurry.",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q117",
+    "question_type": "adversarial",
+    "question": "What event did John participate in to show support for veterans' rights?",
+    "answer": "marching event",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q118",
+    "question_type": "adversarial",
+    "question": "What inspired John to join the marching event for veterans' rights?",
+    "answer": "Respect for the military and the desire to show support",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q119",
+    "question_type": "adversarial",
+    "question": "How often does John get to see sunsets like the one he shared with Maria?",
+    "answer": "At least once a week",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q120",
+    "question_type": "adversarial",
+    "question": "What natural disaster affected John's old area on 7 July, 2023?",
+    "answer": "Flood",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q121",
+    "question_type": "adversarial",
+    "question": "How did the flood impact the homes in John's old area?",
+    "answer": "Lots of homes were ruined.",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q122",
+    "question_type": "adversarial",
+    "question": "What motivated Maria and John to discuss potential solutions for their community on 7 July, 2023?",
+    "answer": "Flood in John's old area",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q123",
+    "question_type": "adversarial",
+    "question": "What did Maria plan to do later on the evening of 7 July, 2023?",
+    "answer": "have dinner with friends from the gym",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q124",
+    "question_type": "adversarial",
+    "question": "What kind of activities did Maria do at the picnic with her church friends?",
+    "answer": "played games like charades and a scavenger hunt",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q125",
+    "question_type": "adversarial",
+    "question": "What does John appreciate about the veteran's hospital visit?",
+    "answer": "the resilience of the veterans and their inspiring stories",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q126",
+    "question_type": "adversarial",
+    "question": "What did John take away from visiting the veteran's hospital?",
+    "answer": "appreciation for giving back",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q127",
+    "question_type": "adversarial",
+    "question": "Why did John feel inspired to join the military after the visit to the hospital?",
+    "answer": "seeing the resilience of the veterans",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q128",
+    "question_type": "adversarial",
+    "question": "In what activity did Maria and her church friends participate in July 2023?",
+    "answer": "hiking",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q129",
+    "question_type": "adversarial",
+    "question": "What does John think about trying new classes at the yoga studio?",
+    "answer": "Trying new classes is a fun way to switch up the exercise routine.",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q130",
+    "question_type": "adversarial",
+    "question": "Which activity has John done apart from yoga at the studio?",
+    "answer": "weight training",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q131",
+    "question_type": "adversarial",
+    "question": "What community service did Maria mention that she was involved in on 31 July, 2023?",
+    "answer": "volunteered at a homeless shelter",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q132",
+    "question_type": "adversarial",
+    "question": "How did Maria start volunteering at the homeless shelter?",
+    "answer": "Witnessed a family struggling on the streets and reached out to the shelter",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q133",
+    "question_type": "adversarial",
+    "question": "What did John do the week before August 3, 2023 involving his kids?",
+    "answer": "Had a meaningful experience at a military memorial",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q134",
+    "question_type": "adversarial",
+    "question": "How did John describe his kids' reaction at the military memorial?",
+    "answer": "awestruck and humbled",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q135",
+    "question_type": "adversarial",
+    "question": "Why does Maria think it's important for younger generations to visit military memorials?",
+    "answer": "To remember and appreciate those who served",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q136",
+    "question_type": "adversarial",
+    "question": "What does John believe is important for children regarding veterans?",
+    "answer": "Teaching them to respect and appreciate those who served",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q137",
+    "question_type": "adversarial",
+    "question": "What happened to John's job in August 2023?",
+    "answer": "John lost his job at the mechanical engineering company.",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q138",
+    "question_type": "adversarial",
+    "question": "What activity did Maria take up with her friends from church in August 2023?",
+    "answer": "community work",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q139",
+    "question_type": "adversarial",
+    "question": "What did John do to help his community last year in his hometown?",
+    "answer": "Helped renovate a rundown community center.",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q140",
+    "question_type": "adversarial",
+    "question": "What cause did the 5K charity run organized by John support?",
+    "answer": "veterans and their families",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q141",
+    "question_type": "adversarial",
+    "question": "Who did John work with to raise awareness and funds for victims of domestic abuse?",
+    "answer": "a local organization",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q142",
+    "question_type": "adversarial",
+    "question": "What recognition did Maria receive at the homeless shelter in August 2023?",
+    "answer": "a medal for volunteering",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q143",
+    "question_type": "adversarial",
+    "question": "What is the name of Maria's puppy she got two weeks before August 11, 2023?",
+    "answer": "Coco",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q144",
+    "question_type": "adversarial",
+    "question": "What activity did John and Max enjoy together last summer?",
+    "answer": "Camping",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q145",
+    "question_type": "adversarial",
+    "question": "How does John describe the camping trip with Max?",
+    "answer": "Peaceful and awesome",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q146",
+    "question_type": "adversarial",
+    "question": "Why does John say he feels stuck and questioning his decisions and goals?",
+    "answer": "Not feeling like making much of an impact",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q147",
+    "question_type": "adversarial",
+    "question": "What is the name of Maria's second puppy?",
+    "answer": "Shadow",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q148",
+    "question_type": "adversarial",
+    "question": "How is Maria's new puppy adjusting to its new home?",
+    "answer": "doing great - learning commands and house training",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q149",
+    "question_type": "adversarial",
+    "question": "What is John currently doing as a volunteer in August 2023?",
+    "answer": "mentoring students at a local school",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q150",
+    "question_type": "adversarial",
+    "question": "What activities does John's family enjoy doing together?",
+    "answer": "going for hikes, hanging out at the park, having picnics, playing board games, having movie nights",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q151",
+    "question_type": "adversarial",
+    "question": "What did the donations help John's community acquire on 16 August, 2023?",
+    "answer": "a brand new fire truck",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q152",
+    "question_type": "commonsense",
+    "question": "What is John's main focus in international politics?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q153",
+    "question_type": "commonsense",
+    "question": "What did Maria donate to a luxury store in December 2023?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q154",
+    "question_type": "commonsense",
+    "question": "Who inspired John to start volunteering?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q155",
+    "question_type": "commonsense",
+    "question": "Why did Maria decide to run for office again?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q156",
+    "question_type": "commonsense",
+    "question": "What activity did Maria's colleague, Rob, invite her to?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q157",
+    "question_type": "commonsense",
+    "question": "What is the name of Maria's one-year-old child?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q158",
+    "question_type": "commonsense",
+    "question": "How often does John take his kids to the library?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q159",
+    "question_type": "commonsense",
+    "question": "What did Maria make for her home to remind her of a trip to France?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q160",
+    "question_type": "commonsense",
+    "question": "Where did John get the idea for the castle shadow box in his home?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q161",
+    "question_type": "commonsense",
+    "question": "What did Maria receive a certificate for?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q162",
+    "question_type": "commonsense",
+    "question": "What areas is John particularly interested in for art appreciation?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q163",
+    "question_type": "commonsense",
+    "question": "Why did Maria start blogging about politics and policies?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q164",
+    "question_type": "commonsense",
+    "question": "What was the focus of John's recent travel and photography blog?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q165",
+    "question_type": "commonsense",
+    "question": "How often does Maria work out with her family?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q166",
+    "question_type": "commonsense",
+    "question": "How has John's artistic skills improved since starting boot camps with his family?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q167",
+    "question_type": "commonsense",
+    "question": "What kind of food did Maria have on her dinner spread with her father?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q168",
+    "question_type": "commonsense",
+    "question": "What did John do to feel closer to a community and his faith?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q169",
+    "question_type": "commonsense",
+    "question": "Why did John join a nearby church recently?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q170",
+    "question_type": "commonsense",
+    "question": "How long was Max a part of Maria's family?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q171",
+    "question_type": "commonsense",
+    "question": "How does Maria plan to honor the memories of her beloved pet?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q172",
+    "question_type": "commonsense",
+    "question": "What important values does Maria want to teach her kids through adopting a rescue dog?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q173",
+    "question_type": "commonsense",
+    "question": "What did Maria say it was like being at the desert in Oregon?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q174",
+    "question_type": "commonsense",
+    "question": "What does John say she feels when doing upside-down yoga poses?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q175",
+    "question_type": "commonsense",
+    "question": "What did Maria recently get promoted to?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q176",
+    "question_type": "commonsense",
+    "question": "What was one of the biggest challenges Maria faced in her journey to becoming assistant manager?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q177",
+    "question_type": "commonsense",
+    "question": "Why did John need to help his cousin find a new place to live?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q178",
+    "question_type": "commonsense",
+    "question": "What event did Maria participate in to show support for veterans' rights?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q179",
+    "question_type": "commonsense",
+    "question": "How did the drought impact the homes in John's old area?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q180",
+    "question_type": "commonsense",
+    "question": "What does John criticize about the veteran's hospital visit?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q181",
+    "question_type": "commonsense",
+    "question": "What did John take away from visiting the orphanage?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q182",
+    "question_type": "commonsense",
+    "question": "Why did Maria feel inspired to join the military after the visit to the hospital?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q183",
+    "question_type": "commonsense",
+    "question": "How did Maria describe her kids' reaction at the military memorial?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q184",
+    "question_type": "commonsense",
+    "question": "Why does Maria think it's important for younger generations to visit art galleries?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q185",
+    "question_type": "commonsense",
+    "question": "What happened to Maria's job in August 2023?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q186",
+    "question_type": "commonsense",
+    "question": "What cause did the 5K charity run organized by Maria support?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q187",
+    "question_type": "commonsense",
+    "question": "Who did John work with to raise awareness and funds for animal welfare?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q188",
+    "question_type": "commonsense",
+    "question": "What recognition did John receive at the homeless shelter in August 2023?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q189",
+    "question_type": "commonsense",
+    "question": "What is the name of John's puppy he got two weeks before August 11, 2023?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q190",
+    "question_type": "commonsense",
+    "question": "How does Maria describe the camping trip with Max?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q191",
+    "question_type": "commonsense",
+    "question": "What is the name of Maria's second kitten?",
+    "answer": "",
+    "sample_id": "conv-41"
+  },
+  {
+    "question_id": "conv-41_q192",
+    "question_type": "commonsense",
+    "question": "How is John's new puppy adjusting to its new home?",
+    "answer": "",
+    "sample_id": "conv-41"
+  }
+]

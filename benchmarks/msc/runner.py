@@ -50,6 +50,7 @@ from benchmarks.msc.baselines import (
     pie_temporal,
     BASELINES,
 )
+from benchmarks.formatting import format_qa_result, format_summary_header
 
 logging.basicConfig(
     level=logging.INFO,
@@ -62,28 +63,33 @@ logger = logging.getLogger("pie.bench.msc")
 # ── Evaluation ────────────────────────────────────────────────────────────────
 
 RESPONSE_JUDGE_SYSTEM = """\
-You are evaluating the quality of a conversational response.
-Score on multiple dimensions:
+You are evaluating whether a generated response contains the CORRECT FACTUAL CONTENT.
 
-1. Fluency (0-1): Is the response natural and grammatically correct?
-2. Relevance (0-1): Does it appropriately continue the conversation?
-3. Consistency (0-1): Is it consistent with the speaker's persona/history?
-4. Engagingness (0-1): Is it interesting and engaging?
+Score on these dimensions:
 
-Output JSON: {"fluency": X, "relevance": X, "consistency": X, "engagingness": X, "overall": X, "reason": "..."}
-Overall should be the average of the four scores."""
+1. Factual Accuracy (0-1): Does the response contain the same key facts as the reference? \
+This is the MOST IMPORTANT dimension. A response that is fluent but factually wrong scores 0.
+2. Consistency (0-1): Is it consistent with the speaker's persona facts?
+3. Relevance (0-1): Does it address what was asked?
+
+CRITICAL: If the reference answer states specific facts (e.g. "I like hiking and cooking") \
+and the response does NOT mention those facts or mentions DIFFERENT facts, \
+Factual Accuracy MUST be 0.
+
+Output JSON: {"factual_accuracy": X, "consistency": X, "relevance": X, "overall": X, "reason": "..."}
+Overall = 0.6 * factual_accuracy + 0.25 * consistency + 0.15 * relevance."""
 
 RESPONSE_JUDGE_USER = """\
-Persona: {personas}
+Persona facts: {personas}
 
-Conversation context:
+Conversation context (abbreviated):
 {context}
 
-Generated response: {response}
+REFERENCE answer (ground truth): {reference}
 
-Reference response (if available): {reference}
+Generated response to evaluate: {response}
 
-Score the generated response:"""
+Does the generated response contain the same key facts as the REFERENCE answer? Score it:"""
 
 QA_JUDGE_SYSTEM = """\
 Evaluate if the predicted answer is correct:
@@ -122,12 +128,27 @@ def judge_response(
         if isinstance(parsed, str):
             parsed = json.loads(parsed)
 
-        overall = float(parsed.get("overall", 0.5))
+        # Use the weighted overall, or compute it from components
+        overall = float(parsed.get("overall", 0.0))
+        factual = float(parsed.get("factual_accuracy", 0.0))
+
+        # If factual accuracy is 0, cap overall at 0.2 regardless of other scores
+        if factual < 0.3:
+            overall = min(overall, 0.2)
+
+        # Discretize: >= 0.7 → 1.0, >= 0.4 → 0.5, else 0.0
+        if overall >= 0.7:
+            overall = 1.0
+        elif overall >= 0.4:
+            overall = 0.5
+        else:
+            overall = 0.0
+
         return overall, parsed
 
     except Exception as e:
         logger.warning(f"Judge failed: {e}")
-        return 0.5, {"error": str(e)}
+        return 0.0, {"error": str(e)}
 
 
 def judge_qa(
@@ -249,14 +270,11 @@ def run_benchmark(
         output_dir = Path(output_dir)
         output_dir.mkdir(parents=True, exist_ok=True)
 
-    logger.info(f"Running MSC benchmark: {baseline_name}")
-    logger.info(f"  Items: {total}")
+    print(format_summary_header("MSC", baseline_name, total))
 
     for i, item in enumerate(items):
         item_id = item["item_id"]
         item_type = item.get("item_type", "unknown")
-
-        logger.info(f"[{i+1}/{total}] {item_id} ({item_type})")
 
         try:
             # Run baseline
@@ -292,11 +310,21 @@ def run_benchmark(
 
             scores.add(result, score, details)
 
-            emoji = "✅" if score >= 0.7 else "🟡" if score >= 0.4 else "❌"
-            logger.info(f"  {emoji} {score:.2f} | {result.latency_ms:.0f}ms")
-
-            if debug:
-                print(f"  Response: {result.hypothesis[:100]}...")
+            # Get question and expected for display
+            question = item.get("question", item.get("context_text", "")[:200])
+            expected = item.get("answer", item.get("expected_response", ""))
+            
+            # Always print formatted Q&A
+            print(format_qa_result(
+                idx=i + 1,
+                total=total,
+                question=question,
+                expected=expected,
+                predicted=result.hypothesis,
+                score=score,
+                qtype=item_type,
+                latency_ms=result.latency_ms,
+            ))
 
         except Exception as e:
             logger.error(f"  ❌ Error: {e}")

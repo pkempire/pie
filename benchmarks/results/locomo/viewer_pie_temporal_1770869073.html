@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>PIE Benchmark Viewer</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: #0a0a0a; color: #e0e0e0; padding: 20px; }
+  h1 { color: #fff; margin-bottom: 8px; }
+  h2 { color: #a78bfa; margin: 24px 0 12px; border-bottom: 1px solid #333; padding-bottom: 4px; }
+  h3 { color: #7dd3fc; margin: 16px 0 8px; }
+  .summary { background: #1a1a2e; padding: 16px; border-radius: 8px; margin: 16px 0;
+              display: flex; gap: 24px; flex-wrap: wrap; }
+  .stat { text-align: center; }
+  .stat .num { font-size: 32px; font-weight: bold; color: #a78bfa; }
+  .stat .label { font-size: 12px; color: #888; }
+  .type-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 8px; margin: 12px 0; }
+  .type-card { background: #1e1e2e; padding: 10px; border-radius: 6px; text-align: center; }
+  .type-card .name { font-size: 12px; color: #888; }
+  .type-card .score { font-size: 20px; font-weight: bold; }
+  .convo-section { background: #111; border: 1px solid #222; border-radius: 8px;
+                    margin: 12px 0; overflow: hidden; }
+  .convo-header { background: #1a1a2e; padding: 12px 16px; cursor: pointer; display: flex;
+                   justify-content: space-between; align-items: center; }
+  .convo-header:hover { background: #222244; }
+  .convo-body { padding: 16px; display: none; }
+  .convo-body.open { display: block; }
+  .entity-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                  gap: 8px; margin: 8px 0; }
+  .entity-card { background: #1a1a2e; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #a78bfa; }
+  .entity-card.has-transitions { border-left-color: #facc15; }
+  .entity-name { font-weight: bold; color: #fff; }
+  .entity-type { font-size: 11px; color: #888; }
+  .entity-state { font-size: 12px; color: #aaa; margin-top: 4px; }
+  .entity-transitions { font-size: 11px; color: #7dd3fc; margin-top: 4px; }
+  .entity-transitions .trans { margin: 2px 0; }
+  .trans-creation { color: #4ade80; }
+  .trans-update { color: #facc15; }
+  .trans-contradiction { color: #f87171; }
+  .trans-archival { color: #888; }
+  .dynamics-box { background: #0d0d1a; padding: 12px; border-radius: 6px; margin: 8px 0;
+                   font-family: monospace; font-size: 12px; white-space: pre-wrap;
+                   max-height: 300px; overflow-y: auto; border: 1px solid #333; }
+  .extraction-log { font-family: monospace; font-size: 12px; background: #0d0d1a;
+                     padding: 8px; border-radius: 4px; margin: 8px 0; max-height: 200px;
+                     overflow-y: auto; }
+  .extraction-log .ok { color: #4ade80; }
+  .extraction-log .err { color: #f87171; }
+  .qa-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .qa-table th { text-align: left; padding: 8px; background: #1a1a2e; color: #a78bfa;
+                  border-bottom: 1px solid #333; position: sticky; top: 0; }
+  .qa-table td { padding: 8px; border-bottom: 1px solid #1a1a1a; vertical-align: top; }
+  .qa-table tr:hover { background: #111122; }
+  .pass { color: #4ade80; }
+  .fail { color: #f87171; }
+  .q-text { max-width: 300px; }
+  .ans-text { max-width: 200px; word-break: break-word; }
+  details { margin: 8px 0; }
+  details summary { cursor: pointer; color: #7dd3fc; font-size: 13px; }
+  .filter-bar { margin: 12px 0; display: flex; gap: 8px; flex-wrap: wrap; }
+  .filter-btn { background: #1e1e2e; border: 1px solid #333; color: #e0e0e0; padding: 4px 12px;
+                 border-radius: 4px; cursor: pointer; font-size: 12px; }
+  .filter-btn.active { background: #a78bfa; color: #000; border-color: #a78bfa; }
+</style></head><body>
+<h1>PIE Benchmark Viewer</h1>
+<p style="color:#888">locomo / pie_temporal / gpt-4o</p>
+
+<div class="summary">
+  <div class="stat"><div class="num">80/199</div><div class="label">Correct (rough match)</div></div>
+  <div class="stat"><div class="num">40%</div><div class="label">Accuracy</div></div>
+  <div class="stat"><div class="num">1</div><div class="label">Conversations</div></div>
+  <div class="stat"><div class="num">5</div><div class="label">Total Entities</div></div>
+  <div class="stat"><div class="num">242</div><div class="label">Total Transitions</div></div>
+</div>
+<h2>By Question Type</h2><div class="type-grid">
+<div class="type-card"><div class="name">adversarial</div><div class="score" style="color:#f87171">15/70 (21%)</div></div>
+<div class="type-card"><div class="name">commonsense</div><div class="score" style="color:#4ade80">47/47 (100%)</div></div>
+<div class="type-card"><div class="name">multi_hop</div><div class="score" style="color:#f87171">6/37 (16%)</div></div>
+<div class="type-card"><div class="name">single_hop</div><div class="score" style="color:#f87171">6/32 (19%)</div></div>
+<div class="type-card"><div class="name">temporal</div><div class="score" style="color:#facc15">6/13 (46%)</div></div>
+</div>
+<h2>World Models &amp; Extraction</h2>
+<div class="convo-section">
+  <div class="convo-header" onclick="this.nextElementSibling.classList.toggle('open')">
+    <span><strong>conv-26</strong> — 5 entities, 242 transitions, 199 questions, 227.7s</span>
+    <span>▼</span>
+  </div>
+  <div class="convo-body">
+<h3>Extraction Log</h3><div class="extraction-log">
+<div class="ok">Session 1: 2,033 chars → 8 extracted, 5 new (total: 5)</div>
+<div class="ok">Session 2: 2,913 chars → 10 extracted, 0 new (total: 5)</div>
+<div class="ok">Session 3: 4,994 chars → 18 extracted, 0 new (total: 5)</div>
+<div class="ok">Session 4: 3,568 chars → 10 extracted, 0 new (total: 5)</div>
+<div class="ok">Session 5: 2,503 chars → 10 extracted, 0 new (total: 5)</div>
+<div class="ok">Session 6: 2,852 chars → 10 extracted, 0 new (total: 5)</div>
+<div class="ok">Session 7: 4,438 chars → 13 extracted, 0 new (total: 5)</div>
+<div class="ok">Session 8: 6,029 chars → 19 extracted, 0 new (total: 5)</div>
+<div class="ok">Session 9: 2,578 chars → 10 extracted, 0 new (total: 5)</div>
+<div class="ok">Session 10: 4,397 chars → 9 extracted, 0 new (total: 5)</div>
+<div class="ok">Session 11: 3,645 chars → 11 extracted, 0 new (total: 5)</div>
+<div class="ok">Session 12: 3,224 chars → 15 extracted, 0 new (total: 5)</div>
+<div class="ok">Session 13: 3,200 chars → 12 extracted, 0 new (total: 5)</div>
+<div class="ok">Session 14: 6,029 chars → 14 extracted, 0 new (total: 5)</div>
+<div class="ok">Session 15: 4,653 chars → 11 extracted, 0 new (total: 5)</div>
+<div class="ok">Session 16: 4,375 chars → 24 extracted, 0 new (total: 5)</div>
+<div class="ok">Session 17: 4,526 chars → 14 extracted, 0 new (total: 5)</div>
+<div class="ok">Session 18: 3,386 chars → 11 extracted, 0 new (total: 5)</div>
+<div class="ok">Session 19: 2,881 chars → 13 extracted, 0 new (total: 5)</div>
+</div>
+<h3>Transition Dynamics</h3>
+<div class="dynamics-box"># World Model Dynamics Report
+
+Entities: 5
+Stale: 1
+Volatile: 2
+Co-occurrences found: 7
+
+## Entity Type Dynamics
+  concept: 5 entities, 48.4 transitions avg, ~11 days between changes, 0% contradiction rate
+
+## Stale Entities (likely needing update)
+  - Caroline&#x27;s career interests: staleness=0.78
+
+## Volatile Entities (high change frequency)
+  - Caroline&#x27;s education plans: volatility=4.07
+  - Melanie&#x27;s painting: volatility=2.30
+
+## Transition Co-occurrences (causal signals)
+  - Caroline&#x27;s education plans ↔ Melanie&#x27;s painting: 611x (lag: 0.0h, conf: 1.00)
+  - Caroline&#x27;s education plans ↔ Caroline&#x27;s career interests: 14x (lag: 0.0h, conf: 1.00)
+  - Caroline&#x27;s career interests ↔ Melanie&#x27;s painting: 9x (lag: 0.0h, conf: 1.00)
+  - Caroline&#x27;s support group experience ↔ Melanie&#x27;s painting: 3x (lag: 0.0h, conf: 1.00)
+  - Caroline&#x27;s feelings about the support group ↔ Melanie&#x27;s painting: 3x (lag: 0.0h, conf: 1.00)
+  - Caroline&#x27;s support group experience ↔ Caroline&#x27;s education plans: 2x (lag: 0.0h, conf: 1.00)
+  - Caroline&#x27;s education plans ↔ Caroline&#x27;s feelings about the support group: 2x (lag: 0.0h, conf: 1.00)
+
+## Predicted Next Transitions
+  - Caroline&#x27;s career interests: likely update (conf: 0.58) — Last transition 108 days ago (avg interval: 30 days, volatility: 0.68)
+
+## Recurring Transition Patterns
+  - update → update (234x) e.g. Caroline&#x27;s education plans, Caroline&#x27;s education plans
+  - update → update → update (231x) e.g. Caroline&#x27;s education plans, Caroline&#x27;s education plans
+  - update → update → update → update (229x) e.g. Caroline&#x27;s education plans, Caroline&#x27;s education plans
+  - update → update → update → update → update (227x) e.g. Caroline&#x27;s education plans, Caroline&#x27;s education plans
+  - creation → update (3x) e.g. Caroline&#x27;s education plans, Caroline&#x27;s career interests</div>
+<h3>Entities (5) — 242 transitions</h3>
+<div class="entity-grid">
+<div class="entity-card has-transitions"><div class="entity-name">Caroline&#x27;s career interests</div><div class="entity-type">concept</div><div class="entity-state">description: Caroline is looking into counseling or mental health work, passionate about helping people and making a positive impact.</div>
+<div class="entity-transitions">
+<div class="trans trans-creation">2023-05-08 [creation] First appearance of Caroline&#x27;s career interests</div>
+<div class="trans trans-update">2023-06-27 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-06 [update] Updated from session</div>
+</div>
+</div>
+<div class="entity-card has-transitions"><div class="entity-name">Caroline&#x27;s education plans</div><div class="entity-type">concept</div><div class="entity-state">description: One of the two speakers.</div>
+<div class="entity-transitions">
+<div class="trans trans-creation">2023-05-08 [creation] First appearance of Caroline&#x27;s education plans</div>
+<div class="trans trans-update">2023-05-08 [update] Updated from session</div>
+<div class="trans trans-update">2023-05-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-05-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-05-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-05-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-05-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-05-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-05-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-05-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-09 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-09 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-09 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-09 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-09 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-09 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-09 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-09 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-09 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-09 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-09 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-09 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-09 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-27 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-27 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-27 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-27 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-27 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-27 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-27 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-03 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-03 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-03 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-03 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-03 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-03 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-03 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-06 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-06 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-06 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-06 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-06 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-12 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-12 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-12 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-12 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-12 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-12 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-12 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-12 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-12 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-12 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-15 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-15 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-15 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-15 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-15 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-15 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-15 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-15 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-15 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-15 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-15 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-15 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-15 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-15 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-20 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-20 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-20 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-20 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-20 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-20 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-20 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-14 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-14 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-14 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-14 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-14 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-14 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-14 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-14 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-14 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-14 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-23 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-23 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-23 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-23 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-23 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-23 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-23 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-23 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-23 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-23 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-28 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-28 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-28 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-28 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-28 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-28 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-28 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-20 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-20 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-20 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-20 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-20 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-20 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-20 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-22 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-22 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-22 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-22 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-22 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-22 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-22 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-22 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-22 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-22 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-22 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-22 [update] Updated from session</div>
+</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s feelings about the support group</div><div class="entity-type">concept</div><div class="entity-state">description: The support group made Caroline feel accepted and gave her courage to embrace herself.</div>
+</div>
+<div class="entity-card"><div class="entity-name">Caroline&#x27;s support group experience</div><div class="entity-type">concept</div><div class="entity-state">description: Attended an LGBTQ support group on May 7, 2023, which was powerful and inspiring.</div>
+</div>
+<div class="entity-card has-transitions"><div class="entity-name">Melanie&#x27;s painting</div><div class="entity-type">concept</div><div class="entity-state">description: One of the two speakers.</div>
+<div class="entity-transitions">
+<div class="trans trans-creation">2023-05-08 [creation] First appearance of Melanie&#x27;s painting</div>
+<div class="trans trans-update">2023-05-08 [update] Updated from session</div>
+<div class="trans trans-update">2023-05-08 [update] Updated from session</div>
+<div class="trans trans-update">2023-05-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-05-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-09 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-09 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-09 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-09 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-09 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-27 [update] Updated from session</div>
+<div class="trans trans-update">2023-06-27 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-03 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-03 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-03 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-06 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-06 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-06 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-06 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-12 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-12 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-12 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-15 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-15 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-15 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-15 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-15 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-20 [update] Updated from session</div>
+<div class="trans trans-update">2023-07-20 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-14 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-17 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-23 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-23 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-25 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-28 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-28 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-28 [update] Updated from session</div>
+<div class="trans trans-update">2023-08-28 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-09-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-13 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-20 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-20 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-20 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-20 [update] Updated from session</div>
+<div class="trans trans-update">2023-10-22 [update] Updated from session</div>
+</div>
+</div>
+</div>
+<h3>Questions (199)</h3>
+<table class="qa-table"><tr><th>✓</th><th>Type</th><th>Question</th><th>Gold</th><th>Predicted</th><th>Time</th></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Caroline go to the LGBTQ support group?</td><td class="ans-text">7 May 2023</td><td class="ans-text">Caroline attended the LGBTQ support group on May 7, 2023.</td><td>1.2s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Melanie paint a sunrise?</td><td class="ans-text">2022</td><td class="ans-text">The context does not provide any specific information about Melanie painting a sunrise. It only ment</td><td>1.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>temporal</td><td class="q-text">What fields would Caroline be likely to pursue in her educaton?</td><td class="ans-text">Psychology, counseling certification</td><td class="ans-text">Caroline is likely to pursue fields related to counseling or mental health work in her education, as</td><td>1.2s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What did Caroline research?</td><td class="ans-text">Adoption agencies</td><td class="ans-text">Caroline researched counseling or mental health work, as she is passionate about helping people and </td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What is Caroline&#x27;s identity?</td><td class="ans-text">Transgender woman</td><td class="ans-text">Caroline attended an LGBTQ support group on May 7, 2023, which made her feel accepted and gave her c</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Melanie run a charity race?</td><td class="ans-text">The sunday before 25 May 2023</td><td class="ans-text">The context does not provide any information about Melanie running a charity race.</td><td>0.6s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When is Melanie planning on going camping?</td><td class="ans-text">June 2023</td><td class="ans-text">The context does not provide any specific information about Melanie planning a camping trip. Therefo</td><td>1.4s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What is Caroline&#x27;s relationship status?</td><td class="ans-text">Single</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Caroline&#x27;s relationship status.</td><td>0.7s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Caroline give a speech at a school?</td><td class="ans-text">The week before 9 June 2023</td><td class="ans-text">The context does not provide any information about Caroline giving a speech at a school.</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Caroline meet up with her friends, family, and mentors?</td><td class="ans-text">The week before 9 June 2023</td><td class="ans-text">The context does not provide specific information about Caroline meeting up with her friends, family</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">How long has Caroline had her current group of friends for?</td><td class="ans-text">4 years</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about how long Caroline has had her curre</td><td>1.2s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">Where did Caroline move from 4 years ago?</td><td class="ans-text">Sweden</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about where Caroline moved from 4 years a</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">How long ago was Caroline&#x27;s 18th birthday?</td><td class="ans-text">10 years ago</td><td class="ans-text">The context does not provide any specific information about Caroline&#x27;s 18th birthday, so I cannot de</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">What career path has Caroline decided to persue?</td><td class="ans-text">counseling or mental health for Transgender people</td><td class="ans-text">Caroline is looking into counseling or mental health work, as she is passionate about helping people</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>temporal</td><td class="q-text">Would Caroline still want to pursue counseling as a career if she hadn&#x27;t received support growing up?</td><td class="ans-text">Likely no</td><td class="ans-text">The context does not provide specific information about whether Caroline&#x27;s desire to pursue counseli</td><td>2.5s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What activities does Melanie partake in?</td><td class="ans-text">pottery, camping, painting, swimming</td><td class="ans-text">The context does not provide specific information about the activities Melanie partakes in. The only</td><td>1.1s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Melanie sign up for a pottery class?</td><td class="ans-text">2 July 2023</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie signing up for a pottery cl</td><td>1.3s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When is Caroline going to the transgender conference?</td><td class="ans-text">July 2023</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Caroline attending a transgender co</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">Where has Melanie camped?</td><td class="ans-text">beach, mountains, forest</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie camping.</td><td>1.4s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What do Melanie&#x27;s kids like?</td><td class="ans-text">dinosaurs, nature</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie&#x27;s kids or their preferences</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Melanie go to the museum?</td><td class="ans-text">5 July 2023</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie going to a museum.</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Caroline have a picnic?</td><td class="ans-text">The week before 6 July 2023</td><td class="ans-text">The context does not provide any information about Caroline having a picnic.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>temporal</td><td class="q-text">Would Caroline likely have Dr. Seuss books on her bookshelf?</td><td class="ans-text">Yes, since she collects classic children&#x27;s books</td><td class="ans-text">The context does not provide any specific information about Caroline&#x27;s reading preferences or whethe</td><td>1.2s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What books has Melanie read?</td><td class="ans-text">&quot;Nothing is Impossible&quot;, &quot;Charlotte&#x27;s Web&quot;</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about books Melanie has read.</td><td>1.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What does Melanie do to destress?</td><td class="ans-text">Running, pottery</td><td class="ans-text">The context does not provide specific information about what Melanie does to destress. However, give</td><td>1.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Caroline go to the LGBTQ conference?</td><td class="ans-text">10 July 2023</td><td class="ans-text">The context does not mention Caroline attending an LGBTQ conference. However, it does mention that C</td><td>1.3s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Melanie read the book &quot;nothing is impossible&quot;?</td><td class="ans-text">2022</td><td class="ans-text">I don&#x27;t know. The context provided does not contain any information about Melanie reading a book tit</td><td>1.2s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>temporal</td><td class="q-text">Would Caroline pursue writing as a career option?</td><td class="ans-text">LIkely no; though she likes reading, she wants to be a counselor</td><td class="ans-text">The context does not mention Caroline pursuing writing as a career option. Caroline is interested in</td><td>1.3s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Caroline go to the adoption meeting?</td><td class="ans-text">The friday before 15 July 2023</td><td class="ans-text">The context does not provide any information about Caroline attending an adoption meeting.</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Melanie go to the pottery workshop?</td><td class="ans-text">The Friday before 15 July 2023</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie attending a pottery worksho</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>temporal</td><td class="q-text">Would Melanie be considered a member of the LGBTQ community?</td><td class="ans-text">Likely no, she does not refer to herself as part of it</td><td class="ans-text">The context does not provide any information about Melanie&#x27;s membership in the LGBTQ community. Ther</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Melanie go camping in June?</td><td class="ans-text">The week before 27 June 2023</td><td class="ans-text">The context does not provide any information about Melanie going camping in June.</td><td>2.5s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">What LGBTQ+ events has Caroline participated in?</td><td class="ans-text">Pride parade, school speech, support group</td><td class="ans-text">Caroline attended an LGBTQ support group on May 7, 2023, which she found powerful and inspiring.</td><td>1.3s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Caroline go to a pride parade during the summer?</td><td class="ans-text">The week before 3 July 2023</td><td class="ans-text">The context does not provide specific information about Caroline attending a pride parade during the</td><td>1.1s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What events has Caroline participated in to help children?</td><td class="ans-text">Mentoring program, school speech</td><td class="ans-text">The context does not provide any specific information about Caroline participating in events to help</td><td>2.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Melanie go camping in July?</td><td class="ans-text">two weekends before 17 July 2023</td><td class="ans-text">The context does not provide any information about Melanie going camping in July.</td><td>1.1s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Caroline join a mentorship program?</td><td class="ans-text">The weekend before 17 July 2023</td><td class="ans-text">The context does not provide any information about Caroline joining a mentorship program.</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What did Melanie paint recently?</td><td class="ans-text">sunset</td><td class="ans-text">I don&#x27;t know. The context does not provide specific details about what Melanie painted recently.</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What activities has Melanie done with her family?</td><td class="ans-text">Pottery, painting, camping, museum, swimming, hiking</td><td class="ans-text">The context does not provide specific information about activities Melanie has done with her family.</td><td>1.2s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">In what ways is Caroline participating in the LGBTQ community?</td><td class="ans-text">Joining activist group, going to pride parades, participating in an art show, mentoring program</td><td class="ans-text">Caroline is participating in the LGBTQ community by attending an LGBTQ support group, which she foun</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">How many times has Melanie gone to the beach in 2023?</td><td class="ans-text">2</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about how many times Melanie has gone to </td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Caroline join a new activist group?</td><td class="ans-text">The Tuesday before 20 July 2023</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Caroline joining a new activist gro</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>temporal</td><td class="q-text">Would Melanie be more interested in going to a national park or a theme park?</td><td class="ans-text">National park; she likes the outdoors</td><td class="ans-text">The context does not provide specific information about Melanie&#x27;s interest in national parks or them</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What kind of art does Caroline make?</td><td class="ans-text">abstract art</td><td class="ans-text">The context does not provide any information about Caroline making art. It mentions Melanie&#x27;s involv</td><td>1.4s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When is Melanie&#x27;s daughter&#x27;s birthday?</td><td class="ans-text">13 August</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie&#x27;s daughter&#x27;s birthday.</td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Caroline attend a pride parade in August?</td><td class="ans-text">The Friday before 14 August 2023</td><td class="ans-text">The context does not mention Caroline attending a pride parade in August.</td><td>0.7s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>temporal</td><td class="q-text">Would Melanie be considered an ally to the transgender community?</td><td class="ans-text">Yes, she is supportive</td><td class="ans-text">The context does not provide specific information about Melanie&#x27;s stance or actions regarding the tr</td><td>1.1s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">Who supports Caroline when she has a negative experience?</td><td class="ans-text">Her mentors, family, and friends</td><td class="ans-text">The context does not provide specific information about who supports Caroline when she has a negativ</td><td>1.4s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What types of pottery have Melanie and her kids made?</td><td class="ans-text">bowls, cup</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie and her kids making pottery</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Caroline and Melanie go to a pride fesetival together?</td><td class="ans-text">2022</td><td class="ans-text">The context does not provide any information about Caroline and Melanie attending a pride festival t</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>temporal</td><td class="q-text">What would Caroline&#x27;s political leaning likely be?</td><td class="ans-text">Liberal</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Caroline&#x27;s political leaning.</td><td>0.7s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What has Melanie painted?</td><td class="ans-text">Horse, sunset, sunrise</td><td class="ans-text">The context does not provide specific details about what Melanie has painted. It only mentions &quot;Mela</td><td>1.5s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What are Melanie&#x27;s pets&#x27; names?</td><td class="ans-text">Oliver, Luna, Bailey</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie&#x27;s pets or their names.</td><td>1.2s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Caroline apply to adoption agencies?</td><td class="ans-text">The week of 23 August 2023</td><td class="ans-text">The context does not provide any information about Caroline applying to adoption agencies.</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Caroline draw a self-portrait?</td><td class="ans-text">The week before 23 August 2023</td><td class="ans-text">The context does not provide any information about Caroline drawing a self-portrait. The premise of </td><td>1.2s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What subject have Caroline and Melanie both painted?</td><td class="ans-text">Sunsets</td><td class="ans-text">The context does not provide any information about a specific subject that both Caroline and Melanie</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">What symbols are important to Caroline?</td><td class="ans-text">Rainbow flag, transgender symbol</td><td class="ans-text">The context does not provide specific information about symbols that are important to Caroline. Howe</td><td>1.7s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>multi_hop</td><td class="q-text">When did Caroline encounter people on a hike and have a negative experience?</td><td class="ans-text">The week before 25 August 2023</td><td class="ans-text">The premise of the question is incorrect. There is no information in the context about Caroline enco</td><td>1.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Melanie make a plate in pottery class?</td><td class="ans-text">24 August 2023</td><td class="ans-text">The context does not provide any information about Melanie making a plate in pottery class.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>temporal</td><td class="q-text">Would Caroline be considered religious?</td><td class="ans-text">Somewhat, but not extremely religious</td><td class="ans-text">I don&#x27;t know. The context provided does not contain any information about Caroline&#x27;s religious belie</td><td>1.2s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What instruments does Melanie play?</td><td class="ans-text">clarinet and violin</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie playing any instruments.</td><td>1.6s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What musical artists/bands has Melanie seen?</td><td class="ans-text">Summer Sounds, Matt Patterson</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about musical artists or bands that Melan</td><td>2.4s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Melanie go to the park?</td><td class="ans-text">27 August 2023</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie going to the park.</td><td>0.6s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When is Caroline&#x27;s youth center putting on a talent show?</td><td class="ans-text">September 2023</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about a talent show at Caroline&#x27;s youth c</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>temporal</td><td class="q-text">Would Melanie likely enjoy the song &quot;The Four Seasons&quot; by Vivaldi?</td><td class="ans-text">Yes; it&#x27;s classical music</td><td class="ans-text">The context does not provide any information about Melanie&#x27;s musical preferences or interests, so I </td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>single_hop</td><td class="q-text">What are some changes Caroline has faced during her transition journey?</td><td class="ans-text">Changes to her body, losing unsupportive friends</td><td class="ans-text">Caroline has faced several changes during her transition journey. She attended an LGBTQ support grou</td><td>2.2s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What does Melanie do with her family on hikes?</td><td class="ans-text">Roast marshmallows, tell stories</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about what Melanie does with her family o</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Caroline go biking with friends?</td><td class="ans-text">The weekend before 13 September 2023</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Caroline going biking with friends.</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">How long has Melanie been practicing art?</td><td class="ans-text">Since 2016</td><td class="ans-text">The context does not provide specific information about how long Melanie has been practicing art. It</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>temporal</td><td class="q-text">What personality traits might Melanie say Caroline has?</td><td class="ans-text">Thoughtful, authentic, driven</td><td class="ans-text">The context does not provide specific information about Melanie&#x27;s views on Caroline&#x27;s personality tr</td><td>1.7s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What transgender-specific events has Caroline attended?</td><td class="ans-text">Poetry reading, conference</td><td class="ans-text">Caroline attended an LGBTQ support group on May 7, 2023, which was described as powerful and inspiri</td><td>0.7s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What book did Melanie read from Caroline&#x27;s suggestion?</td><td class="ans-text">&quot;Becoming Nicole&quot;</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about a book Melanie read from Caroline&#x27;s</td><td>1.1s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Melanie&#x27;s friend adopt a child?</td><td class="ans-text">2022</td><td class="ans-text">The context does not provide any information about Melanie&#x27;s friend adopting a child.</td><td>0.7s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Melanie get hurt?</td><td class="ans-text">September 2023</td><td class="ans-text">The context does not provide any information about Melanie getting hurt.</td><td>1.1s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Melanie&#x27;s family go on a roadtrip?</td><td class="ans-text">The weekend before 20 October 2023</td><td class="ans-text">The context does not provide any information about Melanie&#x27;s family going on a road trip.</td><td>0.6s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">How many children does Melanie have?</td><td class="ans-text">3</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about how many children Melanie has.</td><td>0.7s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">When did Melanie go on a hike after the roadtrip?</td><td class="ans-text">19 October 2023</td><td class="ans-text">The context does not provide any information about Melanie going on a hike after a road trip. Theref</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>temporal</td><td class="q-text">Would Melanie go on another roadtrip soon?</td><td class="ans-text">Likely no; since this one went badly</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie&#x27;s plans for a road trip.</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>single_hop</td><td class="q-text">What items has Melanie bought?</td><td class="ans-text">Figurines, shoes</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about items Melanie has bought.</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Caroline pass the adoption interview?</td><td class="ans-text">The Friday before 22 October 2023</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Caroline passing an adoption interv</td><td>1.1s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>multi_hop</td><td class="q-text">When did Melanie buy the figurines?</td><td class="ans-text">21 October 2023</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie buying figurines.</td><td>1.4s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>temporal</td><td class="q-text">Would Caroline want to move back to her home country soon?</td><td class="ans-text">No; she&#x27;s in the process of adopting children.</td><td class="ans-text">I don&#x27;t know. There is no information in the context about Caroline&#x27;s desire to move back to her hom</td><td>1.3s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What did the charity race raise awareness for?</td><td class="ans-text">mental health</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about a charity race or what it raised aw</td><td>1.3s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What did Melanie realize after the charity race?</td><td class="ans-text">self-care is important</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie&#x27;s realization after a chari</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">How does Melanie prioritize self-care?</td><td class="ans-text">by carving out some me-time each day for activities like running, reading, or playing the violin</td><td class="ans-text">The context does not provide specific information about how Melanie prioritizes self-care.</td><td>1.1s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What are Caroline&#x27;s plans for the summer?</td><td class="ans-text">researching adoption agencies</td><td class="ans-text">The context does not provide specific information about Caroline&#x27;s plans for the summer.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What type of individuals does the adoption agency Caroline is considering support?</td><td class="ans-text">LGBTQ+ individuals</td><td class="ans-text">The context does not provide any information about an adoption agency that Caroline is considering o</td><td>1.2s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">Why did Caroline choose the adoption agency?</td><td class="ans-text">because of their inclusivity and support for LGBTQ+ individuals</td><td class="ans-text">The context does not provide any information about Caroline choosing an adoption agency. Therefore, </td><td>1.7s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What is Caroline excited about in the adoption process?</td><td class="ans-text">creating a family for kids who need one</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Caroline&#x27;s excitement regarding the</td><td>0.7s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What does Melanie think about Caroline&#x27;s decision to adopt?</td><td class="ans-text">she thinks Caroline is doing something amazing and will be an awesome mom</td><td class="ans-text">The context does not provide any information about Melanie&#x27;s thoughts on Caroline&#x27;s decision to adop</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">How long have Mel and her husband been married?</td><td class="ans-text">Mel and her husband have been married for 5 years.</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Mel and her husband&#x27;s marriage dura</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What does Caroline&#x27;s necklace symbolize?</td><td class="ans-text">love, faith, and strength</td><td class="ans-text">I don&#x27;t know. There is no information in the context about what Caroline&#x27;s necklace symbolizes.</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What country is Caroline&#x27;s grandma from?</td><td class="ans-text">Sweden</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about the country Caroline&#x27;s grandma is f</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What was grandma&#x27;s gift to Caroline?</td><td class="ans-text">necklace</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about a gift from grandma to Caroline.</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What is Melanie&#x27;s hand-painted bowl a reminder of?</td><td class="ans-text">art and self-expression</td><td class="ans-text">The context does not provide specific information about what Melanie&#x27;s hand-painted bowl is a remind</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What did Melanie and her family do while camping?</td><td class="ans-text">explored nature, roasted marshmallows, and went on a hike</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie and her family going campin</td><td>1.2s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What kind of counseling and mental health services is Caroline interested in pursuing?</td><td class="ans-text">working with trans people, helping them accept themselves and supporting their mental health</td><td class="ans-text">Caroline is interested in pursuing counseling or mental health work, with a passion for helping peop</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What workshop did Caroline attend recently?</td><td class="ans-text">LGBTQ+ counseling workshop</td><td class="ans-text">The context does not provide specific information about a recent workshop that Caroline attended.</td><td>1.5s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What was discussed in the LGBTQ+ counseling workshop?</td><td class="ans-text">therapeutic methods and how to best work with trans people</td><td class="ans-text">The context does not provide specific details about the discussions in the LGBTQ+ counseling worksho</td><td>2.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What motivated Caroline to pursue counseling?</td><td class="ans-text">her own journey and the support she received, and how counseling improved her life</td><td class="ans-text">Caroline is motivated to pursue counseling or mental health work because she is passionate about hel</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What kind of place does Caroline want to create for people?</td><td class="ans-text">a safe and inviting place for people to grow</td><td class="ans-text">Caroline wants to create a place where people feel accepted and have the courage to embrace themselv</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">Did Melanie make the black and white bowl in the photo?</td><td class="ans-text">Yes</td><td class="ans-text">The context does not provide any information about Melanie making a black and white bowl in a photo.</td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What kind of books does Caroline have in her library?</td><td class="ans-text">kids&#x27; books - classics, stories from different cultures, educational books</td><td class="ans-text">I don&#x27;t know. There is no information about the kind of books Caroline has in her library in the pro</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What was Melanie&#x27;s favorite book from her childhood?</td><td class="ans-text">&quot;Charlotte&#x27;s Web&quot;</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie&#x27;s favorite book from her ch</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What book did Caroline recommend to Melanie?</td><td class="ans-text">&quot;Becoming Nicole&quot;</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about a book recommendation from Caroline</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What did Caroline take away from the book &quot;Becoming Nicole&quot;?</td><td class="ans-text">Lessons on self-acceptance and finding support</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Caroline&#x27;s takeaways from the book </td><td>2.4s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What are the new shoes that Melanie got used for?</td><td class="ans-text">Running</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about new shoes that Melanie got or their</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What is Melanie&#x27;s reason for getting into running?</td><td class="ans-text">To de-stress and clear her mind</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie&#x27;s reason for getting into r</td><td>1.6s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What does Melanie say running has been great for?</td><td class="ans-text">Her mental health</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie&#x27;s views on running.</td><td>1.5s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What did Mel and her kids make during the pottery workshop?</td><td class="ans-text">pots</td><td class="ans-text">The context does not provide any information about Mel and her kids participating in a pottery works</td><td>1.5s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What kind of pot did Mel and her kids make with clay?</td><td class="ans-text">a cup with a dog face on it</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Mel and her kids making a pot with </td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What creative project do Mel and her kids do together besides pottery?</td><td class="ans-text">painting</td><td class="ans-text">The context does not provide specific information about any creative projects that Mel and her kids </td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What did Mel and her kids paint in their latest project in July 2023?</td><td class="ans-text">a sunset with a palm tree</td><td class="ans-text">The context does not provide specific details about what Mel and her kids painted in their latest pr</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What did Caroline see at the council meeting for adoption?</td><td class="ans-text">many people wanting to create loving homes for children in need</td><td class="ans-text">The context does not provide any information about Caroline attending a council meeting for adoption</td><td>1.1s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What do sunflowers represent according to Caroline?</td><td class="ans-text">warmth and happiness</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about what sunflowers represent according</td><td>1.1s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">Why are flowers important to Melanie?</td><td class="ans-text">They remind her to appreciate the small moments and were a part of her wedding decor</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about why flowers might be important to M</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What inspired Caroline&#x27;s painting for the art show?</td><td class="ans-text">visiting an LGBTQ center and wanting to capture unity and strength</td><td class="ans-text">The context does not provide any information about Caroline&#x27;s painting or any art show related to he</td><td>2.2s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">How often does Melanie go to the beach with her kids?</td><td class="ans-text">once or twice a year</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about how often Melanie goes to the beach</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What did Melanie and her family see during their camping trip last year?</td><td class="ans-text">Perseid meteor shower</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie and her family&#x27;s camping tr</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">How did Melanie feel while watching the meteor shower?</td><td class="ans-text">in awe of the universe</td><td class="ans-text">I don&#x27;t know. There is no information in the context about Melanie&#x27;s feelings while watching a meteo</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">Whose birthday did Melanie celebrate recently?</td><td class="ans-text">Melanie&#x27;s daughter</td><td class="ans-text">The context does not provide any information about Melanie celebrating a birthday recently.</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">Who performed at the concert at Melanie&#x27;s daughter&#x27;s birthday?</td><td class="ans-text">Matt Patterson</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about a concert or Melanie&#x27;s daughter&#x27;s b</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">Why did Melanie choose to use colors and patterns in her pottery project?</td><td class="ans-text">She wanted to catch the eye and make people smile.</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie&#x27;s pottery project or her ch</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What pet does Caroline have?</td><td class="ans-text">guinea pig</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Caroline having a pet.</td><td>1.3s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What pets does Melanie have?</td><td class="ans-text">Two cats and a dog</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie having pets.</td><td>1.4s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">Where did Oliver hide his bone once?</td><td class="ans-text">In Melanie&#x27;s slipper</td><td class="ans-text">I don&#x27;t know. The context provided does not contain any information about Oliver or where he might h</td><td>1.3s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What activity did Caroline used to do with her dad?</td><td class="ans-text">Horseback riding</td><td class="ans-text">The context does not provide any information about an activity Caroline used to do with her dad.</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What did Caroline make for a local church?</td><td class="ans-text">a stained glass window</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Caroline making something for a loc</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What did Caroline find in her neighborhood during her walk?</td><td class="ans-text">a rainbow sidewalk</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about what Caroline found in her neighbor</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">Which song motivates Caroline to be courageous?</td><td class="ans-text">Brave by Sara Bareilles</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about a specific song that motivates Caro</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">Which  classical musicians does Melanie enjoy listening to?</td><td class="ans-text">Bach and Mozart</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie&#x27;s preferences for classical</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">Who is Melanie a fan of in terms of modern music?</td><td class="ans-text">Ed Sheeran</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie&#x27;s preferences in modern mus</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">How long has Melanie been creating art?</td><td class="ans-text">7 years</td><td class="ans-text">The context does not provide specific information about how long Melanie has been creating art. It o</td><td>1.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What precautionary sign did Melanie see at the café?</td><td class="ans-text">A sign stating that someone is not being able to leave</td><td class="ans-text">I don&#x27;t know. There is no information in the context about a precautionary sign that Melanie saw at </td><td>1.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What advice does Caroline give for getting started with adoption?</td><td class="ans-text">Do research, find an adoption agency or lawyer, gather necessary documents, and prepare emotionally.</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Caroline giving advice on getting s</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What setback did Melanie face in October 2023?</td><td class="ans-text">She got hurt and had to take a break from pottery.</td><td class="ans-text">The context does not provide any information about a setback Melanie faced in October 2023.</td><td>0.8s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What does Melanie do to keep herself busy during her pottery break?</td><td class="ans-text">Read a book and paint.</td><td class="ans-text">The context does not provide specific information about what Melanie does to keep herself busy durin</td><td>0.6s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What painting did Melanie show to Caroline on October 13, 2023?</td><td class="ans-text">A painting inspired by sunsets with a pink sky.</td><td class="ans-text">The context does not specify what painting Melanie showed to Caroline on October 13, 2023.</td><td>0.7s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What kind of painting did Caroline share with Melanie on October 13, 2023?</td><td class="ans-text">An abstract painting with blue streaks on a wall.</td><td class="ans-text">The context does not provide any information about Caroline sharing a painting with Melanie on Octob</td><td>2.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>adversarial</td><td class="q-text">What was the poetry reading that Caroline attended about?</td><td class="ans-text">It was a transgender poetry reading where transgender people shared their stories.</td><td class="ans-text">The context does not provide any information about Caroline attending a poetry reading. Therefore, I</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What did the posters at the poetry reading say?</td><td class="ans-text">&quot;Trans Lives Matter&quot;</td><td class="ans-text">I don&#x27;t know. There is no information about posters at a poetry reading in the provided context.</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What does Caroline&#x27;s drawing symbolize for her?</td><td class="ans-text">Freedom and being true to herself.</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Caroline&#x27;s drawing or what it might</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">How do Melanie and Caroline describe their journey through life together?</td><td class="ans-text">An ongoing adventure of learning and growing.</td><td class="ans-text">I don&#x27;t have specific information on how Melanie and Caroline describe their journey through life to</td><td>2.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What happened to Melanie&#x27;s son on their road trip?</td><td class="ans-text">He got into an accident</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie&#x27;s son or a road trip.</td><td>0.7s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">How did Melanie&#x27;s son handle the accident?</td><td class="ans-text">He was scared but reassured by his family</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie&#x27;s son or an accident.</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">How did Melanie feel about her family after the accident?</td><td class="ans-text">They are important and mean the world to her</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie&#x27;s feelings about her family</td><td>1.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">How did Melanie&#x27;s children handle the accident?</td><td class="ans-text">They were scared but resilient</td><td class="ans-text">The premise of the question is incorrect. There is no information in the context about Melanie&#x27;s chi</td><td>1.4s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">How did Melanie feel after the accident?</td><td class="ans-text">Grateful and thankful for her family</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie&#x27;s feelings after an acciden</td><td>0.9s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What was Melanie&#x27;s reaction to her children enjoying the Grand Canyon?</td><td class="ans-text">She was happy and thankful</td><td class="ans-text">The context does not provide any information about Melanie&#x27;s reaction to her children enjoying the G</td><td>0.7s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What do Melanie&#x27;s family give her?</td><td class="ans-text">Strength and motivation</td><td class="ans-text">The context does not provide any information about what Melanie&#x27;s family gives her.</td><td>2.0s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">How did Melanie feel about her family supporting her?</td><td class="ans-text">She appreciated them a lot</td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie&#x27;s feelings regarding her fa</td><td>1.1s</td></tr>
+<tr><td><span class="fail">✗</span></td><td>adversarial</td><td class="q-text">What did Melanie do after the road trip to relax?</td><td class="ans-text">Went on a nature walk or hike</td><td class="ans-text">The context does not provide specific information about what Melanie did to relax after a road trip.</td><td>1.5s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What did Caroline realize after her charity race?</td><td class="ans-text"></td><td class="ans-text">The context does not provide any information about Caroline participating in a charity race or any r</td><td>1.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What are Melanie&#x27;s plans for the summer with respect to adoption?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie&#x27;s plans for the summer with</td><td>1.6s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What type of individuals does the adoption agency Melanie is considering support?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about an adoption agency Melanie is consi</td><td>1.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">Why did Melanie choose the adoption agency?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie choosing an adoption agency</td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What is Melanie excited about in her adoption process?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie&#x27;s adoption process or her f</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What does Melanie&#x27;s necklace symbolize?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie&#x27;s necklace or its symbolism</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What country is Melanie&#x27;s grandma from?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie&#x27;s grandma or her country of</td><td>1.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What was grandma&#x27;s gift to Melanie?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about a gift from grandma to Melanie.</td><td>1.2s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What was grandpa&#x27;s gift to Caroline?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about a gift from grandpa to Caroline.</td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What is Caroline&#x27;s hand-painted bowl a reminder of?</td><td class="ans-text"></td><td class="ans-text">The context does not provide any information about Caroline having a hand-painted bowl or what it mi</td><td>4.6s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What did Caroline and her family do while camping?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about what Caroline and her family did wh</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What kind of counseling and mental health services is Melanie interested in pursuing?</td><td class="ans-text"></td><td class="ans-text">The premise is incorrect. It is Caroline, not Melanie, who is interested in pursuing counseling or m</td><td>4.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What kind of counseling workshop did Melanie attend recently?</td><td class="ans-text"></td><td class="ans-text">The context does not provide any information about Melanie attending a counseling workshop. The deta</td><td>1.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What motivated Melanie to pursue counseling?</td><td class="ans-text"></td><td class="ans-text">The premise of the question is incorrect. It is Caroline, not Melanie, who is interested in counseli</td><td>4.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What kind of place does Melanie want to create for people?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie&#x27;s desire to create a place </td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">Did Caroline make the black and white bowl in the photo?</td><td class="ans-text">No</td><td class="ans-text">The context does not provide any information about Caroline making a black and white bowl. Therefore</td><td>2.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What are the new shoes that Caroline got used for?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about new shoes that Caroline got or thei</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What is Caroline&#x27;s reason for getting into running?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Caroline&#x27;s reason for getting into </td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What does Caroline say running has been great for?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Caroline&#x27;s views on running or its </td><td>1.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What did Melanie see at the council meeting for adoption?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Melanie seeing anything at a counci</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What inspired Melanie&#x27;s painting for the art show?</td><td class="ans-text"></td><td class="ans-text">The context does not provide specific information about what inspired Melanie&#x27;s painting for the art</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What inspired Caroline&#x27;s sculpture for the art show?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. There is no information in the context about Caroline&#x27;s sculpture for the art show or </td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">How often does Caroline go to the beach with her kids?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. There is no information in the context about Caroline going to the beach with her kids</td><td>1.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What did Caroline and her family see during their camping trip last year?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about what Caroline and her family saw du</td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">How did Caroline feel while watching the meteor shower?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. There is no information in the context about Caroline&#x27;s feelings while watching a mete</td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">Why did Caroline choose to use colors and patterns in her pottery project?</td><td class="ans-text"></td><td class="ans-text">The context does not provide any information about Caroline using colors and patterns in a pottery p</td><td>1.3s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">Is Oscar Melanie&#x27;s pet?</td><td class="ans-text">No</td><td class="ans-text">The context does not provide any information about Oscar being Melanie&#x27;s pet. Therefore, I don&#x27;t kno</td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">Where did Oscar hide his bone once?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context provided does not contain any information about Oscar or where he might ha</td><td>1.2s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What activity did Melanie used to do with her dad?</td><td class="ans-text"></td><td class="ans-text">The context does not provide any information about an activity that Melanie used to do with her dad.</td><td>1.2s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What did Melanie make for a local church?</td><td class="ans-text"></td><td class="ans-text">The context does not provide any information about Melanie making something for a local church.</td><td>2.4s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What did Melanie find in her neighborhood during her walk?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about what Melanie found in her neighborh</td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">Which song motivates Melanie to be courageous?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about a song that motivates Melanie to be</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What type of instrument does Caroline play?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Caroline playing an instrument.</td><td>1.5s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">Which classical musicians does Caroline enjoy listening to?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Caroline&#x27;s preferences for classica</td><td>0.8s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">Who is Caroline a fan of in terms of modern music?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Caroline&#x27;s preferences in modern mu</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What precautionary sign did Caroline see at the café?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about a precautionary sign Caroline saw a</td><td>0.7s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What setback did Caroline face recently?</td><td class="ans-text"></td><td class="ans-text">The context does not provide specific information about any recent setback Caroline faced.</td><td>0.7s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What does Caroline do to keep herself busy during her pottery break?</td><td class="ans-text"></td><td class="ans-text">The context does not provide specific information about what Caroline does to keep herself busy duri</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What was the poetry reading that Melanie attended about?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. There is no information in the context about a poetry reading that Melanie attended.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What happened to Caroline&#x27;s son on their road trip?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Caroline&#x27;s son or a road trip.</td><td>1.0s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">How did Caroline&#x27;s son handle the accident?</td><td class="ans-text"></td><td class="ans-text">The premise of the question is incorrect. There is no information in the context about Caroline havi</td><td>1.1s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">How did Caroline feel about her family after the accident?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Caroline&#x27;s feelings about her famil</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">How did Caroline&#x27;s children handle the accident?</td><td class="ans-text"></td><td class="ans-text">The premise of the question is incorrect. There is no information in the context about Caroline havi</td><td>1.6s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">How did Caroline feel after the accident?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. There is no information in the context about Caroline&#x27;s feelings after an accident.</td><td>0.9s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What was Caroline&#x27;s reaction to her children enjoying the Grand Canyon?</td><td class="ans-text"></td><td class="ans-text">The context does not provide any information about Caroline&#x27;s reaction to her children enjoying the </td><td>0.6s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What did Caroline do after the road trip to relax?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about what Caroline did to relax after a </td><td>1.2s</td></tr>
+<tr><td><span class="pass">✓</span></td><td>commonsense</td><td class="q-text">What does Caroline love most about camping with her family?</td><td class="ans-text"></td><td class="ans-text">I don&#x27;t know. The context does not provide any information about Caroline&#x27;s feelings or experiences </td><td>0.9s</td></tr>
+</table>
+</div></div>
+</body></html>

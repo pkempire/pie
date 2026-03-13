@@ -1,0 +1,1932 @@
+[
+  {
+    "session_index": 0,
+    "session_id": "conv-26_session_0",
+    "input_chars": 2033,
+    "input_preview": "[Speakers: Caroline and Melanie]\nUse their FULL NAMES (Caroline, Melanie) in entity names, never abbreviations.\n\n[Session \u2014 May 08, 2023 at 13:56]\nCaroline: Hey Mel! Good to see you! How have you been?\nCaroline: Hey Caroline! Good to see you! I'm swamped with the kids & work. What's up with you? Anything new?\nCaroline: I went to a LGBTQ support group yesterday and it was so powerful.\nCaroline: Wow, that's cool, Caroline! What happened that was so awesome? Did you hear any inspiring stories?\nCaro",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Caroline's support group experience",
+          "type": "concept",
+          "state": {
+            "description": "Attended an LGBTQ support group on May 7, 2023, which was powerful and inspiring."
+          }
+        },
+        {
+          "name": "Caroline's feelings about the support group",
+          "type": "concept",
+          "state": {
+            "description": "The support group made Caroline feel accepted and gave her courage to embrace herself."
+          }
+        },
+        {
+          "name": "Caroline's education plans",
+          "type": "concept",
+          "state": {
+            "description": "Plans to continue her education and explore career options."
+          }
+        },
+        {
+          "name": "Caroline's career interests",
+          "type": "concept",
+          "state": {
+            "description": "Interested in counseling or working in mental health to support others with similar issues."
+          }
+        },
+        {
+          "name": "Melanie's painting",
+          "type": "concept",
+          "state": {
+            "description": "Painted a lake sunrise in 2022, which is special to her."
+          }
+        },
+        {
+          "name": "Melanie's painting hobby",
+          "type": "concept",
+          "state": {
+            "description": "Melanie loves to paint animals."
+          }
+        },
+        {
+          "name": "Caroline",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Melanie",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 8,
+    "entities_new": 8,
+    "total_entities": 8
+  },
+  {
+    "session_index": 1,
+    "session_id": "conv-26_session_1",
+    "input_chars": 2913,
+    "input_preview": "[Speakers: Caroline and Melanie]\nUse their FULL NAMES (Caroline, Melanie) in entity names, never abbreviations.\n\n[Session \u2014 May 25, 2023 at 13:14]\nCaroline: Hey Caroline, since we last chatted, I've had a lot of things happening to me. I ran a charity race for mental health last Saturday \u2013 it was really rewarding. Really made me think about taking care of our minds.\nCaroline: That charity race sounds great, Mel! Making a difference & raising awareness for mental health is super rewarding - I'm r",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Caroline's charity race",
+          "type": "event",
+          "state": {
+            "description": "Ran a charity race for mental health on May 20, 2023."
+          }
+        },
+        {
+          "name": "Caroline's self-care journey",
+          "type": "concept",
+          "state": {
+            "description": "Realizing the importance of self-care."
+          }
+        },
+        {
+          "name": "Caroline's me-time activities",
+          "type": "hobby",
+          "state": {
+            "description": "Carving out me-time each day by running, reading, or playing the violin."
+          }
+        },
+        {
+          "name": "Caroline's summer plans",
+          "type": "event",
+          "state": {
+            "description": "Wants to plan a family outing or something special with Melanie this summer."
+          }
+        },
+        {
+          "name": "Caroline's adoption research",
+          "type": "concept",
+          "state": {
+            "description": "Researching adoption agencies to give a loving home to kids."
+          }
+        },
+        {
+          "name": "Caroline's chosen adoption agency",
+          "type": "organization",
+          "state": {
+            "description": "An agency that helps LGBTQ+ folks with adoption."
+          }
+        },
+        {
+          "name": "Caroline's goal for adoption",
+          "type": "concept",
+          "state": {
+            "description": "Goal is to give kids a loving home."
+          }
+        },
+        {
+          "name": "Caroline's support system",
+          "type": "concept",
+          "state": {
+            "description": "Feels grateful for people around her who accept and support her."
+          }
+        },
+        {
+          "name": "Caroline's excitement for adoption",
+          "type": "emotion",
+          "state": {
+            "description": "Thrilled to create a family for kids who need one."
+          }
+        },
+        {
+          "name": "Caroline's challenge as a single parent",
+          "type": "concept",
+          "state": {
+            "description": "Acknowledges it will be tough as a single parent but is ready for the challenge."
+          }
+        },
+        {
+          "name": "Melanie's encouragement",
+          "type": "emotion",
+          "state": {
+            "description": "Encouraging Caroline about her plans for adoption."
+          }
+        },
+        {
+          "name": "Caroline",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Melanie",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 11,
+    "total_entities": 19
+  },
+  {
+    "session_index": 2,
+    "session_id": "conv-26_session_2",
+    "input_chars": 4994,
+    "input_preview": "[Speakers: Caroline and Melanie]\nUse their FULL NAMES (Caroline, Melanie) in entity names, never abbreviations.\n\n[Session \u2014 June 09, 2023 at 19:55]\nCaroline: Hey Melanie! How's it going? I wanted to tell you about my school event last week. It was awesome! I talked about my transgender journey and encouraged students to get involved in the LGBTQ community. It was great to see their reactions. It made me reflect on how far I've come since I started transitioning three years ago.\nCaroline: Hey Car",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Caroline's school event",
+          "type": "concept",
+          "state": {
+            "description": "Caroline's school event where she talked about her transgender journey and encouraged students to get involved in the LGBTQ community."
+          }
+        },
+        {
+          "name": "Caroline's transgender journey",
+          "type": "concept",
+          "state": {
+            "description": "Caroline's personal experience of transitioning, which she has been on for three years (since 2020)."
+          }
+        },
+        {
+          "name": "Melanie's support for Caroline",
+          "type": "concept",
+          "state": {
+            "description": "Melanie expresses admiration for Caroline's journey and offers her support."
+          }
+        },
+        {
+          "name": "Caroline's audience reaction",
+          "type": "concept",
+          "state": {
+            "description": "The audience related to Caroline's talk and felt inspired to be better allies."
+          }
+        },
+        {
+          "name": "Caroline's reflection on her journey",
+          "type": "concept",
+          "state": {
+            "description": "Caroline reflects on how far she has come since starting her transition."
+          }
+        },
+        {
+          "name": "Caroline's commitment to inclusivity",
+          "type": "concept",
+          "state": {
+            "description": "Caroline emphasizes the importance of conversations about gender identity and inclusion."
+          }
+        },
+        {
+          "name": "Caroline's gratitude for support",
+          "type": "concept",
+          "state": {
+            "description": "Caroline feels grateful for the support she received during her journey."
+          }
+        },
+        {
+          "name": "Caroline's motivation",
+          "type": "concept",
+          "state": {
+            "description": "Caroline is motivated by her friends, family, and mentors."
+          }
+        },
+        {
+          "name": "Melanie's motivation",
+          "type": "concept",
+          "state": {
+            "description": "Melanie is motivated by her family."
+          }
+        },
+        {
+          "name": "Caroline's friends' support duration",
+          "type": "concept",
+          "state": {
+            "description": "Caroline has known her friends for 4 years since moving from her home country."
+          }
+        },
+        {
+          "name": "Caroline's tough breakup",
+          "type": "concept",
+          "state": {
+            "description": "Caroline mentions a tough breakup that made her thankful for her friends' support."
+          }
+        },
+        {
+          "name": "Melanie's husband and kids",
+          "type": "concept",
+          "state": {
+            "description": "Melanie's husband and kids are her support system."
+          }
+        },
+        {
+          "name": "Melanie's marriage duration",
+          "type": "concept",
+          "state": {
+            "description": "Melanie has been married for 5 years (since 2018)."
+          }
+        },
+        {
+          "name": "Caroline's wedding dress memory",
+          "type": "concept",
+          "state": {
+            "description": "Melanie recalls the moment she wore her wedding dress."
+          }
+        },
+        {
+          "name": "Caroline's congratulations to Melanie",
+          "type": "concept",
+          "state": {
+            "description": "Caroline congratulates Melanie on her wedding and wishes her many happy years."
+          }
+        },
+        {
+          "name": "Melanie's appreciation for Caroline",
+          "type": "concept",
+          "state": {
+            "description": "Melanie appreciates Caroline's kind words and looks forward to more happy years."
+          }
+        },
+        {
+          "name": "Melanie's family day",
+          "type": "concept",
+          "state": {
+            "description": "Melanie describes a fun family day filled with games and good food."
+          }
+        },
+        {
+          "name": "Caroline's agreement on family importance",
+          "type": "concept",
+          "state": {
+            "description": "Caroline agrees that spending time with loved ones brings happiness."
+          }
+        },
+        {
+          "name": "Caroline",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Melanie",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 20,
+    "entities_new": 18,
+    "total_entities": 37
+  },
+  {
+    "session_index": 3,
+    "session_id": "conv-26_session_3",
+    "input_chars": 3568,
+    "input_preview": "[Speakers: Caroline and Melanie]\nUse their FULL NAMES (Caroline, Melanie) in entity names, never abbreviations.\n\n[Session \u2014 June 27, 2023 at 10:37]\nCaroline: Hey Melanie! Long time no talk! A lot's been going on in my life! Take a look at this.\n[Image: a photo of a person holding a necklace with a cross and a heart]\nCaroline: Hey, Caroline! Nice to hear from you! Love the necklace, any special meaning to it?\nCaroline: Thanks, Melanie! This necklace is super special to me - a gift from my grandma",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Caroline's necklace",
+          "type": "concept",
+          "state": {
+            "description": "A necklace with a cross and a heart, a gift from Caroline's grandma in Sweden, symbolizes love, faith, and strength."
+          }
+        },
+        {
+          "name": "Caroline's hand-painted bowl",
+          "type": "concept",
+          "state": {
+            "description": "A hand-painted bowl made by a friend for Caroline's 18th birthday, symbolizes art and self-expression."
+          }
+        },
+        {
+          "name": "Melanie's camping trip",
+          "type": "event",
+          "state": {
+            "description": "Melanie went camping with her kids a few weeks before September 13, 2023, exploring the forest and hiking."
+          }
+        },
+        {
+          "name": "Caroline's career interest",
+          "type": "concept",
+          "state": {
+            "description": "Looking into counseling or mental health work, passionate about helping people and making a positive impact."
+          }
+        },
+        {
+          "name": "Caroline's counseling focus",
+          "type": "concept",
+          "state": {
+            "description": "Caroline is considering working with trans people to help them accept themselves and support their mental health."
+          }
+        },
+        {
+          "name": "Caroline's LGBTQ+ workshop",
+          "type": "event",
+          "state": {
+            "description": "Caroline attended an LGBTQ+ counseling workshop the Friday before June 27, 2023, which focused on therapeutic methods for working with trans people."
+          }
+        },
+        {
+          "name": "Caroline's motivation for counseling",
+          "type": "concept",
+          "state": {
+            "description": "Caroline's motivation to pursue counseling comes from her own journey and the support she received, which improved her life."
+          }
+        },
+        {
+          "name": "Caroline's passion for mental health",
+          "type": "concept",
+          "state": {
+            "description": "Caroline is passionate about creating a safe, inviting place for people to grow in their mental health."
+          }
+        },
+        {
+          "name": "Caroline",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Melanie",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 8,
+    "total_entities": 45
+  },
+  {
+    "session_index": 4,
+    "session_id": "conv-26_session_4",
+    "input_chars": 2503,
+    "input_preview": "[Speakers: Caroline and Melanie]\nUse their FULL NAMES (Caroline, Melanie) in entity names, never abbreviations.\n\n[Session \u2014 July 03, 2023 at 13:36]\nCaroline: Since we last spoke, some big things have happened. Last week I went to an LGBTQ+ pride parade. Everyone was so happy and it made me feel like I belonged. It showed me how much our community has grown, it was amazing!\nCaroline: Wow, Caroline, sounds like the parade was an awesome experience! It's great to see the love and support for the LG",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Caroline's LGBTQ+ pride parade experience",
+          "type": "concept",
+          "state": {
+            "description": "Attended an LGBTQ+ pride parade the week before July 03, 2023, felt a sense of belonging and community growth."
+          }
+        },
+        {
+          "name": "Caroline's counseling goals",
+          "type": "concept",
+          "state": {
+            "description": "Motivated to use her story to help others, considering a career in counseling and mental health."
+          }
+        },
+        {
+          "name": "Caroline's piano learning",
+          "type": "concept",
+          "state": {
+            "description": "Learning to play the piano as a creative outlet."
+          }
+        },
+        {
+          "name": "Caroline's pottery hobby",
+          "type": "concept",
+          "state": {
+            "description": "Pottery is a huge part of Caroline's life, helping her express emotions and bringing her joy."
+          }
+        },
+        {
+          "name": "Caroline's upcoming transgender conference",
+          "type": "concept",
+          "state": {
+            "description": "Attending a transgender conference in July 2023 to meet others and learn about advocacy."
+          }
+        },
+        {
+          "name": "Melanie's pottery class",
+          "type": "concept",
+          "state": {
+            "description": "Signed up for a pottery class on July 2, 2023, as a form of therapy and self-expression."
+          }
+        },
+        {
+          "name": "Melanie's pottery bowl",
+          "type": "concept",
+          "state": {
+            "description": "Created a bowl with a black and white flower design in her pottery class."
+          }
+        },
+        {
+          "name": "Caroline",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Melanie",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 9,
+    "entities_new": 7,
+    "total_entities": 52
+  },
+  {
+    "session_index": 5,
+    "session_id": "conv-26_session_5",
+    "input_chars": 2852,
+    "input_preview": "[Speakers: Caroline and Melanie]\nUse their FULL NAMES (Caroline, Melanie) in entity names, never abbreviations.\n\n[Session \u2014 July 06, 2023 at 20:18]\nCaroline: Hey Mel! Long time no talk. Lots has been going on since then!\nCaroline: Hey Caroline! Missed you. Anything new? Spill the beans!\nCaroline: Since our last chat, I've been looking into counseling or mental health work more. I'm passionate about helping people and making a positive impact. It's tough, but really rewarding too. Anything new ha",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Caroline's career interest",
+          "type": "concept",
+          "state": {
+            "description": "Looking into counseling or mental health work, passionate about helping people and making a positive impact."
+          }
+        },
+        {
+          "name": "Caroline's library creation",
+          "type": "concept",
+          "state": {
+            "description": "Creating a library for when she has kids, looking forward to reading to them."
+          }
+        },
+        {
+          "name": "Caroline's kids' books",
+          "type": "concept",
+          "state": {
+            "description": "Has lots of kids' books including classics, stories from different cultures, and educational books."
+          }
+        },
+        {
+          "name": "Caroline's favorite childhood book",
+          "type": "concept",
+          "state": {
+            "description": "Loved reading 'Charlotte's Web' as a kid, appreciating themes of friendship and compassion."
+          }
+        },
+        {
+          "name": "Caroline's support network",
+          "type": "concept",
+          "state": {
+            "description": "Support network has been amazing during her transition, providing love, guidance, and acceptance."
+          }
+        },
+        {
+          "name": "Caroline's picnic",
+          "type": "concept",
+          "state": {
+            "description": "Had a picnic with friends and family the week before July 06, 2023."
+          }
+        },
+        {
+          "name": "Melanie's museum visit",
+          "type": "concept",
+          "state": {
+            "description": "Took her kids to the museum, enjoyed spending time with them."
+          }
+        },
+        {
+          "name": "Melanie's kids' excitement",
+          "type": "concept",
+          "state": {
+            "description": "Kids were excited about the dinosaur exhibit at the museum."
+          }
+        },
+        {
+          "name": "Melanie's family camping",
+          "type": "concept",
+          "state": {
+            "description": "Family enjoys camping at the beach, which brings them closer."
+          }
+        },
+        {
+          "name": "Caroline",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Melanie",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 8,
+    "total_entities": 60
+  },
+  {
+    "session_index": 6,
+    "session_id": "conv-26_session_6",
+    "input_chars": 4438,
+    "input_preview": "[Speakers: Caroline and Melanie]\nUse their FULL NAMES (Caroline, Melanie) in entity names, never abbreviations.\n\n[Session \u2014 July 12, 2023 at 16:33]\nCaroline: Hey Mel, great to chat with you again! So much has happened since we last spoke - I went to an LGBTQ conference two days ago and it was really special. I got the chance to meet and connect with people who've gone through similar journeys. It was such a welcoming environment and I felt totally accepted. I'm really thankful for this amazing c",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Caroline's LGBTQ conference",
+          "type": "event",
+          "state": {
+            "description": "Attended an LGBTQ conference on July 10, 2023, which was a welcoming environment and allowed for connection with others."
+          }
+        },
+        {
+          "name": "Caroline's community involvement",
+          "type": "concept",
+          "state": {
+            "description": "Caroline feels thankful for the LGBTQ community and is motivated to fight for trans rights."
+          }
+        },
+        {
+          "name": "Caroline's mental health career plans",
+          "type": "career",
+          "state": {
+            "description": "Caroline is looking into counseling and mental health jobs to help others."
+          }
+        },
+        {
+          "name": "Caroline's mental health experience",
+          "type": "health",
+          "state": {
+            "description": "Caroline struggled with mental health and received helpful support, motivating her to help others."
+          }
+        },
+        {
+          "name": "Caroline's favorite book",
+          "type": "item",
+          "state": {
+            "description": "Caroline's favorite book is 'Becoming Nicole' by Amy Ellis Nutt, which inspired her with its true story about a trans girl."
+          }
+        },
+        {
+          "name": "Caroline's lessons from 'Becoming Nicole'",
+          "type": "concept",
+          "state": {
+            "description": "The book taught Caroline self-acceptance, finding support, and that tough times don't last."
+          }
+        },
+        {
+          "name": "Caroline's pets",
+          "type": "family",
+          "state": {
+            "description": "Caroline has a dog named Luna and a cat named Oliver."
+          }
+        },
+        {
+          "name": "Caroline's new shoes",
+          "type": "item",
+          "state": {
+            "description": "Caroline got new pink sneakers for running."
+          }
+        },
+        {
+          "name": "Caroline's running routine",
+          "type": "hobby",
+          "state": {
+            "description": "Caroline has been running longer since the last chat, using it as a way to de-stress."
+          }
+        },
+        {
+          "name": "Melanie's pets",
+          "type": "family",
+          "state": {
+            "description": "Melanie has a dog named Luna and a cat named Oliver."
+          }
+        },
+        {
+          "name": "Melanie's running motivation",
+          "type": "hobby",
+          "state": {
+            "description": "Melanie has been running farther to de-stress, which has been beneficial for her mental health."
+          }
+        },
+        {
+          "name": "Caroline",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Melanie",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 11,
+    "total_entities": 71
+  },
+  {
+    "session_index": 7,
+    "session_id": "conv-26_session_7",
+    "input_chars": 6029,
+    "input_preview": "[Speakers: Caroline and Melanie]\nUse their FULL NAMES (Caroline, Melanie) in entity names, never abbreviations.\n\n[Session \u2014 July 15, 2023 at 13:51]\nCaroline: Hey Mel, what's up? Been a busy week since we talked.\nCaroline: Hey Caroline, it's been super busy here. So much since we talked! Last Fri I finally took my kids to a pottery workshop. We all made our own pots, it was fun and therapeutic!\n[Image: a photography of a group of children making clay sculptures in a classroom]\nCaroline: Wow, Mel!",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Caroline's pottery workshop",
+          "type": "event",
+          "state": {
+            "description": "Caroline took her kids to a pottery workshop where they made their own pots."
+          }
+        },
+        {
+          "name": "Caroline's painting hobby",
+          "type": "hobby",
+          "state": {
+            "description": "Caroline enjoys painting nature-inspired artworks with her kids."
+          }
+        },
+        {
+          "name": "Caroline's council meeting for adoption",
+          "type": "event",
+          "state": {
+            "description": "Caroline attended a council meeting for adoption that was inspiring and emotional."
+          }
+        },
+        {
+          "name": "Caroline's favorite color",
+          "type": "preference",
+          "state": {
+            "description": "Caroline's favorite color is blue, which makes her feel relaxed."
+          }
+        },
+        {
+          "name": "Caroline's wedding decor",
+          "type": "concept",
+          "state": {
+            "description": "Flowers were an important part of Caroline's wedding decor, reminding her of that special day."
+          }
+        },
+        {
+          "name": "Caroline's pride parade experience",
+          "type": "event",
+          "state": {
+            "description": "Missed the pride parade held the weekend before July 20, 2023, which was a powerful reminder of the fight for equality and inclusivity."
+          }
+        },
+        {
+          "name": "Caroline's feeling of acceptance",
+          "type": "emotion",
+          "state": {
+            "description": "Caroline felt proud and grateful being around people who accepted and celebrated her."
+          }
+        },
+        {
+          "name": "Caroline's courage to transition",
+          "type": "concept",
+          "state": {
+            "description": "Caroline realized she can be herself without fear and found the courage to transition."
+          }
+        },
+        {
+          "name": "Caroline's mental health importance",
+          "type": "belief",
+          "state": {
+            "description": "Caroline believes that being true to oneself is important for mental health and finding peace."
+          }
+        },
+        {
+          "name": "Melanie's family support",
+          "type": "concept",
+          "state": {
+            "description": "Melanie feels her family is her biggest motivation and support."
+          }
+        },
+        {
+          "name": "Melanie's camping trip",
+          "type": "event",
+          "state": {
+            "description": "Melanie went on a camping trip in the forest with her family."
+          }
+        },
+        {
+          "name": "Melanie's hiking hobby",
+          "type": "hobby",
+          "state": {
+            "description": "Melanie enjoys hiking in the mountains and exploring forests with her family."
+          }
+        },
+        {
+          "name": "Caroline",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Melanie",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 11,
+    "total_entities": 82
+  },
+  {
+    "session_index": 8,
+    "session_id": "conv-26_session_8",
+    "input_chars": 2578,
+    "input_preview": "[Speakers: Caroline and Melanie]\nUse their FULL NAMES (Caroline, Melanie) in entity names, never abbreviations.\n\n[Session \u2014 July 17, 2023 at 14:31]\nCaroline: Hey Caroline, hope all's good! I had a quiet weekend after we went camping with my fam two weekends ago. It was great to unplug and hang with the kids. What've you been up to? Anything fun over the weekend?\nCaroline: Hey Melanie! That sounds great! Last weekend I joined a mentorship program for LGBTQ youth - it's really rewarding to help th",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Caroline's weekend activities",
+          "type": "concept",
+          "state": {
+            "description": "Had a quiet weekend after camping with family two weekends before July 17, 2023."
+          }
+        },
+        {
+          "name": "Caroline's mentorship program",
+          "type": "concept",
+          "state": {
+            "description": "Joined a mentorship program for LGBTQ youth, which is rewarding."
+          }
+        },
+        {
+          "name": "Caroline's mentoring experience",
+          "type": "concept",
+          "state": {
+            "description": "Mentoring is going great, met amazing young folks and supported them."
+          }
+        },
+        {
+          "name": "Caroline's mentee",
+          "type": "person",
+          "state": {
+            "description": "Mentors a transgender teen, working on building confidence and positive strategies."
+          }
+        },
+        {
+          "name": "Caroline's pride event",
+          "type": "concept",
+          "state": {
+            "description": "Attended an LGBT pride event June 2023, which was encouraging and filled with love."
+          }
+        },
+        {
+          "name": "Caroline's mentee's reaction",
+          "type": "concept",
+          "state": {
+            "description": "Mentee's face lit up when they saw the support at the pride event."
+          }
+        },
+        {
+          "name": "Caroline's upcoming LGBTQ art show",
+          "type": "concept",
+          "state": {
+            "description": "Having an LGBTQ art show August 2023 featuring her paintings."
+          }
+        },
+        {
+          "name": "Caroline's painting for the art show",
+          "type": "concept",
+          "state": {
+            "description": "A painting created for the LGBTQ art show, inspired by a visit to an LGBTQ center."
+          }
+        },
+        {
+          "name": "Caroline's painting inspiration",
+          "type": "concept",
+          "state": {
+            "description": "Caroline painted a sunset after visiting the beach the week before August 25, 2023."
+          }
+        },
+        {
+          "name": "Melanie's kids' painting",
+          "type": "concept",
+          "state": {
+            "description": "Melanie and her kids finished another painting similar to their last one."
+          }
+        },
+        {
+          "name": "Caroline",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Melanie",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 10,
+    "total_entities": 92
+  },
+  {
+    "session_index": 9,
+    "session_id": "conv-26_session_9",
+    "input_chars": 4397,
+    "input_preview": "[Speakers: Caroline and Melanie]\nUse their FULL NAMES (Caroline, Melanie) in entity names, never abbreviations.\n\n[Session \u2014 July 20, 2023 at 20:56]\nCaroline: Hey Melanie! Just wanted to say hi!\nCaroline: Hey Caroline! Good to talk to you again. What's up? Anything new since last time?\nCaroline: Hey Mel! A lot's happened since we last chatted - I just joined a new LGBTQ activist group last Tues. I'm meeting so many cool people who are as passionate as I am about rights and community support. I'm ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Caroline's LGBTQ activist group",
+          "type": "concept",
+          "state": {
+            "description": "Joined a new LGBTQ activist group called 'Connected LGBTQ Activists' on July 18, 2023."
+          }
+        },
+        {
+          "name": "Caroline's pride parade experience",
+          "type": "event",
+          "state": {
+            "description": "Missed the pride parade held the weekend before July 20, 2023, which was a powerful reminder of the fight for equality and inclusivity."
+          }
+        },
+        {
+          "name": "Caroline's beach trips",
+          "type": "event",
+          "state": {
+            "description": "Usually goes to the beach once or twice a year with her kids."
+          }
+        },
+        {
+          "name": "Caroline's family camping trip",
+          "type": "event",
+          "state": {
+            "description": "Looks forward to family camping trips where they roast marshmallows and tell stories around the campfire."
+          }
+        },
+        {
+          "name": "Caroline's best camping memory",
+          "type": "event",
+          "state": {
+            "description": "Remembered the camping trip 2022 when they saw the Perseid meteor shower."
+          }
+        },
+        {
+          "name": "Caroline's youngest child's first steps",
+          "type": "event",
+          "state": {
+            "description": "Remembers the day her youngest took her first steps."
+          }
+        },
+        {
+          "name": "Melanie's family",
+          "type": "concept",
+          "state": {
+            "description": "Melanie feels lucky to have her family, who bring her joy and love."
+          }
+        },
+        {
+          "name": "Caroline",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Melanie",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 9,
+    "entities_new": 6,
+    "total_entities": 98
+  },
+  {
+    "session_index": 10,
+    "session_id": "conv-26_session_10",
+    "input_chars": 3645,
+    "input_preview": "[Speakers: Caroline and Melanie]\nUse their FULL NAMES (Caroline, Melanie) in entity names, never abbreviations.\n\n[Session \u2014 August 14, 2023 at 14:24]\nCaroline: Hey Caroline! Last night was amazing! We celebrated my daughter's birthday with a concert surrounded by music, joy and the warm summer breeze. Seeing my kids' smiles was so awesome, and I'm so thankful for our special moments together.\nCaroline: Wow, sounds wonderful! Your love for your kids is so awesome. What concert was it? The advocac",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Caroline's daughter's birthday",
+          "type": "event",
+          "state": {
+            "description": "Celebrated Caroline's daughter's birthday with a concert on August 13, 2023."
+          }
+        },
+        {
+          "name": "Caroline's concert experience",
+          "type": "event",
+          "state": {
+            "description": "Attended a concert by Matt Patterson, who is talented and has an amazing voice."
+          }
+        },
+        {
+          "name": "Caroline's pride parade",
+          "type": "event",
+          "state": {
+            "description": "Attended a pride parade on August 11, 2023, which was filled with energy and love."
+          }
+        },
+        {
+          "name": "Caroline's advocacy for LGBTQ rights",
+          "type": "belief",
+          "state": {
+            "description": "Believes in standing up for equality and fighting for LGBTQ rights."
+          }
+        },
+        {
+          "name": "Caroline's art focus",
+          "type": "concept",
+          "state": {
+            "description": "Focuses on representing inclusivity and diversity in her art."
+          }
+        },
+        {
+          "name": "Caroline's trans experience in art",
+          "type": "concept",
+          "state": {
+            "description": "Her art expresses her trans experience and aims to help people understand the trans community."
+          }
+        },
+        {
+          "name": "Caroline's painting 'Embracing Identity'",
+          "type": "concept",
+          "state": {
+            "description": "A painting about finding comfort and love in being oneself, representing the journey of acceptance."
+          }
+        },
+        {
+          "name": "Caroline's self-discovery through art",
+          "type": "concept",
+          "state": {
+            "description": "Uses art to explore her transition and changing body, finding beauty in imperfections."
+          }
+        },
+        {
+          "name": "Melanie's appreciation for Caroline's art",
+          "type": "belief",
+          "state": {
+            "description": "Appreciates how Caroline uses art to tell stories and teach about trans individuals."
+          }
+        },
+        {
+          "name": "Caroline",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Melanie",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 9,
+    "total_entities": 107
+  },
+  {
+    "session_index": 11,
+    "session_id": "conv-26_session_11",
+    "input_chars": 3224,
+    "input_preview": "[Speakers: Caroline and Melanie]\nUse their FULL NAMES (Caroline, Melanie) in entity names, never abbreviations.\n\n[Session \u2014 August 17, 2023 at 13:50]\nCaroline: Hey Mel! How're ya doin'? Recently, I had a not-so-great experience on a hike. I ran into a group of religious conservatives who said something that really upset me. It made me think how much work we still have to do for LGBTQ rights. It's been so helpful to have people around me who accept and support me, so I know I'll be ok!\nCaroline: ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Caroline's hike experience",
+          "type": "concept",
+          "state": {
+            "description": "Had a not-so-great experience on a hike with a group of religious conservatives who upset her."
+          }
+        },
+        {
+          "name": "Caroline's thoughts on LGBTQ rights",
+          "type": "belief",
+          "state": {
+            "description": "Believes there is still much work to do for LGBTQ rights."
+          }
+        },
+        {
+          "name": "Caroline's support system",
+          "type": "concept",
+          "state": {
+            "description": "Feels grateful for people around her who accept and support her."
+          }
+        },
+        {
+          "name": "Melanie's pottery project",
+          "type": "concept",
+          "state": {
+            "description": "Finished another pottery project and shared a photo of a bowl with a colorful design."
+          }
+        },
+        {
+          "name": "Melanie's inspiration for pottery",
+          "type": "concept",
+          "state": {
+            "description": "Obsessed with colors and patterns to catch the eye and make people smile."
+          }
+        },
+        {
+          "name": "Melanie's expression through art",
+          "type": "concept",
+          "state": {
+            "description": "Uses painting to express her feelings and be creative."
+          }
+        },
+        {
+          "name": "Melanie's connection to art",
+          "type": "belief",
+          "state": {
+            "description": "Feels a strong connection to art, which is a huge learning experience for her."
+          }
+        },
+        {
+          "name": "Melanie's view on art",
+          "type": "belief",
+          "state": {
+            "description": "Considers art both a sanctuary and a source of comfort."
+          }
+        },
+        {
+          "name": "Caroline's appreciation for friendship",
+          "type": "concept",
+          "state": {
+            "description": "Values her friendship with Melanie and appreciates having her in her corner."
+          }
+        },
+        {
+          "name": "Caroline's memory of Pride fest",
+          "type": "event",
+          "state": {
+            "description": "Had a blast at the Pride fest 2022 with supportive friends."
+          }
+        },
+        {
+          "name": "Caroline's summer plans",
+          "type": "concept",
+          "state": {
+            "description": "Wants to plan a family outing or something special with Melanie this summer."
+          }
+        },
+        {
+          "name": "Melanie's agreement on summer plans",
+          "type": "concept",
+          "state": {
+            "description": "Agrees to plan something special for the summer."
+          }
+        },
+        {
+          "name": "Caroline's excitement for the trip",
+          "type": "concept",
+          "state": {
+            "description": "Excited about creating memories during the upcoming trip."
+          }
+        },
+        {
+          "name": "Caroline",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Melanie",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 15,
+    "entities_new": 11,
+    "total_entities": 118
+  },
+  {
+    "session_index": 12,
+    "session_id": "conv-26_session_12",
+    "input_chars": 3200,
+    "input_preview": "[Speakers: Caroline and Melanie]\nUse their FULL NAMES (Caroline, Melanie) in entity names, never abbreviations.\n\n[Session \u2014 August 23, 2023 at 15:31]\nCaroline: Hi Melanie! Hope you're doing good. Guess what I did this week? I took the first step towards becoming a mom - I applied to adoption agencies! It's a big decision, but I think I'm ready to give all my love to a child. I got lots of help from this adoption advice/assistance group I attended. It was great!\n[Image: a photo of a sign with a p",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Caroline's adoption application",
+          "type": "concept",
+          "state": {
+            "description": "Caroline applied to adoption agencies to become a mom."
+          }
+        },
+        {
+          "name": "Caroline's pet Oscar",
+          "type": "concept",
+          "state": {
+            "description": "Caroline has a guinea pig named Oscar."
+          }
+        },
+        {
+          "name": "Caroline's childhood horseback riding",
+          "type": "concept",
+          "state": {
+            "description": "Caroline used to go horseback riding with her dad when she was a kid."
+          }
+        },
+        {
+          "name": "Caroline's horse painting",
+          "type": "concept",
+          "state": {
+            "description": "Caroline created a painting of a horse."
+          }
+        },
+        {
+          "name": "Caroline's self-portrait",
+          "type": "concept",
+          "state": {
+            "description": "Caroline painted a self-portrait with a blue face."
+          }
+        },
+        {
+          "name": "Caroline's art therapy",
+          "type": "concept",
+          "state": {
+            "description": "Caroline finds painting therapeutic and helps her explore her identity."
+          }
+        },
+        {
+          "name": "Caroline's support for LGBTQ rights",
+          "type": "concept",
+          "state": {
+            "description": "Caroline promotes LGBTQ rights and aims to live authentically."
+          }
+        },
+        {
+          "name": "Melanie's pet Bailey",
+          "type": "concept",
+          "state": {
+            "description": "Melanie has a cat named Bailey."
+          }
+        },
+        {
+          "name": "Melanie's pet Oliver",
+          "type": "concept",
+          "state": {
+            "description": "Melanie has a dog named Oliver."
+          }
+        },
+        {
+          "name": "Melanie's painting hobby",
+          "type": "concept",
+          "state": {
+            "description": "Melanie loves to paint animals."
+          }
+        },
+        {
+          "name": "Caroline",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Melanie",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 9,
+    "total_entities": 127
+  },
+  {
+    "session_index": 13,
+    "session_id": "conv-26_session_13",
+    "input_chars": 6029,
+    "input_preview": "[Speakers: Caroline and Melanie]\nUse their FULL NAMES (Caroline, Melanie) in entity names, never abbreviations.\n\n[Session \u2014 August 25, 2023 at 13:33]\nCaroline: Hey, Mel! How's it going? There's something I want to tell you. I went hiking last week and got into a bad spot with some people. It really bugged me, so I tried to apologize to them.\n[Image: a photo of a woman sitting on a sign on top of a mountain]\nCaroline: Wow, Caroline! Sorry that happened to you. It's tough when those things happen,",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Caroline's hiking incident",
+          "type": "concept",
+          "state": {
+            "description": "Caroline went hiking and encountered a bad situation with some people, which bothered her."
+          }
+        },
+        {
+          "name": "Caroline's pottery class",
+          "type": "concept",
+          "state": {
+            "description": "Caroline made a plate in pottery class on August 24, 2023."
+          }
+        },
+        {
+          "name": "Caroline's hobby: pottery",
+          "type": "concept",
+          "state": {
+            "description": "Caroline finds pottery relaxing and creative."
+          }
+        },
+        {
+          "name": "Caroline's painting inspiration",
+          "type": "concept",
+          "state": {
+            "description": "Caroline painted a sunset after visiting the beach the week before August 25, 2023."
+          }
+        },
+        {
+          "name": "Caroline's painting of a sunset",
+          "type": "concept",
+          "state": {
+            "description": "Caroline painted a vivid sunset inspired by her beach visit."
+          }
+        },
+        {
+          "name": "Caroline's volunteering experience",
+          "type": "concept",
+          "state": {
+            "description": "Volunteered at an LGBTQ+ youth center, found it gratifying to support young people."
+          }
+        },
+        {
+          "name": "Caroline's support for Melanie",
+          "type": "concept",
+          "state": {
+            "description": "Caroline expressed admiration for Melanie's volunteering efforts."
+          }
+        },
+        {
+          "name": "Caroline's transition",
+          "type": "concept",
+          "state": {
+            "description": "Caroline transitioned and joined the transgender community for acceptance and support."
+          }
+        },
+        {
+          "name": "Caroline's rainbow flag mural",
+          "type": "concept",
+          "state": {
+            "description": "The rainbow flag mural is important to Caroline as it reflects the courage of the trans community."
+          }
+        },
+        {
+          "name": "Caroline's eagle symbol",
+          "type": "concept",
+          "state": {
+            "description": "The eagle symbolizes freedom and pride for Caroline."
+          }
+        },
+        {
+          "name": "Caroline's stained glass window",
+          "type": "concept",
+          "state": {
+            "description": "Caroline made a stained glass window to symbolize discovering true potential."
+          }
+        },
+        {
+          "name": "Caroline's stained glass window for church",
+          "type": "concept",
+          "state": {
+            "description": "Caroline created a stained glass window for a local church to represent her journey as a transgender woman."
+          }
+        },
+        {
+          "name": "Caroline's rainbow sidewalk",
+          "type": "concept",
+          "state": {
+            "description": "Caroline found a vibrant rainbow sidewalk while walking in her neighborhood for Pride Month."
+          }
+        },
+        {
+          "name": "Caroline's joy from art",
+          "type": "concept",
+          "state": {
+            "description": "Caroline finds joy in art, which helps her express feelings and capture moments."
+          }
+        },
+        {
+          "name": "Caroline's favorite art: drawing flowers",
+          "type": "concept",
+          "state": {
+            "description": "Caroline enjoys drawing flowers as a way to appreciate nature."
+          }
+        },
+        {
+          "name": "Melanie's favorite art: painting landscapes and still life",
+          "type": "concept",
+          "state": {
+            "description": "Melanie loves painting landscapes and still life."
+          }
+        },
+        {
+          "name": "Melanie's upcoming art projects",
+          "type": "concept",
+          "state": {
+            "description": "Melanie is planning a few paintings inspired by autumn."
+          }
+        },
+        {
+          "name": "Caroline",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Melanie",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 19,
+    "entities_new": 16,
+    "total_entities": 143
+  },
+  {
+    "session_index": 14,
+    "session_id": "conv-26_session_14",
+    "input_chars": 4653,
+    "input_preview": "[Speakers: Caroline and Melanie]\nUse their FULL NAMES (Caroline, Melanie) in entity names, never abbreviations.\n\n[Session \u2014 August 28, 2023 at 15:19]\nCaroline: Hey Melanie, great to hear from you. What's been up since we talked?\nCaroline: Hey Caroline! Since we last spoke, I took my kids to a park yesterday. They had fun exploring and playing. It was nice seeing them have a good time outdoors. Time flies, huh? What's new with you?\n[Image: a photo of a playground with a climbing net and a slide]\n",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Caroline's volunteering experience",
+          "type": "concept",
+          "state": {
+            "description": "Volunteered at an LGBTQ+ youth center, found it gratifying to support young people."
+          }
+        },
+        {
+          "name": "Caroline's talent show project",
+          "type": "concept",
+          "state": {
+            "description": "Putting together a talent show for kids September 2023."
+          }
+        },
+        {
+          "name": "Caroline's music preference",
+          "type": "concept",
+          "state": {
+            "description": "Loves live music and finds it uplifting."
+          }
+        },
+        {
+          "name": "Caroline's favorite song",
+          "type": "concept",
+          "state": {
+            "description": "The song 'Brave' by Sara Bareilles has deep significance for Caroline."
+          }
+        },
+        {
+          "name": "Caroline's guitar playing",
+          "type": "concept",
+          "state": {
+            "description": "Plays acoustic guitar, started about five years ago."
+          }
+        },
+        {
+          "name": "Caroline's music expression",
+          "type": "concept",
+          "state": {
+            "description": "Uses music as a way to express emotions."
+          }
+        },
+        {
+          "name": "Melanie's clarinet playing",
+          "type": "concept",
+          "state": {
+            "description": "Plays clarinet, started when young, finds it a way to relax."
+          }
+        },
+        {
+          "name": "Melanie's favorite music",
+          "type": "concept",
+          "state": {
+            "description": "Enjoys classical music like Bach and Mozart, and modern music like Ed Sheeran's 'Perfect'."
+          }
+        },
+        {
+          "name": "Caroline",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Melanie",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 7,
+    "total_entities": 150
+  },
+  {
+    "session_index": 15,
+    "session_id": "conv-26_session_15",
+    "input_chars": 4375,
+    "input_preview": "[Speakers: Caroline and Melanie]\nUse their FULL NAMES (Caroline, Melanie) in entity names, never abbreviations.\n\n[Session \u2014 September 13, 2023 at 00:09]\nCaroline: Hey Mel, long time no chat! I had a wicked day out with the gang last weekend - we went biking and saw some pretty cool stuff. It was so refreshing, and the pic I'm sending is just stunning, eh?\n[Image: a photo of a beach with a fence and a sunset]\nCaroline: Hey Caroline! It's so good to hear from you! That pic is so beautiful, the col",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Caroline's weekend biking trip",
+          "type": "event",
+          "state": {
+            "description": "Caroline went biking with friends the weekend before September 13, 2023 and saw beautiful sights."
+          }
+        },
+        {
+          "name": "Melanie's camping trip",
+          "type": "event",
+          "state": {
+            "description": "Melanie went camping with her kids a few weeks before September 13, 2023, exploring the forest and hiking."
+          }
+        },
+        {
+          "name": "Caroline's volunteering inspiration",
+          "type": "belief",
+          "state": {
+            "description": "Caroline is inspired by her work making a difference for the LGBTQ+ community."
+          }
+        },
+        {
+          "name": "Caroline's art creation start age",
+          "type": "demographics",
+          "state": {
+            "description": "Caroline has been creating art since she was 17."
+          }
+        },
+        {
+          "name": "Caroline's art expression",
+          "type": "belief",
+          "state": {
+            "description": "Caroline finds art empowering and cathartic, helping her express feelings and explore her gender identity."
+          }
+        },
+        {
+          "name": "Melanie's art journey",
+          "type": "demographics",
+          "state": {
+            "description": "Melanie has been into art for seven years (since 2016), focusing on painting and pottery."
+          }
+        },
+        {
+          "name": "Melanie's pottery creation",
+          "type": "event",
+          "state": {
+            "description": "Melanie created pottery, which she finds calming and satisfying."
+          }
+        },
+        {
+          "name": "Caroline's painting meaning",
+          "type": "belief",
+          "state": {
+            "description": "Caroline's painting represents her journey as a trans woman, with colors symbolizing the binary gender system."
+          }
+        },
+        {
+          "name": "Caroline's relationship changes",
+          "type": "belief",
+          "state": {
+            "description": "Caroline's journey has changed her relationships, with some friends supporting her and others not."
+          }
+        },
+        {
+          "name": "Caroline's caf\u00e9 experience",
+          "type": "event",
+          "state": {
+            "description": "Caroline had a good time at the caf\u00e9 the weekend before September 13, 2023, enjoying thoughtful signs."
+          }
+        },
+        {
+          "name": "Caroline",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Melanie",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 9,
+    "total_entities": 159
+  },
+  {
+    "session_index": 16,
+    "session_id": "conv-26_session_16",
+    "input_chars": 4526,
+    "input_preview": "[Speakers: Caroline and Melanie]\nUse their FULL NAMES (Caroline, Melanie) in entity names, never abbreviations.\n\n[Session \u2014 October 13, 2023 at 10:31]\nCaroline: Hey Mel, what's up? Long time no see! I just contacted my mentor for adoption advice. I'm ready to be a mom and share my love and family. It's a great feeling. Anything new with you? Anything exciting going on?\nCaroline: Hey Caroline! Great to hear from you! Wow, what an amazing journey. Congrats!\nCaroline: Thanks, Melanie! I'm stoked to",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Caroline's mentor for adoption advice",
+          "type": "person",
+          "state": {
+            "description": "Caroline contacted her mentor for advice on adoption."
+          }
+        },
+        {
+          "name": "Caroline's desire to adopt",
+          "type": "concept",
+          "state": {
+            "description": "Caroline is ready to be a mom and share her love and family through adoption."
+          }
+        },
+        {
+          "name": "Caroline's friend's adoption experience",
+          "type": "concept",
+          "state": {
+            "description": "Caroline's friend adopted 2022 and is now happy with their new child."
+          }
+        },
+        {
+          "name": "Caroline's pottery setback",
+          "type": "concept",
+          "state": {
+            "description": "Caroline had to take a break from pottery September 2023 due to an injury."
+          }
+        },
+        {
+          "name": "Caroline's creative outlets",
+          "type": "concept",
+          "state": {
+            "description": "Caroline has been reading and painting to keep busy."
+          }
+        },
+        {
+          "name": "Caroline's painting inspired by sunsets",
+          "type": "concept",
+          "state": {
+            "description": "Caroline painted a sunset with calming colors the week before October 13, 2023."
+          }
+        },
+        {
+          "name": "Caroline's abstract painting style",
+          "type": "concept",
+          "state": {
+            "description": "Caroline has been trying out abstract painting as a form of self-expression."
+          }
+        },
+        {
+          "name": "Melanie's painting with blue streaks",
+          "type": "concept",
+          "state": {
+            "description": "Melanie painted a piece with peaceful blue streaks to show tranquility."
+          }
+        },
+        {
+          "name": "Caroline's poetry reading experience",
+          "type": "concept",
+          "state": {
+            "description": "Caroline attended a transgender poetry reading the Friday before October 13, 2023 that was empowering."
+          }
+        },
+        {
+          "name": "Caroline's drawing of a woman in a dress",
+          "type": "concept",
+          "state": {
+            "description": "Caroline drew a piece that stands for freedom and being true to herself."
+          }
+        },
+        {
+          "name": "Caroline's emotional journey",
+          "type": "concept",
+          "state": {
+            "description": "Caroline believes life is about learning and exploring."
+          }
+        },
+        {
+          "name": "Melanie's emotional journey",
+          "type": "concept",
+          "state": {
+            "description": "Melanie agrees that being ourselves is a great feeling and part of an ongoing adventure."
+          }
+        },
+        {
+          "name": "Caroline",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Melanie",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 12,
+    "total_entities": 171
+  },
+  {
+    "session_index": 17,
+    "session_id": "conv-26_session_17",
+    "input_chars": 3386,
+    "input_preview": "[Speakers: Caroline and Melanie]\nUse their FULL NAMES (Caroline, Melanie) in entity names, never abbreviations.\n\n[Session \u2014 October 20, 2023 at 18:55]\nCaroline: Hey Caroline, that roadtrip this past weekend was insane! We were all freaked when my son got into an accident. We were so lucky he was okay. It was a real scary experience. Thankfully it's over now. What's been up since we last talked?\n[Image: a photo of a car dashboard with a white cloth and a steering wheel]\nCaroline: Oops, sorry 'bou",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Caroline's son accident",
+          "type": "event",
+          "state": {
+            "description": "Caroline's son got into an accident during a road trip on October 14, 2023."
+          }
+        },
+        {
+          "name": "Caroline's family importance",
+          "type": "belief",
+          "state": {
+            "description": "Caroline believes family is super important, especially after the accident."
+          }
+        },
+        {
+          "name": "Caroline's kids resilience",
+          "type": "belief",
+          "state": {
+            "description": "Caroline thinks kids are amazingly resilient in tough situations."
+          }
+        },
+        {
+          "name": "Caroline's camping trips",
+          "type": "hobby",
+          "state": {
+            "description": "Caroline loves camping trips with her family because nature brings peace and serenity."
+          }
+        },
+        {
+          "name": "Melanie's family support",
+          "type": "belief",
+          "state": {
+            "description": "Melanie feels her family is her biggest motivation and support."
+          }
+        },
+        {
+          "name": "Melanie's recent outdoor activity",
+          "type": "event",
+          "state": {
+            "description": "Melanie and her family went for a walk on a trail on October 19, 2023."
+          }
+        },
+        {
+          "name": "Melanie's love for nature",
+          "type": "belief",
+          "state": {
+            "description": "Melanie loves spending quality time in nature with her family."
+          }
+        },
+        {
+          "name": "Caroline",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Melanie",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 9,
+    "entities_new": 6,
+    "total_entities": 177
+  },
+  {
+    "session_index": 18,
+    "session_id": "conv-26_session_18",
+    "input_chars": 2881,
+    "input_preview": "[Speakers: Caroline and Melanie]\nUse their FULL NAMES (Caroline, Melanie) in entity names, never abbreviations.\n\n[Session \u2014 October 22, 2023 at 09:55]\nCaroline: Woohoo Melanie! I passed the adoption agency interviews last Friday! I'm so excited and thankful. This is a big move towards my goal of having a family.\nCaroline: Congrats, Caroline! Adoption sounds awesome. I'm so happy for you. These figurines I bought yesterday remind me of family love. Tell me, what's your vision for the future?\n[Ima",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Caroline's adoption agency interviews",
+          "type": "event",
+          "state": {
+            "description": "Caroline passed the adoption agency interviews on October 13, 2023."
+          }
+        },
+        {
+          "name": "Caroline's goal of having a family",
+          "type": "concept",
+          "state": {
+            "description": "Caroline's aspiration to build her own family through adoption."
+          }
+        },
+        {
+          "name": "Caroline's vision for the future",
+          "type": "concept",
+          "state": {
+            "description": "Caroline hopes to create a safe and loving home for children who need it."
+          }
+        },
+        {
+          "name": "Caroline's belief in love and acceptance",
+          "type": "belief",
+          "state": {
+            "description": "Caroline believes that love and acceptance should be everyone's right."
+          }
+        },
+        {
+          "name": "Caroline's journey of self-acceptance",
+          "type": "concept",
+          "state": {
+            "description": "Caroline found self-acceptance through support from friends and family."
+          }
+        },
+        {
+          "name": "Caroline's desire to help others",
+          "type": "belief",
+          "state": {
+            "description": "Caroline wants to pass on the support she received to others in need."
+          }
+        },
+        {
+          "name": "Melanie's support for Caroline",
+          "type": "belief",
+          "state": {
+            "description": "Melanie expresses admiration for Caroline's journey and offers her support."
+          }
+        },
+        {
+          "name": "Caroline's strength and inspiration",
+          "type": "belief",
+          "state": {
+            "description": "Caroline is recognized by Melanie for her strength and inspiring journey."
+          }
+        },
+        {
+          "name": "Caroline's gratitude for support",
+          "type": "concept",
+          "state": {
+            "description": "Caroline feels grateful for the support she received during her journey."
+          }
+        },
+        {
+          "name": "Caroline's empowering experience",
+          "type": "concept",
+          "state": {
+            "description": "Caroline finds joy in helping others grow and feel comforted."
+          }
+        },
+        {
+          "name": "Caroline's friends and family support",
+          "type": "concept",
+          "state": {
+            "description": "Caroline acknowledges the invaluable support from friends and family during her transition."
+          }
+        },
+        {
+          "name": "Caroline's happiness in being herself",
+          "type": "belief",
+          "state": {
+            "description": "Caroline feels free and content living honestly and being herself."
+          }
+        },
+        {
+          "name": "Caroline",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Melanie",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 10,
+    "total_entities": 187
+  }
+]

@@ -1,0 +1,1696 @@
+[
+  {
+    "question_id": "conv-43_q0",
+    "question_type": "single_hop",
+    "question": "what are John's goals with regards to his basketball career?",
+    "answer": "improve shooting percentage, win a championship",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q1",
+    "question_type": "single_hop",
+    "question": "What are John's goals for his career that are not related to his basketball skills?",
+    "answer": "get endorsements, build his brand, do charity work",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q2",
+    "question_type": "single_hop",
+    "question": "What items does John collect?",
+    "answer": "sneakers, fantasy movie DVDs, jerseys",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q3",
+    "question_type": "temporal",
+    "question": "Would Tim enjoy reading books by C. S. Lewis or John Greene?",
+    "answer": "C. S.Lewis",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q4",
+    "question_type": "single_hop",
+    "question": "What books has Tim read?",
+    "answer": "Harry Potter, Game of Thrones, the Name of the Wind, The Alchemist, The Hobbit, A Dance with Dragons, and the Wheel of Time.",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q5",
+    "question_type": "temporal",
+    "question": "Based on Tim's collections, what is a shop that he would enjoy visiting in New York city?",
+    "answer": "House of MinaLima",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q6",
+    "question_type": "multi_hop",
+    "question": "In which month's game did John achieve a career-high score in points?",
+    "answer": "June 2023",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q7",
+    "question_type": "single_hop",
+    "question": "Which geographical locations has Tim been to?",
+    "answer": "California, London, the Smoky Mountains",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q8",
+    "question_type": "temporal",
+    "question": "Which outdoor gear company likely signed up John for an endorsement deal?",
+    "answer": "Under Armour",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q9",
+    "question_type": "single_hop",
+    "question": "Which endorsement deals has John been offered?",
+    "answer": "basketball shoes and gear deal with Nike, potential sponsorship with Gatorade, Moxie a popular beverage company, outdoor gear company",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q10",
+    "question_type": "multi_hop",
+    "question": "When was John in Seattle for a game?",
+    "answer": "early August, 2023",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q11",
+    "question_type": "single_hop",
+    "question": "What sports does John like besides basketball?",
+    "answer": "surfing",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q12",
+    "question_type": "multi_hop",
+    "question": "What year did John start surfing?",
+    "answer": "2018",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q13",
+    "question_type": "single_hop",
+    "question": "What does Tim do to escape reality?",
+    "answer": "Read fantasy books.",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q14",
+    "question_type": "single_hop",
+    "question": "What kind of writing does Tim do?",
+    "answer": "comments on favorite books in a fantasy literature forum, articles on fantasy novels, studying characters, themes, and making book recommendations, writing a fantasy novel",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q15",
+    "question_type": "temporal",
+    "question": "Who is Anthony?",
+    "answer": "likely John's friend, colleague or family",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q16",
+    "question_type": "multi_hop",
+    "question": "After how many weeks did Tim reconnect with the fellow Harry Potter fan from California?",
+    "answer": "three weeks",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q17",
+    "question_type": "single_hop",
+    "question": "How many games has John mentioned winning?",
+    "answer": "6",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q18",
+    "question_type": "single_hop",
+    "question": "What authors has Tim read books from?",
+    "answer": "J.K. Rowling, R.R. Martin, Patrick Rothfuss, Paulo Coelho, and J. R. R. Tolkien.",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q19",
+    "question_type": "temporal",
+    "question": "What is a prominent charity organization that John might want to work with and why?",
+    "answer": "Good Sports, because they work with Nike, Gatorade, and Under Armour and they aim toprovide youth sports opportunities for kids ages 3-18 in high-need communities.",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q20",
+    "question_type": "multi_hop",
+    "question": "Which city was John in before traveling to Chicago?",
+    "answer": "Seattle",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q21",
+    "question_type": "single_hop",
+    "question": "Which US cities does John mention visiting to Tim?",
+    "answer": "Seattle, Chicago, New York",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q22",
+    "question_type": "multi_hop",
+    "question": "When did John meet with his teammates after returning from Chicago?",
+    "answer": "August 15, 2023",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q23",
+    "question_type": "multi_hop",
+    "question": "When is Tim attending a book conference?",
+    "answer": "September 2023",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q24",
+    "question_type": "multi_hop",
+    "question": "Where was John between August 11 and August 15 2023?",
+    "answer": "Chicago",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q25",
+    "question_type": "single_hop",
+    "question": "What similar sports collectible do Tim and John own?",
+    "answer": "signed basketball",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q26",
+    "question_type": "single_hop",
+    "question": "Which TV series does Tim mention watching?",
+    "answer": "That, Wheel of Time",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q27",
+    "question_type": "temporal",
+    "question": "Which popular time management technique does Tim use to prepare for exams?",
+    "answer": "Pomodoro technique",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q28",
+    "question_type": "temporal",
+    "question": "Which popular music composer's tunes does Tim enjoy playing on the piano?",
+    "answer": "John Williams",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q29",
+    "question_type": "single_hop",
+    "question": "What schools did John play basketball in and how many years was he with his team during high school?",
+    "answer": "Middle school, high school, and college and he was with his high school team for 4 years.",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q30",
+    "question_type": "single_hop",
+    "question": "Which cities has John been to?",
+    "answer": "Seattle, Chicago, New York, and Paris.",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q31",
+    "question_type": "multi_hop",
+    "question": "What month did Tim plan on going to Universal Studios?",
+    "answer": "September, 2023",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q32",
+    "question_type": "temporal",
+    "question": "Which US states might Tim be in during September 2023 based on his plans of visiting Universal Studios?",
+    "answer": "California or Florida",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q33",
+    "question_type": "multi_hop",
+    "question": "When does John plan on traveling with his team on a team trip?",
+    "answer": "October, 2023",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q34",
+    "question_type": "temporal",
+    "question": "What could John do after his basketball career?",
+    "answer": "become a basketball coach since he likes giving back and leadership",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q35",
+    "question_type": "single_hop",
+    "question": "What outdoor activities does John enjoy?",
+    "answer": "Hiking, surfing",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q36",
+    "question_type": "single_hop",
+    "question": "Who is Tim and John's favorite basketball player?",
+    "answer": "LeBron James",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q37",
+    "question_type": "multi_hop",
+    "question": "Which week did Tim visit the UK for the Harry Potter Conference?",
+    "answer": "The week before October 13th, 2023.",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q38",
+    "question_type": "single_hop",
+    "question": "which country has Tim visited most frequently in his travels?",
+    "answer": "UK",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q39",
+    "question_type": "multi_hop",
+    "question": "What year did Tim go to the Smoky Mountains?",
+    "answer": "2022",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q40",
+    "question_type": "multi_hop",
+    "question": "Has Tim been to North Carolina and/or Tennesee states in the US?",
+    "answer": "Yes",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q41",
+    "question_type": "single_hop",
+    "question": "What kind of fiction stories does Tim write?",
+    "answer": "Fantasy stories with plot twists",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q42",
+    "question_type": "single_hop",
+    "question": "What has John cooked?",
+    "answer": "Soup, a slow cooker meal, and honey garlic chicken with roasted veg.",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q43",
+    "question_type": "single_hop",
+    "question": "What does John like about Lebron James?",
+    "answer": "His heart, determination, skills, and leadership.",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q44",
+    "question_type": "multi_hop",
+    "question": "When did John and his wife go on a European vacation?",
+    "answer": "November, 2023.",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q45",
+    "question_type": "multi_hop",
+    "question": "Which country was Tim visiting in the second week of November?",
+    "answer": "UK",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q46",
+    "question_type": "multi_hop",
+    "question": "Where was Tim in the week before 16 November 2023?",
+    "answer": "UK",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q47",
+    "question_type": "multi_hop",
+    "question": "When did John get married at a greenhouse?",
+    "answer": "last week of September 2023",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q48",
+    "question_type": "single_hop",
+    "question": "When did John get an ankle injury in 2023?",
+    "answer": "around November 16, 2023",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q49",
+    "question_type": "single_hop",
+    "question": "How many times has John injured his ankle?",
+    "answer": "two times",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q50",
+    "question_type": "single_hop",
+    "question": "Which book was John reading during his recovery from an ankle injury?",
+    "answer": "The Alchemist",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q51",
+    "question_type": "temporal",
+    "question": "What kind of yoga for building core strength might John benefit from?",
+    "answer": "Hatha Yoga",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q52",
+    "question_type": "single_hop",
+    "question": "What does John do to supplement his basketball training?",
+    "answer": "Yoga, strength training",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q53",
+    "question_type": "temporal",
+    "question": "What other exercises can help John with his basketball performance?",
+    "answer": "Sprinting, long-distance running, and boxing.",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q54",
+    "question_type": "multi_hop",
+    "question": "When did John take a trip to the Rocky Mountains?",
+    "answer": "2022",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q55",
+    "question_type": "multi_hop",
+    "question": "When did John start playing professionally?",
+    "answer": "May, 2023",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q56",
+    "question_type": "multi_hop",
+    "question": "When did Tim start playing the violin?",
+    "answer": "August 2023",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q57",
+    "question_type": "single_hop",
+    "question": "What instruments does Tim play?",
+    "answer": "piano, violin",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q58",
+    "question_type": "multi_hop",
+    "question": "When did John attend the Harry Potter trivia?",
+    "answer": "August 2023.",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q59",
+    "question_type": "single_hop",
+    "question": "Which career-high performances did John achieve in 2023?",
+    "answer": "highest point score, highest assist",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q60",
+    "question_type": "multi_hop",
+    "question": "When did John achieve a career-high assist performance?",
+    "answer": "December 11, 2023",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q61",
+    "question_type": "single_hop",
+    "question": "What books has John read?",
+    "answer": "inpsiring book on dreaming big, The Alchemist, fantasy series, non-fiction books on personal development, Dune",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q62",
+    "question_type": "single_hop",
+    "question": "What does John do to share his knowledge?",
+    "answer": "gives seminars, mentors younger players.",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q63",
+    "question_type": "multi_hop",
+    "question": "When did John organize a basketball camp for kids?",
+    "answer": "summer 2023",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q64",
+    "question_type": "multi_hop",
+    "question": "Which month was John in Italy?",
+    "answer": "December, 2023",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q65",
+    "question_type": "single_hop",
+    "question": "What fantasy movies does Tim like?",
+    "answer": "Lord of the Rings, Harry Potter, and Star Wars.",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q66",
+    "question_type": "temporal",
+    "question": "What is a Star Wars book that Tim might enjoy?",
+    "answer": "Star Wars: Jedi Apprentice by Judy Blundell and David Farland. It is a highly rated and immersive series about his favorite movies.",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q67",
+    "question_type": "temporal",
+    "question": "What would be a good hobby related to his travel dreams for Tim to pick up?",
+    "answer": "Writing a travel blog.",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q68",
+    "question_type": "multi_hop",
+    "question": "What day did Tim get into his study abroad program?",
+    "answer": "Januarty 5, 2024",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q69",
+    "question_type": "multi_hop",
+    "question": "When will Tim leave for Ireland?",
+    "answer": "February, 2024",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q70",
+    "question_type": "temporal",
+    "question": "Which Star Wars-related locations would Tim enjoy during his visit to Ireland?",
+    "answer": "Skellig Michael, Malin Head, Loop Head, Ceann Sib\u00e9al, and Brow Head because they are Star Wars filming locations.",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q71",
+    "question_type": "adversarial",
+    "question": "Which team did John sign with on 21 May, 2023?",
+    "answer": "The Minnesota Wolves",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q72",
+    "question_type": "adversarial",
+    "question": "What is John's position on the team he signed with?",
+    "answer": "shooting guard",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q73",
+    "question_type": "adversarial",
+    "question": "What challenge did John encounter during pre-season training?",
+    "answer": "fitting into the new team's style of play",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q74",
+    "question_type": "adversarial",
+    "question": "What aspects of the Harry Potter universe will be discussed in John's fan project collaborations?",
+    "answer": "characters, spells, magical creatures",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q75",
+    "question_type": "adversarial",
+    "question": "What forum did Tim join recently?",
+    "answer": "fantasy literature forum",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q76",
+    "question_type": "adversarial",
+    "question": "What kind of picture did Tim share as part of their Harry Potter book collection?",
+    "answer": "MinaLima's creation from the Harry Potter films",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q77",
+    "question_type": "adversarial",
+    "question": "What was the highest number of points John scored in a game recently?",
+    "answer": "40 points",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q78",
+    "question_type": "adversarial",
+    "question": "What did John celebrate at a restaurant with teammates?",
+    "answer": "a tough win",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q79",
+    "question_type": "adversarial",
+    "question": "What kind of deals did John sign with Nike and Gatorade?",
+    "answer": "basketball shoe and gear deal with Nike, potential sponsorship deal with Gatorade",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q80",
+    "question_type": "adversarial",
+    "question": "Which city is John excited to have a game at?",
+    "answer": "Seattle",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q81",
+    "question_type": "adversarial",
+    "question": "How long has John been surfing?",
+    "answer": "five years",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q82",
+    "question_type": "adversarial",
+    "question": "How does John feel while surfing?",
+    "answer": "super exciting and free-feeling",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q83",
+    "question_type": "adversarial",
+    "question": "What kind of articles has Tim been writing about for the online magazine?",
+    "answer": "different fantasy novels, characters, themes, and book recommendations",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q84",
+    "question_type": "adversarial",
+    "question": "Which two fantasy novels does Tim particularly enjoy writing about?",
+    "answer": "Harry Potter and Game of Thrones",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q85",
+    "question_type": "adversarial",
+    "question": "What did Anthony and John end up playing during the charity event?",
+    "answer": "an intense Harry Potter trivia contest",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q86",
+    "question_type": "adversarial",
+    "question": "What did John share with the person he skyped about?",
+    "answer": "Characters from Harry Potter",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q87",
+    "question_type": "adversarial",
+    "question": "How did John describe the team bond?",
+    "answer": "Awesome",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q88",
+    "question_type": "adversarial",
+    "question": "How did John get introduced to basketball?",
+    "answer": "Dad signed him up for a local league",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q89",
+    "question_type": "adversarial",
+    "question": "What is John's number one goal in his basketball career?",
+    "answer": "Winning a championship",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q90",
+    "question_type": "adversarial",
+    "question": "What organization is John teaming up with for his charity work?",
+    "answer": "A local organization helping disadvantaged kids with sports and school",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q91",
+    "question_type": "adversarial",
+    "question": "When did John meet back up with his teammates after his trip in August 2023?",
+    "answer": "Aug 15th",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q92",
+    "question_type": "adversarial",
+    "question": "What did John's teammates give him when they met on Aug 15th?",
+    "answer": "a basketball with autographs on it",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q93",
+    "question_type": "adversarial",
+    "question": "Why did John's teammates sign the basketball they gave him?",
+    "answer": "to show their friendship and appreciation",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q94",
+    "question_type": "adversarial",
+    "question": "What is the main intention behind Tim wanting to attend the book conference?",
+    "answer": "to learn more about literature and create a stronger bond to it",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q95",
+    "question_type": "adversarial",
+    "question": "What new activity has Tim started learning in August 2023?",
+    "answer": "play the piano",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q96",
+    "question_type": "adversarial",
+    "question": "Which movie's theme is Tim's favorite to play on the piano?",
+    "answer": "\"Harry Potter and the Philosopher's Stone\"",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q97",
+    "question_type": "adversarial",
+    "question": "What special memory does \"Harry Potter and the Philosopher's Stone\" bring to Tim?",
+    "answer": "Watching it with his family",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q98",
+    "question_type": "adversarial",
+    "question": "Which movie does Tim mention they enjoy watching during Thanksgiving?",
+    "answer": "\"Home Alone\"",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q99",
+    "question_type": "adversarial",
+    "question": "What tradition does Tim mention they love during Thanksgiving?",
+    "answer": "Prepping the feast and talking about what they're thankful for",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q100",
+    "question_type": "adversarial",
+    "question": "How long did John and his high school basketball teammates play together?",
+    "answer": "Four years",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q101",
+    "question_type": "adversarial",
+    "question": "How was John's experience in New York City?",
+    "answer": "Amazing",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q102",
+    "question_type": "adversarial",
+    "question": "What did John say about NYC, enticing Tim to visit?",
+    "answer": "It's got so much to check out - the culture, food - you won't regret it.",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q103",
+    "question_type": "adversarial",
+    "question": "What kind of soup did John make recently?",
+    "answer": "tasty soup with sage",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q104",
+    "question_type": "adversarial",
+    "question": "What spice did John add to the soup for flavor?",
+    "answer": "sage",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q105",
+    "question_type": "adversarial",
+    "question": "What is Tim excited to see at Universal Studios?",
+    "answer": "The Harry Potter stuff",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q106",
+    "question_type": "adversarial",
+    "question": "Where are John and his teammates planning to explore on a team trip?",
+    "answer": "a new city",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q107",
+    "question_type": "adversarial",
+    "question": "What city did Tim suggest to John for the team trip next month?",
+    "answer": "Edinburgh, Scotland",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q108",
+    "question_type": "adversarial",
+    "question": "What does John want to do after his basketball career?",
+    "answer": "positively influence and inspire others, potentially start a foundation and engage in charity work",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q109",
+    "question_type": "adversarial",
+    "question": "What advice did Tim give John about picking endorsements?",
+    "answer": "Ensure they align with values and brand, look for companies that share the desire to make a change and help others, make sure the endorsement feels authentic",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q110",
+    "question_type": "adversarial",
+    "question": "What book recommendation did Tim give to John for the trip?",
+    "answer": "A fantasy novel by Patrick Rothfuss",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q111",
+    "question_type": "adversarial",
+    "question": "What type of venue did John and his girlfriend choose for their wedding ceremony?",
+    "answer": "Greenhouse",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q112",
+    "question_type": "adversarial",
+    "question": "What was the setting for John and his wife's first dance?",
+    "answer": "Cozy restaurant",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q113",
+    "question_type": "adversarial",
+    "question": "Which basketball team does Tim support?",
+    "answer": "The Wolves",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q114",
+    "question_type": "adversarial",
+    "question": "What passion does Tim mention connects him with people from all over the world?",
+    "answer": "passion for fantasy stuff",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q115",
+    "question_type": "adversarial",
+    "question": "How does John describe the game season for his team?",
+    "answer": "intense with tough losses and great wins",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q116",
+    "question_type": "adversarial",
+    "question": "How does John say his team handles tough opponents?",
+    "answer": "by backing each other up and not quitting",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q117",
+    "question_type": "adversarial",
+    "question": "What motivates John's team to get better, according to John?",
+    "answer": "facing tough opponents",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q118",
+    "question_type": "adversarial",
+    "question": "What did John's team win at the end of the season?",
+    "answer": "a trophy",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q119",
+    "question_type": "adversarial",
+    "question": "Where did Tim capture the photography of the sunset over the mountain range?",
+    "answer": "Smoky Mountains",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q120",
+    "question_type": "adversarial",
+    "question": "How does John feel about being seen as a mentor by some of the younger players?",
+    "answer": "It feels great",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q121",
+    "question_type": "adversarial",
+    "question": "What does John find rewarding about mentoring the younger players?",
+    "answer": "Seeing their growth, improvement, and confidence",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q122",
+    "question_type": "adversarial",
+    "question": "What has John been able to help the younger players achieve?",
+    "answer": "reach their goals",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q123",
+    "question_type": "adversarial",
+    "question": "What genre is the novel that Tim is writing?",
+    "answer": "Fantasy",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q124",
+    "question_type": "adversarial",
+    "question": "Who is one of Tim's sources of inspiration for writing?",
+    "answer": "J.K. Rowling",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q125",
+    "question_type": "adversarial",
+    "question": "What J.K. Rowling quote does Tim resonate with?",
+    "answer": "\"Turn on the light - happiness hides in the darkest of times.\"",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q126",
+    "question_type": "adversarial",
+    "question": "What does John write on the whiteboard to help him stay motivated?",
+    "answer": "motivational quotes and strategies",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q127",
+    "question_type": "adversarial",
+    "question": "What hobby is a therapy for John when away from the court?",
+    "answer": "Cooking",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q128",
+    "question_type": "adversarial",
+    "question": "What type of meal does John often cook using a slow cooker?",
+    "answer": "honey garlic chicken with roasted veg",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q129",
+    "question_type": "adversarial",
+    "question": "How will John share the honey garlic chicken recipe with the other person?",
+    "answer": "write it down and mail it",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q130",
+    "question_type": "adversarial",
+    "question": "What was Tim's huge writing issue last week,as mentioned on November 6, 2023?",
+    "answer": "He got stuck on a plot twist",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q131",
+    "question_type": "adversarial",
+    "question": "What does Tim have that serves as a reminder of hard work and is his prized possession?",
+    "answer": "a basketball signed by his favorite player",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q132",
+    "question_type": "adversarial",
+    "question": "Why do Tim and John find LeBron inspiring?",
+    "answer": "LeBron's determination and the epic block in Game 7 of the '16 Finals",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q133",
+    "question_type": "adversarial",
+    "question": "How did John describe the views during their road trip out on the European coastline?",
+    "answer": "Spectacular",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q134",
+    "question_type": "adversarial",
+    "question": "What is one of Tim's favorite fantasy TV shows, as mentioned on November 11, 2023?",
+    "answer": "\"That\"",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q135",
+    "question_type": "adversarial",
+    "question": "How does Tim stay motivated during difficult study sessions?",
+    "answer": "Visualizing goals and success",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q136",
+    "question_type": "adversarial",
+    "question": "What did Tim say about his injury on 16 November, 2023?",
+    "answer": "The doctor said it's not too serious",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q137",
+    "question_type": "adversarial",
+    "question": "What was the setback Tim faced in his writing project on 21 November, 2023?",
+    "answer": "Story based on experiences in the UK didn't go as planned",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q138",
+    "question_type": "adversarial",
+    "question": "How did John overcome his ankle injury from last season?",
+    "answer": "stayed focused on recovery and worked hard to strengthen his body",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q139",
+    "question_type": "adversarial",
+    "question": "What motivated Tim to keep pushing himself to get better in writing and reading?",
+    "answer": "Love for writing and reading",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q140",
+    "question_type": "adversarial",
+    "question": "How did John overcome a mistake he made during a big game in basketball?",
+    "answer": "Worked hard to get better and focused on growth",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q141",
+    "question_type": "adversarial",
+    "question": "What book did John recently finish rereading that left him feeling inspired and hopeful about following dreams?",
+    "answer": "The Alchemist",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q142",
+    "question_type": "adversarial",
+    "question": "How did \"The Alchemist\" impact John's perspective on following dreams?",
+    "answer": "made him think again about following dreams and searching for personal legends",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q143",
+    "question_type": "adversarial",
+    "question": "What is John trying out to improve his strength and flexibility after recovery from ankle injury?",
+    "answer": "yoga",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q144",
+    "question_type": "adversarial",
+    "question": "How long does John usually hold the yoga pose he shared with Tim?",
+    "answer": "30-60 seconds",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q145",
+    "question_type": "adversarial",
+    "question": "Where was the forest picture shared by John on December 1,2023 taken?",
+    "answer": "near his hometown",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q146",
+    "question_type": "adversarial",
+    "question": "What did Tim recently start learning in addition to being part of a travel club and working on studies?",
+    "answer": "an instrument",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q147",
+    "question_type": "adversarial",
+    "question": "What instrument is Tim learning to play in December 2023?",
+    "answer": "violin",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q148",
+    "question_type": "adversarial",
+    "question": "How long has Tim been playing the piano for, as of December 2023?",
+    "answer": "about four months",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q149",
+    "question_type": "adversarial",
+    "question": "What book did Tim just finish reading on 8th December, 2023?",
+    "answer": "\"A Dance with Dragons\"",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q150",
+    "question_type": "adversarial",
+    "question": "Which book did Tim recommend to John as a good story on 8th December, 2023?",
+    "answer": "\"A Dance with Dragons\"",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q151",
+    "question_type": "adversarial",
+    "question": "What is the topic of discussion between John and Tim on 11 December, 2023?",
+    "answer": "Academic achievements and sports successes",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q152",
+    "question_type": "adversarial",
+    "question": "What kind of game did John have a career-high in assists in?",
+    "answer": "basketball",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q153",
+    "question_type": "adversarial",
+    "question": "What was John's way of dealing with doubts and stress when he was younger?",
+    "answer": "practicing basketball outside for hours",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q154",
+    "question_type": "adversarial",
+    "question": "How did John feel about the atmosphere during the big game against the rival team?",
+    "answer": "electric and intense",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q155",
+    "question_type": "adversarial",
+    "question": "How did John feel after being able to jog without pain?",
+    "answer": "It was a huge success.",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q156",
+    "question_type": "adversarial",
+    "question": "What kind of deal did John get in December?",
+    "answer": "Deal with a renowned outdoor gear company",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q157",
+    "question_type": "adversarial",
+    "question": "Where was the photoshoot done for John's gear deal?",
+    "answer": "In a gorgeous forest",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q158",
+    "question_type": "adversarial",
+    "question": "In which area has John's team seen the most growth during training?",
+    "answer": "Communication and bonding",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q159",
+    "question_type": "adversarial",
+    "question": "What type of seminars is John conducting?",
+    "answer": "Sports and marketing seminars",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q160",
+    "question_type": "adversarial",
+    "question": "What activity did Tim do after reading the stories about the Himalayan trek?",
+    "answer": "visited a travel agency",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q161",
+    "question_type": "adversarial",
+    "question": "What is one cause that John supports with his influence and resources?",
+    "answer": "youth sports and fair chances in sports",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q162",
+    "question_type": "adversarial",
+    "question": "What new fantasy TV series is Tim excited about?",
+    "answer": "\"The Wheel of Time\"",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q163",
+    "question_type": "adversarial",
+    "question": "Which language is Tim learning?",
+    "answer": "German",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q164",
+    "question_type": "adversarial",
+    "question": "What language does Tim know besides German?",
+    "answer": "Spanish",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q165",
+    "question_type": "adversarial",
+    "question": "What book did Tim get in Italy that inspired him to cook?",
+    "answer": "a cooking book",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q166",
+    "question_type": "adversarial",
+    "question": "What is John's favorite book series?",
+    "answer": "Harry Potter",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q167",
+    "question_type": "adversarial",
+    "question": "According to John, who is his favorite character from Lord of the Rings?",
+    "answer": "Aragorn",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q168",
+    "question_type": "adversarial",
+    "question": "Why does John like Aragorn from Lord of the Rings?",
+    "answer": "brave, selfless, down-to-earth attitude",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q169",
+    "question_type": "adversarial",
+    "question": "What kind of painting does John have in his room as a reminder?",
+    "answer": "a painting of Aragorn",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q170",
+    "question_type": "adversarial",
+    "question": "What is the painting of Aragorn a reminder for John to be in everything he does?",
+    "answer": "be a leader",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q171",
+    "question_type": "adversarial",
+    "question": "What map does Tim show to his friend John?",
+    "answer": "a map of Middle-earth from LOTR",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q172",
+    "question_type": "adversarial",
+    "question": "Where will Tim be going for a semester abroad?",
+    "answer": "Ireland",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q173",
+    "question_type": "adversarial",
+    "question": "Which city in Ireland will Tim be staying in during his semester abroad?",
+    "answer": "Galway",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q174",
+    "question_type": "adversarial",
+    "question": "What charity event did John organize recently in 2024?",
+    "answer": "benefit basketball game",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q175",
+    "question_type": "adversarial",
+    "question": "What achievement did John share with Tim in January 2024?",
+    "answer": "endorsement with a popular beverage company",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q176",
+    "question_type": "adversarial",
+    "question": "What was Johns's reaction to sealing the deal with the beverage company?",
+    "answer": "crazy feeling, sense of accomplishment",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q177",
+    "question_type": "adversarial",
+    "question": "Which city did John recommend to Tim in January 2024?",
+    "answer": "Barcelona",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q178",
+    "question_type": "commonsense",
+    "question": "Which team did Tim sign with on 21 May, 2023?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q179",
+    "question_type": "commonsense",
+    "question": "What is Tim's position on the team he signed with?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q180",
+    "question_type": "commonsense",
+    "question": "What challenge did Tim encounter during pre-season training?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q181",
+    "question_type": "commonsense",
+    "question": "What cult did Tim join recently?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q182",
+    "question_type": "commonsense",
+    "question": "What was the highest number of points Tim scored in a game recently?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q183",
+    "question_type": "commonsense",
+    "question": "What did Tim celebrate at a restaurant with teammates?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q184",
+    "question_type": "commonsense",
+    "question": "What kind of deals did Tim sign with Nike and Gatorade?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q185",
+    "question_type": "commonsense",
+    "question": "How does Tim feel while surfing?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q186",
+    "question_type": "commonsense",
+    "question": "What kind of articles has John been writing about for the online magazine?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q187",
+    "question_type": "commonsense",
+    "question": "Which two mystery novels does Tim particularly enjoy writing about?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q188",
+    "question_type": "commonsense",
+    "question": "What did Anthony and Tim end up playing during the charity event?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q189",
+    "question_type": "commonsense",
+    "question": "How did Tim get introduced to basketball?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q190",
+    "question_type": "commonsense",
+    "question": "What is Tim's number one goal in his basketball career?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q191",
+    "question_type": "commonsense",
+    "question": "What organization is Tim teaming up with for his charity work?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q192",
+    "question_type": "commonsense",
+    "question": "What did Tim's teammates give him when they met on Aug 15th?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q193",
+    "question_type": "commonsense",
+    "question": "Why did John's teammates sign the football they gave him?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q194",
+    "question_type": "commonsense",
+    "question": "What is the main intention behind John wanting to attend the book conference?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q195",
+    "question_type": "commonsense",
+    "question": "What new activity has John started learning in August 2023?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q196",
+    "question_type": "commonsense",
+    "question": "What special memory does \"Fifty Shades of Grey\" bring to Tim?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q197",
+    "question_type": "commonsense",
+    "question": "Which movie does John mention they enjoy watching during Thanksgiving?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q198",
+    "question_type": "commonsense",
+    "question": "What tradition does Tim mention they love during Halloween?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q199",
+    "question_type": "commonsense",
+    "question": "How long did Tim and his high school basketball teammates play together?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q200",
+    "question_type": "commonsense",
+    "question": "How was Tim's experience in New York City?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q201",
+    "question_type": "commonsense",
+    "question": "What spice did Tim add to the soup for flavor?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q202",
+    "question_type": "commonsense",
+    "question": "What is Tim excited to see at Disneyland?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q203",
+    "question_type": "commonsense",
+    "question": "Where are John and his teammates planning to avoid on a team trip?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q204",
+    "question_type": "commonsense",
+    "question": "What does Tim want to do after his basketball career?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q205",
+    "question_type": "commonsense",
+    "question": "What type of venue did John and his girlfriend choose for their breakup?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q206",
+    "question_type": "commonsense",
+    "question": "What passion does John mention connects him with people from all over the world?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q207",
+    "question_type": "commonsense",
+    "question": "How does Tim say his team handles tough opponents?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q208",
+    "question_type": "commonsense",
+    "question": "Where did Tim capture the painting of the sunset over the mountain range?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q209",
+    "question_type": "commonsense",
+    "question": "What does Tim find rewarding about mentoring the younger players?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q210",
+    "question_type": "commonsense",
+    "question": "What has Tim been able to help the younger players achieve?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q211",
+    "question_type": "commonsense",
+    "question": "What genre is the novel that John is writing?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q212",
+    "question_type": "commonsense",
+    "question": "Who is one of Tim's sources of inspiration for painting?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q213",
+    "question_type": "commonsense",
+    "question": "What does Tim write on the whiteboard to help him stay motivated?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q214",
+    "question_type": "commonsense",
+    "question": "What hobby is a therapy for Tim when away from the court?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q215",
+    "question_type": "commonsense",
+    "question": "What type of meal does Tim often cook using a slow cooker?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q216",
+    "question_type": "commonsense",
+    "question": "How will Tim share the honey garlic chicken recipe with the other person?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q217",
+    "question_type": "commonsense",
+    "question": "What is one of Tim's favorite crime TV shows, as mentioned on November 11, 2023?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q218",
+    "question_type": "commonsense",
+    "question": "What was the setback Tim faced in his coding project on 21 November, 2023?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q219",
+    "question_type": "commonsense",
+    "question": "How did Tim overcome his ankle injury from last season?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q220",
+    "question_type": "commonsense",
+    "question": "What motivated John to keep pushing himself to get better in writing and reading?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q221",
+    "question_type": "commonsense",
+    "question": "How did Tim overcome a mistake he made during a big game in basketball?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q222",
+    "question_type": "commonsense",
+    "question": "What is Tim trying out to improve his strength and flexibility after recovery from ankle injury?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q223",
+    "question_type": "commonsense",
+    "question": "What did John recently start learning in addition to being part of a travel club and working on studies?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q224",
+    "question_type": "commonsense",
+    "question": "What instrument is John learning to play in December 2023?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q225",
+    "question_type": "commonsense",
+    "question": "How long has John been playing the piano for, as of December 2023?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q226",
+    "question_type": "commonsense",
+    "question": "What movie did Tim just finish watching on 8th December, 2023?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q227",
+    "question_type": "commonsense",
+    "question": "What kind of game did Tim have a career-high in assists in?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q228",
+    "question_type": "commonsense",
+    "question": "What was Tim's way of dealing with doubts and stress when he was younger?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q229",
+    "question_type": "commonsense",
+    "question": "Where was the photoshoot done for John's fragrance deal?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q230",
+    "question_type": "commonsense",
+    "question": "In which area has Tim's team seen the most growth during training?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q231",
+    "question_type": "commonsense",
+    "question": "What type of seminars is Tim conducting?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q232",
+    "question_type": "commonsense",
+    "question": "What is one cause that John opposes with his influence and resources?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q233",
+    "question_type": "commonsense",
+    "question": "What new fantasy TV series is John excited about?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q234",
+    "question_type": "commonsense",
+    "question": "Which language is John learning?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q235",
+    "question_type": "commonsense",
+    "question": "According to John, who is his least favorite character from Lord of the Rings?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q236",
+    "question_type": "commonsense",
+    "question": "Why does Tim like Aragorn from Lord of the Rings?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q237",
+    "question_type": "commonsense",
+    "question": "What kind of painting does Tim have in his room as a reminder?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q238",
+    "question_type": "commonsense",
+    "question": "What is the sculpture of Aragorn a reminder for John to be in everything he does?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q239",
+    "question_type": "commonsense",
+    "question": "Which city in Ireland will John be staying in during his semester abroad?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q240",
+    "question_type": "commonsense",
+    "question": "What charity event did Tim organize recently in 2024?",
+    "answer": "",
+    "sample_id": "conv-43"
+  },
+  {
+    "question_id": "conv-43_q241",
+    "question_type": "commonsense",
+    "question": "What was Tims's reaction to sealing the deal with the beverage company?",
+    "answer": "",
+    "sample_id": "conv-43"
+  }
+]

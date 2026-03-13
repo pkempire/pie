@@ -1,0 +1,2851 @@
+[
+  {
+    "session_index": 0,
+    "session_id": "conv-44_session_0",
+    "input_chars": 2462,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 March 27, 2023 at 13:10]\nAudrey: Hey Andrew! Good to see ya! What's been up since we last talked?\nAudrey: Hey Audrey! So, I started a new job as a Financial Analyst last week - it's been quite a change from my previous job. How about you? Anything interesting happening?\nAudrey: Congrats on the new job! So I got these new collars and tags for my dogs - so cute!\nAudrey: Thanks! Tha",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Andrew's job",
+          "type": "concept",
+          "state": {
+            "description": "Started a new job as a Financial Analyst on March 20, 2023."
+          }
+        },
+        {
+          "name": "Audrey's dogs",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has four dogs: Pepper and Panda are Lab mixes, and Precious and Pixie are Chihuahua mixes."
+          }
+        },
+        {
+          "name": "Audrey's dogs' duration",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has had her dogs for 3 years (since 2020)."
+          }
+        },
+        {
+          "name": "Audrey's favorite animal",
+          "type": "concept",
+          "state": {
+            "description": "Audrey's favorite animal is birds."
+          }
+        },
+        {
+          "name": "Audrey's favorite bird",
+          "type": "concept",
+          "state": {
+            "description": "Audrey's favorite type of bird is eagles."
+          }
+        },
+        {
+          "name": "Audrey's hiking spot",
+          "type": "concept",
+          "state": {
+            "description": "Audrey's favorite hiking spot is Fox Hollow."
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 8,
+    "entities_new": 8,
+    "total_entities": 8
+  },
+  {
+    "session_index": 1,
+    "session_id": "conv-44_session_1",
+    "input_chars": 3347,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 April 02, 2023 at 14:42]\nAudrey: Hey Andrew, I got a surprise for you! We adopted another puppy called Pixie. She's SO cute! Isn't she just the cutest?\n[Image: a photo of a small white dog sitting on a carpet]\nAudrey: That's awesome! Pixie is so cute! Did you ever check out that hiking spot we talked about last time?\nAudrey: Thanks! I know right? She's so cute! Pixie's been keepi",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's pet Pixie",
+          "type": "concept",
+          "state": {
+            "description": "Adopted puppy named Pixie, small white dog"
+          }
+        },
+        {
+          "name": "Audrey's dog Pepper",
+          "type": "concept",
+          "state": {
+            "description": "Audrey's dog Pepper loves lounging on the couch."
+          }
+        },
+        {
+          "name": "Audrey's apartment search",
+          "type": "concept",
+          "state": {
+            "description": "Audrey is searching for a pet-friendly apartment in the city."
+          }
+        },
+        {
+          "name": "Audrey's hiking memories",
+          "type": "concept",
+          "state": {
+            "description": "Misses exploring nature trails with her family's dog"
+          }
+        },
+        {
+          "name": "Audrey's family's dog",
+          "type": "concept",
+          "state": {
+            "description": "Family dog that enjoys lazy couch time"
+          }
+        },
+        {
+          "name": "Andrew's advice on dog-friendly places",
+          "type": "concept",
+          "state": {
+            "description": "Audrey received tips from Andrew on finding dog-friendly apartments"
+          }
+        },
+        {
+          "name": "Audrey's excitement for a new dog",
+          "type": "concept",
+          "state": {
+            "description": "Excited about the possibility of getting a new dog"
+          }
+        },
+        {
+          "name": "Audrey's plans for hiking",
+          "type": "concept",
+          "state": {
+            "description": "Plans to hike with her future dog"
+          }
+        },
+        {
+          "name": "Audrey's future dog",
+          "type": "concept",
+          "state": {
+            "description": "Looking forward to having a furry friend to cuddle and hang out with"
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 9,
+    "total_entities": 17
+  },
+  {
+    "session_index": 2,
+    "session_id": "conv-44_session_2",
+    "input_chars": 4047,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 April 16, 2023 at 16:19]\nAudrey: Hey Audrey! What's up? Missed chatting with ya! Check it out, my girl & I tried out that new cafe scene in the city last weekend! Super fun but kinda sad not being out in nature - that's when I feel like I'm really thriving. Oh man, I miss the peacefulness of being out on a hike.\nAudrey: Hey Andrew! That cafe sounds pretty awesome, glad you enjoye",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's favorite activity",
+          "type": "concept",
+          "state": {
+            "description": "Enjoys being out in nature, especially hiking."
+          }
+        },
+        {
+          "name": "Audrey's dogs",
+          "type": "concept",
+          "state": {
+            "description": "Has dogs that she takes for walks in the park."
+          }
+        },
+        {
+          "name": "Audrey's girlfriend",
+          "type": "person",
+          "state": {
+            "description": "Audrey has a girlfriend with whom she is going on a picnic."
+          }
+        },
+        {
+          "name": "Audrey's pastry party",
+          "type": "concept",
+          "state": {
+            "description": "Plans to have a pastry party with her dogs and friends."
+          }
+        },
+        {
+          "name": "Audrey's tattoo",
+          "type": "concept",
+          "state": {
+            "description": "Tattoo of her dogs and sunflowers representing her love for them."
+          }
+        },
+        {
+          "name": "Andrew's perspective on nature",
+          "type": "concept",
+          "state": {
+            "description": "Andrew expressed missing nature, which prompted Audrey's reflections."
+          }
+        },
+        {
+          "name": "Andrew's city living experience",
+          "type": "concept",
+          "state": {
+            "description": "Finds city living overwhelming and misses connection to nature."
+          }
+        },
+        {
+          "name": "Andrew's favorite activity",
+          "type": "concept",
+          "state": {
+            "description": "Enjoys discovering new places to eat in the city."
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 7,
+    "total_entities": 24
+  },
+  {
+    "session_index": 3,
+    "session_id": "conv-44_session_3",
+    "input_chars": 4563,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 May 03, 2023 at 17:41]\nAudrey: Hey Andrew! Long time no talk! Last week I finally went on a hike and had this amazing experience with a hummingbird. It was so cool watching it dart around with its wings! Nature is so beautiful.\n[Image: a photography of a hummingbird sitting on a branch with its wings spread]\nAudrey: Hey Audrey! Glad to hear from you. That hummingbird was awesome!",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's hiking experience",
+          "type": "concept",
+          "state": {
+            "description": "Audrey went on a two-hour hike with her dogs."
+          }
+        },
+        {
+          "name": "Andrew's new hiking space",
+          "type": "concept",
+          "state": {
+            "description": "Andrew found a new open space to hike nearby."
+          }
+        },
+        {
+          "name": "Audrey's weekend hiking plans",
+          "type": "concept",
+          "state": {
+            "description": "Audrey tries to escape the city at least once a weekend for hiking."
+          }
+        },
+        {
+          "name": "Audrey's therapeutic nature",
+          "type": "concept",
+          "state": {
+            "description": "Audrey finds nature therapeutic and enjoys being surrounded by greenery."
+          }
+        },
+        {
+          "name": "Audrey's photography goal",
+          "type": "concept",
+          "state": {
+            "description": "Audrey tries to capture special moments in nature and share that feeling with others."
+          }
+        },
+        {
+          "name": "Audrey's joy in spreading positivity",
+          "type": "concept",
+          "state": {
+            "description": "Audrey finds joy in spreading positivity and motivating others to find their own peace."
+          }
+        },
+        {
+          "name": "Audrey's pet care",
+          "type": "concept",
+          "state": {
+            "description": "Audrey is busy taking care of her pets and finds it fulfilling."
+          }
+        },
+        {
+          "name": "Audrey's dogs' hiking enjoyment",
+          "type": "concept",
+          "state": {
+            "description": "Audrey's dogs love going on hikes and exploring new scents."
+          }
+        },
+        {
+          "name": "Audrey's dog safety tips",
+          "type": "concept",
+          "state": {
+            "description": "Audrey emphasizes the importance of safety for her dogs when out."
+          }
+        },
+        {
+          "name": "Audrey's dog walking activities",
+          "type": "concept",
+          "state": {
+            "description": "When walking her dogs, Audrey plays fetch and meets other dog owners."
+          }
+        },
+        {
+          "name": "Audrey's dogs' energy",
+          "type": "concept",
+          "state": {
+            "description": "Audrey's dogs have tons of energy and love meeting new pals at playdates."
+          }
+        },
+        {
+          "name": "Audrey's dogs' party hats",
+          "type": "concept",
+          "state": {
+            "description": "Audrey's dogs wear party hats for fun and treats."
+          }
+        },
+        {
+          "name": "Audrey's dog park location",
+          "type": "concept",
+          "state": {
+            "description": "The dog park is located right by the park where Audrey usually walks her dogs."
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 15,
+    "entities_new": 13,
+    "total_entities": 37
+  },
+  {
+    "session_index": 4,
+    "session_id": "conv-44_session_4",
+    "input_chars": 2870,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 May 06, 2023 at 10:47]\nAudrey: Hey! Since we last spoke, I've been looking for a doggo to adopt - browsing websites, visiting shelters and asking friends of theirs. It's been both fun and annoying!\n[Image: a photography of a dog looking through a cage at the camera]\nAudrey: Sounds like a fun and demanding task! Getting to meet new pups must bring so much happiness. What  do you t",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's dog adoption search",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has been looking for a dog to adopt by browsing websites, visiting shelters, and asking friends."
+          }
+        },
+        {
+          "name": "Audrey's living situation",
+          "type": "concept",
+          "state": {
+            "description": "Audrey lives in an apartment and is looking for a smaller dog."
+          }
+        },
+        {
+          "name": "Audrey's housing search",
+          "type": "concept",
+          "state": {
+            "description": "Audrey is contacting landlords and checking neighborhoods to find a pet-friendly place to live."
+          }
+        },
+        {
+          "name": "Audrey's preferred location",
+          "type": "concept",
+          "state": {
+            "description": "Audrey wants to live near a park or woods to provide space for her dog."
+          }
+        },
+        {
+          "name": "Audrey's recent road trip",
+          "type": "concept",
+          "state": {
+            "description": "Audrey took a road trip to a national park with her dogs the Friday before May 06, 2023."
+          }
+        },
+        {
+          "name": "Audrey's road trip frequency",
+          "type": "concept",
+          "state": {
+            "description": "Audrey takes her dogs on road trips once every couple of months."
+          }
+        },
+        {
+          "name": "Audrey's bucket list",
+          "type": "concept",
+          "state": {
+            "description": "Audrey wants to go on a road trip with her future dog."
+          }
+        },
+        {
+          "name": "Audrey's appreciation for help",
+          "type": "concept",
+          "state": {
+            "description": "Audrey appreciates Andrew's help in her search for a dog."
+          }
+        },
+        {
+          "name": "Audrey's promise to update",
+          "type": "concept",
+          "state": {
+            "description": "Audrey will keep Andrew posted about her dog adoption search."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers in the conversation."
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers in the conversation."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 9,
+    "total_entities": 46
+  },
+  {
+    "session_index": 5,
+    "session_id": "conv-44_session_5",
+    "input_chars": 2561,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 May 11, 2023 at 14:03]\nAudrey: Hi Audrey! I had a great hike last weekend with some friends and my girlfriend at the spot we found recently. Nature was so peaceful \u2013 it was so nice to just relax and take it in. How's your week been? Anything exciting going on lately?\n[Image: a photography of a dirt path leading to a grassy hill]\nAudrey: Hey Andrew! That hike sounds great. Nature ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's hike",
+          "type": "concept",
+          "state": {
+            "description": "Had a great hike the weekend before May 11, 2023 with friends and girlfriend at a peaceful nature spot."
+          }
+        },
+        {
+          "name": "Audrey's dogs",
+          "type": "concept",
+          "state": {
+            "description": "Taking care of four dogs and ensuring they are happy and healthy."
+          }
+        },
+        {
+          "name": "Audrey's workshop",
+          "type": "concept",
+          "state": {
+            "description": "Signed up for a workshop about bonding with pets in June 2023."
+          }
+        },
+        {
+          "name": "Audrey's workshop location",
+          "type": "concept",
+          "state": {
+            "description": "Heard about the workshop from a flyer at the local pet store."
+          }
+        },
+        {
+          "name": "Audrey's training method",
+          "type": "concept",
+          "state": {
+            "description": "The workshop is a positive reinforcement training class."
+          }
+        },
+        {
+          "name": "Audrey's dogs' learning ability",
+          "type": "concept",
+          "state": {
+            "description": "Believes her dogs will catch on quickly to training."
+          }
+        },
+        {
+          "name": "Audrey's future dog training tips",
+          "type": "concept",
+          "state": {
+            "description": "Plans to share tips on training a future dog."
+          }
+        },
+        {
+          "name": "Andrew's opinion on positive reinforcement",
+          "type": "concept",
+          "state": {
+            "description": "Believes positive reinforcement is important for pet training."
+          }
+        },
+        {
+          "name": "Andrew's sentiment on punishment",
+          "type": "concept",
+          "state": {
+            "description": "Does not support punishment as a training method for pets."
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 8,
+    "total_entities": 54
+  },
+  {
+    "session_index": 6,
+    "session_id": "conv-44_session_6",
+    "input_chars": 2127,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 June 02, 2023 at 11:27]\nAudrey: Hey how's it going? Yesterday took my pups to the park, it was awesome! Seeing them running around and playing without a leash was awesome. It filled my heart with joy - their happiness brought me so much peace.\nAudrey: That sounds amazing! Must have been so happy watching them running around. It's moments like that which show us how amazing animal",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's pets",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has three dogs named Scout, Toby, and Buddy."
+          }
+        },
+        {
+          "name": "Audrey's hiking trip",
+          "type": "concept",
+          "state": {
+            "description": "Audrey went for a hike the weekend before September 06, 2023 to escape the city."
+          }
+        },
+        {
+          "name": "Audrey's favorite photo",
+          "type": "concept",
+          "state": {
+            "description": "Audrey took a bunch of photos during the hike, one of her favorites is of a sunset over a mountain range."
+          }
+        },
+        {
+          "name": "Audrey's feelings about nature",
+          "type": "belief",
+          "state": {
+            "description": "Audrey feels a void in her heart without being in nature."
+          }
+        },
+        {
+          "name": "Audrey's apartment search",
+          "type": "concept",
+          "state": {
+            "description": "Audrey is searching for a pet-friendly apartment in the city."
+          }
+        },
+        {
+          "name": "Audrey's determination",
+          "type": "belief",
+          "state": {
+            "description": "Audrey is determined to find the right place and dog."
+          }
+        },
+        {
+          "name": "Andrew's support",
+          "type": "belief",
+          "state": {
+            "description": "Andrew encourages Audrey to take care of herself and find balance."
+          }
+        },
+        {
+          "name": "Audrey's gratitude",
+          "type": "belief",
+          "state": {
+            "description": "Audrey expresses gratitude for Andrew's assistance."
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 7,
+    "total_entities": 61
+  },
+  {
+    "session_index": 7,
+    "session_id": "conv-44_session_7",
+    "input_chars": 3989,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 June 13, 2023 at 17:23]\nAudrey: Hey! Long time no chat. Last Sunday was awesome - my friends and I took a rock climbing class and I made it to the top! It was a fantastic experience and now I'm hooked. Think I'm going to try to do more outdoor activities like this every week!\nAudrey: That's awesome! Glad you had such a rad experience rock climbing. I'm always in awe of people who",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's rock climbing class",
+          "type": "event",
+          "state": {
+            "description": "Took a rock climbing class on June 11, 2023, and made it to the top."
+          }
+        },
+        {
+          "name": "Audrey's outdoor activities",
+          "type": "concept",
+          "state": {
+            "description": "Audrey used to hike a lot but finds it challenging now."
+          }
+        },
+        {
+          "name": "Audrey's dogs' park",
+          "type": "location",
+          "state": {
+            "description": "Found a small park with a trail surrounded by trees for walking her dogs."
+          }
+        },
+        {
+          "name": "Audrey's dogs' walk duration",
+          "type": "fact",
+          "state": {
+            "description": "Usually walks her dogs for about an hour."
+          }
+        },
+        {
+          "name": "Audrey's dogs' happiness",
+          "type": "fact",
+          "state": {
+            "description": "Audrey's dogs are doing great, exploring and meeting new people."
+          }
+        },
+        {
+          "name": "Audrey's dogs' meadow photo",
+          "type": "image",
+          "state": {
+            "description": "Photo of two dogs playing with a frisbee in a field."
+          }
+        },
+        {
+          "name": "Audrey's dogs' park photo",
+          "type": "image",
+          "state": {
+            "description": "Photo of two dogs running in a field with a ball in their mouth."
+          }
+        },
+        {
+          "name": "Audrey's appreciation for nature",
+          "type": "belief",
+          "state": {
+            "description": "Audrey values the beauty of nature and the small moments."
+          }
+        },
+        {
+          "name": "Audrey's happy place",
+          "type": "concept",
+          "state": {
+            "description": "Being outdoors with her dogs puts her in her happy place."
+          }
+        },
+        {
+          "name": "Andrew's response to Audrey's climbing",
+          "type": "fact",
+          "state": {
+            "description": "Expressed excitement about Audrey's rock climbing experience."
+          }
+        },
+        {
+          "name": "Andrew's interest in outdoor activities",
+          "type": "fact",
+          "state": {
+            "description": "Showed interest in joining Audrey for a walk with her dogs."
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 11,
+    "total_entities": 72
+  },
+  {
+    "session_index": 8,
+    "session_id": "conv-44_session_8",
+    "input_chars": 3775,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 June 26, 2023 at 13:51]\nAudrey: Woohoo! I got a new place with a bigger backyard for the pooches! Take a look!\n[Image: a photography of two dogs sitting on the grass in front of a house]\nAudrey: That's awesome! Your new place looks great. Your fur babies must be thrilled with the bigger backyard. I'm sure they're having a blast running around. How are they settling in?\nAudrey: Th",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's new place",
+          "type": "concept",
+          "state": {
+            "description": "Audrey got a new place with a bigger backyard for her dogs."
+          }
+        },
+        {
+          "name": "Audrey's dogs",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has two dogs that love the new backyard."
+          }
+        },
+        {
+          "name": "Audrey's doggy play area",
+          "type": "concept",
+          "state": {
+            "description": "Audrey set up a doggy play area in the backyard with agility stuff and toys."
+          }
+        },
+        {
+          "name": "Audrey's doggy daycare",
+          "type": "concept",
+          "state": {
+            "description": "Audrey's doggy daycare has a big indoor space for dogs to play."
+          }
+        },
+        {
+          "name": "Audrey's appreciation for pets",
+          "type": "belief",
+          "state": {
+            "description": "Audrey believes that pets bring joy and are like family."
+          }
+        },
+        {
+          "name": "Audrey's recent hike",
+          "type": "event",
+          "state": {
+            "description": "Audrey hiked with friends the Friday before June 26, 2023, enjoying the great weather and nature."
+          }
+        },
+        {
+          "name": "Audrey's connection with nature",
+          "type": "belief",
+          "state": {
+            "description": "Audrey feels a strong connection with nature and appreciates its calming effects."
+          }
+        },
+        {
+          "name": "Audrey's memorable lake experience",
+          "type": "event",
+          "state": {
+            "description": "A few years ago, Audrey and her friends found a stunning lake in the mountains during a hike."
+          }
+        },
+        {
+          "name": "Andrew's appreciation for pets",
+          "type": "belief",
+          "state": {
+            "description": "Andrew appreciates how pets can bring joy and comfort to people's lives."
+          }
+        },
+        {
+          "name": "Andrew's recent outdoor experience",
+          "type": "event",
+          "state": {
+            "description": "Andrew enjoyed being outdoors and hearing bird songs, missing the connection with nature."
+          }
+        },
+        {
+          "name": "Andrew's peaceful experience",
+          "type": "event",
+          "state": {
+            "description": "Andrew had a peaceful experience by a lake during a hike with friends."
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 10,
+    "total_entities": 82
+  },
+  {
+    "session_index": 9,
+    "session_id": "conv-44_session_9",
+    "input_chars": 5113,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 July 03, 2023 at 20:32]\nAudrey: Hey! It's been a while. I'm taking a dog training course and it's challenging but rewarding. My dogs are doing better already. What's new with you?\nAudrey: Hey great to hear from you! Life's thrown me a few curveballs lately. Still can't seem to find any dog-friendly spots to rent. That's a bummer. Have you been able to do any exploring on new trai",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's dog training course",
+          "type": "concept",
+          "state": {
+            "description": "Taking a dog training course that is challenging but rewarding."
+          }
+        },
+        {
+          "name": "Audrey's dogs",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has four dogs, all mutts, including two Jack Russell mixes and two Chihuahua mixes."
+          }
+        },
+        {
+          "name": "Audrey's dogs' age",
+          "type": "concept",
+          "state": {
+            "description": "All of Audrey's dogs are 3 years old."
+          }
+        },
+        {
+          "name": "Audrey's doggy playdate",
+          "type": "event",
+          "state": {
+            "description": "Audrey organized a doggy playdate with the neighbors' dogs."
+          }
+        },
+        {
+          "name": "Audrey's cooking hobby",
+          "type": "concept",
+          "state": {
+            "description": "Getting into cooking more and trying out new recipes."
+          }
+        },
+        {
+          "name": "Audrey's favorite recipe",
+          "type": "concept",
+          "state": {
+            "description": "Favorite recipe is Chicken Pot Pie, which is cozy and delicious."
+          }
+        },
+        {
+          "name": "Audrey's family's recipe",
+          "type": "concept",
+          "state": {
+            "description": "The Chicken Pot Pie recipe is a family recipe that has been around for years."
+          }
+        },
+        {
+          "name": "Audrey's cooking experience",
+          "type": "concept",
+          "state": {
+            "description": "Cooking has been helping Audrey de-stress and be creative."
+          }
+        },
+        {
+          "name": "Audrey's favorite cooking ingredient",
+          "type": "concept",
+          "state": {
+            "description": "Garlic is Audrey's go-to ingredient in the kitchen."
+          }
+        },
+        {
+          "name": "Audrey's favorite dish with garlic",
+          "type": "concept",
+          "state": {
+            "description": "Roasted Chicken is one of Audrey's favorite dishes to make with garlic."
+          }
+        },
+        {
+          "name": "Audrey's inspiration for Roasted Chicken",
+          "type": "concept",
+          "state": {
+            "description": "The recipe for Roasted Chicken is inspired by Audrey's love for Mediterranean flavors."
+          }
+        },
+        {
+          "name": "Andrew's cooking interest",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 11,
+    "total_entities": 93
+  },
+  {
+    "session_index": 10,
+    "session_id": "conv-44_session_10",
+    "input_chars": 4895,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 July 08, 2023 at 09:48]\nAudrey: Hey how's it going? Last Friday was amazing - I had a picnic with my girlfriend and it was so much fun! Being in the nature can be so refreshing and it always brings me joy. \n[Image: a photo of a picnic table with a variety of snacks and drinks]\nAudrey: Wow sounds like the picnic was awesome! Yeah being in the nature is so nice. My furry friends al",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's picnic",
+          "type": "event",
+          "state": {
+            "description": "Had a picnic with her girlfriend on July 7, 2023."
+          }
+        },
+        {
+          "name": "Audrey's furry friends",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has dogs that bring her joy."
+          }
+        },
+        {
+          "name": "Audrey's dog search",
+          "type": "concept",
+          "state": {
+            "description": "Audrey is looking for a dog but finds it tough to find a place that allows dogs."
+          }
+        },
+        {
+          "name": "Audrey's hiking plans",
+          "type": "event",
+          "state": {
+            "description": "Audrey plans to go hiking with Andrew on Saturday, November 4, 2023."
+          }
+        },
+        {
+          "name": "Audrey's hiking trail",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has a specific trail in mind for hiking with her dogs."
+          }
+        },
+        {
+          "name": "Audrey's outdoor adventure",
+          "type": "event",
+          "state": {
+            "description": "Audrey's dogs are ready for their next outdoor adventure."
+          }
+        },
+        {
+          "name": "Audrey's dogs' happiness",
+          "type": "concept",
+          "state": {
+            "description": "Audrey finds joy in seeing her dogs happy and playing."
+          }
+        },
+        {
+          "name": "Audrey's local park",
+          "type": "location",
+          "state": {
+            "description": "Audrey's dogs enjoy playing at their local park."
+          }
+        },
+        {
+          "name": "Audrey's hike last year",
+          "type": "event",
+          "state": {
+            "description": "Audrey hiked 2022, which was a 3-hour drive from her location."
+          }
+        },
+        {
+          "name": "Audrey's sunset view",
+          "type": "concept",
+          "state": {
+            "description": "Audrey experienced a stunning sunset during her hike 2022."
+          }
+        },
+        {
+          "name": "Audrey's appreciation for nature",
+          "type": "belief",
+          "state": {
+            "description": "Audrey values the beauty of nature and the small moments."
+          }
+        },
+        {
+          "name": "Andrew's hiking plans",
+          "type": "event",
+          "state": {
+            "description": "Plans to go hiking with Audrey and their dogs in August 2023."
+          }
+        },
+        {
+          "name": "Andrew's dogs",
+          "type": "concept",
+          "state": {
+            "description": "Andrew has dogs but has not taken them to the groomer yet."
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 15,
+    "entities_new": 11,
+    "total_entities": 104
+  },
+  {
+    "session_index": 11,
+    "session_id": "conv-44_session_11",
+    "input_chars": 2399,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 July 11, 2023 at 10:05]\nAudrey: Hey! So much has changed since last time we talked - meet Toby, my puppy. He's a bundle of joy and I couldn't resist taking him home, city living and all. How've you been?\n[Image: a photo of a dog sitting on a leash in a room]\nAudrey: OMG! Toby looks so adorable! Congrats on your new addition. I'm sure you're really happy right now! I so happy for ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's puppy Toby",
+          "type": "animal",
+          "state": {
+            "description": "Audrey's new puppy named Toby, described as a bundle of joy."
+          }
+        },
+        {
+          "name": "Audrey's work stress",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has been experiencing tough and stressful work."
+          }
+        },
+        {
+          "name": "Audrey's hiking plans",
+          "type": "event",
+          "state": {
+            "description": "Audrey has plans for a hike in August 2023."
+          }
+        },
+        {
+          "name": "Audrey's personalized dog tags",
+          "type": "item",
+          "state": {
+            "description": "Audrey made personalized tags for her dogs."
+          }
+        },
+        {
+          "name": "Audrey's love for pets",
+          "type": "belief",
+          "state": {
+            "description": "Audrey believes in showing love to her pets through small acts."
+          }
+        },
+        {
+          "name": "Andrew's hiking invitation",
+          "type": "event",
+          "state": {
+            "description": "Andrew invited Audrey to plan a hike together."
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 8,
+    "entities_new": 5,
+    "total_entities": 109
+  },
+  {
+    "session_index": 12,
+    "session_id": "conv-44_session_12",
+    "input_chars": 3508,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 July 27, 2023 at 15:52]\nAudrey: Hey Audrey! How are you? My GF and I just had a great experience volunteering at a pet shelter on Monday - it was so rewarding! We loved spending time with those cute animals and it gave us so much joy. It was so rewarding, it reminded me just how much I love them!\nAudrey: Hi Andrew! I'm good, thanks. That's awesome about the pet shelter volunteeri",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's volunteering experience",
+          "type": "concept",
+          "state": {
+            "description": "Audrey and her girlfriend volunteered at a pet shelter on July 24, 2023, which was a rewarding experience."
+          }
+        },
+        {
+          "name": "Audrey's pets",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has four pets that she refers to as her fur babies."
+          }
+        },
+        {
+          "name": "Audrey's pet personalities",
+          "type": "concept",
+          "state": {
+            "description": "Audrey's oldest pet is relaxed, the second is playful, the third is naughty but loves cuddles, and the youngest is adventurous."
+          }
+        },
+        {
+          "name": "Audrey's childhood dog Max",
+          "type": "concept",
+          "state": {
+            "description": "Max was Audrey's childhood dog who had lots of energy and loved to play fetch."
+          }
+        },
+        {
+          "name": "Audrey's memories with Max",
+          "type": "concept",
+          "state": {
+            "description": "Audrey fondly remembers taking long walks with Max in the neighborhood and sharing her worries and hopes with him."
+          }
+        },
+        {
+          "name": "Andrew's response to volunteering",
+          "type": "concept",
+          "state": {
+            "description": "Andrew expressed happiness for Audrey's volunteering experience and mentioned he has never volunteered at an animal shelter."
+          }
+        },
+        {
+          "name": "Andrew's appreciation for pets",
+          "type": "concept",
+          "state": {
+            "description": "Andrew appreciates how pets can bring joy and comfort to people's lives."
+          }
+        },
+        {
+          "name": "Audrey's gratitude for pets",
+          "type": "concept",
+          "state": {
+            "description": "Audrey feels thankful for having pets around as they bring joy, comfort, and love."
+          }
+        },
+        {
+          "name": "Audrey's volunteering motivation",
+          "type": "concept",
+          "state": {
+            "description": "Audrey volunteers with animals to give back and make their lives better."
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 7,
+    "total_entities": 116
+  },
+  {
+    "session_index": 13,
+    "session_id": "conv-44_session_13",
+    "input_chars": 4744,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 August 04, 2023 at 11:05]\nAudrey: Hey, Audrey! I can't wait for the weekend. My girlfriend, Toby and I are going camping. It's been forever since I've been in nature.\n[Image: a photo of a woman setting up a tent on a rocky hill]\nAudrey: That's awesome! That must be fun! I just started agility classes with my pups at a dog park. It's awesome to watch them learn and build relations",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's girlfriend",
+          "type": "person",
+          "state": {
+            "description": "Audrey's girlfriend is named Toby."
+          }
+        },
+        {
+          "name": "Audrey's camping plans",
+          "type": "concept",
+          "state": {
+            "description": "Audrey and her girlfriend Toby are going camping."
+          }
+        },
+        {
+          "name": "Audrey's agility classes",
+          "type": "concept",
+          "state": {
+            "description": "Audrey started agility classes with her dogs at a dog park."
+          }
+        },
+        {
+          "name": "Audrey's dog training",
+          "type": "concept",
+          "state": {
+            "description": "Audrey takes her dogs to the park twice a week for agility practice."
+          }
+        },
+        {
+          "name": "Audrey's hiking experience",
+          "type": "concept",
+          "state": {
+            "description": "Audrey went on a two-hour hike with her dogs."
+          }
+        },
+        {
+          "name": "Audrey's favorite outdoor activity",
+          "type": "concept",
+          "state": {
+            "description": "Audrey enjoys hiking as her favorite outdoor activity."
+          }
+        },
+        {
+          "name": "Audrey's pets",
+          "type": "person",
+          "state": {
+            "description": "Audrey has dogs that she loves and considers her companions."
+          }
+        },
+        {
+          "name": "Audrey's bond with pets",
+          "type": "concept",
+          "state": {
+            "description": "Audrey feels a deep bond with her pets, who bring her joy."
+          }
+        },
+        {
+          "name": "Toby's breed",
+          "type": "concept",
+          "state": {
+            "description": "Toby is a German Shepherd."
+          }
+        },
+        {
+          "name": "Audrey's advice for dog owners",
+          "type": "concept",
+          "state": {
+            "description": "Audrey advises that dog owners need to have enough time and energy for their pets."
+          }
+        },
+        {
+          "name": "Andrew's dog Toby",
+          "type": "person",
+          "state": {
+            "description": "Andrew's dog, whom he hopes to bond with strongly"
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 8,
+    "total_entities": 124
+  },
+  {
+    "session_index": 14,
+    "session_id": "conv-44_session_14",
+    "input_chars": 3058,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 August 16, 2023 at 21:58]\nAudrey: Hey Andrew, since we last spoke I got another tattoo of my four dogs on my arm! They really mean a lot to me so I thought it'd be nice to have them with me wherever I go. What've you been up to?\n[Image: a photo of a person with a tattoo on their hand]\nAudrey: Wow that's so cool! I recently went to a farm with my girlfriend to get some fresh veggi",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's tattoo of dogs",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has a tattoo of her four dogs and got more drawings added."
+          }
+        },
+        {
+          "name": "Audrey's girlfriend",
+          "type": "person",
+          "state": {
+            "description": "Audrey's girlfriend who went to a farm with her to get fresh veggies."
+          }
+        },
+        {
+          "name": "Audrey's dogs",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has four dogs: Pepper, Pixie, Precious, and Panda."
+          }
+        },
+        {
+          "name": "Audrey's vet trip",
+          "type": "concept",
+          "state": {
+            "description": "Audrey took her four dogs to the vet, which was chaotic."
+          }
+        },
+        {
+          "name": "Audrey's dog Pepper",
+          "type": "person",
+          "state": {
+            "description": "Audrey's dog Pepper loves lounging on the couch."
+          }
+        },
+        {
+          "name": "Audrey's dog Pixie",
+          "type": "person",
+          "state": {
+            "description": "Audrey's dog Pixie always curls up in her bed."
+          }
+        },
+        {
+          "name": "Audrey's dog Precious",
+          "type": "person",
+          "state": {
+            "description": "Audrey's dog who got scared when the leash busted at the park."
+          }
+        },
+        {
+          "name": "Audrey's dog Panda",
+          "type": "person",
+          "state": {
+            "description": "Audrey's dog Panda loves to relax on his rug."
+          }
+        },
+        {
+          "name": "Audrey's favorite blanket",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has a favorite blanket that her dogs snuggle on."
+          }
+        },
+        {
+          "name": "Audrey's happiness from pets",
+          "type": "concept",
+          "state": {
+            "description": "Audrey feels happy seeing her dogs together."
+          }
+        },
+        {
+          "name": "Audrey's cherished memories",
+          "type": "concept",
+          "state": {
+            "description": "Audrey cherishes the moments spent with her dogs."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers in the conversation."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 8,
+    "total_entities": 132
+  },
+  {
+    "session_index": 15,
+    "session_id": "conv-44_session_15",
+    "input_chars": 2726,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 August 19, 2023 at 21:19]\nAudrey: Hey Audrey, hope you're doing good! So I've decided to take a break from work yesterday and check out a new cafe. It was a nice change and reminded me of how the great outdoors is always there to offer you peace. Here's a photo from my last hike - so serene! How's your month been so far?\n[Image: a photo of a sunset over a mountain with a church o",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's break from work",
+          "type": "concept",
+          "state": {
+            "description": "Decided to take a break from work on August 18, 2023."
+          }
+        },
+        {
+          "name": "Audrey's new cafe visit",
+          "type": "concept",
+          "state": {
+            "description": "Visited a new cafe after taking a break from work."
+          }
+        },
+        {
+          "name": "Audrey's last hike",
+          "type": "concept",
+          "state": {
+            "description": "Hiked in a serene location, photo taken of a sunset over a mountain with a church on top."
+          }
+        },
+        {
+          "name": "Audrey's skill learned",
+          "type": "concept",
+          "state": {
+            "description": "Learned dog grooming in August 2023."
+          }
+        },
+        {
+          "name": "Audrey's dogs",
+          "type": "concept",
+          "state": {
+            "description": "Cares for her dogs and enjoys grooming them."
+          }
+        },
+        {
+          "name": "Audrey's dog grooming course",
+          "type": "concept",
+          "state": {
+            "description": "Took a dog grooming course to learn techniques."
+          }
+        },
+        {
+          "name": "Audrey's grooming tips",
+          "type": "concept",
+          "state": {
+            "description": "Grooming slowly and gently, paying attention to sensitive areas like ears and paws."
+          }
+        },
+        {
+          "name": "Audrey's weekend plans",
+          "type": "concept",
+          "state": {
+            "description": "Planning to check out a cozy cafe the weekend of October 13, 2023."
+          }
+        },
+        {
+          "name": "Audrey's nature reserve visit",
+          "type": "concept",
+          "state": {
+            "description": "Heading to a nature reserve to reconnect with the outdoors on the weekend."
+          }
+        },
+        {
+          "name": "Audrey's dogs' post-grooming appearance",
+          "type": "concept",
+          "state": {
+            "description": "Dogs look soft and fluffy after grooming."
+          }
+        },
+        {
+          "name": "Andrew's weekend plans",
+          "type": "concept",
+          "state": {
+            "description": "No specific weekend plans mentioned."
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 10,
+    "total_entities": 142
+  },
+  {
+    "session_index": 16,
+    "session_id": "conv-44_session_16",
+    "input_chars": 2873,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 August 24, 2023 at 00:24]\nAudrey: Hey Audrey! What's up? Last weekend my girlfriend and I went fishing in one of the nearby lakes. It was so nice. We got a few fish and had a blast. Have you ever gone fishing before?\nAudrey: Hey! Actually I've never been fishing. It's always been just chilling at the lake. I remember this moment a few years back when I sat by a gorgeous lake in t",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's girlfriend",
+          "type": "person",
+          "state": {
+            "description": "Audrey's girlfriend who went fishing with her the weekend before August 24, 2023"
+          }
+        },
+        {
+          "name": "Audrey's fishing trip",
+          "type": "event",
+          "state": {
+            "description": "Went fishing in a nearby lake with her girlfriend the weekend before August 24, 2023"
+          }
+        },
+        {
+          "name": "Audrey's lake memory",
+          "type": "event",
+          "state": {
+            "description": "Memorable moment by a gorgeous lake in the mountains with friends a few years back"
+          }
+        },
+        {
+          "name": "Audrey's dogs",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has dogs that she takes care of and loves"
+          }
+        },
+        {
+          "name": "Audrey's dog care routine",
+          "type": "concept",
+          "state": {
+            "description": "Regular grooming, daily brushing, baths, nail trims, and love to keep her dogs healthy and happy"
+          }
+        },
+        {
+          "name": "Audrey's bond with her dogs",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has a strong bond with her dogs and takes the responsibility of their care seriously"
+          }
+        },
+        {
+          "name": "Audrey's feelings about pets",
+          "type": "belief",
+          "state": {
+            "description": "Pets bring a lot of love and joy to Audrey's life"
+          }
+        },
+        {
+          "name": "Audrey's advice to Andrew",
+          "type": "concept",
+          "state": {
+            "description": "Audrey offers to give tips on taking care of Andrew's dog, Toby"
+          }
+        },
+        {
+          "name": "Andrew's dog Toby",
+          "type": "person",
+          "state": {
+            "description": "Andrew's dog, whom he hopes to bond with strongly"
+          }
+        },
+        {
+          "name": "Audrey's photo of dogs",
+          "type": "concept",
+          "state": {
+            "description": "Audrey shared a photo of her dogs running in a field."
+          }
+        },
+        {
+          "name": "Audrey's photo of Toby",
+          "type": "concept",
+          "state": {
+            "description": "Photo of Andrew's dog Toby sitting on the floor with a leash"
+          }
+        },
+        {
+          "name": "Audrey's photo of a sleeping dog",
+          "type": "concept",
+          "state": {
+            "description": "Photo of a dog sleeping in a dog bed on the floor"
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 9,
+    "total_entities": 151
+  },
+  {
+    "session_index": 17,
+    "session_id": "conv-44_session_17",
+    "input_chars": 3411,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 September 06, 2023 at 19:49]\nAudrey: Hey Audrey, how's it going? Since we last talked, a few new things have come up in my life. Work's been tough and stressful, so my outdoor activities have taken a backseat. Finding balance has been challenging.\nAudrey: Hey Andrew, good to hear from you. Sorry to hear about work being tough. Finding that balance can be challenging, huh? It can ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's work stress",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has been experiencing tough and stressful work."
+          }
+        },
+        {
+          "name": "Audrey's self-care activities",
+          "type": "concept",
+          "state": {
+            "description": "Audrey makes sure to do at least one self-care activity each day."
+          }
+        },
+        {
+          "name": "Audrey's morning coffee",
+          "type": "concept",
+          "state": {
+            "description": "Audrey grabs a coffee in the morning as part of her self-care."
+          }
+        },
+        {
+          "name": "Audrey's lunchtime walk",
+          "type": "concept",
+          "state": {
+            "description": "Audrey goes for a walk at lunch to recharge."
+          }
+        },
+        {
+          "name": "Audrey's doggy playdate",
+          "type": "concept",
+          "state": {
+            "description": "Audrey organized a doggy playdate with the neighbors' dogs."
+          }
+        },
+        {
+          "name": "Audrey's new dog beds",
+          "type": "concept",
+          "state": {
+            "description": "Audrey got new beds for her dogs to provide extra comfort."
+          }
+        },
+        {
+          "name": "Audrey's hiking trip",
+          "type": "concept",
+          "state": {
+            "description": "Audrey went for a hike the weekend before September 06, 2023 to escape the city."
+          }
+        },
+        {
+          "name": "Audrey's sunset photo",
+          "type": "concept",
+          "state": {
+            "description": "Audrey took a photo of a beautiful sunset during her hike."
+          }
+        },
+        {
+          "name": "Audrey's pet Toby",
+          "type": "person",
+          "state": {
+            "description": "Audrey has a young dog named Toby."
+          }
+        },
+        {
+          "name": "Andrew's support",
+          "type": "concept",
+          "state": {
+            "description": "Andrew encourages Audrey to take care of herself and find balance."
+          }
+        },
+        {
+          "name": "Andrew's dog-friendly place search",
+          "type": "concept",
+          "state": {
+            "description": "Andrew is still working on finding a dog-friendly place to live."
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 7,
+    "total_entities": 158
+  },
+  {
+    "session_index": 18,
+    "session_id": "conv-44_session_18",
+    "input_chars": 4974,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 September 24, 2023 at 17:53]\nAudrey: Hey Audrey! Long time no talk! How have you been?\nAudrey: Hey! I'm alright. Had some bumps though - last Friday at the park one of my pups saw something and pulled so hard the leash busted. Scared that she might run off and get hurt, so I had to chase after her. Luckily I caught her before anything bad happened. Little moments like this remind",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's dog Precious",
+          "type": "concept",
+          "state": {
+            "description": "Audrey's dog who got scared when the leash busted at the park."
+          }
+        },
+        {
+          "name": "Audrey's bond with Precious",
+          "type": "concept",
+          "state": {
+            "description": "Audrey feels her bond with Precious is stronger after the incident."
+          }
+        },
+        {
+          "name": "Audrey's dog Toby",
+          "type": "concept",
+          "state": {
+            "description": "Audrey's dog, a German Shepherd who loves cute sweaters."
+          }
+        },
+        {
+          "name": "Audrey's dog training methods",
+          "type": "concept",
+          "state": {
+            "description": "Audrey trains her dogs in obedience and tricks like sit, stay, shake, and roll over."
+          }
+        },
+        {
+          "name": "Audrey's dog walking frequency",
+          "type": "concept",
+          "state": {
+            "description": "Audrey takes her dogs for walks multiple times a day."
+          }
+        },
+        {
+          "name": "Audrey's dogs' breeds",
+          "type": "concept",
+          "state": {
+            "description": "Audrey's dogs are all mutts, with two being Jack Russell mixes and two being Chihuahua mixes."
+          }
+        },
+        {
+          "name": "Audrey's garden",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has a small garden that she takes care of."
+          }
+        },
+        {
+          "name": "Audrey's flowers",
+          "type": "concept",
+          "state": {
+            "description": "Audrey's flowers are called Peruvian Lilies, which are easy to care for."
+          }
+        },
+        {
+          "name": "Audrey's veggie patch",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has a veggie patch that is coming along well."
+          }
+        },
+        {
+          "name": "Audrey's dogs' enjoyment of the garden",
+          "type": "concept",
+          "state": {
+            "description": "Audrey's dogs enjoy playing in the garden."
+          }
+        },
+        {
+          "name": "Audrey's love for her dogs",
+          "type": "concept",
+          "state": {
+            "description": "Audrey feels her dogs mean everything to her and bring joy to her life."
+          }
+        },
+        {
+          "name": "Audrey's relaxation from gardening",
+          "type": "concept",
+          "state": {
+            "description": "Taking care of her garden relaxes Audrey and brings her peace."
+          }
+        },
+        {
+          "name": "Audrey's dogs' playmates",
+          "type": "concept",
+          "state": {
+            "description": "Audrey's dogs only play with her and do not have other furry pals."
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 15,
+    "entities_new": 12,
+    "total_entities": 170
+  },
+  {
+    "session_index": 19,
+    "session_id": "conv-44_session_19",
+    "input_chars": 5331,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 October 01, 2023 at 19:09]\nAudrey: Hey wassup? Got some great news - the gf and I are hitting the beach next month with Toby!\n[Image: a photo of a sunset over the ocean with waves]\nAudrey: Hey Andrew! Great to hear from you. Have fun at the beach trip! Bet you can't wait to get out to the nature. Can't wait for our hike with the dogs next month. They always put a smile on my face",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's beach trip",
+          "type": "event",
+          "state": {
+            "description": "Audrey took her dogs to the beach over the weekend."
+          }
+        },
+        {
+          "name": "Audrey's hike with dogs",
+          "type": "event",
+          "state": {
+            "description": "Audrey is going on a hike with her dogs in November 2023."
+          }
+        },
+        {
+          "name": "Audrey's dog park visit",
+          "type": "event",
+          "state": {
+            "description": "Audrey took her dogs to the dog park nearby on September 30, 2023."
+          }
+        },
+        {
+          "name": "Audrey's nature experience",
+          "type": "concept",
+          "state": {
+            "description": "Audrey misses nature living in the city and enjoys visiting parks and hiking."
+          }
+        },
+        {
+          "name": "Audrey's birdwatching interest",
+          "type": "hobby",
+          "state": {
+            "description": "Audrey is interested in birdwatching and finds it peaceful and calming."
+          }
+        },
+        {
+          "name": "Audrey's birdwatching book",
+          "type": "item",
+          "state": {
+            "description": "Audrey is currently reading a book about birdwatching guides."
+          }
+        },
+        {
+          "name": "Audrey's ecological reading",
+          "type": "hobby",
+          "state": {
+            "description": "Audrey reads books about ecological systems."
+          }
+        },
+        {
+          "name": "Audrey's knowledge about nature",
+          "type": "concept",
+          "state": {
+            "description": "Audrey learned about animals, plants, and ecosystems from her readings."
+          }
+        },
+        {
+          "name": "Audrey's recycling habits",
+          "type": "belief",
+          "state": {
+            "description": "Audrey believes recycling is important and does her part."
+          }
+        },
+        {
+          "name": "Audrey's carbon footprint reduction suggestion",
+          "type": "belief",
+          "state": {
+            "description": "Audrey suggests reducing carbon footprint by biking or using public transport."
+          }
+        },
+        {
+          "name": "Audrey's biking interest",
+          "type": "hobby",
+          "state": {
+            "description": "Audrey is interested in biking as a fun way to reduce carbon footprint."
+          }
+        },
+        {
+          "name": "Audrey's bike routes knowledge",
+          "type": "concept",
+          "state": {
+            "description": "Audrey knows some awesome bike routes near the river."
+          }
+        },
+        {
+          "name": "Andrew's nature appreciation",
+          "type": "concept",
+          "state": {
+            "description": "Andrew appreciates nature and enjoys being outdoors."
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 15,
+    "entities_new": 13,
+    "total_entities": 183
+  },
+  {
+    "session_index": 20,
+    "session_id": "conv-44_session_20",
+    "input_chars": 2053,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 October 04, 2023 at 16:18]\nAudrey: Hi Audrey! Been a while since I hear from you. How's it been?\nAudrey: Hey Andrew! It's been a wild ride! I did something fun with my pups over the weekend, took them to the beach and it was so fun to see them playing in the ocean.\nAudrey: Sounds great! Did they love being at the beach? Did they enjoy the water? Here's a pic of my last trip to th",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's pets",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has dogs that she took to the beach."
+          }
+        },
+        {
+          "name": "Audrey's beach trip",
+          "type": "concept",
+          "state": {
+            "description": "Audrey took her dogs to the beach over the weekend."
+          }
+        },
+        {
+          "name": "Audrey's outdoor activities",
+          "type": "concept",
+          "state": {
+            "description": "Audrey used to hike a lot but finds it challenging now."
+          }
+        },
+        {
+          "name": "Audrey's feelings about nature",
+          "type": "concept",
+          "state": {
+            "description": "Audrey feels a void in her heart without being in nature."
+          }
+        },
+        {
+          "name": "Audrey's home plants",
+          "type": "concept",
+          "state": {
+            "description": "Audrey is considering getting more plants for her house."
+          }
+        },
+        {
+          "name": "Andrew's outdoor preferences",
+          "type": "concept",
+          "state": {
+            "description": "Andrew misses being outdoors and finds it hard to find open spaces in the city."
+          }
+        },
+        {
+          "name": "Andrew's dogs",
+          "type": "concept",
+          "state": {
+            "description": "Andrew has dogs that Audrey wants him to say hi to."
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 9,
+    "entities_new": 2,
+    "total_entities": 185
+  },
+  {
+    "session_index": 21,
+    "session_id": "conv-44_session_21",
+    "input_chars": 3131,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 October 06, 2023 at 21:41]\nAudrey: Hey Andrew, I was thinking about what you said about missing nature the other day. It reminded me of when I couldn't walk my dogs because of a knee injury. It was tough 'cause they bring me so much joy. This pic was taken after I started walking again. It felt great to be able to get back out there!\n[Image: a photo of two dogs running in a field",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's knee injury",
+          "type": "concept",
+          "state": {
+            "description": "Audrey had a knee injury that prevented her from walking her dogs."
+          }
+        },
+        {
+          "name": "Audrey's dogs",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has dogs that bring her joy."
+          }
+        },
+        {
+          "name": "Audrey's jewelry hobby",
+          "type": "concept",
+          "state": {
+            "description": "Audrey makes jewelry out of recycled objects."
+          }
+        },
+        {
+          "name": "Audrey's jewelry materials",
+          "type": "concept",
+          "state": {
+            "description": "Audrey uses materials like bottle caps, buttons, and broken jewelry to make her pieces."
+          }
+        },
+        {
+          "name": "Audrey's favorite necklace",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has a favorite necklace made from recycled materials."
+          }
+        },
+        {
+          "name": "Audrey's jewelry sales",
+          "type": "concept",
+          "state": {
+            "description": "Audrey started making jewelry as a hobby and then began selling it."
+          }
+        },
+        {
+          "name": "Audrey's donation cause",
+          "type": "concept",
+          "state": {
+            "description": "Audrey donates a portion of her jewelry profits to a cause close to her heart."
+          }
+        },
+        {
+          "name": "Audrey's donation organization",
+          "type": "concept",
+          "state": {
+            "description": "Audrey donates to an animal shelter."
+          }
+        },
+        {
+          "name": "Audrey's adaptability",
+          "type": "concept",
+          "state": {
+            "description": "Audrey believes in adapting and finding ways to help, even if she can't volunteer."
+          }
+        },
+        {
+          "name": "Andrew's perspective on nature",
+          "type": "concept",
+          "state": {
+            "description": "Andrew expressed missing nature, which prompted Audrey's reflections."
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 8,
+    "total_entities": 193
+  },
+  {
+    "session_index": 22,
+    "session_id": "conv-44_session_22",
+    "input_chars": 4963,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 October 13, 2023 at 16:22]\nAudrey: Hey Audrey, it's been a busy week for me. Last Tuesday, my gf, Toby, and I had a really awesome night playing board games. It was really nice. What's been up with you lately?\n[Image: a photography of a dog sitting at a chess board with a chess set in front of him]\nAudrey: Hey! Sounds like you've been busy! I made some goodies recently to thank m",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's girlfriend Toby",
+          "type": "person",
+          "state": {
+            "description": "Audrey's girlfriend, named Toby."
+          }
+        },
+        {
+          "name": "Audrey's dog Toby",
+          "type": "person",
+          "state": {
+            "description": "Audrey's dog, a German Shepherd who loves cute sweaters."
+          }
+        },
+        {
+          "name": "Audrey's board game night",
+          "type": "event",
+          "state": {
+            "description": "Board game night with girlfriend Toby on October 3, 2023."
+          }
+        },
+        {
+          "name": "Audrey's goodies for neighbors",
+          "type": "concept",
+          "state": {
+            "description": "Made goodies to thank neighbors for their pup-friendly homes."
+          }
+        },
+        {
+          "name": "Audrey's weekend plans",
+          "type": "plans",
+          "state": {
+            "description": "Planning to check out a cozy cafe the weekend of October 13, 2023."
+          }
+        },
+        {
+          "name": "Audrey's dog park experience",
+          "type": "concept",
+          "state": {
+            "description": "The dog park is paradise for Audrey's dogs; they love socializing and exercising."
+          }
+        },
+        {
+          "name": "Audrey's funny dog story",
+          "type": "event",
+          "state": {
+            "description": "Audrey's dog chased a squirrel at the dog park, which was hilarious."
+          }
+        },
+        {
+          "name": "Audrey's dogs' favorite games",
+          "type": "concept",
+          "state": {
+            "description": "Audrey's dogs love to play Fetch and Frisbee at the park."
+          }
+        },
+        {
+          "name": "Audrey's tattoo of dogs",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has a tattoo of her four dogs and got more drawings added."
+          }
+        },
+        {
+          "name": "Audrey's nature experience",
+          "type": "concept",
+          "state": {
+            "description": "Audrey misses nature living in the city and enjoys visiting parks and hiking."
+          }
+        },
+        {
+          "name": "Audrey's hiking with dogs",
+          "type": "event",
+          "state": {
+            "description": "Audrey enjoys hiking with her dogs as a way to bond and make memories."
+          }
+        },
+        {
+          "name": "Audrey's emotional connection to dogs",
+          "type": "concept",
+          "state": {
+            "description": "Audrey feels her dogs bring her joy and unconditional love."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 8,
+    "total_entities": 201
+  },
+  {
+    "session_index": 23,
+    "session_id": "conv-44_session_23",
+    "input_chars": 2827,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 October 19, 2023 at 18:12]\nAudrey: Hey Andrew, hope you're doing ok. I recently had a good week - I went to a pet store last Monday to buy toys for my dogs and it was great seeing them so excited when I got them home. It made me realize how much I love them and how much joy they bring me.\n[Image: a photography of a box filled with toys and other items]\nAudrey: Hi Audrey! Pets rea",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's dogs",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has dogs that she loves and brings her joy."
+          }
+        },
+        {
+          "name": "Audrey's pet store visit",
+          "type": "concept",
+          "state": {
+            "description": "Audrey visited a pet store on October 9, 2023, to buy toys for her dogs."
+          }
+        },
+        {
+          "name": "Andrew's new pup",
+          "type": "concept",
+          "state": {
+            "description": "Andrew recently adopted a pup from a shelter."
+          }
+        },
+        {
+          "name": "Andrew's pup name",
+          "type": "concept",
+          "state": {
+            "description": "Andrew named his new pup Buddy."
+          }
+        },
+        {
+          "name": "Audrey's favorite activity with Buddy",
+          "type": "concept",
+          "state": {
+            "description": "Audrey enjoys taking walks with Buddy."
+          }
+        },
+        {
+          "name": "Buddy's hiking interest",
+          "type": "concept",
+          "state": {
+            "description": "Buddy loves checking out new hiking trails."
+          }
+        },
+        {
+          "name": "Audrey's hiking plans",
+          "type": "concept",
+          "state": {
+            "description": "Audrey plans to take both her dogs hiking November 2023."
+          }
+        },
+        {
+          "name": "Audrey's research for hiking spots",
+          "type": "concept",
+          "state": {
+            "description": "Audrey will do research to find a nice spot for hiking."
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 6,
+    "total_entities": 207
+  },
+  {
+    "session_index": 24,
+    "session_id": "conv-44_session_24",
+    "input_chars": 2947,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 October 24, 2023 at 10:14]\nAudrey: Hi Audrey! How have you been lately? My girlfriend and I went to this awesome wine tasting last weekend. It was great! We tried so many unique wines and learned a lot. I was surprised at how much I enjoyed it. A reminder to step out of the comfort zone!\nAudrey: Hey! Ha, glad you had fun at the wine tasting. Yeah, trying new things can be cool. B",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's girlfriend",
+          "type": "person",
+          "state": {
+            "description": "Audrey's girlfriend who attended a wine tasting with her the weekend before October 24, 2023"
+          }
+        },
+        {
+          "name": "Audrey's wine tasting",
+          "type": "event",
+          "state": {
+            "description": "Wine tasting attended by Audrey and her girlfriend the weekend before October 24, 2023, where they tried unique wines and learned a lot"
+          }
+        },
+        {
+          "name": "Audrey's accident",
+          "type": "event",
+          "state": {
+            "description": "Accident Audrey had while playing with her pups at the park the week before October 24, 2023"
+          }
+        },
+        {
+          "name": "Audrey's arm condition",
+          "type": "health",
+          "state": {
+            "description": "Audrey is managing taking care of her pups with one arm in a cast"
+          }
+        },
+        {
+          "name": "Audrey's sushi experience",
+          "type": "event",
+          "state": {
+            "description": "Audrey recently tried a new sushi spot in town and enjoyed it"
+          }
+        },
+        {
+          "name": "Andrew's adventure",
+          "type": "event",
+          "state": {
+            "description": "Andrew had an unexpected adventure the week before October 24, 2023 involving an accident with his pups"
+          }
+        },
+        {
+          "name": "Andrew's arm condition",
+          "type": "health",
+          "state": {
+            "description": "Andrew is feeling better each day after his accident"
+          }
+        },
+        {
+          "name": "Audrey's sushi interest",
+          "type": "hobby",
+          "state": {
+            "description": "Audrey has been curious about trying sushi and is looking forward to it"
+          }
+        },
+        {
+          "name": "Andrew's sushi tips",
+          "type": "advice",
+          "state": {
+            "description": "Andrew recommends trying a California or salmon roll first when trying sushi"
+          }
+        },
+        {
+          "name": "Audrey's sushi plans",
+          "type": "plans",
+          "state": {
+            "description": "Audrey plans to try California or salmon rolls and different sauces when she tries sushi"
+          }
+        },
+        {
+          "name": "Audrey's excitement for sushi",
+          "type": "emotion",
+          "state": {
+            "description": "Audrey is excited to try different sushi and is looking forward to her sushi adventure"
+          }
+        },
+        {
+          "name": "Audrey's photo sharing",
+          "type": "event",
+          "state": {
+            "description": "Audrey plans to take photos of her sushi adventure and share them with Andrew"
+          }
+        },
+        {
+          "name": "Audrey's dinner plans",
+          "type": "plans",
+          "state": {
+            "description": "Audrey is ordering sushi for dinner tonight"
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 15,
+    "entities_new": 12,
+    "total_entities": 219
+  },
+  {
+    "session_index": 25,
+    "session_id": "conv-44_session_25",
+    "input_chars": 5531,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 October 28, 2023 at 14:36]\nAudrey: Hey Andrew, I wanted to let you know about something going on with my dogs. I noticed they weren't acting normally, so I made an appointment with an animal behaviorist last Wed. It's been a bit hectic but I'm hopeful it'll help me better understand them.\nAudrey: Oh no! Sorry to hear that your dogs haven't been themselves. Are they doing ok? How ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's dogs",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has four dogs: Pepper and Panda are Lab mixes, and Precious and Pixie are Chihuahua mixes."
+          }
+        },
+        {
+          "name": "Audrey's appointment with animal behaviorist",
+          "type": "event",
+          "state": {
+            "description": "Audrey made an appointment with an animal behaviorist on October 25, 2023."
+          }
+        },
+        {
+          "name": "Audrey's positive reinforcement techniques",
+          "type": "concept",
+          "state": {
+            "description": "Audrey is using positive reinforcement techniques to help her dogs."
+          }
+        },
+        {
+          "name": "Audrey's dogs' progress",
+          "type": "concept",
+          "state": {
+            "description": "Audrey's dogs are responding well to the new approach, showing some progress."
+          }
+        },
+        {
+          "name": "Audrey's commitment to her dogs",
+          "type": "belief",
+          "state": {
+            "description": "Audrey is devoted to keeping her dogs healthy and happy."
+          }
+        },
+        {
+          "name": "Audrey's hiking plans",
+          "type": "event",
+          "state": {
+            "description": "Audrey plans to go hiking with Andrew on Saturday, November 4, 2023."
+          }
+        },
+        {
+          "name": "Audrey's picnic date",
+          "type": "event",
+          "state": {
+            "description": "Audrey is going on a picnic date with her girlfriend on Sunday, November 5, 2023."
+          }
+        },
+        {
+          "name": "Audrey's hiking location",
+          "type": "concept",
+          "state": {
+            "description": "Audrey plans to explore a trail by a lake with great views."
+          }
+        },
+        {
+          "name": "Audrey's photo of dogs",
+          "type": "concept",
+          "state": {
+            "description": "Audrey shared a photo of her dogs running in a field."
+          }
+        },
+        {
+          "name": "Audrey's photo of a national park",
+          "type": "concept",
+          "state": {
+            "description": "Audrey shared a photo taken at a national park."
+          }
+        },
+        {
+          "name": "Audrey's photo of a lake",
+          "type": "concept",
+          "state": {
+            "description": "Audrey shared a photo of a lake with a boat in it."
+          }
+        },
+        {
+          "name": "Audrey's photo of a trail",
+          "type": "concept",
+          "state": {
+            "description": "Audrey shared a photo of a trail near the hiking location."
+          }
+        },
+        {
+          "name": "Audrey's photo of her dog",
+          "type": "concept",
+          "state": {
+            "description": "Audrey shared a photo of her dog looking happy during a previous hike."
+          }
+        },
+        {
+          "name": "Andrew's encouragement",
+          "type": "belief",
+          "state": {
+            "description": "Andrew provided words of encouragement to Audrey regarding her dogs."
+          }
+        },
+        {
+          "name": "Andrew's friendship",
+          "type": "belief",
+          "state": {
+            "description": "Audrey values her friendship with Andrew for outdoor trips."
+          }
+        },
+        {
+          "name": "Andrew's hiking invitation",
+          "type": "event",
+          "state": {
+            "description": "Andrew invited Audrey to plan a hike together."
+          }
+        },
+        {
+          "name": "Andrew's dogs",
+          "type": "concept",
+          "state": {
+            "description": "Andrew has dogs that he hopes will join Audrey's dogs on the hike."
+          }
+        },
+        {
+          "name": "Audrey's girlfriend",
+          "type": "person",
+          "state": {
+            "description": "Audrey has a girlfriend with whom she is going on a picnic."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 18,
+    "entities_new": 12,
+    "total_entities": 231
+  },
+  {
+    "session_index": 26,
+    "session_id": "conv-44_session_26",
+    "input_chars": 3189,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 November 04, 2023 at 19:59]\nAudrey: Hey Audrey, had a great weekend! My girlfriend and I went on a bike ride and stumbled upon a cool park outside of town. It was awesome to get away from the city and be surrounded by nature.\n[Image: a photo of two people riding bikes on a paved path]\nAudrey: That's cool! I love checking out new parks with my four pups. Last weekend was so fun - ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's weekend activity",
+          "type": "concept",
+          "state": {
+            "description": "Went on a bike ride with her girlfriend and discovered a cool park outside of town."
+          }
+        },
+        {
+          "name": "Audrey's pets",
+          "type": "concept",
+          "state": {
+            "description": "Has four dogs."
+          }
+        },
+        {
+          "name": "Audrey's dog owners group",
+          "type": "concept",
+          "state": {
+            "description": "Recently joined a group to learn how to better take care of her dogs."
+          }
+        },
+        {
+          "name": "Audrey's dog care frequency",
+          "type": "concept",
+          "state": {
+            "description": "Meets up with other dog owners once a week for tips and socialization."
+          }
+        },
+        {
+          "name": "Audrey's consideration for another dog",
+          "type": "concept",
+          "state": {
+            "description": "Thinking about getting another dog but unsure due to the responsibility of two dogs."
+          }
+        },
+        {
+          "name": "Audrey's dogs Toby and Buddy",
+          "type": "concept",
+          "state": {
+            "description": "Currently taking care of two dogs named Toby and Buddy."
+          }
+        },
+        {
+          "name": "Audrey's city living with dogs",
+          "type": "concept",
+          "state": {
+            "description": "Manages to take care of her dogs while living in the city."
+          }
+        },
+        {
+          "name": "Audrey's dog entertainment methods",
+          "type": "concept",
+          "state": {
+            "description": "Uses toys and games to entertain her dogs in the house."
+          }
+        },
+        {
+          "name": "Audrey's dog activity suggestions",
+          "type": "concept",
+          "state": {
+            "description": "Engages her dogs in puzzles, training, and hide-and-seek for mental stimulation."
+          }
+        },
+        {
+          "name": "Andrew's support for Audrey",
+          "type": "person",
+          "state": {
+            "description": "Offers advice and support to Audrey regarding dog care."
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 9,
+    "total_entities": 240
+  },
+  {
+    "session_index": 27,
+    "session_id": "conv-44_session_27",
+    "input_chars": 3178,
+    "input_preview": "[Speakers: Audrey and Andrew]\nUse their FULL NAMES (Audrey, Andrew) in entity names, never abbreviations.\n\n[Session \u2014 November 22, 2023 at 09:02]\nAudrey: Hey Andrew! Long time no talk! Last Friday I took my fur kids to the pet salon - they were so psyched and their tails were wagging like crazy! It took a while for them to calm down, but all cut up they looked so cute!\nAudrey: Hey Audrey! Nice to hear from you. Sounds adorable! Do you have any pictures of them all groomed up?\nAudrey: Here's a pi",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Audrey's pets",
+          "type": "concept",
+          "state": {
+            "description": "Audrey has three dogs named Scout, Toby, and Buddy."
+          }
+        },
+        {
+          "name": "Audrey's new dog Scout",
+          "type": "concept",
+          "state": {
+            "description": "Audrey adopted a new dog named Scout."
+          }
+        },
+        {
+          "name": "Audrey's dog grooming experience",
+          "type": "concept",
+          "state": {
+            "description": "Audrey took her dogs to the pet salon the Friday before November 22, 2023, and they were excited and looked cute after grooming."
+          }
+        },
+        {
+          "name": "Audrey's dog grooming essentials",
+          "type": "concept",
+          "state": {
+            "description": "Audrey got essentials for her dogs' comfort and entertainment, including a bed, toys, and puppy pads."
+          }
+        },
+        {
+          "name": "Andrew's dogs",
+          "type": "concept",
+          "state": {
+            "description": "Andrew has dogs but has not taken them to the groomer yet."
+          }
+        },
+        {
+          "name": "Andrew's dog park visit",
+          "type": "concept",
+          "state": {
+            "description": "Andrew has a photo of his dog at the park."
+          }
+        },
+        {
+          "name": "Audrey's dogs' happiness",
+          "type": "concept",
+          "state": {
+            "description": "Audrey's dogs are doing great, exploring and meeting new people."
+          }
+        },
+        {
+          "name": "Audrey's gratitude for dogs",
+          "type": "concept",
+          "state": {
+            "description": "Audrey feels grateful to have her dogs as part of her family."
+          }
+        },
+        {
+          "name": "Audrey's dog Scout's first adventure",
+          "type": "concept",
+          "state": {
+            "description": "Audrey plans to take Scout, Toby, and Buddy to a nearby park for fresh air."
+          }
+        },
+        {
+          "name": "Audrey's dog training approach",
+          "type": "concept",
+          "state": {
+            "description": "Audrey is keeping Scout on a leash while they get used to being outside."
+          }
+        },
+        {
+          "name": "Audrey's dog Scout's adventurous spirit",
+          "type": "concept",
+          "state": {
+            "description": "Audrey chose the name 'Scout' for her new dog because it fits their adventurous spirit."
+          }
+        },
+        {
+          "name": "Audrey's doggy mom role",
+          "type": "concept",
+          "state": {
+            "description": "Audrey feels she is doing a good job as a doggy mom."
+          }
+        },
+        {
+          "name": "Audrey's dogs' safe haven",
+          "type": "concept",
+          "state": {
+            "description": "Audrey is creating a safe and fun space for her dogs."
+          }
+        },
+        {
+          "name": "Audrey's dogs' emotional well-being",
+          "type": "concept",
+          "state": {
+            "description": "Audrey's dogs feel loved and safe."
+          }
+        },
+        {
+          "name": "Audrey's relationship with her dogs",
+          "type": "concept",
+          "state": {
+            "description": "Audrey feels lucky to have her dogs and considers them family."
+          }
+        },
+        {
+          "name": "Audrey",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Andrew",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 17,
+    "entities_new": 12,
+    "total_entities": 252
+  }
+]

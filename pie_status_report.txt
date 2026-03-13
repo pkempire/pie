@@ -1,0 +1,52 @@
+============================================================
+  PIE BRIEFING — 2026-02-17 16:35
+============================================================
+
+## Coming Up (next 48h)
+
+- [9.4h] [Lucid Academy] Review Lucid Academy offer doc draft
+
+## Active Predictions
+
+- **Lucid Labs**: Will close first sprint client (expected in 13d, confidence: 40%)
+
+
+## Population: 3998 entities
+
+
+============================================================
+  PREDICTED NEXT STATE CHANGES
+============================================================
+
+## OVERDUE (predicted transition already passed)
+
+    fading  Lucid Labs                                15.0d overdue  (rhythm: 7.0d)
+           Last: Fields updated: recent_assets_added, last_action_date
+    fading  sponsorFind                               10.8d overdue  (rhythm: 5.7d)
+           Last: Fields updated: description, status, priority
+   dormant  Finish Harvey Mudd supplemental essay     5.3d overdue  (rhythm: 13.9d)
+           Last: Fields updated: latest_review_date, ao_rating, draft_produced, suggested_edits_s
+   dormant  SPIE Medical Imaging                      4.4d overdue  (rhythm: 11.6d)
+           Last: Fields updated: contact_emails, student_support_deadline_note
+    fading  Curriculum contributors: Vaibhav          2.9d overdue  (rhythm: 13.7d)
+           Last: Fields updated: description
+
+## EXPECTED NEXT (within 30 days)
+
+    fading  Common App essay critique (ChatGPT sessi  in 3.5d  (S=0.02)
+    fading  Lucid Academy                             in 13.6d  (S=0.03)
+   dormant  Stagehand                                 in 15.3d  (S=0.10)
+   dormant  Personal supplement stack                 in 17.7d  (S=0.18)
+  expected  Pranay Kocheta                            in 18.3d  (S=0.34)
+    fading  Clay                                      in 19.7d  (S=0.02)
+    fading  MCP (Model Context Protocol)              in 20.1d  (S=0.04)
+    fading  Personal Intelligence Engine (PIE)        in 20.2d  (S=0.03)
+   dormant  DeepVO (Deep Learning for Visual Odometr  in 21.9d  (S=0.09)
+    fading  SentenceTransformers (all-MiniLM-L6-v2)   in 22.5d  (S=0.02)
+    fading  AI Innovators (program)                   in 23.7d  (S=0.01)
+    fading  LM Studio / Ollama                        in 24.6d  (S=0.02)
+   dormant  Isabella                                  in 25.2d  (S=0.09)
+   dormant  Cairns Health                             in 27.3d  (S=0.18)
+    fading  Vercel                                    in 28.0d  (S=0.03)
+
+  + 21 entities predicted beyond 30 days

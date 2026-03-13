@@ -1,0 +1,2520 @@
+[
+  {
+    "session_index": 0,
+    "session_id": "conv-30_session_0",
+    "input_chars": 3381,
+    "input_preview": "[Speakers: Jon and Gina]\nUse their FULL NAMES (Jon, Gina) in entity names, never abbreviations.\n\n[Session \u2014 January 20, 2023 at 16:04]\nJon: Hey Jon! Good to see you. What's up? Anything new?\nJon: Hey Gina! Good to see you too. Lost my job as a banker yesterday, so I'm gonna take a shot at starting my own business.\nJon: Sorry about your job Jon, but starting your own business sounds awesome! Unfortunately, I also lost my job at Door Dash this month. What business are you thinking of?\nJon: Sorry t",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Jon's job loss",
+          "type": "concept",
+          "state": {
+            "description": "Jon lost his job, which motivated him to pursue his business dreams."
+          }
+        },
+        {
+          "name": "Jon's new business",
+          "type": "concept",
+          "state": {
+            "description": "Jon is starting a dance studio."
+          }
+        },
+        {
+          "name": "Jon's passion for dancing",
+          "type": "concept",
+          "state": {
+            "description": "Dancing brings Jon joy and reminds him of his passion."
+          }
+        },
+        {
+          "name": "Jon's favorite dance style",
+          "type": "concept",
+          "state": {
+            "description": "Jon's favorite dance style is contemporary."
+          }
+        },
+        {
+          "name": "Gina's job loss",
+          "type": "concept",
+          "state": {
+            "description": "Gina lost her job and decided to take control of her own destiny by starting her online clothing store."
+          }
+        },
+        {
+          "name": "Gina's passion for dancing",
+          "type": "concept",
+          "state": {
+            "description": "Gina uses dance for stress relief."
+          }
+        },
+        {
+          "name": "Gina's favorite dance style",
+          "type": "concept",
+          "state": {
+            "description": "Gina's favorite dance style is contemporary."
+          }
+        },
+        {
+          "name": "Jon's dance competition win",
+          "type": "concept",
+          "state": {
+            "description": "Jon's dance crew won first place in a local competition in 2022."
+          }
+        },
+        {
+          "name": "Gina's dance competition memory",
+          "type": "concept",
+          "state": {
+            "description": "Gina's favorite memory is winning first place at regionals at age fifteen."
+          }
+        },
+        {
+          "name": "Gina's dance piece",
+          "type": "concept",
+          "state": {
+            "description": "Gina's team performed a contemporary piece called 'Finding Freedom'."
+          }
+        },
+        {
+          "name": "Jon's ideal dance studio",
+          "type": "concept",
+          "state": {
+            "description": "Jon's ideal dance studio is by the water."
+          }
+        },
+        {
+          "name": "Jon's rehearsal group",
+          "type": "concept",
+          "state": {
+            "description": "Jon rehearses with a small group of dancers after work."
+          }
+        },
+        {
+          "name": "Jon's dance projects",
+          "type": "concept",
+          "state": {
+            "description": "Jon's group is finishing choreography to perform at a nearby festival in February 2023."
+          }
+        },
+        {
+          "name": "Festival performance",
+          "type": "concept",
+          "state": {
+            "description": "Jon's group will perform at the festival."
+          }
+        },
+        {
+          "name": "Jon's excitement for the festival",
+          "type": "concept",
+          "state": {
+            "description": "Jon is excited to see his group perform at the festival."
+          }
+        },
+        {
+          "name": "Jon",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Gina",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 17,
+    "entities_new": 17,
+    "total_entities": 17
+  },
+  {
+    "session_index": 1,
+    "session_id": "conv-30_session_1",
+    "input_chars": 2739,
+    "input_preview": "[Speakers: Jon and Gina]\nUse their FULL NAMES (Jon, Gina) in entity names, never abbreviations.\n\n[Session \u2014 January 29, 2023 at 14:32]\nJon: Hey Jon! Long time no see! Things have been hectic lately. I just launched an ad campaign for my clothing store in hopes of growing the business. Starting my own store and taking risks is both scary and rewarding. I'm excited to see where it takes me!\n[Image: a photo of a clothing store with a variety of clothes on display]\nJon: Hey Gina! Whoa, your store lo",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Jon's ad campaign",
+          "type": "concept",
+          "state": {
+            "description": "Launched an ad campaign for his clothing store to grow the business."
+          }
+        },
+        {
+          "name": "Jon's clothing store",
+          "type": "organization",
+          "state": {
+            "description": "Jon's own clothing store."
+          }
+        },
+        {
+          "name": "Jon's feelings about risks",
+          "type": "belief",
+          "state": {
+            "description": "Starting his own store and taking risks is both scary and rewarding."
+          }
+        },
+        {
+          "name": "Jon's excitement about the future",
+          "type": "belief",
+          "state": {
+            "description": "Excited to see where his clothing store journey takes him."
+          }
+        },
+        {
+          "name": "Gina's store",
+          "type": "organization",
+          "state": {
+            "description": "Gina has a store that Jon congratulated her on."
+          }
+        },
+        {
+          "name": "Jon's vision for his store",
+          "type": "belief",
+          "state": {
+            "description": "Excited to see his vision happen."
+          }
+        },
+        {
+          "name": "Gina's dance studio search",
+          "type": "concept",
+          "state": {
+            "description": "On the hunt for the ideal spot for her dance studio."
+          }
+        },
+        {
+          "name": "Gina's journey for a dance studio",
+          "type": "concept",
+          "state": {
+            "description": "It's been quite a journey looking at different places for her dance studio."
+          }
+        },
+        {
+          "name": "Gina's ideal dance studio location",
+          "type": "concept",
+          "state": {
+            "description": "Found a place with great natural light for her dance studio."
+          }
+        },
+        {
+          "name": "Jon's recent trip to Paris",
+          "type": "concept",
+          "state": {
+            "description": "Visited Paris on January 28, 2023."
+          }
+        },
+        {
+          "name": "Jon's dance studio location",
+          "type": "concept",
+          "state": {
+            "description": "The ideal spot for his dance studio is downtown."
+          }
+        },
+        {
+          "name": "Jon's dance studio features",
+          "type": "concept",
+          "state": {
+            "description": "Looking for good size and floor quality for the dance studio."
+          }
+        },
+        {
+          "name": "Jon's preferred dance floor",
+          "type": "concept",
+          "state": {
+            "description": "Prefers Marley flooring for his dance studio."
+          }
+        },
+        {
+          "name": "Jon's opinion on Marley flooring",
+          "type": "belief",
+          "state": {
+            "description": "Marley flooring is grippy, allows movement, tough, and easy to clean."
+          }
+        },
+        {
+          "name": "Jon's feelings about the dance studio process",
+          "type": "belief",
+          "state": {
+            "description": "The process of finding the right place and getting everything ready is exciting and nerve-wracking."
+          }
+        },
+        {
+          "name": "Jon's determination",
+          "type": "belief",
+          "state": {
+            "description": "Jon is determined to keep going, whatever comes his way."
+          }
+        },
+        {
+          "name": "Jon's support from Gina",
+          "type": "belief",
+          "state": {
+            "description": "Jon thanks Gina for having his back."
+          }
+        },
+        {
+          "name": "Jon's commitment to self-care",
+          "type": "belief",
+          "state": {
+            "description": "Plans to take breaks and dance to destress."
+          }
+        },
+        {
+          "name": "Jon's optimism about the future",
+          "type": "belief",
+          "state": {
+            "description": "Believes success is almost here."
+          }
+        },
+        {
+          "name": "Jon's encouragement to chase dreams",
+          "type": "belief",
+          "state": {
+            "description": "Encourages both himself and Gina to keep going after their goals."
+          }
+        },
+        {
+          "name": "Jon's friendship with Gina",
+          "type": "relationship",
+          "state": {
+            "description": "Jon values having Gina in his corner."
+          }
+        },
+        {
+          "name": "Gina's visit to Rome",
+          "type": "concept",
+          "state": {
+            "description": "Gina has only visited Rome once."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 22,
+    "entities_new": 22,
+    "total_entities": 39
+  },
+  {
+    "session_index": 2,
+    "session_id": "conv-30_session_2",
+    "input_chars": 2503,
+    "input_preview": "[Speakers: Jon and Gina]\nUse their FULL NAMES (Jon, Gina) in entity names, never abbreviations.\n\n[Session \u2014 February 01, 2023 at 00:48]\nJon: Hey Gina, hope you're doing ok! Still following my passion for dance. It's been bumpy, but I'm determined to make it work. I'm still searching for a place to open my dance studio.\nJon: Hi Jon! So happy you're pushing forward with dancing! Inspiring \ud83d\udcaa I emailed some wholesalers and one replied and said yes today! I'm over the moon because now I can expand my",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Jon's passion for dance",
+          "type": "concept",
+          "state": {
+            "description": "Jon is incredibly talented and passionate about dance."
+          }
+        },
+        {
+          "name": "Jon's dance studio search",
+          "type": "concept",
+          "state": {
+            "description": "Jon is searching for a dance studio location and is determined to find the right spot."
+          }
+        },
+        {
+          "name": "Gina's clothing store expansion",
+          "type": "concept",
+          "state": {
+            "description": "Gina received a positive response from a wholesaler, allowing her to expand her clothing store."
+          }
+        },
+        {
+          "name": "Gina's store location",
+          "type": "concept",
+          "state": {
+            "description": "Gina found a perfect spot for her clothing store."
+          }
+        },
+        {
+          "name": "Gina's store design",
+          "type": "concept",
+          "state": {
+            "description": "Gina designed her store to be cozy and inviting for customers."
+          }
+        },
+        {
+          "name": "Gina's furniture and decor choices",
+          "type": "concept",
+          "state": {
+            "description": "Gina chose furniture that looks great and is comfy, with a chandelier that adds glam."
+          }
+        },
+        {
+          "name": "Gina's customer experience goal",
+          "type": "concept",
+          "state": {
+            "description": "Gina aims to create a comfortable and inviting experience for her customers."
+          }
+        },
+        {
+          "name": "Jon's support for Gina",
+          "type": "concept",
+          "state": {
+            "description": "Feels motivated by having someone to root for him."
+          }
+        },
+        {
+          "name": "Jon's determination",
+          "type": "concept",
+          "state": {
+            "description": "Jon is determined to create a special shopping experience for his customers."
+          }
+        },
+        {
+          "name": "Jon's positivity",
+          "type": "concept",
+          "state": {
+            "description": "Jon is staying positive and pushing forward with his dreams."
+          }
+        },
+        {
+          "name": "Gina's encouragement for Jon",
+          "type": "concept",
+          "state": {
+            "description": "Gina encourages Jon to keep going with his dance studio."
+          }
+        },
+        {
+          "name": "Jon's hard work",
+          "type": "concept",
+          "state": {
+            "description": "Jon believes that hard work will pay off in achieving his dreams."
+          }
+        },
+        {
+          "name": "Jon",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Gina",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 11,
+    "total_entities": 50
+  },
+  {
+    "session_index": 3,
+    "session_id": "conv-30_session_3",
+    "input_chars": 2270,
+    "input_preview": "[Speakers: Jon and Gina]\nUse their FULL NAMES (Jon, Gina) in entity names, never abbreviations.\n\n[Session \u2014 February 04, 2023 at 10:43]\nJon: Hey Gina! What's up? How's the store going? I gotta tell you about this thing with my biz.\nJon: Hey Jon! The store's doing great! It's a wild ride. How's the biz?\nJon: Hey Gina! I'm putting in a lot of work on my business even with the obstacles. I'm gonna make it happen!\nJon: Wow! You've got drive! Keep it up and you'll definitely make a splash.\nJon: Thank",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Jon's business",
+          "type": "concept",
+          "state": {
+            "description": "Jon is working on opening a dance studio."
+          }
+        },
+        {
+          "name": "Gina's support",
+          "type": "concept",
+          "state": {
+            "description": "Gina's support means a lot to Jon."
+          }
+        },
+        {
+          "name": "Jon's dance studio search",
+          "type": "concept",
+          "state": {
+            "description": "Jon is searching for a dance studio location and is determined to find the right spot."
+          }
+        },
+        {
+          "name": "Jon's dance routines",
+          "type": "concept",
+          "state": {
+            "description": "Jon is working on new dance routines and rehearsing hard for an upcoming show."
+          }
+        },
+        {
+          "name": "Jon's upcoming dance competition",
+          "type": "concept",
+          "state": {
+            "description": "Jon is preparing for a dance competition near him in March 2023."
+          }
+        },
+        {
+          "name": "Jon's feelings about dancing",
+          "type": "concept",
+          "state": {
+            "description": "Dancing brings Jon joy and fulfillment."
+          }
+        },
+        {
+          "name": "Gina's encouragement",
+          "type": "concept",
+          "state": {
+            "description": "Gina encourages Jon to keep going."
+          }
+        },
+        {
+          "name": "Jon's talent",
+          "type": "concept",
+          "state": {
+            "description": "Jon is recognized for his talent in dancing."
+          }
+        },
+        {
+          "name": "Jon's determination",
+          "type": "concept",
+          "state": {
+            "description": "Jon is determined to make his dreams happen."
+          }
+        },
+        {
+          "name": "Jon's obstacles",
+          "type": "concept",
+          "state": {
+            "description": "Jon faces setbacks but views them as opportunities for comebacks."
+          }
+        },
+        {
+          "name": "Jon's skills",
+          "type": "concept",
+          "state": {
+            "description": "Jon possesses skills, passion, and drive in his pursuits."
+          }
+        },
+        {
+          "name": "Jon's relationship with Gina",
+          "type": "person",
+          "state": {
+            "description": "Jon and Gina support each other in their business endeavors."
+          }
+        },
+        {
+          "name": "Gina's store",
+          "type": "concept",
+          "state": {
+            "description": "Gina's store is doing great and is described as a wild ride."
+          }
+        },
+        {
+          "name": "Jon's appreciation for Gina",
+          "type": "concept",
+          "state": {
+            "description": "Thanks Gina for her support and encouragement."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 11,
+    "total_entities": 61
+  },
+  {
+    "session_index": 4,
+    "session_id": "conv-30_session_4",
+    "input_chars": 4578,
+    "input_preview": "[Speakers: Jon and Gina]\nUse their FULL NAMES (Jon, Gina) in entity names, never abbreviations.\n\n[Session \u2014 February 08, 2023 at 09:32]\nJon: Hey Jon! Great hearing from you again. How have you been? BTW, I found a cool new fashion piece for my store. Can't wait to share with my customers.\n[Image: a photo of a group of women posing with a giant balloon]\nJon: Hey Gina! Congrats on the new fashion piece! Looks like your store is growing. Remenber the festival I told you about? Had that performance ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Jon's fashion piece",
+          "type": "concept",
+          "state": {
+            "description": "A cool new fashion piece found for Jon's store."
+          }
+        },
+        {
+          "name": "Jon's dance performance",
+          "type": "event",
+          "state": {
+            "description": "Jon had a performance at a festival where many people complimented his dance moves."
+          }
+        },
+        {
+          "name": "Jon's passion for dancing",
+          "type": "concept",
+          "state": {
+            "description": "Dancing brings Jon joy and reminds him of his passion."
+          }
+        },
+        {
+          "name": "Gina's dance studio",
+          "type": "concept",
+          "state": {
+            "description": "Gina runs her own dance studio, allowing her to create a space for dancers of all ages and levels."
+          }
+        },
+        {
+          "name": "Jon's online store",
+          "type": "concept",
+          "state": {
+            "description": "Jon is working on growing his online store's customer base."
+          }
+        },
+        {
+          "name": "Jon's design inspiration",
+          "type": "concept",
+          "state": {
+            "description": "Jon's design reminds him of the grit it takes to stand out and face challenges."
+          }
+        },
+        {
+          "name": "Jon's career change",
+          "type": "concept",
+          "state": {
+            "description": "Jon left his secure 9-5 job as a banker to pursue his passion for dancing."
+          }
+        },
+        {
+          "name": "Jon's tattoo",
+          "type": "concept",
+          "state": {
+            "description": "Jon got a tattoo a few years ago that stands for freedom and reminds him to follow his passions."
+          }
+        },
+        {
+          "name": "Jon's balancing act",
+          "type": "concept",
+          "state": {
+            "description": "Jon finds juggling dance and business goals tricky but rewarding."
+          }
+        },
+        {
+          "name": "Gina's support",
+          "type": "concept",
+          "state": {
+            "description": "Gina provides support and encouragement to Jon in his pursuits."
+          }
+        },
+        {
+          "name": "Jon's determination",
+          "type": "concept",
+          "state": {
+            "description": "Jon is determined to make his dance studio and business ventures successful."
+          }
+        },
+        {
+          "name": "Gina's dedication to dance",
+          "type": "concept",
+          "state": {
+            "description": "Gina is dedicated to her dance studio and encourages Jon to chase his dreams."
+          }
+        },
+        {
+          "name": "Jon's energy exchange",
+          "type": "concept",
+          "state": {
+            "description": "Jon's dance moves energize him to tackle his business goals."
+          }
+        },
+        {
+          "name": "Jon's gratitude towards Gina",
+          "type": "concept",
+          "state": {
+            "description": "Jon expresses gratitude for Gina's support and encouragement."
+          }
+        },
+        {
+          "name": "Jon's dream chasing",
+          "type": "concept",
+          "state": {
+            "description": "Jon is committed to chasing his dreams in dance and business."
+          }
+        },
+        {
+          "name": "Gina's encouragement",
+          "type": "concept",
+          "state": {
+            "description": "Gina encourages Jon to keep moving forward with his dreams."
+          }
+        },
+        {
+          "name": "Jon's age",
+          "type": "demographics",
+          "state": {
+            "description": "Jon's age is not explicitly mentioned."
+          }
+        },
+        {
+          "name": "Gina's age",
+          "type": "demographics",
+          "state": {
+            "description": "Gina's age is not explicitly mentioned."
+          }
+        },
+        {
+          "name": "Jon's relationship with Gina",
+          "type": "relationship",
+          "state": {
+            "description": "Jon and Gina have a supportive friendship."
+          }
+        },
+        {
+          "name": "Jon's dance passion",
+          "type": "concept",
+          "state": {
+            "description": "Dance is Jon's passion."
+          }
+        },
+        {
+          "name": "Gina's dance passion",
+          "type": "concept",
+          "state": {
+            "description": "Dance is Gina's passion."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 21,
+    "entities_new": 16,
+    "total_entities": 77
+  },
+  {
+    "session_index": 5,
+    "session_id": "conv-30_session_5",
+    "input_chars": 2601,
+    "input_preview": "[Speakers: Jon and Gina]\nUse their FULL NAMES (Jon, Gina) in entity names, never abbreviations.\n\n[Session \u2014 March 16, 2023 at 14:35]\nJon: Hi Gina! Been hectic for me lately. Started hitting the gym last week to stay on track with the venture. Gotta figure out how to balance it all, but it's going well. How about you?\nJon: Hey Jon! Great to hear from you. Been having some tough times lately.\nJon: Oof, sorry to hear that. What's up? Is there anything I can do to help?\nJon: Thanks, Jon! Appreciate ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Jon's gym activity",
+          "type": "concept",
+          "state": {
+            "description": "Started hitting the gym to stay on track with his venture, began the week before March 16, 2023."
+          }
+        },
+        {
+          "name": "Gina's job loss",
+          "type": "concept",
+          "state": {
+            "description": "Lost her job at Door Dash."
+          }
+        },
+        {
+          "name": "Gina's online clothes store",
+          "type": "concept",
+          "state": {
+            "description": "Opened an online clothes store, a dream she had for a while."
+          }
+        },
+        {
+          "name": "Gina's passion for fashion",
+          "type": "concept",
+          "state": {
+            "description": "Passionate about fashion trends and finding unique pieces."
+          }
+        },
+        {
+          "name": "Gina's love for dance",
+          "type": "concept",
+          "state": {
+            "description": "Wants to blend her love for dance and fashion."
+          }
+        },
+        {
+          "name": "Jon's encouragement",
+          "type": "concept",
+          "state": {
+            "description": "Jon encourages Gina to pursue her goals."
+          }
+        },
+        {
+          "name": "Jon's business challenges",
+          "type": "concept",
+          "state": {
+            "description": "Facing new challenges while starting and running his own business."
+          }
+        },
+        {
+          "name": "Jon's support for Gina",
+          "type": "concept",
+          "state": {
+            "description": "Feels motivated by having someone to root for him."
+          }
+        },
+        {
+          "name": "Jon's appreciation for Gina",
+          "type": "concept",
+          "state": {
+            "description": "Thanks Gina for her support and encouragement."
+          }
+        },
+        {
+          "name": "Celebration of achievements",
+          "type": "concept",
+          "state": {
+            "description": "Both agree to celebrate achievements and support each other."
+          }
+        },
+        {
+          "name": "Jon's relationship with Gina",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Gina's relationship with Jon",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 8,
+    "total_entities": 85
+  },
+  {
+    "session_index": 6,
+    "session_id": "conv-30_session_6",
+    "input_chars": 2206,
+    "input_preview": "[Speakers: Jon and Gina]\nUse their FULL NAMES (Jon, Gina) in entity names, never abbreviations.\n\n[Session \u2014 March 23, 2023 at 19:28]\nJon: Hey Gina, how's it going?\nJon: Hey Jon, my online clothing store has been a roller coaster but rewarding. Starting a business takes courage - you hang in there too!\nJon: Thanks Gina! It's been tough, but I'm gonna make it happen. It's been great! And hey, you're awesome with your store. How's it going?\nJon: Thanks! Appreciate your kind words. Store's going goo",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Gina's online clothing store",
+          "type": "concept",
+          "state": {
+            "description": "Gina started her own online clothing store not long ago."
+          }
+        },
+        {
+          "name": "Gina's business courage",
+          "type": "belief",
+          "state": {
+            "description": "Starting a business takes courage."
+          }
+        },
+        {
+          "name": "Jon's motivation",
+          "type": "belief",
+          "state": {
+            "description": "Seeing his goals written down helps Jon stay motivated and focused."
+          }
+        },
+        {
+          "name": "Gina's fashion trend awareness",
+          "type": "concept",
+          "state": {
+            "description": "Gina keeps up with fashion trends to offer the best pieces to customers."
+          }
+        },
+        {
+          "name": "Gina's work enjoyment",
+          "type": "belief",
+          "state": {
+            "description": "Gina is really enjoying the work involved in her store."
+          }
+        },
+        {
+          "name": "Jon's advice on brand identity",
+          "type": "concept",
+          "state": {
+            "description": "Jon advises that brand identity is key and should stand out."
+          }
+        },
+        {
+          "name": "Jon's customer relationship advice",
+          "type": "concept",
+          "state": {
+            "description": "Jon suggests building relationships with customers and showing that you care."
+          }
+        },
+        {
+          "name": "Jon's positivity advice",
+          "type": "concept",
+          "state": {
+            "description": "Jon emphasizes the importance of staying positive and motivating others."
+          }
+        },
+        {
+          "name": "Gina's focus on brand image",
+          "type": "belief",
+          "state": {
+            "description": "Gina is always working on creating a strong brand image for her store."
+          }
+        },
+        {
+          "name": "Jon's motivation source",
+          "type": "belief",
+          "state": {
+            "description": "Dancing has kept Jon going."
+          }
+        },
+        {
+          "name": "Jon's fulfillment from teaching",
+          "type": "belief",
+          "state": {
+            "description": "Jon finds it fulfilling to help his students learn and reach their goals."
+          }
+        },
+        {
+          "name": "Gina's support for Jon",
+          "type": "belief",
+          "state": {
+            "description": "Gina expresses pride and support for Jon's efforts in opening the dance studio."
+          }
+        },
+        {
+          "name": "Jon's gratitude for support",
+          "type": "belief",
+          "state": {
+            "description": "Jon is grateful for Gina's help with staying motivated."
+          }
+        },
+        {
+          "name": "Jon's encouragement",
+          "type": "belief",
+          "state": {
+            "description": "Jon encourages Gina to keep going and never give up."
+          }
+        },
+        {
+          "name": "Gina's motivational impact",
+          "type": "belief",
+          "state": {
+            "description": "Gina's words motivate Jon to keep going."
+          }
+        },
+        {
+          "name": "Jon's self-belief",
+          "type": "belief",
+          "state": {
+            "description": "Jon is committed to believing in himself."
+          }
+        },
+        {
+          "name": "Dance class photo",
+          "type": "concept",
+          "state": {
+            "description": "A photo of Jon and his students after one of the dance classes."
+          }
+        },
+        {
+          "name": "Jon",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Gina",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 19,
+    "entities_new": 16,
+    "total_entities": 101
+  },
+  {
+    "session_index": 7,
+    "session_id": "conv-30_session_7",
+    "input_chars": 4117,
+    "input_preview": "[Speakers: Jon and Gina]\nUse their FULL NAMES (Jon, Gina) in entity names, never abbreviations.\n\n[Session \u2014 April 03, 2023 at 13:26]\nJon: Hey Gina, I had to shut down my bank account. It was tough, but I needed to do it for my biz.\nJon: Oh no, Jon! Sorry to hear that. Tough decision for you? How're you handling the changes?\nJon: It was a tough call, but I thought it'd help my biz grow. Handling changes has been hard, but I'm staying positive and looking ahead. Anything new for you?\nJon: Oof, tha",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Jon's bank account status",
+          "type": "concept",
+          "state": {
+            "description": "Jon had to shut down his bank account for his business."
+          }
+        },
+        {
+          "name": "Jon's business growth motivation",
+          "type": "concept",
+          "state": {
+            "description": "Jon believes shutting down his bank account will help his business grow."
+          }
+        },
+        {
+          "name": "Jon's emotional state",
+          "type": "concept",
+          "state": {
+            "description": "Feeling grateful for Gina's encouragement."
+          }
+        },
+        {
+          "name": "Gina's online store promotions",
+          "type": "concept",
+          "state": {
+            "description": "Gina has new offers and promotions to attract customers to her online store."
+          }
+        },
+        {
+          "name": "Gina's business journey",
+          "type": "concept",
+          "state": {
+            "description": "Gina finds starting her business to be a wild ride but is determined not to give up."
+          }
+        },
+        {
+          "name": "Gina's stress relief activity",
+          "type": "concept",
+          "state": {
+            "description": "Gina uses dance as her stress relief."
+          }
+        },
+        {
+          "name": "Gina's creativity source",
+          "type": "concept",
+          "state": {
+            "description": "Fashion fuels Gina's creativity."
+          }
+        },
+        {
+          "name": "Gina's favorite dance session",
+          "type": "concept",
+          "state": {
+            "description": "Gina shared a photo of her favorite dance session."
+          }
+        },
+        {
+          "name": "Gina's passion combination",
+          "type": "concept",
+          "state": {
+            "description": "Gina combines her passions for dance and fashion in her business."
+          }
+        },
+        {
+          "name": "Gina's customer feedback",
+          "type": "concept",
+          "state": {
+            "description": "Gina's customers love her new offers and promotions."
+          }
+        },
+        {
+          "name": "Gina's sales progress",
+          "type": "concept",
+          "state": {
+            "description": "Gina is seeing more sales due to her efforts."
+          }
+        },
+        {
+          "name": "Gina's customer base growth plans",
+          "type": "concept",
+          "state": {
+            "description": "Gina plans to work with fashion bloggers and influencers to grow her customer base."
+          }
+        },
+        {
+          "name": "Gina's advertising strategy",
+          "type": "concept",
+          "state": {
+            "description": "Gina plans to do more ads to reach more people."
+          }
+        },
+        {
+          "name": "Jon's dance studio expansion",
+          "type": "concept",
+          "state": {
+            "description": "Jon is expanding his dance studio's social media presence."
+          }
+        },
+        {
+          "name": "Jon's workshops and classes",
+          "type": "concept",
+          "state": {
+            "description": "Jon is offering workshops and classes to local schools and centers."
+          }
+        },
+        {
+          "name": "Jon's dance competition",
+          "type": "concept",
+          "state": {
+            "description": "Jon is hosting a dance competition May 2023 to showcase local talent."
+          }
+        },
+        {
+          "name": "Jon's emotional satisfaction",
+          "type": "concept",
+          "state": {
+            "description": "Jon feels great about providing a place for people to express themselves through dance."
+          }
+        },
+        {
+          "name": "Gina's support for Jon",
+          "type": "concept",
+          "state": {
+            "description": "Gina expresses pride in Jon's progress with his dance studio."
+          }
+        },
+        {
+          "name": "Jon's invitation to Gina",
+          "type": "concept",
+          "state": {
+            "description": "Jon invites Gina to the dance event May 2023."
+          }
+        },
+        {
+          "name": "Jon's event details",
+          "type": "concept",
+          "state": {
+            "description": "Jon's dance studio and other schools will showcase performances at the event."
+          }
+        },
+        {
+          "name": "Gina's commitment to support",
+          "type": "concept",
+          "state": {
+            "description": "Gina expresses her commitment to support Jon at the event."
+          }
+        },
+        {
+          "name": "Gina's good luck wish",
+          "type": "concept",
+          "state": {
+            "description": "Jon wishes Gina good luck with her store."
+          }
+        },
+        {
+          "name": "Gina's gratitude",
+          "type": "concept",
+          "state": {
+            "description": "Gina appreciates Jon's kind words."
+          }
+        },
+        {
+          "name": "Jon's encouragement",
+          "type": "concept",
+          "state": {
+            "description": "Jon encourages Gina to pursue her goals."
+          }
+        },
+        {
+          "name": "Gina's determination",
+          "type": "concept",
+          "state": {
+            "description": "Gina is determined not to quit on her dreams."
+          }
+        },
+        {
+          "name": "Jon's full name",
+          "type": "person",
+          "state": {
+            "description": "Jon is one of the two speakers."
+          }
+        },
+        {
+          "name": "Gina's full name",
+          "type": "person",
+          "state": {
+            "description": "Gina is one of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 27,
+    "entities_new": 25,
+    "total_entities": 126
+  },
+  {
+    "session_index": 8,
+    "session_id": "conv-30_session_8",
+    "input_chars": 2621,
+    "input_preview": "[Speakers: Jon and Gina]\nUse their FULL NAMES (Jon, Gina) in entity names, never abbreviations.\n\n[Session \u2014 April 09, 2023 at 10:33]\nJon: Hey Gina! I'm turning my loves of dance into a business. I'm sunk tons of time into the studio lately, and look at my students - they're already killing it. I'm even learning with them!\n[Image: a photo of a group of dancers on a stage with a red background]\nJon: Hey Jon! Wow, way to take your passion and make it into a biz! The dance studio looks awesome.\n[Ima",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Jon's dance business",
+          "type": "concept",
+          "state": {
+            "description": "Turning his love of dance into a business with a dance studio."
+          }
+        },
+        {
+          "name": "Jon's students",
+          "type": "concept",
+          "state": {
+            "description": "Jon's students are excelling in dance."
+          }
+        },
+        {
+          "name": "Jon's recent job loss",
+          "type": "concept",
+          "state": {
+            "description": "Losing his job was tough but motivated him to pursue his passion for dance."
+          }
+        },
+        {
+          "name": "Jon's happiness from dancing",
+          "type": "concept",
+          "state": {
+            "description": "Dancing makes Jon happy and he enjoys sharing it with others."
+          }
+        },
+        {
+          "name": "Jon's expression through dance",
+          "type": "concept",
+          "state": {
+            "description": "Dancing is a way for Jon to express himself and find his happy place."
+          }
+        },
+        {
+          "name": "Jon's childhood dance classes",
+          "type": "concept",
+          "state": {
+            "description": "Jon loved spending time in the studio during his childhood dance classes."
+          }
+        },
+        {
+          "name": "Jon's memories of dance",
+          "type": "concept",
+          "state": {
+            "description": "Jon cherishes the memories of taking dance lessons with friends."
+          }
+        },
+        {
+          "name": "Gina's support for Jon",
+          "type": "concept",
+          "state": {
+            "description": "Gina supports Jon's dance journey and expresses pride in his achievements."
+          }
+        },
+        {
+          "name": "Gina's dance trophy",
+          "type": "concept",
+          "state": {
+            "description": "Gina shows Jon one of her trophies from a dance contest."
+          }
+        },
+        {
+          "name": "Jon's determination",
+          "type": "concept",
+          "state": {
+            "description": "Jon is determined to keep pushing and working hard in his dance business."
+          }
+        },
+        {
+          "name": "Jon's happiness about dance",
+          "type": "concept",
+          "state": {
+            "description": "Jon feels that pursuing dance has been tough but also the best thing ever."
+          }
+        },
+        {
+          "name": "Jon",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Gina",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 9,
+    "total_entities": 135
+  },
+  {
+    "session_index": 9,
+    "session_id": "conv-30_session_9",
+    "input_chars": 2627,
+    "input_preview": "[Speakers: Jon and Gina]\nUse their FULL NAMES (Jon, Gina) in entity names, never abbreviations.\n\n[Session \u2014 April 25, 2023 at 11:24]\nJon: Hi Gina! I just wanted to fill you in on my business. Yesterday, I went to a fair to show off my studio, it was both stressful and great! I got some possible leads, so that was awesome. But overall, I've learned that this biz is no cakewalk and having confidence in yourself is important for making it successful!\n[Image: a photo of a group of women performing a",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Jon's business project",
+          "type": "concept",
+          "state": {
+            "description": "Jon is working on a business project and recently attended a fair to showcase his studio."
+          }
+        },
+        {
+          "name": "Jon's fair experience",
+          "type": "concept",
+          "state": {
+            "description": "Jon attended a fair on April 24, 2023, to show off his studio, which was both stressful and great."
+          }
+        },
+        {
+          "name": "Jon's possible leads",
+          "type": "concept",
+          "state": {
+            "description": "Jon received some possible leads from the fair he attended."
+          }
+        },
+        {
+          "name": "Jon's confidence in business",
+          "type": "concept",
+          "state": {
+            "description": "Jon believes that having confidence in oneself is important for business success."
+          }
+        },
+        {
+          "name": "Gina's online clothing store",
+          "type": "concept",
+          "state": {
+            "description": "Gina started her own online clothing store not long ago."
+          }
+        },
+        {
+          "name": "Gina's job loss",
+          "type": "concept",
+          "state": {
+            "description": "Gina lost her job and decided to take control of her own destiny by starting her online clothing store."
+          }
+        },
+        {
+          "name": "Gina's journey",
+          "type": "concept",
+          "state": {
+            "description": "Gina describes her journey of starting her online store as tough but rewarding."
+          }
+        },
+        {
+          "name": "Jon's motivation advice",
+          "type": "concept",
+          "state": {
+            "description": "Gina advises Jon to think of the big goal and why he is doing his business to stay motivated."
+          }
+        },
+        {
+          "name": "Jon's confidence issues",
+          "type": "concept",
+          "state": {
+            "description": "Jon has been feeling low on confidence while running his business."
+          }
+        },
+        {
+          "name": "Gina's confidence tips",
+          "type": "concept",
+          "state": {
+            "description": "Gina suggests that Jon remind himself of his successes and progress to stay confident."
+          }
+        },
+        {
+          "name": "Jon's passion for dance",
+          "type": "concept",
+          "state": {
+            "description": "Jon is incredibly talented and passionate about dance."
+          }
+        },
+        {
+          "name": "Jon's determination",
+          "type": "concept",
+          "state": {
+            "description": "Jon is determined to keep going and reach his dreams no matter what."
+          }
+        },
+        {
+          "name": "Jon's support system",
+          "type": "concept",
+          "state": {
+            "description": "Jon appreciates the support from Gina and is motivated to keep pushing forward."
+          }
+        },
+        {
+          "name": "Gina's encouragement",
+          "type": "concept",
+          "state": {
+            "description": "Gina encourages Jon to believe in himself and tackle any obstacles."
+          }
+        },
+        {
+          "name": "Jon's commitment to success",
+          "type": "concept",
+          "state": {
+            "description": "Jon is committed to focusing on success and why he started his business."
+          }
+        },
+        {
+          "name": "Jon's relationship with Gina",
+          "type": "person",
+          "state": {
+            "description": "Jon and Gina support each other in their business endeavors."
+          }
+        },
+        {
+          "name": "Jon",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Gina",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 18,
+    "entities_new": 10,
+    "total_entities": 145
+  },
+  {
+    "session_index": 10,
+    "session_id": "conv-30_session_10",
+    "input_chars": 2718,
+    "input_preview": "[Speakers: Jon and Gina]\nUse their FULL NAMES (Jon, Gina) in entity names, never abbreviations.\n\n[Session \u2014 May 11, 2023 at 15:14]\nJon: Hi! Since we last spoke I am still working on the dance studio and things are looking up!\n[Image: a photo of a woman in a short skirt with her hands on her hips]\nJon: Hi! You're so inspiring taking it on and opening your own studio!\nJon: Thanks! Losing my job gave me the push to finally start my dream business: my own dance studio! Now I'm stepping into the unkn",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Jon's job",
+          "type": "concept",
+          "state": {
+            "description": "Working on opening his own dance studio"
+          }
+        },
+        {
+          "name": "Jon's dream business",
+          "type": "concept",
+          "state": {
+            "description": "His own dance studio"
+          }
+        },
+        {
+          "name": "Jon's stress reliever",
+          "type": "concept",
+          "state": {
+            "description": "Dance has been his stress-buster since childhood"
+          }
+        },
+        {
+          "name": "Jon's love for dance",
+          "type": "concept",
+          "state": {
+            "description": "Dance makes him feel alive and is a must-have in his life"
+          }
+        },
+        {
+          "name": "Jon's dance studio vision",
+          "type": "concept",
+          "state": {
+            "description": "Jon wants his dance studio to be a place of support and encouragement for all dancers."
+          }
+        },
+        {
+          "name": "Jon's interview",
+          "type": "concept",
+          "state": {
+            "description": "Had an interview for a design internship on May 10, 2023"
+          }
+        },
+        {
+          "name": "Jon's dance practice",
+          "type": "concept",
+          "state": {
+            "description": "Been practicing dance routines to stay focused and motivated"
+          }
+        },
+        {
+          "name": "Gina's encouragement",
+          "type": "concept",
+          "state": {
+            "description": "Encourages Jon in his dance studio venture and appreciates his determination"
+          }
+        },
+        {
+          "name": "Gina's support",
+          "type": "concept",
+          "state": {
+            "description": "Offers help and is excited to see Jon's dance studio come to life"
+          }
+        },
+        {
+          "name": "Gina's reaction to Jon's routine",
+          "type": "concept",
+          "state": {
+            "description": "Proud of Jon and eager to see his dance routine video"
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 8,
+    "total_entities": 153
+  },
+  {
+    "session_index": 11,
+    "session_id": "conv-30_session_11",
+    "input_chars": 2401,
+    "input_preview": "[Speakers: Jon and Gina]\nUse their FULL NAMES (Jon, Gina) in entity names, never abbreviations.\n\n[Session \u2014 May 27, 2023 at 19:18]\nJon: Hey Jon! Long time no talk! A lot's happened - I just got accepted for a fashion internship!\nJon: Congrats, Gina! That's awesome news about the fashion internship. \ud83c\udf89 So stoked for you. Where is the internship and how're you feelin' about it?\nJon: Thanks! I'm excited and kinda nervous. Gonna be a big change. It's part-time position in the fashion department of an",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Gina's fashion internship",
+          "type": "concept",
+          "state": {
+            "description": "Accepted for a part-time fashion internship in the fashion department of an international company."
+          }
+        },
+        {
+          "name": "Gina's feelings about internship",
+          "type": "concept",
+          "state": {
+            "description": "Excited and kinda nervous about the big change."
+          }
+        },
+        {
+          "name": "Jon's current book",
+          "type": "concept",
+          "state": {
+            "description": "Reading 'The Lean Startup'."
+          }
+        },
+        {
+          "name": "Jon's business plan",
+          "type": "concept",
+          "state": {
+            "description": "Wrapping up the business plan for his dance studio."
+          }
+        },
+        {
+          "name": "Jon's search for investors",
+          "type": "concept",
+          "state": {
+            "description": "Jon is looking for investors for his dance studio."
+          }
+        },
+        {
+          "name": "Jon's motivation",
+          "type": "concept",
+          "state": {
+            "description": "Driven by passion for the project and belief in its success."
+          }
+        },
+        {
+          "name": "Jon's organization method",
+          "type": "concept",
+          "state": {
+            "description": "Using a whiteboard to keep track of ideas and milestones."
+          }
+        },
+        {
+          "name": "Jon's attitude towards challenges",
+          "type": "concept",
+          "state": {
+            "description": "Believes obstacles are inevitable but is committed to keep going."
+          }
+        },
+        {
+          "name": "Gina's future plans",
+          "type": "concept",
+          "state": {
+            "description": "Hoping to learn as much as possible from the internship."
+          }
+        },
+        {
+          "name": "Gina's excitement level",
+          "type": "concept",
+          "state": {
+            "description": "A mix of excitement and fear about entering the fashion industry."
+          }
+        },
+        {
+          "name": "Jon's commitment",
+          "type": "concept",
+          "state": {
+            "description": "Impressed by his commitment to his business and learning process."
+          }
+        },
+        {
+          "name": "Gina's encouragement",
+          "type": "concept",
+          "state": {
+            "description": "Encouraging Jon to keep learning and growing."
+          }
+        },
+        {
+          "name": "Jon's appreciation for Gina",
+          "type": "concept",
+          "state": {
+            "description": "Thanks Gina for her support and encouragement."
+          }
+        },
+        {
+          "name": "Gina's reaction to Jon's progress",
+          "type": "concept",
+          "state": {
+            "description": "Impressed by Jon's commitment and progress."
+          }
+        },
+        {
+          "name": "Gina's advice to Jon",
+          "type": "concept",
+          "state": {
+            "description": "Encourages Jon to keep going despite challenges."
+          }
+        },
+        {
+          "name": "Gina's nervousness",
+          "type": "concept",
+          "state": {
+            "description": "Feeling nervous about the internship."
+          }
+        },
+        {
+          "name": "Gina's excitement",
+          "type": "concept",
+          "state": {
+            "description": "Feeling excited about the internship."
+          }
+        },
+        {
+          "name": "Gina's learning goal",
+          "type": "concept",
+          "state": {
+            "description": "Aiming to learn as much as possible from the internship."
+          }
+        },
+        {
+          "name": "Jon's learning attitude",
+          "type": "concept",
+          "state": {
+            "description": "Staying hopeful and learning a lot during the investor search."
+          }
+        },
+        {
+          "name": "Jon's visual organization",
+          "type": "concept",
+          "state": {
+            "description": "Using visual aids to stay organized and motivated."
+          }
+        },
+        {
+          "name": "Jon's belief in success",
+          "type": "concept",
+          "state": {
+            "description": "Belief in the success of his dance studio project."
+          }
+        },
+        {
+          "name": "Jon's business focus",
+          "type": "concept",
+          "state": {
+            "description": "Focusing on building a business based on customer feedback."
+          }
+        },
+        {
+          "name": "Gina's support for Jon",
+          "type": "concept",
+          "state": {
+            "description": "Supporting Jon's efforts and encouraging him."
+          }
+        },
+        {
+          "name": "Jon's emotional state",
+          "type": "concept",
+          "state": {
+            "description": "Feeling grateful for Gina's encouragement."
+          }
+        },
+        {
+          "name": "Gina's congratulatory message",
+          "type": "concept",
+          "state": {
+            "description": "Congratulated Jon on his progress and efforts."
+          }
+        },
+        {
+          "name": "Jon's visual progress tracking",
+          "type": "concept",
+          "state": {
+            "description": "Using a whiteboard to visualize progress and ideas."
+          }
+        },
+        {
+          "name": "Gina's reaction to Jon's ideas",
+          "type": "concept",
+          "state": {
+            "description": "Impressed by Jon's ideas on the whiteboard."
+          }
+        },
+        {
+          "name": "Jon's learning from the book",
+          "type": "concept",
+          "state": {
+            "description": "Hoping 'The Lean Startup' will provide tips for his business."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 28,
+    "entities_new": 23,
+    "total_entities": 176
+  },
+  {
+    "session_index": 12,
+    "session_id": "conv-30_session_12",
+    "input_chars": 3028,
+    "input_preview": "[Speakers: Jon and Gina]\nUse their FULL NAMES (Jon, Gina) in entity names, never abbreviations.\n\n[Session \u2014 June 13, 2023 at 20:29]\nJon: Hey Gina, thanks for being there for me and believing in me. It means a lot.\nJon: Sure, Jon! I'm always around for you. How've you been since we caught up?\nJon: I'm prepping for my dance studio more than ever!\nJon: Proud of you for starting your own business! It takes strength to stay hopeful. What are you doing to prep for your dance studio? I have developed a",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Jon's dance studio preparation",
+          "type": "concept",
+          "state": {
+            "description": "Jon is prepping for his dance studio more than ever."
+          }
+        },
+        {
+          "name": "Jon's video presentation",
+          "type": "concept",
+          "state": {
+            "description": "Jon developed a video presentation to teach how to style his fashion pieces."
+          }
+        },
+        {
+          "name": "Jon's experience with young dancers",
+          "type": "concept",
+          "state": {
+            "description": "Jon finds it inspiring to work with young dancers, seeing their passion and commitment."
+          }
+        },
+        {
+          "name": "Jon's dance studio vision",
+          "type": "concept",
+          "state": {
+            "description": "Jon wants his dance studio to be a place of support and encouragement for all dancers."
+          }
+        },
+        {
+          "name": "Jon's mentoring and training",
+          "type": "concept",
+          "state": {
+            "description": "Jon is offering one-on-one mentoring and training to help dancers reach their full potential."
+          }
+        },
+        {
+          "name": "Jon's organizational system",
+          "type": "concept",
+          "state": {
+            "description": "Jon uses a clipboard with a notepad to stay organized and motivated, setting goals and tracking achievements."
+          }
+        },
+        {
+          "name": "Jon's whiteboard usage",
+          "type": "concept",
+          "state": {
+            "description": "Jon uses a whiteboard to visualize goals and tokenize successes."
+          }
+        },
+        {
+          "name": "Jon's color-coding system",
+          "type": "concept",
+          "state": {
+            "description": "Jon color-codes achievements to easily track progress and stay motivated."
+          }
+        },
+        {
+          "name": "Jon's positive mindset",
+          "type": "concept",
+          "state": {
+            "description": "Jon emphasizes the importance of staying positive."
+          }
+        },
+        {
+          "name": "Gina's support for Jon",
+          "type": "concept",
+          "state": {
+            "description": "Gina has been supportive of Jon's endeavors."
+          }
+        },
+        {
+          "name": "Jon's determination",
+          "type": "concept",
+          "state": {
+            "description": "Jon expresses his commitment to not give up and keep pushing to make his dreams happen."
+          }
+        },
+        {
+          "name": "Jon",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Gina",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 8,
+    "total_entities": 184
+  },
+  {
+    "session_index": 13,
+    "session_id": "conv-30_session_13",
+    "input_chars": 2569,
+    "input_preview": "[Speakers: Jon and Gina]\nUse their FULL NAMES (Jon, Gina) in entity names, never abbreviations.\n\n[Session \u2014 June 16, 2023 at 21:38]\nJon: Gina, you won't believe it - I got mentored by this amazing business dude yesterday! It was really inspiring and now I'm even more pumped to chase my dreams. What's been up with you lately?\nJon: Wow, Jon! Mentors can really help. I'm working on my online store, growing the customer base. It's tough but I'm determined. How about you? Any new things happening?\nJo",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Jon's mentorship experience",
+          "type": "concept",
+          "state": {
+            "description": "Jon got mentored by an inspiring business person on June 15, 2023."
+          }
+        },
+        {
+          "name": "Jon's online store",
+          "type": "concept",
+          "state": {
+            "description": "Jon is working on growing his online store's customer base."
+          }
+        },
+        {
+          "name": "Jon's business promotion",
+          "type": "concept",
+          "state": {
+            "description": "Jon has been doing promotion for his business."
+          }
+        },
+        {
+          "name": "Jon's marketing tips",
+          "type": "concept",
+          "state": {
+            "description": "Gina advised Jon to use social media channels and work with influencers for marketing."
+          }
+        },
+        {
+          "name": "Jon's dance videos",
+          "type": "concept",
+          "state": {
+            "description": "Jon has been posting dance videos on social media, which are creating a stir."
+          }
+        },
+        {
+          "name": "Gina's entrepreneurship",
+          "type": "concept",
+          "state": {
+            "description": "Gina opened an online clothing store after losing her job."
+          }
+        },
+        {
+          "name": "Gina's advice for entrepreneurs",
+          "type": "concept",
+          "state": {
+            "description": "Gina advises to stay passionate, focused, and resilient when starting a business."
+          }
+        },
+        {
+          "name": "Jon's determination",
+          "type": "concept",
+          "state": {
+            "description": "Jon is determined to not quit and keep pursuing his dreams."
+          }
+        },
+        {
+          "name": "Gina's encouragement",
+          "type": "concept",
+          "state": {
+            "description": "Gina encourages Jon to keep going and not give up."
+          }
+        },
+        {
+          "name": "Gina's dance photo",
+          "type": "concept",
+          "state": {
+            "description": "Gina shared a photo of a group of young women posing, which reminded Jon of his love for performing."
+          }
+        },
+        {
+          "name": "Jon's love for dancing",
+          "type": "concept",
+          "state": {
+            "description": "Jon loves performing and dancing."
+          }
+        },
+        {
+          "name": "Jon's support from Gina",
+          "type": "concept",
+          "state": {
+            "description": "Jon feels motivated by Gina's support and encouragement."
+          }
+        },
+        {
+          "name": "Jon",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Gina",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 8,
+    "total_entities": 192
+  },
+  {
+    "session_index": 14,
+    "session_id": "conv-30_session_14",
+    "input_chars": 2316,
+    "input_preview": "[Speakers: Jon and Gina]\nUse their FULL NAMES (Jon, Gina) in entity names, never abbreviations.\n\n[Session \u2014 June 19, 2023 at 10:04]\nJon: Hey Gina, hope you're doing great! Still working on my biz. Took a short trip last week to Rome to clear my mind a little.\nJon: Hi! Good for you! It definitely will help you to concentrate on your biz better.\nJon: Thanks, Gina. Still working on opening a dance studio.\nJon: When are you opening the studio?\nJon: The official opening night is tomorrow. I'm working",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Jon's business",
+          "type": "concept",
+          "state": {
+            "description": "Jon is working on opening a dance studio."
+          }
+        },
+        {
+          "name": "Jon's trip to Rome",
+          "type": "concept",
+          "state": {
+            "description": "Jon took a short trip to Rome to clear his mind, the week before June 19, 2023 before June 19, 2023."
+          }
+        },
+        {
+          "name": "Jon's dance studio opening",
+          "type": "concept",
+          "state": {
+            "description": "The official opening night of Jon's dance studio is on June 20, 2023."
+          }
+        },
+        {
+          "name": "Jon's excitement for the studio",
+          "type": "concept",
+          "state": {
+            "description": "Jon is excited about the grand opening of his dance studio and feels good about it."
+          }
+        },
+        {
+          "name": "Gina's support for Jon",
+          "type": "concept",
+          "state": {
+            "description": "Gina expresses pride and support for Jon's efforts in opening the dance studio."
+          }
+        },
+        {
+          "name": "Jon's feelings about the opening",
+          "type": "concept",
+          "state": {
+            "description": "Jon wants to savor the good vibes and memories at the grand opening."
+          }
+        },
+        {
+          "name": "Jon's memories at the dance studio",
+          "type": "concept",
+          "state": {
+            "description": "Jon looks forward to making awesome memories at the dance studio."
+          }
+        },
+        {
+          "name": "Gina's excitement for the opening",
+          "type": "concept",
+          "state": {
+            "description": "Gina is excited to be at Jon's dance studio grand opening."
+          }
+        },
+        {
+          "name": "Jon's friends",
+          "type": "concept",
+          "state": {
+            "description": "Jon loves being around friends and having a great time."
+          }
+        },
+        {
+          "name": "Jon's anticipation for tomorrow",
+          "type": "concept",
+          "state": {
+            "description": "Jon can't wait for the grand opening on June 20, 2023."
+          }
+        },
+        {
+          "name": "Gina's anticipation for tomorrow",
+          "type": "concept",
+          "state": {
+            "description": "Gina can't wait for the grand opening on June 20, 2023."
+          }
+        },
+        {
+          "name": "Jon",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Gina",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 9,
+    "total_entities": 201
+  },
+  {
+    "session_index": 15,
+    "session_id": "conv-30_session_15",
+    "input_chars": 2161,
+    "input_preview": "[Speakers: Jon and Gina]\nUse their FULL NAMES (Jon, Gina) in entity names, never abbreviations.\n\n[Session \u2014 June 21, 2023 at 14:15]\nJon: Hey Jon, what's been up? Some pretty cool stuff happened since we talked. I have acquired some new unique pieces for my store.\n[Image: a photo of a woman in a black hoodie posing for a picture]\nJon: Congrats on your store, Gina! Happy for you! It looks sick - is it a unique piece you're selling?\nJon: Thanks! This hoodie isn't for sale, it's from my own collecti",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Jon's store",
+          "type": "organization",
+          "state": {
+            "description": "Jon has acquired new unique pieces for his store."
+          }
+        },
+        {
+          "name": "Gina's store",
+          "type": "organization",
+          "state": {
+            "description": "Gina has a store that Jon congratulated her on."
+          }
+        },
+        {
+          "name": "Jon's hoodie",
+          "type": "concept",
+          "state": {
+            "description": "Jon's hoodie is from his own collection and is not for sale."
+          }
+        },
+        {
+          "name": "Jon's limited edition line",
+          "type": "concept",
+          "state": {
+            "description": "Jon made a limited edition line of hoodies the week before June 21, 2023 to show off his style and creativity."
+          }
+        },
+        {
+          "name": "Jon's design inspiration",
+          "type": "concept",
+          "state": {
+            "description": "Jon's design reminds him of the grit it takes to stand out and face challenges."
+          }
+        },
+        {
+          "name": "Jon's networking events",
+          "type": "concept",
+          "state": {
+            "description": "Jon attended networking events to make things happen."
+          }
+        },
+        {
+          "name": "Jon's job loss",
+          "type": "concept",
+          "state": {
+            "description": "Jon lost his job and is investing time in his business."
+          }
+        },
+        {
+          "name": "Jon's planning method",
+          "type": "concept",
+          "state": {
+            "description": "Jon is writing all his plans down to track his goals."
+          }
+        },
+        {
+          "name": "Jon's motivation",
+          "type": "concept",
+          "state": {
+            "description": "Seeing his goals written down helps Jon stay motivated and focused."
+          }
+        },
+        {
+          "name": "Jon's perseverance sign",
+          "type": "concept",
+          "state": {
+            "description": "Jon has a sign that says 'never give up' which reminds him to keep going."
+          }
+        },
+        {
+          "name": "Jon's confidence",
+          "type": "concept",
+          "state": {
+            "description": "Jon is feeling confident and determined not to give up."
+          }
+        },
+        {
+          "name": "Gina's support",
+          "type": "concept",
+          "state": {
+            "description": "Gina's support means a lot to Jon."
+          }
+        },
+        {
+          "name": "Jon",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Gina",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 7,
+    "total_entities": 208
+  },
+  {
+    "session_index": 16,
+    "session_id": "conv-30_session_16",
+    "input_chars": 2738,
+    "input_preview": "[Speakers: Jon and Gina]\nUse their FULL NAMES (Jon, Gina) in entity names, never abbreviations.\n\n[Session \u2014 July 09, 2023 at 13:25]\nJon: Hey Jon! Long time no chat! How's the dance studio? Last week was wild, I got noticed by fashion editors and it's been amazing but kinda scary. Everything's exciting but it's a lot of pressure to keep going up!\n[Image: a photo of a mannequin in a room with a wood wall]\nJon: Hey Gina! Congrats on the fashion editors reach-out, that's awesome! Dance practice has ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Jon's dance studio",
+          "type": "concept",
+          "state": {
+            "description": "Jon's dance studio, currently on tenuous grounds."
+          }
+        },
+        {
+          "name": "Jon's pressure from success",
+          "type": "concept",
+          "state": {
+            "description": "Jon feels a lot of pressure to keep succeeding after being noticed by fashion editors."
+          }
+        },
+        {
+          "name": "Jon's determination",
+          "type": "concept",
+          "state": {
+            "description": "Jon is determined to go full-time with his business idea."
+          }
+        },
+        {
+          "name": "Jon's job loss",
+          "type": "concept",
+          "state": {
+            "description": "Jon lost his job, which motivated him to pursue his business dreams."
+          }
+        },
+        {
+          "name": "Jon's learning",
+          "type": "concept",
+          "state": {
+            "description": "Jon started learning marketing and analytics tools to advance his business."
+          }
+        },
+        {
+          "name": "Jon's mentoring",
+          "type": "concept",
+          "state": {
+            "description": "Jon is excited to guide and mentor aspiring dancers."
+          }
+        },
+        {
+          "name": "Jon's community support",
+          "type": "concept",
+          "state": {
+            "description": "Jon feels supported by his community, which motivates him to chase his dreams."
+          }
+        },
+        {
+          "name": "Jon's dreams",
+          "type": "concept",
+          "state": {
+            "description": "Jon is committed to making his dreams come true despite challenges."
+          }
+        },
+        {
+          "name": "Gina's encouragement",
+          "type": "person",
+          "state": {
+            "description": "Gina provides support and encouragement to Jon."
+          }
+        },
+        {
+          "name": "Gina's belief in Jon",
+          "type": "concept",
+          "state": {
+            "description": "Gina's belief in Jon boosts his confidence."
+          }
+        },
+        {
+          "name": "Gina's friendship",
+          "type": "concept",
+          "state": {
+            "description": "Gina is a great friend to Jon, always cheering him on."
+          }
+        },
+        {
+          "name": "Image of mannequin",
+          "type": "concept",
+          "state": {
+            "description": "A photo of a mannequin in a room with a wood wall."
+          }
+        },
+        {
+          "name": "Image of dancing couple",
+          "type": "concept",
+          "state": {
+            "description": "A photo of a drawing of a couple dancing."
+          }
+        },
+        {
+          "name": "Image of chalkboard quote",
+          "type": "concept",
+          "state": {
+            "description": "A photo of a chalkboard with a quote written on it."
+          }
+        },
+        {
+          "name": "Image of smiley face",
+          "type": "concept",
+          "state": {
+            "description": "A photo of a drawing of a smiley face floating in the water."
+          }
+        },
+        {
+          "name": "Jon's full name",
+          "type": "person",
+          "state": {
+            "description": "Jon is one of the two speakers."
+          }
+        },
+        {
+          "name": "Gina's full name",
+          "type": "person",
+          "state": {
+            "description": "Gina is one of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 17,
+    "entities_new": 12,
+    "total_entities": 220
+  },
+  {
+    "session_index": 17,
+    "session_id": "conv-30_session_17",
+    "input_chars": 3866,
+    "input_preview": "[Speakers: Jon and Gina]\nUse their FULL NAMES (Jon, Gina) in entity names, never abbreviations.\n\n[Session \u2014 July 21, 2023 at 17:44]\nJon: Hey Jon! Long time no talk! Last week, I built a new website for customers to make orders. It's been a wild ride but I'm loving it. What's up with you? How's the dance studio?\nJon: Hey Gina, congrats on the clothing store! The dance studio is on tenuous grounds right now, but I'm staying positive. I got a temp job to help cover expenses while I look for investo",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Jon's website",
+          "type": "concept",
+          "state": {
+            "description": "A new website built for customers to make orders."
+          }
+        },
+        {
+          "name": "Gina's clothing store",
+          "type": "concept",
+          "state": {
+            "description": "A clothing store owned by Gina."
+          }
+        },
+        {
+          "name": "Jon's dance studio",
+          "type": "concept",
+          "state": {
+            "description": "Jon's dance studio, currently on tenuous grounds."
+          }
+        },
+        {
+          "name": "Jon's temporary job",
+          "type": "concept",
+          "state": {
+            "description": "A temporary job Jon got to help cover expenses."
+          }
+        },
+        {
+          "name": "Jon's search for investors",
+          "type": "concept",
+          "state": {
+            "description": "Jon is looking for investors for his dance studio."
+          }
+        },
+        {
+          "name": "Jon's determination",
+          "type": "concept",
+          "state": {
+            "description": "Jon is determined to make his business work despite challenges."
+          }
+        },
+        {
+          "name": "Gina's advice on networking",
+          "type": "concept",
+          "state": {
+            "description": "Gina advises Jon to reach out to people in his field for help and contacts."
+          }
+        },
+        {
+          "name": "Jon's networking efforts",
+          "type": "concept",
+          "state": {
+            "description": "Jon has been networking and it has yielded good results."
+          }
+        },
+        {
+          "name": "Networking event photo",
+          "type": "concept",
+          "state": {
+            "description": "A photo of a group of people standing in a room from Jon's last networking event."
+          }
+        },
+        {
+          "name": "Jon's event experience",
+          "type": "concept",
+          "state": {
+            "description": "Jon met some investors and received good advice at the event."
+          }
+        },
+        {
+          "name": "Jon's business plan update",
+          "type": "concept",
+          "state": {
+            "description": "Jon is sprucing up his business plan and tweaking his pitch to investors."
+          }
+        },
+        {
+          "name": "Jon's online platform",
+          "type": "concept",
+          "state": {
+            "description": "Jon is working on an online platform to showcase the dance studio's offerings."
+          }
+        },
+        {
+          "name": "Gina's marketing advice",
+          "type": "concept",
+          "state": {
+            "description": "Gina suggests using Instagram and TikTok to reach a younger audience."
+          }
+        },
+        {
+          "name": "Jon's social media management",
+          "type": "concept",
+          "state": {
+            "description": "Jon appreciates Gina's offer to help with content creation and managing social media."
+          }
+        },
+        {
+          "name": "Jon's collaboration with Gina",
+          "type": "concept",
+          "state": {
+            "description": "Jon and Gina plan to collaborate to enhance the dance studio's presence."
+          }
+        },
+        {
+          "name": "Jon's gratitude",
+          "type": "concept",
+          "state": {
+            "description": "Jon expresses gratitude for Gina's support."
+          }
+        },
+        {
+          "name": "Gina's enthusiasm",
+          "type": "concept",
+          "state": {
+            "description": "Gina is excited to collaborate with Jon and make an impact."
+          }
+        },
+        {
+          "name": "Jon's motivational statement",
+          "type": "concept",
+          "state": {
+            "description": "Jon encourages the idea of making a difference and showing what they can do together."
+          }
+        },
+        {
+          "name": "Jon's support from Gina",
+          "type": "concept",
+          "state": {
+            "description": "Jon thanks Gina for having his back."
+          }
+        },
+        {
+          "name": "Jon",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Gina",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 21,
+    "entities_new": 15,
+    "total_entities": 235
+  },
+  {
+    "session_index": 18,
+    "session_id": "conv-30_session_18",
+    "input_chars": 1633,
+    "input_preview": "[Speakers: Jon and Gina]\nUse their FULL NAMES (Jon, Gina) in entity names, never abbreviations.\n\n[Session \u2014 July 23, 2023 at 18:46]\nJon: Hey Gina! We haven't talked in a few days. Been rehearsing hard and working on business plans. It's been stressful, but dancing has kept me going.\nJon: Hey Jon! Remember, just do it! You should get to the point where anyone else would quit and you're not going to stop there. No, what are you waiting for? Do it! Just do it!\n[Image: a photo of a group of dancers ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Jon's rehearsal",
+          "type": "concept",
+          "state": {
+            "description": "Jon has been rehearsing hard."
+          }
+        },
+        {
+          "name": "Jon's business plans",
+          "type": "concept",
+          "state": {
+            "description": "Jon is working on business plans."
+          }
+        },
+        {
+          "name": "Jon's stress level",
+          "type": "concept",
+          "state": {
+            "description": "Jon has been feeling stressed."
+          }
+        },
+        {
+          "name": "Jon's motivation source",
+          "type": "concept",
+          "state": {
+            "description": "Dancing has kept Jon going."
+          }
+        },
+        {
+          "name": "Gina's encouragement",
+          "type": "concept",
+          "state": {
+            "description": "Gina encourages Jon to keep going."
+          }
+        },
+        {
+          "name": "Jon's creative space for dancers",
+          "type": "concept",
+          "state": {
+            "description": "Jon believes having a creative space for dancers is important."
+          }
+        },
+        {
+          "name": "Jon's dance class experience",
+          "type": "concept",
+          "state": {
+            "description": "Jon felt the importance of self-expression at dance class the Friday before July 23, 2023."
+          }
+        },
+        {
+          "name": "Jon's studio vision",
+          "type": "concept",
+          "state": {
+            "description": "Jon's studio will be a go-to spot for self-expression."
+          }
+        },
+        {
+          "name": "Jon's excitement for studio",
+          "type": "concept",
+          "state": {
+            "description": "Jon can't wait for his studio to welcome dancers of all ages and backgrounds."
+          }
+        },
+        {
+          "name": "Gina's support",
+          "type": "concept",
+          "state": {
+            "description": "Gina's support means a lot to Jon."
+          }
+        },
+        {
+          "name": "Jon's determination",
+          "type": "concept",
+          "state": {
+            "description": "Jon is determined to keep going, whatever comes his way."
+          }
+        },
+        {
+          "name": "Shia Labeouf's quote",
+          "type": "concept",
+          "state": {
+            "description": "Jon references Shia Labeouf's motivational quote 'Just do it!'"
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 8,
+    "total_entities": 243
+  }
+]

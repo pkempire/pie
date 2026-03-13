@@ -1,0 +1,192 @@
+================================================================================
+PIE WORLD MODEL EXPLORER - QUICK START
+================================================================================
+
+FILE LOCATION:
+  /mnt/personal-intelligence-system/explorer.html
+
+DATA SOURCE:
+  Loads from: output/world_model.json (1,447 entities, 1,412 relationships)
+
+================================================================================
+LAUNCH INSTRUCTIONS
+================================================================================
+
+1. Navigate to the personal-intelligence-system directory:
+   cd /mnt/personal-intelligence-system
+
+2. Start local HTTP server:
+   python3 -m http.server 8000
+
+3. Open in browser:
+   http://localhost:8000/explorer.html
+
+4. (Optional) Use custom data source:
+   http://localhost:8000/explorer.html?wm=path/to/your/world_model.json
+
+================================================================================
+MAIN TABS
+================================================================================
+
+[1] OVERVIEW
+    - Key metrics (total entities, relationships, transitions)
+    - Entity type distribution bar chart
+    - Activity timeline (transitions per day)
+    - System health snapshot
+
+[2] ENTITY EXPLORER
+    - Searchable list of 1,447 entities
+    - Filter by type (person, project, tool, organization, belief, etc)
+    - Sort by: name, type, transition count, first_seen, last_seen
+    - Click entity to see:
+      * Current state (formatted JSON)
+      * Full relationship graph
+      * Complete transition history
+      * Creation/modification timestamps
+
+[3] TIMELINE
+    - Horizontal timeline of entity creation
+    - Color-coded by entity type
+    - Click dates to see which entities were created
+    - Identify system evolution phases
+
+[4] RELATIONSHIPS
+    - Interactive graph view
+    - Select entity from list
+    - See all connected entities radiating out
+    - Click connections to explore further
+    - Understand dependency chains and hubs
+
+[5] INSIGHTS
+    - Most active entities (highest state changes)
+    - Recently modified entities
+    - Contradiction hotspots (conflicting beliefs)
+    - Orphan entities (isolated concepts)
+    - Belief evolution statistics
+    - Network density metrics
+
+================================================================================
+COLOR CODES (Entity Types)
+================================================================================
+
+👤 person           → Cyan (#4fc3f7)
+📋 project          → Green (#81c784)
+🔧 tool             → Orange (#ffb74d)
+🏢 organization     → Purple (#ce93d8)
+💡 belief           → Red (#ef5350)
+⚖️  decision         → Yellow (#ffd54f)
+🧠 concept          → Gray (#90a4ae)
+📅 period           → Teal (#4db6ac)
+📍 event            → Indigo (#7986cb)
+
+================================================================================
+KEY FEATURES
+================================================================================
+
+✓ Dark professional theme (#0d0d1a background)
+✓ Single self-contained HTML file (no dependencies)
+✓ Handles 1,400+ entities efficiently
+✓ Real-time filtering and sorting
+✓ Canvas-based charts
+✓ Interactive relationship visualization
+✓ Comprehensive state viewer with JSON syntax highlighting
+✓ Complete transition history with timeline
+✓ Clickable entity navigation
+✓ Responsive design
+
+================================================================================
+EXPLORATION TIPS
+================================================================================
+
+Finding Key Components:
+  1. Go to OVERVIEW tab to see high-level metrics
+  2. Check INSIGHTS for most active/changed entities
+  3. Use Entity Explorer to sort by transition count
+
+Understanding Relationships:
+  1. Click entity in Entity Explorer
+  2. Scroll to "Relationships" section in detail panel
+  3. Or use RELATIONSHIPS tab for visual graph view
+
+Tracking Changes:
+  1. INSIGHTS tab shows "Recently Changed Entities"
+  2. Entity detail shows full transition history
+  3. TIMELINE tab shows creation patterns
+
+Finding Contradictions:
+  1. Check INSIGHTS "Contradiction Hotspots"
+  2. Review entity's transition history
+  3. Compare from_state and to_state values
+
+Network Analysis:
+  1. Use RELATIONSHIPS tab to find hubs (highly connected entities)
+  2. Check average connections in INSIGHTS
+  3. Identify orphans for data quality assessment
+
+================================================================================
+BROWSER REQUIREMENTS
+================================================================================
+
+✓ Modern browser (Chrome, Firefox, Safari, Edge)
+✓ ES6 JavaScript support
+✓ Canvas API
+✓ Fetch API
+✓ CSS Grid/Flexbox support
+
+================================================================================
+CUSTOMIZATION
+================================================================================
+
+To analyze different world model data:
+  http://localhost:8000/explorer.html?wm=output/alternate_model.json
+
+The ?wm= parameter accepts:
+  - Relative paths: output/other_data.json
+  - Absolute paths: /full/path/to/file.json
+  - HTTP URLs: http://example.com/data.json
+
+================================================================================
+PERFORMANCE
+================================================================================
+
+With current data (1,447 entities):
+  - Load time: < 1 second
+  - Search/filter: Instant
+  - Navigation: Smooth
+  - Charts: Real-time rendering
+  - Memory: ~10-20 MB
+
+================================================================================
+TECHNICAL STACK
+================================================================================
+
+HTML:       Semantic structure with Grid/Flexbox layout
+CSS:        Dark theme, responsive design, no frameworks
+JavaScript: Vanilla ES6, Canvas charts, Fetch API
+Data:       JSON from world_model.json
+
+No external dependencies or CDN required.
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+Problem: "Failed to load world model"
+Solution: Ensure HTTP server is running and path is correct
+
+Problem: Slow performance
+Solution: Use search/filter to narrow results, sort appropriately
+
+Problem: Charts not showing
+Solution: Check browser console, refresh page, verify Canvas support
+
+Problem: Can't click on relationship entities
+Solution: Entity must exist in model; check entity explorer first
+
+================================================================================
+FOR MORE INFORMATION
+================================================================================
+
+See: EXPLORER-GUIDE.md for comprehensive documentation
+
+================================================================================

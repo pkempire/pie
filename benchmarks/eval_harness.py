@@ -33,6 +33,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import os
 import sys
 import time
 from dataclasses import dataclass, field
@@ -42,6 +43,14 @@ from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
+
+# Load .env if present
+_env_path = PROJECT_ROOT / ".env"
+if _env_path.exists():
+    for line in _env_path.read_text().splitlines():
+        if "=" in line and not line.startswith("#"):
+            k, v = line.split("=", 1)
+            os.environ.setdefault(k.strip(), v.strip())
 
 logging.basicConfig(
     level=logging.INFO,
@@ -93,7 +102,7 @@ BENCHMARKS = {
     },
 }
 
-BASELINES = ["full_context", "naive_rag", "pie_temporal"]
+BASELINES = ["full_context", "naive_rag", "pie_temporal", "pie_temporal_cached"]
 
 
 # ── Unified Results ───────────────────────────────────────────────────────────

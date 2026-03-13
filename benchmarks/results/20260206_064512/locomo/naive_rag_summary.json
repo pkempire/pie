@@ -1,0 +1,37 @@
+{
+  "overall": {
+    "accuracy": 57.9,
+    "total": 1986,
+    "total_score": 1149.5
+  },
+  "by_category": {
+    "adversarial": {
+      "accuracy": 79.8,
+      "count": 841,
+      "score": 671.5
+    },
+    "commonsense": {
+      "accuracy": 26.1,
+      "count": 446,
+      "score": 116.5
+    },
+    "multi_hop": {
+      "accuracy": 49.7,
+      "count": 321,
+      "score": 159.5
+    },
+    "single_hop": {
+      "accuracy": 59.2,
+      "count": 282,
+      "score": 167.0
+    },
+    "temporal": {
+      "accuracy": 36.5,
+      "count": 96,
+      "score": 35.0
+    }
+  },
+  "baseline": "naive_rag",
+  "benchmark": "locomo",
+  "timestamp": "2026-02-06T13:20:35.668888+00:00"
+}

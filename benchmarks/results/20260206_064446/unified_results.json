@@ -1,0 +1,40 @@
+{
+  "config": {
+    "benchmarks": [
+      "locomo"
+    ],
+    "baselines": [
+      "naive_rag"
+    ],
+    "subset": null,
+    "model": "gpt-4o",
+    "extraction_model": "gpt-4o-mini",
+    "judge_model": "gpt-4o"
+  },
+  "results": {
+    "locomo": {
+      "naive_rag": {
+        "summary": {
+          "error": "The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable"
+        },
+        "timestamp": "2026-02-06T11:44:46.541848+00:00",
+        "raw_count": 0
+      }
+    }
+  },
+  "comparison": {
+    "benchmarks": {
+      "locomo": "LoCoMo"
+    },
+    "baselines": {
+      "naive_rag": "naive_rag"
+    },
+    "matrix": {
+      "locomo": {
+        "naive_rag": 0
+      }
+    }
+  },
+  "timestamp": "2026-02-06T11:44:46.542961+00:00",
+  "total_time_seconds": 0.2674839496612549
+}

@@ -70,6 +70,7 @@ Ask yourself: "Would this entity matter 3 months from now for understanding this
 - **concept**: Ideas, fields, domains of interest or expertise
 - **period**: Life phases (only if a new period is identified)
 - **event**: User activities, appointments, visits, trips, purchases, meetings — things that happened on specific dates
+- **goal**: Stated intentions, commitments, deadlines, promises to self or others. "I need to finish X by Friday", "I want to hit $10k MRR", "I should reach out to Y". Captures what the user WANTS to do, not just what they DID.
 
 ## CRITICAL: Extracting Events with Dates
 
@@ -105,9 +106,55 @@ For temporal reasoning to work, you MUST extract user activities as **event** en
 
 **If you see ANY user activity with a temporal reference, extract it as an event with computed date.**
 
-## Matching Against Context
+## CRITICAL: Extracting Goals, Commitments, and Intentions
 
-If you are given a CURRENT WORLD STATE section, actively try to match entities you extract against entities listed there. Set `matches_existing` to the exact name of the matching entity from the context. Only mark `is_new: true` if you're confident this entity doesn't exist yet.
+Whenever the user states something they WANT to do, NEED to do, PLAN to do, or PROMISED to do — extract it as a **goal** entity.
+
+**Goal entity format:**
+```json
+{
+  "name": "concise goal name (e.g., 'Launch Lucid Academy landing page', 'Hit $10k MRR')",
+  "type": "goal",
+  "state": {
+    "description": "what the user wants to achieve",
+    "deadline": "YYYY-MM-DD or relative (e.g., 'end of March', 'this week') or null",
+    "status": "stated|active|blocked|completed|abandoned",
+    "priority": "high|medium|low (infer from urgency/language)",
+    "depends_on": "what needs to happen first (if mentioned)",
+    "for_whom": "who this is for (self, a person, an org)"
+  }
+}
+```
+
+**Examples of what to extract as goals:**
+- "I need to finish the landing page by Friday" → goal, deadline=batch_date+days_to_friday, priority=high
+- "I want to hit $250k ARR in 18 months" → goal, deadline=batch_date+18mo, priority=high
+- "I should probably reach out to investors" → goal, status=stated, priority=medium
+- "My next step is to set up the payment flow" → goal, status=active, priority=high
+- "I really want to release something very soon" → goal, status=active, priority=high
+
+## CRITICAL: Matching Against Context — DO NOT RE-DESCRIBE
+
+If you are given a CURRENT WORLD STATE section, it contains the **complete, structured state** for each known entity. When you encounter an entity in the conversations that matches one from the context:
+
+1. Set `matches_existing` to the **exact primary name** from the context header (e.g., if the context shows `### Guide to Cursor (tool)`, set `matches_existing: "Guide to Cursor"`).
+2. Set `is_new: false`.
+3. **ONLY include state fields that ACTUALLY CHANGED** based on the conversations. Do NOT re-describe the entity from scratch. Do NOT repeat fields that haven't changed.
+   - If the conversations reveal a new status → include `"status": "new value"`
+   - If nothing changed about the entity → still mark `matches_existing` but set `state: {}` (empty)
+   - If a specific field changed → include ONLY that field in `state`
+
+**WRONG** (re-inventing state):
+```json
+{"name": "Cursor", "matches_existing": "Guide to Cursor", "state": {"description": "A code editor...", "role": "IDE", "status": "in use"}}
+```
+
+**CORRECT** (only what changed):
+```json
+{"name": "Cursor", "matches_existing": "Guide to Cursor", "state": {"status": "upgraded to v2.1"}}
+```
+
+If the conversation just MENTIONS an entity without changing anything about it, you can skip extracting it entirely — the world model already knows about it.
 
 For projects especially: if the user is working on a subtask that clearly belongs to an active project from the context (e.g., writing curriculum content when "Lucid Academy" is listed as in curriculum design phase), connect it to that project.
 
@@ -118,7 +165,7 @@ Respond with this exact JSON structure:
   "entities": [
     {
       "name": "string — canonical name",
-      "type": "person|project|tool|organization|belief|decision|concept|period|event",
+      "type": "person|project|tool|organization|belief|decision|concept|period|event|goal",
       "state": {"description": "current state as described", ...any relevant key-value pairs},
       "is_new": true/false,
       "matches_existing": "name of existing entity or null",

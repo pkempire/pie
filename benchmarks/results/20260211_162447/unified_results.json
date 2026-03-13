@@ -1,0 +1,51 @@
+{
+  "config": {
+    "benchmarks": [
+      "longmemeval"
+    ],
+    "baselines": [
+      "naive_rag"
+    ],
+    "subset": 5,
+    "model": "gpt-4o",
+    "extraction_model": "gpt-4o-mini",
+    "judge_model": "gpt-4o"
+  },
+  "results": {
+    "longmemeval": {
+      "naive_rag": {
+        "summary": {
+          "overall": {
+            "accuracy": 80.0,
+            "total": 5,
+            "total_score": 4.0
+          },
+          "by_category": {
+            "single-session-user": {
+              "accuracy": 80.0,
+              "count": 5,
+              "score": 4.0
+            }
+          }
+        },
+        "timestamp": "2026-02-11T21:25:16.245872+00:00",
+        "raw_count": 5
+      }
+    }
+  },
+  "comparison": {
+    "benchmarks": {
+      "longmemeval": "LongMemEval"
+    },
+    "baselines": {
+      "naive_rag": "naive_rag"
+    },
+    "matrix": {
+      "longmemeval": {
+        "naive_rag": 80.0
+      }
+    }
+  },
+  "timestamp": "2026-02-11T21:25:16.246486+00:00",
+  "total_time_seconds": 29.16940188407898
+}

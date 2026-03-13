@@ -31,6 +31,46 @@ def _fuzzy_ratio(a: str, b: str) -> float:
     return SequenceMatcher(None, _normalize(a), _normalize(b)).ratio()
 
 
+def _normalize_value(v) -> str:
+    """Normalize a state value for comparison."""
+    if v is None:
+        return ""
+    s = str(v).strip().lower()
+    # Collapse whitespace
+    return " ".join(s.split())
+
+
+def _states_meaningfully_differ(old: dict, new: dict) -> bool:
+    """Check if two state dicts have meaningful differences.
+
+    Returns False when the new state is essentially a re-extraction of the
+    same information (same keys, same values after normalization).
+    """
+    all_keys = set(old.keys()) | set(new.keys())
+    if not all_keys:
+        return False
+
+    # New keys that weren't in old → real change
+    added_keys = set(new.keys()) - set(old.keys())
+    # Only count added keys that have non-empty values
+    real_adds = [k for k in added_keys if _normalize_value(new.get(k))]
+    if real_adds:
+        return True
+
+    # Check existing keys for value changes
+    for key in old:
+        if key not in new:
+            continue  # key wasn't re-extracted, not a removal
+        old_norm = _normalize_value(old[key])
+        new_norm = _normalize_value(new[key])
+        if old_norm != new_norm:
+            # For description fields, also check if it's just minor rewording
+            # (less than 20% different by length) — still counts as change
+            return True
+
+    return False
+
+
 def cosine_similarity(a: list[float], b: list[float]) -> float:
     """Cosine similarity between two vectors."""
     dot = sum(x * y for x, y in zip(a, b))
@@ -118,18 +158,26 @@ class WorldModel:
         trigger_summary: str = "",
         is_contradiction: bool = False,
     ) -> StateTransition | None:
-        """Update an entity's state and record the transition."""
+        """Update an entity's state and record the transition.
+
+        Only records a transition if the state actually changed meaningfully.
+        Prevents noise transitions from re-extraction of unchanged entities.
+        """
         entity = self.entities.get(entity_id)
         if not entity:
             logger.warning(f"Entity {entity_id} not found for state update")
             return None
-        
+
         old_state = entity.current_state.copy()
-        
+
         # Merge new state into current (don't overwrite everything)
         entity.current_state.update(new_state)
         entity.last_seen = max(entity.last_seen, timestamp)
-        
+
+        # Check if anything actually changed meaningfully
+        if not _states_meaningfully_differ(old_state, entity.current_state):
+            return None  # No-op: skip recording redundant transition
+
         transition = self.record_transition(
             entity_id=entity_id,
             from_state=old_state,
@@ -139,16 +187,74 @@ class WorldModel:
             trigger_summary=trigger_summary,
             timestamp=timestamp,
         )
-        
+
         return transition
     
     def add_alias(self, entity_id: str, alias: str):
-        """Add an alias to an entity."""
+        """Add an alias to an entity with validation.
+
+        Safety measures to prevent alias accumulation cascade:
+        1. Cap at MAX_ALIASES per entity
+        2. Alias must share at least one word with entity name or existing aliases
+        3. Skip obviously wrong aliases (empty, same as name)
+        """
+        MAX_ALIASES = 10
+
         entity = self.entities.get(entity_id)
-        if entity and alias not in entity.aliases and alias != entity.name:
-            entity.aliases.append(alias)
-            self._alias_index[_normalize(alias)] = entity_id
-    
+        if not entity:
+            return
+        if alias in entity.aliases or _normalize(alias) == _normalize(entity.name):
+            return
+
+        # Cap alias count — if an entity keeps gaining aliases, something is wrong
+        if len(entity.aliases) >= MAX_ALIASES:
+            logger.warning(
+                f"Alias cap ({MAX_ALIASES}) reached for '{entity.name}' — "
+                f"skipping '{alias}'"
+            )
+            return
+
+        # Basic semantic check: alias should share at least one word with
+        # the entity name or an existing alias. This prevents cascade merges
+        # where unrelated entities get aliased together.
+        alias_words = set(_normalize(alias).split())
+        name_words = set(_normalize(entity.name).split())
+
+        # Collect words from all existing aliases too
+        all_known_words = name_words.copy()
+        for existing in entity.aliases:
+            all_known_words.update(_normalize(existing).split())
+
+        # Remove very common words that don't carry semantic meaning
+        stop_words = {"the", "a", "an", "of", "in", "on", "for", "to", "and", "or", "is", "it", "with"}
+        meaningful_alias = alias_words - stop_words
+        meaningful_known = all_known_words - stop_words
+
+        # If the alias has 3+ meaningful words and shares NONE with entity,
+        # it's almost certainly a wrong merge
+        if len(meaningful_alias) >= 3 and not (meaningful_alias & meaningful_known):
+            logger.warning(
+                f"Alias '{alias}' shares no words with '{entity.name}' "
+                f"(aliases: {entity.aliases[:3]}) — skipping"
+            )
+            return
+
+        entity.aliases.append(alias)
+        self._alias_index[_normalize(alias)] = entity_id
+
+    def remove_alias(self, entity_id: str, alias: str) -> bool:
+        """Remove an alias from an entity. Returns True if removed."""
+        entity = self.entities.get(entity_id)
+        if not entity:
+            return False
+        if alias in entity.aliases:
+            entity.aliases.remove(alias)
+            norm = _normalize(alias)
+            if self._alias_index.get(norm) == entity_id:
+                del self._alias_index[norm]
+            return True
+        return False
+
     # --- Transitions ---
     
     def record_transition(
@@ -195,8 +301,19 @@ class WorldModel:
         description: str = "",
         source_conversation_id: str | None = None,
         timestamp: float = 0.0,
-    ) -> Relationship:
-        """Add a relationship between two entities."""
+    ) -> Relationship | None:
+        """Add a relationship between two entities. Deduplicates by (source, target, type)."""
+        # Check for existing relationship between same entities of same type
+        for rid in self._entity_relationships.get(source_id, []):
+            existing = self.relationships.get(rid)
+            if (existing and existing.source_id == source_id
+                    and existing.target_id == target_id
+                    and existing.type == rel_type):
+                # Already exists — update timestamp if newer
+                if timestamp > existing.timestamp:
+                    existing.timestamp = timestamp
+                return None
+
         rel = Relationship(
             source_id=source_id,
             target_id=target_id,
@@ -227,12 +344,25 @@ class WorldModel:
     
     # --- Entity Resolution ---
     
-    def find_by_name(self, name: str) -> Entity | None:
-        """Exact name lookup (case-insensitive)."""
+    def find_by_name(
+        self,
+        name: str,
+        entity_type: str | None = None,
+    ) -> Entity | None:
+        """Exact name lookup (case-insensitive), checks primary name then aliases.
+
+        Args:
+            name: Entity name to look up.
+            entity_type: If provided, only return the entity if its type matches.
+                         This prevents alias collisions across types.
+        """
         normalized = _normalize(name)
         eid = self._name_index.get(normalized) or self._alias_index.get(normalized)
         if eid:
-            return self.entities.get(eid)
+            entity = self.entities.get(eid)
+            if entity and entity_type and entity.type.value != entity_type:
+                return None  # Type mismatch — don't resolve through wrong-type alias
+            return entity
         return None
     
     def find_by_string_match(
@@ -258,15 +388,21 @@ class WorldModel:
             entity = self.entities[eid]
             best_score = 0.0
             
-            # Check against all names
+            # Check against primary name first, then aliases
             for known_name in entity.all_names:
                 score = _fuzzy_ratio(name, known_name)
                 best_score = max(best_score, score)
-                
-                # Also check if one contains the other
+
+                # Containment check — much more conservative than before.
+                # Requirements: shorter string ≥ 4 chars, represents ≥ 30% of
+                # the longer string, and boost is capped at 0.87 (below auto-
+                # accept threshold of 0.90 so it goes through extra verification).
                 norm_known = _normalize(known_name)
-                if normalized in norm_known or norm_known in normalized:
-                    best_score = max(best_score, 0.9)
+                shorter_len = min(len(normalized), len(norm_known))
+                longer_len = max(len(normalized), len(norm_known))
+                if shorter_len >= 4 and longer_len > 0 and shorter_len / longer_len >= 0.3:
+                    if normalized in norm_known or norm_known in normalized:
+                        best_score = max(best_score, 0.87)
             
             if best_score >= threshold:
                 matches.append((entity, best_score))
@@ -303,6 +439,18 @@ class WorldModel:
         scores.sort(key=lambda x: x[1], reverse=True)
         return scores[:top_k]
     
+    # --- Embedding Management ---
+
+    def get_entities_without_embeddings(self) -> list[Entity]:
+        """Get entities that don't have embeddings computed."""
+        return [e for e in self.entities.values() if e.embedding is None]
+
+    def set_entity_embedding(self, entity_id: str, embedding: list[float]):
+        """Set the embedding for an entity."""
+        entity = self.entities.get(entity_id)
+        if entity:
+            entity.embedding = embedding
+
     # --- Context Building (for sliding window) ---
     
     def get_recently_active_entities(
@@ -351,60 +499,120 @@ class WorldModel:
         projects = [self.entities[eid] for eid in project_ids if eid in self.entities]
         return [p for p in projects if p.importance >= min_importance]
     
-    def build_context_preamble(self, batch_timestamp: float) -> str:
+    def build_context_preamble(
+        self,
+        batch_timestamp: float,
+        max_chars: int = 100_000,
+    ) -> str:
         """
-        Build the activity-based context preamble for extraction.
-        This is what makes the sliding window work.
+        Build the context preamble for extraction.
+
+        Includes FULL structured state for each entity (not truncated).
+        Greedily fills the token budget, prioritizing:
+          1. Recently active entities (most likely to reappear)
+          2. High-importance entities (core knowledge)
+
+        The LLM needs to see the COMPLETE state to:
+          - Correctly match re-extracted entities against existing ones
+          - Know what has already been captured (avoid re-invention)
+          - Detect actual state changes vs rewording
         """
+        import json as _json
+
+        # Collect candidate entities, scored by relevance to this batch
+        candidates: list[tuple[float, Entity]] = []
+        lookback = 7 * 86400  # 7 days
+
+        for eid, entity in self.entities.items():
+            # Score: recency + importance
+            time_since = batch_timestamp - entity.last_seen
+            recency_score = max(0, 1.0 - time_since / (30 * 86400))  # 0 at 30 days
+            # Boost if recently active
+            if time_since < lookback:
+                recency_score += 1.0  # big boost for last-7-days
+            score = recency_score + (entity.importance or 0)
+            candidates.append((score, entity))
+
+        # Sort by score descending
+        candidates.sort(key=lambda x: -x[0])
+
+        # Build preamble, greedily filling budget
         lines = []
-        
-        # Active projects
-        projects = self.get_active_projects(min_importance=0.1)
-        if projects:
-            lines.append("ACTIVE PROJECTS:")
-            for p in sorted(projects, key=lambda p: p.importance, reverse=True)[:15]:
-                state_summary = p.current_state.get("description", str(p.current_state)[:200])
-                transitions = self.get_transitions(p.id)
-                last_change = ""
-                if transitions:
-                    last_t = transitions[-1]
-                    days_ago = (batch_timestamp - last_t.timestamp) / 86400
-                    if days_ago < 1:
-                        last_change = "today"
-                    elif days_ago < 2:
-                        last_change = "yesterday"
-                    else:
-                        last_change = f"{int(days_ago)} days ago"
-                    last_change = f" (last changed: {last_change})"
-                
-                aliases = f" (aka: {', '.join(p.aliases)})" if p.aliases else ""
-                lines.append(f"- {p.name}{aliases}: {state_summary}{last_change}")
-            lines.append("")
-        
-        # Recently active entities (non-project)
-        active = self.get_recently_active_entities(batch_timestamp)
-        non_project_active = [e for e in active if e.type != EntityType.PROJECT]
-        if non_project_active:
-            lines.append("RECENTLY ACTIVE ENTITIES:")
-            for e in non_project_active[:20]:
-                state_summary = e.current_state.get("description", str(e.current_state)[:150])
-                lines.append(f"- {e.name} ({e.type.value}): {state_summary}")
-            lines.append("")
-        
-        # Recent state changes
-        recent_transitions = self.get_recent_transitions(batch_timestamp)
+        chars_used = 0
+        entities_included = 0
+        seen_ids = set()
+
+        for score, entity in candidates:
+            if chars_used >= max_chars:
+                break
+
+            # Serialize full state
+            state_json = _json.dumps(entity.current_state, indent=None, default=str)
+
+            # NOTE: We intentionally do NOT include aliases in the preamble.
+            # Showing aliases to the extraction LLM caused it to write
+            # matches_existing pointing to aliases, which resolved through
+            # the alias index and created wrong merges. The entity resolver
+            # handles alias matching internally; the LLM only needs the
+            # canonical name.
+
+            # Get last transition info
+            transitions = self.get_transitions(entity.id)
+            last_change = ""
+            if transitions:
+                days_ago = (batch_timestamp - transitions[-1].timestamp) / 86400
+                if days_ago < 1:
+                    last_change = " [last changed: today]"
+                elif days_ago < 2:
+                    last_change = " [last changed: yesterday]"
+                elif days_ago < 30:
+                    last_change = f" [last changed: {int(days_ago)} days ago]"
+
+            entry = (
+                f"### {entity.name} ({entity.type.value}){last_change}\n"
+                f"{state_json}\n"
+            )
+
+            if chars_used + len(entry) > max_chars:
+                # Try a compact version: just name + description
+                desc = entity.current_state.get("description", "")
+                compact = f"- {entity.name} ({entity.type.value}): {desc}\n"
+                if chars_used + len(compact) > max_chars:
+                    break
+                lines.append(compact)
+                chars_used += len(compact)
+            else:
+                lines.append(entry)
+                chars_used += len(entry)
+
+            entities_included += 1
+            seen_ids.add(entity.id)
+
+        # Add recent state changes at the end (important for detecting contradictions)
+        recent_transitions = self.get_recent_transitions(batch_timestamp, max_transitions=15)
         if recent_transitions:
-            lines.append("RECENT STATE CHANGES:")
-            for t in recent_transitions[:10]:
-                entity = self.entities.get(t.entity_id)
-                entity_name = entity.name if entity else "unknown"
-                days_ago = (batch_timestamp - t.timestamp) / 86400
-                time_str = "today" if days_ago < 1 else f"{int(days_ago)} days ago"
-                marker = " ⚠ CONTRADICTION" if t.transition_type == TransitionType.CONTRADICTION else ""
-                lines.append(f"- {entity_name}: {t.trigger_summary} ({time_str}){marker}")
-            lines.append("")
-        
-        return "\n".join(lines) if lines else ""
+            header = "\n## RECENT STATE CHANGES\n"
+            if chars_used + len(header) < max_chars:
+                lines.append(header)
+                chars_used += len(header)
+                for t in recent_transitions:
+                    entity = self.entities.get(t.entity_id)
+                    entity_name = entity.name if entity else "unknown"
+                    days_ago = (batch_timestamp - t.timestamp) / 86400
+                    time_str = "today" if days_ago < 1 else f"{int(days_ago)}d ago"
+                    marker = " ⚠ CONTRADICTION" if t.transition_type == TransitionType.CONTRADICTION else ""
+                    entry = f"- {entity_name}: {t.trigger_summary} ({time_str}){marker}\n"
+                    if chars_used + len(entry) > max_chars:
+                        break
+                    lines.append(entry)
+                    chars_used += len(entry)
+
+        logger.debug(
+            f"Context preamble: {entities_included} entities, "
+            f"{chars_used:,} chars (~{chars_used//4:,} tokens)"
+        )
+
+        return "".join(lines) if lines else ""
     
     # --- Stats ---
     

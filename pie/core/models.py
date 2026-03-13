@@ -18,6 +18,7 @@ class EntityType(str, Enum):
     CONCEPT = "concept"
     PERIOD = "period"
     EVENT = "event"  # User activities with specific dates (visits, meetings, purchases, etc.)
+    GOAL = "goal"    # Stated intentions, commitments, deadlines, promises
 
 
 class TransitionType(str, Enum):

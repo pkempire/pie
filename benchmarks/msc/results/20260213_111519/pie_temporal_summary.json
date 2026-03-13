@@ -1,0 +1,15 @@
+{
+  "overall": {
+    "score": 98.8,
+    "total": 10
+  },
+  "by_type": {
+    "response_generation": {
+      "score": 98.8,
+      "count": 10
+    }
+  },
+  "baseline": "pie_temporal",
+  "benchmark": "msc",
+  "timestamp": "2026-02-13T16:18:18.860495+00:00"
+}

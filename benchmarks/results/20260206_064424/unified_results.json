@@ -1,0 +1,109 @@
+{
+  "config": {
+    "benchmarks": [
+      "longmemeval",
+      "locomo",
+      "msc"
+    ],
+    "baselines": [
+      "naive_rag"
+    ],
+    "subset": 5,
+    "model": "gpt-4o",
+    "extraction_model": "gpt-4o-mini",
+    "judge_model": "gpt-4o"
+  },
+  "results": {
+    "longmemeval": {
+      "naive_rag": {
+        "summary": {
+          "overall": {
+            "accuracy": 80.0,
+            "total": 5,
+            "total_score": 4.0
+          },
+          "by_category": {
+            "single-session-user": {
+              "accuracy": 80.0,
+              "count": 5,
+              "score": 4.0
+            }
+          }
+        },
+        "timestamp": "2026-02-06T11:45:36.682662+00:00",
+        "raw_count": 5
+      }
+    },
+    "locomo": {
+      "naive_rag": {
+        "summary": {
+          "overall": {
+            "accuracy": 70.0,
+            "total": 5,
+            "total_score": 3.5
+          },
+          "by_category": {
+            "multi_hop": {
+              "accuracy": 50.0,
+              "count": 2,
+              "score": 1.0
+            },
+            "single_hop": {
+              "accuracy": 100.0,
+              "count": 2,
+              "score": 2.0
+            },
+            "temporal": {
+              "accuracy": 50.0,
+              "count": 1,
+              "score": 0.5
+            }
+          }
+        },
+        "timestamp": "2026-02-06T11:45:47.910512+00:00",
+        "raw_count": 5
+      }
+    },
+    "msc": {
+      "naive_rag": {
+        "summary": {
+          "overall": {
+            "score": 60.0,
+            "total": 5
+          },
+          "by_type": {
+            "memory_qa": {
+              "score": 60.0,
+              "count": 5
+            }
+          }
+        },
+        "timestamp": "2026-02-06T11:46:02.923957+00:00",
+        "raw_count": 5
+      }
+    }
+  },
+  "comparison": {
+    "benchmarks": {
+      "longmemeval": "LongMemEval",
+      "locomo": "LoCoMo",
+      "msc": "MSC"
+    },
+    "baselines": {
+      "naive_rag": "naive_rag"
+    },
+    "matrix": {
+      "longmemeval": {
+        "naive_rag": 80.0
+      },
+      "locomo": {
+        "naive_rag": 70.0
+      },
+      "msc": {
+        "naive_rag": 60.0
+      }
+    }
+  },
+  "timestamp": "2026-02-06T11:46:02.924581+00:00",
+  "total_time_seconds": 98.79880118370056
+}

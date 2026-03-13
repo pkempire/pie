@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PIE Eval Viewer — World Model Explorer</title>
+<style>
+  :root { --bg: #0d1117; --surface: #161b22; --border: #30363d; --text: #c9d1d9; --accent: #58a6ff; --green: #3fb950; --red: #f85149; --yellow: #d29922; --purple: #bc8cff; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', monospace; background: var(--bg); color: var(--text); }
+  .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+  h1 { font-size: 1.5rem; color: var(--accent); margin-bottom: 20px; }
+  h2 { font-size: 1.1rem; color: var(--purple); margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+  .full-width { grid-column: 1 / -1; }
+  .stat { display: inline-block; margin-right: 20px; }
+  .stat-value { font-size: 1.8rem; font-weight: bold; color: var(--accent); }
+  .stat-label { font-size: 0.75rem; color: #8b949e; }
+  .entity-list { max-height: 400px; overflow-y: auto; }
+  .entity { padding: 8px; border-bottom: 1px solid var(--border); cursor: pointer; }
+  .entity:hover { background: rgba(88,166,255,0.1); }
+  .entity-name { font-weight: bold; color: var(--accent); }
+  .entity-type { font-size: 0.75rem; color: var(--purple); background: rgba(188,140,255,0.1); padding: 2px 6px; border-radius: 3px; }
+  .entity-transitions { font-size: 0.8rem; color: #8b949e; }
+  .transition { padding: 6px 8px; border-left: 3px solid var(--border); margin: 4px 0; font-size: 0.85rem; }
+  .transition.creation { border-color: var(--green); }
+  .transition.update { border-color: var(--accent); }
+  .transition.contradiction { border-color: var(--red); }
+  .transition.resolution { border-color: var(--yellow); }
+  .compiled-context { background: #0d1117; border: 1px solid var(--border); padding: 12px; font-family: monospace; font-size: 0.8rem; white-space: pre-wrap; max-height: 500px; overflow-y: auto; line-height: 1.5; }
+  .search { width: 100%; padding: 8px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 0.9rem; margin-bottom: 12px; }
+  .search:focus { outline: none; border-color: var(--accent); }
+  .bar-chart { display: flex; align-items: end; gap: 4px; height: 120px; margin-top: 10px; }
+  .bar { background: var(--accent); border-radius: 3px 3px 0 0; min-width: 30px; text-align: center; position: relative; }
+  .bar-label { position: absolute; bottom: -20px; font-size: 0.65rem; color: #8b949e; white-space: nowrap; transform: rotate(-45deg); transform-origin: top left; }
+  .bar-value { position: absolute; top: -18px; font-size: 0.7rem; color: var(--text); width: 100%; text-align: center; }
+  .tab-bar { display: flex; gap: 2px; margin-bottom: 12px; }
+  .tab { padding: 6px 14px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px 6px 0 0; cursor: pointer; font-size: 0.85rem; }
+  .tab.active { background: var(--surface); border-bottom-color: var(--surface); color: var(--accent); }
+  .upload-zone { border: 2px dashed var(--border); border-radius: 8px; padding: 40px; text-align: center; cursor: pointer; }
+  .upload-zone:hover { border-color: var(--accent); }
+  #detail-panel { display: none; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: bold; }
+  .badge-green { background: rgba(63,185,80,0.2); color: var(--green); }
+  .badge-red { background: rgba(248,81,73,0.2); color: var(--red); }
+  .badge-yellow { background: rgba(210,153,34,0.2); color: var(--yellow); }
+  .flow-diagram { padding: 16px; font-family: monospace; font-size: 0.8rem; line-height: 1.8; }
+  .flow-step { padding: 6px 12px; margin: 4px 0; border-radius: 4px; display: inline-block; }
+  .flow-arrow { color: var(--accent); font-size: 1.2rem; margin: 0 8px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>PIE Eval Viewer</h1>
+
+  <div class="card full-width" style="margin-bottom:16px">
+    <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
+      <input type="file" id="file-input" accept=".json" style="display:none" onchange="loadFile(event)">
+      <p style="font-size:1.1rem;margin-bottom:8px">Drop <code>world_model.json</code> or benchmark results here</p>
+      <p style="color:#8b949e;font-size:0.85rem">Or click to browse. Also loads from <code>output/world_model.json</code> automatically.</p>
+    </div>
+  </div>
+
+  <div id="stats-row" class="card full-width" style="display:none;margin-bottom:16px">
+    <div class="stat"><span class="stat-value" id="stat-entities">0</span><br><span class="stat-label">Entities</span></div>
+    <div class="stat"><span class="stat-value" id="stat-transitions">0</span><br><span class="stat-label">Transitions</span></div>
+    <div class="stat"><span class="stat-value" id="stat-relationships">0</span><br><span class="stat-label">Relationships</span></div>
+    <div class="stat"><span class="stat-value" id="stat-contradictions">0</span><br><span class="stat-label">Contradictions</span></div>
+    <div class="stat"><span class="stat-value" id="stat-date-coverage">0%</span><br><span class="stat-label">Date Coverage</span></div>
+  </div>
+
+  <div class="grid" id="main-content" style="display:none">
+    <!-- Left: Entity List -->
+    <div class="card">
+      <h2>Entities</h2>
+      <input class="search" id="entity-search" placeholder="Search entities..." oninput="filterEntities()">
+      <div class="tab-bar" id="type-tabs"></div>
+      <div class="entity-list" id="entity-list"></div>
+    </div>
+
+    <!-- Right: Entity Detail -->
+    <div class="card" id="detail-panel">
+      <h2 id="detail-name">Select an entity</h2>
+      <div id="detail-content"></div>
+    </div>
+
+    <!-- Right: Type Distribution (shown when no entity selected) -->
+    <div class="card" id="chart-panel">
+      <h2>Entity Type Distribution</h2>
+      <div class="bar-chart" id="type-chart"></div>
+      <div style="margin-top:30px">
+        <h2>Transition Type Distribution</h2>
+        <div class="bar-chart" id="transition-chart"></div>
+      </div>
+    </div>
+
+    <!-- Full width: PIE Pipeline Flow -->
+    <div class="card full-width">
+      <h2>PIE Pipeline: Graph → LLM Input</h2>
+      <div class="flow-diagram">
+        <div class="flow-step" style="background:rgba(63,185,80,0.15)">1. Raw Conversations</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step" style="background:rgba(88,166,255,0.15)">2. LLM Extraction (gpt-4o-mini)</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step" style="background:rgba(188,140,255,0.15)">3. Entity Resolution (3-tier)</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step" style="background:rgba(210,153,34,0.15)">4. World Model (graph)</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step" style="background:rgba(248,81,73,0.15)">5. Temporal Retrieval</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step" style="background:rgba(63,185,80,0.15)">6. Context Compiler (markdown)</div>
+      </div>
+      <h2 style="margin-top:16px">Compiled Context Preview</h2>
+      <div class="compiled-context" id="compiled-context">
+        Load a world model to see the compiled context that gets sent to the LLM.
+        Select an entity on the left to see its individual compiled view.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let worldModel = null;
+let currentFilter = 'all';
+
+function loadFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (data.entities) {
+        loadWorldModel(data);
+      } else if (data.results || data.questions) {
+        loadBenchmarkResults(data);
+      }
+    } catch (err) {
+      alert('Failed to parse JSON: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+}
+
+function loadWorldModel(data) {
+  worldModel = data;
+  document.getElementById('upload-zone').style.display = 'none';
+  document.getElementById('stats-row').style.display = 'block';
+  document.getElementById('main-content').style.display = 'grid';
+
+  const entities = Object.values(data.entities || {});
+  const transitions = Object.values(data.transitions || {});
+  const relationships = Object.values(data.relationships || {});
+
+  // Stats
+  document.getElementById('stat-entities').textContent = entities.length;
+  document.getElementById('stat-transitions').textContent = transitions.length;
+  document.getElementById('stat-relationships').textContent = relationships.length;
+
+  const contradictions = transitions.filter(t => t.transition_type === 'contradiction').length;
+  document.getElementById('stat-contradictions').textContent = contradictions;
+
+  const withDates = entities.filter(e => {
+    const s = e.current_state;
+    return s && typeof s === 'object' && s.date;
+  }).length;
+  document.getElementById('stat-date-coverage').textContent =
+    Math.round(withDates / entities.length * 100) + '%';
+
+  // Type distribution chart
+  const typeCounts = {};
+  entities.forEach(e => { typeCounts[e.type] = (typeCounts[e.type] || 0) + 1; });
+  renderBarChart('type-chart', typeCounts, ['#58a6ff','#3fb950','#bc8cff','#d29922','#f85149','#8b949e','#f0883e','#a371f7','#79c0ff']);
+
+  // Transition distribution
+  const transCounts = {};
+  transitions.forEach(t => { transCounts[t.transition_type] = (transCounts[t.transition_type] || 0) + 1; });
+  const transColors = { creation: '#3fb950', update: '#58a6ff', contradiction: '#f85149', resolution: '#d29922', archival: '#8b949e' };
+  renderBarChart('transition-chart', transCounts, Object.values(transColors));
+
+  // Type tabs
+  const tabBar = document.getElementById('type-tabs');
+  tabBar.innerHTML = '<div class="tab active" onclick="setFilter(\'all\',this)">All (' + entities.length + ')</div>';
+  Object.entries(typeCounts).sort((a,b) => b[1]-a[1]).forEach(([type, count]) => {
+    tabBar.innerHTML += `<div class="tab" onclick="setFilter('${type}',this)">${type} (${count})</div>`;
+  });
+
+  // Entity list
+  renderEntityList(entities);
+}
+
+function renderBarChart(containerId, data, colors) {
+  const container = document.getElementById(containerId);
+  const maxVal = Math.max(...Object.values(data));
+  container.innerHTML = '';
+  Object.entries(data).sort((a,b) => b[1]-a[1]).forEach(([label, value], i) => {
+    const height = Math.max(10, (value / maxVal) * 100);
+    const color = colors[i % colors.length];
+    container.innerHTML += `<div class="bar" style="height:${height}px;background:${color}"><span class="bar-value">${value}</span><span class="bar-label">${label}</span></div>`;
+  });
+}
+
+function setFilter(type, el) {
+  currentFilter = type;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  filterEntities();
+}
+
+function filterEntities() {
+  if (!worldModel) return;
+  const search = document.getElementById('entity-search').value.toLowerCase();
+  let entities = Object.values(worldModel.entities);
+  if (currentFilter !== 'all') entities = entities.filter(e => e.type === currentFilter);
+  if (search) entities = entities.filter(e => e.name.toLowerCase().includes(search) ||
+    (e.aliases || []).some(a => a.toLowerCase().includes(search)));
+  renderEntityList(entities);
+}
+
+function renderEntityList(entities) {
+  const list = document.getElementById('entity-list');
+  const transitions = worldModel ? Object.values(worldModel.transitions || {}) : [];
+
+  // Sort by transition count (most dynamic first)
+  const transCounts = {};
+  transitions.forEach(t => { transCounts[t.entity_id] = (transCounts[t.entity_id] || 0) + 1; });
+  entities.sort((a, b) => (transCounts[b.id] || 0) - (transCounts[a.id] || 0));
+
+  list.innerHTML = entities.map(e => {
+    const tc = transCounts[e.id] || 0;
+    const stateDesc = e.current_state && typeof e.current_state === 'object'
+      ? (e.current_state.description || JSON.stringify(e.current_state).slice(0, 80))
+      : String(e.current_state || '').slice(0, 80);
+    return `<div class="entity" onclick="selectEntity('${e.id}')">
+      <span class="entity-name">${e.name}</span> <span class="entity-type">${e.type}</span>
+      <div class="entity-transitions">${tc} transitions | ${stateDesc}</div>
+    </div>`;
+  }).join('');
+}
+
+function selectEntity(entityId) {
+  if (!worldModel) return;
+  const entity = worldModel.entities[entityId];
+  if (!entity) return;
+
+  document.getElementById('chart-panel').style.display = 'none';
+  document.getElementById('detail-panel').style.display = 'block';
+  document.getElementById('detail-name').textContent = entity.name + ' (' + entity.type + ')';
+
+  const transitions = Object.values(worldModel.transitions || {})
+    .filter(t => t.entity_id === entityId)
+    .sort((a, b) => b.timestamp - a.timestamp);
+
+  const relationships = Object.values(worldModel.relationships || {})
+    .filter(r => r.source_id === entityId || r.target_id === entityId);
+
+  let html = '';
+
+  // Current state
+  if (entity.current_state && typeof entity.current_state === 'object') {
+    html += '<h3 style="margin:12px 0 6px;color:var(--green)">Current State</h3>';
+    Object.entries(entity.current_state).forEach(([k, v]) => {
+      if (k !== 'embedding' && k !== 'id') {
+        html += `<div style="font-size:0.85rem;padding:2px 0"><strong>${k}:</strong> ${v}</div>`;
+      }
+    });
+  }
+
+  // Timestamps
+  if (entity.first_seen) {
+    const first = new Date(entity.first_seen * 1000).toISOString().split('T')[0];
+    const last = new Date(entity.last_seen * 1000).toISOString().split('T')[0];
+    html += `<div style="margin-top:8px;font-size:0.8rem;color:#8b949e">First seen: ${first} | Last seen: ${last}</div>`;
+  }
+
+  // Transitions
+  if (transitions.length > 0) {
+    html += '<h3 style="margin:16px 0 6px;color:var(--accent)">State Transitions (' + transitions.length + ')</h3>';
+    transitions.forEach(t => {
+      const date = new Date(t.timestamp * 1000).toISOString().split('T')[0];
+      html += `<div class="transition ${t.transition_type}">
+        <strong>${date}</strong> <span class="badge ${t.transition_type === 'contradiction' ? 'badge-red' : t.transition_type === 'creation' ? 'badge-green' : 'badge-yellow'}">${t.transition_type}</span><br>
+        ${t.trigger_summary || 'No summary'}
+        ${t.from_state ? '<br><span style="color:#8b949e">From: ' + JSON.stringify(t.from_state).slice(0,100) + '</span>' : ''}
+      </div>`;
+    });
+  }
+
+  // Relationships
+  if (relationships.length > 0) {
+    html += '<h3 style="margin:16px 0 6px;color:var(--purple)">Relationships (' + relationships.length + ')</h3>';
+    relationships.forEach(r => {
+      const otherId = r.source_id === entityId ? r.target_id : r.source_id;
+      const other = worldModel.entities[otherId];
+      const otherName = other ? other.name : otherId;
+      const direction = r.source_id === entityId ? '→' : '←';
+      html += `<div style="font-size:0.85rem;padding:3px 0">${direction} <strong>${otherName}</strong> (${r.type}) ${r.description || ''}</div>`;
+    });
+  }
+
+  document.getElementById('detail-content').innerHTML = html;
+
+  // Update compiled context preview
+  updateCompiledContext(entity, transitions, relationships);
+}
+
+function updateCompiledContext(entity, transitions, relationships) {
+  let ctx = `## ${entity.name}\n`;
+  ctx += `**Type:** ${entity.type}\n`;
+
+  if (entity.first_seen) {
+    ctx += `**First seen:** ${new Date(entity.first_seen * 1000).toISOString().split('T')[0]}\n`;
+    ctx += `**Last seen:** ${new Date(entity.last_seen * 1000).toISOString().split('T')[0]}\n`;
+  }
+
+  if (entity.current_state && typeof entity.current_state === 'object') {
+    ctx += `\n**Current state:**\n`;
+    Object.entries(entity.current_state).forEach(([k, v]) => {
+      if (k !== 'embedding' && k !== 'id') ctx += `- ${k}: ${v}\n`;
+    });
+  }
+
+  if (transitions.length > 0) {
+    ctx += `\n**History (${transitions.length} changes):**\n`;
+    transitions.slice(0, 10).forEach(t => {
+      const date = new Date(t.timestamp * 1000).toISOString().split('T')[0];
+      const icon = t.transition_type === 'contradiction' ? '!!' : '*';
+      ctx += `${icon} **${date}**: ${t.trigger_summary || 'state change'}\n`;
+    });
+  }
+
+  if (relationships.length > 0) {
+    ctx += `\n**Relationships:**\n`;
+    relationships.slice(0, 5).forEach(r => {
+      const otherId = r.source_id === entity.id ? r.target_id : r.source_id;
+      const other = worldModel.entities[otherId];
+      ctx += `- ${r.type} -> ${other ? other.name : otherId}\n`;
+    });
+  }
+
+  ctx += `\n${'─'.repeat(60)}\n`;
+  ctx += `↑ This is what the LLM sees for this entity.\n`;
+  ctx += `  Compiled by context_compiler.py\n`;
+  ctx += `  Total chars: ${ctx.length} (~${Math.round(ctx.length/4)} tokens)`;
+
+  document.getElementById('compiled-context').textContent = ctx;
+}
+
+// Auto-load hint
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('compiled-context').textContent =
+    'How PIE turns graph data into LLM input:\n\n' +
+    '1. EXTRACTION: Raw conversations → LLM (gpt-4o-mini) extracts entities, state changes, relationships\n' +
+    '   Prompt: 152-line system prompt defining entity types, extraction rules, date computation\n\n' +
+    '2. RESOLUTION: Extracted entities → 3-tier matching against world model\n' +
+    '   Tier 1: Fuzzy string match (Levenshtein >= 0.85)\n' +
+    '   Tier 2: Embedding similarity (cosine >= 0.85 accept, >= 0.70 ambiguous)\n' +
+    '   Tier 3: LLM verification for ambiguous matches\n\n' +
+    '3. WORLD MODEL: Resolved entities stored in JSON graph\n' +
+    '   Entities with typed state, transitions with typed changes, relationships\n\n' +
+    '4. RETRIEVAL: Query → temporal ref extraction + semantic search\n' +
+    '   Score = 0.6*semantic + 0.25*temporal + 0.15*recency\n\n' +
+    '5. COMPILATION: Retrieved entities → markdown with dual temporal representation\n' +
+    '   Both ISO dates AND relative time ("3 weeks ago")\n' +
+    '   State transitions shown chronologically with contradiction markers\n\n' +
+    'Load output/world_model.json to explore the actual graph.';
+});
+</script>
+</body>
+</html>

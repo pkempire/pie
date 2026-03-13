@@ -1,0 +1,15 @@
+{
+  "overall": {
+    "score": 40.0,
+    "total": 5
+  },
+  "by_type": {
+    "memory_qa": {
+      "score": 40.0,
+      "count": 5
+    }
+  },
+  "baseline": "naive_rag",
+  "benchmark": "msc",
+  "timestamp": "2026-02-06T12:23:39.937111+00:00"
+}

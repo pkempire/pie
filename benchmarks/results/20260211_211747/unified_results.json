@@ -1,0 +1,40 @@
+{
+  "config": {
+    "benchmarks": [
+      "longmemeval"
+    ],
+    "baselines": [
+      "naive_rag"
+    ],
+    "subset": 3,
+    "model": "gpt-4o",
+    "extraction_model": "gpt-4o-mini",
+    "judge_model": "gpt-4o"
+  },
+  "results": {
+    "longmemeval": {
+      "naive_rag": {
+        "summary": {
+          "error": "Using SOCKS proxy, but the 'socksio' package is not installed. Make sure to install httpx using `pip install httpx[socks]`."
+        },
+        "timestamp": "2026-02-11T21:17:51.399247+00:00",
+        "raw_count": 0
+      }
+    }
+  },
+  "comparison": {
+    "benchmarks": {
+      "longmemeval": "LongMemEval"
+    },
+    "baselines": {
+      "naive_rag": "naive_rag"
+    },
+    "matrix": {
+      "longmemeval": {
+        "naive_rag": 0
+      }
+    }
+  },
+  "timestamp": "2026-02-11T21:17:51.401850+00:00",
+  "total_time_seconds": 3.612215518951416
+}

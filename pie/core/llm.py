@@ -50,13 +50,16 @@ class LLMClient:
         }
         # Some models don't support custom temperature — skip for those
         model_base = model.split("-2025")[0] if "-2025" in model else model
-        if model_base not in self.NO_TEMP_MODELS:
+        is_reasoning = model_base in self.NO_TEMP_MODELS
+        if not is_reasoning:
             kwargs["temperature"] = temperature
+        else:
+            # Reasoning models: set low effort so they don't burn all tokens on thinking
+            kwargs["reasoning_effort"] = "low"
         if json_mode:
             kwargs["response_format"] = {"type": "json_object"}
         if max_tokens:
-            # gpt-5-mini/nano use max_completion_tokens instead of max_tokens
-            if model_base in self.NO_TEMP_MODELS:
+            if is_reasoning:
                 kwargs["max_completion_tokens"] = max_tokens
             else:
                 kwargs["max_tokens"] = max_tokens
@@ -131,14 +134,18 @@ def parse_extraction_result(raw: dict, conversation_ids: list[str], tokens: dict
     
     entities = []
     for e in raw.get("entities", []):
+        name = (e.get("name") or "").strip()
+        if not name:
+            continue  # Skip entities with empty/missing names
+
         # Validate entity type
         etype = e.get("type", "concept").lower()
-        valid_types = {"person", "project", "tool", "organization", "belief", "decision", "concept", "period", "event"}
+        valid_types = {"person", "project", "tool", "organization", "belief", "decision", "concept", "period", "event", "goal"}
         if etype not in valid_types:
             etype = "concept"  # default fallback
-        
+
         entities.append(ExtractedEntity(
-            name=e.get("name", ""),
+            name=name,
             type=etype,
             state=e.get("state", {}) if isinstance(e.get("state"), dict) else {"description": str(e.get("state", ""))},
             is_new=e.get("is_new", True),

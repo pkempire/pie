@@ -1,0 +1,27 @@
+{
+  "overall": {
+    "accuracy": 0.0,
+    "total": 5,
+    "total_score": 0.0
+  },
+  "by_category": {
+    "multi_hop": {
+      "accuracy": 0.0,
+      "count": 2,
+      "score": 0.0
+    },
+    "single_hop": {
+      "accuracy": 0.0,
+      "count": 2,
+      "score": 0.0
+    },
+    "temporal": {
+      "accuracy": 0.0,
+      "count": 1,
+      "score": 0.0
+    }
+  },
+  "baseline": "pie_temporal",
+  "benchmark": "locomo",
+  "timestamp": "2026-02-06T12:23:20.115423+00:00"
+}

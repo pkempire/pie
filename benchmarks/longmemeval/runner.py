@@ -68,13 +68,15 @@ from benchmarks.longmemeval.baselines import (
     PIETemporalCachedBaseline,
     BASELINES,
 )
+from benchmarks.formatting import format_qa_result, format_summary_header
 
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.WARNING,  # Reduce console spam
     format="%(asctime)s [%(levelname)s] %(message)s",
     datefmt="%H:%M:%S",
 )
 logger = logging.getLogger("pie.bench.longmemeval")
+logger.setLevel(logging.WARNING)  # Only warnings and errors
 
 
 # ── LLM-as-Judge Evaluation ──────────────────────────────────────────────────
@@ -418,23 +420,11 @@ def run_benchmark(
         output_dir = Path(output_dir)
         output_dir.mkdir(parents=True, exist_ok=True)
 
-    logger.info(f"Running LongMemEval benchmark: {baseline_name}")
-    logger.info(f"  Questions: {total}")
-    logger.info(f"  Model: {model}")
-    if baseline_name == "pie_temporal":
-        logger.info(f"  Extraction model: {extraction_model}")
-    logger.info(f"  Judge model: {judge_model}")
-    if cache_dir:
-        logger.info(f"  Cache dir: {cache_dir}")
+    print(format_summary_header("LongMemEval", baseline_name, total))
 
     for i, item in enumerate(dataset):
         qid = item["question_id"]
         qtype = item["question_type"]
-
-        logger.info(
-            f"[{i+1}/{total}] {qid} ({qtype}): "
-            f"{item['question'][:60]}..."
-        )
 
         try:
             result, score, reason = run_single_question(
@@ -450,13 +440,17 @@ def run_benchmark(
             )
             scores.add(result, score, reason)
 
-            emoji = "✅" if score == 1.0 else "🟡" if score == 0.5 else "❌"
-            running_acc = scores.overall_accuracy * 100
-            logger.info(
-                f"  {emoji} {score} | Running: {running_acc:.1f}% "
-                f"({int(scores.total_score)}/{scores.total}) | "
-                f"{result.latency_ms:.0f}ms"
-            )
+            # Always print formatted Q&A
+            print(format_qa_result(
+                idx=i + 1,
+                total=total,
+                question=item["question"],
+                expected=item["answer"],
+                predicted=result.hypothesis,
+                score=score,
+                qtype=qtype,
+                latency_ms=result.latency_ms,
+            ))
 
         except Exception as e:
             logger.error(f"  ❌ Error: {e}")

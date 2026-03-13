@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIE World Model Explorer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #0d0d1a;
+            color: #e0e0e0;
+            line-height: 1.5;
+        }
+
+        a {
+            color: #4fc3f7;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #1a1a2e;
+            border-bottom: 1px solid #2a2a4e;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .loading-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #90a4ae;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid #4fc3f7;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            overflow: hidden;
+        }
+
+        .tab-navigation {
+            background-color: #1a1a2e;
+            border-bottom: 1px solid #2a2a4e;
+            display: flex;
+            gap: 0;
+            padding: 0 20px;
+        }
+
+        .tab-nav-item {
+            padding: 12px 16px;
+            border: none;
+            background: none;
+            color: #90a4ae;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab-nav-item:hover {
+            color: #e0e0e0;
+        }
+
+        .tab-nav-item.active {
+            color: #4fc3f7;
+            border-bottom-color: #4fc3f7;
+        }
+
+        .tab-content {
+            display: none;
+            overflow: auto;
+            flex: 1;
+        }
+
+        .tab-content.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: auto;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            padding: 20px;
+        }
+
+        .metric-card {
+            background-color: #1a1a2e;
+            border: 1px solid #2a2a4e;
+            border-radius: 8px;
+            padding: 16px;
+            transition: all 0.2s;
+        }
+
+        .metric-card:hover {
+            border-color: #4fc3f7;
+            box-shadow: 0 0 12px rgba(79, 195, 247, 0.1);
+        }
+
+        .metric-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #90a4ae;
+            margin-bottom: 8px;
+        }
+
+        .metric-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #4fc3f7;
+        }
+
+        .metric-subtitle {
+            font-size: 12px;
+            color: #66bb6a;
+            margin-top: 4px;
+        }
+
+        .chart-container {
+            background-color: #1a1a2e;
+            border: 1px solid #2a2a4e;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px;
+            height: 300px;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .search-section {
+            padding: 20px;
+            background-color: #1a1a2e;
+            border-bottom: 1px solid #2a2a4e;
+        }
+
+        .search-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        input, select {
+            background-color: #2a2a4e;
+            border: 1px solid #3a3a5e;
+            border-radius: 4px;
+            padding: 8px 12px;
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+
+        input::placeholder {
+            color: #66bb6a;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #4fc3f7;
+            box-shadow: 0 0 8px rgba(79, 195, 247, 0.2);
+        }
+
+        .entity-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 20px 20px 20px;
+        }
+
+        .entity-item {
+            background-color: #1a1a2e;
+            border: 1px solid #2a2a4e;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .entity-item:hover {
+            border-color: #4fc3f7;
+            background-color: #242436;
+        }
+
+        .entity-item.selected {
+            border-color: #4fc3f7;
+            background-color: #2a3a4e;
+            box-shadow: 0 0 12px rgba(79, 195, 247, 0.15);
+        }
+
+        .entity-item-info {
+            flex: 1;
+        }
+
+        .entity-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .entity-type {
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            background-color: rgba(79, 195, 247, 0.1);
+            color: #4fc3f7;
+            display: inline-block;
+        }
+
+        .entity-transition-count {
+            font-size: 12px;
+            color: #90a4ae;
+            margin-left: auto;
+            padding-left: 12px;
+        }
+
+        .detail-panel {
+            display: none;
+            flex-direction: column;
+            background-color: #1a1a2e;
+            border: 1px solid #2a2a4e;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .detail-panel.visible {
+            display: flex;
+        }
+
+        .detail-header {
+            border-bottom: 1px solid #2a2a4e;
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+        }
+
+        .detail-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .detail-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: #90a4ae;
+            flex-wrap: wrap;
+        }
+
+        .detail-section {
+            margin-bottom: 20px;
+        }
+
+        .detail-section-title {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #4fc3f7;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #2a2a4e;
+            padding-bottom: 8px;
+        }
+
+        .state-viewer {
+            background-color: #0d0d1a;
+            border: 1px solid #2a2a4e;
+            border-radius: 4px;
+            padding: 12px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            line-height: 1.4;
+        }
+
+        .json-key {
+            color: #4fc3f7;
+        }
+
+        .json-string {
+            color: #66bb6a;
+        }
+
+        .json-number {
+            color: #ffb74d;
+        }
+
+        .json-null {
+            color: #ce93d8;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding: 12px;
+            background-color: #0d0d1a;
+            border-left: 3px solid #4fc3f7;
+            border-radius: 4px;
+        }
+
+        .timeline-dot {
+            min-width: 8px;
+            width: 8px;
+            height: 8px;
+            margin-top: 6px;
+            background-color: #4fc3f7;
+            border-radius: 50%;
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-type {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #ffb74d;
+            margin-bottom: 4px;
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            color: #90a4ae;
+            margin-bottom: 4px;
+        }
+
+        .timeline-summary {
+            font-size: 13px;
+            color: #e0e0e0;
+        }
+
+        .relationship-item {
+            background-color: #0d0d1a;
+            border: 1px solid #2a2a4e;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .relationship-type {
+            background-color: #ce93d8;
+            color: #0d0d1a;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        .relationship-entity {
+            color: #4fc3f7;
+            cursor: pointer;
+            font-weight: 500;
+            margin: 4px 0;
+        }
+
+        .relationship-entity:hover {
+            text-decoration: underline;
+        }
+
+        .relationship-description {
+            font-size: 12px;
+            color: #90a4ae;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 1200px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .timeline-view {
+            padding: 20px;
+        }
+
+        .timeline-horizontal {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 20px 0;
+            align-items: flex-end;
+            height: 300px;
+        }
+
+        .timeline-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 40px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .timeline-bar:hover {
+            transform: scaleY(1.1);
+        }
+
+        .timeline-bar-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-bottom: 4px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .timeline-bar-label {
+            font-size: 10px;
+            color: #90a4ae;
+            text-align: center;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            max-width: 30px;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .insight-card {
+            background-color: #1a1a2e;
+            border: 1px solid #2a2a4e;
+            border-radius: 8px;
+            padding: 16px;
+            transition: all 0.2s;
+        }
+
+        .insight-card:hover {
+            border-color: #4fc3f7;
+        }
+
+        .insight-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #4fc3f7;
+        }
+
+        .insight-item {
+            background-color: #0d0d1a;
+            border-left: 3px solid #4fc3f7;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 2px;
+        }
+
+        .insight-item-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .insight-item-value {
+            font-size: 12px;
+            color: #90a4ae;
+        }
+
+        .color-person { background-color: #4fc3f7; }
+        .color-project { background-color: #81c784; }
+        .color-tool { background-color: #ffb74d; }
+        .color-organization { background-color: #ce93d8; }
+        .color-belief { background-color: #ef5350; }
+        .color-decision { background-color: #ffd54f; }
+        .color-concept { background-color: #90a4ae; }
+        .color-period { background-color: #4db6ac; }
+        .color-event { background-color: #7986cb; }
+
+        .type-badge {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            margin-right: 4px;
+            vertical-align: middle;
+        }
+
+        .relationship-explorer {
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            height: 100%;
+        }
+
+        .rel-exp-selector {
+            flex: 0 0 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border-right: 1px solid #2a2a4e;
+            padding-right: 20px;
+        }
+
+        .rel-exp-graph {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #1a1a2e;
+            border-radius: 8px;
+            border: 1px solid #2a2a4e;
+            position: relative;
+            min-height: 500px;
+        }
+
+        .rel-exp-title {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #4fc3f7;
+            margin-bottom: 12px;
+        }
+
+        .rel-node {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .rel-node-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            background-color: #2a2a4e;
+            margin-bottom: 8px;
+        }
+
+        .rel-node-label {
+            font-size: 11px;
+            text-align: center;
+            max-width: 80px;
+            color: #e0e0e0;
+        }
+
+        .rel-node.center .rel-node-circle {
+            width: 64px;
+            height: 64px;
+            border-color: #4fc3f7;
+            box-shadow: 0 0 20px rgba(79, 195, 247, 0.3);
+        }
+
+        .rel-edge {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #4fc3f7, transparent);
+            transform-origin: left center;
+        }
+
+        .rel-edge-label {
+            position: absolute;
+            background-color: #1a1a2e;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+            color: #90a4ae;
+            white-space: nowrap;
+        }
+
+        .error-message {
+            background-color: #1a1a2e;
+            border: 1px solid #ef5350;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px;
+            color: #ef5350;
+        }
+
+        .no-data-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: #90a4ae;
+        }
+
+        .scrollable {
+            overflow-y: auto;
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>PIE World Model Explorer</h1>
+                <div class="loading-indicator" id="loadingIndicator">
+                    <div class="spinner"></div>
+                    <span>Loading world model...</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="tab-navigation">
+                <button class="tab-nav-item active" data-tab="overview">Overview</button>
+                <button class="tab-nav-item" data-tab="entities">Entity Explorer</button>
+                <button class="tab-nav-item" data-tab="timeline">Timeline</button>
+                <button class="tab-nav-item" data-tab="relationships">Relationships</button>
+                <button class="tab-nav-item" data-tab="insights">Insights</button>
+            </div>
+
+            <div id="overview" class="tab-content active">
+                <div class="overview-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Total Entities</div>
+                        <div class="metric-value" id="totalEntities">-</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Total Relationships</div>
+                        <div class="metric-value" id="totalRelationships">-</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Total Transitions</div>
+                        <div class="metric-value" id="totalTransitions">-</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Entity Types</div>
+                        <div class="metric-value" id="entityTypeCount">-</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Most Active</div>
+                        <div class="metric-value" id="mostActive">-</div>
+                        <div class="metric-subtitle" id="mostActiveLabel">transitions</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Timespan</div>
+                        <div class="metric-value" id="timespan">-</div>
+                        <div class="metric-subtitle" id="timespanDays">days</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="typeDistributionChart"></canvas>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="activityTimelineChart"></canvas>
+                </div>
+            </div>
+
+            <div id="entities" class="tab-content">
+                <div class="search-section">
+                    <div class="search-controls">
+                        <input type="text" id="entitySearch" placeholder="Search entities...">
+                        <select id="entityTypeFilter">
+                            <option value="">All Types</option>
+                        </select>
+                        <select id="entitySortBy">
+                            <option value="name">Sort by Name</option>
+                            <option value="type">Sort by Type</option>
+                            <option value="transitions">Most Transitions</option>
+                            <option value="first_seen">First Seen</option>
+                            <option value="last_seen">Last Seen</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 20px; flex: 1; overflow: hidden;">
+                    <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
+                        <div class="entity-list" id="entityList"></div>
+                    </div>
+                    <div class="detail-panel" id="detailPanel"></div>
+                </div>
+            </div>
+
+            <div id="timeline" class="tab-content">
+                <div class="timeline-view">
+                    <h2 style="margin-bottom: 20px;">Entity Creation Timeline</h2>
+                    <div class="timeline-horizontal" id="timelineHorizontal"></div>
+                    <div style="margin-top: 20px; padding: 20px; background-color: #1a1a2e; border-radius: 8px;">
+                        <div id="timelineDetails"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="relationships" class="tab-content">
+                <div class="relationship-explorer">
+                    <div class="rel-exp-selector">
+                        <div class="rel-exp-title">Select Entity</div>
+                        <input type="text" id="relExpSearch" placeholder="Search entities...">
+                        <div id="relExpEntityList" class="scrollable"></div>
+                    </div>
+                    <div class="rel-exp-graph" id="relationshipGraph">
+                        <div class="no-data-message">Select an entity to see its relationships</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="insights" class="tab-content">
+                <div class="insights-grid" id="insightsGrid"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let worldModel = null;
+        let currentPage = {
+            entities: [],
+            filters: {
+                search: '',
+                type: '',
+                sortBy: 'name'
+            },
+            selectedEntity: null
+        };
+
+        const ENTITY_COLORS = {
+            person: '#4fc3f7',
+            project: '#81c784',
+            tool: '#ffb74d',
+            organization: '#ce93d8',
+            belief: '#ef5350',
+            decision: '#ffd54f',
+            concept: '#90a4ae',
+            period: '#4db6ac',
+            event: '#7986cb'
+        };
+
+        const ENTITY_ICONS = {
+            person: '👤',
+            project: '📋',
+            tool: '🔧',
+            organization: '🏢',
+            belief: '💡',
+            decision: '⚖️',
+            concept: '🧠',
+            period: '📅',
+            event: '📍'
+        };
+
+        // Initialize
+        async function init() {
+            try {
+                await loadWorldModel();
+                initializeUI();
+                renderOverview();
+            } catch (error) {
+                showError(error.message);
+            }
+        }
+
+        async function loadWorldModel() {
+            const params = new URLSearchParams(window.location.search);
+            const wmParam = params.get('wm');
+            const url = wmParam || 'output/world_model.json';
+
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`Failed to load world model: ${response.statusText}`);
+
+            worldModel = await response.json();
+            document.getElementById('loadingIndicator').style.display = 'none';
+        }
+
+        function initializeUI() {
+            // Tab navigation
+            document.querySelectorAll('.tab-nav-item').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const tabName = e.target.dataset.tab;
+                    switchTab(tabName);
+                });
+            });
+
+            // Entity search and filters
+            document.getElementById('entitySearch').addEventListener('input', (e) => {
+                currentPage.filters.search = e.target.value.toLowerCase();
+                renderEntityList();
+            });
+
+            document.getElementById('entityTypeFilter').addEventListener('change', (e) => {
+                currentPage.filters.type = e.target.value;
+                renderEntityList();
+            });
+
+            document.getElementById('entitySortBy').addEventListener('change', (e) => {
+                currentPage.filters.sortBy = e.target.value;
+                renderEntityList();
+            });
+
+            // Populate type filter
+            const types = Object.values(worldModel.entities)
+                .map(e => e.type)
+                .filter((v, i, a) => a.indexOf(v) === i)
+                .sort();
+
+            const typeFilter = document.getElementById('entityTypeFilter');
+            types.forEach(type => {
+                const option = document.createElement('option');
+                option.value = type;
+                option.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+                typeFilter.appendChild(option);
+            });
+
+            // Relationship explorer search
+            document.getElementById('relExpSearch').addEventListener('input', (e) => {
+                renderRelExpEntityList(e.target.value.toLowerCase());
+            });
+            renderRelExpEntityList('');
+        }
+
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-nav-item').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+
+            // Render tab content if needed
+            if (tabName === 'timeline') renderTimeline();
+            if (tabName === 'insights') renderInsights();
+        }
+
+        function renderOverview() {
+            const entities = Object.values(worldModel.entities);
+            const relationships = Object.values(worldModel.relationships);
+            const transitions = Object.values(worldModel.transitions);
+
+            // Metrics
+            document.getElementById('totalEntities').textContent = entities.length.toLocaleString();
+            document.getElementById('totalRelationships').textContent = relationships.length.toLocaleString();
+            document.getElementById('totalTransitions').textContent = transitions.length.toLocaleString();
+
+            const types = new Set(entities.map(e => e.type));
+            document.getElementById('entityTypeCount').textContent = types.size;
+
+            // Most active entity
+            const transitionCounts = {};
+            transitions.forEach(t => {
+                transitionCounts[t.entity_id] = (transitionCounts[t.entity_id] || 0) + 1;
+            });
+            const mostActiveId = Object.entries(transitionCounts)
+                .sort((a, b) => b[1] - a[1])[0];
+            if (mostActiveId) {
+                const mostActiveEntity = worldModel.entities[mostActiveId[0]];
+                document.getElementById('mostActive').textContent = mostActiveId[1];
+                document.getElementById('mostActiveLabel').textContent = mostActiveEntity.name.substring(0, 30);
+            }
+
+            // Timespan
+            const timestamps = entities.map(e => e.first_seen).filter(t => t);
+            if (timestamps.length > 0) {
+                const minTime = Math.min(...timestamps);
+                const maxTime = Math.max(...timestamps);
+                const days = Math.ceil((maxTime - minTime) / (24 * 3600));
+                document.getElementById('timespan').textContent = days;
+            }
+
+            renderTypeDistributionChart();
+            renderActivityTimelineChart();
+        }
+
+        function renderTypeDistributionChart() {
+            const entities = Object.values(worldModel.entities);
+            const typeCounts = {};
+            entities.forEach(e => {
+                typeCounts[e.type] = (typeCounts[e.type] || 0) + 1;
+            });
+
+            const types = Object.keys(typeCounts);
+            const counts = Object.values(typeCounts);
+            const colors = types.map(t => ENTITY_COLORS[t] || '#90a4ae');
+
+            const canvas = document.getElementById('typeDistributionChart');
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+
+            const barWidth = canvas.width / (types.length + 1);
+            const maxCount = Math.max(...counts);
+            const padding = 40;
+
+            // Draw axes
+            ctx.strokeStyle = '#2a2a4e';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Draw bars
+            types.forEach((type, i) => {
+                const x = padding + (i + 0.5) * barWidth;
+                const barHeight = (counts[i] / maxCount) * (canvas.height - 2 * padding);
+                const y = canvas.height - padding - barHeight;
+
+                ctx.fillStyle = colors[i];
+                ctx.fillRect(x - barWidth * 0.35, y, barWidth * 0.7, barHeight);
+
+                // Label
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '12px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(counts[i], x, y - 10);
+                ctx.fillText(type, x, canvas.height - 20);
+            });
+        }
+
+        function renderActivityTimelineChart() {
+            const transitions = Object.values(worldModel.transitions);
+            const dailyCounts = {};
+
+            transitions.forEach(t => {
+                const date = new Date(t.timestamp * 1000).toISOString().split('T')[0];
+                dailyCounts[date] = (dailyCounts[date] || 0) + 1;
+            });
+
+            const dates = Object.keys(dailyCounts).sort();
+            const counts = dates.map(d => dailyCounts[d]);
+
+            const canvas = document.getElementById('activityTimelineChart');
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+
+            const padding = 40;
+            const maxCount = Math.max(...counts);
+            const spacing = (canvas.width - 2 * padding) / (dates.length - 1 || 1);
+
+            // Draw axes
+            ctx.strokeStyle = '#2a2a4e';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Draw line
+            ctx.strokeStyle = '#4fc3f7';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            counts.forEach((count, i) => {
+                const x = padding + i * spacing;
+                const y = canvas.height - padding - (count / maxCount) * (canvas.height - 2 * padding);
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+
+            // Draw points
+            ctx.fillStyle = '#4fc3f7';
+            counts.forEach((count, i) => {
+                const x = padding + i * spacing;
+                const y = canvas.height - padding - (count / maxCount) * (canvas.height - 2 * padding);
+                ctx.beginPath();
+                ctx.arc(x, y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // Labels
+            ctx.fillStyle = '#90a4ae';
+            ctx.font = '10px sans-serif';
+            ctx.textAlign = 'center';
+            [0, Math.floor(dates.length / 2), dates.length - 1].forEach(i => {
+                if (i < dates.length) {
+                    ctx.fillText(dates[i], padding + i * spacing, canvas.height - 10);
+                }
+            });
+        }
+
+        function renderEntityList() {
+            let entities = Object.values(worldModel.entities);
+
+            // Filter
+            if (currentPage.filters.search) {
+                const search = currentPage.filters.search;
+                entities = entities.filter(e =>
+                    e.name.toLowerCase().includes(search) ||
+                    e.aliases.some(a => a.toLowerCase().includes(search))
+                );
+            }
+
+            if (currentPage.filters.type) {
+                entities = entities.filter(e => e.type === currentPage.filters.type);
+            }
+
+            // Sort
+            const transitionCounts = {};
+            Object.values(worldModel.transitions).forEach(t => {
+                transitionCounts[t.entity_id] = (transitionCounts[t.entity_id] || 0) + 1;
+            });
+
+            entities.sort((a, b) => {
+                switch (currentPage.filters.sortBy) {
+                    case 'name':
+                        return a.name.localeCompare(b.name);
+                    case 'type':
+                        return a.type.localeCompare(b.type);
+                    case 'transitions':
+                        return (transitionCounts[b.id] || 0) - (transitionCounts[a.id] || 0);
+                    case 'first_seen':
+                        return (b.first_seen || 0) - (a.first_seen || 0);
+                    case 'last_seen':
+                        return (b.last_seen || 0) - (a.last_seen || 0);
+                    default:
+                        return 0;
+                }
+            });
+
+            currentPage.entities = entities;
+
+            const list = document.getElementById('entityList');
+            list.innerHTML = '';
+
+            if (entities.length === 0) {
+                list.innerHTML = '<div class="no-data-message">No entities found</div>';
+                return;
+            }
+
+            entities.forEach(entity => {
+                const transCount = transitionCounts[entity.id] || 0;
+                const item = document.createElement('div');
+                item.className = 'entity-item';
+                if (currentPage.selectedEntity?.id === entity.id) {
+                    item.classList.add('selected');
+                }
+                item.innerHTML = `
+                    <div class="entity-item-info">
+                        <div class="entity-name">${escapeHtml(entity.name)}</div>
+                        <div>
+                            <span class="type-badge color-${entity.type}"></span>
+                            <span class="entity-type">${entity.type}</span>
+                        </div>
+                    </div>
+                    <div class="entity-transition-count">${transCount} transitions</div>
+                `;
+                item.addEventListener('click', () => {
+                    currentPage.selectedEntity = entity;
+                    renderEntityList();
+                    renderEntityDetail(entity);
+                });
+                list.appendChild(item);
+            });
+        }
+
+        function renderEntityDetail(entity) {
+            const panel = document.getElementById('detailPanel');
+            panel.classList.add('visible');
+
+            const transitionCounts = {};
+            Object.values(worldModel.transitions).forEach(t => {
+                transitionCounts[t.entity_id] = (transitionCounts[t.entity_id] || 0) + 1;
+            });
+
+            const transitions = Object.values(worldModel.transitions)
+                .filter(t => t.entity_id === entity.id)
+                .sort((a, b) => b.timestamp - a.timestamp);
+
+            const relationships = Object.values(worldModel.relationships)
+                .filter(r => r.source_id === entity.id || r.target_id === entity.id);
+
+            const firstSeen = new Date(entity.first_seen * 1000).toLocaleDateString();
+            const lastSeen = new Date(entity.last_seen * 1000).toLocaleDateString();
+
+            let stateHtml = '<div class="state-viewer">' + formatJson(entity.current_state) + '</div>';
+
+            let relationshipsHtml = '';
+            if (relationships.length > 0) {
+                relationships.forEach(rel => {
+                    const isSource = rel.source_id === entity.id;
+                    const otherId = isSource ? rel.target_id : rel.source_id;
+                    const otherEntity = worldModel.entities[otherId];
+                    const direction = isSource ? '→' : '←';
+                    relationshipsHtml += `
+                        <div class="relationship-item">
+                            <div>
+                                <div style="margin-bottom: 8px;">
+                                    <span class="relationship-type">${rel.type}</span>
+                                </div>
+                                <div class="relationship-entity" onclick="selectEntity('${otherId}')">${direction} ${escapeHtml(otherEntity.name)}</div>
+                                ${rel.description ? `<div class="relationship-description">${escapeHtml(rel.description)}</div>` : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            let transitionsHtml = '';
+            transitions.forEach((t, idx) => {
+                const date = new Date(t.timestamp * 1000).toLocaleString();
+                transitionsHtml += `
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-type">${t.transition_type}</div>
+                            <div class="timeline-date">${date}</div>
+                            <div class="timeline-summary">${t.trigger_summary || 'State update'}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            panel.innerHTML = `
+                <div class="detail-header">
+                    <div class="detail-title">${escapeHtml(entity.name)}</div>
+                    <div class="detail-meta">
+                        <span><strong>Type:</strong> ${entity.type}</span>
+                        <span><strong>First seen:</strong> ${firstSeen}</span>
+                        <span><strong>Last seen:</strong> ${lastSeen}</span>
+                        <span><strong>Transitions:</strong> ${transitions.length}</span>
+                        <span><strong>Relationships:</strong> ${relationships.length}</span>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <div class="detail-section-title">Current State</div>
+                    ${stateHtml}
+                </div>
+
+                ${relationships.length > 0 ? `
+                    <div class="detail-section">
+                        <div class="detail-section-title">Relationships (${relationships.length})</div>
+                        ${relationshipsHtml}
+                    </div>
+                ` : ''}
+
+                ${transitions.length > 0 ? `
+                    <div class="detail-section">
+                        <div class="detail-section-title">Transition History (${transitions.length})</div>
+                        ${transitionsHtml}
+                    </div>
+                ` : ''}
+            `;
+        }
+
+        function selectEntity(entityId) {
+            const entity = worldModel.entities[entityId];
+            if (entity) {
+                currentPage.selectedEntity = entity;
+                renderEntityList();
+                renderEntityDetail(entity);
+            }
+        }
+
+        function renderTimeline() {
+            const entities = Object.values(worldModel.entities);
+            const timeline = [];
+
+            entities.forEach(entity => {
+                if (entity.first_seen) {
+                    timeline.push({
+                        entity,
+                        date: new Date(entity.first_seen * 1000)
+                    });
+                }
+            });
+
+            timeline.sort((a, b) => a.date - b.date);
+
+            const container = document.getElementById('timelineHorizontal');
+            container.innerHTML = '';
+
+            const groupedByDate = {};
+            timeline.forEach(item => {
+                const dateStr = item.date.toISOString().split('T')[0];
+                if (!groupedByDate[dateStr]) groupedByDate[dateStr] = [];
+                groupedByDate[dateStr].push(item);
+            });
+
+            const dates = Object.keys(groupedByDate).sort();
+            dates.forEach((dateStr, idx) => {
+                const items = groupedByDate[dateStr];
+                const entity = items[0].entity;
+
+                const bar = document.createElement('div');
+                bar.className = 'timeline-bar';
+                bar.innerHTML = `
+                    <div class="timeline-bar-dot color-${entity.type}"></div>
+                    <div class="timeline-bar-label">${dateStr}</div>
+                `;
+                bar.addEventListener('click', () => {
+                    const details = document.getElementById('timelineDetails');
+                    details.innerHTML = `
+                        <strong>${dateStr}:</strong> ${items.length} entit${items.length === 1 ? 'y' : 'ies'} created<br>
+                        ${items.map(i => `<div style="margin: 4px 0; font-size: 13px;">
+                            <span class="type-badge color-${i.entity.type}"></span>
+                            <strong>${escapeHtml(i.entity.name)}</strong> (${i.entity.type})
+                        </div>`).join('')}
+                    `;
+                });
+                container.appendChild(bar);
+            });
+        }
+
+        function renderRelExpEntityList(search) {
+            const entities = Object.values(worldModel.entities)
+                .filter(e => !search || e.name.toLowerCase().includes(search))
+                .sort((a, b) => a.name.localeCompare(b.name));
+
+            const list = document.getElementById('relExpEntityList');
+            list.innerHTML = '';
+
+            entities.slice(0, 100).forEach(entity => {
+                const item = document.createElement('div');
+                item.className = 'entity-item';
+                item.style.marginBottom = '4px';
+                item.innerHTML = `
+                    <div class="entity-item-info">
+                        <div style="font-size: 13px;">${escapeHtml(entity.name)}</div>
+                    </div>
+                `;
+                item.addEventListener('click', () => renderRelationshipGraph(entity));
+                list.appendChild(item);
+            });
+        }
+
+        function renderRelationshipGraph(entity) {
+            const graph = document.getElementById('relationshipGraph');
+            graph.innerHTML = '';
+
+            const relationships = Object.values(worldModel.relationships)
+                .filter(r => r.source_id === entity.id || r.target_id === entity.id);
+
+            if (relationships.length === 0) {
+                graph.innerHTML = '<div class="no-data-message">No relationships for this entity</div>';
+                return;
+            }
+
+            const centerNode = document.createElement('div');
+            centerNode.className = 'rel-node center';
+            centerNode.style.left = '50%';
+            centerNode.style.top = '50%';
+            centerNode.style.transform = 'translate(-50%, -50%)';
+            centerNode.innerHTML = `
+                <div class="rel-node-circle" style="background-color: ${ENTITY_COLORS[entity.type]};">
+                    ${ENTITY_ICONS[entity.type]}
+                </div>
+                <div class="rel-node-label">${escapeHtml(entity.name.substring(0, 20))}</div>
+            `;
+            graph.appendChild(centerNode);
+
+            // Calculate positions
+            const angleSlice = (Math.PI * 2) / relationships.length;
+            const radius = 150;
+
+            relationships.forEach((rel, idx) => {
+                const otherId = rel.source_id === entity.id ? rel.target_id : rel.source_id;
+                const otherEntity = worldModel.entities[otherId];
+
+                const angle = angleSlice * idx;
+                const x = 50 + Math.cos(angle) * radius / 300;
+                const y = 50 + Math.sin(angle) * radius / 300;
+
+                // Draw edge
+                const edge = document.createElement('div');
+                edge.className = 'rel-edge';
+                const centerX = 50;
+                const centerY = 50;
+                const edgeX = (x - centerX) * 300;
+                const edgeY = (y - centerY) * 300;
+                const edgeLength = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
+                edge.style.width = edgeLength + 'px';
+                edge.style.left = (centerX + '%');
+                edge.style.top = (centerY + '%');
+                edge.style.transform = `rotate(${Math.atan2(edgeY, edgeX)}rad) translateY(-1px)`;
+                edge.style.borderColor = ENTITY_COLORS[otherEntity.type];
+                graph.appendChild(edge);
+
+                // Draw node
+                const node = document.createElement('div');
+                node.className = 'rel-node';
+                node.style.left = (x + '%');
+                node.style.top = (y + '%');
+                node.style.transform = 'translate(-50%, -50%)';
+                node.innerHTML = `
+                    <div class="rel-node-circle" style="background-color: ${ENTITY_COLORS[otherEntity.type]};">
+                        ${ENTITY_ICONS[otherEntity.type]}
+                    </div>
+                    <div class="rel-node-label">${escapeHtml(otherEntity.name.substring(0, 20))}</div>
+                `;
+                node.addEventListener('click', () => renderRelationshipGraph(otherEntity));
+                graph.appendChild(node);
+
+                // Draw relationship label
+                const labelX = centerX + (edgeX / 2);
+                const labelY = centerY + (edgeY / 2);
+                const label = document.createElement('div');
+                label.className = 'rel-edge-label';
+                label.style.left = (labelX + '%');
+                label.style.top = (labelY + '%');
+                label.textContent = rel.type;
+                graph.appendChild(label);
+            });
+        }
+
+        function renderInsights() {
+            const entities = Object.values(worldModel.entities);
+            const relationships = Object.values(worldModel.relationships);
+            const transitions = Object.values(worldModel.transitions);
+
+            // Most active entities
+            const transitionCounts = {};
+            transitions.forEach(t => {
+                transitionCounts[t.entity_id] = (transitionCounts[t.entity_id] || 0) + 1;
+            });
+
+            const mostActive = Object.entries(transitionCounts)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 10);
+
+            // Recently changed
+            const recentlyChanged = entities
+                .filter(e => e.last_seen)
+                .sort((a, b) => b.last_seen - a.last_seen)
+                .slice(0, 10);
+
+            // Contradiction hotspots
+            const contradictions = transitions.filter(t =>
+                t.transition_type && t.transition_type.includes('contradiction')
+            );
+            const contradictionEntities = {};
+            contradictions.forEach(c => {
+                const entity = worldModel.entities[c.entity_id];
+                contradictionEntities[c.entity_id] = entity;
+            });
+
+            // Orphan entities (no relationships)
+            const relatedEntities = new Set();
+            relationships.forEach(r => {
+                relatedEntities.add(r.source_id);
+                relatedEntities.add(r.target_id);
+            });
+            const orphans = entities.filter(e => !relatedEntities.has(e.id)).slice(0, 10);
+
+            // Belief evolution
+            const beliefs = entities.filter(e => e.type === 'belief');
+            const beliefTransitions = transitions.filter(t => {
+                const entity = worldModel.entities[t.entity_id];
+                return entity && entity.type === 'belief';
+            });
+
+            const grid = document.getElementById('insightsGrid');
+            grid.innerHTML = `
+                <div class="insight-card">
+                    <div class="insight-title">Most Active Entities</div>
+                    ${mostActive.map(([id, count]) => {
+                        const entity = worldModel.entities[id];
+                        return `
+                            <div class="insight-item">
+                                <div class="insight-item-title">${escapeHtml(entity.name.substring(0, 40))}</div>
+                                <div class="insight-item-value">${count} transitions</div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-title">Recently Changed Entities</div>
+                    ${recentlyChanged.map(entity => {
+                        const date = new Date(entity.last_seen * 1000).toLocaleDateString();
+                        return `
+                            <div class="insight-item">
+                                <div class="insight-item-title">${escapeHtml(entity.name.substring(0, 40))}</div>
+                                <div class="insight-item-value">${date}</div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-title">Contradiction Hotspots</div>
+                    ${Object.values(contradictionEntities).slice(0, 10).map(entity => {
+                        const count = contradictions.filter(c => c.entity_id === entity.id).length;
+                        return `
+                            <div class="insight-item">
+                                <div class="insight-item-title">${escapeHtml(entity.name.substring(0, 40))}</div>
+                                <div class="insight-item-value">${count} contradictions</div>
+                            </div>
+                        `;
+                    }).join('')}
+                    ${Object.values(contradictionEntities).length === 0 ? '<div class="insight-item"><div class="insight-item-value">No contradictions found</div></div>' : ''}
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-title">Orphan Entities (No Relationships)</div>
+                    ${orphans.map(entity => `
+                        <div class="insight-item">
+                            <div class="insight-item-title">${escapeHtml(entity.name.substring(0, 40))}</div>
+                            <div class="insight-item-value">${entity.type}</div>
+                        </div>
+                    `).join('')}
+                    ${orphans.length === 0 ? '<div class="insight-item"><div class="insight-item-value">All entities have relationships</div></div>' : ''}
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-title">Belief Evolution</div>
+                    <div class="insight-item">
+                        <div class="insight-item-title">Total Beliefs</div>
+                        <div class="insight-item-value">${beliefs.length}</div>
+                    </div>
+                    <div class="insight-item">
+                        <div class="insight-item-title">Belief Transitions</div>
+                        <div class="insight-item-value">${beliefTransitions.length}</div>
+                    </div>
+                    <div class="insight-item">
+                        <div class="insight-item-title">Avg Transitions per Belief</div>
+                        <div class="insight-item-value">${(beliefTransitions.length / beliefs.length).toFixed(2)}</div>
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-title">Relationship Statistics</div>
+                    <div class="insight-item">
+                        <div class="insight-item-title">Total Relationships</div>
+                        <div class="insight-item-value">${relationships.length}</div>
+                    </div>
+                    <div class="insight-item">
+                        <div class="insight-item-title">Avg per Entity</div>
+                        <div class="insight-item-value">${(relationships.length / entities.length).toFixed(2)}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function formatJson(obj) {
+            const json = JSON.stringify(obj, null, 2);
+            return json
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"([^"]+)":/g, '<span class="json-key">"$1"</span>:')
+                .replace(/: "([^"]*)"/g, ': <span class="json-string">"$1"</span>')
+                .replace(/: (\d+)/g, ': <span class="json-number">$1</span>')
+                .replace(/: (true|false)/g, ': <span class="json-null">$1</span>')
+                .replace(/: null/g, ': <span class="json-null">null</span>');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function showError(message) {
+            const container = document.querySelector('.main-content');
+            container.innerHTML = `<div class="error-message">Error: ${escapeHtml(message)}</div>`;
+        }
+
+        // Start
+        init();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1430 @@
+[
+  {
+    "question_id": "conv-50_q0",
+    "question_type": "multi_hop",
+    "question": "When did Calvin first travel to Tokyo?",
+    "answer": "between 26 March and 20 April 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q1",
+    "question_type": "single_hop",
+    "question": "What items did Calvin buy in March 2023?",
+    "answer": "mansion in Japan, luxury car Ferrari 488 GTB",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q2",
+    "question_type": "multi_hop",
+    "question": "When did Dave see Aerosmith perform live?",
+    "answer": "on the weekend before March 26, 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q3",
+    "question_type": "single_hop",
+    "question": "Which bands has Dave enjoyed listening to?",
+    "answer": "Aerosmith, The Fireworks",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q4",
+    "question_type": "temporal",
+    "question": "Which country do Calvin and Dave want to meet in?",
+    "answer": "United States",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q5",
+    "question_type": "single_hop",
+    "question": "What are Dave's dreams?",
+    "answer": "open a car maintenance shop, work on classic cars, build a custom car from scratch",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q6",
+    "question_type": "single_hop",
+    "question": "Which types of cars does Dave like the most?",
+    "answer": "classic vintage cars",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q7",
+    "question_type": "temporal",
+    "question": "Does Dave's shop employ a lot of people?",
+    "answer": "Yes",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q8",
+    "question_type": "multi_hop",
+    "question": "When did Dave start his car maintenance shop?",
+    "answer": "May 1, 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q9",
+    "question_type": "multi_hop",
+    "question": "When did a mishap occur with Calvin's musical gear and favorite mic?",
+    "answer": "On a week before 16 May, 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q10",
+    "question_type": "multi_hop",
+    "question": "When did Calvin's place get flooded in Tokyo?",
+    "answer": "On a week before 16 May, 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q11",
+    "question_type": "single_hop",
+    "question": "What mishaps has Calvin run into?",
+    "answer": "flooding of his mansion, car accident",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q12",
+    "question_type": "multi_hop",
+    "question": "When was Calvin's concert in Tokyo?",
+    "answer": "last week of May 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q13",
+    "question_type": "temporal",
+    "question": "Would Calvin enjoy performing at the Hollywood Bowl?",
+    "answer": "Yes; because he enjoys the rush of performing onstage to large crowds",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q14",
+    "question_type": "multi_hop",
+    "question": "When did Calvin meet with the creative team for his new album?",
+    "answer": "8 June, 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q15",
+    "question_type": "single_hop",
+    "question": "Why does Dave regularly visit parks?",
+    "answer": "because it relaxes and calms him",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q16",
+    "question_type": "multi_hop",
+    "question": "When did Dave take a trip to mountainous regions?",
+    "answer": "July 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q17",
+    "question_type": "multi_hop",
+    "question": "When did Calvin have a car incident?",
+    "answer": "on the Friday before 21 June, 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q18",
+    "question_type": "single_hop",
+    "question": "How many times has Calvin had to deal with insurance paperwork?",
+    "answer": "two times",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q19",
+    "question_type": "single_hop",
+    "question": "Which places or events has Calvin visited in Tokyo?",
+    "answer": "music festival, car museum, Shibuya crossing, Shinjuku",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q20",
+    "question_type": "single_hop",
+    "question": "Who inspired Dave's passion for car engineering?",
+    "answer": "His Dad",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q21",
+    "question_type": "temporal",
+    "question": "Does Calvin wish to become more popular?",
+    "answer": "Yes; he want's to grow his fanbase",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q22",
+    "question_type": "single_hop",
+    "question": "Does Calvin want to expand his brand?",
+    "answer": "yes",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q23",
+    "question_type": "single_hop",
+    "question": "What is Dave's main passion?",
+    "answer": "auto engineering",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q24",
+    "question_type": "single_hop",
+    "question": "Can Dave work with engines?",
+    "answer": "yes",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q25",
+    "question_type": "multi_hop",
+    "question": "When did Dave host a card-playing night with his friends?",
+    "answer": "on the Friday before 22 August, 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q26",
+    "question_type": "multi_hop",
+    "question": "When did Calvin record a podcast with his friends?",
+    "answer": "21 August, 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q27",
+    "question_type": "multi_hop",
+    "question": "Which city was Calvin visiting in August 2023?",
+    "answer": "Miami",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q28",
+    "question_type": "single_hop",
+    "question": "What does Calvin do to relax?",
+    "answer": "take long drives in his car, embrace nature, fixing cars",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q29",
+    "question_type": "single_hop",
+    "question": "What are Dave's hobbies other than fixing cars?",
+    "answer": "take a walk, go hiking, listen to favorite albums, live concerts, photography",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q30",
+    "question_type": "single_hop",
+    "question": "What kind of music does Dave listen to?",
+    "answer": "classic rock, Japanese music",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q31",
+    "question_type": "multi_hop",
+    "question": "Where was Dave in the last two weeks of August 2023?",
+    "answer": "San Francisco",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q32",
+    "question_type": "single_hop",
+    "question": "Where did Dave return from with new knowledge of different techniques of car restoration?",
+    "answer": "San Francisco",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q33",
+    "question_type": "single_hop",
+    "question": "What was Dave doing in San Francisco?",
+    "answer": "attending a car modification workshop",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q34",
+    "question_type": "multi_hop",
+    "question": "When did Dave return from San Francisco?",
+    "answer": "September 1, 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q35",
+    "question_type": "multi_hop",
+    "question": "When did Calvin book flight tickets to Boston?",
+    "answer": "last week of August 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q36",
+    "question_type": "multi_hop",
+    "question": "When was Calvin's album released?",
+    "answer": "September 11, 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q37",
+    "question_type": "temporal",
+    "question": "Does Calvin love music tours?",
+    "answer": "yes",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q38",
+    "question_type": "multi_hop",
+    "question": "When did Dave have a great jam session with his band?",
+    "answer": "September 14, 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q39",
+    "question_type": "temporal",
+    "question": "Would Dave prefer working on a Dodge Charger or a Subaru Forester?",
+    "answer": "Dodge Charger",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q40",
+    "question_type": "single_hop",
+    "question": "What was the artists Calvin used to listen to when he was a kid?",
+    "answer": "Tupac and Dr. Dre",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q41",
+    "question_type": "single_hop",
+    "question": "Which of their family member do Calvin and Dave have nostalgic memories about?",
+    "answer": "Dad",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q42",
+    "question_type": "temporal",
+    "question": "Based on the conversation, did Calvin and Dave have a meeting in Boston between August and November 2023? Answer in yes or no.",
+    "answer": "No",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q43",
+    "question_type": "multi_hop",
+    "question": "Which city was Calvin at on October 3, 2023?",
+    "answer": "Boston",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q44",
+    "question_type": "multi_hop",
+    "question": "When did Calvin met with local artists in Boston?",
+    "answer": "October 3, 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q45",
+    "question_type": "single_hop",
+    "question": "What shared activities do Dave and Calvin have?",
+    "answer": "Working on cars",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q46",
+    "question_type": "single_hop",
+    "question": "What is Dave's favorite activity?",
+    "answer": "Restoring cars",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q47",
+    "question_type": "single_hop",
+    "question": "How many car shows has Dave attended?",
+    "answer": "two",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q48",
+    "question_type": "multi_hop",
+    "question": "What was Dave doing in the first weekend of October 2023?",
+    "answer": "attending a car show",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q49",
+    "question_type": "single_hop",
+    "question": "When Dave was a child, what did he and his father do in the garage?",
+    "answer": "tinkering with car engines, restoration and refurbishing cars",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q50",
+    "question_type": "multi_hop",
+    "question": "When did Calvin buy his second Ferrari?",
+    "answer": "first week of October 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q51",
+    "question_type": "multi_hop",
+    "question": "When did Calvin and Frank Ocean start collaborating?",
+    "answer": "August 2022",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q52",
+    "question_type": "multi_hop",
+    "question": "When did Calvin plan on travelling to Tokyo the second time?",
+    "answer": "November 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q53",
+    "question_type": "single_hop",
+    "question": "Who supports Calvin in tough times?",
+    "answer": "friends and team",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q54",
+    "question_type": "single_hop",
+    "question": "What does help Calvin stay connected to the creative process?",
+    "answer": "Calvin stays connected to the creative process by always staying up-to-date on world events and watching documentaries about artists.",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q55",
+    "question_type": "multi_hop",
+    "question": "When did Calvin visit some of the sights in Boston with a former high school friend?",
+    "answer": "October 24, 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q56",
+    "question_type": "single_hop",
+    "question": "Which cities did Dave travel to in 2023?",
+    "answer": "San Francsico, Detroit",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q57",
+    "question_type": "multi_hop",
+    "question": "Which hobby did Dave pick up in October 2023?",
+    "answer": "photography",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q58",
+    "question_type": "single_hop",
+    "question": "Which events in Dave's life inspired him to take up auto engineering?",
+    "answer": "attending a car show with Dad, working on an old car in a neighbor's garage when he was young, spent a summer restoring an old car with Dad",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q59",
+    "question_type": "single_hop",
+    "question": "How many Ferraris does Calvin own?",
+    "answer": "two",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q60",
+    "question_type": "single_hop",
+    "question": "What gifts has Calvin received from his artist friends?",
+    "answer": "gold chain, custom-made guitar with an octopus on it",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q61",
+    "question_type": "multi_hop",
+    "question": "How long did Dave's work on the Ford Mustang take?",
+    "answer": "nearly two months",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q62",
+    "question_type": "multi_hop",
+    "question": "How long was the car modification workshop in San Francisco?",
+    "answer": "two weeks",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q63",
+    "question_type": "single_hop",
+    "question": "What style of guitars does Calvin own?",
+    "answer": "custom-made yellow guitar with an octopus on it, shiny purple guitar",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q64",
+    "question_type": "single_hop",
+    "question": "What activities has Dave participated in with his friends?",
+    "answer": "weekly visits to local parks, countryside roadtrip, celebration of the opening of his car maintenance shop, card-playing nights",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q65",
+    "question_type": "multi_hop",
+    "question": "When did Dave take a photo of a Boston clock tower?",
+    "answer": "September 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q66",
+    "question_type": "single_hop",
+    "question": "Do all of Dave's car restoration projects go smoothly?",
+    "answer": "No",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q67",
+    "question_type": "multi_hop",
+    "question": "Where was Calvin located in the last week of October 2023?",
+    "answer": "Tokyo",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q68",
+    "question_type": "multi_hop",
+    "question": "When did Dave find the car he repaired and started sharing in his blog?",
+    "answer": "last week of October 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q69",
+    "question_type": "multi_hop",
+    "question": "When did Dave buy a vintage camera?",
+    "answer": "November 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q70",
+    "question_type": "multi_hop",
+    "question": "When did Calvin attend a gala in Boston?",
+    "answer": "November 16, 2023",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q71",
+    "question_type": "adversarial",
+    "question": "How long did Calvin plan to stay in Japan?",
+    "answer": "A few months",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q72",
+    "question_type": "adversarial",
+    "question": "Which band was Dave's favorite at the music festival in April 2023?",
+    "answer": "Aerosmith",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q73",
+    "question_type": "adversarial",
+    "question": "Where did Calvin attend a music festival in April 2023?",
+    "answer": "Tokyo",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q74",
+    "question_type": "adversarial",
+    "question": "What advice did Calvin receive from the producer at the music festival?",
+    "answer": "to stay true to himself and sound unique",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q75",
+    "question_type": "adversarial",
+    "question": "What is Dave's new business venture as of 1 May, 2023?",
+    "answer": "Car maintenance shop",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q76",
+    "question_type": "adversarial",
+    "question": "What type of cars does Dave work on at his shop?",
+    "answer": "all kinds of cars, from regular maintenance to full restorations of classic cars",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q77",
+    "question_type": "adversarial",
+    "question": "What did Calvin receive as a gift from another artist?",
+    "answer": "a gold necklace with a diamond pendant",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q78",
+    "question_type": "adversarial",
+    "question": "What was the necklace Calvin received meant to remind him of?",
+    "answer": "why he keeps hustling as a musician",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q79",
+    "question_type": "adversarial",
+    "question": "What does Dave do when he feels his creativity is frozen?",
+    "answer": "immerse himself in something he loves",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q80",
+    "question_type": "adversarial",
+    "question": "How does Calvin plan to jumpstart his inspiration?",
+    "answer": "explore other things and have some fun",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q81",
+    "question_type": "adversarial",
+    "question": "What did Calvin manage to save during the flood incident?",
+    "answer": "music gear and favorite microphone",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q82",
+    "question_type": "adversarial",
+    "question": "What did Dave open in May 2023?",
+    "answer": "a car shop",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q83",
+    "question_type": "adversarial",
+    "question": "What gives Dave a sense of achievement and purpose?",
+    "answer": "Fixing up things",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q84",
+    "question_type": "adversarial",
+    "question": "What fuels Calvin's soul?",
+    "answer": "Performing live",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q85",
+    "question_type": "adversarial",
+    "question": "What is Dave doing to relax on weekends?",
+    "answer": "exploring parks",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q86",
+    "question_type": "adversarial",
+    "question": "What sports activity is Calvin planning to try after the tour with Frank Ocean?",
+    "answer": "Skiing",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q87",
+    "question_type": "adversarial",
+    "question": "What was Calvin excited to do after getting his car fixed on 7 July, 2023?",
+    "answer": "get back on the road",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q88",
+    "question_type": "adversarial",
+    "question": "What did Calvin and his friends arrange for in the park?",
+    "answer": "regular walks together",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q89",
+    "question_type": "adversarial",
+    "question": "What kind of music has Calvin been creating lately?",
+    "answer": "experimenting with different genres",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q90",
+    "question_type": "adversarial",
+    "question": "How does Calvin describe his process of adding electronic elements to his songs?",
+    "answer": "gives them a fresh vibe",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q91",
+    "question_type": "adversarial",
+    "question": "What car brand does Calvin own that he is proud of?",
+    "answer": "Ferrari",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q92",
+    "question_type": "adversarial",
+    "question": "What is Calvin's biggest current goal?",
+    "answer": "expand his brand worldwide and grow his fanbase",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q93",
+    "question_type": "adversarial",
+    "question": "What is Dave's advice to Calvin regarding his dreams?",
+    "answer": "to never forget his dreams",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q94",
+    "question_type": "adversarial",
+    "question": "What workshop did Dave get picked for on 11 August, 2023?",
+    "answer": "Car mod workshop",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q95",
+    "question_type": "adversarial",
+    "question": "What kind of modifications has Dave been working on in the car mod workshop?",
+    "answer": "engine swaps, suspension modifications, and body modifications",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q96",
+    "question_type": "adversarial",
+    "question": "What type of car did Dave work on during the workshop?",
+    "answer": "classic muscle car",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q97",
+    "question_type": "adversarial",
+    "question": "What does Dave say is important for making his custom cars unique?",
+    "answer": "attention to small details",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q98",
+    "question_type": "adversarial",
+    "question": "How did the audience in Tokyo react when Calvin sang one of his songs?",
+    "answer": "Everyone was so into it and sang along",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q99",
+    "question_type": "adversarial",
+    "question": "How did Calvin meet Frank Ocean?",
+    "answer": "At a music festival in Tokyo",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q100",
+    "question_type": "adversarial",
+    "question": "Where did Calvin and Frank Ocean record a song together?",
+    "answer": "In the studio at Calvin's mansion",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q101",
+    "question_type": "adversarial",
+    "question": "What did Calvin and his friends record in August 2023?",
+    "answer": "a podcast discussing the rap industry",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q102",
+    "question_type": "adversarial",
+    "question": "Where did Calvin start shooting a video for his new album?",
+    "answer": "Miami",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q103",
+    "question_type": "adversarial",
+    "question": "What design is featured on Calvin's guitar?",
+    "answer": "octopus",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q104",
+    "question_type": "adversarial",
+    "question": "Why did Calvin get his guitar customized with a shiny finish?",
+    "answer": "unique look",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q105",
+    "question_type": "adversarial",
+    "question": "What color glow did Calvin customize his guitar with?",
+    "answer": "purple",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q106",
+    "question_type": "adversarial",
+    "question": "Where did Dave come back from with insights on car modification on 1st September 2023?",
+    "answer": "San Francisco",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q107",
+    "question_type": "adversarial",
+    "question": "What emotion does Dave mention feeling when he sees the relief of someone whose car he fixed?",
+    "answer": "Proud",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q108",
+    "question_type": "adversarial",
+    "question": "What did Calvin book a flight ticket for on 1st September 2023?",
+    "answer": "Boston",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q109",
+    "question_type": "adversarial",
+    "question": "What is Calvin excited about after the tour?",
+    "answer": "exploring and growing his brand",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q110",
+    "question_type": "adversarial",
+    "question": "What plans do Calvin and Dave have for when Calvin visits Boston?",
+    "answer": "Check out Dave's garage and maybe get some ideas for future projects",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q111",
+    "question_type": "adversarial",
+    "question": "Which Disney movie did Dave mention as one of his favorites?",
+    "answer": "Ratatouille",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q112",
+    "question_type": "adversarial",
+    "question": "How does Dave feel about the reactions of people when they see the finished restoration project?",
+    "answer": "satisfying and worth the hard work",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q113",
+    "question_type": "adversarial",
+    "question": "What activity did Calvin enjoy during his summer drives?",
+    "answer": "feeling the wind blowing through his hair",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q114",
+    "question_type": "adversarial",
+    "question": "Which song from the childhood of Calvin brings back memories of a road trip with his dad?",
+    "answer": "\"California Love\"",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q115",
+    "question_type": "adversarial",
+    "question": "What project did Calvin work on to chill out?",
+    "answer": "A shiny orange car",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q116",
+    "question_type": "adversarial",
+    "question": "What car did Dave work on in the junkyard?",
+    "answer": "Ford Mustang",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q117",
+    "question_type": "adversarial",
+    "question": "What does Dave find satisfying about restoring old cars?",
+    "answer": "Transforming something old and beat-up into something beautiful",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q118",
+    "question_type": "adversarial",
+    "question": "What do Calvin and Dave use to reach their goals?",
+    "answer": "Hard work and determination",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q119",
+    "question_type": "adversarial",
+    "question": "What does working on cars represent for Dave?",
+    "answer": "Therapy and a way to get away from everyday stress",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q120",
+    "question_type": "adversarial",
+    "question": "What does Dave aim to do with his passion for cars?",
+    "answer": "Take something broken and make it into something awesome",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q121",
+    "question_type": "adversarial",
+    "question": "What did Calvin recently get that is a \"masterpiece on wheels\"?",
+    "answer": "Ferrari",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q122",
+    "question_type": "adversarial",
+    "question": "Who headlined the music festival that Dave attended in October?",
+    "answer": "The Fireworks",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q123",
+    "question_type": "adversarial",
+    "question": "How does Calvin stay motivated when faced with setbacks?",
+    "answer": "Reminds himself of his passion for goals, gets help from others, and takes a break to recharge",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q124",
+    "question_type": "adversarial",
+    "question": "What activity does Dave find fulfilling, similar to Calvin's passion for music festivals?",
+    "answer": "fixing things",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q125",
+    "question_type": "adversarial",
+    "question": "Where did Calvin and Dave meet Frank Ocean to start collaborating?",
+    "answer": "at a festival",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q126",
+    "question_type": "adversarial",
+    "question": "Which part of Tokyo is described as Tokyo's Times Square by Calvin?",
+    "answer": "Shibuya Crossing",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q127",
+    "question_type": "adversarial",
+    "question": "What specific location in Tokyo does Calvin mention being excited to explore?",
+    "answer": "Shinjuku",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q128",
+    "question_type": "adversarial",
+    "question": "What dish does Dave recommend Calvin to try in Tokyo?",
+    "answer": "ramen",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q129",
+    "question_type": "adversarial",
+    "question": "What does Calvin find energizing during the tour?",
+    "answer": "Performing and connecting with the crowd",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q130",
+    "question_type": "adversarial",
+    "question": "How does Calvin balance his job and personal life?",
+    "answer": "Takes it one day at a time",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q131",
+    "question_type": "adversarial",
+    "question": "What inspired Calvin's recent music?",
+    "answer": "Struggles that people go through",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q132",
+    "question_type": "adversarial",
+    "question": "How does Calvin describe his music in relation to capturing feelings?",
+    "answer": "Express himself and work through his emotions",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q133",
+    "question_type": "adversarial",
+    "question": "Why did Dave start working on cars?",
+    "answer": "Fascinated with how machines work",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q134",
+    "question_type": "adversarial",
+    "question": "What is the toughest part of car restoration according to Dave?",
+    "answer": "Paying extra attention to detail",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q135",
+    "question_type": "adversarial",
+    "question": "What does Calvin believe makes an artist create something extraordinary?",
+    "answer": "Paying attention to small details",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q136",
+    "question_type": "adversarial",
+    "question": "When did Dave sell the car he restored last year?",
+    "answer": "Last year",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q137",
+    "question_type": "adversarial",
+    "question": "When did Calvin first get interested in cars?",
+    "answer": "at an early age",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q138",
+    "question_type": "adversarial",
+    "question": "How did Calvin feel about performing with someone he admires?",
+    "answer": "Unreal, like a dream come true",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q139",
+    "question_type": "adversarial",
+    "question": "What realization did the nightclub experience bring to Calvin?",
+    "answer": "how much music means to him, it's like his passion and purpose",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q140",
+    "question_type": "adversarial",
+    "question": "What do Dave and Calvin agree on regarding their pursuits?",
+    "answer": "It's fulfilling and motivating",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q141",
+    "question_type": "adversarial",
+    "question": "Which city is featured in the photograph Dave showed Calvin?",
+    "answer": "Boston",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q142",
+    "question_type": "adversarial",
+    "question": "What did Calvin do recently at his Japanese house?",
+    "answer": "Threw a small party for his new album",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q143",
+    "question_type": "adversarial",
+    "question": "What did Dave recently start a blog about?",
+    "answer": "Car mods",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q144",
+    "question_type": "adversarial",
+    "question": "What is Dave's way to share his passion with others?",
+    "answer": "Through a blog on car mods",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q145",
+    "question_type": "adversarial",
+    "question": "What type of videos does Calvin usually watch on his television?",
+    "answer": "Music videos, concerts, documentaries about artists and their creative process",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q146",
+    "question_type": "adversarial",
+    "question": "What type of music has Dave been getting into lately?",
+    "answer": "Classic rock",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q147",
+    "question_type": "adversarial",
+    "question": "What tools does Calvin use to boost his motivation for music?",
+    "answer": "Writing lyrics and notes",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q148",
+    "question_type": "adversarial",
+    "question": "What type of content does Dave post on his blog that inspired others to start their own DIY projects?",
+    "answer": "How he made his car look like a beast",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q149",
+    "question_type": "adversarial",
+    "question": "What kind of impact does Dave's blog on car mods have on people?",
+    "answer": "It inspires others to start their DIY projects",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q150",
+    "question_type": "adversarial",
+    "question": "Who did Calvin invite to see him perform in Boston on 13 November, 2023?",
+    "answer": "his old high school buddy",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q151",
+    "question_type": "adversarial",
+    "question": "What hobby did Calvin take up recently?",
+    "answer": "Photography",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q152",
+    "question_type": "adversarial",
+    "question": "What new item did Dave buy recently?",
+    "answer": "A vintage camera",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q153",
+    "question_type": "adversarial",
+    "question": "What type of photos does Dave like to capture with his new camera?",
+    "answer": "Nature - sunsets, beaches, waves",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q154",
+    "question_type": "adversarial",
+    "question": "What event did Calvin attend in Boston?",
+    "answer": "Fancy gala",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q155",
+    "question_type": "adversarial",
+    "question": "What did Calvin discuss with the cool artist he met at the gala?",
+    "answer": "Music and art",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q156",
+    "question_type": "adversarial",
+    "question": "Where did Dave take a stunning photo of a waterfall?",
+    "answer": "Nearby park",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q157",
+    "question_type": "adversarial",
+    "question": "What positive impact does Calvin mention nature has on tough times?",
+    "answer": "Nature helps us appreciate life",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q158",
+    "question_type": "commonsense",
+    "question": "Which DJ was Dave's favorite at the music festival in April 2023?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q159",
+    "question_type": "commonsense",
+    "question": "What advice did Calvin receive from the chef at the music festival?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q160",
+    "question_type": "commonsense",
+    "question": "What is Calvin's new business venture as of 1 May, 2023?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q161",
+    "question_type": "commonsense",
+    "question": "What type of cars does Calvin work on at his shop?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q162",
+    "question_type": "commonsense",
+    "question": "What did Dave receive as a gift from another artist?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q163",
+    "question_type": "commonsense",
+    "question": "What was the necklace Dave received meant to remind him of?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q164",
+    "question_type": "commonsense",
+    "question": "What did Calvin open in May 2023?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q165",
+    "question_type": "commonsense",
+    "question": "What gives Calvin a sense of achievement and purpose?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q166",
+    "question_type": "commonsense",
+    "question": "What sports activity is Dave planning to try after the tour with Frank Ocean?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q167",
+    "question_type": "commonsense",
+    "question": "How does Calvin describe his process of adding acoustic elements to his songs?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q168",
+    "question_type": "commonsense",
+    "question": "What clothing brand does Calvin own that he is proud of?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q169",
+    "question_type": "commonsense",
+    "question": "What workshop did Calvin get picked for on 11 August, 2023?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q170",
+    "question_type": "commonsense",
+    "question": "What kind of modifications has Calvin been working on in the car mod workshop?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q171",
+    "question_type": "commonsense",
+    "question": "What type of car did Calvin work on during the workshop?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q172",
+    "question_type": "commonsense",
+    "question": "What did Dave and his friends record in August 2023?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q173",
+    "question_type": "commonsense",
+    "question": "Where did Dave start shooting a video for his new album?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q174",
+    "question_type": "commonsense",
+    "question": "What design is featured on Dave's guitar?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q175",
+    "question_type": "commonsense",
+    "question": "Why did Dave get his guitar customized with a shiny finish?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q176",
+    "question_type": "commonsense",
+    "question": "What color glow did Dave customize his guitar with?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q177",
+    "question_type": "commonsense",
+    "question": "Where did Calvin come back from with insights on car modification on 1st September 2023?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q178",
+    "question_type": "commonsense",
+    "question": "What emotion does Calvin mention feeling when he sees the relief of someone whose car he fixed?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q179",
+    "question_type": "commonsense",
+    "question": "What did Dave book a flight ticket for on 1st September 2023?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q180",
+    "question_type": "commonsense",
+    "question": "Which horror movie did Dave mention as one of his favorites?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q181",
+    "question_type": "commonsense",
+    "question": "Which song from the childhood of Dave brings back memories of a road trip with his dad?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q182",
+    "question_type": "commonsense",
+    "question": "What car did Calvin work on in the junkyard?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q183",
+    "question_type": "commonsense",
+    "question": "What does Dave find satisfying about destroying old cars?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q184",
+    "question_type": "commonsense",
+    "question": "What does working on boats represent for Dave?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q185",
+    "question_type": "commonsense",
+    "question": "What does Dave aim to do with his passion for cooking?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q186",
+    "question_type": "commonsense",
+    "question": "What did Calvin recently get that is a \"masterpiece on canvas\"?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q187",
+    "question_type": "commonsense",
+    "question": "Who headlined the music festival that Calvin attended in October?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q188",
+    "question_type": "commonsense",
+    "question": "Which part of Tokyo is described as Tokyo's Times Square by Dave?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q189",
+    "question_type": "commonsense",
+    "question": "What specific location in Tokyo does Calvin mention being excited to avoid?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q190",
+    "question_type": "commonsense",
+    "question": "When did Calvin sell the car he restored last year?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q191",
+    "question_type": "commonsense",
+    "question": "When did Calvin first get interested in motorcycles?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q192",
+    "question_type": "commonsense",
+    "question": "What realization did the nightclub experience bring to Dave?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q193",
+    "question_type": "commonsense",
+    "question": "What did Dave do recently at his Japanese house?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q194",
+    "question_type": "commonsense",
+    "question": "What did Calvin recently start a blog about?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q195",
+    "question_type": "commonsense",
+    "question": "What type of videos does Dave usually watch on his television?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q196",
+    "question_type": "commonsense",
+    "question": "What type of art has Dave been getting into lately?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q197",
+    "question_type": "commonsense",
+    "question": "What type of content does Dave post on his blog that inspired others to start their own cooking projects?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q198",
+    "question_type": "commonsense",
+    "question": "What kind of impact does Dave's blog on vegan recipes have on people?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q199",
+    "question_type": "commonsense",
+    "question": "Who did Dave invite to see him perform in Boston on 13 November, 2023?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q200",
+    "question_type": "commonsense",
+    "question": "What new item did Calvin buy recently?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q201",
+    "question_type": "commonsense",
+    "question": "What type of photos does Calvin like to capture with his new camera?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q202",
+    "question_type": "commonsense",
+    "question": "What did Dave discuss with the cool artist he met at the gala?",
+    "answer": "",
+    "sample_id": "conv-50"
+  },
+  {
+    "question_id": "conv-50_q203",
+    "question_type": "commonsense",
+    "question": "Where did Calvin take a stunning photo of a waterfall?",
+    "answer": "",
+    "sample_id": "conv-50"
+  }
+]

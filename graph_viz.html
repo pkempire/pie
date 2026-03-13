@@ -126,20 +126,37 @@ let worldModel = null;
 let network = null;
 
 async function loadAndRender() {
-    try {
-        // Try loading from output/world_model.json (relative path)
-        const resp = await fetch('output/world_model.json');
-        if (!resp.ok) throw new Error(`HTTP ${resp.status}: ${resp.statusText}`);
-        worldModel = await resp.json();
-        render();
-    } catch (err) {
-        console.error('Failed to load world_model.json:', err);
-        document.getElementById('loadingBar').style.display = 'none';
-        document.getElementById('error').style.display = 'block';
-        document.getElementById('error-msg').textContent =
-            `Could not load output/world_model.json: ${err.message}. ` +
-            `Make sure this file is served via a local HTTP server (e.g. python3 -m http.server).`;
+    // Try multiple sources in order
+    const sources = [
+        'output/world_model.json',
+        ...Array.from(document.querySelectorAll('[data-wm-path]')).map(e => e.dataset.wmPath),
+    ];
+
+    // Check URL params for custom path: ?wm=path/to/wm.json
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('wm')) sources.unshift(params.get('wm'));
+
+    for (const src of sources) {
+        try {
+            const resp = await fetch(src);
+            if (!resp.ok) continue;
+            worldModel = await resp.json();
+            console.log(`Loaded world model from: ${src}`);
+            render();
+            return;
+        } catch (err) {
+            console.warn(`Failed to load ${src}:`, err.message);
+        }
     }
+
+    // All sources failed
+    document.getElementById('loadingBar').style.display = 'none';
+    document.getElementById('error').style.display = 'block';
+    document.getElementById('error-msg').textContent =
+        `Could not load world model. Start a local server first:\n` +
+        `  cd personal-intelligence-system && python3 -m http.server 8080\n` +
+        `Then open: http://localhost:8080/graph_viz.html\n` +
+        `Or specify a path: http://localhost:8080/graph_viz.html?wm=benchmarks/locomo/cache/conv-26_wm.json`;
 }
 
 function render() {

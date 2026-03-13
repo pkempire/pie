@@ -1,0 +1,3365 @@
+[
+  {
+    "session_index": 0,
+    "session_id": "conv-47_session_0",
+    "input_chars": 5064,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 March 17, 2022 at 15:47]\nJames: Hey! Glad to finally talk to you. I want to ask you, what motivates you?\nJames: Hey John! Video games give me tons of joy and excitement, so they keep me motivated!\nJames: Cool, James! I'm a big video game fan too. They help me relax after a long day. What game are you currently enjoying the most?\nJames: I'm totally into The Witcher 3 right now. The stor",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's motivation",
+          "type": "concept",
+          "state": {
+            "description": "Video games give James joy and excitement, keeping him motivated."
+          }
+        },
+        {
+          "name": "James's favorite game",
+          "type": "concept",
+          "state": {
+            "description": "Favorite game is Apex Legends."
+          }
+        },
+        {
+          "name": "James's programming class",
+          "type": "concept",
+          "state": {
+            "description": "James signed up for a programming class."
+          }
+        },
+        {
+          "name": "James's coding experience",
+          "type": "concept",
+          "state": {
+            "description": "James has coding experience in HTML and CSS."
+          }
+        },
+        {
+          "name": "James's programming languages",
+          "type": "concept",
+          "state": {
+            "description": "James has worked with Python and C++."
+          }
+        },
+        {
+          "name": "James's projects",
+          "type": "concept",
+          "state": {
+            "description": "James has built a website and created game mods."
+          }
+        },
+        {
+          "name": "James's future programming plans",
+          "type": "concept",
+          "state": {
+            "description": "James hopes to work with other programming languages in the future."
+          }
+        },
+        {
+          "name": "James's app idea",
+          "type": "concept",
+          "state": {
+            "description": "James wants to build an app for dog walking and pet care."
+          }
+        },
+        {
+          "name": "James's pets",
+          "type": "concept",
+          "state": {
+            "description": "James considers his pets to be the source of his joy and takes care of them."
+          }
+        },
+        {
+          "name": "James's app goal",
+          "type": "concept",
+          "state": {
+            "description": "The goal of James's app is to connect pet owners with reliable dog walkers."
+          }
+        },
+        {
+          "name": "James's app uniqueness",
+          "type": "concept",
+          "state": {
+            "description": "James's app allows users to customize it for their pets' preferences."
+          }
+        },
+        {
+          "name": "James's motivation for programming",
+          "type": "concept",
+          "state": {
+            "description": "Creating something and seeing it come to life gives James a sense of accomplishment."
+          }
+        },
+        {
+          "name": "James's project inspiration",
+          "type": "concept",
+          "state": {
+            "description": "James is working on a game project inspired by sketches he made as a child."
+          }
+        },
+        {
+          "name": "James's project excitement",
+          "type": "concept",
+          "state": {
+            "description": "James is excited about combining gaming and storytelling in his project."
+          }
+        },
+        {
+          "name": "James's bowling experience",
+          "type": "concept",
+          "state": {
+            "description": "James went bowling and got 2 strikes."
+          }
+        },
+        {
+          "name": "James's bowling preference",
+          "type": "concept",
+          "state": {
+            "description": "James loves bowling."
+          }
+        },
+        {
+          "name": "James's exercise plans",
+          "type": "concept",
+          "state": {
+            "description": "James is considering taking up exercise and going for a run in the morning."
+          }
+        },
+        {
+          "name": "James's VR gaming experience",
+          "type": "concept",
+          "state": {
+            "description": "James has tried VR gaming a few times and finds it immersive."
+          }
+        },
+        {
+          "name": "James's VR gaming plans",
+          "type": "concept",
+          "state": {
+            "description": "James plans to try VR gaming with John next Saturday."
+          }
+        },
+        {
+          "name": "John's motivation",
+          "type": "concept",
+          "state": {
+            "description": "Video games help John relax after a long day."
+          }
+        },
+        {
+          "name": "John's programming experience",
+          "type": "concept",
+          "state": {
+            "description": "John has not done any programming."
+          }
+        },
+        {
+          "name": "John's bowling preference",
+          "type": "concept",
+          "state": {
+            "description": "John does not like bowling."
+          }
+        },
+        {
+          "name": "John's VR gaming experience",
+          "type": "concept",
+          "state": {
+            "description": "John has tried VR gaming a few times."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 25,
+    "entities_new": 25,
+    "total_entities": 25
+  },
+  {
+    "session_index": 1,
+    "session_id": "conv-47_session_1",
+    "input_chars": 3035,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 March 20, 2022 at 21:26]\nJames: Hey John, something awesome happened since we talked. I made a game avatar and joined a new platform. It's so fun exploring and chatting with other gamers - it's a whole new adventure every time! I feel like I'm part of a super cool online community.\nJames: Hey James, awesome! Glad you're enjoying it and connecting with others. Building a community is re",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's game avatar",
+          "type": "concept",
+          "state": {
+            "description": "James made a game avatar and joined a new platform."
+          }
+        },
+        {
+          "name": "James's online community",
+          "type": "concept",
+          "state": {
+            "description": "James feels part of a super cool online community with other gamers."
+          }
+        },
+        {
+          "name": "James's gaming experience",
+          "type": "concept",
+          "state": {
+            "description": "Finds gaming a good way to forget stresses of life."
+          }
+        },
+        {
+          "name": "James's shared language",
+          "type": "concept",
+          "state": {
+            "description": "James believes gaming is a shared language and passion that brings people together."
+          }
+        },
+        {
+          "name": "James's stress relief",
+          "type": "concept",
+          "state": {
+            "description": "Gaming helps James escape stress and calms him down during tough times."
+          }
+        },
+        {
+          "name": "James's therapy",
+          "type": "concept",
+          "state": {
+            "description": "Games are James's go-to for relaxation and escaping troubles."
+          }
+        },
+        {
+          "name": "James's new hobby",
+          "type": "concept",
+          "state": {
+            "description": "James has been checking out different styles of gaming."
+          }
+        },
+        {
+          "name": "John's new hobby",
+          "type": "concept",
+          "state": {
+            "description": "John bought a metal detector and walks along the beaches looking for treasures."
+          }
+        },
+        {
+          "name": "John's metal detecting finds",
+          "type": "concept",
+          "state": {
+            "description": "John mostly finds bottle caps, but has found coins and a gold ring."
+          }
+        },
+        {
+          "name": "James's dogs",
+          "type": "concept",
+          "state": {
+            "description": "Has three dogs at home."
+          }
+        },
+        {
+          "name": "James's dogs' tricks",
+          "type": "concept",
+          "state": {
+            "description": "James's dogs can do tricks like sit, stay, paw, and rollover."
+          }
+        },
+        {
+          "name": "James's dog Daisy",
+          "type": "concept",
+          "state": {
+            "description": "Daisy is one of James's dogs, trained to wait for a treat."
+          }
+        },
+        {
+          "name": "John's desire for a pet",
+          "type": "concept",
+          "state": {
+            "description": "John wants a pet but feels he is not ready yet."
+          }
+        },
+        {
+          "name": "James's offer to John",
+          "type": "concept",
+          "state": {
+            "description": "James offers to help John find the perfect pet."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 16,
+    "entities_new": 14,
+    "total_entities": 39
+  },
+  {
+    "session_index": 2,
+    "session_id": "conv-47_session_2",
+    "input_chars": 3293,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 March 27, 2022 at 00:40]\nJames: Hey James, long time no see! I had a big win in my game last week - finally advanced to the next level! It was a huge confidence booster and felt like I'd really achieved something.\nJames: Hey John, congrats on your win! Games can really boost confidence, huh? I'm challenging myself too - I'm learning this instrument, which has been quite the journey.\n\n[",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's gaming achievement",
+          "type": "concept",
+          "state": {
+            "description": "James advanced to the next level in his game, boosting his confidence."
+          }
+        },
+        {
+          "name": "James's instrument",
+          "type": "concept",
+          "state": {
+            "description": "Used to play drums when younger, but hasn't played in a while."
+          }
+        },
+        {
+          "name": "James's drum playing duration",
+          "type": "concept",
+          "state": {
+            "description": "James has been playing drums for a month."
+          }
+        },
+        {
+          "name": "John's drum playing duration",
+          "type": "concept",
+          "state": {
+            "description": "John started playing drums a few days ago."
+          }
+        },
+        {
+          "name": "James's gaming system",
+          "type": "concept",
+          "state": {
+            "description": "James got a new cutting-edge gaming system with incredible graphics."
+          }
+        },
+        {
+          "name": "James's gaming convention experience",
+          "type": "concept",
+          "state": {
+            "description": "James attended a gaming convention where he tried out games, met developers, and participated in a tournament."
+          }
+        },
+        {
+          "name": "James's favorite game",
+          "type": "concept",
+          "state": {
+            "description": "James's favorite game is CS:GO."
+          }
+        },
+        {
+          "name": "John's motivation strategy",
+          "type": "concept",
+          "state": {
+            "description": "John sets small goals and tracks his progress to stay motivated."
+          }
+        },
+        {
+          "name": "James's gaming genre exploration",
+          "type": "concept",
+          "state": {
+            "description": "James is getting into different types of games, including RPGs and strategy games."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 8,
+    "total_entities": 47
+  },
+  {
+    "session_index": 3,
+    "session_id": "conv-47_session_3",
+    "input_chars": 3482,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 April 04, 2022 at 14:13]\nJames: Hey James! Long time no chat. What's up? Been playing any new games lately?\nJames: Hey John! Yeah, it's been a while. I've been busy, but I joined an online gaming tournament yesterday. It was so intense and fun! Here is a photo report.\n[Image: a photo of a group of people posing for a picture]\nJames: That online gaming tournament looks awesome! Glad you",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's online gaming tournament",
+          "type": "event",
+          "state": {
+            "description": "Participated in an online gaming tournament on April 3, 2022."
+          }
+        },
+        {
+          "name": "James's tournament performance",
+          "type": "event",
+          "state": {
+            "description": "Made it to the semifinals and won some rounds in the tournament."
+          }
+        },
+        {
+          "name": "James's final rounds experience",
+          "type": "event",
+          "state": {
+            "description": "Competed in tough final rounds but did not win."
+          }
+        },
+        {
+          "name": "James's famous player encounter",
+          "type": "event",
+          "state": {
+            "description": "Met the whole team of players at the tournament."
+          }
+        },
+        {
+          "name": "James's gaming tips",
+          "type": "concept",
+          "state": {
+            "description": "Received gaming tips from a famous player."
+          }
+        },
+        {
+          "name": "James's autographs",
+          "type": "concept",
+          "state": {
+            "description": "Received autographs from the whole team."
+          }
+        },
+        {
+          "name": "James's most important advice",
+          "type": "concept",
+          "state": {
+            "description": "Always communicate correctly with the team and prioritize team success over ego."
+          }
+        },
+        {
+          "name": "James's communication method",
+          "type": "concept",
+          "state": {
+            "description": "Uses voice chat to communicate with his team."
+          }
+        },
+        {
+          "name": "James's favorite game",
+          "type": "concept",
+          "state": {
+            "description": "Favorite game is Apex Legends."
+          }
+        },
+        {
+          "name": "James's game graphics opinion",
+          "type": "concept",
+          "state": {
+            "description": "Apex Legends has awesome graphics and fast-paced gameplay."
+          }
+        },
+        {
+          "name": "James's new game interests",
+          "type": "concept",
+          "state": {
+            "description": "Interested in trying RPGs and MOBAs."
+          }
+        },
+        {
+          "name": "John's encouragement",
+          "type": "concept",
+          "state": {
+            "description": "John encouraged James to try new game genres."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 11,
+    "total_entities": 58
+  },
+  {
+    "session_index": 4,
+    "session_id": "conv-47_session_4",
+    "input_chars": 2102,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 April 12, 2022 at 09:52]\nJames: Hey John! Long time no chat - I adopted a pup from a shelter in Stamford last week and my days have been so much happier with him in the fam. I named it Ned. Any progress on your gaming goals?\n[Image: a photo of a dog and a cat sitting on a dog bed]\nJames: Hey James! Congrats on getting a pup! They really do make days brighter. I haven't made much progre",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's pet Ned",
+          "type": "concept",
+          "state": {
+            "description": "Dog named Ned, adopted by James"
+          }
+        },
+        {
+          "name": "John's gaming goals",
+          "type": "concept",
+          "state": {
+            "description": "Hasn't made much progress with gaming lately due to a busy life."
+          }
+        },
+        {
+          "name": "James's RPG game",
+          "type": "concept",
+          "state": {
+            "description": "New RPG with a cool story and world, set in a futuristic dystopia."
+          }
+        },
+        {
+          "name": "James's gaming experience",
+          "type": "concept",
+          "state": {
+            "description": "Finds gaming a good way to forget stresses of life."
+          }
+        },
+        {
+          "name": "James's opinion on the RPG game",
+          "type": "concept",
+          "state": {
+            "description": "Thinks the game has fun story, awesome world, but is a little laggy with some errors."
+          }
+        },
+        {
+          "name": "James's graphics opinion",
+          "type": "concept",
+          "state": {
+            "description": "Thinks the graphics of the game are awesome and gameplay is super immersive."
+          }
+        },
+        {
+          "name": "James's link to the game",
+          "type": "concept",
+          "state": {
+            "description": "Offers to send John a link to the game."
+          }
+        },
+        {
+          "name": "James's excitement for the game",
+          "type": "concept",
+          "state": {
+            "description": "Excited to try the game and will let John know his thoughts."
+          }
+        },
+        {
+          "name": "James's farewell",
+          "type": "concept",
+          "state": {
+            "description": "Says goodbye and wishes John to enjoy gaming."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 8,
+    "total_entities": 66
+  },
+  {
+    "session_index": 5,
+    "session_id": "conv-47_session_5",
+    "input_chars": 3510,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 April 20, 2022 at 21:32]\nJames: Hey James! Long time no see! I have great news! Last Tuesday I met three cool new friends in my programming course, they share the same passion as me and it's cool to grow my social circle. Have you had any fun surprises lately?\nJames: Hey John! Glad you had a great week meeting new people! Something awesome happened to me last Thursday \u2013 I got to work w",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's programming course friends",
+          "type": "concept",
+          "state": {
+            "description": "Three new friends met in programming course who share the same passion as James."
+          }
+        },
+        {
+          "name": "James's programming project",
+          "type": "concept",
+          "state": {
+            "description": "Working on a coding project with his siblings, a simple text-based adventure game"
+          }
+        },
+        {
+          "name": "James's game character",
+          "type": "concept",
+          "state": {
+            "description": "A character created by James in the virtual world."
+          }
+        },
+        {
+          "name": "James's inspiration for game character",
+          "type": "concept",
+          "state": {
+            "description": "Inspired by a walk with dogs two weeks before April 20, 2022, where he saw a stranger."
+          }
+        },
+        {
+          "name": "James's canyon experience",
+          "type": "concept",
+          "state": {
+            "description": "Found a calming canyon view two days ago."
+          }
+        },
+        {
+          "name": "James's motivation principle",
+          "type": "belief",
+          "state": {
+            "description": "Believes that only those who rest well work well."
+          }
+        },
+        {
+          "name": "James's travel history",
+          "type": "concept",
+          "state": {
+            "description": "Visited Italy, Turkey, and Mexico."
+          }
+        },
+        {
+          "name": "James's last country visited",
+          "type": "concept",
+          "state": {
+            "description": "Last visited country was Japan."
+          }
+        },
+        {
+          "name": "John's programming course friends",
+          "type": "concept",
+          "state": {
+            "description": "No specific friends mentioned, but John is glad James met new people."
+          }
+        },
+        {
+          "name": "John's travel history",
+          "type": "concept",
+          "state": {
+            "description": "Dreams of visiting Italy and has not mentioned other countries."
+          }
+        },
+        {
+          "name": "John's last country visited",
+          "type": "concept",
+          "state": {
+            "description": "Last visited country was Japan."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 11,
+    "total_entities": 77
+  },
+  {
+    "session_index": 6,
+    "session_id": "conv-47_session_6",
+    "input_chars": 2858,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 April 23, 2022 at 11:04]\nJames: Hey James! How's it going?\nJames: Hey John! Good to hear from ya. Yeah, been crazy. Last Thursday I took my dogs out for a hike. Was quite the adventure! Explored some nice trails and enjoyed fresh air.\nJames: Wow, sounds like quite an adventure! Do you have any pictures from that day?\nJames: Yeah, I have one. It was great! They loved it - so many trails",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's dogs",
+          "type": "concept",
+          "state": {
+            "description": "James has two dogs that he took out for a hike."
+          }
+        },
+        {
+          "name": "James's hiking adventure",
+          "type": "concept",
+          "state": {
+            "description": "James went hiking with his dogs last Thursday, exploring trails and enjoying fresh air."
+          }
+        },
+        {
+          "name": "James's favorite hiking spot",
+          "type": "concept",
+          "state": {
+            "description": "James picked a hiking spot for its great views and many trails."
+          }
+        },
+        {
+          "name": "James's work situation",
+          "type": "concept",
+          "state": {
+            "description": "James has been super busy at work with deadlines and a difficult project."
+          }
+        },
+        {
+          "name": "James's project difficulty",
+          "type": "concept",
+          "state": {
+            "description": "James is struggling with a coding project that involves a complicated algorithm."
+          }
+        },
+        {
+          "name": "James's advice to John",
+          "type": "concept",
+          "state": {
+            "description": "James advised John to break down his coding problem into smaller steps and seek help."
+          }
+        },
+        {
+          "name": "John's work situation",
+          "type": "concept",
+          "state": {
+            "description": "John has been busy at work with many deadlines and a challenging project."
+          }
+        },
+        {
+          "name": "John's project difficulty",
+          "type": "concept",
+          "state": {
+            "description": "John is stuck on a difficult coding assignment and feels frustrated."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 7,
+    "total_entities": 84
+  },
+  {
+    "session_index": 7,
+    "session_id": "conv-47_session_7",
+    "input_chars": 5077,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 April 29, 2022 at 14:36]\nJames: Hey John! What's up? Anything fun going on?\nJames: I'm currently taking on some freelance programming to hone my coding skills. It's challenging, but I'm determined to improve.\nJames: Freelancing can definitely be a great way to sharpen skills and gain experience. What projects are you currently working on?\nJames: I'm actually working on a website for a ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's freelance programming",
+          "type": "concept",
+          "state": {
+            "description": "Currently taking on freelance programming to hone coding skills."
+          }
+        },
+        {
+          "name": "James's first professional project",
+          "type": "concept",
+          "state": {
+            "description": "Working on a website for a local small business."
+          }
+        },
+        {
+          "name": "James's adventure book",
+          "type": "concept",
+          "state": {
+            "description": "Bought an adventure book with fantasy novels and cool arts three days ago."
+          }
+        },
+        {
+          "name": "James's favorite genre",
+          "type": "concept",
+          "state": {
+            "description": "Loves the fantasy genre."
+          }
+        },
+        {
+          "name": "James's pet Daisy",
+          "type": "concept",
+          "state": {
+            "description": "Faithful furry friend, a dog."
+          }
+        },
+        {
+          "name": "James's current game",
+          "type": "concept",
+          "state": {
+            "description": "Currently playing AC Valhalla."
+          }
+        },
+        {
+          "name": "James's strategy games",
+          "type": "concept",
+          "state": {
+            "description": "Trying out some strategy games."
+          }
+        },
+        {
+          "name": "James's game Civilization VI",
+          "type": "concept",
+          "state": {
+            "description": "A high-quality turn-based strategy game."
+          }
+        },
+        {
+          "name": "James's gaming duration",
+          "type": "concept",
+          "state": {
+            "description": "Been playing Civilization VI for a month."
+          }
+        },
+        {
+          "name": "James's recent board game",
+          "type": "concept",
+          "state": {
+            "description": "Played a strategy board game with friends two days ago."
+          }
+        },
+        {
+          "name": "James's mystery card game",
+          "type": "concept",
+          "state": {
+            "description": "Played a game with multi-colored cards with numbers, where you can only place a card with the same color or number."
+          }
+        },
+        {
+          "name": "James's impostor game",
+          "type": "concept",
+          "state": {
+            "description": "Playing a game to figure out who the impostors are."
+          }
+        },
+        {
+          "name": "John's first professional project",
+          "type": "concept",
+          "state": {
+            "description": "Working on a website for a local small business."
+          }
+        },
+        {
+          "name": "John's challenges",
+          "type": "concept",
+          "state": {
+            "description": "Encountered challenges figuring out how to get payments on the website."
+          }
+        },
+        {
+          "name": "John's learning resources",
+          "type": "concept",
+          "state": {
+            "description": "Used resources to understand the payment process."
+          }
+        },
+        {
+          "name": "John's progress",
+          "type": "concept",
+          "state": {
+            "description": "Progress on the project has been slow with some hiccups."
+          }
+        },
+        {
+          "name": "John's gaming habits",
+          "type": "concept",
+          "state": {
+            "description": "Dogs love to watch him gaming and often hug him."
+          }
+        },
+        {
+          "name": "John's strategy game interest",
+          "type": "concept",
+          "state": {
+            "description": "Interested in strategy games like Civilization VI."
+          }
+        },
+        {
+          "name": "John's board game experience",
+          "type": "concept",
+          "state": {
+            "description": "Enjoys playing board games with friends."
+          }
+        },
+        {
+          "name": "John's recommendation",
+          "type": "concept",
+          "state": {
+            "description": "Recommended 'The Name of the Wind' as a great novel."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 22,
+    "entities_new": 20,
+    "total_entities": 104
+  },
+  {
+    "session_index": 8,
+    "session_id": "conv-47_session_8",
+    "input_chars": 2954,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 May 04, 2022 at 19:01]\nJames: Hey James! How've you been? Had an eventful week since our last chat.\nJames: Hey John! Man, it's been wild since we talked. Last Friday, something happened on my project that I've been working on for weeks. I got so close to finishing it but I just couldn't figure it out. Super frustrating.\nJames: Ugh, that's rough. I understand how frustrating it can be. ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's project",
+          "type": "concept",
+          "state": {
+            "description": "Working on a project that hit a major snag due to a bug in the code."
+          }
+        },
+        {
+          "name": "James's bug issue",
+          "type": "concept",
+          "state": {
+            "description": "A bug in the code messed up the game mechanics."
+          }
+        },
+        {
+          "name": "James's team",
+          "type": "concept",
+          "state": {
+            "description": "A group of friends helped James fix the bug in his project."
+          }
+        },
+        {
+          "name": "James's day off",
+          "type": "concept",
+          "state": {
+            "description": "James's day off is on August 27, 2022"
+          }
+        },
+        {
+          "name": "James's pets",
+          "type": "concept",
+          "state": {
+            "description": "James has two dogs, one named Daisy, a Labrador."
+          }
+        },
+        {
+          "name": "Daisy's breed",
+          "type": "concept",
+          "state": {
+            "description": "Daisy is a Labrador who loves to play with toys and eat."
+          }
+        },
+        {
+          "name": "James's other dogs",
+          "type": "concept",
+          "state": {
+            "description": "James has two other dogs that are shepherds."
+          }
+        },
+        {
+          "name": "James's happiness sources",
+          "type": "concept",
+          "state": {
+            "description": "James finds happiness in pets, computer games, travel, and pizza."
+          }
+        },
+        {
+          "name": "James's favorite pizza",
+          "type": "concept",
+          "state": {
+            "description": "James's favorite pizza is pepperoni."
+          }
+        },
+        {
+          "name": "John's favorite pizza",
+          "type": "concept",
+          "state": {
+            "description": "John's favorite pizza is Hawaiian."
+          }
+        },
+        {
+          "name": "James's other pizza preferences",
+          "type": "concept",
+          "state": {
+            "description": "James also likes cheese pizza and prosciutto."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 10,
+    "total_entities": 114
+  },
+  {
+    "session_index": 9,
+    "session_id": "conv-47_session_9",
+    "input_chars": 2057,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 May 08, 2022 at 00:45]\nJames: Hey John! Been a while since we chatted. Sorry 'bout not getting back sooner. How's it going? Any new games you're into?\nJames: Hey James! No worries, I know you are really busy at work. I'm good, thanks for asking. Oh, I've been organizing something with my friends yesterday - it was cool! Guess what it was, I'll give you a little hint.\n[Image: a photo of",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's job",
+          "type": "concept",
+          "state": {
+            "description": "James is busy at work."
+          }
+        },
+        {
+          "name": "John's game tournament",
+          "type": "concept",
+          "state": {
+            "description": "John organized a CS:GO tournament for charity."
+          }
+        },
+        {
+          "name": "John's charity goal",
+          "type": "concept",
+          "state": {
+            "description": "The main goal was to raise money for a dog shelter."
+          }
+        },
+        {
+          "name": "John's community service",
+          "type": "concept",
+          "state": {
+            "description": "John used leftover money to buy groceries and cook food for the homeless."
+          }
+        },
+        {
+          "name": "James's support for John",
+          "type": "concept",
+          "state": {
+            "description": "James expresses support for John's desire to make a positive impact."
+          }
+        },
+        {
+          "name": "James's interest in gaming events",
+          "type": "concept",
+          "state": {
+            "description": "James is interested in organizing more gaming events for charity."
+          }
+        },
+        {
+          "name": "John's friends",
+          "type": "person",
+          "state": {
+            "description": "John organized the tournament with his friends."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 9,
+    "entities_new": 7,
+    "total_entities": 121
+  },
+  {
+    "session_index": 10,
+    "session_id": "conv-47_session_10",
+    "input_chars": 3159,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 May 11, 2022 at 17:00]\nJames: Hey James, it's been a bit since we last talked. Something cool happened recently - I volunteered my programming skills for a social cause. It was cool to use my passion to do something good. I made a software tool for one charitable foundation which helped streamline their operations and make them run more smoothly. Seeing my skills making a real differen",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's volunteering experience",
+          "type": "concept",
+          "state": {
+            "description": "James volunteered with an organization that provides necessary items to those less fortunate."
+          }
+        },
+        {
+          "name": "James's software tool",
+          "type": "concept",
+          "state": {
+            "description": "Created a software tool that helped the foundation transition from paper records to a smartphone application for inventory management."
+          }
+        },
+        {
+          "name": "James's motivation for volunteering",
+          "type": "concept",
+          "state": {
+            "description": "Inspired by the foundation's passion for helping kids and the desire to challenge himself through coding."
+          }
+        },
+        {
+          "name": "James's sense of purpose",
+          "type": "concept",
+          "state": {
+            "description": "Gained a clearer sense of purpose and motivation to use programming skills for positive impact."
+          }
+        },
+        {
+          "name": "James's future plans",
+          "type": "concept",
+          "state": {
+            "description": "Considering volunteer roles and a potential career in the non-profit sector."
+          }
+        },
+        {
+          "name": "James's search for non-profit organizations",
+          "type": "concept",
+          "state": {
+            "description": "Has not yet found a non-profit organization that aligns with his values but believes it won't be difficult."
+          }
+        },
+        {
+          "name": "John's encouragement",
+          "type": "person",
+          "state": {
+            "description": "John encouraged James in his volunteering efforts and future plans."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 9,
+    "entities_new": 6,
+    "total_entities": 127
+  },
+  {
+    "session_index": 11,
+    "session_id": "conv-47_session_11",
+    "input_chars": 2483,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 May 23, 2022 at 19:33]\nJames: Hey John, last weekend I had an awesome time at the amusement park with my friends. It was a great break from the virtual world. I went on some awesome roller coasters and it reminded me of when I was a kid. Everything was so real and exciting; it felt like I was in a video game!\nJames: Hey James! Sounds like an awesome time! I bet those rides brought back",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's amusement park experience",
+          "type": "concept",
+          "state": {
+            "description": "Had an awesome time at the amusement park with friends, went on roller coasters, reminded him of childhood."
+          }
+        },
+        {
+          "name": "James's rides at the amusement park",
+          "type": "concept",
+          "state": {
+            "description": "Rode the Ferris wheel, electric cars, and buggies at the amusement park."
+          }
+        },
+        {
+          "name": "James's tournament achievement",
+          "type": "concept",
+          "state": {
+            "description": "Entered a local tournament and took second place."
+          }
+        },
+        {
+          "name": "James's tournament prize",
+          "type": "concept",
+          "state": {
+            "description": "Received some money for taking second place in the tournament."
+          }
+        },
+        {
+          "name": "James's trophy",
+          "type": "concept",
+          "state": {
+            "description": "Received a trophy for second place in the tournament."
+          }
+        },
+        {
+          "name": "James's personal milestone",
+          "type": "concept",
+          "state": {
+            "description": "Finished a big project he had been working on for months."
+          }
+        },
+        {
+          "name": "James's project challenges",
+          "type": "concept",
+          "state": {
+            "description": "Challenging because he had to learn a new language and handle many details."
+          }
+        },
+        {
+          "name": "James's skills learned",
+          "type": "concept",
+          "state": {
+            "description": "Learned problem-solving, patience, and perseverance from completing the project."
+          }
+        },
+        {
+          "name": "John's achievement",
+          "type": "person",
+          "state": {
+            "description": "Received a trophy for his achievement."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 9,
+    "total_entities": 136
+  },
+  {
+    "session_index": 12,
+    "session_id": "conv-47_session_12",
+    "input_chars": 2371,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 June 13, 2022 at 16:30]\nJames: Hey James, long time no talk! A lot has happened during this time. Let me fill you in.\nJames: Hey John! Awesome to hear from you. Yeah, a lot has happened. Let's catch up!\nJames: I finally got my dream job! After lots of interviews and late nights, I got the offer and was ecstatic. Can't wait to start my journey!\nJames: Wow, John! Congrats on getting your",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's dream job",
+          "type": "concept",
+          "state": {
+            "description": "James got his dream job after lots of interviews and late nights."
+          }
+        },
+        {
+          "name": "James's job start date",
+          "type": "concept",
+          "state": {
+            "description": "James is starting his new job in July 2022."
+          }
+        },
+        {
+          "name": "James's course",
+          "type": "concept",
+          "state": {
+            "description": "James started a course that combines his passion for gaming and programming."
+          }
+        },
+        {
+          "name": "James's football simulator project",
+          "type": "concept",
+          "state": {
+            "description": "James is working on a new part of the football simulator, focusing on collecting player databases."
+          }
+        },
+        {
+          "name": "James's love for football",
+          "type": "belief",
+          "state": {
+            "description": "James loves football and believes it is the best sport."
+          }
+        },
+        {
+          "name": "James's support for Liverpool",
+          "type": "belief",
+          "state": {
+            "description": "James is a fan of Liverpool and does not miss a single match."
+          }
+        },
+        {
+          "name": "James's hope for Liverpool",
+          "type": "belief",
+          "state": {
+            "description": "James hopes Liverpool will become champions next season."
+          }
+        },
+        {
+          "name": "John's support for Manchester City",
+          "type": "belief",
+          "state": {
+            "description": "John is a fan of Manchester City and believes they will win the championship."
+          }
+        },
+        {
+          "name": "John's bet with James",
+          "type": "concept",
+          "state": {
+            "description": "John and James made a bet on which team will finish higher in the standings."
+          }
+        },
+        {
+          "name": "John's response to James's dream job",
+          "type": "concept",
+          "state": {
+            "description": "John congratulated James on getting his dream job."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 10,
+    "total_entities": 146
+  },
+  {
+    "session_index": 13,
+    "session_id": "conv-47_session_13",
+    "input_chars": 4878,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 June 16, 2022 at 17:07]\nJames: Hey John, how's it going? A lot has happened for me lately, some good and some not so great. I`m lucky to have at least two people who always help me out when I'm struggling. What about you?\n[Image: a photo of a dog laying on a person on a couch]\nJames: Gad to hear you have your support system ready. It's crucial, especially during hard times. For me, it'",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's blog",
+          "type": "concept",
+          "state": {
+            "description": "Started a blog about coding on June 9, 2022."
+          }
+        },
+        {
+          "name": "James's favorite genres",
+          "type": "concept",
+          "state": {
+            "description": "Big fan of sci-fi and fantasy books."
+          }
+        },
+        {
+          "name": "James's favorite book series",
+          "type": "concept",
+          "state": {
+            "description": "Favorites include 'The Stormlight Archive', 'Kingkiller Chronicle', and 'The Expanse'."
+          }
+        },
+        {
+          "name": "James's pet Max",
+          "type": "person",
+          "state": {
+            "description": "Dog named Max, lovable and playful."
+          }
+        },
+        {
+          "name": "Max's swimming ability",
+          "type": "concept",
+          "state": {
+            "description": "Max loves swimming and is a pro swimmer."
+          }
+        },
+        {
+          "name": "Max's frisbee talent",
+          "type": "concept",
+          "state": {
+            "description": "Max is awesome at catching frisbees in mid-air."
+          }
+        },
+        {
+          "name": "James's walking trail",
+          "type": "concept",
+          "state": {
+            "description": "Nearby trail where James and Max take walks, a mile from his house."
+          }
+        },
+        {
+          "name": "James's park activities",
+          "type": "concept",
+          "state": {
+            "description": "Brings a book to the park to chill and escape from reality."
+          }
+        },
+        {
+          "name": "John's support system",
+          "type": "person",
+          "state": {
+            "description": "John has a support system ready for hard times."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 9,
+    "total_entities": 155
+  },
+  {
+    "session_index": 14,
+    "session_id": "conv-47_session_14",
+    "input_chars": 2895,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 June 19, 2022 at 21:59]\nJames: Hey John, since our last chat, something awesome happened. Last Friday, I started introducing Max, Daisy and the new pup Ned. It was hard at first, but they're slowly adapting. It's sweet to watch them bond and have fun together.\nJames: Wow, that's cool, James! Seeing them bonding and having a great time is so sweet. Do you have a picture of them together",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's pets Max, Daisy, and Ned",
+          "type": "concept",
+          "state": {
+            "description": "James has three pets: a dog named Max, a dog named Daisy, and a new puppy named Ned."
+          }
+        },
+        {
+          "name": "James's photo of pets",
+          "type": "concept",
+          "state": {
+            "description": "A photo of James's three dogs, Max, Daisy, and Ned, in a field of grass."
+          }
+        },
+        {
+          "name": "James's thoughts on future",
+          "type": "concept",
+          "state": {
+            "description": "James is thinking about his career and wants to make a positive impact on the world."
+          }
+        },
+        {
+          "name": "James's volunteering plans",
+          "type": "concept",
+          "state": {
+            "description": "James is looking into volunteering and considering non-profit work."
+          }
+        },
+        {
+          "name": "James's volunteering experience",
+          "type": "concept",
+          "state": {
+            "description": "James volunteered with an organization that provides necessary items to those less fortunate."
+          }
+        },
+        {
+          "name": "James's photo from volunteering",
+          "type": "concept",
+          "state": {
+            "description": "A photo of James volunteering with a group of people outside of a building."
+          }
+        },
+        {
+          "name": "James's weekend plans",
+          "type": "concept",
+          "state": {
+            "description": "James plans to take John to the volunteering organization the weekend of June 19, 2022."
+          }
+        },
+        {
+          "name": "James's support for John",
+          "type": "concept",
+          "state": {
+            "description": "James expresses support for John's desire to make a positive impact."
+          }
+        },
+        {
+          "name": "John's determination",
+          "type": "concept",
+          "state": {
+            "description": "John is determined to make a positive impact and appreciates James's support."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 7,
+    "total_entities": 162
+  },
+  {
+    "session_index": 15,
+    "session_id": "conv-47_session_15",
+    "input_chars": 2218,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 July 09, 2022 at 17:13]\nJames: Hey John! Long time no talk - hope you're doing well. Guess what? Last week I actually won an online gaming tournament! It was such an exciting experience and it blew my mind when I won. Winning felt so good and it really motivated me to keep improving.\nJames: Hey James! Congrats on winning the online gaming tournament! It's super fulfilling to see your h",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's online gaming tournament victory",
+          "type": "concept",
+          "state": {
+            "description": "James won an online gaming tournament in the week before July 9, 2022."
+          }
+        },
+        {
+          "name": "James's interest in extreme sports",
+          "type": "concept",
+          "state": {
+            "description": "James has become interested in extreme sports."
+          }
+        },
+        {
+          "name": "James's rope jumping experience",
+          "type": "concept",
+          "state": {
+            "description": "James did rope jumping from a height of 150 meters."
+          }
+        },
+        {
+          "name": "James's surfing experience",
+          "type": "concept",
+          "state": {
+            "description": "James went surfing three days before July 9, 2022."
+          }
+        },
+        {
+          "name": "James's reading hobby",
+          "type": "concept",
+          "state": {
+            "description": "James likes to relax by reading."
+          }
+        },
+        {
+          "name": "James's air tickets to Toronto",
+          "type": "concept",
+          "state": {
+            "description": "James bought air tickets to Toronto, leaving on July 11, 2022."
+          }
+        },
+        {
+          "name": "James's travel plans to Vancouver",
+          "type": "concept",
+          "state": {
+            "description": "James plans to visit Vancouver after Toronto."
+          }
+        },
+        {
+          "name": "James's return date from trip",
+          "type": "concept",
+          "state": {
+            "description": "James plans to return from his trip on July 20, 2022."
+          }
+        },
+        {
+          "name": "John's congratulatory message",
+          "type": "concept",
+          "state": {
+            "description": "John congratulated James on winning the online gaming tournament."
+          }
+        },
+        {
+          "name": "John's reading hobby",
+          "type": "concept",
+          "state": {
+            "description": "John likes to relax by reading."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 10,
+    "total_entities": 172
+  },
+  {
+    "session_index": 16,
+    "session_id": "conv-47_session_16",
+    "input_chars": 4716,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 July 22, 2022 at 09:49]\nJames: Hi James! I just started playing chess to get better at strategy. I'm loving it! Have you ever tried it out?\nJames: Hey John! Yeah, I've played chess before. It's a game that really tests your strategy. It's great that you're enjoying it!\nJames: Yeah, chess is really fun! It's like solving an endless puzzle and always trying to outwit your opponent.\nJames",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's hobby: chess",
+          "type": "concept",
+          "state": {
+            "description": "Started playing chess to improve strategy skills."
+          }
+        },
+        {
+          "name": "James's chess club",
+          "type": "concept",
+          "state": {
+            "description": "Joined a chess club to practice with others."
+          }
+        },
+        {
+          "name": "James's interest in strategy games",
+          "type": "concept",
+          "state": {
+            "description": "Always drawn to strategy games to challenge himself."
+          }
+        },
+        {
+          "name": "James's belief about chess",
+          "type": "belief",
+          "state": {
+            "description": "Believes chess can improve decision-making skills."
+          }
+        },
+        {
+          "name": "James's tips for chess improvement",
+          "type": "concept",
+          "state": {
+            "description": "Studying opening moves and analyzing games to spot weaknesses."
+          }
+        },
+        {
+          "name": "James's childhood memory",
+          "type": "concept",
+          "state": {
+            "description": "Photo from elementary school when he was 10 and into skateboarding."
+          }
+        },
+        {
+          "name": "James's dogs",
+          "type": "concept",
+          "state": {
+            "description": "Taught his dogs how to balance on a skateboard."
+          }
+        },
+        {
+          "name": "James's dogs' enjoyment",
+          "type": "concept",
+          "state": {
+            "description": "Dogs love to chase and run with the skateboard."
+          }
+        },
+        {
+          "name": "James's trip to Nuuk",
+          "type": "concept",
+          "state": {
+            "description": "Traveled to Nuuk, added another country to his bucket list."
+          }
+        },
+        {
+          "name": "James's souvenirs",
+          "type": "concept",
+          "state": {
+            "description": "Brought souvenirs for John and his sister Jill."
+          }
+        },
+        {
+          "name": "James's sister",
+          "type": "person",
+          "state": {
+            "description": "Spends time with James and their dogs."
+          }
+        },
+        {
+          "name": "James's bond with his sister",
+          "type": "concept",
+          "state": {
+            "description": "Has a close bond with his sister and their furry friends."
+          }
+        },
+        {
+          "name": "James's sunset memory",
+          "type": "concept",
+          "state": {
+            "description": "Watched a wonderful sunset near the ocean with his sister."
+          }
+        },
+        {
+          "name": "James's photography",
+          "type": "concept",
+          "state": {
+            "description": "Took many photos and chose the best one to send to John."
+          }
+        },
+        {
+          "name": "John's gratitude for family",
+          "type": "concept",
+          "state": {
+            "description": "Grateful for the connection with his siblings and their support."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 17,
+    "entities_new": 14,
+    "total_entities": 186
+  },
+  {
+    "session_index": 17,
+    "session_id": "conv-47_session_17",
+    "input_chars": 2500,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 August 06, 2022 at 13:45]\nJames: Hey James, good catching up! Been a while huh? I made a huge call - recently left my IT job after 3 years. It was tough but I wanted something that made a difference. And now with this new job, I am happy about my decision. I am loving the new job!\nJames: Hey John! Great to hear from you. Leaving after 3 years is a big step - how did it feel?\nJames: At ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's job change",
+          "type": "concept",
+          "state": {
+            "description": "James recently left his IT job after 3 years (since 2019) to pursue a new career that aligns with his values and passions."
+          }
+        },
+        {
+          "name": "James's new job",
+          "type": "concept",
+          "state": {
+            "description": "James is happy about his new job in the gaming industry."
+          }
+        },
+        {
+          "name": "James's passion for gaming",
+          "type": "concept",
+          "state": {
+            "description": "James's childhood games sparked his passion for gaming."
+          }
+        },
+        {
+          "name": "James's tournament organization plan",
+          "type": "concept",
+          "state": {
+            "description": "James plans to organize tournaments for games like CS:GO and Fortnite."
+          }
+        },
+        {
+          "name": "James's connections in gaming",
+          "type": "concept",
+          "state": {
+            "description": "James has made connections that will help him host Fortnite competitions."
+          }
+        },
+        {
+          "name": "James's experience goal",
+          "type": "concept",
+          "state": {
+            "description": "James aims to gain more experience and perfect his skills in the gaming field."
+          }
+        },
+        {
+          "name": "James's puppy clinic visit",
+          "type": "concept",
+          "state": {
+            "description": "James took his puppy to the clinic for a routine examination and vaccination."
+          }
+        },
+        {
+          "name": "James's puppy vaccination",
+          "type": "concept",
+          "state": {
+            "description": "James's puppy was vaccinated to prevent seasonal canine disease."
+          }
+        },
+        {
+          "name": "John's support for James",
+          "type": "concept",
+          "state": {
+            "description": "Offers support to James in his game development journey."
+          }
+        },
+        {
+          "name": "James's pets",
+          "type": "concept",
+          "state": {
+            "description": "James considers his pets to be the source of his joy and takes care of them."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 9,
+    "total_entities": 195
+  },
+  {
+    "session_index": 18,
+    "session_id": "conv-47_session_18",
+    "input_chars": 2265,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 August 10, 2022 at 09:16]\nJames: Hey James, been a few days. The convo got me thinking about my passions and goals. Thanks for encouraging me to try new game genres.\nJames: Hey John! Nice to hear from you! Glad our chat made an impact. What sort of games are you interested in exploring?\nJames: Lately, I've been playing some different genres like strategy and RPG games instead of my usu",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's passion for gaming",
+          "type": "concept",
+          "state": {
+            "description": "James is exploring new game genres, particularly strategy and RPG games."
+          }
+        },
+        {
+          "name": "James's interest in competitions",
+          "type": "concept",
+          "state": {
+            "description": "James is thinking about making competitions for the new game genres he is exploring."
+          }
+        },
+        {
+          "name": "James's current RPG",
+          "type": "concept",
+          "state": {
+            "description": "James is playing 'The Witcher 3', which features immersive storytelling and character development."
+          }
+        },
+        {
+          "name": "James's favorite character in The Witcher 3",
+          "type": "concept",
+          "state": {
+            "description": "James is particularly interested in the monster hunter character in 'The Witcher 3'."
+          }
+        },
+        {
+          "name": "James's beach outing",
+          "type": "event",
+          "state": {
+            "description": "James took his three dogs to a beach outing to bond with other dogkeepers."
+          }
+        },
+        {
+          "name": "James's new acquaintance",
+          "type": "person",
+          "state": {
+            "description": "James met a girl named Samantha at the beach and is considering asking her out."
+          }
+        },
+        {
+          "name": "James's plan to call Samantha",
+          "type": "concept",
+          "state": {
+            "description": "James plans to call Samantha tomorrow after getting her phone number."
+          }
+        },
+        {
+          "name": "John's encouragement",
+          "type": "concept",
+          "state": {
+            "description": "John encouraged James to try new game genres."
+          }
+        },
+        {
+          "name": "John's interest in gaming",
+          "type": "concept",
+          "state": {
+            "description": "John is interested in exploring different game genres."
+          }
+        },
+        {
+          "name": "John's response to James's gaming",
+          "type": "concept",
+          "state": {
+            "description": "John expressed excitement about James trying out different game genres."
+          }
+        },
+        {
+          "name": "John's opinion on RPGs",
+          "type": "concept",
+          "state": {
+            "description": "John believes storytelling is what makes RPGs enjoyable."
+          }
+        },
+        {
+          "name": "John's comment on graphics",
+          "type": "concept",
+          "state": {
+            "description": "John commented on the stunning graphics of 'The Witcher 3'."
+          }
+        },
+        {
+          "name": "James's workplace organization",
+          "type": "concept",
+          "state": {
+            "description": "James organized his workplace with wall lighting and gaming setup."
+          }
+        },
+        {
+          "name": "James's dogs",
+          "type": "family",
+          "state": {
+            "description": "James has three dogs."
+          }
+        },
+        {
+          "name": "James's gaming room",
+          "type": "concept",
+          "state": {
+            "description": "James has a gaming room with a computer and a gaming chair."
+          }
+        },
+        {
+          "name": "James's photo of the beach outing",
+          "type": "concept",
+          "state": {
+            "description": "James shared a photo of his beach outing with his dogs."
+          }
+        },
+        {
+          "name": "James's photo of his workplace",
+          "type": "concept",
+          "state": {
+            "description": "James shared a photo of his organized gaming room."
+          }
+        },
+        {
+          "name": "James's photo of the calendar",
+          "type": "concept",
+          "state": {
+            "description": "James shared a photo of a refrigerator with a calendar on it."
+          }
+        },
+        {
+          "name": "James's photo of the man in armor",
+          "type": "concept",
+          "state": {
+            "description": "James shared a photo of a man dressed in armor holding a sword."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 21,
+    "entities_new": 16,
+    "total_entities": 211
+  },
+  {
+    "session_index": 19,
+    "session_id": "conv-47_session_19",
+    "input_chars": 4300,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 August 21, 2022 at 15:57]\nJames: Hey, James! Good to hear from you. I have some awesome news - I joined a programming group online last Friday and it's been incredible! It's awesome to be part of a community of people with similar goals - coding and making a difference.\nJames: Hey John! That's great to hear! Being part of a coding community can definitely be rewarding. Can you share mo",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's online programming group",
+          "type": "concept",
+          "state": {
+            "description": "Joined an online programming group on August 12, 2022, focused on coding and making a difference."
+          }
+        },
+        {
+          "name": "James's collaboration experience",
+          "type": "concept",
+          "state": {
+            "description": "Collaborated on a project with a member of the online programming group the week before August 21, 2022."
+          }
+        },
+        {
+          "name": "James's eSports competition plans",
+          "type": "concept",
+          "state": {
+            "description": "Plans to start hosting eSports competitions."
+          }
+        },
+        {
+          "name": "James's gaming group",
+          "type": "concept",
+          "state": {
+            "description": "Regularly plays with a gaming group and streams game sessions."
+          }
+        },
+        {
+          "name": "James's new gaming devices",
+          "type": "concept",
+          "state": {
+            "description": "Bought new devices and refurbished gaming desk."
+          }
+        },
+        {
+          "name": "James's gaming setup",
+          "type": "concept",
+          "state": {
+            "description": "Uses a gaming PC with a powerful graphics card, keyboard, mouse, and a comfy chair."
+          }
+        },
+        {
+          "name": "James's gaming headset",
+          "type": "concept",
+          "state": {
+            "description": "Uses a headset for immersive sound during gaming."
+          }
+        },
+        {
+          "name": "James's gaming marathon",
+          "type": "concept",
+          "state": {
+            "description": "Hosted a gaming marathon with friends, played all night."
+          }
+        },
+        {
+          "name": "James's childhood gaming night",
+          "type": "concept",
+          "state": {
+            "description": "Had a gaming night organized by siblings when younger."
+          }
+        },
+        {
+          "name": "James's sibling gaming nights",
+          "type": "concept",
+          "state": {
+            "description": "Plans to organize a gaming night with siblings in September 2022."
+          }
+        },
+        {
+          "name": "John's gaming group",
+          "type": "concept",
+          "state": {
+            "description": "Plays with a gaming group regularly."
+          }
+        },
+        {
+          "name": "John's family gaming nights",
+          "type": "concept",
+          "state": {
+            "description": "Plans to have a gaming night with siblings September 2022."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 12,
+    "total_entities": 223
+  },
+  {
+    "session_index": 20,
+    "session_id": "conv-47_session_20",
+    "input_chars": 2366,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 August 26, 2022 at 21:18]\nJames: Hey John! Look how cute it is. My dog came to me today while I was playing on the console. What is new?\n[Image: a photo of a person holding a dog on a couch]\nJames: Your pup is so cute, remind me what's their name? I've been helping my younger siblings out with programming since they joined the programming course. It's really cool to see them get into i",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's pet Ned",
+          "type": "concept",
+          "state": {
+            "description": "Dog named Ned, adopted by James"
+          }
+        },
+        {
+          "name": "James's siblings",
+          "type": "concept",
+          "state": {
+            "description": "James has younger siblings who joined a programming course"
+          }
+        },
+        {
+          "name": "James's programming project",
+          "type": "concept",
+          "state": {
+            "description": "Working on a coding project with his siblings, a simple text-based adventure game"
+          }
+        },
+        {
+          "name": "James's game design aspiration",
+          "type": "concept",
+          "state": {
+            "description": "Aspires to create a strategy game like Civilization"
+          }
+        },
+        {
+          "name": "James's day off",
+          "type": "concept",
+          "state": {
+            "description": "James's day off is on August 27, 2022"
+          }
+        },
+        {
+          "name": "James's coffee suggestion",
+          "type": "concept",
+          "state": {
+            "description": "Suggested going to Starbucks for coffee"
+          }
+        },
+        {
+          "name": "James's beer preference",
+          "type": "concept",
+          "state": {
+            "description": "James does not like dark beer but is okay with light beers"
+          }
+        },
+        {
+          "name": "James's meeting place",
+          "type": "concept",
+          "state": {
+            "description": "Agreed to meet at McGee's Pub on August 27, 2022"
+          }
+        },
+        {
+          "name": "John's pet",
+          "type": "concept",
+          "state": {
+            "description": "John has a dog, name not mentioned"
+          }
+        },
+        {
+          "name": "John's siblings",
+          "type": "concept",
+          "state": {
+            "description": "John has siblings who signed up for programming"
+          }
+        },
+        {
+          "name": "John's game design ideas",
+          "type": "concept",
+          "state": {
+            "description": "John is considering new game designs, specifics not mentioned"
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 8,
+    "total_entities": 231
+  },
+  {
+    "session_index": 21,
+    "session_id": "conv-47_session_21",
+    "input_chars": 3169,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 September 01, 2022 at 18:53]\nJames: Hey John! Been a while, but hope you're doing well. My Unity strategy game is finally finished\u2014it took loads of time and effort, but I'm really proud. Your support and encouragement made a real difference. Thanks for believing in me!\n[Image: a photography of a screenshot of a stone building with a giant creature]\nJames: Hey James! Congrats on finishi",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's game",
+          "type": "concept",
+          "state": {
+            "description": "Playing a board game called 'Dungeons of the Dragon', which is exciting."
+          }
+        },
+        {
+          "name": "James's inspiration for game",
+          "type": "concept",
+          "state": {
+            "description": "Inspired to create his game by playing video games, especially The Witcher 3."
+          }
+        },
+        {
+          "name": "James's development challenges",
+          "type": "concept",
+          "state": {
+            "description": "Faced challenges in balancing mechanics and ensuring fairness during game development."
+          }
+        },
+        {
+          "name": "James's key takeaways",
+          "type": "concept",
+          "state": {
+            "description": "Learned perseverance, patience, and the importance of feedback and collaboration."
+          }
+        },
+        {
+          "name": "James's siblings' coding",
+          "type": "concept",
+          "state": {
+            "description": "James has been teaching his siblings coding, and they are creating their own programs."
+          }
+        },
+        {
+          "name": "James's siblings' projects",
+          "type": "concept",
+          "state": {
+            "description": "They are starting small, making basic games and stories."
+          }
+        },
+        {
+          "name": "James's pride in siblings",
+          "type": "concept",
+          "state": {
+            "description": "James is proud of his siblings for learning coding and creating their own games."
+          }
+        },
+        {
+          "name": "John's support for James",
+          "type": "person",
+          "state": {
+            "description": "John has been supportive and encouraging towards James."
+          }
+        },
+        {
+          "name": "James's friendship with John",
+          "type": "concept",
+          "state": {
+            "description": "James values his friendship with John, especially during difficult times."
+          }
+        },
+        {
+          "name": "James's difficult times",
+          "type": "concept",
+          "state": {
+            "description": "James is going through some difficult times and appreciates John's support."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 9,
+    "total_entities": 240
+  },
+  {
+    "session_index": 22,
+    "session_id": "conv-47_session_22",
+    "input_chars": 2991,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 September 04, 2022 at 21:23]\nJames: Hey John, it's been a few days since we talked. So much has gone on, both good and bad. Yesterday, when we were at the theater, Samantha loves theater, I asked her to become my girlfriend, and she agreed. We have gone through a lot in this short period. There were good and bad, but I'm happy with her. All that ups and downs were a bit overwhelming, b",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's girlfriend Samantha",
+          "type": "person",
+          "state": {
+            "description": "James asked Samantha to become his girlfriend, and she agreed."
+          }
+        },
+        {
+          "name": "James's parents learning coding",
+          "type": "concept",
+          "state": {
+            "description": "James's parents just started learning coding from him."
+          }
+        },
+        {
+          "name": "James's father's first coding experience",
+          "type": "concept",
+          "state": {
+            "description": "James's father coding his own program for the first time."
+          }
+        },
+        {
+          "name": "James's favorite bar McGee's",
+          "type": "concept",
+          "state": {
+            "description": "James and Samantha went to McGee's bar where she loves a good lager beer."
+          }
+        },
+        {
+          "name": "James's baseball game plans",
+          "type": "concept",
+          "state": {
+            "description": "James and Samantha are going to a baseball game on September 11, 2022."
+          }
+        },
+        {
+          "name": "James's new gaming equipment",
+          "type": "concept",
+          "state": {
+            "description": "James bought new gaming equipment including headphones and a mouse."
+          }
+        },
+        {
+          "name": "James's new headphones",
+          "type": "concept",
+          "state": {
+            "description": "James chose headphones from Sennheiser, known for excellent sound."
+          }
+        },
+        {
+          "name": "James's new mouse",
+          "type": "concept",
+          "state": {
+            "description": "James bought a mouse from Logitech."
+          }
+        },
+        {
+          "name": "James's cooking class",
+          "type": "concept",
+          "state": {
+            "description": "James signed up for a cooking class two days ago."
+          }
+        },
+        {
+          "name": "James's first cooking lesson",
+          "type": "concept",
+          "state": {
+            "description": "In his first cooking lesson, James prepared several simple dishes including a great omelette."
+          }
+        },
+        {
+          "name": "James's cooking class cost",
+          "type": "concept",
+          "state": {
+            "description": "The cooking classes cost only $10 per class."
+          }
+        },
+        {
+          "name": "James's meringue dish",
+          "type": "concept",
+          "state": {
+            "description": "James made meringue in his cooking class."
+          }
+        },
+        {
+          "name": "James's dough making lesson",
+          "type": "concept",
+          "state": {
+            "description": "James learned how to make dough in his cooking class."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 15,
+    "entities_new": 13,
+    "total_entities": 253
+  },
+  {
+    "session_index": 23,
+    "session_id": "conv-47_session_23",
+    "input_chars": 3125,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 September 18, 2022 at 18:02]\nJames: Hey James! Long time no see! A lot's changed since we talked. I started getting into board games. I tried one last week and it turned out to be a lot of fun. What's new with you?\n[Image: a photo of a table with a laptop and a game on it]\nJames: Hey John! Cool, what kind of board game is this? I had a lot to do all this time. And in order not to forge",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's hobby: board games",
+          "type": "concept",
+          "state": {
+            "description": "Started getting into board games, tried one the week before September 18, 2022 and found it fun."
+          }
+        },
+        {
+          "name": "James's notebook",
+          "type": "concept",
+          "state": {
+            "description": "Started writing down everything needed to do in a notebook."
+          }
+        },
+        {
+          "name": "James's game",
+          "type": "concept",
+          "state": {
+            "description": "Playing a board game called 'Dungeons of the Dragon', which is exciting."
+          }
+        },
+        {
+          "name": "James's idea sources",
+          "type": "concept",
+          "state": {
+            "description": "Gets ideas from various sources like books, movies, and dreams."
+          }
+        },
+        {
+          "name": "James's dream inspiration",
+          "type": "concept",
+          "state": {
+            "description": "Had a vivid dream a few weeks before September 18, 2022 that led to creative ideas."
+          }
+        },
+        {
+          "name": "James's dream details",
+          "type": "concept",
+          "state": {
+            "description": "Dream involved a medieval castle with a labyrinth full of puzzles and traps."
+          }
+        },
+        {
+          "name": "James's sketches and notes",
+          "type": "concept",
+          "state": {
+            "description": "Made sketches and notes from the dream experience."
+          }
+        },
+        {
+          "name": "James's music preference",
+          "type": "concept",
+          "state": {
+            "description": "Music is a big part of his life, enjoys electronic and rock music."
+          }
+        },
+        {
+          "name": "James's instrument",
+          "type": "concept",
+          "state": {
+            "description": "Used to play drums when younger, but hasn't played in a while."
+          }
+        },
+        {
+          "name": "James's guitar experience",
+          "type": "concept",
+          "state": {
+            "description": "Used to play guitar when younger, but hasn't played in a while."
+          }
+        },
+        {
+          "name": "James's jamming experience",
+          "type": "concept",
+          "state": {
+            "description": "Jammed with friends before, found it a lot of fun."
+          }
+        },
+        {
+          "name": "James's streaming plans",
+          "type": "concept",
+          "state": {
+            "description": "Started streaming games, no details yet."
+          }
+        },
+        {
+          "name": "John's music preference",
+          "type": "concept",
+          "state": {
+            "description": "Likes rock music."
+          }
+        },
+        {
+          "name": "John's instrument",
+          "type": "concept",
+          "state": {
+            "description": "Used to play guitar when younger, but hasn't played in a while."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 16,
+    "entities_new": 12,
+    "total_entities": 265
+  },
+  {
+    "session_index": 24,
+    "session_id": "conv-47_session_24",
+    "input_chars": 4025,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 September 20, 2022 at 20:56]\nJames: Hey James, been a few days since we chatted. Lots of stuff goin' on in my life!\nJames: Hey John! What new has happened in your life?\nJames: Yesterday I started a new startup - portable smokers. Now, I\u2019ve already welded one from metal. Do you think it looks good? How about you, any cool stuff happening?\n[Image: a photo of a fire burning in a metal pot",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's startup",
+          "type": "concept",
+          "state": {
+            "description": "Started a new startup focused on portable smokers."
+          }
+        },
+        {
+          "name": "James's first mobile game",
+          "type": "concept",
+          "state": {
+            "description": "Achieved a major career milestone by creating a 2D adventure mobile game with puzzles and exploration, launching in October 2022."
+          }
+        },
+        {
+          "name": "James's gaming community experience",
+          "type": "concept",
+          "state": {
+            "description": "Received positive comments from the gaming community after streaming a game."
+          }
+        },
+        {
+          "name": "John's mobile game",
+          "type": "concept",
+          "state": {
+            "description": "Creating a mobile game that is a 2D adventure with puzzles and exploration."
+          }
+        },
+        {
+          "name": "John's game design resources",
+          "type": "concept",
+          "state": {
+            "description": "Uses a book filled with tips and insights on game design, watches tutorials, and follows developer forums."
+          }
+        },
+        {
+          "name": "James's week",
+          "type": "concept",
+          "state": {
+            "description": "Trying to find a balance between work and other activities."
+          }
+        },
+        {
+          "name": "John's week",
+          "type": "concept",
+          "state": {
+            "description": "Chaotic week with everything going on, but powering through."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 9,
+    "entities_new": 7,
+    "total_entities": 272
+  },
+  {
+    "session_index": 25,
+    "session_id": "conv-47_session_25",
+    "input_chars": 2230,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 October 03, 2022 at 09:20]\nJames: Hey James! Busy few weeks for sure, but I'm pushing through. Got an email about a volunteer gig at a game dev non-profit. It's something I've wanted to do for a while, and could be the perfect start to a career that combines my two loves - gaming and helping. So stoked!\nJames: Hey John, that sounds awesome! Combining your two loves - gaming and helping",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's volunteer gig",
+          "type": "concept",
+          "state": {
+            "description": "Volunteer gig at a game dev non-profit as a programming mentor for game developers."
+          }
+        },
+        {
+          "name": "James's loves",
+          "type": "concept",
+          "state": {
+            "description": "James's two loves are gaming and helping people."
+          }
+        },
+        {
+          "name": "James's teaching role",
+          "type": "concept",
+          "state": {
+            "description": "Teaching coding and assisting with projects as a programming mentor."
+          }
+        },
+        {
+          "name": "James's excitement about mentoring",
+          "type": "concept",
+          "state": {
+            "description": "James is excited and inspired about mentoring programmers."
+          }
+        },
+        {
+          "name": "James's fulfillment from mentoring",
+          "type": "concept",
+          "state": {
+            "description": "James finds it rewarding to share knowledge and see others reach their potential."
+          }
+        },
+        {
+          "name": "James's new video card",
+          "type": "concept",
+          "state": {
+            "description": "James got a new video card the week before October 03, 2022."
+          }
+        },
+        {
+          "name": "James's favorite game genre",
+          "type": "concept",
+          "state": {
+            "description": "James is super into RPGs."
+          }
+        },
+        {
+          "name": "James's interest in Cyberpunk 2077",
+          "type": "concept",
+          "state": {
+            "description": "James is excited about playing Cyberpunk 2077."
+          }
+        },
+        {
+          "name": "John's recommendation of Cyberpunk 2077",
+          "type": "concept",
+          "state": {
+            "description": "John recommends Cyberpunk 2077, describing it as awesome with an immersive world and amazing story."
+          }
+        },
+        {
+          "name": "John's support for James",
+          "type": "concept",
+          "state": {
+            "description": "John expresses support for James's volunteer gig and new video card."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 9,
+    "total_entities": 281
+  },
+  {
+    "session_index": 26,
+    "session_id": "conv-47_session_26",
+    "input_chars": 2041,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 October 13, 2022 at 14:14]\nJames: Hey James! How's it going? I had a blast last week when my programmer friends and I organized an online comp. It was awesome to see everyone show off their skills! Anything new in your life?\n[Image: a photo of a desk with a laptop and a monitor]\nJames: Hey John, congrats! Something cool happened to me recently. I made my first game and released it for ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's online competition",
+          "type": "concept",
+          "state": {
+            "description": "Organized an online competition with programmer friends, had a blast the week before October 13, 2022."
+          }
+        },
+        {
+          "name": "James's first game",
+          "type": "concept",
+          "state": {
+            "description": "Released his first game for the gaming community, felt excited about it."
+          }
+        },
+        {
+          "name": "James's game engagement",
+          "type": "concept",
+          "state": {
+            "description": "Felt fulfilled to see players engage with the game world he created."
+          }
+        },
+        {
+          "name": "James's inspiration for game",
+          "type": "concept",
+          "state": {
+            "description": "Inspired to create his game by playing video games, especially The Witcher 3."
+          }
+        },
+        {
+          "name": "James's future game development plans",
+          "type": "concept",
+          "state": {
+            "description": "Plans to make more games in different genres and test out new ideas."
+          }
+        },
+        {
+          "name": "James's determination in game development",
+          "type": "concept",
+          "state": {
+            "description": "Determination and love for game development is incredible."
+          }
+        },
+        {
+          "name": "James's appreciation for support",
+          "type": "concept",
+          "state": {
+            "description": "Appreciates John's support in his game development journey."
+          }
+        },
+        {
+          "name": "John's support for James",
+          "type": "concept",
+          "state": {
+            "description": "Offers support to James in his game development journey."
+          }
+        },
+        {
+          "name": "James's teamwork with John",
+          "type": "concept",
+          "state": {
+            "description": "Considers their collaboration as a good team effort."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 7,
+    "total_entities": 288
+  },
+  {
+    "session_index": 27,
+    "session_id": "conv-47_session_27",
+    "input_chars": 4558,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 October 21, 2022 at 19:36]\nJames: Hey John, long time no talk! So much has happened!\nJames: Hey James! I'm excited to catch up. What's been up lately?\nJames: Three days ago my apartment lost power - so annoying because I had just gotten to the big reveal in that game! Had to wait hours before playing again.\nJames: Ugh, that stinks! Losing power in the middle of a game is such a bummer.",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's apartment power loss",
+          "type": "concept",
+          "state": {
+            "description": "James's apartment lost power three days ago."
+          }
+        },
+        {
+          "name": "James's gaming progress",
+          "type": "concept",
+          "state": {
+            "description": "James lost some gaming progress because he forgot to save."
+          }
+        },
+        {
+          "name": "James's programming seminar",
+          "type": "concept",
+          "state": {
+            "description": "James organized a programming seminar the week before October 21, 2022."
+          }
+        },
+        {
+          "name": "James's seminar turnout",
+          "type": "concept",
+          "state": {
+            "description": "The seminar had a great turnout."
+          }
+        },
+        {
+          "name": "James's seminar insights",
+          "type": "concept",
+          "state": {
+            "description": "James gained insight into various programming approaches and techniques from the seminar."
+          }
+        },
+        {
+          "name": "James's programming techniques",
+          "type": "concept",
+          "state": {
+            "description": "James found some cool programming ideas to incorporate into his work."
+          }
+        },
+        {
+          "name": "James's experimentation plans",
+          "type": "concept",
+          "state": {
+            "description": "James is looking forward to experimenting with new programming techniques."
+          }
+        },
+        {
+          "name": "James's mother's visit",
+          "type": "concept",
+          "state": {
+            "description": "James's mother visited him with her army friend two days ago."
+          }
+        },
+        {
+          "name": "James's mother's friend",
+          "type": "person",
+          "state": {
+            "description": "James's mother's friend is still serving in the army but retired a long time ago."
+          }
+        },
+        {
+          "name": "James's childhood gaming",
+          "type": "concept",
+          "state": {
+            "description": "James had a Nintendo gaming system as a child and played Super Mario and The Legend of Zelda."
+          }
+        },
+        {
+          "name": "James's passion for gaming",
+          "type": "concept",
+          "state": {
+            "description": "James's childhood games sparked his passion for gaming."
+          }
+        },
+        {
+          "name": "James's recent game",
+          "type": "concept",
+          "state": {
+            "description": "James tried Cyberpunk 2077 October 20, 2022 and found it great and addictive."
+          }
+        },
+        {
+          "name": "James's game difficulty",
+          "type": "concept",
+          "state": {
+            "description": "The most difficult thing about Cyberpunk 2077 is making the right choices."
+          }
+        },
+        {
+          "name": "John's advice on Cyberpunk 2077",
+          "type": "concept",
+          "state": {
+            "description": "John advised James to remember that he doesn't have to be friends with every character in the game."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 16,
+    "entities_new": 13,
+    "total_entities": 301
+  },
+  {
+    "session_index": 28,
+    "session_id": "conv-47_session_28",
+    "input_chars": 2367,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 October 31, 2022 at 00:37]\nJames: Hey James! Hope you're doing great. I've some amazing news - I held a gaming tourney with my buddies last night. We played Fortnite and a few other games. We raised a decent amount for a children's hospital. Combining gaming and a good cause felt awesome!\nJames: Hey John! Awesome job organizing a gaming tournament for a children's hospital! Combining g",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's gaming tournament",
+          "type": "event",
+          "state": {
+            "description": "Held a gaming tournament with friends on October 30, 2022, raising money for a children's hospital."
+          }
+        },
+        {
+          "name": "James's games played",
+          "type": "event",
+          "state": {
+            "description": "Played Fortnite, Overwatch, and Apex Legends during the gaming tournament."
+          }
+        },
+        {
+          "name": "James's apartment",
+          "type": "home",
+          "state": {
+            "description": "Rented an apartment not far from McGee's bar."
+          }
+        },
+        {
+          "name": "James's decision to move in",
+          "type": "event",
+          "state": {
+            "description": "James and Samantha decided to move in together."
+          }
+        },
+        {
+          "name": "John's support",
+          "type": "concept",
+          "state": {
+            "description": "John expressed support for James's decision to move in with Samantha."
+          }
+        },
+        {
+          "name": "Samantha's relationship with James",
+          "type": "person",
+          "state": {
+            "description": "Samantha is James's partner."
+          }
+        },
+        {
+          "name": "Children's hospital fundraiser",
+          "type": "event",
+          "state": {
+            "description": "The gaming tournament raised money for a children's hospital."
+          }
+        },
+        {
+          "name": "James's photo from the tournament",
+          "type": "item",
+          "state": {
+            "description": "A photo of a computer screen with a game menu from the tournament."
+          }
+        },
+        {
+          "name": "James's photo with dogs",
+          "type": "item",
+          "state": {
+            "description": "A photo of a man and two dogs running in a field."
+          }
+        },
+        {
+          "name": "James's favorite bar",
+          "type": "place",
+          "state": {
+            "description": "McGee's bar is a favorite spot for James and Samantha."
+          }
+        },
+        {
+          "name": "James's friends",
+          "type": "person",
+          "state": {
+            "description": "James's gaming pals who participated in the tournament."
+          }
+        },
+        {
+          "name": "John's excitement",
+          "type": "concept",
+          "state": {
+            "description": "John expressed excitement about James's gaming tournament."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 12,
+    "total_entities": 313
+  },
+  {
+    "session_index": 29,
+    "session_id": "conv-47_session_29",
+    "input_chars": 2325,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 November 05, 2022 at 17:20]\nJames: Hey John, hope you're doing well. Yesterday, we started on a road trip. It was fun spending time with the family and my dogs. Exploring new places and taking in nature with the furballs was awesome!\nJames: Hey James! Wow, what an adventure! Lately, I've been busy with something. Guess what? I had a great accomplishment this Tuesday! It was awesome.\nJa",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's road trip",
+          "type": "concept",
+          "state": {
+            "description": "Currently on a road trip with family, visited friends Josh and Mark."
+          }
+        },
+        {
+          "name": "James's dogs",
+          "type": "concept",
+          "state": {
+            "description": "James has dogs that he enjoys spending time with."
+          }
+        },
+        {
+          "name": "James's chess tournament win",
+          "type": "concept",
+          "state": {
+            "description": "Won the regional chess tournament on November 1, 2022."
+          }
+        },
+        {
+          "name": "James's chess strategy",
+          "type": "concept",
+          "state": {
+            "description": "Analyzed and anticipated opponent's moves to stay one step ahead."
+          }
+        },
+        {
+          "name": "James's chess improvement tips",
+          "type": "concept",
+          "state": {
+            "description": "Studying opening moves and strategies, learning from experienced players, and analyzing past games."
+          }
+        },
+        {
+          "name": "James's resource for chess openings",
+          "type": "concept",
+          "state": {
+            "description": "Provided a helpful resource for chess openings."
+          }
+        },
+        {
+          "name": "James's gaming interest",
+          "type": "concept",
+          "state": {
+            "description": "Interested in trying new gaming genres, specifically sports games."
+          }
+        },
+        {
+          "name": "James's gaming practice",
+          "type": "concept",
+          "state": {
+            "description": "Plans to practice FIFA 23 before playing with John."
+          }
+        },
+        {
+          "name": "John's gaming recommendation",
+          "type": "concept",
+          "state": {
+            "description": "Currently playing FIFA 23, a football game that allows online play."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 8,
+    "total_entities": 321
+  },
+  {
+    "session_index": 30,
+    "session_id": "conv-47_session_30",
+    "input_chars": 3256,
+    "input_preview": "[Speakers: James and John]\nUse their FULL NAMES (James, John) in entity names, never abbreviations.\n\n[Session \u2014 November 07, 2022 at 20:57]\nJames: Hey John! Guess what? Me and my family are currently on the road trip! We`ve already visited my friends Josh and Mark and had such a great time!\n[Image: a photo of a group of people posing for a picture]\nJames: Hey James! That sounds awesome! I had a super fun weekend - I worked with a game developer on a project and it was great to see my ideas come ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "James's road trip",
+          "type": "concept",
+          "state": {
+            "description": "Currently on a road trip with family, visited friends Josh and Mark."
+          }
+        },
+        {
+          "name": "James's friends Josh and Mark",
+          "type": "person",
+          "state": {
+            "description": "Friends visited during the road trip."
+          }
+        },
+        {
+          "name": "James's weekend project",
+          "type": "concept",
+          "state": {
+            "description": "Worked with a game developer on a project."
+          }
+        },
+        {
+          "name": "James's game project",
+          "type": "concept",
+          "state": {
+            "description": "Collaborated with a game developer to create an online board game."
+          }
+        },
+        {
+          "name": "James's game demo release",
+          "type": "concept",
+          "state": {
+            "description": "About to release a demo of the online board game."
+          }
+        },
+        {
+          "name": "James's visit to animal sanctuary",
+          "type": "concept",
+          "state": {
+            "description": "Visited an animal sanctuary during the road trip, saw many cute rescue dogs."
+          }
+        },
+        {
+          "name": "James's dogs",
+          "type": "concept",
+          "state": {
+            "description": "Has three dogs at home."
+          }
+        },
+        {
+          "name": "James's feelings about dogs",
+          "type": "belief",
+          "state": {
+            "description": "Believes having furry friends brings joy and friendship."
+          }
+        },
+        {
+          "name": "James's cousin's dog Luna",
+          "type": "person",
+          "state": {
+            "description": "Cousin's dog named Luna."
+          }
+        },
+        {
+          "name": "John's weekend project",
+          "type": "concept",
+          "state": {
+            "description": "Worked with a game developer on a project."
+          }
+        },
+        {
+          "name": "John's feelings about dogs",
+          "type": "belief",
+          "state": {
+            "description": "Wants to get a dog and appreciates the joy they bring."
+          }
+        },
+        {
+          "name": "James",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "John",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 9,
+    "total_entities": 330
+  }
+]

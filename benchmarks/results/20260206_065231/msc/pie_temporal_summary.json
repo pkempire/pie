@@ -1,0 +1,15 @@
+{
+  "overall": {
+    "score": 20.0,
+    "total": 5
+  },
+  "by_type": {
+    "memory_qa": {
+      "score": 20.0,
+      "count": 5
+    }
+  },
+  "baseline": "pie_temporal",
+  "benchmark": "msc",
+  "timestamp": "2026-02-06T12:24:30.117950+00:00"
+}

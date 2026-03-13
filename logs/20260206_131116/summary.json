@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-02-06T18:11:16.504499+00:00",
+  "output_dir": "/Users/parthkocheta/personal-intelligence-system/logs/20260206_131116",
+  "results": {
+    "extraction": {
+      "status": "dry_run"
+    },
+    "longmemeval": {
+      "status": "dry_run"
+    },
+    "locomo": {
+      "status": "dry_run"
+    },
+    "tot": {
+      "status": "dry_run"
+    },
+    "baselines": {
+      "status": "dry_run"
+    }
+  }
+}

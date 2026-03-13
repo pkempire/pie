@@ -34,11 +34,17 @@ from pie.core.models import Turn, Conversation
 
 # ── Date Parsing ──────────────────────────────────────────────────────────────
 
-# LoCoMo date formats:
-# "18 May 2023 at 1:39 pm"
-# "7 April 2023 at 4:01 pm"
-_DATE_RE_12H = re.compile(
+# LoCoMo date formats (at least 3 variants in the dataset):
+# Format A: "18 May 2023 at 1:39 pm"
+# Format B: "7 April 2023 at 4:01 pm"
+# Format C: "1:56 pm on 8 May, 2023"  (time-first)
+_DATE_RE_A = re.compile(
     r"(\d{1,2})\s+(\w+)\s+(\d{4})\s+at\s+(\d{1,2}):(\d{2})\s*(am|pm)",
+    re.IGNORECASE
+)
+# "1:56 pm on 8 May, 2023" or "1:56 pm on 8 May 2023"
+_DATE_RE_B = re.compile(
+    r"(\d{1,2}):(\d{2})\s*(am|pm)\s+on\s+(\d{1,2})\s+(\w+),?\s+(\d{4})",
     re.IGNORECASE
 )
 
@@ -55,22 +61,36 @@ def parse_locomo_date(date_str: str) -> float:
     """
     Parse a LoCoMo date string into a Unix timestamp.
 
-    Format: "18 May 2023 at 1:39 pm"
+    Handles multiple formats found in the dataset:
+      - "18 May 2023 at 1:39 pm"
+      - "1:56 pm on 8 May, 2023"
     Returns: float (Unix timestamp, UTC)
     """
     if not date_str:
         return 0.0
 
-    m = _DATE_RE_12H.match(date_str.strip())
-    if not m:
-        raise ValueError(f"Cannot parse LoCoMo date: {date_str!r}")
+    stripped = date_str.strip()
 
-    day = int(m.group(1))
-    month_str = m.group(2).lower()
-    year = int(m.group(3))
-    hour = int(m.group(4))
-    minute = int(m.group(5))
-    ampm = m.group(6).lower()
+    # Try Format A: "18 May 2023 at 1:39 pm"
+    m = _DATE_RE_A.match(stripped)
+    if m:
+        day = int(m.group(1))
+        month_str = m.group(2).lower()
+        year = int(m.group(3))
+        hour = int(m.group(4))
+        minute = int(m.group(5))
+        ampm = m.group(6).lower()
+    else:
+        # Try Format B: "1:56 pm on 8 May, 2023"
+        m = _DATE_RE_B.match(stripped)
+        if not m:
+            raise ValueError(f"Cannot parse LoCoMo date: {date_str!r}")
+        hour = int(m.group(1))
+        minute = int(m.group(2))
+        ampm = m.group(3).lower()
+        day = int(m.group(4))
+        month_str = m.group(5).lower()
+        year = int(m.group(6))
 
     month = MONTH_MAP.get(month_str)
     if not month:

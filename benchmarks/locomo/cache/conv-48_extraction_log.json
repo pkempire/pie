@@ -1,0 +1,3328 @@
+[
+  {
+    "session_index": 0,
+    "session_id": "conv-48_session_0",
+    "input_chars": 2158,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 January 23, 2023 at 16:06]\nDeborah: Hey Jolene, nice to meet you! How's your week going? Anything fun happened?\nDeborah: Hi Deb! Good to meet you! Yeah, my week's been busy. I finished an electrical engineering project last week - took a lot of work, but it's done now. Anything fun happening for you?\nDeborah: Congrats! Last week I visited a place that holds a lot of memories fo",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's electrical engineering project",
+          "type": "concept",
+          "state": {
+            "description": "Completed an electrical engineering project in January 2023."
+          }
+        },
+        {
+          "name": "Deborah's mother's old house",
+          "type": "concept",
+          "state": {
+            "description": "A place that holds many memories for Deborah, as her mother passed away a few years ago."
+          }
+        },
+        {
+          "name": "Deborah's last photo with her mother",
+          "type": "concept",
+          "state": {
+            "description": "A photo of Deborah and her mother together."
+          }
+        },
+        {
+          "name": "Deborah's mother's passing",
+          "type": "concept",
+          "state": {
+            "description": "Deborah's mother passed away in 2022."
+          }
+        },
+        {
+          "name": "Deborah's room in her mother's house",
+          "type": "concept",
+          "state": {
+            "description": "Deborah has many memories in her room at her mother's house."
+          }
+        },
+        {
+          "name": "Deborah's special bench",
+          "type": "concept",
+          "state": {
+            "description": "Deborah has a special bench in the park that holds memories with her mom."
+          }
+        },
+        {
+          "name": "Deborah's pendant from her mother",
+          "type": "concept",
+          "state": {
+            "description": "A pendant given to Deborah by her mother in 2010 in Paris."
+          }
+        },
+        {
+          "name": "Deborah's pendant symbol",
+          "type": "concept",
+          "state": {
+            "description": "The pendant has a special symbol that represents freedom for Deborah."
+          }
+        },
+        {
+          "name": "Deborah's yoga teaching goal",
+          "type": "concept",
+          "state": {
+            "description": "One of Deborah's goals is to keep teaching yoga and supporting her community."
+          }
+        },
+        {
+          "name": "Deborah's inspiration for yoga",
+          "type": "concept",
+          "state": {
+            "description": "Deborah was inspired to teach yoga because it helped her find peace during a rough time."
+          }
+        },
+        {
+          "name": "Jolene's mother",
+          "type": "person",
+          "state": {
+            "description": "Jolene's mother passed away 2022."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 13,
+    "total_entities": 13
+  },
+  {
+    "session_index": 1,
+    "session_id": "conv-48_session_1",
+    "input_chars": 3728,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 January 27, 2023 at 09:49]\nDeborah: Hey Jolene, sorry to tell you this but my dad passed away two days ago. It's been really tough on us all - his sudden death left us all kinda shell-shocked. I'm trying to channel my grief by spending more time with family and cherishing the memories. These moments remind me to live life fully.\n[Image: a photo of a woman hugging a woman who is",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's father's passing",
+          "type": "event",
+          "state": {
+            "description": "Deborah's father passed away on January 25, 2023."
+          }
+        },
+        {
+          "name": "Deborah's coping mechanism",
+          "type": "concept",
+          "state": {
+            "description": "Finding ways to keep her mother's memory alive gives Deborah peace."
+          }
+        },
+        {
+          "name": "Deborah's parents' wedding",
+          "type": "event",
+          "state": {
+            "description": "Deborah's parents were married in 1993."
+          }
+        },
+        {
+          "name": "Deborah's relationship values",
+          "type": "concept",
+          "state": {
+            "description": "Deborah values love and openness in her relationship."
+          }
+        },
+        {
+          "name": "Deborah's letter from group members",
+          "type": "concept",
+          "state": {
+            "description": "Deborah received a letter from group members thanking her for her positive influence."
+          }
+        },
+        {
+          "name": "Deborah's passion for yoga",
+          "type": "concept",
+          "state": {
+            "description": "Deborah is passionate about yoga."
+          }
+        },
+        {
+          "name": "Deborah's old home",
+          "type": "location",
+          "state": {
+            "description": "Deborah's old home is a place where she feels connected to her deceased mother."
+          }
+        },
+        {
+          "name": "Deborah's mother's hobbies",
+          "type": "concept",
+          "state": {
+            "description": "Deborah's mother enjoyed reading and traveling."
+          }
+        },
+        {
+          "name": "Deborah's pet snake Susie",
+          "type": "animal",
+          "state": {
+            "description": "Deborah has a pet snake named Susie."
+          }
+        },
+        {
+          "name": "Deborah's second snake Seraphim",
+          "type": "animal",
+          "state": {
+            "description": "Deborah has a second pet snake named Seraphim."
+          }
+        },
+        {
+          "name": "Deborah's pet acquisition",
+          "type": "event",
+          "state": {
+            "description": "Deborah bought her snake Seraphim a year ago in Paris."
+          }
+        },
+        {
+          "name": "Deborah's gaming activity",
+          "type": "concept",
+          "state": {
+            "description": "Deborah enjoys gaming with her partner."
+          }
+        },
+        {
+          "name": "Deborah's planned gaming session",
+          "type": "event",
+          "state": {
+            "description": "Deborah and her partner plan to play 'Walking Dead' on February 4, 2023."
+          }
+        },
+        {
+          "name": "Jolene's support",
+          "type": "person",
+          "state": {
+            "description": "Deborah appreciates Jolene's support in their journey."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 16,
+    "entities_new": 14,
+    "total_entities": 27
+  },
+  {
+    "session_index": 2,
+    "session_id": "conv-48_session_2",
+    "input_chars": 1750,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 February 01, 2023 at 19:03]\nDeborah: Hi Deb! How're you? I've been busy. My engineering professor gave us a huge robotics project. It's tough but fun, it's making me get creative and problem-solve.\n[Image: a photo of a table with a robot on it and a laptop]\nDeborah: Hey Jolene! It's great to hear from you. It sounds challenging but interesting! It must be really putting your cr",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's robotics project",
+          "type": "concept",
+          "state": {
+            "description": "A huge robotics project assigned by her engineering professor, which is tough but fun, making her get creative and problem-solve."
+          }
+        },
+        {
+          "name": "Deborah's emotions about the project",
+          "type": "concept",
+          "state": {
+            "description": "Felt a mix of emotions - excited and nervous when first receiving the project."
+          }
+        },
+        {
+          "name": "Deborah's enjoyment of the project",
+          "type": "concept",
+          "state": {
+            "description": "Now really enjoying the project, likening it to solving a puzzle and finding the best design and programming."
+          }
+        },
+        {
+          "name": "Deborah's neighbor Anna",
+          "type": "person",
+          "state": {
+            "description": "New neighbor met by Deborah at yoga in the park."
+          }
+        },
+        {
+          "name": "Deborah's yoga experience",
+          "type": "concept",
+          "state": {
+            "description": "Has been doing yoga for 3 years (since 2020)."
+          }
+        },
+        {
+          "name": "Deborah's weekend plans",
+          "type": "concept",
+          "state": {
+            "description": "Planned to play video games with her partner."
+          }
+        },
+        {
+          "name": "Jolene's response to Deborah's project",
+          "type": "concept",
+          "state": {
+            "description": "Expressed that it sounds challenging but interesting, and that it must be putting Deborah's creative and problem-solving skills to the test."
+          }
+        },
+        {
+          "name": "Jolene's interest in yoga",
+          "type": "concept",
+          "state": {
+            "description": "Deborah asked Jolene if she has ever thought about resuming yoga."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 8,
+    "total_entities": 35
+  },
+  {
+    "session_index": 3,
+    "session_id": "conv-48_session_3",
+    "input_chars": 6029,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 February 04, 2023 at 09:48]\nDeborah: Hey Deborah! Good to hear from you. How've you been? I've been on an emotional rollercoaster lately, but I'm coping.\nDeborah: Hey Jolene! Good to hear from you. All good here - how about you? Anything new happening lately?\nDeborah: I had a major milestone last week and it went really well - I'm so relieved and proud. It was a huge accomplish",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's emotional state",
+          "type": "concept",
+          "state": {
+            "description": "Deborah has been on an emotional rollercoaster but is coping."
+          }
+        },
+        {
+          "name": "Deborah's milestone",
+          "type": "concept",
+          "state": {
+            "description": "Deborah had a major milestone the week before February 04, 2023 that went really well."
+          }
+        },
+        {
+          "name": "Deborah's accomplishment",
+          "type": "concept",
+          "state": {
+            "description": "Deborah designed and built a sustainable water purifier for a rural community."
+          }
+        },
+        {
+          "name": "Deborah's engineering impact",
+          "type": "concept",
+          "state": {
+            "description": "Deborah's engineering skills made a difference for people in a rural area."
+          }
+        },
+        {
+          "name": "Deborah's career aspirations",
+          "type": "concept",
+          "state": {
+            "description": "Deborah wants to continue working in engineering to make a positive impact on communities."
+          }
+        },
+        {
+          "name": "Deborah's yoga teaching",
+          "type": "concept",
+          "state": {
+            "description": "Deborah has been focusing on teaching yoga."
+          }
+        },
+        {
+          "name": "Deborah's yoga class bond",
+          "type": "concept",
+          "state": {
+            "description": "Deborah bonded with Anna during a yoga class."
+          }
+        },
+        {
+          "name": "Deborah's yoga pose experience",
+          "type": "concept",
+          "state": {
+            "description": "Deborah tried different dance poses, including Warrior II, which builds strength and boosts focus."
+          }
+        },
+        {
+          "name": "Deborah's modified yoga pose explanation",
+          "type": "concept",
+          "state": {
+            "description": "To do the modified pose, sit on the edge of a chair, twist your torso, and hold for a few breaths."
+          }
+        },
+        {
+          "name": "Deborah's bookshelf",
+          "type": "concept",
+          "state": {
+            "description": "Has a big bookshelf for escaping reality and relaxing with books."
+          }
+        },
+        {
+          "name": "Deborah's favorite book",
+          "type": "concept",
+          "state": {
+            "description": "Deborah is currently into 'Sapiens', a fascinating look at human history."
+          }
+        },
+        {
+          "name": "Deborah's recent read",
+          "type": "concept",
+          "state": {
+            "description": "Deborah read 'Avalanche' by Neal Stephenson in one sitting two weeks before February 04, 2023."
+          }
+        },
+        {
+          "name": "Deborah's powerful story",
+          "type": "concept",
+          "state": {
+            "description": "Deborah read a story about someone who became successful despite challenges."
+          }
+        },
+        {
+          "name": "Deborah's bouquet backstory",
+          "type": "concept",
+          "state": {
+            "description": "Deborah received a bouquet from a friend when she was struggling."
+          }
+        },
+        {
+          "name": "Deborah's favorite nature spot",
+          "type": "concept",
+          "state": {
+            "description": "Deborah's favorite nature spot is a park with a forest trail."
+          }
+        },
+        {
+          "name": "Deborah's beach spot",
+          "type": "concept",
+          "state": {
+            "description": "Deborah loves a nearby beach for its calming sound of waves."
+          }
+        },
+        {
+          "name": "Deborah's vacation memory",
+          "type": "concept",
+          "state": {
+            "description": "Deborah took a picture during her vacation last summer in Bogota."
+          }
+        },
+        {
+          "name": "Deborah's reflection spot",
+          "type": "concept",
+          "state": {
+            "description": "Deborah reflects on her mom's life by the water near her mom's old house."
+          }
+        },
+        {
+          "name": "Deborah's amulet",
+          "type": "concept",
+          "state": {
+            "description": "Deborah brings an amulet from her mom when she reflects."
+          }
+        },
+        {
+          "name": "Deborah's connection to lost loved ones",
+          "type": "concept",
+          "state": {
+            "description": "Deborah believes small things can remind us of love and strength from lost loved ones."
+          }
+        },
+        {
+          "name": "Jolene's emotional support",
+          "type": "person",
+          "state": {
+            "description": "Jolene provides emotional support and encouragement to Deborah."
+          }
+        },
+        {
+          "name": "Anna's yoga class bond",
+          "type": "person",
+          "state": {
+            "description": "Anna is a friend of Deborah who she bonded with during yoga."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 24,
+    "entities_new": 22,
+    "total_entities": 57
+  },
+  {
+    "session_index": 4,
+    "session_id": "conv-48_session_4",
+    "input_chars": 2298,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 February 09, 2023 at 21:03]\nDeborah: Hey Deborah! Been a few days since we last talked so I wanted to fill you in on something cool. Last Wednesday I did a mini retreat to assess where I'm at in life. It was a dope experience that totally gave me a new outlook.\nDeborah: Hey Jolene! Sounds great. Taking time to reflect can be really awesome. Did you gain any new insights from it",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's retreat",
+          "type": "concept",
+          "state": {
+            "description": "Mini retreat on February 1, 2023, to assess life and gain new insights."
+          }
+        },
+        {
+          "name": "Deborah's confidence boost",
+          "type": "concept",
+          "state": {
+            "description": "Achieved a real confidence boost from the retreat."
+          }
+        },
+        {
+          "name": "Deborah's engineering project",
+          "type": "concept",
+          "state": {
+            "description": "Tough engineering project that Deborah wrapped up in May 2023."
+          }
+        },
+        {
+          "name": "Deborah's green tech idea",
+          "type": "concept",
+          "state": {
+            "description": "Interested in exploring green tech to make a difference in disadvantaged areas."
+          }
+        },
+        {
+          "name": "Deborah's volunteer program idea",
+          "type": "concept",
+          "state": {
+            "description": "Proposed a volunteer program where engineers teach STEM to underprivileged kids."
+          }
+        },
+        {
+          "name": "Deborah's workshop plan",
+          "type": "concept",
+          "state": {
+            "description": "Thinking of teaming up with local schools/centers to conduct workshops."
+          }
+        },
+        {
+          "name": "Deborah's guest speakers plan",
+          "type": "concept",
+          "state": {
+            "description": "Plan to invite engineers as guest speakers to show kids their career options."
+          }
+        },
+        {
+          "name": "Deborah's outreach plan",
+          "type": "concept",
+          "state": {
+            "description": "Plans to solidify her outreach plan before reaching out to schools or centers."
+          }
+        },
+        {
+          "name": "Deborah's sketches",
+          "type": "concept",
+          "state": {
+            "description": "Sketches in her planner related to her ideas."
+          }
+        },
+        {
+          "name": "Jolene's support",
+          "type": "person",
+          "state": {
+            "description": "Deborah appreciates Jolene's support and offers to keep her posted."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 9,
+    "total_entities": 66
+  },
+  {
+    "session_index": 5,
+    "session_id": "conv-48_session_5",
+    "input_chars": 1947,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 February 22, 2023 at 16:12]\nDeborah: Hey Deborah, totally buzzing! Had a great night out last night - dinner, and drinks with my friends. So glad I got to let my hair down. You?\n[Image: a photo of a plate of food and a glass of wine]\nDeborah: Sounds great, Jolene! I just visited this place and it was so calming. Nostalgic too.\n[Image: a photo of a garden with a bunch of flowers",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's night out",
+          "type": "event",
+          "state": {
+            "description": "Had a great night out on February 21, 2023, with dinner and drinks with friends."
+          }
+        },
+        {
+          "name": "Deborah's calming visit",
+          "type": "event",
+          "state": {
+            "description": "Visited a calming place that felt nostalgic."
+          }
+        },
+        {
+          "name": "Deborah's flowers",
+          "type": "concept",
+          "state": {
+            "description": "Brought flowers to the place she visited."
+          }
+        },
+        {
+          "name": "Deborah's friend loss",
+          "type": "event",
+          "state": {
+            "description": "Lost a friend the week before February 22, 2023, which has been tough."
+          }
+        },
+        {
+          "name": "Deborah's memories with Karlie",
+          "type": "concept",
+          "state": {
+            "description": "Last photo with Karlie taken last summer during a hike."
+          }
+        },
+        {
+          "name": "Deborah's travel to Bali",
+          "type": "event",
+          "state": {
+            "description": "Traveled to Bali in 2022, which was one of her favorite trips."
+          }
+        },
+        {
+          "name": "Deborah's interest in yoga",
+          "type": "hobby",
+          "state": {
+            "description": "Interested in trying yoga on the beach."
+          }
+        },
+        {
+          "name": "Jolene's support",
+          "type": "person",
+          "state": {
+            "description": "Jolene expressed support for Deborah after her loss."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 10,
+    "entities_new": 7,
+    "total_entities": 73
+  },
+  {
+    "session_index": 6,
+    "session_id": "conv-48_session_6",
+    "input_chars": 3351,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 February 25, 2023 at 16:50]\nDeborah: Hi Deborah, it's been a while! Since we last talked, so much has happened. Balancing engineering school with my partner's video games is quite a feat. But I'm also setting aside time for myself, doing yoga and meditation. It helps give me calm amidst the craziness.\nDeborah: Hey Jolene! Great to hear from you. Taking a break is key. How have ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's school",
+          "type": "concept",
+          "state": {
+            "description": "Engineering school where Deborah is studying"
+          }
+        },
+        {
+          "name": "Deborah's partner's video games",
+          "type": "concept",
+          "state": {
+            "description": "Video games played by Deborah's partner"
+          }
+        },
+        {
+          "name": "Deborah's yoga practice",
+          "type": "concept",
+          "state": {
+            "description": "Deborah practices yoga on the beach, finding peace and relaxation."
+          }
+        },
+        {
+          "name": "Deborah's meditation practice",
+          "type": "concept",
+          "state": {
+            "description": "Meditation helped her regain clarity and stay calm."
+          }
+        },
+        {
+          "name": "Deborah's partner's yoga participation",
+          "type": "concept",
+          "state": {
+            "description": "Deborah's partner sometimes joins her for yoga"
+          }
+        },
+        {
+          "name": "Deborah's relationship duration",
+          "type": "concept",
+          "state": {
+            "description": "Deborah and her partner have been together for three years (since 2020)"
+          }
+        },
+        {
+          "name": "Deborah's relationship origin",
+          "type": "concept",
+          "state": {
+            "description": "Deborah and her partner met in an engineering class in college"
+          }
+        },
+        {
+          "name": "Deborah's engineering projects",
+          "type": "concept",
+          "state": {
+            "description": "Deborah enjoys working on engineering projects with her partner"
+          }
+        },
+        {
+          "name": "Deborah's stress management",
+          "type": "concept",
+          "state": {
+            "description": "Deborah uses breathing and meditation to manage stress"
+          }
+        },
+        {
+          "name": "Deborah's daily routine",
+          "type": "concept",
+          "state": {
+            "description": "Deborah's daily routine includes meditation, yoga, teaching classes, and spending time with loved ones"
+          }
+        },
+        {
+          "name": "Deborah's morning jog",
+          "type": "concept",
+          "state": {
+            "description": "Deborah went for a morning jog for the first time on February 24, 2023"
+          }
+        },
+        {
+          "name": "Deborah's self-care philosophy",
+          "type": "belief",
+          "state": {
+            "description": "Deborah believes in prioritizing self-care to help others"
+          }
+        },
+        {
+          "name": "Jolene's support",
+          "type": "concept",
+          "state": {
+            "description": "Jolene expresses gratitude for Deborah's support and encouragement"
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers"
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 15,
+    "entities_new": 12,
+    "total_entities": 85
+  },
+  {
+    "session_index": 7,
+    "session_id": "conv-48_session_7",
+    "input_chars": 2838,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 March 02, 2023 at 19:18]\nDeborah: Hey Jolene, Anna got me a vegan stir-fry the other day - tofu and veg with ginger and soy sauce. It was really tasty! Food is such a wonderful source of pleasure and nourishment. What dishes are comforting to you?\nDeborah: One of my favorite dishes is lasagna! Comfort food can be a great pick-me-up. I've got a lot going on with my studies and e",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's favorite dish",
+          "type": "concept",
+          "state": {
+            "description": "Deborah's favorite dish is lasagna."
+          }
+        },
+        {
+          "name": "Deborah's recent meal",
+          "type": "concept",
+          "state": {
+            "description": "Deborah had a vegan stir-fry with tofu and vegetables, seasoned with ginger and soy sauce."
+          }
+        },
+        {
+          "name": "Deborah's stress levels",
+          "type": "concept",
+          "state": {
+            "description": "Deborah needs to be more mindful of her stress levels and prioritize self-care."
+          }
+        },
+        {
+          "name": "Deborah's mental health",
+          "type": "concept",
+          "state": {
+            "description": "Deborah is trying to take care of her mental health amidst her studies."
+          }
+        },
+        {
+          "name": "Deborah's recent activity",
+          "type": "concept",
+          "state": {
+            "description": "Deborah did yoga and meditation the Friday before March 02, 2023 to relax."
+          }
+        },
+        {
+          "name": "Deborah's pet Seraphim",
+          "type": "person",
+          "state": {
+            "description": "A snake bought 2022, brings comfort and joy."
+          }
+        },
+        {
+          "name": "Deborah's to-do list",
+          "type": "concept",
+          "state": {
+            "description": "Deborah feels overwhelmed by her never-ending to-do list due to exams and deadlines."
+          }
+        },
+        {
+          "name": "Deborah's study tip",
+          "type": "concept",
+          "state": {
+            "description": "Deborah suggests breaking study material into smaller pieces and setting goals."
+          }
+        },
+        {
+          "name": "Deborah's time management tip",
+          "type": "concept",
+          "state": {
+            "description": "Deborah recommends using planners or schedulers for better time management."
+          }
+        },
+        {
+          "name": "Jolene's encouragement",
+          "type": "person",
+          "state": {
+            "description": "Jolene congratulated Deborah on her engineering project."
+          }
+        },
+        {
+          "name": "Deborah's mug gift",
+          "type": "concept",
+          "state": {
+            "description": "Deborah plans to give Jolene a mug that encourages her."
+          }
+        },
+        {
+          "name": "Deborah's outdoor experience",
+          "type": "concept",
+          "state": {
+            "description": "Deborah enjoys the birds chirping and the breeze when outdoors."
+          }
+        },
+        {
+          "name": "Deborah's self-care reminder",
+          "type": "concept",
+          "state": {
+            "description": "Deborah reminds herself to slow down and appreciate the little things."
+          }
+        },
+        {
+          "name": "Deborah's exam stress",
+          "type": "concept",
+          "state": {
+            "description": "Deborah feels overwhelmed by exams and deadlines."
+          }
+        },
+        {
+          "name": "Jolene's support",
+          "type": "person",
+          "state": {
+            "description": "Jolene appreciates Deborah's help and support."
+          }
+        },
+        {
+          "name": "Deborah's me-time",
+          "type": "concept",
+          "state": {
+            "description": "Deborah is trying to squeeze in some me-time."
+          }
+        },
+        {
+          "name": "Deborah's studies",
+          "type": "concept",
+          "state": {
+            "description": "Meditation helps Deborah stay balanced during her studies."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 17,
+    "entities_new": 16,
+    "total_entities": 101
+  },
+  {
+    "session_index": 8,
+    "session_id": "conv-48_session_8",
+    "input_chars": 2089,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 March 13, 2023 at 11:22]\nDeborah: Hi Jolene! We haven't corresponded for a long time!\nDeborah: Hey Deb, yeah life can get chaotic. How's it been going lately?\nDeborah: So much has been going on lately. I started this yoga class in the neighborhood - it's such a good feeling! Now I get to share the exercise with my neighbors and watch it really transform them.\nDeborah: Congrats.",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's yoga class",
+          "type": "concept",
+          "state": {
+            "description": "Started a yoga class in her neighborhood to share exercise with neighbors."
+          }
+        },
+        {
+          "name": "Deborah's yoga teaching motivation",
+          "type": "belief",
+          "state": {
+            "description": "Finds yoga calming and wants to share peace and awareness with others."
+          }
+        },
+        {
+          "name": "Deborah's community connections",
+          "type": "concept",
+          "state": {
+            "description": "Teaching yoga has helped her make great friends and build community connections."
+          }
+        },
+        {
+          "name": "Deborah's engineering assignments",
+          "type": "concept",
+          "state": {
+            "description": "Struggling to manage engineering assignments and keep up with the workload."
+          }
+        },
+        {
+          "name": "Jolene's support",
+          "type": "belief",
+          "state": {
+            "description": "Believes having support in tough times is key to handling life."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 7,
+    "entities_new": 4,
+    "total_entities": 105
+  },
+  {
+    "session_index": 9,
+    "session_id": "conv-48_session_9",
+    "input_chars": 3268,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 March 22, 2023 at 17:35]\nDeborah: Hey Jolene, it's been a while. Hope you're doing okay with all your exams and deadlines. I know it's difficult for you right now.\nDeborah: Hey Deb! Yeah, it can be tough. Trying to find time for everything is like playing catch-up - really stressful!\nDeborah: How do you manage your time and stay organized with all the projects and deadlines?\nDe",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's time management technique",
+          "type": "concept",
+          "state": {
+            "description": "Using the Pomodoro Technique - 25 minutes work, 5-minute break."
+          }
+        },
+        {
+          "name": "Deborah's daily schedule method",
+          "type": "concept",
+          "state": {
+            "description": "Creates a daily schedule or to-do list to manage tasks."
+          }
+        },
+        {
+          "name": "Deborah's overwhelming task experience",
+          "type": "concept",
+          "state": {
+            "description": "Feels overwhelmed when faced with a big stack of tasks."
+          }
+        },
+        {
+          "name": "Deborah's task prioritization method",
+          "type": "concept",
+          "state": {
+            "description": "Uses the Eisenhower Matrix to sort tasks based on urgency and importance."
+          }
+        },
+        {
+          "name": "Deborah's surfing aspiration",
+          "type": "concept",
+          "state": {
+            "description": "Wants to learn to surf and is gathering information and resources."
+          }
+        },
+        {
+          "name": "Jolene's exam stress",
+          "type": "concept",
+          "state": {
+            "description": "Experiencing stress due to exams and deadlines."
+          }
+        },
+        {
+          "name": "Jolene's time management struggle",
+          "type": "concept",
+          "state": {
+            "description": "Struggling to find time for everything and manage projects."
+          }
+        },
+        {
+          "name": "Jolene's surfing preparation",
+          "type": "concept",
+          "state": {
+            "description": "Gathering information, watching videos, and has a beginners' guide to surfing."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Anna",
+          "type": "person",
+          "state": {
+            "description": "Deborah told Anna the story of her life."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 9,
+    "total_entities": 114
+  },
+  {
+    "session_index": 10,
+    "session_id": "conv-48_session_10",
+    "input_chars": 2276,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 March 28, 2023 at 16:03]\nDeborah: Hey Deb, long time no talk. A lot's happened! On Friday I had a breakthrough with my engineering project. Finally found a solution to a prob that's been bugging me. Feels great to see my hard work paying off.\n[Image: a photo of a person's hand holding a pair of scissors]\nDeborah: You've really proven your skills. Feels great, right? Keep it up!",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's engineering project breakthrough",
+          "type": "concept",
+          "state": {
+            "description": "Deborah had a breakthrough with her engineering project on March 24, 2023."
+          }
+        },
+        {
+          "name": "Deborah's new yoga props",
+          "type": "concept",
+          "state": {
+            "description": "Deborah bought new props for her yoga class."
+          }
+        },
+        {
+          "name": "Deborah's yoga candle",
+          "type": "concept",
+          "state": {
+            "description": "Deborah bought a candle to improve her yoga practice."
+          }
+        },
+        {
+          "name": "Deborah's favorite scents",
+          "type": "concept",
+          "state": {
+            "description": "Deborah loves scents like lavender and rosemary for creating a serene space during yoga."
+          }
+        },
+        {
+          "name": "Deborah's yoga music preference",
+          "type": "concept",
+          "state": {
+            "description": "Deborah enjoys listening to instrumental tracks with mellow melodies and rhythms during yoga."
+          }
+        },
+        {
+          "name": "Deborah's favorite track",
+          "type": "concept",
+          "state": {
+            "description": "One of Deborah's favorite tracks for yoga is called 'Savana.'"
+          }
+        },
+        {
+          "name": "Deborah's favorite artists",
+          "type": "concept",
+          "state": {
+            "description": "Deborah loves listening to Nils Frahm and Olafur Arnalds during her yoga practice."
+          }
+        },
+        {
+          "name": "Deborah's meditation album",
+          "type": "concept",
+          "state": {
+            "description": "Deborah is listening to an album called 'Sleep,' which is great for meditation and deep relaxation."
+          }
+        },
+        {
+          "name": "Jolene's response to music recommendations",
+          "type": "concept",
+          "state": {
+            "description": "Jolene expressed interest in checking out Deborah's music recommendations for yoga."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 9,
+    "total_entities": 123
+  },
+  {
+    "session_index": 11,
+    "session_id": "conv-48_session_11",
+    "input_chars": 2258,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 April 09, 2023 at 16:30]\nDeborah: Hey Jolene! Great to see you! Had a blast biking nearby with my neighbor last week - was so freeing and beautiful. Checked out an art show with a friend today - really cool and inspiring stuff. Reminded me of my mom.\n[Image: a photo of a large brown and white photo of a person]\nDeborah: Hey Deborah! Sounds like you had a blast biking and at the",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's biking experience",
+          "type": "concept",
+          "state": {
+            "description": "Had a blast biking nearby with her neighbor, described as freeing and beautiful."
+          }
+        },
+        {
+          "name": "Deborah's art show visit",
+          "type": "concept",
+          "state": {
+            "description": "Checked out an art show with a friend on April 9, 2023, found it cool and inspiring."
+          }
+        },
+        {
+          "name": "Deborah's mother",
+          "type": "person",
+          "state": {
+            "description": "Deborah's biggest fan and source of motivation, often attended yoga classes with her."
+          }
+        },
+        {
+          "name": "Deborah's coping mechanism",
+          "type": "concept",
+          "state": {
+            "description": "Finding ways to keep her mother's memory alive gives Deborah peace."
+          }
+        },
+        {
+          "name": "Deborah's snakes",
+          "type": "concept",
+          "state": {
+            "description": "Deborah has snakes that enjoy watching her practice yoga."
+          }
+        },
+        {
+          "name": "Deborah's video gaming",
+          "type": "concept",
+          "state": {
+            "description": "Playing video games with her partner after a long day is a way for Deborah to relax."
+          }
+        },
+        {
+          "name": "Deborah's big project",
+          "type": "concept",
+          "state": {
+            "description": "Deborah has been working on a big project that has been tough but exciting to see take shape."
+          }
+        },
+        {
+          "name": "Jolene's support",
+          "type": "concept",
+          "state": {
+            "description": "Deborah appreciates Jolene's support regarding her project."
+          }
+        },
+        {
+          "name": "Deborah's message to Jolene",
+          "type": "concept",
+          "state": {
+            "description": "Deborah encourages Jolene to enjoy her day and make time for joy."
+          }
+        },
+        {
+          "name": "Deborah's emotional connection to art",
+          "type": "concept",
+          "state": {
+            "description": "Art brings back powerful emotions and reminds Deborah of her mother."
+          }
+        },
+        {
+          "name": "Deborah's happiness from simple things",
+          "type": "concept",
+          "state": {
+            "description": "Deborah believes simple things can bring the most happiness."
+          }
+        },
+        {
+          "name": "Deborah's relationship with Jolene",
+          "type": "person",
+          "state": {
+            "description": "Deborah and Jolene share a supportive friendship."
+          }
+        },
+        {
+          "name": "Deborah's emotional experience",
+          "type": "concept",
+          "state": {
+            "description": "Felt a mix of nostalgia, longing, and gratitude for the memories."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 11,
+    "total_entities": 134
+  },
+  {
+    "session_index": 12,
+    "session_id": "conv-48_session_12",
+    "input_chars": 3252,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 June 06, 2023 at 15:56]\nDeborah: Hey Deborah! Long time no talk - I had lots of stuff going on. Remember the tough engineering project? I finally wrapped that up last month. Look at the result!\n[Image: a photo of a solar powered vehicle with a solar panel on the back]\nDeborah: Jolene! Congrats on wrapping up your with it! You really put in the work and it paid off.\nDeborah: I'm",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's engineering project",
+          "type": "concept",
+          "state": {
+            "description": "Tough engineering project that Deborah wrapped up in May 2023."
+          }
+        },
+        {
+          "name": "Deborah's internship",
+          "type": "concept",
+          "state": {
+            "description": "Internship at a well-known engineering firm."
+          }
+        },
+        {
+          "name": "Deborah's colleagues",
+          "type": "person",
+          "state": {
+            "description": "New colleagues at the engineering firm."
+          }
+        },
+        {
+          "name": "Deborah's school application",
+          "type": "concept",
+          "state": {
+            "description": "Applying what Deborah learned in school to real projects."
+          }
+        },
+        {
+          "name": "Deborah's love for engineering",
+          "type": "belief",
+          "state": {
+            "description": "Deborah's love for engineering has been stoked by her internship."
+          }
+        },
+        {
+          "name": "Deborah's work-life balance",
+          "type": "concept",
+          "state": {
+            "description": "Finding work-life balance has been tough for Deborah during her internship."
+          }
+        },
+        {
+          "name": "Deborah's yoga practice",
+          "type": "concept",
+          "state": {
+            "description": "Deborah has been doing yoga sporadically for about 3 years (since 2020)."
+          }
+        },
+        {
+          "name": "Deborah's yoga benefits",
+          "type": "belief",
+          "state": {
+            "description": "Yoga has helped Deborah with stress and kept her centered."
+          }
+        },
+        {
+          "name": "Deborah's favorite yoga studio",
+          "type": "concept",
+          "state": {
+            "description": "Deborah's favorite yoga studio is always calming."
+          }
+        },
+        {
+          "name": "Deborah's mindful breathing advice",
+          "type": "concept",
+          "state": {
+            "description": "Deborah recommends practicing mindful breathing for yoga."
+          }
+        },
+        {
+          "name": "Jolene's encouragement",
+          "type": "person",
+          "state": {
+            "description": "Jolene congratulated Deborah on her engineering project."
+          }
+        },
+        {
+          "name": "Deborah's yoga on mount Talkeetna",
+          "type": "concept",
+          "state": {
+            "description": "Deborah did yoga on top of mount Talkeetna on June 5, 2023."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": [
+        {
+          "source": "Deborah's internship",
+          "target": "Deborah's love for engineering",
+          "type": "inspired",
+          "description": "Deborah's internship has inspired her love for engineering."
+        },
+        {
+          "source": "Deborah's yoga practice",
+          "target": "Deborah's yoga benefits",
+          "type": "improved",
+          "description": "Deborah's yoga practice has improved her ability to manage stress."
+        }
+      ]
+    },
+    "entities_found": 12,
+    "entities_new": 9,
+    "total_entities": 143
+  },
+  {
+    "session_index": 13,
+    "session_id": "conv-48_session_13",
+    "input_chars": 2636,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 June 26, 2023 at 09:17]\nDeborah: Hey Jolene! How's it going? We haven't talked in a while. I've been busy getting ready for a yoga retreat with some buddies. A chance to hang out with people who think like me and find peace and understanding. Sounds awesome!\n[Image: a photo of a group of people doing yoga in a park]\nDeborah: Hey Deb! Been super hectic with internship and stuff.",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's yoga retreat",
+          "type": "concept",
+          "state": {
+            "description": "Attended an awesome yoga retreat that was peaceful with beautiful views."
+          }
+        },
+        {
+          "name": "Deborah's new yoga pose",
+          "type": "concept",
+          "state": {
+            "description": "Tried a new pose called Dancer Pose (Natarajasana)."
+          }
+        },
+        {
+          "name": "Deborah's pet Seraphim",
+          "type": "concept",
+          "state": {
+            "description": "A snake bought 2022, brings comfort and joy."
+          }
+        },
+        {
+          "name": "Deborah's feelings about pets",
+          "type": "belief",
+          "state": {
+            "description": "Pets make life more enjoyable and bright."
+          }
+        },
+        {
+          "name": "Deborah's project breakthrough",
+          "type": "concept",
+          "state": {
+            "description": "Had a big breakthrough with a project, feeling excited and rewarded."
+          }
+        },
+        {
+          "name": "Deborah's tree pose",
+          "type": "concept",
+          "state": {
+            "description": "A new yoga pose tried during the retreat."
+          }
+        },
+        {
+          "name": "Deborah's thoughts on the statue",
+          "type": "belief",
+          "state": {
+            "description": "The statue is a symbol of peace and enlightenment."
+          }
+        },
+        {
+          "name": "Deborah's desire for a retreat",
+          "type": "belief",
+          "state": {
+            "description": "Would love to visit a retreat for peace and refreshment."
+          }
+        },
+        {
+          "name": "Deborah's need for relaxation",
+          "type": "belief",
+          "state": {
+            "description": "Feels the need for chill time and peaceful moments."
+          }
+        },
+        {
+          "name": "Jolene's internship",
+          "type": "concept",
+          "state": {
+            "description": "Currently busy with an internship."
+          }
+        },
+        {
+          "name": "Jolene's yoga retreat",
+          "type": "concept",
+          "state": {
+            "description": "Expressed interest in attending a yoga retreat."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 10,
+    "total_entities": 153
+  },
+  {
+    "session_index": 14,
+    "session_id": "conv-48_session_14",
+    "input_chars": 6029,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 July 09, 2023 at 19:37]\nDeborah: Hey Jolene! I started a running group with Anna - it's awesome connecting with people who care about fitness!\n[Image: a photo of three men standing next to each other on a road]\nDeborah: Cool, Deb! Glad you found some people to get fit with. I'm trying to add workouts into my studying schedule, which has been tough but fun. How about you? Any ch",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's running group",
+          "type": "concept",
+          "state": {
+            "description": "Started a running group with Anna, focused on fitness and motivation."
+          }
+        },
+        {
+          "name": "Deborah's workout schedule",
+          "type": "concept",
+          "state": {
+            "description": "Trying to add workouts into her studying schedule."
+          }
+        },
+        {
+          "name": "Deborah's gaming partner",
+          "type": "person",
+          "state": {
+            "description": "Deborah's partner who helps her stay focused on gaming goals."
+          }
+        },
+        {
+          "name": "Deborah's favorite game",
+          "type": "concept",
+          "state": {
+            "description": "Deborah's favorite game is hard to choose."
+          }
+        },
+        {
+          "name": "Deborah's hobbies",
+          "type": "concept",
+          "state": {
+            "description": "Enjoys running, yoga, meditation, and organizing workshops."
+          }
+        },
+        {
+          "name": "Deborah's workshops",
+          "type": "concept",
+          "state": {
+            "description": "Involves yoga, meditation, and self-reflection to promote well-being."
+          }
+        },
+        {
+          "name": "Deborah's pet snake",
+          "type": "animal",
+          "state": {
+            "description": "Deborah has a pet snake that she finds calming and connects with nature."
+          }
+        },
+        {
+          "name": "Deborah's favorite memory with her snake",
+          "type": "concept",
+          "state": {
+            "description": "Had a 'snake adventure' when her snake got out and was found snuggling under the bed."
+          }
+        },
+        {
+          "name": "Deborah's pets",
+          "type": "animal",
+          "state": {
+            "description": "Deborah has cats, as she doesn't like dogs."
+          }
+        },
+        {
+          "name": "Deborah's pet care routine",
+          "type": "concept",
+          "state": {
+            "description": "Takes her cats out for a run in the park every morning and evening."
+          }
+        },
+        {
+          "name": "Deborah's nature appreciation",
+          "type": "concept",
+          "state": {
+            "description": "Finds peace and clarity in nature, enjoys going for walks."
+          }
+        },
+        {
+          "name": "Deborah's favorite peaceful spot",
+          "type": "concept",
+          "state": {
+            "description": "A hidden gem that makes her feel peaceful and tranquil."
+          }
+        },
+        {
+          "name": "Jolene's pet snake",
+          "type": "animal",
+          "state": {
+            "description": "Jolene has a pet snake that she is fascinated by."
+          }
+        },
+        {
+          "name": "Jolene's cats",
+          "type": "animal",
+          "state": {
+            "description": "Jolene has cats instead of dogs."
+          }
+        },
+        {
+          "name": "Jolene's nature walks",
+          "type": "concept",
+          "state": {
+            "description": "Loves going for walks to take in nature."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 17,
+    "entities_new": 15,
+    "total_entities": 168
+  },
+  {
+    "session_index": 15,
+    "session_id": "conv-48_session_15",
+    "input_chars": 2823,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 August 01, 2023 at 09:26]\nDeborah: Hey Jolene! Great news - I just started a project for a cleanup in our community and have been trying to raise funds for it. It's been amazing to see everyone come together to make a difference. How've you been? Anything new going on?\nDeborah: Hey Debs! Congrats on your project for the community! As for me, life's been a rollercoaster lately. ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's community project",
+          "type": "concept",
+          "state": {
+            "description": "Started a project for a cleanup in the community and raising funds for it."
+          }
+        },
+        {
+          "name": "Jolene's project setback",
+          "type": "concept",
+          "state": {
+            "description": "Had a huge setback with her project the week before August 01, 2023, losing everything she worked on."
+          }
+        },
+        {
+          "name": "Jolene's pet Susie",
+          "type": "concept",
+          "state": {
+            "description": "Adopted Susie two years ago when Jolene was feeling lonely."
+          }
+        },
+        {
+          "name": "Jolene's coping methods",
+          "type": "concept",
+          "state": {
+            "description": "Pets and video games help Jolene cope during tough times."
+          }
+        },
+        {
+          "name": "Deborah's self-care practices",
+          "type": "concept",
+          "state": {
+            "description": "Prioritizing self-care through yoga and meditation."
+          }
+        },
+        {
+          "name": "Deborah's favorite yoga routine",
+          "type": "concept",
+          "state": {
+            "description": "A gentle flow yoga routine focused on breathing and grounding."
+          }
+        },
+        {
+          "name": "Deborah's yoga tutorial",
+          "type": "concept",
+          "state": {
+            "description": "Will send Jolene a tutorial video with yoga poses."
+          }
+        },
+        {
+          "name": "Deborah's support for Jolene",
+          "type": "concept",
+          "state": {
+            "description": "Deborah offers support to Jolene during her project."
+          }
+        },
+        {
+          "name": "Deborah's age",
+          "type": "person",
+          "state": {
+            "description": "Age not specified."
+          }
+        },
+        {
+          "name": "Jolene's age",
+          "type": "person",
+          "state": {
+            "description": "Age not specified."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 10,
+    "total_entities": 178
+  },
+  {
+    "session_index": 16,
+    "session_id": "conv-48_session_16",
+    "input_chars": 1905,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 August 12, 2023 at 20:50]\nDeborah: Since we last spoke, I made a meditation guide for my yoga retreat. How about you?\nDeborah: I have been stressed since I lost my work files. I was so overwhelmed...but meditation kept me chill and I got my clarity back, thank goodness. Really appreciate the practice!\nDeborah: It's amazing how it can give you peace and calm in times like that. ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's meditation guide",
+          "type": "concept",
+          "state": {
+            "description": "Created a meditation guide for her yoga retreat."
+          }
+        },
+        {
+          "name": "Deborah's stress",
+          "type": "concept",
+          "state": {
+            "description": "Has been stressed since losing her work files."
+          }
+        },
+        {
+          "name": "Deborah's meditation practice",
+          "type": "concept",
+          "state": {
+            "description": "Meditation helped her regain clarity and stay calm."
+          }
+        },
+        {
+          "name": "Deborah's notebooks",
+          "type": "concept",
+          "state": {
+            "description": "Designed notebooks with elements like galaxies and circuitry."
+          }
+        },
+        {
+          "name": "Deborah's engineering projects inspiration",
+          "type": "concept",
+          "state": {
+            "description": "Inspired by art and design, which gives her a unique perspective on problems."
+          }
+        },
+        {
+          "name": "Deborah's current project",
+          "type": "concept",
+          "state": {
+            "description": "Working on a prototype that could revolutionize aerial surveillance."
+          }
+        },
+        {
+          "name": "Deborah's project aim",
+          "type": "concept",
+          "state": {
+            "description": "Aiming to devise a more productive and affordable aerial surveillance system."
+          }
+        },
+        {
+          "name": "Deborah's commitment",
+          "type": "concept",
+          "state": {
+            "description": "Committed to not giving up and continuing to push forward."
+          }
+        },
+        {
+          "name": "Jolene's creativity",
+          "type": "concept",
+          "state": {
+            "description": "Recognized for her amazing creativity in designing notebooks."
+          }
+        },
+        {
+          "name": "Jolene's love for space and engines",
+          "type": "concept",
+          "state": {
+            "description": "Inspired her design of the notebooks."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 9,
+    "total_entities": 187
+  },
+  {
+    "session_index": 17,
+    "session_id": "conv-48_session_17",
+    "input_chars": 2454,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 August 16, 2023 at 14:58]\nDeborah: Been thinking a lot about my plans lately, especially after checking in with my bf. It's been up and down!  Some days it feels like I'm trying to juggle my engineering, relationship, and growing as a person, and I just don't know how to handle it all. How do you manage when it's too much?\n[Image: a photo of a book with a checklist on it]\nDebor",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's plans",
+          "type": "concept",
+          "state": {
+            "description": "Deborah has been thinking a lot about her plans, especially regarding her engineering, relationship, and personal growth."
+          }
+        },
+        {
+          "name": "Deborah's boyfriend",
+          "type": "person",
+          "state": {
+            "description": "Deborah's boyfriend, who she checks in with regarding her plans."
+          }
+        },
+        {
+          "name": "Deborah's time management strategies",
+          "type": "concept",
+          "state": {
+            "description": "Deborah has been trying out time management strategies, including using a bullet journal."
+          }
+        },
+        {
+          "name": "Deborah's bullet journal",
+          "type": "concept",
+          "state": {
+            "description": "Deborah uses a bullet journal to track her tasks and stay organized."
+          }
+        },
+        {
+          "name": "Deborah's favorite quote",
+          "type": "concept",
+          "state": {
+            "description": "Deborah has a favorite quote that she finds uplifting and motivating."
+          }
+        },
+        {
+          "name": "Deborah's meditation yoga session",
+          "type": "event",
+          "state": {
+            "description": "Deborah led a meditation yoga session for the elderly at a local care home the week before August 16, 2023 during sunset."
+          }
+        },
+        {
+          "name": "Deborah's mindfulness practice",
+          "type": "concept",
+          "state": {
+            "description": "Trying to be more mindful and grateful to appreciate the little things in life."
+          }
+        },
+        {
+          "name": "Jolene's interest in mindfulness",
+          "type": "concept",
+          "state": {
+            "description": "Jolene is keen to try mindfulness and is interested in destressing."
+          }
+        },
+        {
+          "name": "Deborah's support for Jolene",
+          "type": "concept",
+          "state": {
+            "description": "Deborah is willing to assist Jolene with her mindfulness journey."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 8,
+    "total_entities": 195
+  },
+  {
+    "session_index": 18,
+    "session_id": "conv-48_session_18",
+    "input_chars": 4147,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 August 19, 2023 at 00:52]\nDeborah: Hey Jolene! Hope you're having a good one. Last Friday I told Anna the story of my life and they were super kind about it. It was so nice to have a meaningful connection. How's the mindfulness workshops and reading going? Need any help?\nDeborah: Life's been hella busy since we last talked. I bought a console for my partner as a gift on the 17t",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's mindfulness workshops",
+          "type": "concept",
+          "state": {
+            "description": "Deborah is involved in mindfulness workshops."
+          }
+        },
+        {
+          "name": "Deborah's console gift",
+          "type": "item",
+          "state": {
+            "description": "Deborah bought a console for her partner as a gift on August 17, 2023."
+          }
+        },
+        {
+          "name": "Deborah's engineering studies",
+          "type": "concept",
+          "state": {
+            "description": "Deborah's engineering studies are ongoing."
+          }
+        },
+        {
+          "name": "Deborah's yoga teaching",
+          "type": "concept",
+          "state": {
+            "description": "Deborah has been focusing on teaching yoga."
+          }
+        },
+        {
+          "name": "Deborah's yoga event",
+          "type": "event",
+          "state": {
+            "description": "Deborah organized a yoga event July 2023."
+          }
+        },
+        {
+          "name": "Deborah's time management tips",
+          "type": "concept",
+          "state": {
+            "description": "Deborah finds prioritizing and managing time effective for balancing hobbies and studies."
+          }
+        },
+        {
+          "name": "Deborah's video game recommendations",
+          "type": "concept",
+          "state": {
+            "description": "Deborah recommends Zelda BOTW and Animal Crossing: New Horizons."
+          }
+        },
+        {
+          "name": "Deborah's favorite game",
+          "type": "concept",
+          "state": {
+            "description": "Deborah's favorite game is hard to choose."
+          }
+        },
+        {
+          "name": "Deborah's co-op game",
+          "type": "concept",
+          "state": {
+            "description": "Deborah enjoys playing Overcooked 2 with her partner."
+          }
+        },
+        {
+          "name": "Deborah's outdoor activities",
+          "type": "concept",
+          "state": {
+            "description": "Deborah enjoys spending time outdoors and exploring nature."
+          }
+        },
+        {
+          "name": "Deborah's favorite park",
+          "type": "concept",
+          "state": {
+            "description": "Deborah loves going to a park near her house with a forest trail and a beach."
+          }
+        },
+        {
+          "name": "Deborah's special bench",
+          "type": "concept",
+          "state": {
+            "description": "Deborah has a special bench in the park that holds memories with her mom."
+          }
+        },
+        {
+          "name": "Deborah's memories with her mom",
+          "type": "concept",
+          "state": {
+            "description": "Deborah cherishes memories with her mom at the bench, including watching a beautiful sunset."
+          }
+        },
+        {
+          "name": "Jolene's mindfulness workshops",
+          "type": "concept",
+          "state": {
+            "description": "Jolene is involved in mindfulness workshops."
+          }
+        },
+        {
+          "name": "Anna",
+          "type": "person",
+          "state": {
+            "description": "Deborah told Anna the story of her life."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 17,
+    "entities_new": 11,
+    "total_entities": 206
+  },
+  {
+    "session_index": 19,
+    "session_id": "conv-48_session_19",
+    "input_chars": 3026,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 August 21, 2023 at 09:11]\nDeborah: Long time no talk! We were given a new game for the console last week, it is Battlefield 1. What's been up with you?\nDeborah: Hey Jolene! Good to hear from you. That`s cool! Been thinking about a few big moments lately - went to a place that held a lot of memories for me. Sat on a bench where we used to chat and it brought back a lot of emotio",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's new game",
+          "type": "concept",
+          "state": {
+            "description": "Received Battlefield 1 for the console the week before August 21, 2023."
+          }
+        },
+        {
+          "name": "Deborah's nostalgic moment",
+          "type": "concept",
+          "state": {
+            "description": "Visited a place with many memories and sat on a bench where she used to chat."
+          }
+        },
+        {
+          "name": "Deborah's emotional experience",
+          "type": "concept",
+          "state": {
+            "description": "Felt a mix of nostalgia, longing, and gratitude for the memories."
+          }
+        },
+        {
+          "name": "Deborah's flowers",
+          "type": "concept",
+          "state": {
+            "description": "Brought flowers to the place she visited."
+          }
+        },
+        {
+          "name": "Deborah's mom's love for flowers",
+          "type": "concept",
+          "state": {
+            "description": "Her mom really loved flowers and they made her happy."
+          }
+        },
+        {
+          "name": "Deborah's mom's appreciation for life",
+          "type": "concept",
+          "state": {
+            "description": "Her mom appreciated the simple things in life."
+          }
+        },
+        {
+          "name": "Deborah's calming habits",
+          "type": "concept",
+          "state": {
+            "description": "Practices yoga and meditation to find balance and inner peace."
+          }
+        },
+        {
+          "name": "Deborah's yoga experience",
+          "type": "concept",
+          "state": {
+            "description": "Has been doing yoga for 3 years (since 2020)."
+          }
+        },
+        {
+          "name": "Deborah's favorite yoga pose",
+          "type": "concept",
+          "state": {
+            "description": "Favorite pose is savasana, also known as the corpse pose."
+          }
+        },
+        {
+          "name": "Deborah's walking habit",
+          "type": "concept",
+          "state": {
+            "description": "Goes out for walks to stay grounded and mindful."
+          }
+        },
+        {
+          "name": "Deborah's photo taking habit",
+          "type": "concept",
+          "state": {
+            "description": "Takes similar photos on walks."
+          }
+        },
+        {
+          "name": "Jolene's calming habits",
+          "type": "concept",
+          "state": {
+            "description": "Practices yoga and meditation to help relax and stay focused."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 9,
+    "total_entities": 215
+  },
+  {
+    "session_index": 20,
+    "session_id": "conv-48_session_20",
+    "input_chars": 2877,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 August 24, 2023 at 09:34]\nDeborah: Hey Jolene! Good to hear from you! A lot's happened since we talked - last week I got to go to this yoga retreat near my mom's place. It was so cool - I got to hang with nature and really get to know myself. Definitely life-changing! That's how beautiful it was there!\n[Image: a photo of a trail in a forest with moss and trees]\nDeborah: Wow, De",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's yoga retreat",
+          "type": "concept",
+          "state": {
+            "description": "Attended a yoga retreat near her mom's place, described as life-changing."
+          }
+        },
+        {
+          "name": "Deborah's self-reflection",
+          "type": "concept",
+          "state": {
+            "description": "Engaged in self-reflection and connecting with nature, finding beauty in every moment."
+          }
+        },
+        {
+          "name": "Deborah's career goals",
+          "type": "concept",
+          "state": {
+            "description": "Aiming to be successful in her field and make a positive impact."
+          }
+        },
+        {
+          "name": "Deborah's studies and workshops",
+          "type": "concept",
+          "state": {
+            "description": "Studying, attending workshops, and networking to achieve her career goals."
+          }
+        },
+        {
+          "name": "Deborah's virtual conference presentation",
+          "type": "concept",
+          "state": {
+            "description": "Presented at a virtual conference and received positive feedback."
+          }
+        },
+        {
+          "name": "Deborah's feelings about feedback",
+          "type": "concept",
+          "state": {
+            "description": "Felt thrilled and rewarded by the positive feedback received."
+          }
+        },
+        {
+          "name": "Deborah's focus on experience",
+          "type": "concept",
+          "state": {
+            "description": "Currently focusing on studying and gaining more experience, considering internships."
+          }
+        },
+        {
+          "name": "Jolene's support",
+          "type": "concept",
+          "state": {
+            "description": "Expressed gratitude for Deborah's support in her endeavors."
+          }
+        },
+        {
+          "name": "Deborah's encouragement",
+          "type": "concept",
+          "state": {
+            "description": "Encouraged Jolene to reach for her goals and enjoy the journey."
+          }
+        },
+        {
+          "name": "Deborah's advice to Jolene",
+          "type": "concept",
+          "state": {
+            "description": "Advised Jolene to take time for herself and find joy in the journey."
+          }
+        },
+        {
+          "name": "Deborah's commitment",
+          "type": "concept",
+          "state": {
+            "description": "Committed to not giving up and continuing to push forward."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 8,
+    "total_entities": 223
+  },
+  {
+    "session_index": 21,
+    "session_id": "conv-48_session_21",
+    "input_chars": 5325,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 August 26, 2023 at 17:33]\nDeborah: Hey Jolene, since we talked I've been thinking about my mom's influence. Remembering those we love is important.\nDeborah: I understand, Deb. Remembering and cherishing the memories of our loved ones is so important. It's comforting to know that their influence still guides us. Last Friday, my partner and I talked about how our loved ones have ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's mom's influence",
+          "type": "concept",
+          "state": {
+            "description": "Deborah reflects on her mom's influence and the importance of remembering loved ones."
+          }
+        },
+        {
+          "name": "Deborah's partner",
+          "type": "person",
+          "state": {
+            "description": "Deborah's partner who she will share the meditation experience with."
+          }
+        },
+        {
+          "name": "Deborah's values from her mom",
+          "type": "concept",
+          "state": {
+            "description": "Deborah's mom taught her to persevere and stay resilient."
+          }
+        },
+        {
+          "name": "Deborah's partner's dad's values",
+          "type": "concept",
+          "state": {
+            "description": "Deborah's partner's dad taught them to stay determined."
+          }
+        },
+        {
+          "name": "Deborah's engineering goals",
+          "type": "concept",
+          "state": {
+            "description": "Deborah aims to use her engineering talents to do good and solve important problems."
+          }
+        },
+        {
+          "name": "Deborah's future projects",
+          "type": "concept",
+          "state": {
+            "description": "Deborah aims to work on projects that make a real difference to communities."
+          }
+        },
+        {
+          "name": "Deborah's interest in renewable energy",
+          "type": "concept",
+          "state": {
+            "description": "Deborah is focused on developing renewable energy solutions like solar."
+          }
+        },
+        {
+          "name": "Deborah's clean water project",
+          "type": "concept",
+          "state": {
+            "description": "Deborah is interested in finding ways to supply clean water to those with limited access."
+          }
+        },
+        {
+          "name": "Deborah's yoga practice",
+          "type": "concept",
+          "state": {
+            "description": "Deborah practices yoga to help with challenges and maintain balance."
+          }
+        },
+        {
+          "name": "Deborah's self-care activities",
+          "type": "concept",
+          "state": {
+            "description": "Deborah engages in self-care activities like yoga and meditation to stay balanced and relax."
+          }
+        },
+        {
+          "name": "Deborah's snakes",
+          "type": "animal",
+          "state": {
+            "description": "Deborah has snakes that enjoy watching her practice yoga."
+          }
+        },
+        {
+          "name": "Deborah's cat Luna",
+          "type": "animal",
+          "state": {
+            "description": "Deborah's cat named Luna, who is 5 years old."
+          }
+        },
+        {
+          "name": "Deborah's cat Max",
+          "type": "animal",
+          "state": {
+            "description": "Deborah's cat named Max, who is 8 years old and was taken from her mother after she passed away."
+          }
+        },
+        {
+          "name": "Deborah's cat adoption",
+          "type": "concept",
+          "state": {
+            "description": "Deborah adopted Luna from the shelter."
+          }
+        },
+        {
+          "name": "Jolene's emotional chat",
+          "type": "concept",
+          "state": {
+            "description": "Jolene and her partner had an emotional conversation about their loved ones' influence."
+          }
+        },
+        {
+          "name": "Jolene's values",
+          "type": "concept",
+          "state": {
+            "description": "Jolene cherishes the values taught by her loved ones."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 18,
+    "entities_new": 14,
+    "total_entities": 237
+  },
+  {
+    "session_index": 22,
+    "session_id": "conv-48_session_22",
+    "input_chars": 4014,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 August 30, 2023 at 11:46]\nDeborah: Hey Deborah, how's it going? Guess what? Yesterday my partner and I got back from an awesome trip to Rio de Janeiro- we checked out some cool yoga classes.\n[Image: a photo of a woman doing a yoga pose in a mirror]\nDeborah: That yoga pose looks great. Must've been a cool experience for the two of you. What did the trip teach you?\nDeborah: This ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's trip to Rio de Janeiro",
+          "type": "concept",
+          "state": {
+            "description": "Deborah and her partner visited Rio de Janeiro and attended yoga classes."
+          }
+        },
+        {
+          "name": "Deborah's experience in Rio de Janeiro",
+          "type": "concept",
+          "state": {
+            "description": "Deborah learned about different kinds of yoga and their backgrounds during her trip."
+          }
+        },
+        {
+          "name": "Deborah's favorite cafes in Rio de Janeiro",
+          "type": "concept",
+          "state": {
+            "description": "Deborah visited many delicious cafes in Rio de Janeiro."
+          }
+        },
+        {
+          "name": "Deborah's mom's house",
+          "type": "concept",
+          "state": {
+            "description": "Deborah visited her mom's house July 2023, which holds special memories for her."
+          }
+        },
+        {
+          "name": "Deborah's husband",
+          "type": "person",
+          "state": {
+            "description": "Deborah's husband is pictured in front of her mom's house."
+          }
+        },
+        {
+          "name": "Deborah's relaxation experience",
+          "type": "concept",
+          "state": {
+            "description": "Deborah relaxed outside her mom's house, bringing back fond memories."
+          }
+        },
+        {
+          "name": "Deborah's meditation spot",
+          "type": "concept",
+          "state": {
+            "description": "Deborah meditates by a tranquil spot nearby."
+          }
+        },
+        {
+          "name": "Deborah's meditation effect",
+          "type": "concept",
+          "state": {
+            "description": "Meditation helps Deborah make sense of everything and relieves stress."
+          }
+        },
+        {
+          "name": "Deborah's favorite pondering spot",
+          "type": "concept",
+          "state": {
+            "description": "Deborah has a favorite spot to ponder and let things go."
+          }
+        },
+        {
+          "name": "Deborah's favorite spot's vibes",
+          "type": "concept",
+          "state": {
+            "description": "The soothing vibes and nice views of Deborah's favorite spot make it ideal for reflecting."
+          }
+        },
+        {
+          "name": "Deborah's excursions in Rio de Janeiro",
+          "type": "concept",
+          "state": {
+            "description": "Deborah went on many excursions in Rio de Janeiro."
+          }
+        },
+        {
+          "name": "Deborah's visit to an old temple",
+          "type": "concept",
+          "state": {
+            "description": "Deborah visited an old temple during her trip to Rio de Janeiro."
+          }
+        },
+        {
+          "name": "Deborah's photo from three years ago",
+          "type": "concept",
+          "state": {
+            "description": "Deborah took a beautiful photo during her trip to Rio de Janeiro three years ago."
+          }
+        },
+        {
+          "name": "Deborah's interest in architecture and history",
+          "type": "concept",
+          "state": {
+            "description": "Deborah found the architecture and history of the places she visited in Rio de Janeiro interesting."
+          }
+        },
+        {
+          "name": "Deborah's friend's quote",
+          "type": "concept",
+          "state": {
+            "description": "Deborah received a quote from a friend that says 'Let go of what no longer serves you.'"
+          }
+        },
+        {
+          "name": "Deborah's notebook quote",
+          "type": "concept",
+          "state": {
+            "description": "Deborah has a quote in her notebook that inspires her."
+          }
+        },
+        {
+          "name": "Deborah's strength quotes",
+          "type": "concept",
+          "state": {
+            "description": "Deborah came across a quote that reminds her to focus on positive growth."
+          }
+        },
+        {
+          "name": "Deborah's new plant",
+          "type": "concept",
+          "state": {
+            "description": "Deborah got a new plant as a reminder to nurture herself and embrace fresh starts."
+          }
+        },
+        {
+          "name": "Jolene's self-care reminder",
+          "type": "concept",
+          "state": {
+            "description": "Jolene's new plant serves as a reminder to take care of herself."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 21,
+    "entities_new": 19,
+    "total_entities": 256
+  },
+  {
+    "session_index": 23,
+    "session_id": "conv-48_session_23",
+    "input_chars": 2552,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 September 03, 2023 at 14:14]\nDeborah: Hey Jolene, just catching up. I went to a cool event last week with the aim to support each other - pretty inspiring. Have you been connecting with anyone lately?\nDeborah: Hey Deb, great to hear from you! I've been focusing on studying and my relationship with my partner. We're taking little trips to the beach, it's a great way to relax. Ho",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's event",
+          "type": "concept",
+          "state": {
+            "description": "Attended a cool event aimed at supporting each other, inspiring experience."
+          }
+        },
+        {
+          "name": "Deborah's relationship",
+          "type": "concept",
+          "state": {
+            "description": "Focusing on her relationship with her partner, taking little trips to the beach."
+          }
+        },
+        {
+          "name": "Deborah's community meetup",
+          "type": "concept",
+          "state": {
+            "description": "Attended a community meetup on August 25, 2023, where stories were shared."
+          }
+        },
+        {
+          "name": "Deborah's significant other",
+          "type": "person",
+          "state": {
+            "description": "Feeling thankful for her significant other who encourages her goals."
+          }
+        },
+        {
+          "name": "Deborah's yoga friends",
+          "type": "concept",
+          "state": {
+            "description": "Yoga pals considered as a second family, providing support."
+          }
+        },
+        {
+          "name": "Deborah's old photo",
+          "type": "concept",
+          "state": {
+            "description": "Found an old photo from when she first started doing yoga."
+          }
+        },
+        {
+          "name": "Deborah's mother",
+          "type": "person",
+          "state": {
+            "description": "Deborah's biggest fan and source of motivation, often attended yoga classes with her."
+          }
+        },
+        {
+          "name": "Deborah's video game passion",
+          "type": "concept",
+          "state": {
+            "description": "Started her passion for video games at age 10 when her parents got her a Nintendo."
+          }
+        },
+        {
+          "name": "Deborah's gaming support",
+          "type": "concept",
+          "state": {
+            "description": "Taught herself to play video games, with support from her dad and mom."
+          }
+        },
+        {
+          "name": "Deborah's favorite game with mom",
+          "type": "concept",
+          "state": {
+            "description": "Favorite game to play with her mom was 'Monster Hunter: World'."
+          }
+        },
+        {
+          "name": "Deborah's gaming as stress relief",
+          "type": "concept",
+          "state": {
+            "description": "Uses gaming as a way to de-stress and take a break from life."
+          }
+        },
+        {
+          "name": "Deborah's finals",
+          "type": "concept",
+          "state": {
+            "description": "Has a lot of finals coming up in September 2023, studying hard."
+          }
+        },
+        {
+          "name": "Deborah's post-finals trip",
+          "type": "concept",
+          "state": {
+            "description": "Thinking about taking a trip somewhere to relax and recharge after finals."
+          }
+        },
+        {
+          "name": "Jolene's studying focus",
+          "type": "concept",
+          "state": {
+            "description": "Focusing on studying and her relationship with her partner."
+          }
+        },
+        {
+          "name": "Jolene's beach trips",
+          "type": "concept",
+          "state": {
+            "description": "Taking little trips to the beach with her partner to relax."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 15,
+    "entities_new": 14,
+    "total_entities": 270
+  },
+  {
+    "session_index": 24,
+    "session_id": "conv-48_session_24",
+    "input_chars": 1713,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 September 06, 2023 at 20:31]\nDeborah: Woohoo! I signed up for a meditation course at a retreat near a lake. Can't wait to share this experience with my partner and learn some new techniques. Sooo excited!\n[Image: a photo of a building with a curved roof on a hill]\nDeborah: That`s awesome! It looks so calm in the pic - I hope you enjoy your experience and learn some new techniqu",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's meditation course",
+          "type": "concept",
+          "state": {
+            "description": "Signed up for a meditation course at a retreat near a lake."
+          }
+        },
+        {
+          "name": "Deborah's partner",
+          "type": "person",
+          "state": {
+            "description": "Deborah's partner who she will share the meditation experience with."
+          }
+        },
+        {
+          "name": "Deborah's health routine",
+          "type": "concept",
+          "state": {
+            "description": "Meditation has become part of Deborah's routine."
+          }
+        },
+        {
+          "name": "Deborah's studies",
+          "type": "concept",
+          "state": {
+            "description": "Meditation helps Deborah stay balanced during her studies."
+          }
+        },
+        {
+          "name": "Jolene's project",
+          "type": "concept",
+          "state": {
+            "description": "Jolene is working on a tough project."
+          }
+        },
+        {
+          "name": "Deborah's support for Jolene",
+          "type": "concept",
+          "state": {
+            "description": "Deborah offers support to Jolene during her project."
+          }
+        },
+        {
+          "name": "Deborah's beach walks",
+          "type": "concept",
+          "state": {
+            "description": "Taking beach walks relaxes Deborah."
+          }
+        },
+        {
+          "name": "Deborah's last beach getaway",
+          "type": "concept",
+          "state": {
+            "description": "Deborah reminisces about her last beach getaway."
+          }
+        },
+        {
+          "name": "Deborah's sunrise experience",
+          "type": "concept",
+          "state": {
+            "description": "Deborah recently saw a wonderful sunrise."
+          }
+        },
+        {
+          "name": "Deborah's offer to watch the sunrise",
+          "type": "concept",
+          "state": {
+            "description": "Deborah expresses a desire to watch the sunrise with Jolene."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 7,
+    "total_entities": 277
+  },
+  {
+    "session_index": 25,
+    "session_id": "conv-48_session_25",
+    "input_chars": 2335,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 September 08, 2023 at 19:39]\nDeborah: Hey Jolene, had a tough week. Storm forced us to cancel our yoga getaway.\nDeborah: Sorry to hear about it. How are you feeling now?\nDeborah: I was bummed about it, but I'm doing better now. It was just a setback, but I found comfort in my work and spending time at home. Reminds me to be grateful for the little things. And you? How's it goin",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's tough week",
+          "type": "concept",
+          "state": {
+            "description": "Deborah had a tough week due to a storm that forced the cancellation of her yoga getaway."
+          }
+        },
+        {
+          "name": "Deborah's feelings",
+          "type": "concept",
+          "state": {
+            "description": "Deborah felt bummed about the cancellation but is doing better now."
+          }
+        },
+        {
+          "name": "Deborah's coping strategies",
+          "type": "concept",
+          "state": {
+            "description": "Deborah found comfort in her work and spending time at home, reminding her to be grateful for the little things."
+          }
+        },
+        {
+          "name": "Deborah's camping trip plans",
+          "type": "concept",
+          "state": {
+            "description": "Deborah and her partner plan a camping trip to connect with nature and practice yoga."
+          }
+        },
+        {
+          "name": "Deborah's planning strategies",
+          "type": "concept",
+          "state": {
+            "description": "Deborah uses a routine to stay on top of her busy schedule, including classes, studying, and personal time."
+          }
+        },
+        {
+          "name": "Deborah's self-care activities",
+          "type": "concept",
+          "state": {
+            "description": "Deborah engages in self-care activities like yoga and meditation to stay balanced and relax."
+          }
+        },
+        {
+          "name": "Deborah's coffee date proposal",
+          "type": "concept",
+          "state": {
+            "description": "Deborah proposed a coffee date to Jolene to discuss planning strategies."
+          }
+        },
+        {
+          "name": "Deborah's coffee date schedule",
+          "type": "concept",
+          "state": {
+            "description": "Deborah suggested meeting at the cafe on Wednesday at 4 PM, but later realized she had other plans."
+          }
+        },
+        {
+          "name": "Deborah's rescheduled coffee date",
+          "type": "concept",
+          "state": {
+            "description": "Deborah rescheduled the coffee date with Jolene to Friday at 5 PM."
+          }
+        },
+        {
+          "name": "Deborah's book sorting plans",
+          "type": "concept",
+          "state": {
+            "description": "Deborah plans to sort out books from her bookcase before the coffee date."
+          }
+        },
+        {
+          "name": "Jolene's understanding",
+          "type": "person",
+          "state": {
+            "description": "Jolene expressed understanding regarding the rescheduling of the coffee date."
+          }
+        },
+        {
+          "name": "Deborah's request for books",
+          "type": "concept",
+          "state": {
+            "description": "Deborah asked Jolene to grab her some interesting books."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 14,
+    "entities_new": 11,
+    "total_entities": 288
+  },
+  {
+    "session_index": 26,
+    "session_id": "conv-48_session_26",
+    "input_chars": 2531,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 September 12, 2023 at 14:18]\nDeborah: Hey Deb! So sorry for the late reply, been super busy. Last weekend my partner and I traveled to a meditation retreat for a few weeks in Phuket. Amazing experience! Nature, reflection and a break from engineering studies were awesome - it helped me find inner peace.\n[Image: a photo of a woman doing a yoga pose on the beach]\nDeborah: I'd lov",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's meditation retreat",
+          "type": "concept",
+          "state": {
+            "description": "Traveled to a meditation retreat in Phuket for a few weeks, focusing on nature, reflection, and a break from engineering studies."
+          }
+        },
+        {
+          "name": "Deborah's experience at the retreat",
+          "type": "concept",
+          "state": {
+            "description": "Amazing experience that helped Deborah find inner peace."
+          }
+        },
+        {
+          "name": "Deborah's reflections from the retreat",
+          "type": "concept",
+          "state": {
+            "description": "Realized the importance of incorporating relaxation, self-care, and balance in life alongside engineering studies."
+          }
+        },
+        {
+          "name": "Deborah's standout session",
+          "type": "concept",
+          "state": {
+            "description": "A session about releasing expectations and judgments, savoring the present."
+          }
+        },
+        {
+          "name": "Deborah's realization about goals",
+          "type": "concept",
+          "state": {
+            "description": "Reminder to appreciate the journey and not just dwell on the finish line."
+          }
+        },
+        {
+          "name": "Deborah's thoughts on small moments",
+          "type": "concept",
+          "state": {
+            "description": "Believes being grateful for small moments can boost happiness."
+          }
+        },
+        {
+          "name": "Deborah's mindfulness practice",
+          "type": "concept",
+          "state": {
+            "description": "Trying to be more mindful and grateful to appreciate the little things in life."
+          }
+        },
+        {
+          "name": "Deborah's joy level",
+          "type": "concept",
+          "state": {
+            "description": "Experiencing a new level of joy and happiness."
+          }
+        },
+        {
+          "name": "Deborah's supportive community",
+          "type": "concept",
+          "state": {
+            "description": "Believes having a supportive community helps motivate and encourage each other."
+          }
+        },
+        {
+          "name": "Deborah's card game",
+          "type": "concept",
+          "state": {
+            "description": "Played a card game about cats where players take cards from a deck and can attack opponents."
+          }
+        },
+        {
+          "name": "Jolene's support",
+          "type": "person",
+          "state": {
+            "description": "Deborah appreciates Jolene's support in their journey."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 9,
+    "total_entities": 297
+  },
+  {
+    "session_index": 27,
+    "session_id": "conv-48_session_27",
+    "input_chars": 3906,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 September 15, 2023 at 15:09]\nDeborah: Since speaking last, I reconnected with my mom's old friends. Their stories made me tear up and reminded me how lucky I am to have had her.\n[Image: a photo of a living room with a couch and a fire place]\nDeborah: It's great that you could reconnect with them. Hearing stories about our loved ones can be tough but also comforting.\nDeborah: He",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's mom's friends",
+          "type": "person",
+          "state": {
+            "description": "Deborah reconnected with her mom's old friends, sharing emotional stories."
+          }
+        },
+        {
+          "name": "Deborah's mom",
+          "type": "person",
+          "state": {
+            "description": "Deborah's mother, who had a big passion for cooking."
+          }
+        },
+        {
+          "name": "Deborah's wedding beach",
+          "type": "concept",
+          "state": {
+            "description": "The beach where Deborah got married and discovered her love for surfing."
+          }
+        },
+        {
+          "name": "Deborah's yoga practice",
+          "type": "concept",
+          "state": {
+            "description": "Deborah practices yoga on the beach, finding peace and relaxation."
+          }
+        },
+        {
+          "name": "Deborah's meditation style",
+          "type": "concept",
+          "state": {
+            "description": "Deborah tried a new style of meditation in Thailand that involves flowers."
+          }
+        },
+        {
+          "name": "Deborah's relaxation space",
+          "type": "concept",
+          "state": {
+            "description": "Deborah creates a serene yoga space with candles and oils."
+          }
+        },
+        {
+          "name": "Deborah's room",
+          "type": "concept",
+          "state": {
+            "description": "Deborah's room is her haven for peace and rest after a busy day."
+          }
+        },
+        {
+          "name": "Deborah's pet Susie",
+          "type": "person",
+          "state": {
+            "description": "Deborah's pet snake, Susie, whom she has had for two years (since 2021)."
+          }
+        },
+        {
+          "name": "Deborah's friends",
+          "type": "person",
+          "state": {
+            "description": "Deborah's friends who keep her company."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "The other speaker in the conversation."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 11,
+    "entities_new": 8,
+    "total_entities": 305
+  },
+  {
+    "session_index": 28,
+    "session_id": "conv-48_session_28",
+    "input_chars": 4457,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 September 17, 2023 at 13:24]\nDeborah: Hey Jolene, I'm so excited to tell you! Yesterday, me and my neighbor ran a free gardening class for the community, it was awesome! People of any age joined in and it was such a great thing to see.\nDeborah: Wow, Deborah, that's awesome! Keep up the great work, and here's hoping for more events like this in the future!\nDeborah: Gardening is ",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's gardening class",
+          "type": "concept",
+          "state": {
+            "description": "Ran a free gardening class for the community on September 16, 2023."
+          }
+        },
+        {
+          "name": "Deborah's scuba diving lesson",
+          "type": "concept",
+          "state": {
+            "description": "Tried a scuba diving lesson on September 15, 2023."
+          }
+        },
+        {
+          "name": "Deborah's mom",
+          "type": "person",
+          "state": {
+            "description": "Deborah's mother, who had a big passion for cooking."
+          }
+        },
+        {
+          "name": "Deborah's memory of cooking with her mom",
+          "type": "concept",
+          "state": {
+            "description": "Loved baking pineapple birthday cakes with her mom as a child."
+          }
+        },
+        {
+          "name": "Deborah's favorite cookie",
+          "type": "concept",
+          "state": {
+            "description": "Warm, gooey chocolate chip cookies."
+          }
+        },
+        {
+          "name": "Deborah's bookshelf",
+          "type": "concept",
+          "state": {
+            "description": "Has a big bookshelf for escaping reality and relaxing with books."
+          }
+        },
+        {
+          "name": "Deborah's self-discovery book",
+          "type": "concept",
+          "state": {
+            "description": "Read a self-discovery book in her bathroom that resonated with her."
+          }
+        },
+        {
+          "name": "Deborah's beach experience",
+          "type": "concept",
+          "state": {
+            "description": "Finds peace and relaxation at the beach."
+          }
+        },
+        {
+          "name": "Deborah's surfing interest",
+          "type": "concept",
+          "state": {
+            "description": "Interested in surfing but has not tried it yet."
+          }
+        },
+        {
+          "name": "Jolene's surfing interest",
+          "type": "concept",
+          "state": {
+            "description": "Just started learning about surfing but hasn't gone yet."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 12,
+    "entities_new": 8,
+    "total_entities": 313
+  },
+  {
+    "session_index": 29,
+    "session_id": "conv-48_session_29",
+    "input_chars": 3040,
+    "input_preview": "[Speakers: Deborah and Jolene]\nUse their FULL NAMES (Deborah, Jolene) in entity names, never abbreviations.\n\n[Session \u2014 September 20, 2023 at 10:17]\nDeborah: I had a great time at the music festival with my pals! The vibes were unreal and the music was magical. It was so freeing to dance and bop around. Music brings us together and helps us show our feelings. It reminds me of my mom and her soothing voice when she'd sing lullabies to me. Lucky to have those memories!\nDeborah: Wow, festivals soun",
+    "raw_extraction": {
+      "entities": [
+        {
+          "name": "Deborah's music festival experience",
+          "type": "concept",
+          "state": {
+            "description": "Had a great time at the music festival with friends, felt freeing to dance and enjoy the music."
+          }
+        },
+        {
+          "name": "Deborah's memories of her mom",
+          "type": "concept",
+          "state": {
+            "description": "Remembers her mom's soothing voice singing lullabies."
+          }
+        },
+        {
+          "name": "Deborah's trip with her partner",
+          "type": "concept",
+          "state": {
+            "description": "Just got back from a trip with her partner, described as cool."
+          }
+        },
+        {
+          "name": "Deborah's yoga retreat",
+          "type": "concept",
+          "state": {
+            "description": "Attended an awesome yoga retreat that was peaceful with beautiful views."
+          }
+        },
+        {
+          "name": "Deborah's feelings during yoga",
+          "type": "concept",
+          "state": {
+            "description": "Felt connected to nature and herself during yoga with a beautiful backdrop."
+          }
+        },
+        {
+          "name": "Deborah's hike experience",
+          "type": "concept",
+          "state": {
+            "description": "Took a hike with her partner and found a waterfall oasis, felt peaceful."
+          }
+        },
+        {
+          "name": "Deborah's upcoming nature plans",
+          "type": "concept",
+          "state": {
+            "description": "Planning to get out in nature again in October 2023."
+          }
+        },
+        {
+          "name": "Deborah's blossom tree memories",
+          "type": "concept",
+          "state": {
+            "description": "Remembers a gorgeous blossom tree near her home that bloomed every spring."
+          }
+        },
+        {
+          "name": "Deborah's appreciation for nature",
+          "type": "concept",
+          "state": {
+            "description": "Feels awe and appreciation for the beauty of life when watching nature."
+          }
+        },
+        {
+          "name": "Deborah's resilience photo",
+          "type": "concept",
+          "state": {
+            "description": "Took a photo of a plant growing out of a corner of a building, representing resilience."
+          }
+        },
+        {
+          "name": "Deborah's habit of finding beauty",
+          "type": "concept",
+          "state": {
+            "description": "Values appreciating small things to find positivity during tough times."
+          }
+        },
+        {
+          "name": "Deborah",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        },
+        {
+          "name": "Jolene",
+          "type": "person",
+          "state": {
+            "description": "One of the two speakers."
+          }
+        }
+      ],
+      "state_changes": [],
+      "relationships": []
+    },
+    "entities_found": 13,
+    "entities_new": 10,
+    "total_entities": 323
+  }
+]

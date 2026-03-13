@@ -56,9 +56,10 @@ from benchmarks.locomo.baselines import (
     pie_temporal,
     BASELINES,
 )
+from benchmarks.formatting import format_qa_result, format_summary_header
 
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.WARNING,
     format="%(asctime)s [%(levelname)s] %(message)s",
     datefmt="%H:%M:%S",
 )
@@ -228,9 +229,7 @@ def run_benchmark(
         output_dir = Path(output_dir)
         output_dir.mkdir(parents=True, exist_ok=True)
 
-    logger.info(f"Running LoCoMo benchmark: {baseline_name}")
-    logger.info(f"  Questions: {total}")
-    logger.info(f"  Model: {model}")
+    print(format_summary_header("LoCoMo", baseline_name, total))
 
     # Cache world models per conversation
     world_model_cache = {}
@@ -239,8 +238,6 @@ def run_benchmark(
         qid = item["question_id"]
         qtype = item["question_type"]
         sample_id = item.get("sample_id", qid.split("_q")[0])
-
-        logger.info(f"[{i+1}/{total}] {qid} ({qtype}): {item['question'][:50]}...")
 
         try:
             # Get or build world model (for PIE)
@@ -279,17 +276,17 @@ def run_benchmark(
 
             scores.add(result, score, reason)
 
-            emoji = "✅" if score == 1.0 else "🟡" if score == 0.5 else "❌"
-            running_acc = scores.overall_accuracy * 100
-            logger.info(
-                f"  {emoji} {score} | Running: {running_acc:.1f}% | "
-                f"{result.latency_ms:.0f}ms"
-            )
-
-            if debug:
-                print(f"  Q: {item['question']}")
-                print(f"  Gold: {item['answer']}")
-                print(f"  Pred: {result.hypothesis}")
+            # Always print formatted Q&A
+            print(format_qa_result(
+                idx=i + 1,
+                total=total,
+                question=item["question"],
+                expected=item["answer"],
+                predicted=result.hypothesis,
+                score=score,
+                qtype=qtype,
+                latency_ms=result.latency_ms,
+            ))
 
         except Exception as e:
             logger.error(f"  ❌ Error: {e}")

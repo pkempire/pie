@@ -1,0 +1,1374 @@
+[
+  {
+    "question_id": "conv-49_q0",
+    "question_type": "single_hop",
+    "question": "What kind of car does Evan drive?",
+    "answer": "Prius",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q1",
+    "question_type": "single_hop",
+    "question": "What kinds of things did Evan have broken?",
+    "answer": "His old Prius and his new Prius.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q2",
+    "question_type": "single_hop",
+    "question": "Where has Evan been on roadtrips with his family?",
+    "answer": "Rockies, Jasper",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q3",
+    "question_type": "single_hop",
+    "question": "How many Prius has Evan owned?",
+    "answer": "two",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q4",
+    "question_type": "multi_hop",
+    "question": "Which hobby did Sam take up in May 2023?",
+    "answer": "painting",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q5",
+    "question_type": "temporal",
+    "question": "Which country was Evan visiting in May 2023?",
+    "answer": "Canada",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q6",
+    "question_type": "single_hop",
+    "question": "How many roadtrips did Evan take in May 2023?",
+    "answer": "two",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q7",
+    "question_type": "single_hop",
+    "question": "What new hobbies did Sam consider trying?",
+    "answer": "Painting, kayaking, hiking, cooking, running",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q8",
+    "question_type": "single_hop",
+    "question": "What hobby did Evan start practicing a few years ago that he enjoys?",
+    "answer": "Watercolor painting",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q9",
+    "question_type": "multi_hop",
+    "question": "When did Evan go to Jasper with his family?",
+    "answer": "weekend before May 24, 2023",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q10",
+    "question_type": "temporal",
+    "question": "Which type of vacation would Evan prefer with his family, walking tours in metropolitan cities or camping trip in the outdoors?",
+    "answer": "camping trip in the outdoors",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q11",
+    "question_type": "single_hop",
+    "question": "What health issue did Sam face that motivated him to change his lifestyle?",
+    "answer": "Weight problem",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q12",
+    "question_type": "multi_hop",
+    "question": "When did Sam first go to the doctor and find out he had a weight problem?",
+    "answer": "A few days before May 24, 2023.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q13",
+    "question_type": "multi_hop",
+    "question": "When did Evan have his sudden heart palpitation incident that really shocked him up?",
+    "answer": "first week of June 2023",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q14",
+    "question_type": "single_hop",
+    "question": "What is Evan's favorite food?",
+    "answer": "Ginger snaps",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q15",
+    "question_type": "single_hop",
+    "question": "What kind of unhealthy snacks does Sam enjoy eating?",
+    "answer": "soda, candy",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q16",
+    "question_type": "single_hop",
+    "question": "What recurring issue frustrates Sam at the grocery store?",
+    "answer": "Malfunctioning self-checkout machines.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q17",
+    "question_type": "multi_hop",
+    "question": "When did Sam's friends mock him for being overweight?",
+    "answer": "Friday before 27 July 2023",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q18",
+    "question_type": "single_hop",
+    "question": "What kind of healthy food suggestions has Evan given to Sam?",
+    "answer": "flavored seltzer water, dark chocolate with high cocoa content, air-popped popcorn and fruit, veggies, healthy sandwich snacks, energy balls, grilled chicken salad with avocado",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q19",
+    "question_type": "temporal",
+    "question": "Considering their conversations and personal growth, what advice might Evan and Sam give to someone facing a major life transition or challenge?",
+    "answer": "Evan and Sam would likely advise embracing small, consistent changes\u200b\u200b, finding stress-relieving activities like hiking\u200b\u200b, painting, and road trips\u200b\u200b, and the importance of friendship and support in navigating challenges\u200b\u200b.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q20",
+    "question_type": "temporal",
+    "question": "In light of the health and dietary changes discussed, what would be an appropriate gift for both Evan and Sam to encourage their healthy lifestyles?",
+    "answer": "a cookbook with healthy recipes or a subscription to a healthy meal delivery service.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q21",
+    "question_type": "single_hop",
+    "question": "How does Evan describe the woman and his feelings for her that he met in Canada?",
+    "answer": "He says she's cool, incredible, like something out of a movie, and that he feels alive around her. Every moment with her is fun and energetic, also Evan feels really lucky to have someone who gets him.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q22",
+    "question_type": "multi_hop",
+    "question": "When Evan did meet his future wife?",
+    "answer": "week before August 7, 2023.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q23",
+    "question_type": "multi_hop",
+    "question": "When did Sam start working out at the gym?",
+    "answer": "July 28, 2023",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q24",
+    "question_type": "multi_hop",
+    "question": "What significant event happened in Sam's life towards the end of summer 2023?",
+    "answer": "He fell in love with a Canadian woman",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q25",
+    "question_type": "multi_hop",
+    "question": "Which year did Evan start taking care of his health seriously?",
+    "answer": "2021",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q26",
+    "question_type": "single_hop",
+    "question": "What motivates Evan to take care of his health?",
+    "answer": "family, fitness tracker, thirst for adventure on interesting hikes",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q27",
+    "question_type": "temporal",
+    "question": "What electronic device could Evan gift Sam to help him keep up with his fitness goals?",
+    "answer": "fitness tracker",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q28",
+    "question_type": "single_hop",
+    "question": "What kind of writing does Sam do to relax and cope with his health issues?",
+    "answer": "journalling, creative writing",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q29",
+    "question_type": "single_hop",
+    "question": "Who did Evan meet on his trip to Canada, and who did he come back from Canada with?",
+    "answer": "Evan met the woman he fell in love with and returned with her.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q30",
+    "question_type": "multi_hop",
+    "question": "When Evan get back from a vacation with his SO?",
+    "answer": "August 13, 2023",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q31",
+    "question_type": "temporal",
+    "question": "How might Evan and Sam's experiences with health and lifestyle changes influence their approach to stress and challenges?",
+    "answer": "Their experiences likely lead them to view challenges as opportunities for growth and change. They both have embraced healthier lifestyles, indicating a proactive approach to managing stress and challenges.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q32",
+    "question_type": "single_hop",
+    "question": "What recurring frustration does Evan experience?",
+    "answer": "Evan consistently misplaces his keys every week.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q33",
+    "question_type": "single_hop",
+    "question": "What is the recurring dream that Sam keeps having?",
+    "answer": "he's flying over a cityscape.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q34",
+    "question_type": "single_hop",
+    "question": "What accidents has Evan's son faced lately?",
+    "answer": "injured at a soccer game, fell off his bike",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q35",
+    "question_type": "multi_hop",
+    "question": "When was Evan's son injured at soccer?",
+    "answer": "Saturday before August 15, 2023.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q36",
+    "question_type": "single_hop",
+    "question": "What kind of foods or recipes has Sam recommended to Evan?",
+    "answer": "grilled vegetables, grilled chicken and veggie stir-fry, poutine",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q37",
+    "question_type": "single_hop",
+    "question": "What kind of healthy meals did Sam start eating after getting a health scare?",
+    "answer": "salad, grilled salmon and vegetables, grilled chicken and veggie stir-fry, Beef Merlot, fruit bowl, smoothie bowl",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q38",
+    "question_type": "temporal",
+    "question": "What role does nature and the outdoors play in Evan and Sam's mental well-being?",
+    "answer": "Nature and outdoor activities seem to be significant stress relievers and sources of joy for both Evan and Sam. These activities likely contribute positively to their mental well-being.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q39",
+    "question_type": "multi_hop",
+    "question": "How many months lapsed between Sam's first and second doctor's appointment?",
+    "answer": "three months",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q40",
+    "question_type": "multi_hop",
+    "question": "When did Evan start taking painting classes?",
+    "answer": "Few days before 19 August, 2023.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q41",
+    "question_type": "multi_hop",
+    "question": "Which classes did Evan join in mid-August 2023?",
+    "answer": "painting classes",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q42",
+    "question_type": "single_hop",
+    "question": "How did Evan get into painting?",
+    "answer": "His friend got him into it by gifting him a painting and giving him some advice. The painting inspired Evan.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q43",
+    "question_type": "temporal",
+    "question": "How often does Sam get health checkups?",
+    "answer": "every three months",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q44",
+    "question_type": "single_hop",
+    "question": "What kind of subjects does Evan enjoy painting?",
+    "answer": "nature landscapes, portraits, abstract minimalism",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q45",
+    "question_type": "multi_hop",
+    "question": "Which places in Canada was Evan visiting in July 2023?",
+    "answer": "Banff, Rocky Mountains",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q46",
+    "question_type": "temporal",
+    "question": "How do Evan and Sam use creative outlets to cope with life's challenges?",
+    "answer": "Evan and Sam use creative activities, like painting and writing, as therapeutic tools to express themselves and cope with stress.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q47",
+    "question_type": "multi_hop",
+    "question": "When did Evan go skiing in Banff?",
+    "answer": "July 2023",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q48",
+    "question_type": "single_hop",
+    "question": "What new diet and lifestyle change did Sam adopt over time?",
+    "answer": "Healthy eating, exercise routine, running, hiking",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q49",
+    "question_type": "single_hop",
+    "question": "Who was injured in Evan's family?",
+    "answer": "Evan's son and Evan himself",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q50",
+    "question_type": "single_hop",
+    "question": "What kind of hobbies does Evan pursue?",
+    "answer": "painting, hiking, reading books, biking, skiing, snowboarding, ice skating, swimming, camping, kayaking",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q51",
+    "question_type": "temporal",
+    "question": "What challenges does Sam face in his quest for a healthier lifestyle, and how does he address them?",
+    "answer": "Sam faces challenges like maintaining motivation and making dietary changes. He addresses them by enrolling in cooking classes and seeking support from friends like Evan.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q52",
+    "question_type": "multi_hop",
+    "question": "Which activity do Evan and Sam plan on doing together during September 2023?",
+    "answer": "painting",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q53",
+    "question_type": "multi_hop",
+    "question": "When did Evan and Sam decide to paint together?",
+    "answer": "Saturday after 11 September, 2023.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q54",
+    "question_type": "single_hop",
+    "question": "What personal health incidents does Evan face in 2023?",
+    "answer": "heart palpitations, twisted ankle, twisted ankle",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q55",
+    "question_type": "single_hop",
+    "question": "What recurring adventure does Evan have with strangers?",
+    "answer": "Helping lost tourists and experiencing unexpected adventures in the city.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q56",
+    "question_type": "single_hop",
+    "question": "What is Sam's persistent problem with his phone?",
+    "answer": "His new phone malfunctioning, particularly with the navigation app.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q57",
+    "question_type": "temporal",
+    "question": "Which US state was Sam travelling in during October 2023?",
+    "answer": "California",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q58",
+    "question_type": "multi_hop",
+    "question": "When did Evan start lifting weights?",
+    "answer": "October 2022",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q59",
+    "question_type": "multi_hop",
+    "question": "When did Sam and his friend decide to try kayaking?",
+    "answer": "October 14, 2023",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q60",
+    "question_type": "multi_hop",
+    "question": "Which new activity does Sam take up in October 2023?",
+    "answer": "kayaking",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q61",
+    "question_type": "multi_hop",
+    "question": "What kind of stress was Sam dealing with in October 2023?",
+    "answer": "work-related stress",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q62",
+    "question_type": "single_hop",
+    "question": "What health scares did Sam and Evan experience?",
+    "answer": "Sam faced a health scare with stomach pains that turned out to be gastritis, prompting him to rethink his health habits. Evan, on the other hand, experienced two separate incidents: a sudden heart palpitation incident and a different event involving a misunderstanding during a medical check-up. These experiences have significantly influenced their perspectives on health and well-being.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q63",
+    "question_type": "multi_hop",
+    "question": "When was Sam in the ER?",
+    "answer": "weekend before 17 October, 2023.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q64",
+    "question_type": "single_hop",
+    "question": "Which ailment does Sam have to face due to his weight?",
+    "answer": "gastritis",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q65",
+    "question_type": "temporal",
+    "question": "Does Evan live close to a beach or mountains?",
+    "answer": "beach",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q66",
+    "question_type": "multi_hop",
+    "question": "When did Evan lose his job?",
+    "answer": "end of October 2023",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q67",
+    "question_type": "multi_hop",
+    "question": "When did Evan and Sam planned a trip to the beach together?",
+    "answer": "December, 2023",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q68",
+    "question_type": "multi_hop",
+    "question": "What was Sam doing on December 4, 2023?",
+    "answer": "Attending a Weight Watchers meeting",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q69",
+    "question_type": "single_hop",
+    "question": "Which two significant life events occur in Evan's life in December 2023 with his partner?",
+    "answer": "his partner gets pregnant and they get married",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q70",
+    "question_type": "multi_hop",
+    "question": "How long did Evan and his partner date before getting married?",
+    "answer": "four months",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q71",
+    "question_type": "temporal",
+    "question": "Which major holiday season conincides with Evan's wedding?",
+    "answer": "Christmas",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q72",
+    "question_type": "single_hop",
+    "question": "Which activity did Sam resume in December 2023 after a long time?",
+    "answer": "hiking",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q73",
+    "question_type": "multi_hop",
+    "question": "When is Evan planning a big family reunion?",
+    "answer": "Summer 2024",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q74",
+    "question_type": "multi_hop",
+    "question": "When did Evan's son fall off his bike?",
+    "answer": "Thursday before December 17, 2023.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q75",
+    "question_type": "multi_hop",
+    "question": "When did Evan announce his marriage to his extended family?",
+    "answer": "January 5, 2024",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q76",
+    "question_type": "multi_hop",
+    "question": "When did Evan finish the painting that's hanging in the exhibit?",
+    "answer": "few days before 17 December, 2023.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q77",
+    "question_type": "single_hop",
+    "question": "How does Evan spend his time with his bride after the wedding?",
+    "answer": "family get-together, honeymoon in Canada to see snowy landscapes, ski, taste local cuisine and do some snowshoeing",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q78",
+    "question_type": "single_hop",
+    "question": "Who did Evan tell about his marriage?",
+    "answer": "To Sam, to his friends from work, and to his and his wife's families.",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q79",
+    "question_type": "multi_hop",
+    "question": "When will Evan and his partner have their honeymoon in Canada?",
+    "answer": "February 2024",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q80",
+    "question_type": "multi_hop",
+    "question": "When did Evan have a drunken night with his friends?",
+    "answer": "January 9, 2023",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q81",
+    "question_type": "single_hop",
+    "question": "What is a stress reliever for Evan?",
+    "answer": "Drawing, traveling, places with a beautiful view, yoga, sunsets or something comfortable for Evan",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q82",
+    "question_type": "single_hop",
+    "question": "What is a stress reliever for Sam?",
+    "answer": "Unhealthy snacks, sweets, yoga, places with beautiful views",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q83",
+    "question_type": "adversarial",
+    "question": "What type of car did Evan get after his old Prius broke down?",
+    "answer": "new Prius",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q84",
+    "question_type": "adversarial",
+    "question": "How did Evan get into watercolor painting?",
+    "answer": "friend's advice",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q85",
+    "question_type": "adversarial",
+    "question": "What did Evan start doing a few years back as a stress-buster?",
+    "answer": "watercolor painting",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q86",
+    "question_type": "adversarial",
+    "question": "What advice did Evan give Sam about finding a passion?",
+    "answer": "keep trying new things until something sparks excitement",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q87",
+    "question_type": "adversarial",
+    "question": "Where did Evan take his family for a road trip on 24 May, 2023?",
+    "answer": "Jasper",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q88",
+    "question_type": "adversarial",
+    "question": "What did Evan find relaxing about his road trip to Jasper?",
+    "answer": "fresh air, peacefulness, cozy cabin surrounded by mountains and forests",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q89",
+    "question_type": "adversarial",
+    "question": "What habit is Sam trying to change in terms of diet?",
+    "answer": "consuming soda and candy",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q90",
+    "question_type": "adversarial",
+    "question": "What new suggestion did Evan give to Sam regarding his soda and candy consumption?",
+    "answer": "try flavored seltzer water and dark chocolate with high cocoa content",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q91",
+    "question_type": "adversarial",
+    "question": "What did Sam agree to try instead of soda and candy?",
+    "answer": "flavored seltzer water and dark chocolate with high cocoa content",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q92",
+    "question_type": "adversarial",
+    "question": "What frustrating issue did Sam face at the supermarket?",
+    "answer": "broken self-checkout machines",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q93",
+    "question_type": "adversarial",
+    "question": "What novel is Evan reading that he finds gripping?",
+    "answer": "The Great Gatsby",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q94",
+    "question_type": "adversarial",
+    "question": "What kind of water does Evan suggest Sam try as an alternative to soda?",
+    "answer": "Flavored seltzer water",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q95",
+    "question_type": "adversarial",
+    "question": "What does the smartwatch help Evan with?",
+    "answer": "tracks progress and serves as a constant reminder to keep going",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q96",
+    "question_type": "adversarial",
+    "question": "What does the bonsai tree symbolize for Evan?",
+    "answer": "strength and resilience",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q97",
+    "question_type": "adversarial",
+    "question": "Why did Evan decide to get the bonsai tree?",
+    "answer": "motivates him to keep going through tough times",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q98",
+    "question_type": "adversarial",
+    "question": "According to Sam, what is more important than perfection?",
+    "answer": "progress",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q99",
+    "question_type": "adversarial",
+    "question": "What did Evan suggest Sam to check out for insights into his dream?",
+    "answer": "dream interpretation book",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q100",
+    "question_type": "adversarial",
+    "question": "What did Evan mention he had been searching for fruitlessly for half an hour?",
+    "answer": "his keys",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q101",
+    "question_type": "adversarial",
+    "question": "What class is Sam taking to learn how to make healthier meals?",
+    "answer": "cooking class",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q102",
+    "question_type": "adversarial",
+    "question": "What dish did Sam make on 18 August, 2023 that turned out flavorful?",
+    "answer": "grilled dish with salmon and vegetables",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q103",
+    "question_type": "adversarial",
+    "question": "What kind of recipe did Evan request from Sam on 19 August, 2023?",
+    "answer": "recipes with more vegetables",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q104",
+    "question_type": "adversarial",
+    "question": "What food did Sam share a photo of on 19 August, 2023?",
+    "answer": "bowl of spinach, avocado, and strawberries",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q105",
+    "question_type": "adversarial",
+    "question": "What type of painting classes did Evan start taking in 2023?",
+    "answer": "watercolor painting classes",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q106",
+    "question_type": "adversarial",
+    "question": "What did Evan start painting years ago due to being inspired by a friend's gift?",
+    "answer": "forest scene",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q107",
+    "question_type": "adversarial",
+    "question": "What nature concept do watercolor painting classes emphasize according to Evan?",
+    "answer": "observing nature and painting what is seen",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q108",
+    "question_type": "adversarial",
+    "question": "What type of landscapes does Evan love painting the most?",
+    "answer": "sunsets over the ocean",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q109",
+    "question_type": "adversarial",
+    "question": "What fun activity did Evan mention doing in July 2023?",
+    "answer": "skiing",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q110",
+    "question_type": "adversarial",
+    "question": "What injury did Evan suffer from in August 2023?",
+    "answer": "Twisted knee",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q111",
+    "question_type": "adversarial",
+    "question": "What sports activity has Evan been doing to stay active while dealing with the knee injury?",
+    "answer": "Swimming",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q112",
+    "question_type": "adversarial",
+    "question": "What suggestion did Sam give to Evan to help with his knee issue?",
+    "answer": "Consider low-impact exercises or physical therapy",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q113",
+    "question_type": "adversarial",
+    "question": "What did Evan suggest Sam try as a calming hobby?",
+    "answer": "Painting",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q114",
+    "question_type": "adversarial",
+    "question": "What did Evan recommend Sam acquire to get started with painting?",
+    "answer": "Acrylic paints, brushes, canvas/paper, palette",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q115",
+    "question_type": "adversarial",
+    "question": "What activity does Evan do to keep himself busy while healing his knee?",
+    "answer": "Watercolor painting",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q116",
+    "question_type": "adversarial",
+    "question": "What painting did Evan share with Sam in October?",
+    "answer": "a cactus in the desert",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q117",
+    "question_type": "adversarial",
+    "question": "What kind of writing does Sam enjoy as a form of expression?",
+    "answer": "creative writing",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q118",
+    "question_type": "adversarial",
+    "question": "What electronics issue has been frustrating Sam lately?",
+    "answer": "malfunctioning navigation app on the new phone",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q119",
+    "question_type": "adversarial",
+    "question": "What activity did Evan start one year ago?",
+    "answer": "lifting weights",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q120",
+    "question_type": "adversarial",
+    "question": "What advice did Evan give to Sam to avoid injuries while starting weightlifting?",
+    "answer": "Find a trainer",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q121",
+    "question_type": "adversarial",
+    "question": "Where did Sam and his mate plan to try kayaking?",
+    "answer": "Lake Tahoe",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q122",
+    "question_type": "adversarial",
+    "question": "What digestive issue did Sam experience lately?",
+    "answer": "Gastritis",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q123",
+    "question_type": "adversarial",
+    "question": "What adventurous theme is emerging in Evan's life as mentioned by Sam?",
+    "answer": "helping lost tourists",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q124",
+    "question_type": "adversarial",
+    "question": "What does Evan mention about his progress at the gym to Sam?",
+    "answer": "gaining strength",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q125",
+    "question_type": "adversarial",
+    "question": "How did Evan start his transformation journey two years ago?",
+    "answer": "Changed his diet and started walking regularly",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q126",
+    "question_type": "adversarial",
+    "question": "What gift did Evan receive from a close friend?",
+    "answer": "1968 Kustom K-200A vintage guitar",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q127",
+    "question_type": "adversarial",
+    "question": "Why had Evan been going through a tough time lately?",
+    "answer": "Lost their job due to downsizing",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q128",
+    "question_type": "adversarial",
+    "question": "How does Evan describe the island he grew up on?",
+    "answer": "A happy place",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q129",
+    "question_type": "adversarial",
+    "question": "What was the main reason for Evan's frustration with his new Prius breaking down?",
+    "answer": "He relied on it for his active lifestyle and road trips",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q130",
+    "question_type": "adversarial",
+    "question": "How did Sam suggest Evan view the setback with his broken Prius?",
+    "answer": "As a chance to explore other ways of staying active and traveling",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q131",
+    "question_type": "adversarial",
+    "question": "What did Sam suggest Evan try for stress relief and flexibility?",
+    "answer": "Yoga",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q132",
+    "question_type": "adversarial",
+    "question": "What did Sam offer Evan regarding yoga?",
+    "answer": "Support and tips",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q133",
+    "question_type": "adversarial",
+    "question": "What news did Evan share with Sam on 9th December 2023?",
+    "answer": "partner is pregnant",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q134",
+    "question_type": "adversarial",
+    "question": "What family event is Evan planning for next summer?",
+    "answer": "big family reunion",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q135",
+    "question_type": "adversarial",
+    "question": "What is the motto of Evan's family?",
+    "answer": "'Bring it on Home'",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q136",
+    "question_type": "adversarial",
+    "question": "According to Evan, what is important for Sam to believe in concerning his weight?",
+    "answer": "Your worth is not defined by your weight",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q137",
+    "question_type": "adversarial",
+    "question": "Who helped Evan get the painting published in the exhibition?",
+    "answer": "a close friend",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q138",
+    "question_type": "adversarial",
+    "question": "What did Sam recently start enjoying to clear his head?",
+    "answer": "running in the mornings",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q139",
+    "question_type": "adversarial",
+    "question": "What did Sam suggest Evan should do with his keys?",
+    "answer": "put a GPS sensor on them",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q140",
+    "question_type": "adversarial",
+    "question": "How did Evan feel when he painted the piece with the bird flying over it?",
+    "answer": "a sense of joy and freedom",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q141",
+    "question_type": "adversarial",
+    "question": "What did Evan suggest Sam should keep doing to find his own version of love?",
+    "answer": "Keep trying new things",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q142",
+    "question_type": "adversarial",
+    "question": "How did Evan describe the process of creating the painting with the bird flying over it?",
+    "answer": "embracing the creative process without restraint",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q143",
+    "question_type": "adversarial",
+    "question": "What did Evan want to share with his work friends?",
+    "answer": "getting married",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q144",
+    "question_type": "adversarial",
+    "question": "What did Evan share with Sam after their hiking trip?",
+    "answer": "a photo of a man standing on a rock looking out over a valley",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q145",
+    "question_type": "adversarial",
+    "question": "What did Evan offer to share with Sam after talking about healthy snacks?",
+    "answer": "the recipes for cookies",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q146",
+    "question_type": "adversarial",
+    "question": "What did Evan and his partner share with their extended family on January 5, 2024?",
+    "answer": "their marriage",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q147",
+    "question_type": "adversarial",
+    "question": "What was Evan limiting himself to on his new diet?",
+    "answer": "just two ginger snaps a day",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q148",
+    "question_type": "adversarial",
+    "question": "What sports activity did Evan and his partner try in a recent weekend?",
+    "answer": "Snowshoeing",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q149",
+    "question_type": "adversarial",
+    "question": "What advice did Evan suggest Sam seek from a doctor?",
+    "answer": "diet plan and low-impact exercises",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q150",
+    "question_type": "adversarial",
+    "question": "What suggestions did Evan give for low-impact exercises?",
+    "answer": "swimming, yoga, walking",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q151",
+    "question_type": "adversarial",
+    "question": "What movie did Sam watch that motivated him to keep up with his routine?",
+    "answer": "The Godfather",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q152",
+    "question_type": "adversarial",
+    "question": "What activity helped Evan with stress and flexibility?",
+    "answer": "Yoga",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q153",
+    "question_type": "adversarial",
+    "question": "What did Evan share a photo of that was taken on a camping trip?",
+    "answer": "a kayak",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q154",
+    "question_type": "adversarial",
+    "question": "Why did Evan apologize to his partner?",
+    "answer": "for a drunken night",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q155",
+    "question_type": "adversarial",
+    "question": "How does Evan describe being out on the water while kayaking and watching the sunset?",
+    "answer": "peaceful",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q156",
+    "question_type": "commonsense",
+    "question": "What type of car did Sam get after his old Prius broke down?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q157",
+    "question_type": "commonsense",
+    "question": "How did Sam get into watercolor painting?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q158",
+    "question_type": "commonsense",
+    "question": "What did Sam start doing a few years back as a stress-buster?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q159",
+    "question_type": "commonsense",
+    "question": "Where did Sam take his family for a road trip on 24 May, 2023?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q160",
+    "question_type": "commonsense",
+    "question": "What did Sam find relaxing about his road trip to Jasper?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q161",
+    "question_type": "commonsense",
+    "question": "What habit is Evan trying to change in terms of diet?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q162",
+    "question_type": "commonsense",
+    "question": "What frustrating issue did Evan face at the supermarket?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q163",
+    "question_type": "commonsense",
+    "question": "What novel is Sam reading that he finds gripping?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q164",
+    "question_type": "commonsense",
+    "question": "What does the smartwatch help Sam with?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q165",
+    "question_type": "commonsense",
+    "question": "Why did Sam decide to get the bonsai tree?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q166",
+    "question_type": "commonsense",
+    "question": "What did Sam mention he had been searching for fruitlessly for half an hour?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q167",
+    "question_type": "commonsense",
+    "question": "What class is Evan taking to learn how to make healthier meals?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q168",
+    "question_type": "commonsense",
+    "question": "What dish did Sam make on 18 August, 2023 that turned out bland?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q169",
+    "question_type": "commonsense",
+    "question": "What food did Evan share a photo of on 19 August, 2023?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q170",
+    "question_type": "commonsense",
+    "question": "What did Evan start sculpting years ago due to being inspired by a friend's gift?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q171",
+    "question_type": "commonsense",
+    "question": "What nature concept do watercolor painting classes emphasize according to Sam?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q172",
+    "question_type": "commonsense",
+    "question": "What type of landscapes does Sam love painting the most?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q173",
+    "question_type": "commonsense",
+    "question": "What sports activity has Sam been doing to stay active while dealing with the knee injury?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q174",
+    "question_type": "commonsense",
+    "question": "What activity does Sam do to keep himself busy while healing his knee?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q175",
+    "question_type": "commonsense",
+    "question": "What kind of writing does Evan enjoy as a form of expression?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q176",
+    "question_type": "commonsense",
+    "question": "What electronics issue has been frustrating Evan lately?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q177",
+    "question_type": "commonsense",
+    "question": "What activity did Evan quit one year ago?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q178",
+    "question_type": "commonsense",
+    "question": "Where did Sam and his mate plan to try skydiving?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q179",
+    "question_type": "commonsense",
+    "question": "What digestive issue did Evan experience lately?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q180",
+    "question_type": "commonsense",
+    "question": "How did Sam start his transformation journey two years ago?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q181",
+    "question_type": "commonsense",
+    "question": "What gift did Sam receive from a close friend?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q182",
+    "question_type": "commonsense",
+    "question": "How does Sam describe the island he grew up on?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q183",
+    "question_type": "commonsense",
+    "question": "What was the main reason for Evan's frustration with his new Prius getting stolen?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q184",
+    "question_type": "commonsense",
+    "question": "What family event is Sam planning for next summer?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q185",
+    "question_type": "commonsense",
+    "question": "What is the motto of Sam's family?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q186",
+    "question_type": "commonsense",
+    "question": "Who helped Sam get the painting published in the exhibition?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q187",
+    "question_type": "commonsense",
+    "question": "How did Sam feel when he painted the piece with the bird flying over it?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q188",
+    "question_type": "commonsense",
+    "question": "How did Sam describe the process of creating the painting with the bird flying over it?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q189",
+    "question_type": "commonsense",
+    "question": "What did Evan and his partner keep from their extended family on January 5, 2024?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q190",
+    "question_type": "commonsense",
+    "question": "What was Sam limiting himself to on his new diet?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q191",
+    "question_type": "commonsense",
+    "question": "What dance activity did Evan and his partner try in a recent weekend?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q192",
+    "question_type": "commonsense",
+    "question": "What suggestions did Evan give for high-impact exercises?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q193",
+    "question_type": "commonsense",
+    "question": "What movie did Evan watch that motivated him to keep up with his routine?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q194",
+    "question_type": "commonsense",
+    "question": "What activity hindered Evan's stress and flexibility?",
+    "answer": "",
+    "sample_id": "conv-49"
+  },
+  {
+    "question_id": "conv-49_q195",
+    "question_type": "commonsense",
+    "question": "What did Sam share a photo of that was taken on a camping trip?",
+    "answer": "",
+    "sample_id": "conv-49"
+  }
+]
