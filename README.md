@@ -1,214 +1,199 @@
-# PIE World Model Explorer
+# PIE — Personal Intelligence Engine
 
-A comprehensive, self-contained analytical dashboard for exploring the Personal Intelligence Environment (PIE) world model. Handles 1,447+ entities, 1,412+ relationships, and 3,033+ state transitions with deep analytical capabilities.
+PIE ingests your entire ChatGPT conversation history and builds a structured **temporal knowledge graph** of your life: every person, project, tool, belief, and decision — tracked across time with full state history.
 
-## Quick Start
-
-```bash
-cd /mnt/personal-intelligence-system
-python3 -m http.server 8000
-# Open: http://localhost:8000/explorer.html
-```
-
-## Files
-
-- **explorer.html** - Main application (53 KB, no dependencies)
-- **QUICKSTART.txt** - Quick reference (5 min read)
-- **EXPLORER-GUIDE.md** - Full documentation
-- **README.md** - This file
-
-## Features
-
-### 1. Overview Dashboard
-System-wide metrics and visualizations:
-- 6 key metrics cards (total entities, relationships, transitions, etc)
-- Entity type distribution chart (Canvas)
-- Activity timeline showing transition frequency
-
-### 2. Entity Explorer
-Searchable, filterable database of all entities:
-- Real-time search across names and aliases
-- Filter by entity type
-- 5 sort options (name, type, transitions, first_seen, last_seen)
-- Detailed view panel with:
-  - Current state (syntax-highlighted JSON)
-  - All relationships with clickable navigation
-  - Complete transition history with timestamps
-
-### 3. Timeline View
-Temporal visualization of entity creation:
-- Horizontal timeline colored by entity type
-- Click dates to see created entities
-- Identify system evolution phases
-
-### 4. Relationship Explorer
-Interactive graph exploration:
-- Select entity from searchable list
-- See all connected entities radiating outward
-- Click any connection to re-center and explore
-- Visual relationship type labels
-
-### 5. Insights Panel
-Auto-computed analytics:
-- Most active entities (transition count)
-- Recently changed entities (latest updates)
-- Contradiction hotspots (conflicting beliefs)
-- Orphan entities (isolated concepts)
-- Belief evolution statistics
-- Network density metrics
-
-## Technical Stack
-
-- **HTML/CSS/JS**: Single self-contained file, vanilla code
-- **No dependencies**: No npm, no CDN, no frameworks
-- **Canvas API**: Used for charts (bar and line graphs)
-- **CSS Grid/Flexbox**: Responsive layout
-- **Fetch API**: Loads world_model.json via HTTP
-
-## Color System
-
-Entity types use consistent colors throughout:
-
-| Type | Color | Icon |
-|------|-------|------|
-| person | #4fc3f7 (cyan) | 👤 |
-| project | #81c784 (green) | 📋 |
-| tool | #ffb74d (orange) | 🔧 |
-| organization | #ce93d8 (purple) | 🏢 |
-| belief | #ef5350 (red) | 💡 |
-| decision | #ffd54f (yellow) | ⚖️ |
-| concept | #90a4ae (gray) | 🧠 |
-| period | #4db6ac (teal) | 📅 |
-| event | #7986cb (indigo) | 📍 |
-
-## Data Source
-
-Loads from: `output/world_model.json`
-
-Contains:
-- 1,447 entities with full state tracking
-- 1,412 relationships with multiple types
-- 3,033 transitions with complete history
-- 9 entity types with icons and colors
-
-## Performance
-
-- Load time: ~350ms
-- Memory: 10-15 MB
-- Search/filter: <100ms per keystroke
-- Handles 1,500+ entities smoothly
-
-## Browser Support
-
-Requires modern browser with:
-- ES6 JavaScript
-- Canvas API
-- Fetch API
-- CSS Grid/Flexbox
-
-Compatible: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
-
-## Usage Examples
-
-### Finding Key Components
-1. Go to OVERVIEW tab
-2. Review metrics and charts
-3. Check INSIGHTS for most active entities
-4. Use Entity Explorer sorted by transitions
-
-### Understanding Relationships
-1. Go to Relationships tab
-2. Search and select entity
-3. See connected entities in radial layout
-4. Click any to explore further
-
-### Tracking Changes
-1. Entity Explorer → click entity
-2. Detail panel → scroll to "Transition History"
-3. See complete state evolution with timestamps
-
-### Identifying Issues
-1. INSIGHTS tab → "Contradiction Hotspots"
-2. Entity detail → review conflicting states
-3. Timeline view → identify when changes occurred
-
-## Customization
-
-Use custom world model:
-```
-http://localhost:8000/explorer.html?wm=path/to/model.json
-```
-
-The ?wm= parameter accepts:
-- Relative paths: `output/alternate.json`
-- Absolute paths: `/full/path/to/file.json`
-- HTTP URLs: `http://example.com/data.json`
-
-## Architecture
-
-Single HTML file containing:
-- HTML structure (semantic layout)
-- CSS styling (dark theme, responsive)
-- JavaScript code (vanilla ES6)
-
-Key functions:
-- `loadWorldModel()` - Fetch and parse data
-- `renderOverview()` - Dashboard metrics and charts
-- `renderEntityList()` - Searchable entity explorer
-- `renderEntityDetail()` - Full entity information
-- `renderTimeline()` - Creation timeline
-- `renderRelationshipGraph()` - Connection explorer
-- `renderInsights()` - Computed analytics
-
-## Troubleshooting
-
-**Failed to load world model**
-- Ensure HTTP server is running
-- Check path to world_model.json is correct
-- Open browser console (F12) for error details
-
-**Charts not rendering**
-- Refresh page
-- Check browser supports Canvas API
-- Try different browser
-
-**Slow performance**
-- Use search/filter to narrow results
-- Sort by relevant field
-- Close other tabs
-
-## Future Enhancements
-
-Potential additions:
-- CSV/JSON export
-- Relationship type filtering
-- State comparison view
-- Force-directed graph layout
-- Network centrality analysis
-- Entity clustering
-- Custom analytics queries
-
-## Documentation
-
-- **QUICKSTART.txt** - 5-minute getting started guide
-- **EXPLORER-GUIDE.md** - Comprehensive user manual
-- **EXPLORER_DETAILS.md** - Technical architecture details
-
-## Security
-
-- No external dependencies
-- No server communication (except JSON fetch)
-- All user input HTML-escaped
-- Safe for offline use
-- CORS-compatible
-
-## License
-
-This explorer is part of the PIE (Personal Intelligence Environment) system.
+Once built, you can query it conversationally ("what was I working on in January?"), browse it visually, get a daily briefing, or connect it to Claude via MCP so your AI has real memory of who you are.
 
 ---
 
-Created: February 16, 2026
-Status: Production Ready
-Lines of Code: 1,538
-Size: 53 KB
+## What you get
+
+- **A knowledge graph of your life** — entities extracted from your conversations: people, projects, tools, organizations, beliefs, decisions, concepts. Each with a full history of how it changed over time.
+- **Temporal queries** — ask natural language questions grounded in your actual data. "How has project X evolved?" "What did I decide about Y last year?"
+- **Visual explorer** — browse entities, timelines, and relationship graphs in the browser. No backend needed.
+- **Daily briefing** — a prioritized summary of what's active, stale, overdue, or coming up based on your world model.
+- **Claude MCP integration** — plug PIE into Claude Desktop so every conversation starts with real context about you.
+
+---
+
+## Setup
+
+**Requirements:** Python 3.10+, an OpenAI API key.
+
+```bash
+git clone https://github.com/parthkocheta/pie
+cd pie
+pip install -r requirements.txt
+cp .env.example .env
+# Edit .env and add your OPENAI_API_KEY
+```
+
+**Get your ChatGPT export:**  
+Go to [chatgpt.com](https://chatgpt.com) → Settings → Data controls → Export data. You'll get a `conversations.json` in your Downloads folder.
+
+---
+
+## Run the ingestion pipeline
+
+This reads your conversations, extracts entities and state changes via LLM, and writes `output/world_model.json`.
+
+```bash
+# Test run first (5 daily batches, ~$0.10)
+python run.py --test --no-web
+
+# Full run (all conversations from 2024 onward)
+python run.py --no-web --year 2024
+
+# Resume if interrupted
+python run.py --no-web --start-date 2024-06-01
+
+# Check what's in your world model
+python run.py --stats
+```
+
+**Cost:** roughly $1–5 to process a full year of conversations using `gpt-4o-mini`. The `--test` flag limits to 5 batches so you can verify it works before committing.
+
+---
+
+## Browse visually
+
+Start a local HTTP server in the project root:
+
+```bash
+python3 -m http.server 8000
+```
+
+Then open in your browser:
+
+| URL | What it shows |
+|-----|---------------|
+| `http://localhost:8000/explorer.html` | Main dashboard — entity search, timeline, relationships, insights |
+| `http://localhost:8000/graph_viz.html` | Force-directed knowledge graph — people, projects, orgs as nodes |
+| `http://localhost:8000/eval_viewer.html` | Entity detail view with full transition history |
+| `http://localhost:8000/board.html` | Command center — goals, active projects, decisions |
+
+---
+
+## Query your world model
+
+Interactive conversational interface over your world model:
+
+```bash
+python3 -m pie.eval.query_interface --world-model output/world_model.json
+```
+
+Ask things like:
+- *"What projects was I working on in mid-2024?"*
+- *"How has my thinking on [topic] changed?"*
+- *"Who are the people I've collaborated with most?"*
+
+It retrieves relevant entities via embedding search, compiles their full state history into context, and answers with grounded citations.
+
+---
+
+## Daily briefing
+
+```bash
+python briefing.py
+```
+
+Prints a prioritized executive summary: what's active and moving, what's gone stale, what deadlines are approaching, what has the highest recent activity.
+
+---
+
+## Connect to Claude (MCP)
+
+Add PIE as an MCP server so Claude Desktop has live access to your world model:
+
+```json
+{
+  "mcpServers": {
+    "pie": {
+      "command": "python3",
+      "args": ["/path/to/pie/mcp_server.py"],
+      "env": { "OPENAI_API_KEY": "sk-..." }
+    }
+  }
+}
+```
+
+See `claude_desktop_config.json` for the full template. Once connected, Claude can call tools like `get_temporal_briefing`, `search_entities`, `get_timeline`, and `get_commitments` before and after each conversation.
+
+---
+
+## Repo structure
+
+```
+pie/                     # Core Python module
+  ingestion/
+    pipeline.py          # Main orchestrator — parses conversations, runs extraction, saves world model
+    prompts.py           # LLM prompts for entity/relationship extraction
+  core/
+    world_model.py       # In-memory + JSON-persisted graph store
+    models.py            # Entity, StateTransition, Relationship data models
+    llm.py               # OpenAI client wrapper (chat + embeddings)
+    dynamics.py          # Importance scoring, staleness, volatility
+    parser.py            # conversations.json → Conversation objects
+  resolution/
+    resolver.py          # 3-tier entity resolution (string → embedding → LLM)
+  retrieval/
+    context_compiler.py  # Subgraph → LLM-ready markdown with temporal context
+    temporal_retriever.py
+  eval/
+    query_interface.py   # Interactive query CLI
+    extraction_quality.py
+  config.py              # All thresholds and settings
+
+run.py                   # CLI entry point for ingestion pipeline
+briefing.py              # Daily briefing generator
+mcp_server.py            # MCP server for Claude Desktop integration
+
+explorer.html            # Main visual dashboard
+graph_viz.html           # Force-directed knowledge graph
+eval_viewer.html         # Entity detail + transition history
+board.html               # Command center view
+lib/                     # Vendored vis.js for graph rendering
+
+output/                  # Generated by pipeline (gitignored)
+  world_model.json       # Your knowledge graph (not committed — personal data)
+```
+
+---
+
+## How it works
+
+**Ingestion pipeline** (`run.py` → `pie/ingestion/pipeline.py`):
+
+1. Parse `conversations.json` → group into daily batches
+2. For each batch: build a context preamble from existing world model state, format conversation text, call LLM with extraction prompt
+3. LLM returns JSON: entities (name, type, current state), state changes, relationships
+4. Entity resolution: for each extracted entity, run 3-tier matching against existing world model — fuzzy string match → embedding cosine similarity → LLM verification for ambiguous cases
+5. Write creates/updates/relationships to world model, save checkpoint every 5 batches
+6. After all batches: compute importance scores (transition count × recency decay), save final `output/world_model.json`
+
+**Entity types:** person, project, tool, organization, belief, decision, concept, period, event
+
+**Resolution tiers:**
+- Tier 1 (free): fuzzy string match ≥ 0.95 → auto-accept, 0.90 + same type → auto-accept
+- Tier 2 (cheap): embedding cosine similarity — accept > 0.85, reject < 0.70, ambiguous zone → Tier 3
+- Tier 3 (expensive): LLM yes/no prompt, defaults to "no" on ambiguity to avoid bad merges
+
+---
+
+## Environment variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `OPENAI_API_KEY` | Yes | Used for extraction (gpt-4o-mini) and embeddings (text-embedding-3-large) |
+| `BRAVE_API_KEY` | No | Web grounding for new tool/org entities. Free tier at brave.com/search/api |
+
+---
+
+## Cost estimate
+
+| Operation | Model | Approx cost |
+|-----------|-------|-------------|
+| Full ingestion (1 year) | gpt-4o-mini | ~$2–5 |
+| Entity resolution LLM calls | gpt-4o-mini | ~$0.50 |
+| Embeddings (text-embedding-3-large) | — | ~$0.50 |
+| Single query | gpt-4o-mini | ~$0.01 |
