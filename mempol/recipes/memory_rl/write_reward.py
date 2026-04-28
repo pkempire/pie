@@ -192,7 +192,56 @@ class WriteReward:
                 / max(cov_result.n_evidence_dia_ids_total, 1)
             ),
         }
+        # Side-channel state for the dashboard: serialize the per-question
+        # coverage list and a compact KG snapshot. Tinker's rollout JSON
+        # exporter reads `metrics` as a flat dict, so we attach these as
+        # extra members on `_last_metrics` only — string lists are dropped
+        # by the metric uploader but a wrapper script can read them off
+        # the rollout dump.
+        try:
+            self._last_metrics_full = dict(self._last_metrics)
+            self._last_metrics_full["per_question_coverage"] = [
+                (q[:120], float(s)) for q, s in cov_result.per_question
+            ]
+            self._last_metrics_full["kg_snapshot"] = self._kg_snapshot()
+        except Exception:
+            pass
         return reward, dict(self._last_metrics)
+
+    def _kg_snapshot(self, max_entities: int = 30) -> dict:
+        """Serialise the post-W KG for dashboard display. Compact — capped
+        to `max_entities` rows. Reads the same backend that just got scored."""
+        wm = self.backend.wm
+        entities = []
+        for uid, e in list(wm.entities.items())[:max_entities]:
+            tids = wm._entity_transitions.get(uid, [])
+            entities.append({
+                "uid": uid,
+                "name": e.name,
+                "type": e.type.value if hasattr(e.type, "value") else str(e.type),
+                "current_state": dict(e.current_state or {}),
+                "n_transitions": len(tids),
+                "source_dia_id": e.created_from or "",
+            })
+        return {
+            "n_entities": len(wm.entities),
+            "stored_dia_ids": sorted(self._collect_dia_ids()),
+            "entities": entities,
+        }
+
+    def _collect_dia_ids(self) -> set[str]:
+        """Re-collect stored dia_ids (mirrors evidence_coverage.stored_dia_ids
+        but kept inline so this method has no extra import dependency)."""
+        out: set[str] = set()
+        for e in self.backend.wm.entities.values():
+            if e.created_from:
+                out.add(e.created_from)
+        for trans_list in self.backend.wm._entity_transitions.values():
+            for tid in trans_list:
+                tr = self.backend.wm.transitions.get(tid)
+                if tr and tr.trigger_conversation_id:
+                    out.add(tr.trigger_conversation_id)
+        return out
 
     @staticmethod
     def _assistant_tool_calls(msg: Any) -> list[dict]:
