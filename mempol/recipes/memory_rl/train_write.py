@@ -66,6 +66,22 @@ class CLIConfig:
     eval_every: int = 0
     max_steps: int | None = None
 
+    # ── Exploration / regularization ──
+    # The smoke runs showed entropy collapsing fast (0.18 → 0.10 → 0.07 → 0.04
+    # over 4 steps). Two cookbook knobs to fight that:
+    #
+    # temperature: sampling temperature for rollouts. Default 1.0 in the
+    #   cookbook; raising to 1.1–1.3 widens the on-policy distribution and
+    #   keeps lookups/noops in the action mix at smoke scale. Too high (>1.5)
+    #   degrades signal quality.
+    # kl_penalty_coef: weight on KL(π_θ || π_ref). Default 0.0 means no
+    #   regularizer — the LoRA can drift arbitrarily far from base. 0.02–0.1
+    #   is the working range for a 4B+rank-32 LoRA. The cookbook warns
+    #   temperature and KL interact, so prefer pulling on KL first.
+    temperature: float = 1.0
+    kl_penalty_coef: float = 0.0
+    kl_reference_base_model: str | None = None    # if None, uses model_name
+
     # ── Dataset (LoCoMo write episodes) ──
     n_convs: int = 8
     train_frac: float = 0.8
@@ -82,6 +98,7 @@ class CLIConfig:
     log_path: str | None = None
     wandb_project: str | None = None
     wandb_name: str | None = None
+    num_groups_to_log: int = 8         # rollouts dumped per step for inspect
     behavior_if_log_dir_exists: cli_utils.LogdirBehavior = "delete"
 
 
@@ -126,6 +143,22 @@ async def cli_main(cfg: CLIConfig) -> None:
         raise ValueError("/tmp does not exist")
     cli_utils.check_log_dir(log_path, behavior_if_exists=cfg.behavior_if_log_dir_exists)
 
+    # Reference model for KL — defaults to the same base. Importing lazily
+    # because KLReferenceConfig isn't always exported in older cookbook
+    # versions; we fall back to no KL if it's unavailable.
+    kl_ref = None
+    if cfg.kl_penalty_coef > 0:
+        try:
+            from tinker_cookbook.rl.train import KLReferenceConfig  # type: ignore
+            kl_ref = KLReferenceConfig(
+                base_model=cfg.kl_reference_base_model or cfg.model_name,
+            )
+        except Exception as e:
+            logger.warning(
+                "kl_penalty_coef=%s requested but KLReferenceConfig unavailable "
+                "(%s); proceeding with no KL.", cfg.kl_penalty_coef, e,
+            )
+
     config = train.Config(
         model_name=cfg.model_name,
         renderer_name=renderer_name,
@@ -138,6 +171,10 @@ async def cli_main(cfg: CLIConfig) -> None:
         wandb_name=cfg.wandb_name or run_name,
         lora_rank=cfg.lora_rank,
         max_steps=cfg.max_steps,
+        temperature=cfg.temperature,
+        kl_penalty_coef=cfg.kl_penalty_coef,
+        kl_reference_config=kl_ref,
+        num_groups_to_log=cfg.num_groups_to_log,
     )
 
     await train.main(config)
