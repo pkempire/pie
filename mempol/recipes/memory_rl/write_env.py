@@ -273,6 +273,11 @@ class WriteRLDatasetBuilder(RLDatasetBuilder):
     group_size: int = 4
     max_turns: int = 4
     max_battery_per_turn: int = 6        # cap battery size for cost control
+    min_battery_per_turn: int = 2        # FIX (audit #6): drop battery_size=1
+                                          # turns. Smoke showed they ALWAYS produce
+                                          # zero variance → cookbook drops the
+                                          # group → wasted compute. Filtering
+                                          # roughly doubles effective signal/$.
     n_prior_turns_in_context: int = 2
     seed: int = 0
     renderer_name: str | None = None
@@ -294,8 +299,8 @@ class WriteRLDatasetBuilder(RLDatasetBuilder):
 
                 for ti, t in enumerate(conv.turns):
                     qas_for_turn = evidence_index.get(t.dia_id, [])
-                    if not qas_for_turn:
-                        continue                       # no learning signal for this turn
+                    if len(qas_for_turn) < self.min_battery_per_turn:
+                        continue                       # too few Qs → no GRPO variance
                     # Cap battery size so reward cost stays bounded.
                     battery = qas_for_turn[: self.max_battery_per_turn]
                     prior_turns = conv.turns[max(0, ti - self.n_prior_turns_in_context):ti]

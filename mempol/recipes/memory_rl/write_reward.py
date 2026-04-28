@@ -93,39 +93,50 @@ class WriteReward:
             return -0.01, dict(self._last_metrics)
 
         # 2. Score the held-out battery using the (frozen) R runner.
-        scores: list[float] = []
+        # Run all (r_runner, judge) pairs in parallel via asyncio.gather —
+        # serial loop was 6x slower per trajectory and blocked the event
+        # loop. The R runner is sync (heuristic uses blocking OpenAI calls)
+        # so we wrap each call in run_in_executor; gather() runs them
+        # concurrently in the default thread pool.
         loop = asyncio.get_running_loop()
-        for question, gold in self.query_battery:
+
+        async def _score_one(question: str, gold: str) -> float:
             try:
-                # Run R synchronously inside an executor to avoid blocking
-                # the asyncio event loop. The R runner is sync (heuristic
-                # uses blocking OpenAI calls); a future Tinker-backed R
-                # would be async-native and we'd just `await` it.
                 answer = await loop.run_in_executor(
                     None, self.r_runner, question, self.backend
                 )
                 judge_score, _ = await loop.run_in_executor(
                     None, _judge_sync, question, gold, answer
                 )
-                scores.append(float(judge_score))
+                return float(judge_score)
             except Exception as e:
                 logger.warning(
                     "WriteReward: R-runner / judge failed for q=%s: %s",
                     question[:60], e,
                 )
-                scores.append(0.0)
+                return 0.0
 
+        scores = await asyncio.gather(
+            *[_score_one(q, g) for q, g in self.query_battery]
+        )
         mean_qa = sum(scores) / len(scores)
 
         # 3. Cost from the trajectory.
-        n_ops = self._count_ops(history)
+        # FIX (audit #3): n_ops counts every <tool_call> occurrence, which
+        # INCLUDES lookups. Without subtracting them, lookups would be
+        # double-charged (cost_per_op + cost_per_lookup = 0.007). The
+        # intent (per docstring + design) is lookups are CHEAPER than
+        # mutations (0.002 < 0.005). Subtract lookups from n_ops first.
+        n_ops_total = self._count_ops(history)
         n_lookups = self._count_lookups(history)
+        n_mutations = max(0, n_ops_total - n_lookups)
         n_entities = len(self.backend.wm.entities)
         cost = (
-            self.cost_per_op * n_ops
+            self.cost_per_op * n_mutations
             + self.cost_per_lookup * n_lookups
             + self.cost_per_entity * n_entities
         )
+        n_ops = n_ops_total                                  # for metrics dict
 
         reward = mean_qa - cost
         self._last_metrics = {

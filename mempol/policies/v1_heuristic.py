@@ -93,8 +93,13 @@ class HeuristicPolicy(ReadPolicy):
                 if h.unit.uid not in seen:
                     hits.append(h)
 
-        # 4. Light rerank: keep top-final_k by dense similarity to the original question
-        rerank_hits = backend.retrieve(question, k=self.final_k, source="dense") if hits else []
+        # 4. Light rerank: keep top-final_k by dense similarity to the original question.
+        # FIX (audit #5): if the backend is sparse (e.g. Phase B with 1-2
+        # entities in a fresh PIE), don't ask for more hits than exist.
+        # Using max(2, len(hits)) ensures we get whatever context is there
+        # without forcing the answer LLM into "not in context" by default.
+        target_k = min(self.final_k, max(2, len(hits)))
+        rerank_hits = backend.retrieve(question, k=target_k, source="dense") if hits else []
         rerank_uids = [h.unit.uid for h in rerank_hits]
         # Combine: prefer reranked, then fill from hits
         seen, out = set(), []

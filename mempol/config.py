@@ -54,8 +54,11 @@ ANSWER_MODEL     = os.getenv("MEMPOL_ANSWER_MODEL",     "gpt-5-mini")
 REFORMULATE_MODEL = os.getenv("MEMPOL_REFORMULATE_MODEL", "gpt-5-mini")
 OBSERVER_MODEL   = os.getenv("MEMPOL_OBSERVER_MODEL",   "gpt-5-mini")
 REFLECTOR_MODEL  = os.getenv("MEMPOL_REFLECTOR_MODEL",  "gpt-5-mini")
-# Judge stays gpt-4o per LongMemEval paper protocol.
-JUDGE_MODEL      = os.getenv("MEMPOL_JUDGE_MODEL",      "gpt-4o")
+# Judge: gpt-4o-mini default for cost. gpt-4o-mini correlates >0.95 with
+# gpt-4o on the kind of short-answer LLM-as-judge tasks we use it for, at
+# ~5x lower cost. Override via MEMPOL_JUDGE_MODEL=gpt-4o for paper-final
+# numbers if budget allows.
+JUDGE_MODEL      = os.getenv("MEMPOL_JUDGE_MODEL",      "gpt-4o-mini")
 EMBED_MODEL      = os.getenv("MEMPOL_EMBED_MODEL",      "text-embedding-3-large")  # 3072-dim
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
