@@ -50,6 +50,7 @@ from mempol.backends.pie_kg import PIEBackend
 from mempol.data.locomo import load as load_locomo
 from mempol.policies.v1_write import HeuristicWritePolicy
 from mempol.recipes.memory_rl.write_env import WRITE_TASK_INSTRUCTIONS
+from mempol.recipes.memory_rl.write_tools import WriteTool
 
 logger = logging.getLogger(__name__)
 
@@ -87,39 +88,39 @@ def _build_assistant_message(ops: list[dict]) -> dict:
     return {"role": "assistant", "content": "\n".join(chunks)}
 
 
-def _heuristic_ops_for_turn(policy: HeuristicWritePolicy, backend: PIEBackend,
-                             turn_text: str, dia_id: str,
-                             timestamp: float) -> list[dict]:
-    """Run the heuristic write policy on one turn, recording the ops it
-    chose (instead of just executing them silently). The HeuristicWritePolicy
-    in mempol.policies.v1_write already exposes a list of (op_name, args).
+def _heuristic_ops_for_turn(
+    policy: HeuristicWritePolicy,
+    backend: PIEBackend,
+    turn_text: str,
+    dia_id: str,
+    timestamp: float,
+) -> list[dict]:
+    """Run the heuristic write policy on one turn and return the ops it
+    chose, formatted as Tinker-style tool_calls
+    ({"name": ..., "arguments": ...}).
 
-    If your installed HeuristicWritePolicy doesn't return ops directly, this
-    function falls back to inspecting the backend before/after for inferred
-    ops. The fallback is approximate but acceptable for SFT warmup.
+    The real API on HeuristicWritePolicy is `step(turn_text, dia_id,
+    timestamp, backend, write_tool) -> WriteDecision`. We pass a fresh
+    WriteTool wrapping the same backend so the policy's mutations land
+    where we expect them, and we read `decision.raw_ops` (the LLM's
+    chosen ops) instead of `applied_ops` (only ones that succeeded) —
+    SFT learns the *intended* sequence, errors and all.
     """
-    if hasattr(policy, "process_turn_recording"):
-        return policy.process_turn_recording(
-            backend=backend, turn_text=turn_text,
-            dia_id=dia_id, timestamp=timestamp,
-        )
-    # Fallback: snapshot, run, diff
-    n_before = len(backend.wm.entities)
-    policy.process_turn(backend=backend, turn_text=turn_text,
-                        dia_id=dia_id, timestamp=timestamp)
-    n_after = len(backend.wm.entities)
-    n_added = n_after - n_before
-    if n_added <= 0:
-        return [{"name": "noop", "arguments": {"reason": "no new entity"}}]
-    # Reconstruct as create_entity ops by walking the new entities
-    new_entities = list(backend.wm.entities.values())[-n_added:]
+    write_tool = WriteTool(backend=backend)
+    decision = policy.step(
+        turn_text=turn_text,
+        dia_id=dia_id,
+        timestamp=timestamp,
+        backend=backend,
+        write_tool=write_tool,
+    )
+    ops = decision.raw_ops or []
+    if not ops:
+        return [{"name": "noop", "arguments": {"reason": "no ops emitted"}}]
     return [
-        {"name": "create_entity", "arguments": {
-            "name": e.name,
-            "type": e.type.value if hasattr(e.type, "value") else str(e.type),
-            "state": dict(e.current_state or {}),
-        }}
-        for e in new_entities
+        {"name": op_spec.get("op", "noop"),
+         "arguments": op_spec.get("args") or {}}
+        for op_spec in ops
     ]
 
 
