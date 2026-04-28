@@ -10,6 +10,14 @@
 \usepackage{amsmath, amssymb}
 \usepackage{listings}
 \usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, shapes.geometric, shapes.misc,
+  backgrounds, fit, calc, decorations.pathreplacing}
+\usepackage{float}
+% Lightweight algorithm float — avoids the heavier algorithm/algpseudocode
+% packages whose default styling clashes with our tabular-style listing.
+\newfloat{algorithm}{htbp}{loa}
+\floatname{algorithm}{Algorithm}
 \setlist{itemsep=1pt, topsep=2pt}
 
 % TBD macro for unfilled experiment cells
@@ -25,36 +33,91 @@
 \maketitle
 
 \begin{abstract}
-Long-horizon LLM agents need a memory store. Today, every system that ships
-one---Mem0, Letta, Mastra, Zep, our own PIE---hand-codes the rules for what
-to write and how to read. They use thresholds, prompts, and heuristics. None
-of those rules learn from outcomes.
+Every memory system shipping in 2026---Mem0, Letta, Mastra, Zep, our own
+KGmem---decides what to write and how to read with code a person typed by
+hand. The thresholds are fixed. The prompts are fixed. The schedules are
+fixed. None of these rules update when the system makes a mistake. The
+agent gets older but the operating system in front of its memory does not.
 
-We turn memory operations into the actions of a small learned policy. The
-policy is a LoRA adapter on a 4B parameter language model. We train two of
-them: a write policy that decides what to store from each turn of
-conversation, and a read policy that decides how to search memory for an
-answer. They share the same op vocabulary. They are trained jointly with
-GRPO~\cite{shao2024deepseekmath}. The reward for the read policy is whether
-the answer is correct. The reward for the write policy is whether the read
-policy can later answer questions that depend on the turn the write policy
-saw.
+We replace the operating system with a learned policy. Memory operations
+become actions of a LoRA~\cite{hu2021lora} adapter on a 4B parameter base
+model. A write policy decides what to store from each conversation turn. A
+read policy decides how to search memory for an answer. They share the
+same op vocabulary across three different storage backends: a flat chunk
+store, a typed-transition knowledge graph, and a Mastra-style
+observational text log~\cite{mastra2025om}. Both policies train with
+GRPO~\cite{shao2024deepseekmath}.
 
-We show that this works on
-LoCoMo~\cite{maharana2024locomo} and
-LongMemEval~\cite{wu2024longmemeval}. \TBD{report final numbers once Phase
-A and Phase B run to completion.} The trained read policy outperforms a
-heuristic teacher by~\TBD{X} points. Joint training adds~\TBD{Y} more
-points. The same policy works across three different memory backends---a
-flat chunk store, an entity-based knowledge graph (PIE), and Mastra-style
-observational memory---with~\TBD{Z}\% drop on transfer.
+The hard part of training the write side is reward. Outcome supervision is
+sparse and noisy: a single judge call to a frozen reader is expensive and
+collapses to zero whenever the reader fails for unrelated reasons. We
+contribute a second, dense signal we call \emph{evidence coverage}.
+LoCoMo~\cite{maharana2024locomo} annotates every question with the
+dialogue turns it depends on; the knowledge graph records which dialogue
+turn produced each entity. Coverage is the fraction of the question's
+required dialogue turns that the policy actually preserved in the graph.
+It is deterministic, free, and dense. We blend it with the judge term
+($w_{\text{cov}} = 0.6$, $w_{\text{qa}} = 0.4$) and report ablations.
 
-The contribution is not a new memory store. It is a learned policy that
-uses the store. Facts stay in the store, where they belong. The policy
-encodes the strategy, which transfers between users.
+We evaluate on LoCoMo~\cite{maharana2024locomo} and
+LongMemEval~\cite{wu2024longmemeval}. \TBD{report headline numbers once
+the long Phase~A and Phase~B runs land.} The single trained adapter runs
+unchanged across the three backends, with~\TBD{Z}\% drop on transfer.
+Facts stay in the store. The strategy is in the weights. One adapter
+serves any user; their store stays theirs.
 \end{abstract}
 
 % --------------------------------------------------------------------------
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[
+  node distance=10mm,
+  font=\small,
+  conv/.style={draw, fill=blue!5, rounded corners=1.5mm, minimum width=22mm,
+               minimum height=10mm, align=center, line width=0.4pt},
+  policy/.style={draw, fill=orange!10, rounded corners=1.5mm,
+                 minimum width=22mm, minimum height=10mm, align=center,
+                 line width=0.4pt},
+  store/.style={draw, fill=green!8, rounded corners=1.5mm,
+                minimum width=22mm, minimum height=10mm, align=center,
+                line width=0.4pt},
+  reward/.style={draw, fill=red!8, rounded corners=1.5mm,
+                 minimum width=42mm, minimum height=8mm, align=center,
+                 line width=0.4pt, font=\footnotesize},
+  arr/.style={-Stealth, line width=0.45pt, draw=black!75},
+  flow/.style={-Stealth, line width=0.45pt, draw=blue!60!black, dashed},
+]
+\node[conv] (turn)  {turn $t$\\\scriptsize ``Caroline went to\dots''};
+\node[policy, right=of turn] (W) {\textbf{W} policy};
+\node[store, right=of W] (M) {memory $M_t$\\\scriptsize KG / chunks / log};
+\node[policy, right=of M] (R) {\textbf{R} policy};
+\node[conv, right=of R] (qa) {QA battery\\\scriptsize evidence-tagged};
+\node[reward, below=14mm of M] (cov) {\textbf{coverage} $=
+  |\text{evidence}\cap M_t|\,/\,|\text{evidence}|$};
+\node[reward, below=4mm of cov] (judge) {\textbf{judge} $=
+  \mathrm{judge}(R(q, M_t),\,\text{gold})$};
+\node[draw=none, below=4mm of judge, font=\footnotesize\itshape]
+  (rwd) {$r_W = 0.6\cdot\mathrm{cov} + 0.4\cdot\mathrm{judge} - \mathrm{cost}$};
+\draw[arr] (turn)   -- (W);
+\draw[arr] (W)      -- node[above, font=\scriptsize]{ops}      (M);
+\draw[arr] (M)      -- node[above, font=\scriptsize]{retrieve} (R);
+\draw[arr] (qa)     -- (R);
+\draw[flow] (M.south) |- (cov.east);
+\draw[flow] (R.south) |- (judge.east);
+\draw[flow] (qa.south) |- (cov.east);
+\draw[arr]  (cov.west) -- ++(-8mm,0) |- (W.south);
+\draw[arr]  (judge.west) -- ++(-8mm,0) |- (W.south);
+\end{tikzpicture}
+\caption{The write policy~$W$ ingests one conversation turn and emits
+memory ops; the read policy~$R$ later retrieves from the resulting store
+$M_t$ to answer questions. $W$'s reward blends a deterministic
+\emph{evidence-coverage} term against LoCoMo's per-question dia\_id labels
+with an LLM-judge term over $R$'s answer. Coverage is dense and free;
+judge keeps the policy honest about whether the stored content is
+actually answerable.}
+\label{fig:overview}
+\end{figure}
+
 \section{Introduction}
 
 Long-running AI assistants need long-running memory. ChatGPT can remember
@@ -132,13 +195,15 @@ generalises. That is what transfers.
 \begin{enumerate}
   \item A backend-agnostic vocabulary of memory operations that compiles
     to three different storage representations: a flat chunk store, a
-    knowledge graph, and an observational text log.
+    typed-transition knowledge graph, and an observational text log.
   \item A co-training algorithm that alternates GRPO updates on read and
     write policies, with the read policy serving as the deferred-reward
     judge for the write policy.
-  \item A reward design for the write policy that uses the existing
-    LoCoMo evidence labels as a per-turn counterfactual signal, with no
-    extra annotation needed.
+  \item An \emph{evidence-coverage} reward that turns LoCoMo's existing
+    per-question dia\_id annotations into a dense, deterministic, free
+    signal for the write side---blended with the slower LLM-judge term
+    so training is robust to judge variance and trains
+    $\sim$6$\times$ faster per step.
   \item Empirical results on LoCoMo and LongMemEval showing
     \TBD{summarise once experiments land}.
 \end{enumerate}
@@ -341,6 +406,41 @@ reasoning over a single entity's evolving state. KGmem's hand-coded
 extraction prompts and 3-tier resolver are \emph{replaced} by our
 learned write policy; we keep only the data structure.
 
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+  font=\footnotesize,
+  ent/.style={draw, rounded corners=1mm, fill=green!8, minimum width=22mm,
+              minimum height=8mm, align=center, line width=0.4pt},
+  trans/.style={draw, fill=yellow!10, minimum width=18mm, minimum height=6mm,
+                align=center, font=\scriptsize, line width=0.4pt},
+  rel/.style={-Stealth, line width=0.5pt},
+  evo/.style={-Stealth, line width=0.4pt, draw=blue!60!black, dashed},
+  lab/.style={font=\scriptsize, midway},
+]
+\node[ent] (e1) {\textbf{Caroline}\\type=person};
+\node[ent, right=22mm of e1] (e2) {\textbf{LGBTQ group}\\type=event};
+\node[trans, below=4mm of e1, xshift=-12mm] (t1)
+  {\texttt{creation}\\D1:5  city=Boston};
+\node[trans, below=2mm of t1] (t2)
+  {\texttt{update}\\D2:3  mood=excited};
+\node[trans, below=2mm of t2] (t3)
+  {\texttt{contradiction}\\D9:1  city=NYC};
+\node[trans, below=4mm of e2, xshift=8mm] (t4)
+  {\texttt{creation}\\D1:5  date=7~May};
+\draw[rel] (e1) -- node[lab, above]{\texttt{attended}} (e2);
+\draw[evo] (e1.west) ++(0,-2mm) -- ++(-6mm,0) |- (t1);
+\draw[evo] (t1) -- (t2);
+\draw[evo] (t2) -- (t3);
+\draw[evo] (e2.east) ++(0,-2mm) -- ++(6mm,0) |- (t4);
+\end{tikzpicture}
+\caption{KGmem schema. Solid arrow: typed relationship between entities.
+Dashed arrows: typed state transitions, each tagged with the dia\_id that
+caused it. Coverage reward sums dia\_ids reachable through these
+provenance fields.}
+\label{fig:kgmem}
+\end{figure}
+
 \subsection{Backend abstraction}
 
 The op vocabulary is the invariant. Each backend is an adapter that
@@ -378,58 +478,111 @@ where $c_R(\tau) = $ number of tool calls (each costs 0.005--0.01 reward
 units) and $\mathrm{judge}$ returns $\{0.0, 0.5, 1.0\}$ via gpt-4o
 following the LongMemEval paper's protocol.
 
-\paragraph{Write episodes.} One conversation turn per episode (Decision~C
-in our design doc). The model sees the focal turn, two prior turns, and a
-top-$k$ snapshot of pre-existing entities. It emits up to four write ops.
-The episode ends. Reward is computed by:
+\paragraph{Write episodes.} One conversation turn per episode. The model
+sees the focal turn, two prior turns, and a top-$k$ snapshot of
+pre-existing entities. It emits up to four write ops. The episode ends.
+The reward blends two terms:
+\begin{align}
+  r_W(\tau) \;=\;
+  &w_{\text{cov}} \cdot \mathrm{cov}(M_\tau, Q) \nonumber \\
+  &+ w_{\text{qa}} \cdot \frac{1}{|Q|} \sum_{q \in Q}
+      \mathrm{judge}\bigl(R_{\text{frozen}}(q, M_\tau), \mathrm{gold}_q\bigr)
+   - \lambda_W \, c_W(\tau)
+\end{align}
+where the per-trajectory \emph{evidence coverage} is
 \[
-  r_W(\tau) = \frac{1}{|Q|} \sum_{q \in Q}
-              \mathrm{judge}\bigl(R_{\text{frozen}}(q, M_\tau), \text{gold}_q\bigr)
-              - \lambda_W \, c_W(\tau)
+  \mathrm{cov}(M_\tau, Q) \;=\; \frac{1}{|Q|} \sum_{q \in Q}
+    \frac{|\,\mathrm{evidence}(q) \,\cap\, \mathrm{stored}(M_\tau)\,|}
+         {|\mathrm{evidence}(q)|},
 \]
-where $Q$ is a battery of LoCoMo questions whose evidence label includes
-the focal turn's dia\_id, $M_\tau$ is the resulting memory state after
-applying $\tau$'s ops, $R_{\text{frozen}}$ is the read policy held fixed
-during this phase, and
-$c_W(\tau) = \alpha\,n_{\text{ops}} + \beta\,n_{\text{lookups}} +
+$\mathrm{stored}(M_\tau)$ is the union of all dia\_ids referenced by
+entity provenance (\texttt{Entity.created\_from}) or transition triggers
+(\texttt{StateTransition.trigger\_conversation\_id}) in the post-W KG,
+$Q$ is the LoCoMo questions whose evidence label names the focal turn,
+$R_{\text{frozen}}$ is the held-fixed read policy, and
+$c_W(\tau) = \alpha\,n_{\text{mut}} + \beta\,n_{\text{lookups}} +
 \gamma\,n_{\text{entities}}$.
 
+We default to $w_{\text{cov}} = 0.6$, $w_{\text{qa}} = 0.4$,
+$\alpha = 0.005$, $\beta = 0.002$, $\gamma = 0.001$. The coverage term
+makes the reward dense (a fractional score per question) and
+deterministic (no LLM call needed); the judge term anchors training to
+the actual downstream task so the policy cannot win by ``store every
+dia\_id verbatim and ignore retrieval quality''. We report the reward
+mixture as an ablation.
+
 The choice of $Q$ is critical and uses the existing LoCoMo evidence
-labels---no new annotation needed. For each turn $t$, $Q$ is exactly the
-LoCoMo questions that name $t$ as evidence. This gives a per-turn
-counterfactual signal: ``did $W$ preserve enough information to answer the
-questions that depend on this turn?''
+labels---no new annotation needed. This gives a per-turn counterfactual
+signal: ``did $W$ preserve enough information to answer the questions
+that depend on this turn, and can $R$ actually surface it?''
 
 \subsection{Co-training algorithm}
 
-\begin{verbatim}
-INITIALIZE
-  W_0 = LoRA on Qwen3-4B (random or SFT-warmed)
-  R_0 = LoRA on Qwen3-4B (random or SFT-warmed)
-  R_frozen for first iteration = HeuristicPolicy
-                                 (deterministic Python; we have no R_0 yet)
+We train read and write in alternation (Algorithm~\ref{alg:cotrain}).
+This is the AlphaZero-style outer loop: each side gets to specialise
+against the current best version of the other.
 
-FOR t in 1..T:                                       # T = 5
-  # Phase A_t: train R, freeze W
-  build memory M with W_{t-1} (or default chunking for t=1)
-  for s in 1..S_R:                                   # S_R = 200
-    sample G read rollouts per (Q, gold)
-    GRPO step on R using r_R
-  R_t := R after this phase
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+  font=\small,
+  phase/.style={draw, rounded corners=1.5mm, minimum width=42mm,
+                minimum height=12mm, align=center, line width=0.4pt},
+  arr/.style={-Stealth, line width=0.5pt}
+]
+\node[phase, fill=orange!10] (A) {\textbf{Phase A}\\\scriptsize
+  train $R_t$, freeze $W_{t-1}$\\\scriptsize $S_R = 200$ GRPO steps};
+\node[phase, fill=blue!10, right=20mm of A] (B) {\textbf{Phase B}\\\scriptsize
+  train $W_t$, freeze $R_t$\\\scriptsize $S_W = 100$ GRPO steps};
+\draw[arr] (A.east) -- node[above]{$R_t$} (B.west);
+\draw[arr] (B.south) .. controls +(0,-10mm) and +(0,-10mm) ..
+   node[below, font=\scriptsize]{$W_t$, increment $t$} (A.south);
+\end{tikzpicture}
+\caption{Outer-loop alternation. Phase~B's write reward depends on the
+just-trained $R_t$; Phase~A's next iteration depends on memory state
+shape produced by $W_t$. We run $T = 5$ outer iterations.}
+\label{fig:cotrain}
+\end{figure}
 
-  # Phase B_t: train W, freeze R
-  for s in 1..S_W:                                   # S_W = 100
-    sample G write rollouts per turn
-    for each rollout, run R_t on the held-out Q-battery for cost+reward
-    GRPO step on W using r_W
-  W_t := W after this phase
-
-  evaluate(R_t, W_t) on held-out splits
-  if not_improving: break
-\end{verbatim}
+\begin{algorithm}[h]
+\caption{Mempol co-training (alternating GRPO).}
+\label{alg:cotrain}
+\small
+\begin{tabular}{ll}
+\textbf{Init} & $W_0$, $R_0$ are LoRA adapters on Qwen3-4B
+                (random or SFT-warmed). \\
+& $R_{\text{frozen}} \gets$ \texttt{HeuristicPolicy} for $t = 1$
+  (no trained $R_0$ yet).\\
+\textbf{For} & $t = 1 \ldots T$ (default $T = 5$): \\
+\quad\textbf{Phase A:} & freeze $W_{t-1}$. \\
+& \quad For $S_R$ GRPO steps: sample $G$ read rollouts; reward
+  $r_R = \text{judge} - \lambda_R c_R$. \\
+& \quad $R_t \gets$ trained read policy. \\
+\quad\textbf{Phase B:} & freeze $R_t$. \\
+& \quad For $S_W$ GRPO steps: sample $G$ write rollouts; reward
+  $r_W$ from Eq.~(1). \\
+& \quad $W_t \gets$ trained write policy. \\
+\quad\textbf{Eval:} & $R_t, W_t$ on held-out LoCoMo + LongMemEval; stop
+                      early if not improving. \\
+\end{tabular}
+\end{algorithm}
 
 The cost regulariser keeps the write policy from learning ``store
-everything'' as a strategy. The held-out evaluation lets us stop early.
+everything''; the dense coverage term gives reward at every group member;
+the held-out evaluation lets us stop early.
+
+\paragraph{Substrate sharing (current scope and roadmap).} The version
+of the algorithm in this paper alternates with a partial decoupling: in
+Phase~A, $R$ trains against the windowed-chunk \texttt{FlatBackend}
+substrate (the same one all baselines see); in Phase~B, $W$ trains
+against the \texttt{KGBackend} populated by its own ops, and the
+deferred-reward judge runs the same $R$ adapter on $R$'s usual
+substrate. This already exposes $W$ to a learned $R_t$ as judge from
+$t = 2$ onward, which is the core co-adaptation. Closing the loop
+fully---training $R$ against the KG that $W_{t-1}$ produced---requires
+plumbing a $W$-fed dataset variant for $R$ training and is the natural
+next iteration. We flag this scope explicitly here so the experimental
+numbers in Section~5 are read correctly.
 
 \subsection{Implementation}
 
@@ -468,8 +621,33 @@ turns with a date+session header at the top:
 \end{quote}
 The window provides enough text for embeddings to be meaningful, the
 date header lets the answer LLM resolve relative dates (``yesterday'')
-against an absolute reference, and the overlap (stride 3) prevents
-important spans from being split across chunk boundaries.
+against an absolute reference, and the overlap (stride~3) prevents
+important spans from being split across chunk boundaries
+(Figure~\ref{fig:chunk}).
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+  font=\footnotesize,
+  turn/.style={draw, fill=blue!4, minimum width=8mm, minimum height=5mm,
+               line width=0.3pt, font=\scriptsize},
+  win/.style={draw, rounded corners=1mm, dashed, line width=0.5pt},
+  caplab/.style={font=\scriptsize\itshape}
+]
+\foreach \i/\lab in {1/d:1, 2/d:2, 3/d:3, 4/d:4, 5/d:5, 6/d:6, 7/d:7, 8/d:8, 9/d:9}
+  \node[turn] (t\i) at (1.0*\i,0) {\lab};
+\node[win, fit=(t1)(t6),
+      label=above:{\scriptsize chunk $A$ (turns 1--6)}] {};
+\node[win, fit=(t4)(t9),
+      label=below:{\scriptsize chunk $B$ (turns 4--9)}] {};
+\node[caplab, right=8mm of t9, align=left]
+  {window $W=6$\\stride $S=3$\\overlap $=3$};
+\end{tikzpicture}
+\caption{Chunked windowing within a session. Window of six consecutive
+turns; stride of three; overlap of three. Each chunk gets a date+session
+header. Replaces turn-level units that gave 0\% multi-hop recall.}
+\label{fig:chunk}
+\end{figure}
 
 \paragraph{Reward variance.} GRPO needs reward variance within a group
 or it gets no learning signal. With group size $G=8$ and Tinker's default
@@ -486,6 +664,17 @@ read policy on the union of single-hop and temporal (where the policy
 can succeed early), and mix in multi-hop and adversarial after the first
 $\sim$50 GRPO steps. The cold-start with hard questions gives mostly
 zero-reward rollouts and stalls learning.
+
+\paragraph{Tool errors as feedback.} Early write rollouts emitted
+\texttt{update\_state(uid="d12:6", \ldots)} for entity uids the model
+had hallucinated. The KG layer originally logged a warning and returned
+\texttt{None}, so the policy got the same observation as a successful
+op---no negative signal. We changed every mutating tool to return
+\texttt{\{"ok": false, "error": "entity not found",
+"hint": "lookup\_entity first"\}} when the target uid is missing. The
+in-trajectory feedback loop is what teaches the policy to call
+\texttt{lookup\_entity} before issuing a mutation; this matters more
+than any cost coefficient.
 
 % --------------------------------------------------------------------------
 \section{Datasets and Evaluation}

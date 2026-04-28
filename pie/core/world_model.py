@@ -7,11 +7,12 @@ The interface stays the same regardless of backend.
 
 from __future__ import annotations
 import json
-import math
 import logging
 from pathlib import Path
 from collections import defaultdict
 from difflib import SequenceMatcher
+
+import numpy as np
 
 from .models import (
     Entity, EntityType, StateTransition, TransitionType,
@@ -73,12 +74,12 @@ def _states_meaningfully_differ(old: dict, new: dict) -> bool:
 
 def cosine_similarity(a: list[float], b: list[float]) -> float:
     """Cosine similarity between two vectors."""
-    dot = sum(x * y for x, y in zip(a, b))
-    norm_a = math.sqrt(sum(x * x for x in a))
-    norm_b = math.sqrt(sum(x * x for x in b))
-    if norm_a == 0 or norm_b == 0:
+    va = np.asarray(a, dtype=np.float32)
+    vb = np.asarray(b, dtype=np.float32)
+    denom = np.linalg.norm(va) * np.linalg.norm(vb)
+    if denom == 0:
         return 0.0
-    return dot / (norm_a * norm_b)
+    return float(np.dot(va, vb) / denom)
 
 
 class WorldModel:
@@ -101,10 +102,15 @@ class WorldModel:
         self._type_index: dict[str, set[str]] = defaultdict(set)  # type -> set of entity_ids
         self._entity_transitions: dict[str, list[str]] = defaultdict(list)  # entity_id -> transition_ids
         self._entity_relationships: dict[str, list[str]] = defaultdict(list)  # entity_id -> relationship_ids
-        
+
+        # Vectorized embedding index: pre-normalized matrix for O(N) matmul search
+        self._emb_matrix: np.ndarray | None = None   # shape (N, D), L2-normalized rows
+        self._emb_ids: list[str] = []                # entity_id at row i
+
         self.persist_path = Path(persist_path) if persist_path else None
         if self.persist_path and self.persist_path.exists():
             self._load()
+            self._try_load_embeddings()
     
     # --- Entity CRUD ---
     
@@ -417,25 +423,52 @@ class WorldModel:
         entity_type: str | None = None,
         exclude_ids: set[str] | None = None,
     ) -> list[tuple[Entity, float]]:
+        """Find entities by embedding similarity via vectorized matmul.
+
+        The embedding matrix is pre-normalized so cosine similarity reduces to
+        a single dot product: sims = matrix @ query_unit_vec.
+        Falls back to entity-by-entity loop if matrix hasn't been built yet.
         """
-        Find entities by embedding similarity.
-        Returns list of (entity, cosine_similarity) pairs.
-        """
-        if entity_type:
-            candidate_ids = self._type_index.get(entity_type, set())
-        else:
-            candidate_ids = set(self.entities.keys())
-        
+        if self._emb_matrix is not None and len(self._emb_ids) > 0:
+            q = np.asarray(embedding, dtype=np.float32)
+            q_norm = np.linalg.norm(q)
+            if q_norm == 0:
+                return []
+            q = q / q_norm
+
+            sims = self._emb_matrix @ q  # (N,) — single matmul, not N loops
+
+            # Mask out filtered entities
+            if entity_type or exclude_ids:
+                type_set = self._type_index.get(entity_type, set()) if entity_type else None
+                for i, eid in enumerate(self._emb_ids):
+                    if (type_set is not None and eid not in type_set) or \
+                       (exclude_ids and eid in exclude_ids):
+                        sims[i] = -2.0
+
+            top_indices = np.argpartition(sims, -min(top_k, len(sims)))[-top_k:]
+            top_indices = top_indices[np.argsort(sims[top_indices])[::-1]]
+
+            results = []
+            for i in top_indices:
+                if sims[i] > -2.0:
+                    entity = self.entities.get(self._emb_ids[i])
+                    if entity:
+                        results.append((entity, float(sims[i])))
+            return results
+
+        # Fallback: linear scan (used before matrix is built)
+        candidate_ids = self._type_index.get(entity_type, set()) if entity_type \
+            else set(self.entities.keys())
         if exclude_ids:
-            candidate_ids -= exclude_ids
-        
+            candidate_ids = candidate_ids - exclude_ids
+
         scores = []
         for eid in candidate_ids:
             entity = self.entities[eid]
             if entity.embedding:
-                sim = cosine_similarity(embedding, entity.embedding)
-                scores.append((entity, sim))
-        
+                scores.append((entity, cosine_similarity(embedding, entity.embedding)))
+
         scores.sort(key=lambda x: x[1], reverse=True)
         return scores[:top_k]
     
@@ -446,10 +479,86 @@ class WorldModel:
         return [e for e in self.entities.values() if e.embedding is None]
 
     def set_entity_embedding(self, entity_id: str, embedding: list[float]):
-        """Set the embedding for an entity."""
+        """Set the embedding for an entity. Matrix rebuilt lazily on next search."""
         entity = self.entities.get(entity_id)
         if entity:
             entity.embedding = embedding
+            self._emb_matrix = None  # invalidate; rebuilt on next find_by_embedding call
+
+    def rebuild_embedding_matrix(self):
+        """Build the L2-normalized embedding matrix for vectorized search.
+
+        Call this after batch-computing embeddings (e.g. after ingestion or load).
+        Rows are pre-normalized so cosine similarity = dot product at query time.
+        """
+        ids, vecs = [], []
+        for eid, entity in self.entities.items():
+            if entity.embedding is not None:
+                ids.append(eid)
+                vecs.append(entity.embedding)
+
+        if not vecs:
+            self._emb_ids, self._emb_matrix = [], None
+            return
+
+        matrix = np.array(vecs, dtype=np.float32)
+        norms = np.linalg.norm(matrix, axis=1, keepdims=True)
+        norms = np.where(norms == 0, 1.0, norms)
+        self._emb_ids = ids
+        self._emb_matrix = matrix / norms
+        logger.info(f"Embedding matrix built: {len(ids)} vectors, dim={matrix.shape[1]}")
+
+    def save_embeddings(self, path: Path):
+        """Save embeddings to .npy + index file alongside the world model JSON.
+
+        Kept separate from the JSON to avoid bloating the human-readable file.
+        Format: .npy matrix of shape (N, D) + _ids.json mapping row → entity_id.
+        """
+        path = Path(path)
+        ids, vecs = [], []
+        for eid, entity in self.entities.items():
+            if entity.embedding is not None:
+                ids.append(eid)
+                vecs.append(entity.embedding)
+
+        if not vecs:
+            return
+
+        np.save(str(path), np.array(vecs, dtype=np.float32))
+        ids_path = path.with_suffix("").with_name(path.stem + "_ids.json")
+        with open(ids_path, "w") as f:
+            json.dump(ids, f)
+        logger.info(f"Saved {len(ids)} embeddings to {path}")
+
+    def load_embeddings(self, path: Path) -> bool:
+        """Load embeddings from .npy file. Returns True if successful."""
+        path = Path(path)
+        ids_path = path.with_suffix("").with_name(path.stem + "_ids.json")
+        if not path.exists() or not ids_path.exists():
+            return False
+
+        matrix = np.load(str(path))
+        with open(ids_path) as f:
+            ids = json.load(f)
+
+        loaded = 0
+        for eid, vec in zip(ids, matrix):
+            if eid in self.entities:
+                self.entities[eid].embedding = vec.tolist()
+                loaded += 1
+
+        self.rebuild_embedding_matrix()
+        logger.info(f"Loaded {loaded} embeddings from {path}")
+        return True
+
+    def _try_load_embeddings(self):
+        """Auto-load embeddings from the default path alongside world_model.json."""
+        if self.persist_path is None:
+            return
+        emb_path = self.persist_path.with_name(
+            self.persist_path.stem + "_embeddings.npy"
+        )
+        self.load_embeddings(emb_path)
 
     # --- Context Building (for sliding window) ---
     
@@ -686,7 +795,12 @@ class WorldModel:
         self.persist_path.parent.mkdir(parents=True, exist_ok=True)
         with open(self.persist_path, "w") as f:
             json.dump(data, f, indent=2, default=str)
-        
+
+        emb_path = self.persist_path.with_name(
+            self.persist_path.stem + "_embeddings.npy"
+        )
+        self.save_embeddings(emb_path)
+
         logger.info(f"Saved world model: {self.stats}")
     
     def _load(self):

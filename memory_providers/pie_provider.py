@@ -36,14 +36,14 @@ class PIEProvider(MemoryProvider):
     
     def __init__(self, config: MemoryProviderConfig | None = None):
         super().__init__(config)
-        
-        # Lazy imports to avoid circular dependencies
+
         from pie.core.llm import LLMClient
         from pie.core.world_model import WorldModel
-        
+
         self.llm = LLMClient()
         self.world_model = WorldModel()
         self._ingested = False
+        self._retriever = None  # built lazily after ingestion
     
     def ingest(self, sessions: list[list[dict]], dates: list[str] | None = None) -> None:
         """
@@ -91,6 +91,7 @@ class PIEProvider(MemoryProvider):
             self._simple_extraction(conversations, dates)
         
         self._ingested = True
+        self._build_retriever()
         logger.info(f"Ingested {len(sessions)} sessions → {self.world_model.stats}")
     
     def _simple_extraction(self, conversations, dates):
@@ -128,15 +129,25 @@ class PIEProvider(MemoryProvider):
                     tokens=result.get("tokens", {}),
                 )
 
-                # Add entities to world model
+                # Add entities to world model with name-based dedup
                 for entity in extraction.entities:
-                    self.world_model.create_entity(
-                        name=entity.name,
-                        type=entity.type,
-                        state=entity.state if isinstance(entity.state, dict) else {"description": str(entity.state)},
-                        source_conversation_id=conv.id,
-                        timestamp=0,
-                    )
+                    state = entity.state if isinstance(entity.state, dict) else {"description": str(entity.state)}
+                    existing = self.world_model.find_by_name(entity.name)
+                    if existing:
+                        self.world_model.update_entity_state(
+                            entity_id=existing.id,
+                            new_state=state,
+                            source_conversation_id=conv.id,
+                            timestamp=0,
+                        )
+                    else:
+                        self.world_model.create_entity(
+                            name=entity.name,
+                            type=entity.type,
+                            state=state,
+                            source_conversation_id=conv.id,
+                            timestamp=0,
+                        )
 
             except Exception as e:
                 logger.warning(f"Extraction failed for conv {i}: {e}")
@@ -159,104 +170,86 @@ class PIEProvider(MemoryProvider):
                 logger.info(f"Computed embeddings for {len(embeddings)} entities")
             except Exception as e:
                 logger.warning(f"Batch embedding failed: {e}")
+
+        self.world_model.rebuild_embedding_matrix()
     
+    def _build_retriever(self):
+        """Build the hybrid retriever after ingestion."""
+        from pie.retrieval.hybrid_retriever import HybridRetriever
+        from pie.config import PIEConfig
+        self._retriever = HybridRetriever(self.world_model, self.llm, PIEConfig())
+
     def search(self, query: str, top_k: int = 10) -> list[SearchResult]:
-        """Search world model for relevant entities."""
+        """Search world model using hybrid retrieval (BM25 + dense + RRF)."""
         if not self.world_model.entities:
             return []
 
-        from pie.core.world_model import cosine_similarity
+        if self._retriever is None:
+            self._build_retriever()
 
-        # Check if any entities have embeddings
-        has_embeddings = any(e.embedding for e in self.world_model.entities.values())
-
-        scored = []
-        if has_embeddings:
-            # Embedding-based search (primary)
-            try:
-                query_emb = self.llm.embed_single(query)
-                for entity_id, entity in self.world_model.entities.items():
-                    if entity.embedding:
-                        score = cosine_similarity(query_emb, entity.embedding)
-                        scored.append((entity, score))
-            except Exception as e:
-                logger.warning(f"Embedding search failed: {e}, falling back to text match")
-                has_embeddings = False
-
-        if not has_embeddings or not scored:
-            # Text-based fallback: fuzzy match against entity names + state
-            query_lower = query.lower()
-            query_words = set(query_lower.split())
-            for entity_id, entity in self.world_model.entities.items():
-                entity_text = f"{entity.name} {entity.current_state.get('description', '')}".lower()
-                # Score by word overlap
-                entity_words = set(entity_text.split())
-                overlap = len(query_words & entity_words)
-                if overlap > 0:
-                    score = overlap / max(len(query_words), 1)
-                    scored.append((entity, score))
-
-        # Sort and return top-k
-        scored.sort(key=lambda x: x[1], reverse=True)
-
+        entity_ids = self._retriever.retrieve(query, top_k=top_k)
         results = []
-        for entity, score in scored[:top_k]:
-            state_desc = entity.current_state.get("description", str(entity.current_state)[:300])
-            content = f"{entity.name} ({entity.type}): {state_desc}"
-            results.append(SearchResult(
-                content=content,
-                score=score,
-                metadata={"entity_id": entity.id, "type": entity.type},
-            ))
-
-        return results
-    
-    def answer(self, question: str, question_date: str | None = None) -> str:
-        """Answer using PIE's temporal context compilation."""
-        # Search for relevant entities
-        results = self.search(question, top_k=15)
-        
-        if not results:
-            return "I don't have enough information to answer this question."
-        
-        # Compile temporal context
-        context_parts = []
-        for r in results:
-            # Add temporal context if available
-            entity_id = r.metadata.get("entity_id")
-            if entity_id and entity_id in self.world_model.entities:
-                transitions = self.world_model.get_transitions(entity_id)
-                if transitions:
-                    history = " → ".join([
-                        t.trigger_summary[:50] or str(t.to_state)[:50]
-                        for t in transitions[-3:]
-                    ])
-                    context_parts.append(f"{r.content}\n  History: {history}")
+        for eid in entity_ids:
+            entity = self.world_model.entities.get(eid)
+            if entity:
+                state_desc = ""
+                if isinstance(entity.current_state, dict):
+                    state_desc = entity.current_state.get("description", str(entity.current_state)[:300])
                 else:
-                    context_parts.append(r.content)
-            else:
-                context_parts.append(r.content)
-        
-        context = "\n\n".join(context_parts)
-        
-        # Generate answer
-        prompt = f"""Based on the following knowledge about the user, answer the question.
+                    state_desc = str(entity.current_state)[:300]
+                results.append(SearchResult(
+                    content=f"{entity.name} ({entity.type}): {state_desc}",
+                    score=1.0 / (1 + entity_ids.index(eid)),  # rank-based score
+                    metadata={"entity_id": entity.id, "type": entity.type},
+                ))
+        return results
 
-Knowledge:
-{context}
+    def answer(self, question: str, question_date: str | None = None) -> str:
+        """Answer using PIE's hybrid retrieval + full temporal context compilation."""
+        if not self.world_model.entities:
+            return "I don't have enough information to answer this question."
 
-Question: {question}
-{"(Asked on: " + question_date + ")" if question_date else ""}
+        if self._retriever is None:
+            self._build_retriever()
 
-Answer concisely:"""
-        
+        now_dt = None
+        if question_date:
+            try:
+                from datetime import datetime
+                now_dt = datetime.fromisoformat(question_date)
+            except (ValueError, TypeError):
+                pass
+
+        entity_ids = self._retriever.retrieve(question, top_k=15, now=now_dt)
+        if not entity_ids:
+            return "I don't have enough information to answer this question."
+
+        context = self._retriever.compile_context(entity_ids, query=question, now=now_dt)
+
+        messages = [
+            {
+                "role": "system",
+                "content": (
+                    "You are a personal knowledge assistant. Answer the question using "
+                    "ONLY the provided context. Use temporal information (history, "
+                    "contradictions, change dates) where relevant. Be concise."
+                ),
+            },
+            {
+                "role": "user",
+                "content": (
+                    f"Context:\n\n{context}\n\n---\n\nQuestion: {question}"
+                    + (f"\n(Question date: {question_date})" if question_date else "")
+                ),
+            },
+        ]
+
         response = self.llm.chat(
-            messages=[{"role": "user", "content": prompt}],
+            messages=messages,
             model=self.config.model,
-            max_tokens=300,
+            max_tokens=400,
         )
-        
-        return response["content"].strip()
+        return (response.get("content") or "").strip()
     
     def stats(self) -> MemoryStats:
         """Get PIE world model statistics."""

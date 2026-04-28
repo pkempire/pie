@@ -193,7 +193,11 @@ class MemoryRLDataset(RLDataset):
         return self.env_group_builders[s:s + self.batch_size]
 
     def __len__(self) -> int:
-        return len(self.env_group_builders) // self.batch_size
+        # Same defensive guard as WriteRLDataset — zero-batch datasets are
+        # always a bug (filters too aggressive, n_convs too small, etc.).
+        if not self.env_group_builders:
+            return 0
+        return max(1, len(self.env_group_builders) // self.batch_size)
 
 
 @chz.chz

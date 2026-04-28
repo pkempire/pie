@@ -104,6 +104,16 @@ class WriteTool:
         - resolution: a prior contradiction is resolved
         - archival: entity is no longer active
         """
+        # Surface unknown-uid as an error tool result instead of a silent
+        # no-op. PIE's WorldModel.update_entity_state used to log a warning
+        # and return None — the policy never saw the mistake, so it kept
+        # hallucinating IDs. With an explicit error tool result the policy
+        # learns to lookup_entity first and use the returned uid verbatim.
+        if uid not in self.backend.wm.entities:
+            return simple_tool_result(json.dumps({
+                "ok": False, "uid": uid, "error": "entity not found",
+                "hint": "call lookup_entity first; copy the uid field exactly",
+            }))
         ok = self.backend.update_state(
             uid=uid,
             new_state=new_state,
@@ -123,6 +133,12 @@ class WriteTool:
     def merge_entities(self, canonical_uid: str, alias_uid: str) -> ToolResult:
         """Collapse alias_uid into canonical_uid. Moves transitions and
         relationships. Use when lookup returns a high-similarity duplicate."""
+        missing = [u for u in (canonical_uid, alias_uid)
+                   if u not in self.backend.wm.entities]
+        if missing:
+            return simple_tool_result(json.dumps({
+                "ok": False, "error": "entity not found", "missing": missing,
+            }))
         ok = self.backend.merge_entities(canonical_uid, alias_uid)
         if ok:
             self.n_merges += 1
@@ -137,6 +153,12 @@ class WriteTool:
         rel_type ∈ {uses, works_on, collaborates_with, related_to, part_of,
                     caused_by, during, replaces, integrates_with}
         """
+        missing = [u for u in (source_uid, target_uid)
+                   if u not in self.backend.wm.entities]
+        if missing:
+            return simple_tool_result(json.dumps({
+                "ok": False, "error": "entity not found", "missing": missing,
+            }))
         ok = self.backend.add_relation(
             source_uid=source_uid, target_uid=target_uid, rel_type=rel_type,
             description=description, timestamp=self.current_timestamp,
@@ -149,6 +171,10 @@ class WriteTool:
     def mark_contradiction(self, uid: str, contradicting_state: dict) -> ToolResult:
         """Flag that the current turn contradicts the entity's prior state.
         Both states retained — useful when the truth is unclear."""
+        if uid not in self.backend.wm.entities:
+            return simple_tool_result(json.dumps({
+                "ok": False, "uid": uid, "error": "entity not found",
+            }))
         ok = self.backend.mark_contradiction(
             uid=uid, contradicting_state=contradicting_state,
             source=self.current_dia_id, timestamp=self.current_timestamp,
@@ -161,6 +187,10 @@ class WriteTool:
     def forget(self, uid: str, reason: str = "") -> ToolResult:
         """Archive (soft-delete) an entity. Preserves the transition history
         but marks the entity as no longer active."""
+        if uid not in self.backend.wm.entities:
+            return simple_tool_result(json.dumps({
+                "ok": False, "uid": uid, "error": "entity not found",
+            }))
         ok = self.backend.forget(uid, reason)
         if ok:
             self.n_forgets += 1

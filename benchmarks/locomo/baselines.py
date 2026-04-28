@@ -55,7 +55,13 @@ class BaselineResult:
     latency_ms: float = 0.0
     context_chars: int = 0
     retrieval_count: int = 0
+    tokens_prompt: int = 0
+    tokens_completion: int = 0
     error: str | None = None
+
+    @property
+    def tokens_total(self) -> int:
+        return self.tokens_prompt + self.tokens_completion
 
     def to_dict(self) -> dict:
         return {
@@ -69,6 +75,9 @@ class BaselineResult:
             "latency_ms": round(self.latency_ms, 1),
             "context_chars": self.context_chars,
             "retrieval_count": self.retrieval_count,
+            "tokens_prompt": self.tokens_prompt,
+            "tokens_completion": self.tokens_completion,
+            "tokens_total": self.tokens_total,
             "error": self.error,
         }
 
@@ -335,13 +344,29 @@ def _batch_embed(
 # ═══════════════════════════════════════════════════════════════════════════════
 
 
+_TOP_K_BY_TYPE: dict[str, int] = {
+    "single_hop":   30,   # single fact — but specific entities can rank low, need headroom
+    "temporal":     25,   # date-chain — moderate window
+    "adversarial":  25,   # single fact, wrong-person hint
+    "commonsense":  30,   # inference — need broader context
+    "multi_hop":    40,   # chain of facts — wide retrieval
+}
+
+
+def _dynamic_top_k(world_model: "WorldModel", qtype: str | None = None) -> int:
+    """Scale top_k with world model size. Retrieve ~20% of entities, min 15, max 60."""
+    n = len(world_model.entities) if world_model else 0
+    proportional = max(15, min(60, n // 5))
+    return proportional
+    
+
 def pie_temporal(
     item: dict[str, Any],
     world_model: WorldModel | None = None,
     llm: LLMClient | None = None,
     model: str = "gpt-4o",
     extraction_model: str = "gpt-4o-mini",
-    top_k_entities: int = 25,
+    top_k_entities: int | None = None,
     max_context_chars: int = 30_000,
 ) -> BaselineResult:
     """
@@ -355,11 +380,17 @@ def pie_temporal(
     llm = llm or LLMClient()
     t0 = time.time()
 
+    qtype = item.get("question_type", "")
+    if top_k_entities is None:
+        top_k_entities = _dynamic_top_k(world_model) if world_model else 20
+
     try:
         if world_model is None:
             world_model = _build_world_model_for_conversation(
                 item, llm, extraction_model
             )
+            if top_k_entities == 20:
+                top_k_entities = _dynamic_top_k(world_model)
 
         # Retrieve relevant entities
         question = item["question"]
@@ -391,7 +422,7 @@ def pie_temporal(
         )
 
         # Ask LLM
-        answer = _ask_llm_temporal(
+        answer, tok_p, tok_c = _ask_llm_temporal(
             context=context,
             question=question,
             llm=llm,
@@ -409,6 +440,8 @@ def pie_temporal(
             latency_ms=(time.time() - t0) * 1000,
             context_chars=len(context),
             retrieval_count=len(retrieved),
+            tokens_prompt=tok_p,
+            tokens_completion=tok_c,
         )
 
     except Exception as e:
@@ -431,89 +464,60 @@ def pie_temporal(
 PIE_EXTRACTION_PROMPT = """\
 You are extracting a knowledge graph from a conversation between two people.
 
-CRITICAL RULE: Create ONE ENTITY PER FACT, not one entity per person.
-Each entity must have a UNIQUE DESCRIPTIVE NAME that identifies the specific fact.
+## CORE RULE: ONE ENTITY PER FACT
 
-## ENTITY NAMING — READ CAREFULLY
+Each entity represents a single fact with a unique descriptive name.
 
-WRONG (everything collapses to 2 entities):
-  {"name": "Himanshu", "state": {"job": "engineer", "pet": "dog named Rex"}}
+Bad — everything collapsed into one entity:
+  {"name": "Alex", "state": {"job": "engineer", "pet": "dog", "city": "NYC"}}
 
-RIGHT (each fact is its own entity):
-  {"name": "Himanshu's job", "state": {"description": "Software engineer at Google"}}
-  {"name": "Himanshu's pet Rex", "state": {"description": "Dog named Rex, golden retriever"}}
-  {"name": "Himanshu's degree", "state": {"description": "BS in Computer Science from MIT, 2019"}}
-  {"name": "Apartment search", "state": {"description": "Looking for 2BR in Brooklyn, budget $3000"}}
-  {"name": "Hawaii trip", "state": {"description": "Planned trip to Maui in August 2023"}}
+Good — each fact is its own entity:
+  {"name": "Alex's job", "state": {"description": "Software engineer at Google"}}
+  {"name": "Alex's dog", "state": {"description": "Golden retriever named Rex"}}
+  {"name": "Alex's city", "state": {"description": "New York City"}}
+  {"name": "Road trip to Austin", "state": {"description": "Weekend trip Alex took in March 2024"}}
 
-## WHAT TO EXTRACT — BE EXHAUSTIVE
+## WHAT TO EXTRACT
 
-For EACH speaker, create separate entities for EVERY fact mentioned:
-- Education: "{Name}'s degree", "{Name}'s school", "{Name}'s major"
-- Career: "{Name}'s job", "{Name}'s employer", "{Name}'s commute"
-- Family: "{Name}'s sister {SisterName}", "{Name}'s pet {PetName}", "{Name}'s children" (include COUNT)
-- Health: "{Name}'s allergy", "{Name}'s diet", "{Name}'s injury"
-- Hobbies/Activities: "{Name}'s hobby: {hobby}", "{Name}'s instrument"
-- Preferences: "{Name}'s favorite restaurant", "{Name}'s music taste"
-- Home/Location: "{Name}'s apartment", "{Name}'s neighborhood", "{Name}'s hometown", "{Name}'s home country"
-- Demographics: "{Name}'s age", "{Name}'s relationship status", "{Name}'s marital status"
-- Events attended: "Trip to {place}", "{Name}'s birthday party", "Concert: {artist name}", "{Name}'s park visit"
-- Purchases/Items: "{Name}'s new shoes", "{Name}'s figurines", "Gift from {person}"
-- Books/Media: "{Name}'s book: {title}", "{Name}'s favorite book", "{Name}'s movie recommendation"
-- Specific details: bandnames, book titles, pet behaviors, item descriptions
-- Plans: "{Name}'s weekend plans", "Upcoming move"
-- Emotional experiences: "{Name}'s reaction to {event}", "How {Name} felt about {thing}"
-- People mentioned: Create entity for each person mentioned by name
+Create entities for every stated fact across BOTH speakers:
+- Identity/demographics: name, age, job, relationship status, nationality
+- Family: each family member with their name and role
+- Pets: each pet with name, type, any behaviors  
+- Hobbies and activities: one entity per hobby/activity, include how long/how often
+- Events: one entity per event, include when it happened
+- Locations: hometown, current city, places visited — each separately
+- Books, films, music: title and speaker who mentioned it
+- Purchases and possessions: item, description, when acquired
+- Emotions and reactions: how someone felt about a specific event
+- Plans and intentions: upcoming events, goals
 
-CRITICAL — COMMONLY MISSED DETAILS (extract these!):
-- Exact number of children/siblings/pets
-- Book titles (in quotes in the conversation)
-- Band/artist names from concerts or music mentions
-- Specific items purchased or received as gifts (with descriptions)
-- Where pets hide things, pet quirks and behaviors
-- What posters/signs said at events
-- How someone FELT about an event (emotions, reactions)
-- Frequency of activities ("once a year", "every weekend")
-- Specific places visited (Grand Canyon, park name, beach name)
-- What exactly was painted/created/made (with details like "sunset with palm tree")
+## EXTRACTION RULES
 
-Also create the SPEAKER entities themselves:
-  {"name": "Himanshu", "type": "person", "state": {"description": "One of the two speakers"}}
+1. **Extract verbatim.** Copy names, places, titles, and numbers exactly as spoken.  
+   "my home country, Sweden" → description: "Sweden" (not "home country")  
+   "I read 'Educated' last year" → entity: "Alex's book: Educated"
+
+2. **Attribute correctly.** If speaker A says "I did X", create the entity under A's name, even if the topic is about B.
+
+3. **Convert all relative dates to absolute** using the session timestamp provided.  
+   Session date July 2, 2023: "yesterday" → "July 1, 2023", "last week" → "the week before July 2, 2023"
+
+4. **Compute durations.** "I've been doing X for 7 years" + session date 2023 → start year 2016.
+
+5. **Over-extract rather than under-extract.** If unsure, include it.
+
+6. Create a speaker entity for each person:
+   {"name": "Alex", "type": "person", "state": {"description": "One of the two speakers"}}
 
 ## STATE CHANGES
-If a fact CHANGED from earlier sessions, note it:
-  {"entity_name": "Himanshu's job", "what_changed": "employer", "old_state": "engineer at Google", "new_state": "engineer at Meta", "is_contradiction": false}
 
-## DATE HANDLING — CRITICAL
-Convert ALL relative dates to ABSOLUTE dates using the session date shown above.
-If the session date is "July 2, 2023" and someone says:
-  "yesterday" → "July 1, 2023"
-  "last week" → "the week before July 2, 2023"
-  "this month" → "July 2023"
-  "next month" → "August 2023"
-  "a year ago" → "2022"
-  "seven years" of doing something → calculate the start year
-NEVER store relative dates like "yesterday" or "last week" — always convert to absolute.
+If a fact changed since a previous session, record it:
+  {"entity_name": "Alex's job", "what_changed": "employer", "old_state": "Google", "new_state": "Meta", "is_contradiction": false}
 
-## RULES
-- ONE ENTITY PER DISTINCT FACT — this is the most important rule
-- EXTRACT from BOTH speakers equally — do NOT favor one speaker over the other
-- DO NOT skip ANY facts — questions test EVERY detail including:
-  - Specific item descriptions (what color, what pattern, what was on it)
-  - Book titles, band names, artist names, song names
-  - Numbers (how many children, how many years married, how often they do something)
-  - Pet behaviors and quirks
-  - What signs/posters said
-  - How someone felt about something
-  - What someone did after/before an event
-- Include the specific details (names, numbers, dates, places)
-- If unsure whether important, EXTRACT IT ANYWAY — err on the side of OVER-extracting
-- ALWAYS use the speaker's FULL NAME (from the conversation) in entity names, never abbreviations or "User"/"Assistant"
-- Convert all relative dates to ABSOLUTE dates (see DATE HANDLING above)
+## OUTPUT
 
-Output JSON:
 {
-  "entities": [{"name": "descriptive unique name", "type": "person|concept|organization|belief", "state": {"description": "the specific fact with details"}}],
+  "entities": [{"name": "unique descriptive name", "type": "person|concept|event|organization|belief", "state": {"description": "the specific fact"}}],
   "state_changes": [{"entity_name": "str", "what_changed": "str", "old_state": "str", "new_state": "str", "is_contradiction": false}],
   "relationships": [{"source": "str", "target": "str", "type": "str", "description": "str"}]
 }"""
@@ -556,21 +560,63 @@ def _build_world_model_for_conversation(
     # 12-16K chars of input which caused gpt-4o-mini to generate truncated
     # JSON, leading to silent extraction failures.
     MAX_INPUT_CHARS = 6_000
+    # Entity context cap: keep the known-entity summary under this many chars
+    # so it doesn't crowd out the session text.
+    MAX_ENTITY_CONTEXT_CHARS = 3_000
 
     for i, convo in enumerate(conversations):
+        print(".", end="", flush=True)
+
         batch_text = _format_conversations_for_extraction(
             [convo], speaker_a=speaker_a, speaker_b=speaker_b
         )
 
-        # If a single session is very long, truncate it
         if len(batch_text) > MAX_INPUT_CHARS:
             batch_text = batch_text[:MAX_INPUT_CHARS] + "\n\n[... session truncated ...]"
+
+        # Inject known entities from previous sessions so the LLM can detect
+        # state changes and use consistent names instead of re-inventing them.
+        # Sort by recency (most recently updated first) so the most active
+        # entities are always included. Cap at whole entities, never mid-entity.
+        entity_context = ""
+        if i > 0 and wm.entities:
+            # Sort by latest transition timestamp descending
+            def _last_ts(eid: str) -> float:
+                trans = wm.get_transitions(eid, ordered=True)
+                return trans[-1].timestamp if trans else 0.0
+
+            sorted_eids = sorted(wm.entities.keys(), key=_last_ts, reverse=True)
+
+            lines = []
+            chars = 0
+            for eid in sorted_eids:
+                ent = wm.entities[eid]
+                desc = ""
+                if isinstance(ent.current_state, dict):
+                    desc = ent.current_state.get("description", "")
+                elif ent.current_state:
+                    desc = str(ent.current_state)
+                line = f"  - {ent.name}: {desc}"
+                if chars + len(line) > MAX_ENTITY_CONTEXT_CHARS:
+                    break  # stop before adding a partial entry
+                lines.append(line)
+                chars += len(line)
+
+            hidden = len(wm.entities) - len(lines)
+            header = f"Known entities ({len(lines)}/{len(wm.entities)} most recent; use consistent names; record changes as state_changes):"
+            if hidden:
+                footer = f"  ... {hidden} older entities not shown"
+                entity_context = header + "\n" + "\n".join(lines) + "\n" + footer + "\n\n"
+            else:
+                entity_context = header + "\n" + "\n".join(lines) + "\n\n"
+
+        user_content = entity_context + batch_text
 
         try:
             result = llm.chat(
                 messages=[
                     {"role": "system", "content": PIE_EXTRACTION_PROMPT},
-                    {"role": "user", "content": batch_text},
+                    {"role": "user", "content": user_content},
                 ],
                 model=extraction_model,
                 json_mode=True,
@@ -967,22 +1013,27 @@ def _compile_temporal_context(
 
         # Timeline (skip if ablation=no-timeline or no-dates)
         if ablation not in ("no-timeline", "no-dates"):
-            if transitions and len(transitions) > 1:
-                lines.append("\nTimeline:")
-                for t in transitions:
+            if transitions:
+                if len(transitions) == 1:
+                    # Single event — show the date inline under the entity header
+                    t = transitions[0]
                     dt = datetime.fromtimestamp(t.timestamp, tz=timezone.utc)
-                    date_str = dt.strftime("%B %d, %Y")
-                    ttype = t.transition_type
-                    prefix = "  ⚠" if ttype == TransitionType.CONTRADICTION else "  •"
+                    lines.append(f"  date: {dt.strftime('%B %d, %Y')}")
+                else:
+                    lines.append("\nTimeline:")
+                    for t in transitions:
+                        dt = datetime.fromtimestamp(t.timestamp, tz=timezone.utc)
+                        date_str = dt.strftime("%B %d, %Y")
+                        ttype = t.transition_type
+                        prefix = "  ⚠" if ttype == TransitionType.CONTRADICTION else "  •"
 
-                    # Include the state content too, not just the trigger
-                    summary = t.trigger_summary or ""
-                    if isinstance(t.to_state, dict):
-                        state_desc = t.to_state.get("description", "")
-                        if state_desc and state_desc != summary:
-                            summary = f"{summary} — {state_desc}" if summary else state_desc
-                    if summary:
-                        lines.append(f"{prefix} {date_str}: {summary}")
+                        summary = t.trigger_summary or ""
+                        if isinstance(t.to_state, dict):
+                            state_desc = t.to_state.get("description", "")
+                            if state_desc and state_desc != summary:
+                                summary = f"{summary} — {state_desc}" if summary else state_desc
+                        if summary:
+                            lines.append(f"{prefix} {date_str}: {summary}")
 
         # Related entities (1-hop neighbors)
         neighbors = world_model.get_neighbors(eid)
@@ -1007,39 +1058,19 @@ def _compile_temporal_context(
 
 
 PIE_ANSWER_SYSTEM = """\
-You are answering questions about a conversation between two people.
-You are given structured knowledge extracted from their chat history.
+Answer the question using the knowledge base provided. Be as concise as possible — \
+give only what is asked for. No preamble, no reasoning, no explanation.
 
-## ANSWER FORMAT
-- Be CONCISE. For factual questions, answer in 1-2 sentences max.
-- Single word/name/date/phrase answers are PREFERRED:
-  Q: "When did X happen?" → "July 2023"
-  Q: "What is X's pet?" → "A dog named Rex"
-  Q: "Where did X move from?" → "Sweden"
-  Q: "What is X's relationship status?" → "Single"
-- Use absolute dates from the Timeline when available (e.g. "July 6, 2023").
-- For list questions ("what activities", "what hobbies"), scan ALL entities and combine everything into one comma-separated list.
+For factual questions (who, what, where, when, how long), give the specific value directly.
+For list questions, give a short comma-separated list.
+For why/how questions, one sentence maximum.
 
-## ADVERSARIAL / TRICKY QUESTIONS
-- The question may DELIBERATELY name the WRONG person. For example, it might ask "What did Melanie do?" when actually it was Caroline who did it.
-- If the question asks about Person A but the context only has that fact about Person B → ANSWER ANYWAY using Person B's information. Correct the premise briefly if needed.
-  Example: Q: "What did Melanie realize after the charity race?" → If only Caroline ran a charity race: "Caroline (not Melanie) ran the charity race and realized the importance of mental health awareness."
-- NEVER say "I don't know" or "the context does not mention" just because the person's name doesn't match. Look for the FACT across ALL entities regardless of which person it's attributed to.
+If the question names the wrong person, answer with the correct fact anyway — \
+do not write correction prefixes, just state the fact.
 
-## TEMPORAL REASONING
-- The MOST RECENT state is the current truth
-- State changes marked with ⚠ mean the NEWER value replaced the old one
-- Use Timeline dates to answer "when" questions
-- If a Timeline shows a date range like "the week before July 6, 2023", use that as the answer
-
-## CRITICAL ANSWERING RULES
-1. NEVER say "I don't know", "the context does not provide", "not mentioned", or "no information". These phrases are FORBIDDEN.
-2. If ANY entity has even PARTIAL information related to the question, USE IT.
-3. Make reasonable inferences. If someone had a "tough breakup" → they are likely "single".
-4. Search ALL entities for relevant facts, not just entities matching the person named in the question.
-5. For list questions, aggregate from EVERY entity that mentions the topic.
-6. If truly zero relevant info exists, give your best guess based on context clues rather than saying IDK.
-7. Do NOT fabricate entirely, but DO make reasonable inferences."""
+Use the most recent state when facts have changed over time.
+Copy dates exactly as they appear in the knowledge base.
+Never say you don't know or that information is missing — use whatever is available to make a reasonable inference."""
 
 
 def _ask_llm_temporal(
@@ -1047,8 +1078,8 @@ def _ask_llm_temporal(
     question: str,
     llm: LLMClient,
     model: str = "gpt-4o",
-) -> str:
-    """Ask LLM with PIE's temporal context."""
+) -> tuple[str, int, int]:
+    """Ask LLM with PIE's temporal context. Returns (answer, prompt_tokens, completion_tokens)."""
     messages = [
         {"role": "system", "content": PIE_ANSWER_SYSTEM},
         {
@@ -1056,8 +1087,204 @@ def _ask_llm_temporal(
             "content": f"Knowledge base:\n\n{context}\n\n---\n\nQuestion: {question}\n\nAnswer:",
         },
     ]
-    result = llm.chat(messages=messages, model=model, max_tokens=500)
-    return result["content"].strip()
+    result = llm.chat(messages=messages, model=model, max_tokens=150)
+    usage = result.get("usage", {})
+    return (
+        result["content"].strip(),
+        usage.get("prompt", 0),
+        usage.get("completion", 0),
+    )
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Baseline 4: PIE Temporal + Hybrid (LLM-decomposed retrieval)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+
+_HYBRID_DECOMPOSE_SYSTEM = """\
+You are analyzing a question about a two-person conversation stored as a knowledge graph.
+Your job: generate 8-12 SHORT (2-6 word) keyword search queries that will retrieve the
+exact entities needed to answer the question.
+
+The knowledge graph stores facts as typed entities named like:
+  "{Person}'s {fact}", "{Event name}", "{Location}"
+
+Rules:
+- Extract any person names mentioned and include them in queries
+- If the question asks "when", include time/date-related keywords
+- Cover the question from multiple angles: person, activity, location, date
+- Prefer short keyword phrases (2-6 words) over full sentences
+- Do not use generic filler words like "find", "search", "what is"
+
+Return JSON: {"queries": ["...", "...", ...], "speakers": ["name1", "name2"], "date_hint": "YYYY or null"}"""
+
+
+def _targeted_retrieve_for_question(
+    question: str,
+    world_model: "WorldModel",
+    llm: "LLMClient",
+    model: str = "gpt-4.1",
+    top_k: int = 30,
+    item: dict | None = None,
+) -> list[str]:
+    """LLM-decomposed retrieval targeted specifically at a benchmark question.
+
+    Unlike generic broad_scan, this:
+    1. Parses speaker names and date hints directly from the question
+    2. Generates sub-queries that match PIE's entity naming convention
+    3. Runs BM25+dense RRF per sub-query, then multi-source RRF fusion
+    4. Returns entity_ids (no graph expansion — keeps precision for single-hop QA)
+    """
+    from pie.retrieval.hybrid_retriever import HybridRetriever, _rrf_score
+    from pie.config import PIEConfig
+    from datetime import datetime
+
+    if not world_model.entities:
+        return []
+
+    # Build the HybridRetriever around this (small, per-question) world model
+    world_model.rebuild_embedding_matrix()
+    retriever = HybridRetriever(world_model, llm, PIEConfig())
+
+    # Get speaker context to help decomposition
+    speaker_context = ""
+    if item:
+        conv = item.get("conversation", {})
+        sa = conv.get("speaker_a", "")
+        sb = conv.get("speaker_b", "")
+        if sa and sb:
+            speaker_context = f"\nSpeakers in this conversation: {sa} and {sb}"
+
+    try:
+        result = llm.chat(
+            messages=[
+                {"role": "system", "content": _HYBRID_DECOMPOSE_SYSTEM},
+                {"role": "user", "content": f"Question: {question}{speaker_context}"},
+            ],
+            model=model,
+            json_mode=True,
+        )
+        _c = result["content"]
+        parsed = _c if isinstance(_c, dict) else json.loads(_c)
+        sub_queries: list[str] = parsed.get("queries", [])
+        if not sub_queries:
+            sub_queries = [question]
+    except Exception:
+        sub_queries = [question]
+
+    # Multi-source RRF: run each sub-query, collect rank votes
+    rank_votes: dict[str, dict[int, int]] = {}
+    now = datetime.now()
+    for q_idx, sub_q in enumerate(sub_queries[:12]):
+        results = retriever._raw_retrieve(sub_q, top_k=20, now=now)
+        for rank, eid in enumerate(results):
+            rank_votes.setdefault(eid, {})[q_idx] = rank
+
+    fused: dict[str, float] = {
+        eid: sum(_rrf_score(r) for r in votes.values())
+        for eid, votes in rank_votes.items()
+    }
+    ranked = sorted(fused.items(), key=lambda x: x[1], reverse=True)
+    return [eid for eid, _ in ranked[:top_k]]
+
+
+def pie_temporal_hybrid(
+    item: dict[str, Any],
+    world_model: "WorldModel | None" = None,
+    llm: "LLMClient | None" = None,
+    model: str = "gpt-4.1",
+    extraction_model: str = "gpt-4.1",
+    top_k_entities: int | None = None,
+    max_context_chars: int = 40_000,
+) -> BaselineResult:
+    """PIE Temporal + Hybrid retrieval.
+
+    Identical pipeline to pie_temporal but replaces flat BM25+cosine retrieval
+    with LLM-decomposed targeted retrieval:
+      - Parses speaker names and date/event hints from the question
+      - Generates entity-naming-aware sub-queries ("{Name}'s {event}", not generic activity labels)
+      - Multi-source RRF over 8-12 sub-queries → better recall on multi-hop and temporal questions
+    """
+    llm = llm or LLMClient()
+    t0 = time.time()
+
+    if top_k_entities is None:
+        top_k_entities = _dynamic_top_k(world_model) if world_model else 20
+
+    try:
+        if world_model is None:
+            world_model = _build_world_model_for_conversation(
+                item, llm, extraction_model
+            )
+            if top_k_entities == 20:
+                top_k_entities = _dynamic_top_k(world_model)
+
+        question = item["question"]
+
+        entity_ids = _targeted_retrieve_for_question(
+            question=question,
+            world_model=world_model,
+            llm=llm,
+            model=model,
+            top_k=top_k_entities,
+            item=item,
+        )
+
+        if not entity_ids:
+            return BaselineResult(
+                question_id=item["question_id"],
+                question_type=item["question_type"],
+                question=question,
+                gold_answer=item["answer"],
+                hypothesis="I don't have enough information.",
+                baseline_name="pie_temporal_hybrid",
+                model=model,
+                latency_ms=(time.time() - t0) * 1000,
+            )
+
+        # Reuse same context compiler as pie_temporal
+        retrieved_triples = [
+            (eid, world_model.entities[eid], 1.0)
+            for eid in entity_ids
+            if eid in world_model.entities
+        ]
+        context = _compile_temporal_context(retrieved_triples, world_model, max_context_chars)
+
+        answer, tok_p, tok_c = _ask_llm_temporal(
+            context=context,
+            question=question,
+            llm=llm,
+            model=model,
+        )
+
+        return BaselineResult(
+            question_id=item["question_id"],
+            question_type=item["question_type"],
+            question=question,
+            gold_answer=item["answer"],
+            hypothesis=answer,
+            baseline_name="pie_temporal_hybrid",
+            model=model,
+            latency_ms=(time.time() - t0) * 1000,
+            context_chars=len(context),
+            retrieval_count=len(entity_ids),
+            tokens_prompt=tok_p,
+            tokens_completion=tok_c,
+        )
+
+    except Exception as e:
+        logger.exception(f"PIE temporal hybrid failed for {item['question_id']}")
+        return BaselineResult(
+            question_id=item["question_id"],
+            question_type=item["question_type"],
+            question=item["question"],
+            gold_answer=item["answer"],
+            hypothesis=f"Error: {e}",
+            baseline_name="pie_temporal_hybrid",
+            model=model,
+            latency_ms=(time.time() - t0) * 1000,
+            error=str(e),
+        )
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -1068,4 +1295,5 @@ BASELINES = {
     "full_context": full_context,
     "naive_rag": naive_rag,
     "pie_temporal": pie_temporal,
+    "pie_temporal_hybrid": pie_temporal_hybrid,
 }

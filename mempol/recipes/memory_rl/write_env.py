@@ -58,7 +58,9 @@ from mempol.backends.pie_kg import PIEBackend
 from mempol.data.locomo import Conversation, QA, Turn, load as load_locomo
 from mempol.recipes.memory_rl.tinker_compat import build_agent_tool_env
 from mempol.recipes.memory_rl.write_tools import WriteTool
-from mempol.recipes.memory_rl.write_reward import WriteReward
+from mempol.recipes.memory_rl.write_reward import (
+    WriteReward, resolve_r_runner_from_env,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -136,7 +138,9 @@ class WriteDatum(TypedDict):
     session_date: str
     prior_turns_text: str
     existing_entities_summary: str
-    query_battery: list[tuple[str, str]]
+    # (question, gold_answer, evidence_dia_ids) — evidence is what enables
+    # the dense coverage reward in WriteReward.
+    query_battery: list[tuple[str, str, list[str]]]
 
 
 class WriteEnvGroupBuilder(EnvGroupBuilder):
@@ -189,9 +193,14 @@ class WriteEnvGroupBuilder(EnvGroupBuilder):
             wtool.current_dia_id = self.datum["turn_dia_id"]
             wtool.current_timestamp = float(self.datum["turn_idx"])
             initial_messages = _initial_messages(self.datum, renderer, wtool)
+            # If MEMPOL_R_CHECKPOINT is set and resolvable, use the trained
+            # R LoRA as the QA-judge backbone; otherwise the heuristic
+            # default kicks in inside WriteReward.__post_init__.
+            r_runner = resolve_r_runner_from_env()
             reward_fn = WriteReward(
                 backend=backend,
                 query_battery=self.datum["query_battery"],
+                r_runner=r_runner,
             )
             envs.append(build_agent_tool_env(
                 renderer=renderer,
@@ -253,7 +262,12 @@ class WriteRLDataset(RLDataset):
         return self.builders[s:s + self.batch_size]
 
     def __len__(self) -> int:
-        return len(self.builders) // self.batch_size
+        # Floor-divide can return 0 when filters knock the corpus below
+        # batch_size — Tinker then iterates zero batches and the run is a
+        # silent no-op. Guarantee at least one partial batch.
+        if not self.builders:
+            return 0
+        return max(1, len(self.builders) // self.batch_size)
 
 
 @chz.chz
@@ -316,7 +330,10 @@ class WriteRLDatasetBuilder(RLDatasetBuilder):
                         session_date=t.session_date,
                         prior_turns_text=prior_text,
                         existing_entities_summary="",     # v1: fresh KG per env
-                        query_battery=[(qa.question, qa.answer) for qa in battery],
+                        query_battery=[
+                            (qa.question, qa.answer, list(qa.evidence or []))
+                            for qa in battery
+                        ],
                     ))
             return data
 

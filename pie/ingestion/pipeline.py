@@ -436,6 +436,8 @@ class IngestionPipeline:
                 logger.warning(f"  Embedding batch {i}-{i+BATCH_SIZE} failed: {e}")
                 continue
 
+        self.world_model.rebuild_embedding_matrix()
+
         logger.info(f"  Computed {computed} embeddings. Tier 2 resolution ready.")
 
     def _compute_dynamics(self):

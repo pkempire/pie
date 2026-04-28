@@ -1,872 +1,893 @@
 #!/usr/bin/env python3
 """
-PIE MCP Server — temporal awareness engine for Claude.
+PIE MCP Server — gives any MCP-compatible AI (Claude, Cursor, etc.)
+direct access to your personal knowledge graph.
 
-Gives any LLM client (Claude Desktop, Cursor, etc.) awareness of your world:
-what projects exist, what's stale, what deadlines are approaching, how long
-since you last talked, and what deserves proactive mention.
+Tools available:
+  search                — hybrid BM25+dense search, returns top-k entities
+  broad_scan            — LLM decomposes topic into 12 sub-queries, returns 60 entities
+  get_entity            — full detail: state + complete transition history + relationships
+  get_entities_by_type  — all entities of a given type (tool/project/person/org/goal/…)
+  get_recent_entities   — most recently updated entities (optional type filter)
+  answer                — full RAG pipeline: retrieve → compile temporal context → gpt-5.4
+  get_architecture      — generates a full architecture doc for a project from the KG
+  enrich_entity         — enriches a tool/org entity with current web-grounded knowledge
+  get_briefing          — active projects, goals, stale threads, people network
+  get_beliefs           — all extracted beliefs and preferences
+  get_decisions         — all significant decisions
+  get_stats             — entity counts, type breakdown
 
-Two key operations:
-1. BEFORE conversation: get_temporal_briefing() — structured temporal context
-2. AFTER conversation: update_world() — extract entities/transitions, track threads
-
-Plus: search, entity lookup, timeline, deadlines, commitments, world stats.
-
-Usage:
-    python mcp_server.py                  # stdio mode (for Claude Desktop)
-
-Configure in Claude Desktop settings.json:
-    "mcpServers": {
-        "pie": {
-            "command": "python",
-            "args": ["/path/to/personal-intelligence-system/mcp_server.py"],
-            "env": {}
-        }
-    }
+Usage (Claude Desktop or Cursor):
+    command: python3.11
+    args: ["/path/to/personal-intelligence-system/mcp_server.py"]
 """
 
-import sys
-import math
-import time
 import json
 import logging
-import numpy as np
-from pathlib import Path
+import sys
+import time
 from collections import defaultdict
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.decomposition import TruncatedSVD
+from pathlib import Path
 
-# Add project root to path
 PROJECT_ROOT = Path(__file__).parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from mcp.server.fastmcp import FastMCP
 
-from pie.core.world_model import WorldModel
-from pie.core.dynamics import TransitionDynamics
-from pie.core.models import EntityType
-from pie.temporal.briefing import TemporalBriefing
-from pie.temporal.gaps import GapAnalyzer
-from pie.temporal.threads import ThreadTracker
-
+logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("pie.mcp")
 
-# ── Initialize ────────────────────────────────────────────────────────────────
+_ANSWER_MODEL = "gpt-5.4"
+_WM_PATH = PROJECT_ROOT / "output" / "world_model.json"
+_SESSIONS_DIR = PROJECT_ROOT / "output" / "sessions"
 
-WM_PATH = PROJECT_ROOT / "output" / "world_model.json"
-THREADS_PATH = PROJECT_ROOT / "output" / "threads.json"
-INTERACTIONS_PATH = PROJECT_ROOT / "output" / "interactions.json"
+# ── Lazy singletons ────────────────────────────────────────────────────────────
+
+_wm = None
+_llm = None
+_retriever = None
+
+
+def _get_wm():
+    global _wm
+    if _wm is None:
+        from pie.core.world_model import WorldModel
+        _wm = WorldModel(persist_path=_WM_PATH)
+        if not _wm.entities:
+            raise RuntimeError(f"World model empty or not found at {_WM_PATH}")
+    return _wm
+
+
+def _get_llm():
+    global _llm
+    if _llm is None:
+        from pie.core.llm import LLMClient
+        _llm = LLMClient()
+    return _llm
+
+
+def _get_retriever():
+    global _retriever
+    if _retriever is None:
+        from pie.retrieval.hybrid_retriever import HybridRetriever
+        from pie.config import PIEConfig
+        _retriever = HybridRetriever(_get_wm(), _get_llm(), PIEConfig())
+    return _retriever
+
+
+def _fmt_ts(ts: float) -> str:
+    if not ts:
+        return "unknown"
+    from datetime import datetime
+    return datetime.fromtimestamp(ts).strftime("%Y-%m-%d")
+
+
+def _humanize(ts: float) -> str:
+    if not ts:
+        return ""
+    days = (time.time() - ts) / 86400
+    if days < 1:   return "today"
+    if days < 7:   return f"{int(days)}d ago"
+    if days < 30:  return f"{int(days/7)}w ago"
+    if days < 365: return f"{int(days/30)}mo ago"
+    return f"{days/365:.1f}y ago"
+
+
+def _entity_to_dict(entity, wm, include_history: bool = False) -> dict:
+    out = {
+        "id": entity.id,
+        "name": entity.name,
+        "type": entity.type.value,
+        "aliases": entity.aliases[:5],
+        "current_state": entity.current_state,
+        "first_seen": _fmt_ts(entity.first_seen),
+        "last_seen": _fmt_ts(entity.last_seen),
+        "last_seen_relative": _humanize(entity.last_seen),
+        "importance": entity.importance or 0,
+    }
+    if include_history:
+        transitions = wm.get_transitions(entity.id)
+        out["transition_count"] = len(transitions)
+        out["history"] = [
+            {
+                "date": _fmt_ts(t.timestamp),
+                "type": t.transition_type.value,
+                "summary": t.trigger_summary,
+            }
+            for t in transitions
+        ]
+        rels = wm.get_relationships(entity.id)
+        out["relationships"] = [
+            {
+                "type": r.type.value,
+                "entity": (wm.entities.get(
+                    r.target_id if r.source_id == entity.id else r.source_id
+                ) or type("_", (), {"name": "unknown"})()).name,
+                "direction": "out" if r.source_id == entity.id else "in",
+                "description": r.description[:100],
+            }
+            for r in rels[:15]
+        ]
+    return out
+
+
+# ── MCP Server ─────────────────────────────────────────────────────────────────
 
 mcp = FastMCP(
     "PIE — Personal Intelligence Engine",
     instructions=(
-        "You have access to Pranay's personal world model — a temporal knowledge graph "
-        "with 4000 entities and 6700 state transitions spanning a year of his life. "
-        "IMPORTANT: Call get_temporal_briefing() at the START of every conversation to "
-        "load temporal context. Call update_world() at the END to keep the model current. "
-        "Use the temporal briefing to proactively mention relevant deadlines, stale threads, "
-        "and context — don't wait to be asked."
+        "You have direct access to a personal temporal knowledge graph with ~4000 entities "
+        "and ~6700 state transitions spanning over a year of the user's life.\n\n"
+        "STRATEGY FOR BEST RESULTS:\n"
+        "1. For specific questions: use `search` or `get_entity` to find precise facts.\n"
+        "2. For broad questions ('tell me about all my projects / health / etc'): use `broad_scan` "
+        "   which decomposes your query into 12 specific sub-queries and retrieves 60 entities.\n"
+        "3. For a full LLM-synthesized answer: use `answer` — it runs retrieval + temporal context "
+        "   compilation + gpt-5.4 synthesis in one call.\n"
+        "4. For session context: call `get_briefing` at conversation start.\n\n"
+        "The knowledge graph has typed entities: project, person, organization, tool, belief, "
+        "goal, event, decision, concept, period. Use entity_type filter in `search` to narrow down.\n\n"
+        "State transitions track HOW things changed over time — contradictions, updates, resolutions. "
+        "This is the core differentiator vs. flat memory systems."
     ),
 )
 
-_wm: WorldModel | None = None
-_dynamics: TransitionDynamics | None = None
-_report = None
-_briefing_engine: TemporalBriefing | None = None
-_gap_analyzer: GapAnalyzer | None = None
-_thread_tracker: ThreadTracker | None = None
 
-# Semantic search index
-_tfidf: TfidfVectorizer | None = None
-_svd: TruncatedSVD | None = None
-_embeddings: np.ndarray | None = None
-_entity_id_order: list | None = None
+@mcp.tool()
+def search(query: str, entity_type: str = "", top_k: int = 15) -> str:
+    """Hybrid BM25+dense search over the knowledge graph.
 
+    Returns ranked entities with current state and metadata.
+    Fast (< 1s) — use for specific entity lookups.
 
-def _get_wm() -> WorldModel:
-    global _wm
-    if _wm is None:
-        _wm = WorldModel(persist_path=str(WM_PATH))
-        if not _wm.entities:
-            raise RuntimeError(f"No world model at {WM_PATH}")
-    return _wm
-
-
-def _get_briefing_engine() -> TemporalBriefing:
-    global _briefing_engine
-    if _briefing_engine is None:
-        _briefing_engine = TemporalBriefing(_get_wm())
-    return _briefing_engine
-
-
-def _get_gap_analyzer() -> GapAnalyzer:
-    global _gap_analyzer
-    if _gap_analyzer is None:
-        _gap_analyzer = GapAnalyzer(INTERACTIONS_PATH)
-    return _gap_analyzer
-
-
-def _get_thread_tracker() -> ThreadTracker:
-    global _thread_tracker
-    if _thread_tracker is None:
-        _thread_tracker = ThreadTracker(THREADS_PATH)
-    return _thread_tracker
-
-
-def _get_search_index():
-    """Build TF-IDF + SVD semantic search index (lazy, ~1s)."""
-    global _tfidf, _svd, _embeddings, _entity_id_order
-    if _tfidf is not None:
-        return _tfidf, _svd, _embeddings, _entity_id_order
-
+    Args:
+        query: What to search for. E.g. "Lucid Academy revenue", "sleep supplements", "BJJ training"
+        entity_type: Optional filter. One of: project, person, organization, tool, belief,
+                     goal, event, decision, concept, period
+        top_k: Number of results (default 15, max 30)
+    """
     wm = _get_wm()
-    _entity_id_order = []
-    texts = []
+    r = _get_retriever()
+    entity_ids = r.retrieve(query, top_k=min(top_k, 30))
 
-    for eid, entity in wm.entities.items():
-        _entity_id_order.append(eid)
-        cs = entity.current_state
-        parts = [
-            entity.name,
-            entity.type.value,
-            ' '.join(entity.aliases),
-        ]
-        for k, v in cs.items():
-            if isinstance(v, str):
-                parts.append(f"{k}: {v}")
-            elif isinstance(v, list):
-                parts.append(f"{k}: {' '.join(str(x) for x in v)}")
-            elif isinstance(v, dict):
-                parts.append(f"{k}: {json.dumps(v)}")
-        texts.append(' '.join(parts))
-
-    _tfidf = TfidfVectorizer(
-        max_features=5000,
-        stop_words='english',
-        ngram_range=(1, 2),
-        min_df=2,
-        max_df=0.8,
-        sublinear_tf=True,
-    )
-    tfidf_matrix = _tfidf.fit_transform(texts)
-
-    _svd = TruncatedSVD(n_components=128, random_state=42)
-    _embeddings = _svd.fit_transform(tfidf_matrix)
-    # Normalize
-    norms = np.linalg.norm(_embeddings, axis=1, keepdims=True)
-    norms[norms == 0] = 1
-    _embeddings = _embeddings / norms
-
-    logger.info(f"Search index built: {len(_entity_id_order)} entities, 128d embeddings")
-    return _tfidf, _svd, _embeddings, _entity_id_order
-
-
-def _semantic_search(query: str, top_k: int = 10, entity_type: str = "") -> list:
-    """Semantic search using TF-IDF + SVD cosine similarity."""
-    wm = _get_wm()
-    tfidf, svd, embeddings, eid_order = _get_search_index()
-
-    # Transform query
-    q_tfidf = tfidf.transform([query])
-    q_emb = svd.transform(q_tfidf)
-    q_norm = np.linalg.norm(q_emb)
-    if q_norm > 0:
-        q_emb = q_emb / q_norm
-
-    # Cosine similarity
-    scores = embeddings @ q_emb.T
-    scores = scores.flatten()
-
-    # Filter by type if needed
-    if entity_type:
-        for i, eid in enumerate(eid_order):
-            e = wm.entities.get(eid)
-            if e and e.type.value != entity_type.lower():
-                scores[i] = -1
-
-    # Get top-k
-    top_indices = np.argsort(scores)[::-1][:top_k]
     results = []
-    for idx in top_indices:
-        if scores[idx] <= 0:
-            break
-        eid = eid_order[idx]
+    for eid in entity_ids:
+        entity = wm.entities.get(eid)
+        if not entity:
+            continue
+        if entity_type and entity.type.value != entity_type.lower():
+            continue
+        results.append(_entity_to_dict(entity, wm))
+
+    return json.dumps({"query": query, "count": len(results), "entities": results},
+                      indent=2, default=str)
+
+
+@mcp.tool()
+def broad_scan(topic: str, top_k: int = 60) -> str:
+    """Exhaustive memory scan — decomposes topic into 12 sub-queries, returns up to 60 entities.
+
+    USE THIS for: "tell me everything about my health", "list all my projects",
+    "what do you know about my diet", "scan all health memories", etc.
+
+    Internally: LLM generates 12 specific search queries from your topic →
+    each runs BM25+dense retrieval → all results merged via multi-source RRF.
+    One LLM call + fast local retrieval. Takes ~5-10s.
+
+    Args:
+        topic: Broad topic or question. Can be a full paragraph for maximum recall.
+        top_k: Max entities to return (default 60)
+    """
+    wm = _get_wm()
+    r = _get_retriever()
+    entity_ids = r.broad_retrieve(topic, top_k=min(top_k, 80))
+
+    results = []
+    for eid in entity_ids:
         entity = wm.entities.get(eid)
         if entity:
-            results.append((entity, float(scores[idx])))
+            results.append(_entity_to_dict(entity, wm))
 
-    return results
-
-
-def _get_dynamics():
-    global _dynamics, _report
-    wm = _get_wm()
-    if _dynamics is None:
-        _dynamics = TransitionDynamics(wm)
-        _report = _dynamics.analyze()
-    return _dynamics, _report
-
-
-def _importance(eid: str) -> float:
-    """Get entity importance (computes if needed)."""
-    _, report = _get_dynamics()
-    profile = report.entity_profiles.get(eid)
-    if not profile:
-        return 0.0
-    base = math.log2(1 + profile.total_transitions) / 8.0
-    base = min(base, 1.0)
-    recency = 1.0 - 0.8 * profile.staleness_score
-    return round(base * recency, 4)
-
-
-def _entity_summary(entity, include_state=True, include_transitions=False) -> dict:
-    """Serialize an entity for tool output."""
-    wm = _get_wm()
-    result = {
-        "name": entity.name,
-        "type": entity.type.value,
-        "importance": entity.importance or _importance(entity.id),
-        "first_seen": entity.first_seen,
-        "last_seen": entity.last_seen,
-        "aliases": entity.aliases,
-        "web_verified": entity.web_verified,
-    }
-    if include_state:
-        result["current_state"] = entity.current_state
-    if include_transitions:
-        transitions = wm.get_transitions(entity.id, ordered=True)
-        result["transitions"] = [
-            {
-                "type": t.transition_type.value,
-                "trigger": t.trigger_summary,
-                "timestamp": t.timestamp,
-                "from_state_keys": list((t.from_state or {}).keys()),
-                "to_state_keys": list((t.to_state or {}).keys()),
-            }
-            for t in transitions[-10:]  # last 10
-        ]
-        result["total_transitions"] = len(transitions)
-    return result
-
-
-# ── Tools ─────────────────────────────────────────────────────────────────────
-
-
-@mcp.tool()
-def search_entities(query: str, entity_type: str = "", top_k: int = 10) -> str:
-    """Semantic search the world model for entities matching a query.
-
-    Uses TF-IDF + SVD embeddings for semantic matching — understands meaning,
-    not just keywords. Use this to find projects, tools, people, beliefs, etc.
-
-    Args:
-        query: Search terms (e.g. "Lucid Academy", "browser automation", "BJJ", "revenue strategy")
-        entity_type: Optional filter: person, project, tool, organization, belief, decision, concept, period, event, goal
-        top_k: Max results to return
-    """
-    results_raw = _semantic_search(query, top_k=top_k, entity_type=entity_type)
-    results = []
-    for entity, score in results_raw:
-        summary = _entity_summary(entity)
-        summary["relevance_score"] = round(score, 3)
-        results.append(summary)
-    return json.dumps(results, indent=2, default=str)
-
-
-@mcp.tool()
-def get_entity(name: str) -> str:
-    """Get full details for a specific entity by name.
-
-    Returns the complete current state, transition history, and relationships.
-
-    Args:
-        name: Entity name (fuzzy matched)
-    """
-    wm = _get_wm()
-    entity = wm.find_by_name(name)
-    if not entity:
-        # Try fuzzy
-        matches = wm.find_by_fuzzy_name(name, threshold=0.6)
-        if matches:
-            entity = matches[0][0]
-        else:
-            return json.dumps({"error": f"No entity found matching '{name}'"})
-
-    result = _entity_summary(entity, include_state=True, include_transitions=True)
-
-    # Add relationships
-    rels = wm.get_relationships(entity.id)
-    result["relationships"] = []
-    for r in rels:
-        if r:
-            other_id = r.target_id if r.source_id == entity.id else r.source_id
-            other = wm.entities.get(other_id)
-            other_name = other.name if other else "unknown"
-            direction = "outgoing" if r.source_id == entity.id else "incoming"
-            result["relationships"].append({
-                "type": r.type.value,
-                "entity": other_name,
-                "direction": direction,
-                "description": r.description,
-            })
-
-    return json.dumps(result, indent=2, default=str)
-
-
-@mcp.tool()
-def get_briefing() -> str:
-    """Get today's executive briefing.
-
-    Returns: active projects ranked by importance, goals & commitments,
-    stale entities needing attention, causal co-occurrence patterns,
-    predicted next transitions, and the people network.
-    """
-    wm = _get_wm()
-    _, report = _get_dynamics()
-
-    briefing = {}
-
-    # Active projects
-    projects = []
-    for eid, entity in wm.entities.items():
-        if entity.type not in (EntityType.PROJECT, EntityType.ORGANIZATION):
-            continue
-        profile = report.entity_profiles.get(eid)
-        if not profile or profile.total_transitions < 2:
-            continue
-        days_since = (time.time() - profile.last_transition_ts) / 86400
-        projects.append({
-            "name": entity.name,
-            "type": entity.type.value,
-            "importance": entity.importance or _importance(eid),
-            "staleness": round(profile.staleness_score, 3),
-            "days_since_update": round(days_since, 1),
-            "transitions": profile.total_transitions,
-            "status": entity.current_state.get("status", "unknown"),
-            "description": entity.current_state.get("description", "")[:200],
-        })
-    projects.sort(key=lambda p: -p["importance"])
-    briefing["active_projects"] = projects[:15]
-
-    # Goals
-    goals = []
-    for eid, entity in wm.entities.items():
-        if entity.type == EntityType.GOAL:
-            goals.append({
-                "name": entity.name,
-                "deadline": entity.current_state.get("deadline"),
-                "status": entity.current_state.get("status", "unknown"),
-                "priority": entity.current_state.get("priority", "unknown"),
-                "description": entity.current_state.get("description", "")[:200],
-            })
-    # Also infer goals from decisions
-    for eid, entity in wm.entities.items():
-        if entity.type == EntityType.DECISION:
-            desc = entity.current_state.get("description", "").lower()
-            if any(w in desc for w in ["plan to", "want to", "need to", "target", "aiming", "will "]):
-                goals.append({
-                    "name": entity.name,
-                    "deadline": entity.current_state.get("deadline"),
-                    "status": "inferred_from_decision",
-                    "priority": "medium",
-                    "description": entity.current_state.get("description", "")[:200],
-                })
-    briefing["goals"] = goals[:20]
-
-    # Stale
-    stale = []
-    for eid in report.stale_entities:
-        entity = wm.entities.get(eid)
-        profile = report.entity_profiles.get(eid)
-        if not entity or not profile:
-            continue
-        if entity.type in (EntityType.CONCEPT, EntityType.PERIOD):
-            continue
-        days_since = (time.time() - profile.last_transition_ts) / 86400
-        stale.append({
-            "name": entity.name,
-            "type": entity.type.value,
-            "staleness": round(profile.staleness_score, 3),
-            "days_since_update": round(days_since, 1),
-            "importance": entity.importance or _importance(eid),
-        })
-    stale.sort(key=lambda s: (-s.get("importance", 0), -s["staleness"]))
-    briefing["stale_entities"] = stale[:15]
-
-    # Predictions
-    briefing["predicted_next_transitions"] = report.predicted_next_transitions[:10]
-
-    # People
-    people = []
-    for eid, entity in wm.entities.items():
-        if entity.type == EntityType.PERSON:
-            people.append({
-                "name": entity.name,
-                "description": entity.current_state.get("description", "")[:150],
-                "importance": entity.importance or _importance(eid),
-            })
-    people.sort(key=lambda p: -p["importance"])
-    briefing["people"] = people
-
-    return json.dumps(briefing, indent=2, default=str)
-
-
-@mcp.tool()
-def get_beliefs() -> str:
-    """Get all of Parth's extracted beliefs, preferences, and opinions.
-
-    These are things he has stated positions on — values, preferences,
-    personality traits, and worldview that could change over time.
-    """
-    wm = _get_wm()
-    beliefs = []
-    for eid, entity in wm.entities.items():
-        if entity.type == EntityType.BELIEF:
-            beliefs.append({
-                "name": entity.name,
-                "description": entity.current_state.get("description", "")[:300],
-                "importance": entity.importance or _importance(eid),
-            })
-    beliefs.sort(key=lambda b: -b["importance"])
-    return json.dumps(beliefs, indent=2, default=str)
-
-
-@mcp.tool()
-def get_decisions() -> str:
-    """Get all significant decisions Parth has made.
-
-    Includes technical, business, product, and personal decisions with reasoning.
-    """
-    wm = _get_wm()
-    decisions = []
-    for eid, entity in wm.entities.items():
-        if entity.type == EntityType.DECISION:
-            decisions.append({
-                "name": entity.name,
-                "description": entity.current_state.get("description", "")[:300],
-                "importance": entity.importance or _importance(eid),
-            })
-    decisions.sort(key=lambda d: -d["importance"])
-    return json.dumps(decisions, indent=2, default=str)
-
-
-@mcp.tool()
-def get_entity_history(name: str) -> str:
-    """Get the full state transition history for an entity.
-
-    Shows how an entity evolved over time — every state change with timestamps,
-    triggers, and before/after states.
-
-    Args:
-        name: Entity name (fuzzy matched)
-    """
-    wm = _get_wm()
-    entity = wm.find_by_name(name)
-    if not entity:
-        matches = wm.find_by_fuzzy_name(name, threshold=0.6)
-        if matches:
-            entity = matches[0][0]
-        else:
-            return json.dumps({"error": f"No entity found matching '{name}'"})
-
-    transitions = wm.get_transitions(entity.id, ordered=True)
-    history = {
-        "entity": entity.name,
-        "type": entity.type.value,
-        "total_transitions": len(transitions),
-        "timeline": [],
-    }
-
-    for t in transitions:
-        entry = {
-            "type": t.transition_type.value,
-            "trigger": t.trigger_summary,
-            "timestamp": t.timestamp,
-        }
-        # Show what changed (new keys or changed values)
-        if t.from_state and t.to_state:
-            changes = {}
-            for k in set(list(t.to_state.keys()) + list(t.from_state.keys())):
-                old_v = t.from_state.get(k)
-                new_v = t.to_state.get(k)
-                if str(old_v) != str(new_v):
-                    changes[k] = {"from": str(old_v)[:100], "to": str(new_v)[:100]}
-            if changes:
-                entry["changes"] = changes
-        elif t.to_state:
-            entry["initial_state"] = {k: str(v)[:100] for k, v in t.to_state.items()}
-
-        history["timeline"].append(entry)
-
-    return json.dumps(history, indent=2, default=str)
-
-
-@mcp.tool()
-def get_related_entities(name: str) -> str:
-    """Find all entities connected to a given entity via relationships.
-
-    Shows the network around an entity — what it uses, is part of, integrates with, etc.
-
-    Args:
-        name: Entity name (fuzzy matched)
-    """
-    wm = _get_wm()
-    entity = wm.find_by_name(name)
-    if not entity:
-        matches = wm.find_by_fuzzy_name(name, threshold=0.6)
-        if matches:
-            entity = matches[0][0]
-        else:
-            return json.dumps({"error": f"No entity found matching '{name}'"})
-
-    rels = wm.get_relationships(entity.id)
-    connections = []
-    for r in rels:
-        other_id = r.target_id if r.source_id == entity.id else r.source_id
-        other = wm.entities.get(other_id)
-        if not other:
-            continue
-        connections.append({
-            "entity": other.name,
-            "type": other.type.value,
-            "relationship": r.type.value,
-            "direction": "outgoing" if r.source_id == entity.id else "incoming",
-            "description": r.description,
-            "importance": other.importance or 0,
-        })
-
-    connections.sort(key=lambda c: -c["importance"])
     return json.dumps({
-        "entity": entity.name,
-        "total_connections": len(connections),
-        "connections": connections,
+        "topic": topic,
+        "entities_found": len(results),
+        "note": "Use get_entity(name) for full history of any specific entity.",
+        "entities": results,
     }, indent=2, default=str)
 
 
 @mcp.tool()
-def get_world_model_stats() -> str:
-    """Get high-level statistics about the world model.
+def get_entity(name: str) -> str:
+    """Get complete details for an entity: full state + every transition + all relationships.
 
-    Returns entity counts by type, transition counts, date range, etc.
+    Use this after search/broad_scan when you need the complete history of a specific entity.
+    Fuzzy-matches the name if exact match not found.
+
+    Args:
+        name: Entity name (e.g. "Lucid Academy", "ADHD", "carnivore diet")
     """
     wm = _get_wm()
-    _, report = _get_dynamics()
+    entity = wm.find_by_name(name)
 
-    type_counts = defaultdict(int)
-    for entity in wm.entities.values():
-        type_counts[entity.type.value] += 1
+    if not entity:
+        # Try fuzzy fallback
+        candidates = []
+        name_lower = name.lower()
+        for e in wm.entities.values():
+            if name_lower in e.name.lower() or any(name_lower in a.lower() for a in e.aliases):
+                candidates.append(e)
+        if candidates:
+            entity = sorted(candidates, key=lambda e: -(e.importance or 0))[0]
+
+    if not entity:
+        return json.dumps({"error": f"No entity found matching '{name}'. Try search() first."})
+
+    return json.dumps(_entity_to_dict(entity, wm, include_history=True),
+                      indent=2, default=str)
+
+
+@mcp.tool()
+def answer(question: str, mode: str = "auto") -> str:
+    """Full RAG pipeline: retrieve → compile temporal context → gpt-5.4 answer.
+
+    This is the highest-quality tool: it retrieves relevant entities, compiles
+    rich temporal context (state history, contradictions, dates), and synthesizes
+    a full answer using gpt-5.4.
+
+    Args:
+        question: Any natural language question about the user's world.
+        mode: "auto" (default) | "broad" (force 60-entity scan) | "focused" (top 10 only).
+              "auto" picks broad for long/scan queries, focused for specific questions.
+    """
+    from pie.eval.query_interface import answer_query, _is_scan_query
+    from datetime import datetime
+
+    llm = _get_llm()
+    r = _get_retriever()
+
+    force_broad = (mode == "broad") or (mode == "auto" and _is_scan_query(question))
+
+    result = answer_query(
+        question, r, llm,
+        model=_ANSWER_MODEL,
+        top_k=60 if force_broad else 15,
+        force_broad=force_broad,
+    )
+
+    return json.dumps({
+        "question": question,
+        "answer": result.answer,
+        "entities_used": result.entities_used,
+        "retrieval_mode": result.retrieval_method,
+        "latency_ms": round(result.latency_ms),
+    }, indent=2, default=str)
+
+
+@mcp.tool()
+def get_briefing() -> str:
+    """Get an executive briefing: active projects, goals, stale entities, people network.
+
+    Call this at the start of a session to load temporal context.
+    Returns: top projects by importance, all goals, stale entities, people.
+    """
+    wm = _get_wm()
+    from pie.core.models import EntityType
+
+    now = time.time()
+    type_counts: dict[str, int] = defaultdict(int)
+    for e in wm.entities.values():
+        type_counts[e.type.value] += 1
+
+    def _top(etype, limit=20):
+        entities = [e for e in wm.entities.values() if e.type.value == etype]
+        entities.sort(key=lambda e: -(e.importance or 0))
+        return [
+            {
+                "name": e.name,
+                "last_seen": _humanize(e.last_seen),
+                "status": e.current_state.get("status", "") if isinstance(e.current_state, dict) else "",
+                "description": (e.current_state.get("description", "") if isinstance(e.current_state, dict) else str(e.current_state))[:200],
+            }
+            for e in entities[:limit]
+        ]
+
+    stale = [
+        e for e in wm.entities.values()
+        if e.last_seen and (now - e.last_seen) / 86400 > 30
+        and e.type.value in ("project", "goal", "decision")
+    ]
+    stale.sort(key=lambda e: -(now - (e.last_seen or 0)))
+
+    return json.dumps({
+        "entity_counts": dict(type_counts),
+        "active_projects": _top("project", 20),
+        "goals": _top("goal", 15),
+        "people": _top("person", 20),
+        "stale_projects": [
+            {"name": e.name, "last_seen": _humanize(e.last_seen)}
+            for e in stale[:10]
+        ],
+    }, indent=2, default=str)
+
+
+@mcp.tool()
+def get_beliefs() -> str:
+    """Get all extracted beliefs, preferences, and stated opinions.
+
+    These are positions the user has stated — values, worldview, preferences —
+    that can change over time and have state transition history.
+    """
+    wm = _get_wm()
+    beliefs = [e for e in wm.entities.values() if e.type.value == "belief"]
+    beliefs.sort(key=lambda e: -(e.importance or 0))
+    return json.dumps([
+        {
+            "name": e.name,
+            "description": (e.current_state.get("description", "") if isinstance(e.current_state, dict) else str(e.current_state))[:300],
+            "last_seen": _humanize(e.last_seen),
+        }
+        for e in beliefs
+    ], indent=2, default=str)
+
+
+@mcp.tool()
+def get_decisions() -> str:
+    """Get all significant decisions with their reasoning and context."""
+    wm = _get_wm()
+    decisions = [e for e in wm.entities.values() if e.type.value == "decision"]
+    decisions.sort(key=lambda e: -(e.importance or 0))
+    return json.dumps([
+        {
+            "name": e.name,
+            "description": (e.current_state.get("description", "") if isinstance(e.current_state, dict) else str(e.current_state))[:300],
+            "last_seen": _humanize(e.last_seen),
+        }
+        for e in decisions
+    ], indent=2, default=str)
+
+
+@mcp.tool()
+def chat_session(
+    message: str,
+    session_id: str = "default",
+    top_k: int = 20,
+) -> str:
+    """Conversational interface to PIE with persistent memory across calls.
+
+    Unlike `answer()` (single-shot RAG), this maintains a full conversation
+    history in a session file. Each call adds to the history, so you can ask
+    follow-up questions and build on previous answers — same as talking to a
+    person who remembers everything you said in the conversation.
+
+    The session persists between MCP calls and even between Cursor restarts.
+    Use session_id to maintain separate conversations (default: "default").
+
+    Args:
+        message: Your message or question.
+        session_id: Conversation thread name (default: "default").
+        top_k: Number of entities to retrieve for context (default: 20).
+    """
+    _SESSIONS_DIR.mkdir(parents=True, exist_ok=True)
+    session_file = _SESSIONS_DIR / f"{session_id}.json"
+
+    # Load existing history
+    history: list[dict] = []
+    if session_file.exists():
+        try:
+            history = json.loads(session_file.read_text())
+        except Exception:
+            history = []
+
+    # Retrieve relevant PIE context for this message
+    retriever = _get_retriever()
+    try:
+        entity_ids = retriever.broad_retrieve(message, top_k=top_k, n_subqueries=6)
+        context_md = retriever.compile_context(entity_ids, query=message, max_transitions=10)
+        if len(context_md) > 40_000:
+            context_md = context_md[:40_000] + "\n\n[...truncated...]"
+    except Exception:
+        context_md = ""
+
+    # Build messages: system + history + new context + user message
+    system = (
+        "You are a personal knowledge assistant with access to the user's temporal knowledge graph "
+        "(PIE — Personal Intelligence Engine). You have full conversation memory within this session.\n\n"
+        "Use the CONTEXT BLOCK below (retrieved from PIE for this specific message) to ground your answer. "
+        "Also use anything discussed earlier in the conversation. "
+        "Be direct, specific, and make use of temporal detail (dates, transitions, contradictions).\n\n"
+        f"PIE Context for this message:\n\n{context_md}"
+    )
+
+    messages = [{"role": "system", "content": system}]
+    # Include last 20 turns of history to stay within context limits
+    for turn in history[-20:]:
+        messages.append({"role": turn["role"], "content": turn["content"]})
+    messages.append({"role": "user", "content": message})
+
+    llm = _get_llm()
+    result = llm.chat(messages=messages, model=_ANSWER_MODEL, max_tokens=2000)
+    answer = (result.get("content") or "").strip()
+
+    # Save updated history
+    history.append({"role": "user", "content": message, "ts": time.time()})
+    history.append({"role": "assistant", "content": answer, "ts": time.time()})
+    session_file.write_text(json.dumps(history, ensure_ascii=False, indent=2))
+
+    return json.dumps({
+        "answer": answer,
+        "session_id": session_id,
+        "turn": len(history) // 2,
+        "entities_used": len(entity_ids) if 'entity_ids' in dir() else 0,
+    }, ensure_ascii=False)
+
+
+@mcp.tool()
+def list_sessions() -> str:
+    """List all active conversation sessions with their message counts and last activity."""
+    _SESSIONS_DIR.mkdir(parents=True, exist_ok=True)
+    sessions = []
+    for f in sorted(_SESSIONS_DIR.glob("*.json")):
+        try:
+            history = json.loads(f.read_text())
+            if not isinstance(history, list):
+                continue
+            last_ts = max((m.get("ts", 0) for m in history), default=0)
+            sessions.append({
+                "session_id": f.stem,
+                "turns": len(history) // 2,
+                "last_active": _humanize(last_ts),
+                "last_message": next(
+                    (m["content"][:80] for m in reversed(history) if m.get("role") == "user"), ""
+                ),
+            })
+        except Exception:
+            pass
+    return json.dumps(sessions, indent=2)
+
+
+@mcp.tool()
+def ingest_conversation(
+    text: str,
+    title: str = "Untitled conversation",
+    source: str = "mcp_ingest",
+) -> str:
+    """Ingest a new conversation or notes into the knowledge graph.
+
+    Use this to keep PIE up to date with recent conversations, decisions,
+    projects, or events. Provide the raw conversation text (or a structured
+    summary) and it will be extracted, resolved against existing entities,
+    and saved permanently.
+
+    Args:
+        text: Raw conversation text, meeting notes, or structured summary.
+              Supports any format — ChatGPT-style, plain prose, bullet points.
+        title: Human-readable title for this conversation/note.
+        source: Source identifier (default: 'mcp_ingest').
+
+    Returns:
+        Summary of what was extracted and added.
+    """
+    import uuid as _uuid
+    from pie.core.models import Conversation, Turn, DailyBatch
+    from pie.core.llm import LLMClient, parse_extraction_result
+    from pie.ingestion.prompts import (
+        EXTRACTION_SYSTEM_PROMPT,
+        build_extraction_user_message,
+        format_conversations_for_extraction,
+    )
+    from pie.resolution.resolver import EntityResolver
+    from pie.config import PIEConfig
+
+    wm = _get_wm()
+    llm = _get_llm()
+    config = PIEConfig()
+
+    now = time.time()
+    conv_id = str(_uuid.uuid4())
+
+    # Wrap raw text into a minimal Conversation object
+    conv = Conversation(
+        id=conv_id,
+        title=title,
+        created_at=now,
+        updated_at=now,
+        model=source,
+        turns=[Turn(role="user", text=text, timestamp=now)],
+    )
+
+    batch = DailyBatch(
+        date=__import__("datetime").datetime.now().strftime("%Y-%m-%d"),
+        conversations=[conv],
+    )
+
+    # Build context preamble from current world model
+    context_preamble = ""
+    if len(wm.entities) > 0:
+        context_preamble = wm.build_context_preamble(now)
+
+    from pie.ingestion.prompts import format_conversations_for_extraction
+    conversations_text = format_conversations_for_extraction(
+        batch.conversations, max_chars_per_turn=8000, max_turns_per_conversation=50
+    )
+    user_message = build_extraction_user_message(
+        batch_date=batch.date,
+        conversations_text=conversations_text,
+        context_preamble=context_preamble,
+        num_conversations=1,
+    )
+
+    result = llm.chat(
+        messages=[
+            {"role": "system", "content": EXTRACTION_SYSTEM_PROMPT},
+            {"role": "user", "content": user_message},
+        ],
+        model="gpt-5.4",
+        json_mode=True,
+        max_tokens=4000,
+    )
+
+    extraction = parse_extraction_result(
+        raw=result["content"],
+        conversation_ids=[conv_id],
+        tokens=result["tokens"],
+    )
+
+    # Resolve entities against existing world model
+    resolver = EntityResolver(world_model=wm, llm=llm, config=config.resolution)
+    resolved = resolver.resolve(extraction.entities)
+
+    # Apply to world model
+    creates, updates = 0, 0
+    for r in resolved:
+        if r.action == "create":
+            from pie.core.models import Entity, EntityType
+            entity = Entity(
+                id=str(_uuid.uuid4()),
+                type=EntityType(r.extracted.type),
+                name=r.extracted.name,
+                aliases=[],
+                current_state=r.extracted.state or {},
+                first_seen=now,
+                last_seen=now,
+                importance=r.extracted.confidence or 0.5,
+            )
+            wm.entities[entity.id] = entity
+            creates += 1
+        elif r.action == "update" and r.matched_id:
+            wm.update_entity_state(
+                entity_id=r.matched_id,
+                new_state=r.extracted.state or {},
+                source_conversation_id=conv_id,
+                timestamp=now,
+                trigger_summary=f"[{source}] {title}",
+            )
+            updates += 1
+
+    # Apply state changes
+    for sc in extraction.state_changes:
+        # Find entity by name
+        match = wm.find_by_name(sc.entity_name)
+        if match:
+            wm.update_entity_state(
+                entity_id=match.id,
+                new_state={"description": sc.new_state} if isinstance(sc.new_state, str) else (sc.new_state or {}),
+                source_conversation_id=conv_id,
+                timestamp=now,
+                trigger_summary=sc.what_changed,
+                is_contradiction=sc.is_contradiction,
+            )
+
+    wm.rebuild_embedding_matrix()
+    wm.save()
+
+    global _retriever
+    _retriever = None  # Reset so it rebuilds with new data on next query
+
+    return json.dumps({
+        "status": "ok",
+        "title": title,
+        "entities_created": creates,
+        "entities_updated": updates,
+        "state_changes_applied": len(extraction.state_changes),
+        "relationships_found": len(extraction.relationships),
+        "tokens_used": result["tokens"]["total"],
+        "summary": extraction.summary or f"Ingested '{title}': {creates} new entities, {updates} updated.",
+    }, indent=2)
+
+
+@mcp.tool()
+def get_entities_by_type(entity_type: str, limit: int = 50) -> str:
+    """Retrieve all entities of a specific type from the knowledge graph.
+
+    Useful for browsing the full inventory of tools, projects, people, goals, etc.
+    without needing a search query.
+
+    Args:
+        entity_type: One of: tool, project, person, organization, goal, decision,
+                     belief, concept, event, period
+        limit: Max entities to return (default 50, max 200)
+    """
+    from pie.core.models import EntityType
+    wm = _get_wm()
+
+    try:
+        target_type = EntityType(entity_type.lower())
+    except ValueError:
+        valid = [e.value for e in EntityType]
+        return json.dumps({"error": f"Unknown type '{entity_type}'. Valid: {valid}"})
+
+    matches = [
+        e for e in wm.entities.values()
+        if e.type == target_type
+    ]
+    # Sort by last_seen descending
+    matches.sort(key=lambda e: e.last_seen or 0, reverse=True)
+    matches = matches[:min(limit, 200)]
+
+    results = [_entity_to_dict(e, wm) for e in matches]
+    return json.dumps({
+        "entity_type": entity_type,
+        "total_found": len(results),
+        "entities": results,
+    }, indent=2, default=str)
+
+
+@mcp.tool()
+def get_recent_entities(limit: int = 30, entity_type: str | None = None) -> str:
+    """Get the most recently updated entities — useful for a 'what's new' pulse check.
+
+    Args:
+        limit: Number of entities to return (default 30)
+        entity_type: Optional — filter by type (tool, project, person, etc.)
+    """
+    from pie.core.models import EntityType
+    wm = _get_wm()
+
+    entities = list(wm.entities.values())
+
+    if entity_type:
+        try:
+            target_type = EntityType(entity_type.lower())
+            entities = [e for e in entities if e.type == target_type]
+        except ValueError:
+            pass
+
+    entities.sort(key=lambda e: e.last_seen or 0, reverse=True)
+    entities = entities[:limit]
+
+    results = [_entity_to_dict(e, wm) for e in entities]
+    return json.dumps({
+        "limit": limit,
+        "entity_type_filter": entity_type,
+        "entities": results,
+    }, indent=2, default=str)
+
+
+@mcp.tool()
+def get_architecture(project_name: str) -> str:
+    """
+    Generate a full architecture document for a project from the knowledge graph.
+
+    Retrieves the project entity, all related tool/technology entities, architectural
+    decisions, and key relationships — then synthesizes a structured architecture doc
+    showing what tools were chosen for each layer and why.
+
+    Args:
+        project_name: Name of the project (e.g. "Lucid Academy", "Hermes", "PIE")
+    """
+    wm = _get_wm()
+    llm = _get_llm()
+    retriever = _get_retriever()
+
+    # Broad retrieve: project + all tech choices, decisions, tools in its orbit
+    entity_ids = retriever.broad_retrieve(
+        f"{project_name} tech stack architecture tools decisions database framework API",
+        top_k=40,
+        n_subqueries=8,
+    )
+
+    if not entity_ids:
+        return json.dumps({"error": f"No entities found for project: {project_name}"})
+
+    context = retriever.compile_context(entity_ids, max_transitions=8)
+
+    # Also pull direct relationships for the project entity
+    project_entity = wm.find_by_name(project_name)
+    rel_context = ""
+    if project_entity:
+        rels = [r for r in wm.relationships.values()
+                if r.from_entity_id == project_entity.id or r.to_entity_id == project_entity.id]
+        if rels:
+            lines = []
+            for r in rels[:20]:
+                other_id = r.to_entity_id if r.from_entity_id == project_entity.id else r.from_entity_id
+                other = wm.entities.get(other_id)
+                other_name = other.name if other else other_id
+                direction = "→" if r.from_entity_id == project_entity.id else "←"
+                lines.append(f"  {project_name} {direction} [{r.relationship_type}] {other_name}")
+            rel_context = "\nDirect relationships:\n" + "\n".join(lines)
+
+    system = """\
+You are an expert software architect with deep knowledge of AI and full-stack systems.
+Given context from a personal knowledge graph about a project, produce a structured
+architecture document. Focus on:
+1. What the project does (1-2 sentences)
+2. Tech stack by layer (frontend, backend, AI/ML, data, infra, integrations)
+3. Key architectural decisions made and the reasoning
+4. Tool choices per component and why they were selected
+5. Current status and open architectural questions
+
+Format as clean markdown. Be specific — cite exact tools and decisions from the context.
+Where the knowledge graph has gaps, note them explicitly rather than guessing."""
+
+    messages = [
+        {"role": "system", "content": system},
+        {"role": "user", "content": f"Project: {project_name}\n\n{context}{rel_context}\n\nGenerate the architecture document."},
+    ]
+
+    result = llm.chat(messages=messages, model=_ANSWER_MODEL, max_tokens=2000)
+    content = result["content"]
+    if isinstance(content, dict):
+        content = json.dumps(content)
+
+    return content
+
+
+@mcp.tool()
+def enrich_entity(entity_name: str, force: bool = False) -> str:
+    """
+    Enrich a tool/organization entity with current web-grounded knowledge.
+
+    Looks up the entity in PIE, then uses LLM knowledge + any available web search
+    to produce an up-to-date description covering: what it does, current version/status,
+    how it fits into the broader ecosystem, and notes for your specific use cases.
+    Saves the enrichment as a new state transition so it persists.
+
+    Args:
+        entity_name: Name of the tool or org to enrich (e.g. "LangGraph", "Supabase")
+        force: If True, re-enriches even if recently updated (default: False)
+    """
+    import os
+    from datetime import datetime, timezone
+
+    wm = _get_wm()
+    llm = _get_llm()
+
+    entity = wm.find_by_name(entity_name)
+    if not entity:
+        # Try fuzzy search
+        results = wm.find_by_embedding(
+            llm.embed_single(entity_name), top_k=1
+        )
+        if results:
+            entity = wm.entities.get(results[0])
+        if not entity:
+            return json.dumps({"error": f"Entity not found: {entity_name}"})
+
+    current_state = entity.current_state or {}
+    current_desc = current_state.get("description", "")
+    entity_type = entity.type.value
+
+    # Check if recently enriched (within 7 days) unless force
+    enriched_at = current_state.get("web_enriched_at")
+    if enriched_at and not force:
+        from datetime import datetime
+        try:
+            days_ago = (datetime.now() - datetime.fromisoformat(enriched_at)).days
+            if days_ago < 7:
+                return json.dumps({
+                    "status": "skipped",
+                    "reason": f"Already enriched {days_ago}d ago. Use force=True to re-enrich.",
+                    "entity": entity_name,
+                })
+        except Exception:
+            pass
+
+    # Gather context: all transitions + relationships
+    retriever = _get_retriever()
+    entity_ids = retriever.broad_retrieve(
+        f"{entity_name} tool capabilities use cases ecosystem", top_k=10, n_subqueries=3
+    )
+    context = retriever.compile_context(entity_ids, max_transitions=5)
+
+    # PIE usage context: how this entity appears in the user's history
+    transitions = [t for t in wm.transitions.values() if t.entity_id == entity.id]
+    usage_notes = []
+    for t in sorted(transitions, key=lambda x: x.timestamp, reverse=True)[:5]:
+        s = t.new_state if isinstance(t.new_state, dict) else {"description": str(t.new_state)}
+        if s.get("description"):
+            usage_notes.append(f"- {s['description'][:200]}")
+    usage_context = "\n".join(usage_notes) if usage_notes else "No prior usage notes."
+
+    system = """\
+You are an expert technical researcher. Given information about a tool/technology from
+a personal knowledge graph, produce an enriched, structured description that covers:
+1. What it is and what it does (current as of 2026)
+2. Key capabilities and differentiators vs alternatives
+3. How it fits the user's specific use cases based on their history
+4. Current maturity, ecosystem health, and any important recent changes
+5. Best practices for integration
+
+Be specific and factual. Today's date is 2026-04-13. Where you're uncertain about
+very recent changes (post-2025), say so explicitly."""
+
+    messages = [
+        {"role": "system", "content": system},
+        {"role": "user", "content": (
+            f"Tool/Entity: {entity_name} (type: {entity_type})\n\n"
+            f"Current PIE description:\n{current_desc}\n\n"
+            f"User's usage history:\n{usage_context}\n\n"
+            f"Related context from knowledge graph:\n{context[:3000]}\n\n"
+            "Produce an enriched description."
+        )},
+    ]
+
+    result = llm.chat(messages=messages, model=_ANSWER_MODEL, max_tokens=1500)
+    enriched = result["content"]
+    if isinstance(enriched, dict):
+        enriched = json.dumps(enriched)
+
+    # Save as state transition
+    now = datetime.now(timezone.utc).timestamp()
+    new_state = dict(current_state)
+    new_state["description"] = enriched
+    new_state["web_enriched_at"] = datetime.now(timezone.utc).date().isoformat()
+
+    wm.update_entity_state(
+        entity_id=entity.id,
+        new_state=new_state,
+        source_conversation_id="mcp_enrich",
+        timestamp=now,
+        trigger_summary=f"Web-enriched description for {entity_name}",
+    )
+    wm.save()
+
+    return json.dumps({
+        "status": "enriched",
+        "entity": entity_name,
+        "entity_id": entity.id,
+        "enriched_description": enriched,
+    }, indent=2)
+
+
+@mcp.tool()
+def get_stats() -> str:
+    """Get high-level statistics about the knowledge graph."""
+    wm = _get_wm()
+    type_counts: dict[str, int] = defaultdict(int)
+    for e in wm.entities.values():
+        type_counts[e.type.value] += 1
 
     return json.dumps({
         "total_entities": len(wm.entities),
         "total_transitions": len(wm.transitions),
         "total_relationships": len(wm.relationships),
         "entities_by_type": dict(sorted(type_counts.items(), key=lambda x: -x[1])),
-        "stale_count": len(report.stale_entities),
-        "volatile_count": len(report.volatile_entities),
-        "cooccurrence_patterns": len(report.cooccurrences),
+        "world_model_path": str(_WM_PATH),
     }, indent=2)
 
 
-@mcp.tool()
-def query_world_model(question: str) -> str:
-    """Ask a natural-language question about Parth's world model.
-
-    Uses semantic search (TF-IDF + SVD embeddings) to find the most relevant
-    entities, then returns full context including state and relationships.
-
-    Examples:
-    - "What tools is Parth using for browser automation?"
-    - "What's the status of Lucid Academy?"
-    - "Who does Parth work with?"
-    - "What decisions has he made about monetization?"
-    - "What content ideas has he discussed?"
-
-    Args:
-        question: Natural language question
-    """
-    wm = _get_wm()
-    results_raw = _semantic_search(question, top_k=10)
-
-    results = []
-    for entity, score in results_raw:
-        entry = {
-            "name": entity.name,
-            "type": entity.type.value,
-            "relevance_score": round(score, 3),
-            "current_state": entity.current_state,
-            "importance": entity.importance or _importance(entity.id),
-        }
-        # Add relationships for highly relevant results
-        if score > 0.3:
-            rels = wm.get_relationships(entity.id)
-            entry["relationships"] = [
-                {
-                    "type": r.type.value,
-                    "entity": getattr(wm.entities.get(
-                        r.target_id if r.source_id == entity.id else r.source_id
-                    ), 'name', 'unknown'),
-                    "description": r.description,
-                }
-                for r in rels[:5]
-            ]
-        results.append(entry)
-
-    return json.dumps({
-        "question": question,
-        "results_count": len(results),
-        "results": results,
-    }, indent=2, default=str)
-
-
-# ── Temporal Tools (THE NEW STUFF) ────────────────────────────────────────────
-
-
-@mcp.tool()
-def get_temporal_briefing(focus_project: str = "", current_context: str = "") -> str:
-    """Get a temporal briefing — CALL THIS AT THE START OF EVERY CONVERSATION.
-
-    Returns structured temporal context: what's active, what's stale, approaching
-    deadlines, how long since last interaction, and what deserves proactive mention.
-    This is the core tool that gives you temporal awareness.
-
-    Args:
-        focus_project: Optional project name to expand context for (e.g. "PIE", "sponsorFind")
-        current_context: Optional brief description of what the user is working on right now
-    """
-    now = time.time()
-    gap = _get_gap_analyzer()
-    tracker = _get_thread_tracker()
-    engine = _get_briefing_engine()
-
-    # Record this interaction
-    gap.record_interaction(now)
-
-    # Get temporal data
-    deadlines = tracker.get_approaching_deadlines(window_days=14)
-    commitments = tracker.get_overdue_commitments()
-
-    briefing = engine.generate_briefing(
-        ref_time=now,
-        focus_project=focus_project if focus_project else None,
-        last_interaction_time=gap.last_interaction_time,
-        approaching_deadlines=deadlines,
-        overdue_commitments=commitments,
-    )
-
-    return briefing
-
-
-@mcp.tool()
-def update_world(
-    conversation_summary: str,
-    entities_mentioned: str = "",
-    deadlines_mentioned: str = "",
-    commitments_made: str = "",
-) -> str:
-    """Update the world model after a conversation — CALL THIS AT THE END.
-
-    Records what was discussed so future briefings stay current. Also updates
-    thread tracking for deadlines and commitments.
-
-    Args:
-        conversation_summary: Brief summary of what was discussed in this conversation.
-        entities_mentioned: Comma-separated names of projects/people/tools discussed.
-        deadlines_mentioned: JSON array of deadlines: [{"topic": "...", "due_date": "...", "entity": "..."}]
-        commitments_made: JSON array of commitments: [{"what": "...", "who": "user", "due_date": "..."}]
-    """
-    tracker = _get_thread_tracker()
-    now = time.time()
-
-    # Parse entities
-    entity_names = [e.strip() for e in entities_mentioned.split(",") if e.strip()] if entities_mentioned else []
-
-    # Parse deadlines
-    parsed_deadlines = None
-    if deadlines_mentioned:
-        try:
-            parsed_deadlines = json.loads(deadlines_mentioned)
-        except json.JSONDecodeError:
-            pass
-
-    # Parse commitments
-    parsed_commitments = None
-    if commitments_made:
-        try:
-            parsed_commitments = json.loads(commitments_made)
-        except json.JSONDecodeError:
-            pass
-
-    # Update thread tracker
-    tracker.update_from_conversation(
-        mentioned_entities=entity_names,
-        new_deadlines=parsed_deadlines,
-        new_commitments=parsed_commitments,
-    )
-
-    # Touch any matching entities in the world model to update last_seen
-    wm = _get_wm()
-    touched = []
-    for name in entity_names:
-        entity = wm.find_by_name(name)
-        if entity:
-            entity.last_seen = now
-            touched.append(entity.name)
-
-    # Save world model if we touched anything
-    if touched:
-        wm.save()
-
-    result = {
-        "status": "updated",
-        "entities_touched": touched,
-        "deadlines_added": len(parsed_deadlines) if parsed_deadlines else 0,
-        "commitments_added": len(parsed_commitments) if parsed_commitments else 0,
-        "summary_recorded": conversation_summary[:200],
-    }
-
-    return json.dumps(result, indent=2)
-
-
-@mcp.tool()
-def get_approaching_deadlines(window_days: int = 14) -> str:
-    """Get deadlines approaching in the next N days.
-
-    Returns tracked deadlines and commitments, sorted by urgency.
-
-    Args:
-        window_days: How many days ahead to look (default 14)
-    """
-    tracker = _get_thread_tracker()
-    deadlines = tracker.get_approaching_deadlines(window_days)
-    overdue = tracker.get_overdue_commitments()
-
-    return json.dumps({
-        "approaching_deadlines": deadlines,
-        "overdue_commitments": overdue,
-    }, indent=2, default=str)
-
-
-@mcp.tool()
-def get_stale_threads(threshold_days: int = 14) -> str:
-    """Get active threads that haven't been mentioned recently.
-
-    These are topics that were opened but have gone quiet — potential
-    forgotten commitments or abandoned threads.
-
-    Args:
-        threshold_days: How many days of silence before a thread is "stale" (default 14)
-    """
-    tracker = _get_thread_tracker()
-    stale = tracker.get_stale_threads(threshold_days)
-
-    return json.dumps({
-        "stale_threads": stale,
-        "total_active_threads": len(tracker.get_active_threads()),
-    }, indent=2, default=str)
-
-
-@mcp.tool()
-def track_deadline(
-    topic: str,
-    due_date: str,
-    entity_name: str = "",
-    notes: str = "",
-) -> str:
-    """Explicitly track a deadline for future proactive mention.
-
-    Use this when the user mentions a deadline during conversation.
-    It will appear in future temporal briefings as it approaches.
-
-    Args:
-        topic: What the deadline is for (e.g. "API demo", "paper submission")
-        due_date: When it's due (e.g. "2026-03-20", "next Friday")
-        entity_name: Optional project/entity name this relates to
-        notes: Optional additional context
-    """
-    tracker = _get_thread_tracker()
-
-    # Try to parse the date
-    due_timestamp = None
-    try:
-        from datetime import datetime
-        # Try common formats
-        for fmt in ["%Y-%m-%d", "%Y-%m-%dT%H:%M:%S", "%m/%d/%Y"]:
-            try:
-                dt = datetime.strptime(due_date, fmt)
-                due_timestamp = dt.timestamp()
-                break
-            except ValueError:
-                continue
-    except Exception:
-        pass
-
-    thread = tracker.open_thread(
-        topic=topic,
-        entity_name=entity_name if entity_name else None,
-        deadline=due_date,
-        deadline_timestamp=due_timestamp,
-    )
-    if notes:
-        thread.notes = notes
-        tracker._save()
-
-    return json.dumps({
-        "status": "deadline_tracked",
-        "thread_id": thread.id,
-        "topic": topic,
-        "due_date": due_date,
-        "parsed_timestamp": due_timestamp,
-    }, indent=2)
-
-
-@mcp.tool()
-def track_commitment(
-    what: str,
-    due_date: str = "",
-    who: str = "user",
-) -> str:
-    """Track a commitment (something the user said they'd do).
-
-    Will appear in future briefings when the due date passes.
-
-    Args:
-        what: What was committed to (e.g. "finish integration tests")
-        due_date: When it's due (optional, e.g. "2026-03-20")
-        who: Who committed — usually "user" (default)
-    """
-    tracker = _get_thread_tracker()
-
-    due_timestamp = None
-    if due_date:
-        try:
-            from datetime import datetime
-            for fmt in ["%Y-%m-%d", "%Y-%m-%dT%H:%M:%S", "%m/%d/%Y"]:
-                try:
-                    dt = datetime.strptime(due_date, fmt)
-                    due_timestamp = dt.timestamp()
-                    break
-                except ValueError:
-                    continue
-        except Exception:
-            pass
-
-    tracker.add_commitment(
-        thread_id=None,
-        what=what,
-        who=who,
-        due_date=due_date,
-        due_timestamp=due_timestamp,
-    )
-
-    return json.dumps({
-        "status": "commitment_tracked",
-        "what": what,
-        "who": who,
-        "due_date": due_date,
-    }, indent=2)
-
-
-# ── Run ───────────────────────────────────────────────────────────────────────
+# ── Entry point ────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     mcp.run(transport="stdio")

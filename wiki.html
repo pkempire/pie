@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PIE — Personal Wikipedia</title>
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --bg2: #181818;
+    --bg3: #222;
+    --border: #2a2a2a;
+    --text: #e8e8e8;
+    --text2: #aaa;
+    --text3: #666;
+    --accent: #7c6af7;
+    --accent2: #a29af8;
+    --green: #4caf72;
+    --yellow: #f0c040;
+    --red: #e05555;
+    --blue: #5b9cf6;
+    --sidebar: 260px;
+    --radius: 8px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 48px 1fr;
+    grid-template-columns: var(--sidebar) 1fr;
+  }
+
+  /* ── Top bar ── */
+  #topbar {
+    grid-column: 1 / 3;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 16px;
+  }
+  #topbar .logo {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--accent2);
+    letter-spacing: -0.3px;
+    white-space: nowrap;
+  }
+  #topbar .logo span { color: var(--text3); font-weight: 400; }
+  #search-wrap {
+    flex: 1;
+    position: relative;
+    max-width: 560px;
+  }
+  #search-input {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 36px 6px 12px;
+    color: var(--text);
+    font-size: 13px;
+    font-family: var(--font);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  #search-input:focus { border-color: var(--accent); }
+  #search-input::placeholder { color: var(--text3); }
+  .search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text3);
+    font-size: 13px;
+    pointer-events: none;
+  }
+  #stats-badge {
+    font-size: 11px;
+    color: var(--text3);
+    white-space: nowrap;
+  }
+  #ask-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s;
+  }
+  #ask-btn:hover { background: var(--accent2); }
+
+  /* ── Sidebar ── */
+  #sidebar {
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 8px 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  #sidebar::-webkit-scrollbar { width: 4px; }
+  #sidebar::-webkit-scrollbar-track { background: transparent; }
+  #sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  .type-group { margin-bottom: 2px; }
+  .type-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--text3);
+    transition: color 0.1s;
+  }
+  .type-header:hover { color: var(--text2); }
+  .type-header .chevron { transition: transform 0.15s; font-size: 9px; }
+  .type-header.open .chevron { transform: rotate(90deg); }
+  .type-header .type-count {
+    margin-left: auto;
+    background: var(--bg3);
+    border-radius: 10px;
+    padding: 1px 6px;
+    font-size: 10px;
+  }
+  .type-header .type-icon { font-size: 12px; }
+
+  .entity-list { display: none; }
+  .entity-list.open { display: block; }
+  .entity-item {
+    padding: 5px 12px 5px 28px;
+    cursor: pointer;
+    font-size: 12.5px;
+    color: var(--text2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-left: 2px solid transparent;
+    transition: all 0.1s;
+  }
+  .entity-item:hover { color: var(--text); background: var(--bg3); }
+  .entity-item.active {
+    color: var(--accent2);
+    border-left-color: var(--accent);
+    background: #1c1a30;
+  }
+  .entity-item .recency-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  /* ── Main content ── */
+  #main {
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  #main::-webkit-scrollbar { width: 6px; }
+  #main::-webkit-scrollbar-track { background: transparent; }
+  #main::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  /* ── Home / empty state ── */
+  #home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 24px;
+    color: var(--text3);
+  }
+  #home .home-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text2);
+  }
+  #home .home-sub {
+    font-size: 14px;
+    text-align: center;
+    max-width: 380px;
+    line-height: 1.6;
+  }
+  #home .quick-stats {
+    display: flex;
+    gap: 24px;
+  }
+  #home .stat-box {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 24px;
+    text-align: center;
+  }
+  #home .stat-num { font-size: 28px; font-weight: 700; color: var(--accent2); }
+  #home .stat-label { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+  /* ── Search results panel ── */
+  #search-results {
+    display: none;
+    padding: 24px;
+    max-width: 760px;
+  }
+  #search-results h2 { font-size: 16px; margin-bottom: 16px; color: var(--text2); }
+  .search-result-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: border-color 0.1s;
+  }
+  .search-result-item:hover { border-color: var(--accent); }
+  .search-result-item .sr-name { font-weight: 600; font-size: 14px; }
+  .search-result-item .sr-type { font-size: 11px; color: var(--text3); margin-left: 8px; }
+  .search-result-item .sr-desc { font-size: 12px; color: var(--text2); margin-top: 4px; }
+
+  /* ── Ask panel ── */
+  #ask-panel {
+    display: none;
+    padding: 24px;
+    max-width: 760px;
+  }
+  #ask-panel textarea {
+    width: 100%;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px;
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 14px;
+    resize: none;
+    outline: none;
+    min-height: 80px;
+  }
+  #ask-panel textarea:focus { border-color: var(--accent); }
+  #ask-panel .ask-controls {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    align-items: center;
+  }
+  #ask-panel .ask-controls button {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  #ask-panel .ask-controls button.secondary {
+    background: var(--bg3);
+    color: var(--text2);
+    border: 1px solid var(--border);
+  }
+  #answer-box {
+    margin-top: 20px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    line-height: 1.7;
+    font-size: 14px;
+    display: none;
+  }
+  #answer-box .answer-meta {
+    font-size: 11px;
+    color: var(--text3);
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  #followups { margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .followup-btn {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--text2);
+    cursor: pointer;
+    transition: all 0.1s;
+  }
+  .followup-btn:hover { border-color: var(--accent); color: var(--text); }
+
+  /* ── Entity wiki page ── */
+  #entity-page { display: none; padding: 32px 40px; max-width: 860px; }
+
+  .entity-header { margin-bottom: 24px; }
+  .entity-header .entity-title {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .entity-header .entity-meta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .pill.type { background: #1e1e35; color: var(--accent2); }
+  .pill.status-active { background: #0e2a1a; color: var(--green); }
+  .pill.status-paused { background: #2a2410; color: var(--yellow); }
+  .pill.status-completed { background: #1a1a2a; color: var(--text3); }
+  .pill.status-abandoned { background: #2a1010; color: var(--red); }
+  .pill.status-unclear { background: var(--bg3); color: var(--text3); }
+  .alias-list { font-size: 12px; color: var(--text3); }
+
+  .intro-box {
+    background: linear-gradient(135deg, #1c1a30 0%, #1a1c28 100%);
+    border: 1px solid #3a3560;
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .intro-box .generating-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #1c1a30 0%, #1a1c28 100%);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--text3);
+    font-size: 13px;
+  }
+
+  .sections-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 700px) { .sections-grid { grid-template-columns: 1fr; } }
+
+  .section-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+  }
+  .section-card h3 {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--text3);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .section-card.full { grid-column: 1 / -1; }
+
+  .current-state table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .current-state td {
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .current-state td:first-child {
+    color: var(--text3);
+    width: 35%;
+    padding-right: 12px;
+    font-size: 12px;
+  }
+
+  .todos-list { list-style: none; }
+  .todos-list li {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.4;
+  }
+  .todos-list li:last-child { border-bottom: none; }
+  .todo-check {
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid var(--accent);
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .timeline { }
+  .timeline-item {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12.5px;
+  }
+  .timeline-item:last-child { border-bottom: none; }
+  .tl-date {
+    color: var(--text3);
+    font-size: 11px;
+    font-family: var(--mono);
+    white-space: nowrap;
+    padding-top: 2px;
+    min-width: 80px;
+  }
+  .tl-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+  .tl-dot.update { background: var(--blue); }
+  .tl-dot.creation { background: var(--green); }
+  .tl-dot.contradiction { background: var(--red); }
+  .tl-dot.resolution { background: var(--yellow); }
+  .tl-dot.archival { background: var(--text3); }
+  .tl-text { color: var(--text2); line-height: 1.5; }
+  .tl-text .contradiction-flag { color: var(--red); font-size: 11px; margin-left: 4px; }
+
+  .rel-list { display: flex; flex-direction: column; gap: 6px; }
+  .rel-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    padding: 6px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .rel-item:hover { background: var(--bg3); }
+  .rel-type {
+    font-size: 10px;
+    color: var(--text3);
+    background: var(--bg3);
+    border-radius: 10px;
+    padding: 2px 7px;
+    font-family: var(--mono);
+  }
+  .rel-name { font-weight: 500; }
+  .rel-arrow { color: var(--text3); }
+  .rel-desc { color: var(--text3); font-size: 11px; margin-top: 1px; }
+
+  .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .tag {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 11px;
+    color: var(--text2);
+  }
+
+  /* ── Markdown rendering ── */
+  .md-content { font-size: 13.5px; line-height: 1.8; color: var(--text2); }
+  .md-content h2 { font-size: 14px; font-weight: 700; color: var(--text); margin: 16px 0 6px; }
+  .md-content h3 { font-size: 13px; font-weight: 600; color: var(--text); margin: 12px 0 4px; }
+  .md-content ul { padding-left: 18px; }
+  .md-content li { margin: 3px 0; }
+  .md-content strong { color: var(--text); }
+  .md-content code { font-family: var(--mono); background: var(--bg3); padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+
+  /* ── Utilities ── */
+  .spinner {
+    width: 16px; height: 16px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    display: inline-block;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .hidden { display: none !important; }
+  .loading-text { color: var(--text3); font-size: 13px; display: flex; align-items: center; gap: 8px; }
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<header id="topbar">
+  <div class="logo">PIE <span>/ personal wiki</span></div>
+  <div id="search-wrap">
+    <input id="search-input" type="text" placeholder="Search entities... (press Enter)" autocomplete="off">
+    <span class="search-icon">⌕</span>
+  </div>
+  <div id="stats-badge">Loading...</div>
+  <button id="ask-btn">✦ Ask</button>
+</header>
+
+<!-- Sidebar -->
+<nav id="sidebar"></nav>
+
+<!-- Main content area -->
+<main id="main">
+  <div id="home">
+    <div class="home-title">🧠 Personal Wikipedia</div>
+    <div class="home-sub">Your world model, organized as a knowledge base.<br>Click any entity or search to explore.</div>
+    <div class="quick-stats" id="home-stats"></div>
+  </div>
+
+  <div id="search-results"></div>
+  <div id="ask-panel">
+    <h2 style="font-size:16px;margin-bottom:16px;color:var(--text2)">✦ Ask your knowledge base</h2>
+    <textarea id="ask-textarea" placeholder="Ask anything about your projects, people, goals, decisions..." rows="3"></textarea>
+    <div class="ask-controls">
+      <button id="ask-submit-btn">Answer</button>
+      <button class="secondary" id="smart-search-btn">🔍 Smart explore</button>
+      <span id="ask-spinner" class="spinner hidden"></span>
+    </div>
+    <div id="answer-box">
+      <div class="answer-meta" id="answer-meta"></div>
+      <div id="answer-content"></div>
+      <div id="followups"></div>
+    </div>
+  </div>
+
+  <div id="entity-page"></div>
+</main>
+
+<script>
+const API = 'http://127.0.0.1:7331';
+let allEntities = {};
+let currentEntityId = null;
+
+// ── Fetch helpers ────────────────────────────────────────────────────────────
+
+async function get(url) {
+  const r = await fetch(API + url);
+  if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
+  return r.json();
+}
+async function post(url, body) {
+  const r = await fetch(API + url, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(body),
+  });
+  if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
+  return r.json();
+}
+
+// ── Type metadata ────────────────────────────────────────────────────────────
+
+const TYPE_META = {
+  project:      { icon: '⬡', label: 'Projects',      color: '#7c6af7' },
+  person:       { icon: '◎', label: 'People',         color: '#5b9cf6' },
+  organization: { icon: '⬢', label: 'Organizations',  color: '#f0a060' },
+  tool:         { icon: '⊛', label: 'Tools',          color: '#4caf72' },
+  belief:       { icon: '◈', label: 'Beliefs',        color: '#f0c040' },
+  goal:         { icon: '◆', label: 'Goals',          color: '#e06080' },
+  event:        { icon: '◇', label: 'Events',         color: '#90d0c0' },
+  concept:      { icon: '○', label: 'Concepts',       color: '#a0a0a0' },
+  period:       { icon: '▦', label: 'Periods',        color: '#b090e0' },
+  decision:     { icon: '◑', label: 'Decisions',      color: '#d0a020' },
+};
+function typeMeta(t) {
+  return TYPE_META[t] || { icon: '●', label: t.charAt(0).toUpperCase()+t.slice(1), color: '#888' };
+}
+
+// ── Recency color ────────────────────────────────────────────────────────────
+
+function recencyColor(days) {
+  if (days < 7)   return '#4caf72';
+  if (days < 30)  return '#7c6af7';
+  if (days < 90)  return '#f0c040';
+  if (days < 365) return '#888';
+  return '#444';
+}
+
+// ── Init ─────────────────────────────────────────────────────────────────────
+
+async function init() {
+  try {
+    const [grouped, stats] = await Promise.all([get('/api/entities'), get('/api/stats')]);
+    allEntities = grouped;
+    renderSidebar(grouped);
+    renderHomeStats(stats);
+    document.getElementById('stats-badge').textContent =
+      `${stats.total_entities || 0} entities · ${stats.total_transitions || 0} transitions`;
+  } catch (e) {
+    document.getElementById('stats-badge').textContent = 'Server not running — start with: python3 -m pie.ui.server';
+    document.querySelector('#home .home-sub').textContent =
+      'Start the server: python3 -m pie.ui.server --world-model output/world_model.json';
+  }
+}
+
+// ── Sidebar ──────────────────────────────────────────────────────────────────
+
+function renderSidebar(grouped) {
+  const sidebar = document.getElementById('sidebar');
+  const typeOrder = ['project','person','organization','tool','belief','goal','event','decision','concept','period'];
+  const allTypes = [...new Set([...typeOrder, ...Object.keys(grouped)])];
+
+  sidebar.innerHTML = allTypes
+    .filter(t => grouped[t]?.length)
+    .map(t => {
+      const meta = typeMeta(t);
+      const entities = grouped[t];
+      return `
+        <div class="type-group" data-type="${t}">
+          <div class="type-header" onclick="toggleGroup('${t}')">
+            <span class="chevron">▶</span>
+            <span class="type-icon" style="color:${meta.color}">${meta.icon}</span>
+            <span>${meta.label}</span>
+            <span class="type-count">${entities.length}</span>
+          </div>
+          <div class="entity-list" id="group-${t}">
+            ${entities.map(e => `
+              <div class="entity-item" id="item-${e.id}" onclick="loadEntity('${e.id}')">
+                <span class="recency-dot" style="background:${recencyColor(e.recency_days)}"></span>${escHtml(e.name)}
+              </div>`).join('')}
+          </div>
+        </div>`;
+    }).join('');
+
+  // Auto-open first 3 groups
+  allTypes.filter(t => grouped[t]?.length).slice(0, 3).forEach(t => toggleGroup(t, true));
+}
+
+function toggleGroup(type, forceOpen) {
+  const list = document.getElementById(`group-${type}`);
+  const header = list?.previousElementSibling;
+  if (!list) return;
+  const open = forceOpen !== undefined ? forceOpen : !list.classList.contains('open');
+  list.classList.toggle('open', open);
+  header?.classList.toggle('open', open);
+}
+
+function renderHomeStats(stats) {
+  const el = document.getElementById('home-stats');
+  const items = [
+    { num: stats.total_entities || 0, label: 'Entities' },
+    { num: stats.total_transitions || 0, label: 'State Changes' },
+    { num: stats.total_relationships || 0, label: 'Relationships' },
+  ];
+  el.innerHTML = items.map(s => `
+    <div class="stat-box">
+      <div class="stat-num">${s.num.toLocaleString()}</div>
+      <div class="stat-label">${s.label}</div>
+    </div>`).join('');
+}
+
+// ── Panel management ─────────────────────────────────────────────────────────
+
+function showPanel(id) {
+  ['home','search-results','ask-panel','entity-page'].forEach(p => {
+    document.getElementById(p).style.display = p === id ? '' : 'none';
+  });
+}
+
+// ── Entity page ──────────────────────────────────────────────────────────────
+
+async function loadEntity(entityId) {
+  // Update sidebar active state
+  document.querySelectorAll('.entity-item').forEach(el => el.classList.remove('active'));
+  document.getElementById(`item-${entityId}`)?.classList.add('active');
+  currentEntityId = entityId;
+
+  showPanel('entity-page');
+  const container = document.getElementById('entity-page');
+
+  // Show skeleton while loading
+  container.innerHTML = `
+    <div class="entity-header">
+      <div class="loading-text"><span class="spinner"></span> Loading entity data...</div>
+    </div>`;
+
+  try {
+    const data = await get(`/api/entity/${entityId}`);
+    renderEntityShell(data, container);
+    // Kick off LLM page generation in background
+    generateLLMPage(entityId, data);
+  } catch (e) {
+    container.innerHTML = `<p style="color:var(--red)">Error loading entity: ${e.message}</p>`;
+  }
+}
+
+function renderEntityShell(data, container) {
+  const meta = typeMeta(data.type);
+  const aliases = data.aliases?.length
+    ? `<span class="alias-list">aka: ${data.aliases.join(', ')}</span>` : '';
+
+  const transitions = data.transitions || [];
+  const relationships = data.relationships || [];
+
+  const stateRows = Object.entries(data.current_state || {})
+    .filter(([k]) => !['embedding','id'].includes(k))
+    .map(([k,v]) => `<tr><td>${escHtml(k)}</td><td>${escHtml(String(v).slice(0,300))}</td></tr>`)
+    .join('');
+
+  const tlItems = [...transitions].reverse().slice(0, 25).map(t => `
+    <div class="timeline-item">
+      <div class="tl-date">${t.date || ''}</div>
+      <div class="tl-dot ${t.type}"></div>
+      <div class="tl-text">${escHtml(t.summary || t.type)}${t.type==='contradiction'?'<span class="contradiction-flag">⚠ contradiction</span>':''}</div>
+    </div>`).join('');
+
+  const relItems = relationships.map(r => `
+    <div class="rel-item" onclick="loadEntity('${r.other_id}')">
+      <span class="rel-arrow">${r.direction==='out'?'→':'←'}</span>
+      <span class="rel-type">${r.type}</span>
+      <span class="rel-name">${escHtml(r.other_name)}</span>
+      ${r.description ? `<span class="rel-desc">— ${escHtml(r.description.slice(0,60))}</span>` : ''}
+    </div>`).join('');
+
+  container.innerHTML = `
+    <div class="entity-header">
+      <div class="entity-title">${escHtml(data.name)}</div>
+      <div class="entity-meta">
+        <span class="pill type" style="color:${meta.color}">${meta.icon} ${data.type}</span>
+        <span class="pill status-unclear" id="status-pill">...</span>
+        <span style="font-size:12px;color:var(--text3)">first seen ${data.first_seen || '?'} · last seen ${data.last_seen || '?'}</span>
+        ${aliases}
+      </div>
+    </div>
+
+    <!-- LLM intro box with loading state -->
+    <div class="intro-box" id="intro-box">
+      <div class="generating-overlay" id="intro-overlay">
+        <span class="spinner"></span>
+        <span>Generating summary...</span>
+      </div>
+      <div id="intro-text" class="hidden"></div>
+    </div>
+
+    <div class="sections-grid">
+      <!-- Current State -->
+      <div class="section-card current-state">
+        <h3>📋 Current State</h3>
+        ${stateRows ? `<table>${stateRows}</table>` : '<span style="color:var(--text3);font-size:12px">No structured state.</span>'}
+      </div>
+
+      <!-- Todos (populated by LLM) -->
+      <div class="section-card" id="todos-card">
+        <h3>✦ Action Items</h3>
+        <div class="loading-text" id="todos-loading"><span class="spinner"></span></div>
+        <ul class="todos-list hidden" id="todos-list"></ul>
+      </div>
+
+      <!-- Tags (populated by LLM) -->
+      <div class="section-card" id="tags-card">
+        <h3>🏷 Tags</h3>
+        <div class="tag-list" id="tags-list">
+          <span style="color:var(--text3);font-size:12px">Generating...</span>
+        </div>
+      </div>
+
+      <!-- Relationships -->
+      <div class="section-card">
+        <h3>🔗 Relationships <span style="font-weight:400;color:var(--text3)">(${relationships.length})</span></h3>
+        ${relItems ? `<div class="rel-list">${relItems}</div>` : '<span style="color:var(--text3);font-size:12px">No relationships recorded.</span>'}
+      </div>
+    </div>
+
+    <!-- Full LLM summary (full width) -->
+    <div class="section-card full" id="summary-card">
+      <h3>📖 Full Summary</h3>
+      <div class="loading-text" id="summary-loading"><span class="spinner"></span></div>
+      <div class="md-content hidden" id="summary-content"></div>
+    </div>
+
+    <!-- Timeline (full width) -->
+    <div class="section-card full" style="margin-top:16px">
+      <h3>🕐 State History <span style="font-weight:400;color:var(--text3)">(${transitions.length} changes)</span></h3>
+      ${tlItems || '<span style="color:var(--text3);font-size:12px">No transitions recorded.</span>'}
+    </div>
+
+    <!-- Recent changes (LLM, full width) -->
+    <div class="section-card full" id="recent-card" style="margin-top:16px">
+      <h3>⚡ Recent Changes (LLM Analysis)</h3>
+      <div class="loading-text" id="recent-loading"><span class="spinner"></span></div>
+      <div class="md-content hidden" id="recent-content"></div>
+    </div>
+  `;
+}
+
+async function generateLLMPage(entityId, data) {
+  try {
+    const page = await post(`/api/entity/${entityId}/page`, { model: 'gpt-4o-mini' });
+
+    // Intro
+    const introOverlay = document.getElementById('intro-overlay');
+    const introText = document.getElementById('intro-text');
+    if (introOverlay && introText) {
+      introOverlay.remove();
+      introText.textContent = page.intro || '';
+      introText.classList.remove('hidden');
+    }
+
+    // Status pill
+    const statusPill = document.getElementById('status-pill');
+    if (statusPill && page.status) {
+      statusPill.textContent = page.status;
+      statusPill.className = `pill status-${page.status}`;
+    }
+
+    // Todos
+    const todosList = document.getElementById('todos-list');
+    const todosLoading = document.getElementById('todos-loading');
+    if (todosList && todosLoading) {
+      todosLoading.remove();
+      if (page.todos?.length) {
+        todosList.innerHTML = page.todos.map(t =>
+          `<li><div class="todo-check"></div>${escHtml(t)}</li>`
+        ).join('');
+      } else {
+        todosList.innerHTML = '<li style="color:var(--text3)">No action items identified.</li>';
+      }
+      todosList.classList.remove('hidden');
+    }
+
+    // Tags
+    const tagsList = document.getElementById('tags-list');
+    if (tagsList && page.tags?.length) {
+      tagsList.innerHTML = page.tags.map(t => `<span class="tag">${escHtml(t)}</span>`).join('');
+    }
+
+    // Summary
+    const summaryContent = document.getElementById('summary-content');
+    const summaryLoading = document.getElementById('summary-loading');
+    if (summaryContent && summaryLoading) {
+      summaryLoading.remove();
+      summaryContent.innerHTML = mdToHtml(page.summary || '');
+      summaryContent.classList.remove('hidden');
+    }
+
+    // Recent
+    const recentContent = document.getElementById('recent-content');
+    const recentLoading = document.getElementById('recent-loading');
+    if (recentContent && recentLoading) {
+      recentLoading.remove();
+      recentContent.innerHTML = mdToHtml(page.recent || '_No recent changes identified._');
+      recentContent.classList.remove('hidden');
+    }
+
+  } catch (e) {
+    const overlay = document.getElementById('intro-overlay');
+    if (overlay) overlay.innerHTML = `<span style="color:var(--red)">LLM generation failed: ${escHtml(e.message)}</span>`;
+  }
+}
+
+// ── Search ───────────────────────────────────────────────────────────────────
+
+let searchTimeout = null;
+document.getElementById('search-input').addEventListener('input', function() {
+  clearTimeout(searchTimeout);
+  const q = this.value.trim();
+  if (!q) { showPanel('home'); return; }
+  searchTimeout = setTimeout(() => runSearch(q), 300);
+});
+document.getElementById('search-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { clearTimeout(searchTimeout); runSearch(this.value.trim()); }
+});
+
+async function runSearch(query) {
+  if (!query) return;
+  showPanel('search-results');
+  const container = document.getElementById('search-results');
+  container.innerHTML = `<h2>Results for "${escHtml(query)}"</h2><div class="loading-text"><span class="spinner"></span> Searching...</div>`;
+  container.style.display = '';
+
+  try {
+    const { entities } = await post('/api/search', { query, top_k: 20 });
+    if (!entities?.length) {
+      container.innerHTML = `<h2>No results for "${escHtml(query)}"</h2>`;
+      return;
+    }
+    container.innerHTML = `
+      <h2>Results for "${escHtml(query)}" <span style="color:var(--text3);font-weight:400">(${entities.length})</span></h2>
+      ${entities.map(e => `
+        <div class="search-result-item" onclick="loadEntity('${e.id}')">
+          <span class="sr-name">${escHtml(e.name)}</span>
+          <span class="sr-type">${typeMeta(e.type).icon} ${e.type}</span>
+          <div class="sr-desc">${escHtml((e.desc||'').slice(0,160))}</div>
+        </div>`).join('')}`;
+  } catch(e) {
+    container.innerHTML = `<p style="color:var(--red)">Search failed: ${escHtml(e.message)}</p>`;
+  }
+}
+
+// ── Ask / Smart search ───────────────────────────────────────────────────────
+
+document.getElementById('ask-btn').addEventListener('click', () => {
+  showPanel('ask-panel');
+  document.getElementById('ask-textarea').focus();
+});
+
+document.getElementById('ask-textarea').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) runAsk();
+});
+document.getElementById('ask-submit-btn').addEventListener('click', runAsk);
+document.getElementById('smart-search-btn').addEventListener('click', runSmartSearch);
+
+async function runAsk() {
+  const query = document.getElementById('ask-textarea').value.trim();
+  if (!query) return;
+
+  const spinner = document.getElementById('ask-spinner');
+  const answerBox = document.getElementById('answer-box');
+  const content = document.getElementById('answer-content');
+  const meta = document.getElementById('answer-meta');
+  const followups = document.getElementById('followups');
+
+  spinner.classList.remove('hidden');
+  answerBox.style.display = 'none';
+
+  try {
+    const res = await post('/api/query', { query, model: 'gpt-4o-mini' });
+    meta.textContent = `${Math.round(res.latency_ms)}ms · entities: ${res.entities_used?.join(', ')}`;
+    content.innerHTML = mdToHtml(res.answer || '');
+    followups.innerHTML = (res.followups || []).map(q =>
+      `<button class="followup-btn" onclick="askFollowup(this)">${escHtml(q)}</button>`
+    ).join('');
+    answerBox.style.display = '';
+  } catch(e) {
+    content.textContent = `Error: ${e.message}`;
+    answerBox.style.display = '';
+  } finally {
+    spinner.classList.add('hidden');
+  }
+}
+
+function askFollowup(btn) {
+  document.getElementById('ask-textarea').value = btn.textContent;
+  runAsk();
+}
+
+async function runSmartSearch() {
+  const topic = document.getElementById('ask-textarea').value.trim();
+  if (!topic) return;
+
+  const spinner = document.getElementById('ask-spinner');
+  const answerBox = document.getElementById('answer-box');
+  const content = document.getElementById('answer-content');
+  const meta = document.getElementById('answer-meta');
+
+  spinner.classList.remove('hidden');
+  answerBox.style.display = 'none';
+
+  try {
+    const res = await post('/api/smart-search', { topic });
+    meta.textContent = `Smart queries: ${res.generated_queries?.join(' · ')}`;
+    let html = `<p style="margin-bottom:12px;color:var(--text2)">Found <strong>${res.entities.length}</strong> relevant entities:</p>`;
+    html += (res.entities || []).map(e => `
+      <div class="search-result-item" onclick="loadEntity('${e.id}')">
+        <span class="sr-name">${escHtml(e.name)}</span>
+        <span class="sr-type">${typeMeta(e.type).icon} ${e.type}</span>
+        <div class="sr-desc">${escHtml((e.desc||'').slice(0,160))}</div>
+      </div>`).join('');
+    content.innerHTML = html;
+    answerBox.style.display = '';
+  } catch(e) {
+    content.textContent = `Error: ${e.message}`;
+    answerBox.style.display = '';
+  } finally {
+    spinner.classList.add('hidden');
+  }
+}
+
+// ── Minimal markdown → HTML ───────────────────────────────────────────────────
+
+function mdToHtml(md) {
+  if (!md) return '';
+  return md
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/`(.+?)`/g, '<code>$1</code>')
+    .replace(/^[\-\*] (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>\n?)+/g, m => `<ul>${m}</ul>`)
+    .replace(/\n\n+/g, '</p><p>')
+    .replace(/^(?!<[hpuol])(.+)$/gm, (m) => m ? m : '')
+    .replace(/\n/g, '<br>');
+}
+
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+
+init();
+</script>
+</body>
+</html>

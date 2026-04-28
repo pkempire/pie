@@ -47,6 +47,13 @@ from typing import Any
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
+_env_path = PROJECT_ROOT / ".env"
+if _env_path.exists():
+    for _line in _env_path.read_text().splitlines():
+        if "=" in _line and not _line.startswith("#"):
+            _k, _v = _line.split("=", 1)
+            os.environ.setdefault(_k.strip(), _v.strip())
+
 from pie.core.llm import LLMClient
 from pie.core.world_model import WorldModel
 
@@ -1074,8 +1081,10 @@ Examples:
             / datetime.now().strftime("%Y%m%d_%H%M%S")
         )
 
-    # Set default cache dir for PIE
-    if args.cache_dir is None and args.baseline in ("pie_temporal", "pie_temporal_cached", "all"):
+    # Only auto-assign cache dir for pie_temporal_cached (dedicated cached mode).
+    # pie_temporal uses fresh ingestion by default; pass --cache-dir explicitly to
+    # enable caching there (use run_pie_with_caching).
+    if args.cache_dir is None and args.baseline == "pie_temporal_cached":
         args.cache_dir = (
             PROJECT_ROOT / "benchmarks" / "longmemeval" / "cache"
         )
