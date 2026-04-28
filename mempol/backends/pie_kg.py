@@ -296,10 +296,11 @@ class PIEBackend(Backend):
     ) -> bool:
         if source_uid not in self.wm.entities or target_uid not in self.wm.entities:
             return False
+        # PIE's WorldModel.add_relationship uses kwarg `rel_type`, not `type`.
         self.wm.add_relationship(
             source_id=source_uid,
             target_id=target_uid,
-            type=_as_relationship_type(rel_type),
+            rel_type=_as_relationship_type(rel_type),
             description=description,
             timestamp=timestamp,
         )

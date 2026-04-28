@@ -311,6 +311,36 @@ The episode ends when the model emits a final answer formatted as
     transition history but marks the entity inactive.
 \end{itemize}
 
+\subsection{Background: typed-transition knowledge graph}
+\label{sec:pie}
+
+One of the three backends we use was built before this paper. We call it
+\emph{KGmem} for clarity (the implementation is the PIE memory system from
+the lead author's prior work). KGmem models the user's world as a graph
+of typed entities: \texttt{person}, \texttt{project}, \texttt{tool},
+\texttt{organization}, \texttt{belief}, \texttt{decision},
+\texttt{concept}, \texttt{period}, \texttt{event}, \texttt{goal}. What
+makes KGmem useful as a write substrate is that every entity carries a
+\emph{history of typed state transitions}---each transition records a
+(from\_state, to\_state) pair tagged with one of \texttt{creation},
+\texttt{update}, \texttt{contradiction}, \texttt{resolution}, or
+\texttt{archival}. We are not aware of another open KG memory system that
+treats contradiction as a first-class transition rather than an
+overwrite. KGmem also supports per-entity importance scoring and
+relationship edges, but in this paper we use only the entity-and-typed-
+transition substrate.
+
+For our purposes, KGmem matters for two reasons. First, the typed
+transitions give the write policy a richer action vocabulary than
+``store'' or ``delete''---it can emit \texttt{contradiction} when a turn
+conflicts with an existing entity, leaving both states present for the
+read policy to surface later. Second, the entity uids let the read
+policy chain queries through \texttt{lookup\_entity} $\to$
+\texttt{transitions\_for(uid)} when a question requires multi-hop
+reasoning over a single entity's evolving state. KGmem's hand-coded
+extraction prompts and 3-tier resolver are \emph{replaced} by our
+learned write policy; we keep only the data structure.
+
 \subsection{Backend abstraction}
 
 The op vocabulary is the invariant. Each backend is an adapter that
@@ -321,13 +351,13 @@ compiles ops to native operations:
     with BM25 index and dense embeddings. \texttt{memory\_search} is
     BM25/dense/RRF~\cite{shao2024deepseekmath}. Most write ops are
     no-ops; \texttt{create\_entity} appends a chunk.
-  \item \textbf{PIEBackend}: wraps our PIE
-    \texttt{WorldModel}---typed entities, typed transitions, and a
+  \item \textbf{KGBackend}: wraps the KGmem WorldModel from
+    Section~\ref{sec:pie}---typed entities, typed transitions, and a
     relationship graph. Every write op compiles to a real KG mutation.
-    Important: we re-use only the \emph{data structure} from PIE---the
-    write policy replaces PIE's hardcoded extraction prompts and 3-tier
+    Important: we re-use only the data structure---the write policy
+    replaces KGmem's hardcoded extraction prompts and 3-tier
     string/embedding/LLM resolver entirely. The trained adapter learns
-    what PIE's heuristics did by hand, against outcome supervision.
+    what those heuristics did by hand, against outcome supervision.
   \item \textbf{MastraBackend}: an Observer/Reflector pipeline that
     compresses raw turns into a dated bullet observation
     log~\cite{mastra2025om}. Read ops scan the log; write ops mostly
@@ -483,11 +513,30 @@ We report on three benchmarks:
     $\sim$115k tokens / 30--40 sessions per question. Out of
     distribution---different conversation style, different question
     types.
-  \item \textbf{TemporalBench} (ours): 6-axis behavioural temporal
-    benchmark testing proactivity, deadline tracking, gap-aware
-    resumption, staleness detection, rhythm recognition, and commitment
-    follow-through. \TBD{Build and release; spec lives at
-    \texttt{TEMPORAL-BENCH-SPEC.md}.}
+  \item \textbf{TemporalBench} (ours): a 6-axis benchmark of temporal
+    awareness as \emph{behaviour}, not as a reasoning skill. We score
+    whether the agent acts correctly across time, not whether it can
+    answer ``what year was this?''. The six axes:
+    \begin{enumerate}
+      \item \textbf{Proactive surfacing}: does the agent volunteer
+        time-relevant information without being asked?
+      \item \textbf{Deadline tracking}: given a deadline mentioned days
+        or weeks ago, does the agent surface it as it approaches?
+      \item \textbf{Gap-aware resumption}: when the user returns after
+        an absence, does behaviour reflect the gap duration? A 5-minute
+        gap and a 5-week gap should produce different responses.
+      \item \textbf{Staleness detection}: can the agent recognise when
+        previously-discussed information might be outdated?
+      \item \textbf{Rhythm recognition}: after observing patterns
+        (Monday standups, Friday retros), does the agent anticipate
+        context for those patterns?
+      \item \textbf{Commitment follow-through}: when a time-bound
+        commitment is made (``I'll do X by Thursday''), does the agent
+        follow up after the deadline?
+    \end{enumerate}
+    Each axis is scored 0--3 across $\sim$10 scenarios; the overall
+    score is the mean across axes. \TBD{Build and release publicly with
+    this paper. Spec at \texttt{TEMPORAL-BENCH-SPEC.md}.}
 \end{enumerate}
 
 We use gpt-4o as the judge across all benchmarks, following the
@@ -502,7 +551,12 @@ We compare against the strongest publicly-available memory systems:
   \item \textbf{Mem0}~\cite{chhikara2024mem0}.
   \item \textbf{Mastra Observational Memory}~\cite{mastra2025om}.
   \item \textbf{Zep}~\cite{rasmussen2024zep}.
-  \item \textbf{PIE} (our prior system; PIE-temporal).
+  \item \textbf{KGmem-temporal}: the lead author's prior hand-coded KG
+    system (the typed-transition substrate from Section~\ref{sec:pie}),
+    using its built-in extraction prompts and 3-tier resolver. We
+    include this as a baseline against the learned write policy that
+    operates on the same substrate---the comparison isolates the value
+    of learned ops vs.\ hand-coded ops on identical storage.
   \item \textbf{HeuristicPolicy} (our handwritten read-side teacher),
     bounded by SFT data quality.
 \end{itemize}
@@ -529,7 +583,7 @@ Naive RAG               & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
 Mem0                    & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
 Mastra OM (gpt-5-mini)  & \TBD{} & 94.87 (reported) & \TBD{} & \TBD{} \\
 Zep                     & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-PIE (temporal, ours)    & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+KGmem-temporal          & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
 \midrule
 \textsf{mempol-Phase-A} (read trained) & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
 \textsf{mempol-Phase-B} (W trained, R fixed) & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
