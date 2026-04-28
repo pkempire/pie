@@ -1,5 +1,14 @@
 """WriteReward — deferred + dense reward for the write policy.
 
+Side note: if the env var `MEMPOL_TRAJECTORY_DUMP_DIR` is set, every call
+to `WriteReward.__call__` writes a JSON snapshot of the trajectory
+(messages, metrics, KG snapshot, per-question coverage) to that directory.
+Used by the Streamlit dashboard. We do this here rather than via Tinker's
+own logging because the cookbook's `rollout_json_export` writes to an
+internal store we can't tail; doing it ourselves gives a flat directory
+of one-JSON-per-rollout that any tool can read.
+
+
 The write policy W emits a sequence of memory-store mutations during a single
 turn. The reward is composed of two terms (plus a cost regulariser):
 
@@ -31,9 +40,13 @@ all generated tokens during GRPO advantage computation. Per-op credit
 """
 from __future__ import annotations
 import asyncio
+import json
 import logging
 import os
+import time
+import uuid
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any, Callable
 
 from mempol.backends.pie_kg import PIEBackend
@@ -42,6 +55,49 @@ from mempol.eval.judge import judge as _judge_sync
 from mempol.policies.v1_heuristic import HeuristicPolicy
 
 logger = logging.getLogger(__name__)
+
+
+def _maybe_dump_trajectory(history: list, reward: float,
+                            metrics_full: dict) -> None:
+    """If MEMPOL_TRAJECTORY_DUMP_DIR is set, write this rollout to disk
+    for the dashboard. Failures are swallowed so logging never crashes the
+    training loop."""
+    out_dir = os.environ.get("MEMPOL_TRAJECTORY_DUMP_DIR", "").strip()
+    if not out_dir:
+        return
+    try:
+        d = Path(out_dir)
+        d.mkdir(parents=True, exist_ok=True)
+        # Normalize messages to plain dicts so json.dumps works regardless
+        # of whether tinker passed in dataclasses or message objects.
+        msgs_out = []
+        for m in history:
+            if isinstance(m, dict):
+                msgs_out.append({k: v for k, v in m.items() if v is not None})
+                continue
+            md: dict = {}
+            for fld in ("role", "content", "tool_calls"):
+                v = getattr(m, fld, None)
+                if v is not None:
+                    md[fld] = v
+            msgs_out.append(md)
+        payload = {
+            "ts":       time.time(),
+            "reward":   float(reward),
+            "metrics":  {k: float(v) if isinstance(v, (int, float)) else v
+                         for k, v in metrics_full.items()
+                         if not isinstance(v, list) and not isinstance(v, dict)},
+            "per_question_coverage":
+                metrics_full.get("per_question_coverage", []),
+            "kg_snapshot": metrics_full.get("kg_snapshot", {}),
+            "messages":   msgs_out,
+        }
+        # Filename: <step-time>_<short-uuid>.json so the dashboard can sort
+        # by mtime and pick the most recent batch.
+        name = f"{int(payload['ts']*1000)}_{uuid.uuid4().hex[:6]}.json"
+        (d / name).write_text(json.dumps(payload, ensure_ascii=False, default=str))
+    except Exception as e:
+        logger.warning("trajectory dump failed: %s", e)
 
 
 # Default cost coefficients. Tunable, reported as ablation in the paper.
@@ -204,8 +260,9 @@ class WriteReward:
                 (q[:120], float(s)) for q, s in cov_result.per_question
             ]
             self._last_metrics_full["kg_snapshot"] = self._kg_snapshot()
-        except Exception:
-            pass
+            _maybe_dump_trajectory(history, reward, self._last_metrics_full)
+        except Exception as e:
+            logger.warning("metrics-side-channel build failed: %s", e)
         return reward, dict(self._last_metrics)
 
     def _kg_snapshot(self, max_entities: int = 30) -> dict:
