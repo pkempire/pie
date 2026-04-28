@@ -145,7 +145,7 @@ def session_to_conversation(
 
     turns = []
     for turn_idx, raw_turn in enumerate(session):
-        name = raw_turn.get("name", "")
+        name = raw_turn.get("speaker") or raw_turn.get("name", "")
         text = raw_turn.get("text", "")
 
         # Skip empty turns
@@ -269,14 +269,19 @@ def load_dataset(
 
 # LoCoMo question type mapping (numeric -> string)
 QUESTION_TYPE_MAP = {
-    1: "single_hop",
-    2: "multi_hop",
-    3: "temporal",
-    4: "adversarial",
-    5: "commonsense",
+    # The LoCoMo JSON does not ship an explicit mapping. The local file's
+    # evidence distribution and question text imply:
+    #   1 = multi-hop, 2 = temporal, 3 = open-domain, 4 = single-hop,
+    #   5 = adversarial.
+    1: "multi_hop",
+    2: "temporal",
+    3: "open_domain",
+    4: "single_hop",
+    5: "adversarial",
     "single_hop": "single_hop",
     "multi_hop": "multi_hop",
     "temporal": "temporal",
+    "open_domain": "open_domain",
     "adversarial": "adversarial",
     "commonsense": "commonsense",
 }
@@ -306,11 +311,16 @@ def flatten_qa(dataset: list[dict]) -> list[dict]:
             raw_type = qa.get("category", "unknown")
             question_type = QUESTION_TYPE_MAP.get(raw_type, str(raw_type))
 
+            answer = qa.get("answer")
+            if (answer is None or answer == "") and qa.get("adversarial_answer"):
+                answer = qa.get("adversarial_answer")
+
             items.append({
                 "question_id": f"{sample_id}_q{i}",
                 "question": qa.get("question", ""),
                 "question_type": question_type,
-                "answer": qa.get("answer", ""),
+                "answer": answer or "",
+                "adversarial_answer": qa.get("adversarial_answer", ""),
                 "evidence": qa.get("evidence", []),
                 "sample_id": sample_id,
                 "conversation": conversation,
@@ -374,7 +384,7 @@ def format_conversation_as_text(
         total_chars += len(header)
 
         for turn in session:
-            name = turn.get("name", "Unknown")
+            name = turn.get("speaker") or turn.get("name", "Unknown")
             text = turn.get("text", "").strip()
             if not text:
                 continue
@@ -406,7 +416,7 @@ def format_session_as_text(
     human_date = format_date_for_context(date_str)
     lines = [f"[Session {session_index + 1} — {human_date}]"]
     for turn in session:
-        name = turn.get("name", "Unknown")
+        name = turn.get("speaker") or turn.get("name", "Unknown")
         text = turn.get("text", "").strip()
         if text:
             if turn.get("blip_caption"):

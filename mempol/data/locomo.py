@@ -7,7 +7,16 @@ from pathlib import Path
 
 from .. import config
 
-_CAT = {1: "single-hop", 2: "multi-hop", 3: "open-domain", 4: "temporal", 5: "adversarial"}
+_CAT = {
+    # Local LoCoMo category ids:
+    # 1 = multi-hop, 2 = temporal, 3 = open-domain, 4 = single-hop,
+    # 5 = adversarial.
+    1: "multi-hop",
+    2: "temporal",
+    3: "open-domain",
+    4: "single-hop",
+    5: "adversarial",
+}
 
 
 @dataclass
@@ -80,7 +89,7 @@ def load(path: Path | None = None, n_convs: int | None = None) -> list[tuple[Con
                     sample_id=sid,
                     qid=f"{sid}::q{i}",
                     question=str(q.get("question", "")),
-                    answer=str(q.get("answer", "")),
+                    answer=str(q.get("answer") or q.get("adversarial_answer", "")),
                     evidence=list(q.get("evidence", []) or []),
                     category=int(q.get("category", 0)),
                 )

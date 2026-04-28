@@ -51,6 +51,7 @@ from typing import Any, Callable
 
 from mempol.backends.base import Backend
 from mempol.backends.pie_kg import PIEBackend
+from mempol.eval.answer_gain import battery_answer_gain, GainResult
 from mempol.eval.evidence_coverage import battery_coverage
 from mempol.eval.judge import judge as _judge_sync
 from mempol.eval.reader_overlap import (
@@ -110,12 +111,22 @@ DEFAULT_COST_PER_OP = 0.001
 DEFAULT_COST_PER_LOOKUP = 0.0
 DEFAULT_COST_PER_ENTITY = 0.0
 
-# Reward mix. The dense signal is reader-overlap (label-free, validated to
-# correlate with gold coverage at within-turn ρ ≈ 0.61 on LoCoMo). We blend
-# with the LLM-judge QA term so the policy is anchored to actual downstream
-# answer quality, not just retrieval shape.
-DEFAULT_W_OVERLAP = 0.7
-DEFAULT_W_QA = 0.3
+# Reward mix.
+#
+# v1 (deprecated): w_overlap=0.7, w_qa=0.3. Reader-overlap at dia_id
+# granularity was structurally biased low because the reader retrieves
+# multi-dia_id chunks from full text but the post-W KG stores 1-dia_id
+# entities, so the intersection was bounded near zero regardless of write
+# quality. Confirmed on a smoke run: overlap=0.045 vs qa_mean=0.542.
+#
+# v2 (current): answer-gain over a random-K baseline as the dense signal.
+# For each question, judge(R, post_W_KG) - judge(R, random_K_sample). This
+# directly measures the value the W policy adds over content-agnostic
+# subsampling at the same retention budget. Cached per (conv, q, K) so the
+# random baseline is judged once over the whole training run.
+DEFAULT_W_GAIN = 0.7        # weight on answer-gain (post-W vs random-K)
+DEFAULT_W_QA   = 0.3        # weight on absolute judge(R, post-W)
+DEFAULT_W_OVERLAP = 0.0     # legacy, kept for ablations only
 
 # Hard retention budget: the post-W KG is pruned to at most this many
 # entities before scoring. The number 12 is calibrated to LoCoMo turn-level
@@ -161,13 +172,19 @@ class WriteReward:
     reader: Any = None
     r_runner: Callable[[str, PIEBackend], str] | None = None
     write_tool: Any = None
-    w_overlap: float = DEFAULT_W_OVERLAP
+    conv_id: str = ""                                # keys baseline_cache
+    w_gain: float = DEFAULT_W_GAIN                   # answer-gain weight (NEW)
     w_qa: float = DEFAULT_W_QA
+    w_overlap: float = DEFAULT_W_OVERLAP             # legacy, default 0
     k_max: int = DEFAULT_K_MAX
     cost_per_op: float = DEFAULT_COST_PER_OP
     cost_per_lookup: float = DEFAULT_COST_PER_LOOKUP
     cost_per_entity: float = DEFAULT_COST_PER_ENTITY
     full_text_cache: dict[str, set[str]] | None = None
+    # Cache of (conv_id, q, K) -> baseline judge score for answer-gain.
+    # Caller passes a dict that persists across rollouts of one conv so the
+    # random-K baseline is judged at most once per (conv, q, K).
+    baseline_cache: dict | None = None
     # Internal: per-evaluation metrics for logging
     _last_metrics: dict[str, float] = field(default_factory=dict)
 
@@ -201,11 +218,35 @@ class WriteReward:
         # 2. Enforce hard retention budget on the post-W KG.
         n_pruned = enforce_budget(self.backend, k_max=self.k_max)
 
-        # 3. Reader-overlap — label-free dense signal. If full_text_backend
-        #    isn't supplied (e.g. unit tests, smoke), fall back to legacy
-        #    coverage so the reward still trains.
-        overlap_result: OverlapResult | None = None
+        # 3. Dense signals.
+        #    a) Answer-gain (current default) — judge margin over random-K.
+        #    b) Coverage / reader-overlap (legacy, logged for ablations).
         cov_result = battery_coverage(self.backend, self.query_battery)
+        gain_result: GainResult | None = None
+        mean_gain = 0.0
+        loop = asyncio.get_running_loop()
+
+        if self.w_gain > 0 and self.full_text_backend is not None and self.reader is not None:
+            try:
+                # answer_gain runs sync judge calls inside; offload to a
+                # thread so we don't block the event loop.
+                def _run_gain():
+                    return battery_answer_gain(
+                        backend=self.backend,
+                        battery=self.query_battery,
+                        full_text_backend=self.full_text_backend,
+                        reader=self.reader,
+                        K=self.k_max,
+                        conv_id=self.conv_id,
+                        baseline_cache=self.baseline_cache,
+                    )
+                gain_result = await loop.run_in_executor(None, _run_gain)
+                mean_gain = gain_result.mean_gain
+            except Exception as e:
+                logger.warning("WriteReward: answer-gain failed (%s)", e)
+
+        # Reader-overlap kept for logging only (legacy diagnostic).
+        overlap_result: OverlapResult | None = None
         if self.full_text_backend is not None and self.reader is not None:
             try:
                 overlap_result = battery_reader_overlap(
@@ -215,15 +256,9 @@ class WriteReward:
                     reader=self.reader,
                     full_text_cache=self.full_text_cache,
                 )
-                mean_overlap = overlap_result.mean_overlap
-            except Exception as e:
-                logger.warning("WriteReward: reader-overlap failed (%s); "
-                                "falling back to coverage signal", e)
-                mean_overlap = cov_result.mean_coverage
-        else:
-            # No full-text backend: fall back to coverage. Used during the
-            # transition period and for ablations.
-            mean_overlap = cov_result.mean_coverage
+            except Exception:
+                pass
+        mean_overlap = overlap_result.mean_overlap if overlap_result else 0.0
 
         # 4. QA judge — optional anchoring term.
         mean_qa = 0.0
@@ -276,26 +311,35 @@ class WriteReward:
             + self.cost_per_entity * n_entities
         )
 
-        reward = self.w_overlap * mean_overlap + self.w_qa * mean_qa - cost
+        reward = (
+            self.w_gain * mean_gain
+            + self.w_qa * mean_qa
+            + self.w_overlap * mean_overlap
+            - cost
+        )
         self._last_metrics = {
-            "reader_overlap_mean": mean_overlap,
-            "coverage_mean": cov_result.mean_coverage,    # legacy, kept for log
-            "qa_mean": mean_qa,
-            "cost_total": cost,
-            "n_ops": float(n_ops_total),
-            "n_lookups": float(n_lookups),
-            "n_mutations": float(n_mutations),
-            "n_noops": float(n_noops),
-            "n_entities": float(n_entities),
-            "n_pruned": float(n_pruned),
-            "k_max": float(self.k_max),
-            "battery_size": float(len(self.query_battery)),
-            "stored_dia_ids": float(cov_result.n_stored_dia_ids),
+            "answer_gain_mean":   mean_gain,             # primary signal
+            "qa_mean":            mean_qa,
+            "reader_overlap_mean": mean_overlap,         # legacy diagnostic
+            "coverage_mean":      cov_result.mean_coverage,  # legacy diagnostic
+            "cost_total":         cost,
+            "n_ops":              float(n_ops_total),
+            "n_lookups":          float(n_lookups),
+            "n_mutations":        float(n_mutations),
+            "n_noops":            float(n_noops),
+            "n_entities":         float(n_entities),
+            "n_pruned":           float(n_pruned),
+            "k_max":              float(self.k_max),
+            "battery_size":       float(len(self.query_battery)),
+            "stored_dia_ids":     float(cov_result.n_stored_dia_ids),
             "evidence_hit_frac": (
                 cov_result.n_evidence_dia_ids_hit
                 / max(cov_result.n_evidence_dia_ids_total, 1)
             ),
         }
+        if gain_result is not None:
+            self._last_metrics["baseline_cache_misses"] = float(
+                gain_result.n_random_baseline_calls)
         if overlap_result is not None:
             self._last_metrics["full_text_dia_ids_recovered_frac"] = (
                 overlap_result.n_full_text_dia_ids_recovered

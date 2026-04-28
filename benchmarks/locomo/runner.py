@@ -475,7 +475,7 @@ def main():
         "--category", "-c",
         type=str,
         default=None,
-        choices=["single_hop", "multi_hop", "temporal", "adversarial", "commonsense"],
+        choices=["single_hop", "multi_hop", "temporal", "open_domain", "adversarial", "commonsense"],
     )
     parser.add_argument("--question-id", "-q", type=str, default=None)
     parser.add_argument(

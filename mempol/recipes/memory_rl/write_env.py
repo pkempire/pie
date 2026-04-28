@@ -146,14 +146,18 @@ class WriteDatum(TypedDict):
     # legacy coverage signal as a control.
     query_battery: list[tuple[str, str, list[str]]]
     # Full-conversation text backend (FlatBackend). The reader queries this
-    # to define the overlap target. Built once per conv and shared across
-    # all turn-episodes of that conv to keep memory pressure low.
+    # both for reader-overlap (legacy) and for the random-K baseline used
+    # in answer-gain. Built once per conv.
     full_text_backend: Any
     # Per-conv cache of question -> set of dia_ids the reader retrieves
-    # from full text. Same dict reference is shared across all turns of one
-    # conv so the per-question full-text retrieval is cached across
-    # rollouts of the same battery.
+    # from full text. Same dict reference shared across all turns of one
+    # conv so the per-question full-text retrieval is cached.
     full_text_cache: dict
+    # Per-conv cache of (conv_id, q, K) -> baseline judge score for
+    # answer-gain. Same dict reference shared across all rollouts so the
+    # random-K baseline is judged at most once per (conv, q, K) over the
+    # whole training run.
+    baseline_cache: dict
 
 
 class WriteEnvGroupBuilder(EnvGroupBuilder):
@@ -210,11 +214,14 @@ class WriteEnvGroupBuilder(EnvGroupBuilder):
             # the QA-judge backbone; otherwise the heuristic R is the
             # default (resolved inside WriteReward.__post_init__).
             r_runner = resolve_r_runner_from_env()
-            # Reward-mix knobs (env vars). Defaults match
-            # write_reward.DEFAULT_W_OVERLAP / DEFAULT_W_QA.
+            # Reward-mix knobs. Defaults match write_reward.DEFAULT_W_GAIN /
+            # DEFAULT_W_QA: the dense signal is now answer-gain over a
+            # random-K baseline (replacing the broken dia_id-overlap term),
+            # blended with absolute judge-on-post-W as a smaller anchor.
             import os as _os
-            w_overlap = float(_os.environ.get("MEMPOL_W_OVERLAP", "0.7"))
+            w_gain    = float(_os.environ.get("MEMPOL_W_GAIN",    "0.7"))
             w_qa      = float(_os.environ.get("MEMPOL_W_QA",      "0.3"))
+            w_overlap = float(_os.environ.get("MEMPOL_W_OVERLAP", "0.0"))
             k_max     = int(_os.environ.get("MEMPOL_K_MAX",       "12"))
             reward_fn = WriteReward(
                 backend=backend,
@@ -222,10 +229,13 @@ class WriteEnvGroupBuilder(EnvGroupBuilder):
                 full_text_backend=self.datum.get("full_text_backend"),
                 r_runner=r_runner,
                 write_tool=wtool,
-                w_overlap=w_overlap,
+                conv_id=self.datum.get("conv_id", ""),
+                w_gain=w_gain,
                 w_qa=w_qa,
+                w_overlap=w_overlap,
                 k_max=k_max,
                 full_text_cache=self.datum.get("full_text_cache"),
+                baseline_cache=self.datum.get("baseline_cache"),
             )
             envs.append(build_agent_tool_env(
                 renderer=renderer,
@@ -346,6 +356,7 @@ class WriteRLDatasetBuilder(RLDatasetBuilder):
                     for u in unit_dicts
                 ])
                 full_text_cache: dict = {}              # shared per conv
+                baseline_cache:  dict = {}              # shared per conv (answer-gain)
 
                 for ti, t in enumerate(conv.turns):
                     qas_for_turn = evidence_index.get(t.dia_id, [])
@@ -372,6 +383,7 @@ class WriteRLDatasetBuilder(RLDatasetBuilder):
                         ],
                         full_text_backend=full_text_backend,
                         full_text_cache=full_text_cache,
+                        baseline_cache=baseline_cache,
                     ))
             return data
 
