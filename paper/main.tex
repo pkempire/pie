@@ -26,7 +26,7 @@
 
 \title{\bfseries Memory as a Learned Policy:\\
 \large Co-Training Read and Write Operations for Long-Horizon LLM Agents}
-\author{Pranay Kocheta\\\small University of Maryland}
+\author{Parth Kocheta\\\small University of Maryland}
 \date{\today}
 
 \begin{document}
@@ -129,90 +129,81 @@ actually answerable.}
 
 \section{Introduction}
 
-Long-running AI assistants need long-running memory. ChatGPT can remember
-your preferences. Claude can keep notes across a project. A coding agent
-should know what design choices it made yesterday. A customer-support bot
-should know what the customer is angry about now and what they were angry
-about three weeks ago.
+Long-running AI assistants need long-running memory. ChatGPT remembers
+user preferences across sessions; Claude keeps notes within a project; a
+coding agent should be able to recall the design choices it made
+yesterday. Each of these uses an external memory store paired with a
+control layer that decides what to write down and what to read back. The
+store grows from use, but the control layer typically does not.
 
-Each of these uses a memory system. Each system has a way to write things
-down and a way to read them back. And each was hand-built.
-
-\paragraph{Where the design choices currently live.} Looking at popular
+\paragraph{Where the design choices currently live.} Across popular
 open-source memory systems for LLM agents, a pattern emerges: each
-ships an external store paired with a hand-tuned control layer.
+pairs an external store with a hand-tuned control layer.
 \begin{itemize}
   \item \textbf{Mem0}~\cite{chhikara2024mem0} stores facts as flat
-    key-value pairs. On each new turn an LLM-as-judge prompt picks one
-    of \texttt{ADD/UPDATE/DELETE/NONE}. The decision rule (the prompt
-    and its thresholds) ships fixed.
+    key-value pairs. On each new turn, an LLM-as-judge prompt selects
+    one of \texttt{ADD/UPDATE/DELETE/NONE}. The prompt and its
+    thresholds are fixed.
   \item \textbf{Letta / MemGPT}~\cite{zhang2024memgpt} models memory as
-    OS tiers (working, recall, archival) and uses an LLM to move items
-    between tiers via prompted function calls. The promotion rules are
-    written by hand.
-  \item \textbf{Zep / Graphiti}~\cite{rasmussen2024zep} keeps a temporal
-    knowledge graph in which edges carry valid-time intervals. The
-    rules for when an edge becomes invalid are fixed.
+    OS-style tiers (working, recall, archival) and moves items between
+    tiers via prompted function calls. The promotion rules are written
+    by hand.
+  \item \textbf{Zep / Graphiti}~\cite{rasmussen2024zep} maintains a
+    temporal knowledge graph in which edges carry valid-time intervals.
+    The rules for when an edge becomes invalid are fixed.
   \item \textbf{Mastra}~\cite{mastra2025om} compresses raw turns into a
-    dated bullet observation log using two background agents (Observer
-    and Reflector). The compression schedule and prompts are fixed.
-  \item \textbf{KGmem} (the lead author's prior system, also one of our
-    backends) keeps typed entities with state transitions and resolves
-    new mentions against existing entities through a 3-tier
-    string/embedding/LLM cascade. The cascade thresholds---0.85 for
-    string match, 0.85 for embedding accept, 0.65 for reject---are
-    constants chosen by inspection, not learned from outcomes.
+    dated bullet observation log using two background agents
+    (\emph{Observer} and \emph{Reflector}). The compression schedule
+    and prompts are fixed.
+  \item \textbf{KGmem} (the lead author's prior system, used as one of
+    our backends) keeps typed entities with state transitions, and
+    resolves new mentions against existing entities through a three-tier
+    string/embedding/LLM cascade. The cascade thresholds (0.85 for
+    string match, 0.85 for embedding accept, 0.65 for reject) are
+    constants chosen by inspection.
 \end{itemize}
 None of this is a criticism: hand-tuned control layers are a reasonable
-starting point and many of these systems work well in practice. The open
-question is whether the same control decisions can be improved by RL
-against the same answer-correctness signal we use for evaluation, and
-whether the resulting policy generalises across stores.
+starting point and most of these systems work well in practice. The
+open question we take up is whether the same control decisions can be
+improved by RL against the same answer-correctness signal already used
+to evaluate the system, and whether the resulting policy generalises
+across storage substrates.
 
-In each system, the rules for what to write and how to read sit in
-human-authored code. The store grows from use---facts come in, get
-edited, get retrieved---but the control layer that picks the write
-op or the search strategy is the same on day 1 and on day 100. A natural
-question is whether those control decisions can be learned from the same
-outcome signal that we already use to evaluate the system: did the
-agent answer correctly later?
+\paragraph{What we do.} We treat memory operations as actions of a
+learned policy implemented as a low-rank adapter
+(LoRA)~\cite{hu2021lora} on a 4B-parameter open-source language model.
+The actions are tool calls into a memory backend. We define a single
+op vocabulary covering both sides of the system: read ops
+(\texttt{memory\_search}, \texttt{memory\_expand},
+\texttt{memory\_filter}, \texttt{memory\_rerank}) and write ops
+(\texttt{lookup\_entity}, \texttt{create\_entity},
+\texttt{update\_state}, \texttt{merge\_entities}, \texttt{add\_relation},
+\texttt{mark\_contradiction}, \texttt{forget}, \texttt{noop}).
 
-\paragraph{What we do.} We treat memory operations as actions of a small
-learned policy. The policy is a low-rank adapter
-(LoRA)~\cite{hu2021lora} on top of a 4B-parameter open-source language
-model. The actions are tool calls into a memory backend.
+The \emph{read} policy answers questions. Its reward is judged answer
+correctness, minus a small per-tool-call cost. We train it with
+GRPO~\cite{shao2024deepseekmath}, DeepSeek's critic-free simplification
+of PPO that has become the default RL algorithm for tool-use training.
 
-We define one action vocabulary. It has read ops
-(\texttt{memory\_search}, \texttt{memory\_expand}, \texttt{memory\_filter},
-\texttt{memory\_rerank}) and write ops (\texttt{lookup\_entity},
-\texttt{create\_entity}, \texttt{update\_state}, \texttt{merge\_entities},
-\texttt{add\_relation}, \texttt{mark\_contradiction}, \texttt{forget},
-\texttt{noop}, \texttt{add\_alias}). We train two policies.
-
-The \emph{read} policy answers questions. Its reward is whether the answer
-is correct, minus a small cost for each tool call. We train it with
-GRPO~\cite{shao2024deepseekmath}, the simplification of PPO that powers
-DeepSeek-R1.
-
-The \emph{write} policy ingests conversations turn-by-turn. Its reward is
-\emph{deferred}: after a write trajectory finishes, we run the read policy
-on a battery of held-out questions whose answer depends on the turn the
-write policy just saw. The reward is the read policy's accuracy on that
+The \emph{write} policy ingests a conversation turn at a time. Its
+reward is deferred: after the write trajectory ends, the read policy
+answers a held-out battery of questions that depend on the turn the
+write policy just saw. The reward blends evidence-coverage (a
+deterministic, dense signal computed from the resulting graph's
+provenance) with the read policy's judged answer accuracy on the
 battery, minus a storage cost.
 
-The two policies are trained jointly. We alternate. Train the read policy
-against memory the write policy made. Then freeze the read policy and
-train the write policy against the read policy's eval. Repeat.
+The two policies are trained in alternation: train the read policy
+against the current memory state, then freeze the read policy and train
+the write policy against the read policy's evaluation. Repeat.
 
-This is the AlphaZero idea applied to memory. Read and write co-adapt. The
-storage substrate stays swappable.
-
-\paragraph{Why this matters.} For a paper, the contribution is the
-\emph{learned operating system} for memory: facts in the store, strategy
-in the weights. For a product, it means one trained adapter can serve
-many users. The user's facts live in their personal store. The adapter
-encodes how to use any memory store, no matter whose. That is what
-generalises. That is what transfers.
+\paragraph{Why this matters.} For research, the contribution is a
+\emph{learned operating system} for memory---facts in the store,
+strategy in the weights---and a backend-agnostic op vocabulary that
+makes the strategy transferable. For deployment, the same observation
+implies a useful asymmetry: a single trained adapter can run against
+any user's personal store, with no per-user fine-tuning needed and no
+need to move user data into a shared corpus.
 
 \paragraph{Contributions.}
 \begin{enumerate}
@@ -295,10 +286,11 @@ for tool-use training.
 
 \textbf{Search-R1}~\cite{jin2025searchr1} applies GRPO to multi-turn
 search-then-answer over Wikipedia. Each rollout is a sequence of search
-queries and a final answer. Reported gains: +41\% over RAG baselines on
-NaturalQuestions with Qwen2.5-7B. The Tinker reproduction we built on
-exceeds the original paper's numbers across all four QA benchmarks. Our
-work extends this to the \emph{memory} setting and adds a write side.
+queries followed by a final answer; reported gains are +41\% over RAG
+baselines on NaturalQuestions with Qwen2.5-7B. We use the
+Tinker-cookbook reproduction of Search-R1 as the structural template
+for our environment; the present work extends that template to the
+memory setting and adds a write side.
 
 \textbf{Reflexion}~\cite{shinn2023reflexion} and verbal RL approaches
 update natural-language ``self-reflections'' rather than weights. They are
@@ -339,8 +331,8 @@ primitives (forward-backward, sample, optim-step) for GRPO.
 
 Despite a crowded space, no published system combines all three:
 \begin{enumerate}
-  \item Discrete, interpretable memory operations (Mem0/Letta/PIE have
-    these).
+  \item Discrete, interpretable memory operations (Mem0, Letta, and
+    KGmem all have these).
   \item Operations chosen by a learned policy supervised by outcome
     reward (Search-R1 has this for retrieval only).
   \item A write side trained against deferred QA accuracy on a held-out
@@ -399,35 +391,41 @@ The episode ends when the model emits a final answer formatted as
     transition history but marks the entity inactive.
 \end{itemize}
 
-\subsection{Background: typed-transition knowledge graph}
+\subsection{Background: KGmem, a typed-transition knowledge graph}
 \label{sec:pie}
 
-One of the three backends we use was built before this paper. We call it
-\emph{KGmem} for clarity (the implementation is the PIE memory system from
-the lead author's prior work). KGmem models the user's world as a graph
-of typed entities: \texttt{person}, \texttt{project}, \texttt{tool},
-\texttt{organization}, \texttt{belief}, \texttt{decision},
-\texttt{concept}, \texttt{period}, \texttt{event}, \texttt{goal}. What
-makes KGmem useful as a write substrate is that every entity carries a
-\emph{history of typed state transitions}---each transition records a
-(from\_state, to\_state) pair tagged with one of \texttt{creation},
-\texttt{update}, \texttt{contradiction}, \texttt{resolution}, or
-\texttt{archival}. We are not aware of another open KG memory system that
-treats contradiction as a first-class transition rather than an
-overwrite. KGmem also supports per-entity importance scoring and
-relationship edges, but in this paper we use only the entity-and-typed-
-transition substrate.
+One of the three backends we evaluate predates this paper. We refer to
+it throughout as \emph{KGmem}; the open-source implementation is the
+PIE memory system from prior work by the lead author, retained in our
+repository under \texttt{pie/}. We use a renamed reference here for
+readability and to keep the role of the data structure separate from
+the role of any specific control layer.
 
-For our purposes, KGmem matters for two reasons. First, the typed
-transitions give the write policy a richer action vocabulary than
-``store'' or ``delete''---it can emit \texttt{contradiction} when a turn
-conflicts with an existing entity, leaving both states present for the
-read policy to surface later. Second, the entity uids let the read
-policy chain queries through \texttt{lookup\_entity} $\to$
-\texttt{transitions\_for(uid)} when a question requires multi-hop
-reasoning over a single entity's evolving state. KGmem's hand-coded
-extraction prompts and 3-tier resolver are \emph{replaced} by our
-learned write policy; we keep only the data structure.
+KGmem represents the user's world as a graph of typed entities (one of
+\texttt{person}, \texttt{project}, \texttt{tool}, \texttt{organization},
+\texttt{belief}, \texttt{decision}, \texttt{concept}, \texttt{period},
+\texttt{event}, or \texttt{goal}). Each entity carries a history of
+typed state transitions: every transition records a $(\textit{from
+state},\,\textit{to state})$ pair labelled with one of
+\texttt{creation}, \texttt{update}, \texttt{contradiction},
+\texttt{resolution}, or \texttt{archival}. In particular,
+contradiction is a first-class transition rather than an overwrite---an
+unusual choice among open knowledge-graph memory systems---which lets
+both the conflicting and prior states coexist until a later transition
+resolves them. KGmem also supports per-entity importance scoring and
+typed relationship edges; this paper uses the entity-plus-transition
+substrate only.
+
+KGmem matters here for two reasons. First, the typed transitions give
+the write policy a richer action vocabulary than ``store'' and
+``delete''---it can emit \texttt{contradiction} when a turn conflicts
+with an existing entity, leaving both states retrievable for the read
+policy. Second, entity uids let the read policy chain queries
+(\texttt{lookup\_entity} $\to$ \texttt{transitions\_for(uid)}) when a
+question requires multi-hop reasoning over a single entity's evolving
+state. We re-use the data structure; the hand-coded extraction prompts
+and three-tier resolver that ship with KGmem are replaced by the
+learned write policy.
 
 \begin{figure}[h]
 \centering
@@ -497,9 +495,13 @@ pair per episode. The model emits read ops and a final answer. Reward:
 \[
   r_R(\tau) = \mathrm{judge}(\text{answer}, \text{gold}) - \lambda_R\,c_R(\tau)
 \]
-where $c_R(\tau) = $ number of tool calls (each costs 0.005--0.01 reward
-units) and $\mathrm{judge}$ returns $\{0.0, 0.5, 1.0\}$ via gpt-4o
-following the LongMemEval paper's protocol.
+where $c_R(\tau)$ is the number of tool calls (each priced at
+0.005--0.01 reward units) and $\mathrm{judge}$ returns one of
+$\{0.0, 0.5, 1.0\}$ following the bucketing protocol of the
+LongMemEval paper. We use gpt-4o-mini as the judge during training
+(which correlates above 0.95 with gpt-4o on this style of free-form QA
+at roughly one fifth the cost), and switch to gpt-4o for the final
+held-out evaluation reported in Section~\ref{sec:exp-main}.
 
 \paragraph{Write episodes.} One conversation turn per episode. The model
 sees the focal turn, two prior turns, and a top-$k$ snapshot of
@@ -554,9 +556,9 @@ against the current best version of the other.
   arr/.style={-Stealth, line width=0.5pt}
 ]
 \node[phase, fill=orange!10] (A) {\textbf{Phase A}\\\scriptsize
-  train $R_t$, freeze $W_{t-1}$\\\scriptsize $S_R = 200$ GRPO steps};
+  train $R_t$, freeze $W_{t-1}$\\\scriptsize $S_R$ GRPO steps};
 \node[phase, fill=blue!10, right=20mm of A] (B) {\textbf{Phase B}\\\scriptsize
-  train $W_t$, freeze $R_t$\\\scriptsize $S_W = 100$ GRPO steps};
+  train $W_t$, freeze $R_t$\\\scriptsize $S_W$ GRPO steps};
 \draw[arr] (A.east) -- node[above]{$R_t$} (B.west);
 \draw[arr] (B.south) .. controls +(0,-10mm) and +(0,-10mm) ..
    node[below, font=\scriptsize]{$W_t$, increment $t$} (A.south);
@@ -572,27 +574,28 @@ shape produced by $W_t$. We run $T = 5$ outer iterations.}
 \label{alg:cotrain}
 \small
 \begin{tabular}{ll}
-\textbf{Init} & $W_0$, $R_0$ are LoRA adapters on Qwen3-4B
-                (random or SFT-warmed). \\
-& $R_{\text{frozen}} \gets$ \texttt{HeuristicPolicy} for $t = 1$
-  (no trained $R_0$ yet).\\
-\textbf{For} & $t = 1 \ldots T$ (default $T = 5$): \\
+\textbf{Init} & $W_0$, $R_0$: LoRA adapters on Qwen3-4B (random or SFT-warmed). \\
+& $R_{\text{frozen}} \gets$ deterministic heuristic policy for $t = 1$ (no
+  $R_0$ trained yet). \\
+\textbf{For} & $t = 1 \ldots T$: \\
 \quad\textbf{Phase A:} & freeze $W_{t-1}$. \\
 & \quad For $S_R$ GRPO steps: sample $G$ read rollouts; reward
-  $r_R = \text{judge} - \lambda_R c_R$. \\
+  $r_R = \mathrm{judge} - \lambda_R c_R$. \\
 & \quad $R_t \gets$ trained read policy. \\
 \quad\textbf{Phase B:} & freeze $R_t$. \\
-& \quad For $S_W$ GRPO steps: sample $G$ write rollouts; reward
-  $r_W$ from Eq.~(1). \\
+& \quad For $S_W$ GRPO steps: sample $G$ write rollouts; reward $r_W$
+  from Eq.~(1). \\
 & \quad $W_t \gets$ trained write policy. \\
-\quad\textbf{Eval:} & $R_t, W_t$ on held-out LoCoMo + LongMemEval; stop
-                      early if not improving. \\
+\quad\textbf{Eval:} & $R_t,\,W_t$ on held-out LoCoMo + LongMemEval;
+                      stop early if not improving. \\
 \end{tabular}
 \end{algorithm}
 
-The cost regulariser keeps the write policy from learning ``store
-everything''; the dense coverage term gives reward at every group member;
-the held-out evaluation lets us stop early.
+The dense coverage term gives reward at every group member regardless of
+judge variance; the cost regulariser blocks the write policy from
+collapsing onto a ``store everything'' policy that maximises coverage at
+the expense of retrieval quality; the held-out evaluation lets us stop
+the outer loop early when neither side is still improving.
 
 \paragraph{Substrate sharing (current scope and roadmap).} The version
 of the algorithm in this paper alternates with a partial decoupling: in
@@ -751,8 +754,10 @@ We report on three benchmarks:
     this paper. Spec at \texttt{TEMPORAL-BENCH-SPEC.md}.}
 \end{enumerate}
 
-We use gpt-4o as the judge across all benchmarks, following the
-LongMemEval paper protocol.
+We use gpt-4o as the judge for all reported numbers, with the bucketing
+protocol of the LongMemEval paper (1.0 fully correct, 0.5 partially
+correct, 0.0 wrong). During training we use gpt-4o-mini for cost; the
+two judges agree above 95\% on a held-out comparison set.
 
 \subsection{Baselines}
 
@@ -775,10 +780,12 @@ We compare against the strongest publicly-available memory systems:
 
 % --------------------------------------------------------------------------
 \section{Experiments}
+\label{sec:experiments}
 
 \TBD{Fill in once Phase A and Phase B runs land.}
 
 \subsection{Main results}
+\label{sec:exp-main}
 
 Table~\ref{tab:main} reports the headline numbers across LoCoMo and
 LongMemEval-S.
