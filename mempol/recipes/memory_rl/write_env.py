@@ -197,10 +197,18 @@ class WriteEnvGroupBuilder(EnvGroupBuilder):
             # R LoRA as the QA-judge backbone; otherwise the heuristic
             # default kicks in inside WriteReward.__post_init__.
             r_runner = resolve_r_runner_from_env()
+            # Ablation knobs: MEMPOL_W_COVERAGE / MEMPOL_W_QA env vars let
+            # the train_write CLI sweep the reward mix without touching
+            # WriteReward's signature. Defaults preserve the 0.6 / 0.4 blend.
+            import os as _os
+            w_cov = float(_os.environ.get("MEMPOL_W_COVERAGE", "0.6"))
+            w_qa  = float(_os.environ.get("MEMPOL_W_QA",       "0.4"))
             reward_fn = WriteReward(
                 backend=backend,
                 query_battery=self.datum["query_battery"],
                 r_runner=r_runner,
+                w_coverage=w_cov,
+                w_qa=w_qa,
             )
             envs.append(build_agent_tool_env(
                 renderer=renderer,

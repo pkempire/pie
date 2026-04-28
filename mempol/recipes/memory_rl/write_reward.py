@@ -177,32 +177,58 @@ class WriteReward:
         return reward, dict(self._last_metrics)
 
     @staticmethod
-    def _count_ops(history: list[dict]) -> int:
-        """Count assistant messages that contain a tool_call (each ≈ one op).
-        Lookups are counted separately for cost shaping."""
+    def _assistant_tool_calls(msg: Any) -> list[dict]:
+        """Return the structured tool_calls list from an assistant message.
+
+        Tinker's renderers parse `<tool_call>` tags out of the raw content
+        into a structured field. The substring fallback catches older
+        renderers that leave the tag in `content`. Returns one dict per
+        tool call with at least a `name` key."""
+        if isinstance(msg, dict):
+            tcs = msg.get("tool_calls") or []
+            content = msg.get("content") or ""
+        else:
+            tcs = getattr(msg, "tool_calls", None) or []
+            content = getattr(msg, "content", "") or ""
+        # Normalize: structured form first (tinker-cookbook >=0.4)
+        out: list[dict] = []
+        for tc in tcs:
+            if isinstance(tc, dict):
+                name = tc.get("name") or (tc.get("function") or {}).get("name", "")
+                out.append({"name": str(name)})
+        if out:
+            return out
+        # Fallback: substring scrape of `<tool_call>{"name": "..."}` blocks.
+        if isinstance(content, str) and "<tool_call>" in content:
+            import re
+            for m in re.finditer(r'"name"\s*:\s*"([^"]+)"', content):
+                out.append({"name": m.group(1)})
+        return out
+
+    @classmethod
+    def _count_ops(cls, history: list[dict]) -> int:
+        """Total assistant tool calls in the trajectory (mutations + lookups)."""
         n = 0
         for msg in history:
-            try:
-                role = msg.get("role")
-            except AttributeError:
-                role = getattr(msg, "role", None)
+            role = (msg.get("role") if isinstance(msg, dict)
+                    else getattr(msg, "role", None))
             if role != "assistant":
                 continue
-            content = (msg.get("content") if isinstance(msg, dict)
-                       else getattr(msg, "content", "")) or ""
-            if isinstance(content, str) and "<tool_call>" in content:
-                n += content.count("<tool_call>")
-        return max(n, 0)
+            n += len(cls._assistant_tool_calls(msg))
+        return n
 
-    @staticmethod
-    def _count_lookups(history: list[dict]) -> int:
-        """Count tool calls that are lookup ops (cheaper than mutations)."""
+    @classmethod
+    def _count_lookups(cls, history: list[dict]) -> int:
+        """Subset of assistant tool calls that are lookup ops."""
         n = 0
         for msg in history:
-            content = (msg.get("content") if isinstance(msg, dict)
-                       else getattr(msg, "content", "")) or ""
-            if isinstance(content, str):
-                n += content.count('"lookup_entity"') + content.count('"lookup_relation"')
+            role = (msg.get("role") if isinstance(msg, dict)
+                    else getattr(msg, "role", None))
+            if role != "assistant":
+                continue
+            for tc in cls._assistant_tool_calls(msg):
+                if tc.get("name") in ("lookup_entity", "lookup_relation"):
+                    n += 1
         return n
 
 
