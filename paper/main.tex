@@ -224,8 +224,14 @@ adversarial).
 
 \subsection{Joint training of two policies}
 
-\textbf{CoSearch}~\cite{ace2026} (cited as concurrent ICLR work) jointly
-trains a reasoning policy and a document ranker via RL on agentic search.
+\textbf{CoSearch}~\cite{ace2026} (concurrent ICLR work) jointly trains a
+reasoning policy (an LLM that decides what to search) and a document
+ranker (a scoring head that re-orders candidates) via RL on agentic
+search. Their ranker is a learned scoring function, not an action policy
+in the same sense as our W and R. The shared idea worth taking is
+\emph{joint training of two model components that interact through a
+shared substrate}; we extend that pattern to two action policies that
+share an op vocabulary across read and write sides of memory.
 \textbf{HippoRAG}~\cite{guu2024hipporag} uses Personalised PageRank over a
 graph of memories---inspired by the hippocampus---but uses no RL. Our
 approach extends the joint-training idea from query-time
@@ -318,6 +324,10 @@ compiles ops to native operations:
   \item \textbf{PIEBackend}: wraps our PIE
     \texttt{WorldModel}---typed entities, typed transitions, and a
     relationship graph. Every write op compiles to a real KG mutation.
+    Important: we re-use only the \emph{data structure} from PIE---the
+    write policy replaces PIE's hardcoded extraction prompts and 3-tier
+    string/embedding/LLM resolver entirely. The trained adapter learns
+    what PIE's heuristics did by hand, against outcome supervision.
   \item \textbf{MastraBackend}: an Observer/Reflector pipeline that
     compresses raw turns into a dated bullet observation
     log~\cite{mastra2025om}. Read ops scan the log; write ops mostly
