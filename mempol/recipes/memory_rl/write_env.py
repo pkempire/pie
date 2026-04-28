@@ -139,22 +139,38 @@ class WriteDatum(TypedDict):
     query_battery: list[tuple[str, str]]
 
 
-@dataclass
-class WriteEnvGroupBuilder:
+class WriteEnvGroupBuilder(EnvGroupBuilder):
     """Build G envs for one WriteDatum — the GRPO group.
 
     Each env in the group gets its own fresh PIEBackend (no shared state
     across rollouts). The frozen R for reward is shared (read-only).
+
+    Inherits compute_group_rewards (default: zero group reward, episode
+    rewards via reward_fn already cover us) and cleanup (no-op) from the
+    base class. We override make_envs and logging_tags only.
     """
-    datum: WriteDatum
-    model_name: str
-    renderer_name: str | None
-    group_size: int
-    max_turns: int = 4                  # max ops per W episode
-    format_coef: float = 0.0            # W has no answer; format bonus is irrelevant
-    max_trajectory_tokens: int = 4 * 1024
-    max_generation_tokens: int | None = None
-    context_overflow_reward: float = -0.1
+
+    def __init__(
+        self,
+        datum: WriteDatum,
+        model_name: str,
+        renderer_name: str | None,
+        group_size: int,
+        max_turns: int = 4,
+        format_coef: float = 0.0,
+        max_trajectory_tokens: int = 4 * 1024,
+        max_generation_tokens: int | None = None,
+        context_overflow_reward: float = -0.1,
+    ):
+        self.datum = datum
+        self.model_name = model_name
+        self.renderer_name = renderer_name
+        self.group_size = group_size
+        self.max_turns = max_turns
+        self.format_coef = format_coef
+        self.max_trajectory_tokens = max_trajectory_tokens
+        self.max_generation_tokens = max_generation_tokens
+        self.context_overflow_reward = context_overflow_reward
 
     async def make_envs(self) -> Sequence[Env]:
         if not HAS_TINKER:
