@@ -1,16 +1,31 @@
-"""PIE knowledge-graph backend.
+"""KGmem (PIE) backend with hybrid retrieval.
 
-Wraps `pie.core.world_model.WorldModel` so the same world_model.json that PIE
-produces today is the artefact a trained write-policy produces from RL rollouts.
+Wraps `pie.core.world_model.WorldModel` so the same world_model.json that the
+prior KGmem system produces is the artefact a trained write-policy produces
+from RL rollouts.
 
-Exposes:
-  - The standard read interface (`Backend.retrieve` / `expand` / `filter_by_time`)
-    so read-policy training works against this backend.
-  - PIE-shaped write operations (`lookup_entity`, `create_entity`, `update_state`,
-    `add_relation`, `mark_contradiction`, `forget`, `merge_entities`).
+Retrieval design (post-Discovery audit, Apr 2026)
+=================================================
+An earlier version of this file used named-entity-only retrieval as the
+default. A controlled study on a 50-question LoCoMo paired sample showed
+this single design choice collapses end-to-end QA from 0.50 (FlatBackend
+hybrid retrieval) to 0.10 (NER-only KG retrieval), McNemar p = 1.9e-6, and
+the gap persists on multi-hop questions. The fix was to fuse NER lookup,
+BM25 over entity textual representations, and dense embedding similarity
+via reciprocal-rank fusion. That recovered 75 percent of the lost
+accuracy. We default to the fused mode here and treat
+backend-retriever alignment as a first-class methodological concern: the
+read and write sides train and evaluate against the same retriever.
 
-The write ops give us byte-for-byte the same entities/transitions/relationships
-schema PIE has been writing all along — no parallel KB, no schema drift.
+Read interface
+  retrieve(query, k, source)   source ∈ {bm25, dense, ner, hybrid}
+                                hybrid is the default and fuses all three
+  expand, filter_by_time       inherited from Backend
+
+Write interface (driven by the policy's tool calls)
+  lookup_entity, lookup_relation
+  create_entity, update_state, merge_entities, add_relation,
+  mark_contradiction, forget
 """
 from __future__ import annotations
 from dataclasses import dataclass
@@ -25,6 +40,7 @@ from pie.core.world_model import WorldModel
 
 from .. import llm
 from .base import Backend, Hit, Unit
+from .flat import BM25Index, _tokens, _rrf
 
 
 # ── helpers ──
@@ -106,13 +122,46 @@ class PIEBackend(Backend):
                 timestamp=float(u.metadata.get("timestamp") or 0.0),
             )
 
+    def _build_bm25_index(self) -> tuple[BM25Index, list[str]]:
+        """Compact BM25 over entity textual representations.
+
+        Each entity is one document; the document text is name + aliases +
+        flattened current_state (skipping container brackets). Tokens are
+        the Flat backend's regex tokenizer for consistency. Cached
+        per-call (cheap, KGs are small) — for very large KGs we'd build
+        and persist incrementally; not worth it at LoCoMo scale.
+        """
+        index = BM25Index()
+        uids: list[str] = []
+        for uid, e in self.wm.entities.items():
+            parts = [e.name or ""]
+            parts.extend(e.aliases or [])
+            for v in (e.current_state or {}).values():
+                if isinstance(v, (str, int, float, bool)):
+                    parts.append(str(v))
+            text = " ".join(parts).lower()
+            index.add(_tokens(text))
+            uids.append(uid)
+        return index, uids
+
     def retrieve(self, query: str, k: int = 10, source: str = "hybrid") -> list[Hit]:
-        # Dense retrieval over entities. WorldModel maintains an embedding
-        # matrix internally; we use its `find_by_embedding` API.
+        """Hybrid retrieval over the KG.
+
+        source:
+          ner     — name/alias substring match only (the original collapse-
+                    inducing default; preserved for ablations)
+          bm25    — proper BM25 over entity name + aliases + state values
+          dense   — embedding similarity over entity textual rep
+          hybrid  — RRF fusion of NER + BM25 + dense (default)
+
+        Empty KG returns empty list. Missing embeddings are backfilled lazily
+        because the write policy may create entities at runtime that have no
+        vector.
+        """
         if not self.wm.entities:
             return []
-        # Ensure missing embeddings are filled — the policy may create entities
-        # at runtime that lack vectors.
+
+        # Backfill embeddings created mid-rollout
         missing = self.wm.get_entities_without_embeddings()
         if missing:
             texts = [_entity_to_text(e) for e in missing]
@@ -121,27 +170,78 @@ class PIEBackend(Backend):
                 self.wm.set_entity_embedding(e.id, v.tolist())
             self.wm.rebuild_embedding_matrix()
 
-        if source == "bm25":
-            q = (query or "").lower()
-            scored: list[tuple[Entity, float]] = []
-            for e in self.wm.entities.values():
-                hay = (e.name + " " + " ".join(str(v) for v in (e.current_state or {}).values())).lower()
-                if q and q in hay:
-                    scored.append((e, 1.0))
+        # ── Primitive rankers (each returns ordered list of (uid, score)) ──
+        def _ner_rank() -> list[tuple[str, float]]:
+            out: list[tuple[str, float]] = []
+            for e, score in self.wm.find_by_string_match(query, threshold=0.6):
+                out.append((e.id, float(score)))
+            return out
+
+        def _bm25_rank() -> list[tuple[str, float]]:
+            index, uids = self._build_bm25_index()
+            if not uids:
+                return []
+            q_tokens = _tokens(query or "")
+            scored = [(uids[i], index.score(q_tokens, i)) for i in range(len(uids))]
+            scored = [(u, s) for u, s in scored if s > 0]
             scored.sort(key=lambda x: x[1], reverse=True)
-            return [_entity_to_hit(e, s, "bm25") for e, s in scored[:k]]
-        # dense / hybrid both go through the embedding API.
-        q_emb = llm.embed([query])[0].tolist()
-        matches = self.wm.find_by_embedding(q_emb, top_k=k)
-        hits = [_entity_to_hit(e, score, "dense") for e, score in matches]
-        if source == "hybrid":
-            string_matches = self.wm.find_by_string_match(query, threshold=0.7)
-            seen = {h.unit.uid for h in hits}
-            for e, score in string_matches:
-                if e.id not in seen:
-                    hits.append(_entity_to_hit(e, score, "string"))
-                    seen.add(e.id)
-        return hits[:k]
+            return scored
+
+        def _dense_rank() -> list[tuple[str, float]]:
+            try:
+                q_emb = llm.embed([query])[0].tolist()
+            except Exception:
+                return []
+            return [(e.id, float(score))
+                    for e, score in self.wm.find_by_embedding(q_emb, top_k=k * 4)]
+
+        if source == "ner":
+            ranking = _ner_rank()[:k]
+            return [_entity_to_hit(self.wm.entities[uid],
+                                    s, "ner",
+                                    n_transitions=len(self.wm.get_transitions(uid)))
+                    for uid, s in ranking if uid in self.wm.entities]
+
+        if source == "bm25":
+            ranking = _bm25_rank()[:k]
+            return [_entity_to_hit(self.wm.entities[uid],
+                                    s, "bm25",
+                                    n_transitions=len(self.wm.get_transitions(uid)))
+                    for uid, s in ranking if uid in self.wm.entities]
+
+        if source == "dense":
+            ranking = _dense_rank()[:k]
+            return [_entity_to_hit(self.wm.entities[uid],
+                                    s, "dense",
+                                    n_transitions=len(self.wm.get_transitions(uid)))
+                    for uid, s in ranking if uid in self.wm.entities]
+
+        # ── Hybrid: RRF over the three rankers ──
+        ner_uids   = [u for u, _ in _ner_rank()]
+        bm25_uids  = [u for u, _ in _bm25_rank()]
+        dense_uids = [u for u, _ in _dense_rank()]
+        # _rrf takes integer doc-id ranks; we map uids -> dense ints, then back
+        all_uids = list({*ner_uids, *bm25_uids, *dense_uids})
+        if not all_uids:
+            return []
+        u2i = {u: i for i, u in enumerate(all_uids)}
+        rank_lists = [
+            [u2i[u] for u in ner_uids],
+            [u2i[u] for u in bm25_uids],
+            [u2i[u] for u in dense_uids],
+        ]
+        fused = _rrf(rank_lists, k=60)[:k]
+        out: list[Hit] = []
+        for di, score in fused:
+            uid = all_uids[di]
+            e = self.wm.entities.get(uid)
+            if not e:
+                continue
+            out.append(_entity_to_hit(
+                e, score, "hybrid",
+                n_transitions=len(self.wm.get_transitions(uid)),
+            ))
+        return out
 
     def expand(self, seed_uids: list[str], k_per: int = 2) -> list[Hit]:
         out, seen = [], set(seed_uids)

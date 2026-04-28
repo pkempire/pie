@@ -49,9 +49,13 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable
 
+from mempol.backends.base import Backend
 from mempol.backends.pie_kg import PIEBackend
 from mempol.eval.evidence_coverage import battery_coverage
 from mempol.eval.judge import judge as _judge_sync
+from mempol.eval.reader_overlap import (
+    battery_reader_overlap, enforce_budget, OverlapResult,
+)
 from mempol.policies.v1_heuristic import HeuristicPolicy
 
 logger = logging.getLogger(__name__)
@@ -100,87 +104,128 @@ def _maybe_dump_trajectory(history: list, reward: float,
         logger.warning("trajectory dump failed: %s", e)
 
 
-# Default cost coefficients. Tunable, reported as ablation in the paper.
-DEFAULT_COST_PER_OP = 0.005
-DEFAULT_COST_PER_LOOKUP = 0.002    # lookup is cheaper than create / update / merge
-DEFAULT_COST_PER_ENTITY = 0.001    # storage cost — penalises bloat
+# Cost coefficients. Mostly redundant now that we enforce a hard retention
+# budget — kept for ablation purposes (cost-only training as a comparison).
+DEFAULT_COST_PER_OP = 0.001
+DEFAULT_COST_PER_LOOKUP = 0.0
+DEFAULT_COST_PER_ENTITY = 0.0
 
-# Reward mix. Coverage is the primary signal because it's dense and free;
-# the QA judge term keeps the policy honest against the actual downstream
-# task. Both ablation values are reported in the paper.
-DEFAULT_W_COVERAGE = 0.6
-DEFAULT_W_QA = 0.4
+# Reward mix. The dense signal is reader-overlap (label-free, validated to
+# correlate with gold coverage at within-turn ρ ≈ 0.61 on LoCoMo). We blend
+# with the LLM-judge QA term so the policy is anchored to actual downstream
+# answer quality, not just retrieval shape.
+DEFAULT_W_OVERLAP = 0.7
+DEFAULT_W_QA = 0.3
+
+# Hard retention budget: the post-W KG is pruned to at most this many
+# entities before scoring. The number 12 is calibrated to LoCoMo turn-level
+# episodes (typical conversation has ~50 turns × ~0.25 entities/turn = ~12)
+# but should be reported as an ablation. The budget makes "store everything"
+# structurally impossible.
+DEFAULT_K_MAX = 12
 
 
 @dataclass
 class WriteReward:
-    """Deferred + dense reward for one write trajectory.
+    """Reader-overlap + judge reward for one write trajectory, scored
+    under a hard retention budget.
 
     Lifetime: one instance per env (per group member). Bound to a specific
-    PIEBackend (the one being mutated by the W tools in that env) and a
-    pre-computed QA battery — each entry is `(question, gold_answer,
-    evidence_dia_ids)`. The evidence list is what enables the dense
-    `coverage` term; without it the reward collapses to the legacy
-    judge-only signal.
+    PIEBackend (the one being mutated by the W tools in that env), a
+    pre-computed QA battery, a frozen reader, and a full-text reference
+    backend the reader queries to compute the overlap target.
 
     Attributes:
-        backend: the PIEBackend mutated in-place by W's tool calls during the
-            episode. We do NOT make a fresh copy — the backend's final state
-            is exactly what we score.
-        query_battery: list of (question, gold, evidence_dia_ids) tuples
-            drawn from LoCoMo's QA labels for THIS turn.
-        r_runner: callable(question: str, backend: PIEBackend) -> answer_str.
-            For Phase B v1, defaults to a HeuristicPolicy run. Set to None
-            to skip the QA term entirely (coverage-only training).
-        w_coverage / w_qa: blend weights for the two reward terms.
-        cost_per_op / cost_per_lookup / cost_per_entity: cost coefficients.
+        backend: the post-W KG. Pruned to ≤ k_max entities before scoring.
+        query_battery: list of (question, gold, evidence_dia_ids) tuples.
+            evidence_dia_ids is unused by the overlap reward — kept for
+            backward compat with optional logging of legacy coverage.
+        full_text_backend: a Backend (typically FlatBackend) holding the
+            FULL conversation chunks. The reader queries this to define
+            the overlap target.
+        reader: the frozen read policy with `.run(question, backend)`.
+        r_runner: callable(question, backend) -> answer_str for the judge
+            term. Defaults to the heuristic R if not provided AND w_qa > 0.
+        write_tool: WriteTool instance — source of truth for op counts.
+        w_overlap, w_qa: blend weights for the two reward terms.
+        k_max: hard retention budget; KG is pruned to this many entities
+            before scoring.
+        cost_*: residual op costs (kept for ablations).
+        full_text_cache: shared dict[question -> set[dia_id]] across
+            rollouts of the same conv to amortise the full-text retrieval
+            cost. Caller passes one cache per (conv, episode-batch).
     """
     backend: PIEBackend
     query_battery: list[tuple[str, str, list[str]]]
+    full_text_backend: Backend | None = None
+    reader: Any = None
     r_runner: Callable[[str, PIEBackend], str] | None = None
-    # Source of truth for op counts. WriteTool already increments n_creates,
-    # n_updates, n_lookups, etc. on every executed tool call — no fragile
-    # history parsing needed. Falls back to history scrape only if not set.
     write_tool: Any = None
-    w_coverage: float = DEFAULT_W_COVERAGE
+    w_overlap: float = DEFAULT_W_OVERLAP
     w_qa: float = DEFAULT_W_QA
+    k_max: int = DEFAULT_K_MAX
     cost_per_op: float = DEFAULT_COST_PER_OP
     cost_per_lookup: float = DEFAULT_COST_PER_LOOKUP
     cost_per_entity: float = DEFAULT_COST_PER_ENTITY
-    # Internal: track per-evaluation metrics for logging
+    full_text_cache: dict[str, set[str]] | None = None
+    # Internal: per-evaluation metrics for logging
     _last_metrics: dict[str, float] = field(default_factory=dict)
 
     def __post_init__(self):
-        # Coverage-only mode: caller can disable judge by passing r_runner=None
-        # AND w_qa=0. If r_runner is None but w_qa>0, fall back to the
-        # heuristic so we never silently train on stale signal.
+        # Default the judge runner to the heuristic R only if QA is in the mix.
         if self.r_runner is None and self.w_qa > 0:
             self.r_runner = _default_r_runner
+        # Default reader for overlap to the heuristic if not provided.
+        if self.reader is None:
+            self.reader = _HEURISTIC_R
 
     async def __call__(self, history: list[dict]) -> tuple[float, dict[str, float]]:
         """Tinker-compatible reward signature.
 
-        Args:
-            history: the W policy's trajectory — list of message dicts with
-                roles {system, user, assistant, tool}. We don't actually need
-                the history itself (the backend has been mutated by tool
-                dispatches), but we use it to count ops for cost.
+        Returns (reward, metrics) where reward is a scalar in roughly [-0.01, 1.0]
+        and metrics is logged per-step by the trainer. The reward decomposes:
 
-        Returns:
-            (reward, metrics_dict) — reward is a single scalar; metrics_dict
-            is logged per-step by the trainer.
+            reward = w_overlap * reader_overlap(R, full_text, post_W_KG, Q)
+                   + w_qa      * mean_q judge(R(q, post_W_KG), gold_q)
+                   - cost(ops)
+
+        Budget enforcement happens BEFORE scoring: the post-W KG is pruned
+        to at most k_max entities (lowest-importance first). This makes
+        "store everything" structurally impossible.
         """
-        # 1. Empty battery → no signal. Return small negative so the W
-        #    policy doesn't learn that empty batteries are good.
+        # 1. Empty battery → no signal.
         if not self.query_battery:
             self._last_metrics = {"battery_size": 0.0}
             return -0.01, dict(self._last_metrics)
 
-        # 2. Coverage — deterministic, free.
-        cov_result = battery_coverage(self.backend, self.query_battery)
-        mean_cov = cov_result.mean_coverage
+        # 2. Enforce hard retention budget on the post-W KG.
+        n_pruned = enforce_budget(self.backend, k_max=self.k_max)
 
-        # 3. QA judge — only run if we want a non-zero qa weight.
+        # 3. Reader-overlap — label-free dense signal. If full_text_backend
+        #    isn't supplied (e.g. unit tests, smoke), fall back to legacy
+        #    coverage so the reward still trains.
+        overlap_result: OverlapResult | None = None
+        cov_result = battery_coverage(self.backend, self.query_battery)
+        if self.full_text_backend is not None and self.reader is not None:
+            try:
+                overlap_result = battery_reader_overlap(
+                    backend=self.backend,
+                    battery=self.query_battery,
+                    full_text_backend=self.full_text_backend,
+                    reader=self.reader,
+                    full_text_cache=self.full_text_cache,
+                )
+                mean_overlap = overlap_result.mean_overlap
+            except Exception as e:
+                logger.warning("WriteReward: reader-overlap failed (%s); "
+                                "falling back to coverage signal", e)
+                mean_overlap = cov_result.mean_coverage
+        else:
+            # No full-text backend: fall back to coverage. Used during the
+            # transition period and for ablations.
+            mean_overlap = cov_result.mean_coverage
+
+        # 4. QA judge — optional anchoring term.
         mean_qa = 0.0
         if self.w_qa > 0 and self.r_runner is not None:
             loop = asyncio.get_running_loop()
@@ -231,9 +276,10 @@ class WriteReward:
             + self.cost_per_entity * n_entities
         )
 
-        reward = self.w_coverage * mean_cov + self.w_qa * mean_qa - cost
+        reward = self.w_overlap * mean_overlap + self.w_qa * mean_qa - cost
         self._last_metrics = {
-            "coverage_mean": mean_cov,
+            "reader_overlap_mean": mean_overlap,
+            "coverage_mean": cov_result.mean_coverage,    # legacy, kept for log
             "qa_mean": mean_qa,
             "cost_total": cost,
             "n_ops": float(n_ops_total),
@@ -241,6 +287,8 @@ class WriteReward:
             "n_mutations": float(n_mutations),
             "n_noops": float(n_noops),
             "n_entities": float(n_entities),
+            "n_pruned": float(n_pruned),
+            "k_max": float(self.k_max),
             "battery_size": float(len(self.query_battery)),
             "stored_dia_ids": float(cov_result.n_stored_dia_ids),
             "evidence_hit_frac": (
@@ -248,6 +296,11 @@ class WriteReward:
                 / max(cov_result.n_evidence_dia_ids_total, 1)
             ),
         }
+        if overlap_result is not None:
+            self._last_metrics["full_text_dia_ids_recovered_frac"] = (
+                overlap_result.n_full_text_dia_ids_recovered
+                / max(overlap_result.n_full_text_dia_ids_total, 1)
+            )
         # Side-channel state for the dashboard: serialize the per-question
         # coverage list and a compact KG snapshot. Tinker's rollout JSON
         # exporter reads `metrics` as a flat dict, so we attach these as

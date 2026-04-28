@@ -54,8 +54,11 @@ except Exception:
     model_info = _Stub; tokenizer_utils = _Stub
     def get_renderer(*a, **kw): raise RuntimeError("tinker_cookbook not installed")
 
+from mempol.backends.flat import FlatBackend
+from mempol.backends.base import Unit
 from mempol.backends.pie_kg import PIEBackend
 from mempol.data.locomo import Conversation, QA, Turn, load as load_locomo
+from mempol.recipes.memory_rl.data import _conv_to_serializable_units
 from mempol.recipes.memory_rl.tinker_compat import build_agent_tool_env
 from mempol.recipes.memory_rl.write_tools import WriteTool
 from mempol.recipes.memory_rl.write_reward import (
@@ -138,9 +141,19 @@ class WriteDatum(TypedDict):
     session_date: str
     prior_turns_text: str
     existing_entities_summary: str
-    # (question, gold_answer, evidence_dia_ids) — evidence is what enables
-    # the dense coverage reward in WriteReward.
+    # (question, gold_answer, evidence_dia_ids). evidence is unused by the
+    # reader-overlap reward but kept for backward-compat logging of the
+    # legacy coverage signal as a control.
     query_battery: list[tuple[str, str, list[str]]]
+    # Full-conversation text backend (FlatBackend). The reader queries this
+    # to define the overlap target. Built once per conv and shared across
+    # all turn-episodes of that conv to keep memory pressure low.
+    full_text_backend: Any
+    # Per-conv cache of question -> set of dia_ids the reader retrieves
+    # from full text. Same dict reference is shared across all turns of one
+    # conv so the per-question full-text retrieval is cached across
+    # rollouts of the same battery.
+    full_text_cache: dict
 
 
 class WriteEnvGroupBuilder(EnvGroupBuilder):
@@ -193,23 +206,26 @@ class WriteEnvGroupBuilder(EnvGroupBuilder):
             wtool.current_dia_id = self.datum["turn_dia_id"]
             wtool.current_timestamp = float(self.datum["turn_idx"])
             initial_messages = _initial_messages(self.datum, renderer, wtool)
-            # If MEMPOL_R_CHECKPOINT is set and resolvable, use the trained
-            # R LoRA as the QA-judge backbone; otherwise the heuristic
-            # default kicks in inside WriteReward.__post_init__.
+            # If MEMPOL_R_CHECKPOINT is set, the trained R LoRA is used as
+            # the QA-judge backbone; otherwise the heuristic R is the
+            # default (resolved inside WriteReward.__post_init__).
             r_runner = resolve_r_runner_from_env()
-            # Ablation knobs: MEMPOL_W_COVERAGE / MEMPOL_W_QA env vars let
-            # the train_write CLI sweep the reward mix without touching
-            # WriteReward's signature. Defaults preserve the 0.6 / 0.4 blend.
+            # Reward-mix knobs (env vars). Defaults match
+            # write_reward.DEFAULT_W_OVERLAP / DEFAULT_W_QA.
             import os as _os
-            w_cov = float(_os.environ.get("MEMPOL_W_COVERAGE", "0.6"))
-            w_qa  = float(_os.environ.get("MEMPOL_W_QA",       "0.4"))
+            w_overlap = float(_os.environ.get("MEMPOL_W_OVERLAP", "0.7"))
+            w_qa      = float(_os.environ.get("MEMPOL_W_QA",      "0.3"))
+            k_max     = int(_os.environ.get("MEMPOL_K_MAX",       "12"))
             reward_fn = WriteReward(
                 backend=backend,
                 query_battery=self.datum["query_battery"],
+                full_text_backend=self.datum.get("full_text_backend"),
                 r_runner=r_runner,
                 write_tool=wtool,
-                w_coverage=w_cov,
+                w_overlap=w_overlap,
                 w_qa=w_qa,
+                k_max=k_max,
+                full_text_cache=self.datum.get("full_text_cache"),
             )
             envs.append(build_agent_tool_env(
                 renderer=renderer,
@@ -320,6 +336,17 @@ class WriteRLDatasetBuilder(RLDatasetBuilder):
                     for did in qa.evidence:
                         evidence_index.setdefault(did, []).append(qa)
 
+                # Build the full-text backend once per conversation. Shared
+                # across all turn-episodes of this conv so the reader's
+                # full-text retrieval is consistent and the cache hits.
+                unit_dicts = _conv_to_serializable_units(conv)
+                full_text_backend = FlatBackend()
+                full_text_backend.ingest([
+                    Unit(uid=u["uid"], text=u["text"], metadata=u["metadata"])
+                    for u in unit_dicts
+                ])
+                full_text_cache: dict = {}              # shared per conv
+
                 for ti, t in enumerate(conv.turns):
                     qas_for_turn = evidence_index.get(t.dia_id, [])
                     if len(qas_for_turn) < self.min_battery_per_turn:
@@ -343,6 +370,8 @@ class WriteRLDatasetBuilder(RLDatasetBuilder):
                             (qa.question, qa.answer, list(qa.evidence or []))
                             for qa in battery
                         ],
+                        full_text_backend=full_text_backend,
+                        full_text_cache=full_text_cache,
                     ))
             return data
 
