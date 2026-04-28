@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Memory as a learned policy — a budgeted write problem</title>
+<meta name="description" content="LLM agents need external memory. The hand-coded layer that decides what to keep can be learned. We frame it as a budgeted decision problem, train with GRPO, and validate against random subsampling."/>
+<style>
+  :root {
+    --fg: #1a1a1a;
+    --fg-soft: #4a4a4a;
+    --fg-faint: #8a8a8a;
+    --bg: #fafaf7;
+    --bg-card: #ffffff;
+    --accent: #2563eb;
+    --accent-soft: #dbeafe;
+    --rule: #e5e5e5;
+    --code-bg: #f3f4f6;
+    --warn-bg: #fef3c7;
+    --warn-fg: #92400e;
+    --good-bg: #d1fae5;
+    --good-fg: #065f46;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fg: #e5e5e5;
+      --fg-soft: #b8b8b8;
+      --fg-faint: #888;
+      --bg: #14161a;
+      --bg-card: #1c1f24;
+      --accent: #60a5fa;
+      --accent-soft: #1e3a5f;
+      --rule: #2a2d33;
+      --code-bg: #11141a;
+      --warn-bg: #3b2e0d;
+      --warn-fg: #fde68a;
+      --good-bg: #0f2e25;
+      --good-fg: #6ee7b7;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { font-size: 17px; -webkit-font-smoothing: antialiased; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+                 "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.65;
+    color: var(--fg);
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+  }
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 64px 28px 96px;
+  }
+  header.title {
+    margin-bottom: 56px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 32px;
+  }
+  header.title .eyebrow {
+    color: var(--fg-faint);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  header.title h1 {
+    font-size: 2.4rem;
+    line-height: 1.15;
+    margin: 0 0 16px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  header.title .lede {
+    font-size: 1.15rem;
+    color: var(--fg-soft);
+    line-height: 1.55;
+    margin: 0;
+  }
+  header.title .meta {
+    display: flex;
+    gap: 16px;
+    font-size: 0.9rem;
+    color: var(--fg-faint);
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  header.title .meta a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  header.title .meta a:hover { border-bottom-color: var(--accent); }
+
+  h2 {
+    font-size: 1.55rem;
+    margin: 56px 0 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+  h3 {
+    font-size: 1.15rem;
+    margin: 32px 0 8px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+  }
+  p { margin: 0 0 18px; }
+  p, li { color: var(--fg); }
+
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-soft); }
+  a:hover { border-bottom-color: var(--accent); }
+
+  ul, ol { padding-left: 24px; margin: 0 0 18px; }
+  li { margin-bottom: 6px; }
+
+  blockquote {
+    margin: 24px 0;
+    padding: 16px 20px;
+    border-left: 3px solid var(--accent);
+    background: var(--accent-soft);
+    border-radius: 0 6px 6px 0;
+    color: var(--fg);
+  }
+  blockquote p:last-child { margin-bottom: 0; }
+
+  pre, code {
+    font-family: "SF Mono", Menlo, Monaco, "Roboto Mono", Consolas, monospace;
+    font-size: 0.88rem;
+  }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--rule);
+    padding: 14px 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    line-height: 1.55;
+    margin: 18px 0;
+  }
+  code {
+    background: var(--code-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+  pre code { background: transparent; padding: 0; }
+
+  .callout {
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 24px 0;
+  }
+  .callout.warn {
+    background: var(--warn-bg);
+    color: var(--warn-fg);
+    border-color: transparent;
+  }
+  .callout.warn strong { color: var(--warn-fg); }
+  .callout.good {
+    background: var(--good-bg);
+    color: var(--good-fg);
+    border-color: transparent;
+  }
+  .callout.good strong { color: var(--good-fg); }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout-label {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    opacity: 0.8;
+  }
+
+  details {
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin: 18px 0;
+  }
+  details summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--fg);
+    list-style: none;
+    user-select: none;
+  }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::before {
+    content: "▸";
+    display: inline-block;
+    margin-right: 10px;
+    transition: transform 0.15s ease;
+    color: var(--fg-faint);
+  }
+  details[open] summary::before { transform: rotate(90deg); }
+  details > *:not(summary) { margin-top: 12px; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 22px 0;
+    font-size: 0.92rem;
+  }
+  th, td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+  }
+  th {
+    font-weight: 600;
+    background: var(--code-bg);
+    border-bottom-width: 2px;
+  }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+  figure {
+    margin: 28px 0;
+    padding: 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    text-align: center;
+  }
+  figcaption {
+    font-size: 0.88rem;
+    color: var(--fg-soft);
+    margin-top: 14px;
+    text-align: left;
+  }
+
+  .pull-quote {
+    font-size: 1.25rem;
+    line-height: 1.45;
+    color: var(--fg);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 24px 0;
+    margin: 36px 0;
+    font-style: italic;
+  }
+
+  hr.section-break {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 56px 0;
+  }
+
+  .footnote-ref {
+    font-size: 0.7em;
+    vertical-align: super;
+    margin-left: 1px;
+    color: var(--accent);
+    border: none;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="title">
+  <div class="eyebrow">Research note · April 2026</div>
+  <h1>Memory as a learned policy: a budgeted write problem</h1>
+  <p class="lede">
+    LLM agents that run for hours or days accumulate more context than
+    any context window can hold. The store grows from use. The control
+    layer that decides what to commit doesn&rsquo;t. We turn that layer
+    into a learned policy and frame the whole thing as a budgeted
+    decision problem &mdash; with a label-free dense reward that stops
+    the policy from cheating.
+  </p>
+  <div class="meta">
+    <span>Parth Kocheta &middot; University of Maryland</span>
+    <a href="main.pdf">Read the paper (PDF)</a>
+    <a href="https://github.com/pkempire/pie">Code on GitHub</a>
+  </div>
+</header>
+
+<h2>The problem, in one paragraph</h2>
+
+<p>
+Every memory system shipping for LLM agents in 2026 &mdash; Mem0,
+Letta, Mastra, Zep, our own KGmem &mdash; pairs an external store
+(vector index, knowledge graph, or compressed log) with a hand-written
+control layer. The store grows from use: facts come in, get edited,
+get retrieved. The control layer is fixed at design time. A Mem0 prompt
+that misclassifies a fact today will misclassify the same fact in a
+year. The store is dynamic; the operating system over the store is
+not.
+</p>
+
+<p>
+We ask whether that operating system can be learned from the same
+answer-correctness signal we already use to evaluate it.
+</p>
+
+<h2>Reframing: memory is a budgeted decision problem</h2>
+
+<p>
+Most prior work frames memory as <em>retrieval-augmented generation</em>:
+shovel everything into a vector store, retrieve top-k at read time,
+let the model do the rest. That works when storage is free. It
+doesn&rsquo;t when storage is the bottleneck &mdash; which is the
+regime that matters as agents get long enough to accumulate hundreds
+of thousands of turns and tens of millions of tokens of context.
+</p>
+
+<p>
+A cleaner formulation: assume a <strong>hard retention budget</strong>
+$K$. The write policy gets to keep at most $K$ items per
+conversation. Its job is to pick which $K$ matter. The read policy is
+a fixed stack (BM25 over entity text + dense embedding similarity +
+named-entity lookup, fused via reciprocal-rank fusion) that operates
+on whatever the write policy leaves behind. Performance is measured
+as the area under the efficiency curve as $K$ varies.
+</p>
+
+<div class="callout">
+  <div class="callout-label">Why budget the writes, not the reads</div>
+  <p>
+  An audit on 50 LoCoMo questions showed <strong>BM25 alone is the
+  strongest single retriever</strong> at $0.62$ accuracy; dense was
+  $0.42$, NER+dense was $0.44$. A learned read policy can&rsquo;t
+  meaningfully beat a hybrid BM25+dense+NER stack. So the read policy
+  isn&rsquo;t the ceiling. The write policy &mdash; which decides
+  <em>what BM25 gets to BM25 over</em> &mdash; is.
+  </p>
+</div>
+
+<h2>The reward design problem (and why everyone&rsquo;s answer is wrong)</h2>
+
+<p>
+Outcome supervision on memory writes is delayed and noisy: a write
+op only matters if the read policy can later use what was stored.
+Running a frozen reader against a held-out QA battery on every write
+trajectory works in principle but is slow and judge-noisy. Most
+training pipelines reach for a denser proxy.
+</p>
+
+<p>
+The obvious proxy is <em>evidence coverage</em>: of the dialogue
+turns a held-out question depends on (LoCoMo annotates these as
+<code>evidence</code> dia_ids), what fraction did the policy preserve
+in memory? It&rsquo;s deterministic, free to compute, and dense.
+</p>
+
+<p>
+The problem: in a controlled study, evidence coverage correlates with
+the trivial <em>number of turns kept</em> feature at Spearman
+$\rho \approx 0.98$. Almost any policy that retains more turns will
+score higher under coverage, regardless of <em>which</em> turns it
+retains. A policy that wins coverage by 5 points might just be
+storing 5% more stuff.
+</p>
+
+<p>
+Worse, evidence coverage requires per-question dia_id annotations,
+which research benchmarks ship and real personal-AI deployments do
+not. A user&rsquo;s ChatGPT export does not come with &ldquo;this
+answer required turn 47 from session 9.&rdquo; If the only training
+signal we can build needs labels real users won&rsquo;t produce, the
+technique is benchmark-shaped.
+</p>
+
+<h3>Reader-overlap, with a hard budget</h3>
+
+<p>
+The fix is two changes at once. First, replace evidence coverage with
+<strong>reader-overlap</strong>: for each held-out question, take
+what a frozen reader retrieves from the <em>full conversation
+text</em> &mdash; the set of dialogue turns the reader believes are
+relevant &mdash; and score how many of those turns the
+post-write knowledge graph preserved. No gold labels. The reader
+defines the target.
+</p>
+
+<p>
+Second, enforce the budget as a hard cap. Before scoring, the
+post-write KG is pruned to at most $K$ entities (lowest-importance
+first). &ldquo;Store everything verbatim&rdquo; is structurally
+impossible, so the cost regulariser doesn&rsquo;t need to fight that
+fight.
+</p>
+
+<figure>
+<svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto;">
+  <defs>
+    <marker id="arrowhead" markerWidth="9" markerHeight="9" refX="9" refY="4.5" orient="auto">
+      <polygon points="0 0, 9 4.5, 0 9" fill="#4a4a4a" />
+    </marker>
+  </defs>
+  <g font-family="-apple-system, BlinkMacSystemFont, system-ui, sans-serif" font-size="13">
+    <!-- conversation -->
+    <rect x="20" y="40" width="120" height="48" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.2"/>
+    <text x="80" y="62" text-anchor="middle" font-weight="600">conversation</text>
+    <text x="80" y="78" text-anchor="middle" font-size="11" fill="#4a4a4a">N turns</text>
+
+    <!-- W policy -->
+    <rect x="180" y="40" width="120" height="48" rx="8" fill="#fef3c7" stroke="#92400e" stroke-width="1.2"/>
+    <text x="240" y="62" text-anchor="middle" font-weight="600">W policy</text>
+    <text x="240" y="78" text-anchor="middle" font-size="11" fill="#4a4a4a">LoRA on Qwen3-4B</text>
+
+    <!-- KG -->
+    <rect x="340" y="40" width="120" height="48" rx="8" fill="#d1fae5" stroke="#065f46" stroke-width="1.2"/>
+    <text x="400" y="62" text-anchor="middle" font-weight="600">KG (≤ K entities)</text>
+    <text x="400" y="78" text-anchor="middle" font-size="11" fill="#4a4a4a">budget enforced</text>
+
+    <!-- R policy -->
+    <rect x="500" y="40" width="120" height="48" rx="8" fill="#e0e7ff" stroke="#4338ca" stroke-width="1.2"/>
+    <text x="560" y="62" text-anchor="middle" font-weight="600">R (frozen)</text>
+    <text x="560" y="78" text-anchor="middle" font-size="11" fill="#4a4a4a">BM25 + dense + NER</text>
+
+    <line x1="140" y1="64" x2="180" y2="64" stroke="#4a4a4a" stroke-width="1.2" marker-end="url(#arrowhead)"/>
+    <line x1="300" y1="64" x2="340" y2="64" stroke="#4a4a4a" stroke-width="1.2" marker-end="url(#arrowhead)"/>
+    <line x1="460" y1="64" x2="500" y2="64" stroke="#4a4a4a" stroke-width="1.2" marker-end="url(#arrowhead)"/>
+
+    <!-- reward path -->
+    <rect x="180" y="180" width="280" height="68" rx="8" fill="#fef2f2" stroke="#b91c1c" stroke-width="1.2"/>
+    <text x="320" y="202" text-anchor="middle" font-weight="600">reward = 0.7·overlap + 0.3·judge</text>
+    <text x="320" y="222" text-anchor="middle" font-size="11" fill="#4a4a4a">
+      overlap: did W store what R retrieves from full text?
+    </text>
+    <text x="320" y="237" text-anchor="middle" font-size="11" fill="#4a4a4a">
+      judge: did R answer correctly from W's KG?
+    </text>
+
+    <line x1="400" y1="92" x2="400" y2="180" stroke="#b91c1c" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrowhead)"/>
+    <line x1="560" y1="92" x2="460" y2="180" stroke="#b91c1c" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrowhead)"/>
+    <line x1="240" y1="180" x2="240" y2="92" stroke="#b91c1c" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrowhead)"/>
+
+    <text x="50" y="205" font-size="11" fill="#92400e" font-style="italic">
+      <tspan x="50" dy="0">GRPO</tspan>
+      <tspan x="50" dy="14">on W</tspan>
+    </text>
+  </g>
+</svg>
+<figcaption>
+The training loop. The write policy ingests one conversation turn,
+emits up to four tool-call ops into a fresh KG, and the KG is pruned
+to the budget. The frozen reader queries the post-W KG and, separately,
+the full-text version of the conversation; the reward blends how
+much of the reader&rsquo;s full-text retrieval the policy preserved
+(overlap) with whether the reader could answer (judge).
+</figcaption>
+</figure>
+
+<details>
+<summary>The reward equation in full</summary>
+<pre>
+reward(τ) = w_overlap · overlap(R, full_text, post_W_KG, Q)
+          + w_qa      · mean_q judge(R(q, post_W_KG), gold_q)
+          - λ · cost(ops)
+
+overlap(R, F, M_τ, Q) = (1/|Q|) · Σ_q
+                          |dia(R, F, q) ∩ dia(M_τ)| / |dia(R, F, q)|
+
+where dia(R, F, q) = dia_ids of turns R retrieves from full-text F for q
+      dia(M_τ)    = dia_ids reachable through provenance in budget-pruned M_τ
+
+defaults: w_overlap = 0.7, w_qa = 0.3, λ = 0.001, K_max = 12
+</pre>
+<p>
+The reader is the same in both terms: a hand-coded composite of BM25
+(over entity name + aliases + state values), dense embedding
+similarity, and named-entity lookup, fused via reciprocal-rank
+fusion. We hold it fixed during Phase B so write-side improvements
+aren&rsquo;t entangled with read-side drift.
+</p>
+</details>
+
+<h2>Why this works (and how we know)</h2>
+
+<p>
+A separate AI-researcher agent ran controlled experiments on the
+mempol problem. Three of its findings shaped this design.
+</p>
+
+<h3>1. Backend-retriever alignment is the dominant confound</h3>
+
+<p>
+On a paired 50-question LoCoMo sample with a frozen
+<code>gpt-4o-mini</code> reader, accuracy was $0.50$ on FlatBackend
+(BM25 + dense over windowed chunks) and <strong>$0.10$ on
+RichKGBackend</strong> (NER lookup only). McNemar $p = 1.9 \times
+10^{-6}$. The KG backend lost on 20 questions Flat answered
+correctly, and won on zero. The fix &mdash; hybridising the KG
+retrieval with BM25 + dense via RRF &mdash; recovered $0.40$ of the
+$0.50$ ceiling. Backend-retriever alignment alone moves accuracy by
+30+ points; if you don&rsquo;t control for it, your write-policy
+study is mostly measuring this confound.
+</p>
+
+<table>
+<thead>
+  <tr><th>Retriever</th><th class="num">QA accuracy</th><th>Notes</th></tr>
+</thead>
+<tbody>
+  <tr><td>FlatBackend (BM25+dense+RRF)</td><td class="num">0.50</td><td>baseline</td></tr>
+  <tr><td>RichKGBackend (NER only)</td><td class="num">0.10</td><td>$-0.40$, McNemar $p = 2 \cdot 10^{-6}$</td></tr>
+  <tr><td>RichKGBackend + ±1 chronological neighbours</td><td class="num">0.12</td><td>almost no recovery</td></tr>
+  <tr><td>HybridKG (NER + BM25 + dense, RRF)</td><td class="num">0.40</td><td>recovers 75% of the gap</td></tr>
+  <tr><td>BM25 only</td><td class="num">0.62</td><td>strongest single signal</td></tr>
+</tbody>
+</table>
+
+<h3>2. Reader-overlap correlates with gold coverage</h3>
+
+<p>
+On 1,404 simulated write trajectories (234 turns × 6 trajectories),
+reader-overlap and gold coverage track each other at global
+Spearman $\rho = 0.585$ and within-turn $\rho = 0.614$. The
+within-turn number is the GRPO-relevant one because GRPO ranks
+rollouts within a group rather than across episodes. A composite of
+reader-overlap and a lexical signal (weighted $\alpha = 0.55$ on
+overlap) tightens the within-episode ranking from $0.343$ to
+$0.374$.
+</p>
+
+<p>
+Importantly, popular intrinsic-motivation rewards <em>don&rsquo;t</em>
+work here. Random Network Distillation came in at $\rho = 0.082 \pm
+0.041$ &mdash; statistically indistinguishable from zero. We&rsquo;ve
+saved a research detour.
+</p>
+
+<h3>3. Strong retrievers mask write-policy quality</h3>
+
+<p>
+This is the most important finding for evaluation design. On
+LongMemEval-S, two heuristic write policies (BM25 vs Dense Reward)
+that differed materially in <em>which</em> turns they kept produced
+<strong>identical end-to-end QA accuracy</strong> (both $0.633$ at
+$F = 0.1$) because the downstream BM25+dense retrieval was strong
+enough to find the answer either way. Their retrieved top-10
+overlapped at $7.4/10$ items.
+</p>
+
+<p>
+Removing the retriever and feeding the kept turns directly to the
+reader exposed the underlying quality differences with high power:
+an Adaptive Reward policy beat BM25 at every retention fraction by
+$\geq 0.10$ recall (Wilcoxon $p = 3.1 \times 10^{-14}$). A two-step
+chain-of-thought prompt on the reader alone raised
+<code>gpt-4o</code> multi-session accuracy from $0.466$ to
+$0.737$.
+</p>
+
+<div class="callout warn">
+  <div class="callout-label">Implication</div>
+  <p>
+  End-to-end QA at full retention is a <em>bad</em> evaluation
+  metric for write policies, because a strong retriever washes out
+  the write differences. The right metrics are
+  <strong>retriever-free evidence recall</strong> and
+  <strong>QA at low retention</strong>, where the write decision
+  matters most.
+  </p>
+</div>
+
+<h2>The success criterion</h2>
+
+<p>
+The discovery&rsquo;s most useful contribution is the
+<strong>random-subsampling efficiency frontier</strong>. For each
+conversation and each retention fraction $F \in \{0.1, 0.2, \ldots,
+1.0\}$, retain $K = \lceil F \cdot N \rceil$ uniformly-sampled turns
+and run the reader. The resulting accuracy-vs-$F$ curve on LoCoMo
+goes from $\sim 4\%$ at $F = 0.1$ to $\sim 56\%$ at $F = 0.9$. Any
+learned write policy <em>must</em> lie strictly above this curve at
+matched $F$, or the learning has bought nothing over chance.
+</p>
+
+<table>
+<thead>
+  <tr><th>Retention $F$</th><th class="num">Random</th><th class="num">BM25 heuristic</th><th class="num">Learned (target)</th></tr>
+</thead>
+<tbody>
+  <tr><td>0.1</td><td class="num">~0.04</td><td class="num">~0.63</td><td class="num">&gt; 0.65 to claim a win</td></tr>
+  <tr><td>0.3</td><td class="num">~0.27</td><td class="num">~0.71</td><td class="num">&gt; 0.73</td></tr>
+  <tr><td>0.5</td><td class="num">~0.45</td><td class="num">~0.74</td><td class="num">&gt; 0.76</td></tr>
+  <tr><td>1.0</td><td class="num">~0.56</td><td class="num">~0.76</td><td class="num">~ ceiling</td></tr>
+</tbody>
+</table>
+
+<p style="font-size: 0.92rem; color: var(--fg-soft); margin-top: -8px;">
+Random and BM25 numbers from the audit on LoCoMo+LongMemEval-S; learned column is the target the long Phase B run has to clear.
+</p>
+
+<p>
+We also report two clean negative controls. Topical Redundancy
+(retain turns most similar to other turns) collapses to evidence
+recall $\sim 0.01$ at $F = 0.20$. Zero-shot
+<code>gpt-4o-mini</code> as a write policy is statistically
+indistinguishable from random ($0.191$ vs $0.178$). If our learned
+policy ends up near either of these, training is broken.
+</p>
+
+<hr class="section-break"/>
+
+<h2>Where this is heading</h2>
+
+<p>
+The current paper has a sharper claim than its earlier draft did. We
+are not claiming that a learned read policy beats hand-coded
+retrieval &mdash; the audit shows BM25 is hard to beat at retrieval.
+We are claiming that a learned <em>write</em> policy, given a hard
+retention budget and a label-free reader-overlap reward, can pick a
+better $K$-sized subset of a conversation than random subsampling or
+a BM25 heuristic can.
+</p>
+
+<p>
+That smaller claim has three nice properties. It is falsifiable
+&mdash; either we beat random and BM25 at low $F$ or we don&rsquo;t,
+and AUEC is a single number that closes the loop. It is
+deployment-shaped &mdash; real assistants face hard memory budgets,
+and retention is the actual bottleneck, not retrieval. And it is
+label-free &mdash; the reader-overlap signal works on any
+conversation, including data without per-question evidence
+annotations.
+</p>
+
+<div class="pull-quote">
+The store holds whatever the user chooses to give it. The strategy
+&mdash; what to keep, what to discard, what to revisit &mdash; lives
+in the weights and transfers between users without moving any of
+their data.
+</div>
+
+<h2>Open questions</h2>
+
+<ol>
+  <li>
+    <strong>Per-conversation rather than per-turn episodes.</strong>
+    Per-turn gives clean credit assignment but rules out write
+    strategies that span turns (&ldquo;defer until I see if it comes
+    up again&rdquo;). The natural extension is multi-turn episodes
+    with discounted across-turn rewards, but credit assignment gets
+    murkier.
+  </li>
+  <li>
+    <strong>Implicit reward from the next user turn.</strong> Mode~D
+    in the eval framework: in deployment, the user&rsquo;s
+    follow-up message is the reward signal. Did the agent&rsquo;s
+    previous-turn writes preserve the context the user&rsquo;s reply
+    depends on? If this works, evidence labels are no longer needed
+    even at training time.
+  </li>
+  <li>
+    <strong>Free-form storage.</strong> Right now the op vocabulary
+    has a fixed schema (9 entity types, 5 transition types). A more
+    expressive substrate is a key-value store with arbitrary keys and
+    schemas the model invents on the fly. Bigger search space, more
+    interesting research question, harder to bootstrap. Probably the
+    paper-2 design.
+  </li>
+</ol>
+
+<h2>Reading further</h2>
+<ul>
+  <li><a href="main.pdf">The full paper</a> (PDF, 18 pages)</li>
+  <li><a href="https://github.com/pkempire/pie">Code on GitHub</a> &mdash; mempol, the KGmem backend, the Tinker training recipe, the random-baseline runner, and the Streamlit live monitor.</li>
+  <li>The eval-design writeup at <code>mempol/EVAL-DESIGN.md</code> in the repo: four eval modes from gold-evidence to label-free implicit reward.</li>
+</ul>
+
+<p style="margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--rule); color: var(--fg-faint); font-size: 0.88rem;">
+Drafted April 2026. Comments welcome &mdash;
+<a href="mailto:pranayko021@gmail.com">pranayko021@gmail.com</a>.
+</p>
+
+</div>
+</body>
+</html>
