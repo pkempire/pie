@@ -82,6 +82,10 @@ class WriteReward:
     backend: PIEBackend
     query_battery: list[tuple[str, str, list[str]]]
     r_runner: Callable[[str, PIEBackend], str] | None = None
+    # Source of truth for op counts. WriteTool already increments n_creates,
+    # n_updates, n_lookups, etc. on every executed tool call — no fragile
+    # history parsing needed. Falls back to history scrape only if not set.
+    write_tool: Any = None
     w_coverage: float = DEFAULT_W_COVERAGE
     w_qa: float = DEFAULT_W_QA
     cost_per_op: float = DEFAULT_COST_PER_OP
@@ -146,12 +150,24 @@ class WriteReward:
             )
             mean_qa = sum(scores) / max(len(scores), 1)
 
-        # 4. Cost from the trajectory. Lookups are cheaper than mutations
-        # (intent: encourage exploration before commits). We subtract lookups
-        # from n_ops_total before pricing mutations to avoid double-charging.
-        n_ops_total = self._count_ops(history)
-        n_lookups = self._count_lookups(history)
-        n_mutations = max(0, n_ops_total - n_lookups)
+        # 4. Cost from the trajectory. Op counts come from the WriteTool's
+        # in-method counters (ground truth) when available; fall back to
+        # history scraping (fragile across renderer versions) otherwise.
+        if self.write_tool is not None:
+            wt = self.write_tool
+            n_lookups   = int(getattr(wt, "n_lookups", 0))
+            n_mutations = int(
+                getattr(wt, "n_creates", 0) + getattr(wt, "n_updates", 0)
+                + getattr(wt, "n_merges", 0)  + getattr(wt, "n_relations", 0)
+                + getattr(wt, "n_contradictions", 0) + getattr(wt, "n_forgets", 0)
+            )
+            n_noops    = int(getattr(wt, "n_noops", 0))
+            n_ops_total = n_lookups + n_mutations + n_noops
+        else:
+            n_ops_total = self._count_ops(history)
+            n_lookups = self._count_lookups(history)
+            n_mutations = max(0, n_ops_total - n_lookups)
+            n_noops = 0
         n_entities = len(self.backend.wm.entities)
         cost = (
             self.cost_per_op * n_mutations
@@ -166,6 +182,8 @@ class WriteReward:
             "cost_total": cost,
             "n_ops": float(n_ops_total),
             "n_lookups": float(n_lookups),
+            "n_mutations": float(n_mutations),
+            "n_noops": float(n_noops),
             "n_entities": float(n_entities),
             "battery_size": float(len(self.query_battery)),
             "stored_dia_ids": float(cov_result.n_stored_dia_ids),

@@ -207,6 +207,7 @@ class WriteEnvGroupBuilder(EnvGroupBuilder):
                 backend=backend,
                 query_battery=self.datum["query_battery"],
                 r_runner=r_runner,
+                write_tool=wtool,
                 w_coverage=w_cov,
                 w_qa=w_qa,
             )
