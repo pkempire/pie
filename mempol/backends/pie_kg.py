@@ -54,7 +54,9 @@ def _entity_to_text(e: Entity) -> str:
     return f"{e.name} ({e.type.value}) — {state_str}"
 
 
-def _entity_to_hit(e: Entity, score: float, source: str) -> Hit:
+def _entity_to_hit(e: Entity, score: float, source: str, n_transitions: int = 0) -> Hit:
+    """Module-level helper. n_transitions is passed by callers that hold
+    the WorldModel reference; default 0 for callers that don't need it."""
     return Hit(
         unit=Unit(
             uid=e.id,
@@ -65,7 +67,7 @@ def _entity_to_hit(e: Entity, score: float, source: str) -> Hit:
                 "current_state": e.current_state,
                 "first_seen": e.first_seen,
                 "last_seen": e.last_seen,
-                "n_transitions": len(self.wm.get_transitions(uid)),
+                "n_transitions": n_transitions,
                 "importance": e.importance,
                 "aliases": list(e.aliases or []),
             },
