@@ -118,3 +118,33 @@ visual-memory/
 sales/output/*.json
 sales/uploads/
 pie_status_report.txt
+
+# mempol research artifacts (results, traces, embedding cache)
+mempol/results/
+mempol/traces/
+mempol/.cache/
+mempol/data/*.jsonl
+mempol/recipes/memory_rl/_mempol_root/
+
+# heavyweight benchmark outputs
+benchmarks/locomo/cache/
+benchmarks/locomo/results/
+benchmarks/longmemeval/results/
+
+# Tinker run outputs (typically /tmp but cover local too)
+tinker-runs/
+*.pkl
+
+# LaTeX build artifacts
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.fls
+paper/*.fdb_latexmk
+
+# scratch
+output/
+inbox/

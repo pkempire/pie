@@ -1,0 +1,672 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[expansion=false]{microtype}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\hypersetup{colorlinks=true, linkcolor=blue!60!black, citecolor=teal,
+  urlcolor=blue!60!black}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath, amssymb}
+\usepackage{listings}
+\usepackage{enumitem}
+\setlist{itemsep=1pt, topsep=2pt}
+
+% TBD macro for unfilled experiment cells
+\newcommand{\TBD}[1]{%
+  \textcolor{red!80!black}{\textsf{[TBD: #1]}}}
+
+\title{\bfseries Memory as a Learned Policy:\\
+\large Co-Training Read and Write Operations for Long-Horizon LLM Agents}
+\author{Pranay Kocheta\\\small University of Maryland}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Long-horizon LLM agents need a memory store. Today, every system that ships
+one---Mem0, Letta, Mastra, Zep, our own PIE---hand-codes the rules for what
+to write and how to read. They use thresholds, prompts, and heuristics. None
+of those rules learn from outcomes.
+
+We turn memory operations into the actions of a small learned policy. The
+policy is a LoRA adapter on a 4B parameter language model. We train two of
+them: a write policy that decides what to store from each turn of
+conversation, and a read policy that decides how to search memory for an
+answer. They share the same op vocabulary. They are trained jointly with
+GRPO~\cite{shao2024deepseekmath}. The reward for the read policy is whether
+the answer is correct. The reward for the write policy is whether the read
+policy can later answer questions that depend on the turn the write policy
+saw.
+
+We show that this works on
+LoCoMo~\cite{maharana2024locomo} and
+LongMemEval~\cite{wu2024longmemeval}. \TBD{report final numbers once Phase
+A and Phase B run to completion.} The trained read policy outperforms a
+heuristic teacher by~\TBD{X} points. Joint training adds~\TBD{Y} more
+points. The same policy works across three different memory backends---a
+flat chunk store, an entity-based knowledge graph (PIE), and Mastra-style
+observational memory---with~\TBD{Z}\% drop on transfer.
+
+The contribution is not a new memory store. It is a learned policy that
+uses the store. Facts stay in the store, where they belong. The policy
+encodes the strategy, which transfers between users.
+\end{abstract}
+
+% --------------------------------------------------------------------------
+\section{Introduction}
+
+Long-running AI assistants need long-running memory. ChatGPT can remember
+your preferences. Claude can keep notes across a project. A coding agent
+should know what design choices it made yesterday. A customer-support bot
+should know what the customer is angry about now and what they were angry
+about three weeks ago.
+
+Each of these uses a memory system. Each system has a way to write things
+down and a way to read them back. And each was hand-built.
+
+\paragraph{The hand-coded gap.} Look at the popular open-source memory
+systems for LLM agents:
+\begin{itemize}
+  \item \textbf{Mem0}~\cite{chhikara2024mem0} stores facts as flat
+    key-value pairs. When a new fact arrives, an LLM-as-judge prompt picks
+    one of \texttt{ADD/UPDATE/DELETE/NONE}. The thresholds are fixed.
+  \item \textbf{Letta / MemGPT}~\cite{zhang2024memgpt} treats memory as
+    operating-system tiers. The LLM uses fixed function calls to move
+    things between tiers. The promotion rules are hard-coded.
+  \item \textbf{Zep / Graphiti}~\cite{rasmussen2024zep} keeps a temporal
+    knowledge graph. Edges have valid times. The invalidation rules are
+    fixed.
+  \item \textbf{Mastra}~\cite{mastra2025om} uses two background agents,
+    Observer and Reflector, to compress the chat into a dense observation
+    log. The compression schedule is fixed.
+  \item \textbf{Our own PIE} keeps typed entities with state transitions.
+    A 3-tier resolver decides if a new mention matches an existing entity.
+    The thresholds are fixed: 0.85 for string match, 0.85 for embedding
+    accept, 0.65 for reject.
+\end{itemize}
+
+In every case, the rules for what to write and how to read are written by
+humans. None of the rules update when the system makes a mistake. None of
+them improve from being used.
+
+\paragraph{What we do.} We treat memory operations as actions of a small
+learned policy. The policy is a low-rank adapter
+(LoRA)~\cite{hu2021lora} on top of a 4B-parameter open-source language
+model. The actions are tool calls into a memory backend.
+
+We define one action vocabulary. It has read ops
+(\texttt{memory\_search}, \texttt{memory\_expand}, \texttt{memory\_filter},
+\texttt{memory\_rerank}) and write ops (\texttt{lookup\_entity},
+\texttt{create\_entity}, \texttt{update\_state}, \texttt{merge\_entities},
+\texttt{add\_relation}, \texttt{mark\_contradiction}, \texttt{forget},
+\texttt{noop}, \texttt{add\_alias}). We train two policies.
+
+The \emph{read} policy answers questions. Its reward is whether the answer
+is correct, minus a small cost for each tool call. We train it with
+GRPO~\cite{shao2024deepseekmath}, the simplification of PPO that powers
+DeepSeek-R1.
+
+The \emph{write} policy ingests conversations turn-by-turn. Its reward is
+\emph{deferred}: after a write trajectory finishes, we run the read policy
+on a battery of held-out questions whose answer depends on the turn the
+write policy just saw. The reward is the read policy's accuracy on that
+battery, minus a storage cost.
+
+The two policies are trained jointly. We alternate. Train the read policy
+against memory the write policy made. Then freeze the read policy and
+train the write policy against the read policy's eval. Repeat.
+
+This is the AlphaZero idea applied to memory. Read and write co-adapt. The
+storage substrate stays swappable.
+
+\paragraph{Why this matters.} For a paper, the contribution is the
+\emph{learned operating system} for memory: facts in the store, strategy
+in the weights. For a product, it means one trained adapter can serve
+many users. The user's facts live in their personal store. The adapter
+encodes how to use any memory store, no matter whose. That is what
+generalises. That is what transfers.
+
+\paragraph{Contributions.}
+\begin{enumerate}
+  \item A backend-agnostic vocabulary of memory operations that compiles
+    to three different storage representations: a flat chunk store, a
+    knowledge graph, and an observational text log.
+  \item A co-training algorithm that alternates GRPO updates on read and
+    write policies, with the read policy serving as the deferred-reward
+    judge for the write policy.
+  \item A reward design for the write policy that uses the existing
+    LoCoMo evidence labels as a per-turn counterfactual signal, with no
+    extra annotation needed.
+  \item Empirical results on LoCoMo and LongMemEval showing
+    \TBD{summarise once experiments land}.
+\end{enumerate}
+
+% --------------------------------------------------------------------------
+\section{Related Work}
+
+\subsection{Memory systems for LLM agents}
+
+The space splits along two axes: where facts live (in the model weights or
+in an external store), and how the operations on those facts are
+controlled (hand-coded or learned).
+
+\paragraph{Facts in an external store, hand-coded ops.} Most production
+systems sit here. \textbf{Mem0}~\cite{chhikara2024mem0} stores facts in a
+vector index and uses an LLM-as-judge prompt for each new turn to choose
+between ADD, UPDATE, DELETE, or NONE. \textbf{Letta} (formerly
+MemGPT)~\cite{zhang2024memgpt} keeps a tiered memory (working, recall,
+archival) and uses LLM function calls to move things between tiers.
+\textbf{Zep / Graphiti}~\cite{rasmussen2024zep} stores a bi-temporal
+knowledge graph---each edge has a valid-time interval and an
+ingestion-time. \textbf{Mastra Observational
+Memory}~\cite{mastra2025om} uses two background agents (Observer and
+Reflector) to compress the chat history into a dense bullet-point
+observation log; it reports the highest published score on LongMemEval
+(94.87\% with gpt-5-mini). \textbf{Generative
+Agents}~\cite{park2023generative} run periodic reflection cycles that
+condense raw observations into higher-level beliefs. In all of these, the
+schedule, thresholds, and prompts that decide what to remember are
+designed by hand.
+
+\paragraph{Facts in the weights.} A different line modifies model
+parameters per user or per fact. \textbf{ROME / MEMIT}~\cite{meng2022rome}
+do surgical edits to feed-forward layer activations to insert specific
+facts. Per-user fine-tuning embeds a user's history into a LoRA adapter.
+These approaches give very tight retrieval (no search needed---the model
+just knows) but fragment the model fleet (one adapter per user) and risk
+catastrophic forgetting.
+
+\paragraph{Facts in the store, ops learned.} This cell is the smallest
+and is where we sit. The closest precedent is \textbf{ACE}~\cite{ace2026}
+(under review at ICLR 2026), which evolves text-form ``playbooks'' based
+on agent execution feedback---but the playbook is a single prompt
+document, not a structured memory store. \textbf{Voyager}~\cite{wang2023voyager}
+maintains a Minecraft skill library that grows over time, with the LLM
+deciding what to add---but additions are trial-and-error, not RL-trained.
+
+\subsection{Reinforcement learning for tool use}
+
+The general framework is: an LLM emits tool calls as actions, an
+environment runs them and returns observations, the episode ends with a
+verifiable reward, and we train the LLM to emit better tool sequences.
+
+\textbf{RLHF}~\cite{ouyang2022rlhf} pioneered using RL on language model
+outputs, but with reward models trained from human preferences and PPO as
+the algorithm. \textbf{PPO}~\cite{schulman2017ppo} requires a critic
+network to estimate baseline rewards.
+
+\textbf{GRPO}~\cite{shao2024deepseekmath} drops the critic. Instead, for
+each prompt, sample a group of $G$ rollouts, compute the reward of each,
+and use the group mean as the baseline. The advantage of rollout $i$ is
+$(r_i - \bar r) / \mathrm{std}(r)$. This works exceptionally well when the
+reward is verifiable (e.g.\ correct answer to a math problem). DeepSeek-R1
+demonstrated GRPO on chain-of-thought; it is now the default RL algorithm
+for tool-use training.
+
+\textbf{Search-R1}~\cite{jin2025searchr1} applies GRPO to multi-turn
+search-then-answer over Wikipedia. Each rollout is a sequence of search
+queries and a final answer. Reported gains: +41\% over RAG baselines on
+NaturalQuestions with Qwen2.5-7B. The Tinker reproduction we built on
+exceeds the original paper's numbers across all four QA benchmarks. Our
+work extends this to the \emph{memory} setting and adds a write side.
+
+\textbf{Reflexion}~\cite{shinn2023reflexion} and verbal RL approaches
+update natural-language ``self-reflections'' rather than weights. They are
+fast and cheap but plateau quickly because the policy is a static prompt.
+
+\textbf{Curriculum learning}~\cite{bengio2009curriculum} is a classic
+finding we make use of: starting an RL agent on easy tasks gives reward
+signal that bootstraps learning on harder tasks. We use LoCoMo's question
+categories as a curriculum (easy single-hop $\to$ hard multi-hop and
+adversarial).
+
+\subsection{Joint training of two policies}
+
+\textbf{CoSearch}~\cite{ace2026} (cited as concurrent ICLR work) jointly
+trains a reasoning policy and a document ranker via RL on agentic search.
+\textbf{HippoRAG}~\cite{guu2024hipporag} uses Personalised PageRank over a
+graph of memories---inspired by the hippocampus---but uses no RL. Our
+approach extends the joint-training idea from query-time
+(reasoning+ranking) to ingestion-time (write+read).
+
+\subsection{Adapter-based fine-tuning}
+
+\textbf{LoRA}~\cite{hu2021lora} adds small low-rank matrices alongside the
+attention layers of a frozen base model. Fine-tuning only the adapter
+keeps the base intact and produces a $\sim$50--200 MB artefact that can be
+applied to any copy of the same base. We use rank-32 adapters on
+Qwen3-4B-Instruct~\cite{tinker2025}, trained via Tinker---Thinking
+Machines Lab's managed RL training service that exposes the right
+primitives (forward-backward, sample, optim-step) for GRPO.
+
+\subsection{What is missing}
+
+Despite a crowded space, no published system combines all three:
+\begin{enumerate}
+  \item Discrete, interpretable memory operations (Mem0/Letta/PIE have
+    these).
+  \item Operations chosen by a learned policy supervised by outcome
+    reward (Search-R1 has this for retrieval only).
+  \item A write side trained against deferred QA accuracy on a held-out
+    battery (no published system).
+\end{enumerate}
+
+That is the gap we close.
+
+% --------------------------------------------------------------------------
+\section{Method}
+
+\subsection{The op vocabulary}
+
+We define a unified action space $\mathcal{A} = \mathcal{A}_R \cup
+\mathcal{A}_W$. Each action is a JSON tool call with a fixed schema.
+
+\paragraph{Read ops $\mathcal{A}_R$.}
+\begin{itemize}
+  \item \texttt{memory\_search(query, k, source)}: Retrieve top-$k$ chunks
+    by lexical (BM25), semantic (dense), or hybrid (RRF~\cite{shao2024deepseekmath})
+    match. The retrieval substrate is whichever Backend the env was built
+    with.
+  \item \texttt{memory\_expand(seed\_uids, k\_per)}: Pull adjacent chunks
+    of seeds (one-hop graph follow / sibling-turn lookup).
+  \item \texttt{memory\_filter(predicate, value)}: Restrict the current
+    hit set by session, speaker, or time window.
+  \item \texttt{memory\_rerank(strategy, query)}: Re-order hits by dense
+    similarity, recency, or session order.
+\end{itemize}
+The episode ends when the model emits a final answer formatted as
+``\texttt{Answer: \ldots}''.
+
+\paragraph{Write ops $\mathcal{A}_W$.}
+\begin{itemize}
+  \item \texttt{noop}: This turn is not memory-worthy. The default.
+  \item \texttt{lookup\_entity(query, type, top\_k)}: Find existing
+    entities by name. The policy uses this to avoid duplicates.
+  \item \texttt{lookup\_relation(source\_uid, target\_uid)}: Inspect
+    existing graph edges.
+  \item \texttt{create\_entity(name, type, state)}: Add a new entity.
+    Type is one of nine: \texttt{person}, \texttt{project}, \texttt{tool},
+    \texttt{organization}, \texttt{belief}, \texttt{decision},
+    \texttt{concept}, \texttt{period}, \texttt{event}, \texttt{goal}.
+  \item \texttt{update\_state(uid, new\_state, transition\_type,
+    trigger\_summary)}: Mutate an entity. Transition type is one of
+    \texttt{update}, \texttt{contradiction}, \texttt{resolution},
+    \texttt{archival}.
+  \item \texttt{merge\_entities(canonical\_uid, alias\_uid)}: Collapse
+    two entities, moving transitions and edges.
+  \item \texttt{add\_relation(source\_uid, target\_uid, rel\_type,
+    description)}: Add a typed graph edge.
+  \item \texttt{mark\_contradiction(uid, contradicting\_state)}: Flag
+    that the current turn conflicts with the entity's prior state, but
+    do not pick a winner.
+  \item \texttt{forget(uid, reason)}: Soft-delete (archive). Keeps the
+    transition history but marks the entity inactive.
+\end{itemize}
+
+\subsection{Backend abstraction}
+
+The op vocabulary is the invariant. Each backend is an adapter that
+compiles ops to native operations:
+
+\begin{itemize}
+  \item \textbf{FlatBackend}: an in-memory list of windowed text chunks
+    with BM25 index and dense embeddings. \texttt{memory\_search} is
+    BM25/dense/RRF~\cite{shao2024deepseekmath}. Most write ops are
+    no-ops; \texttt{create\_entity} appends a chunk.
+  \item \textbf{PIEBackend}: wraps our PIE
+    \texttt{WorldModel}---typed entities, typed transitions, and a
+    relationship graph. Every write op compiles to a real KG mutation.
+  \item \textbf{MastraBackend}: an Observer/Reflector pipeline that
+    compresses raw turns into a dated bullet observation
+    log~\cite{mastra2025om}. Read ops scan the log; write ops mostly
+    no-op (the Observer/Reflector run as background processes).
+\end{itemize}
+
+The same trained policy runs on any of the three. Backend-transfer
+is one of our main empirical claims.
+
+\subsection{Episode definitions}
+
+\paragraph{Read episodes.} One $(\text{question}, \text{gold\_answer})$
+pair per episode. The model emits read ops and a final answer. Reward:
+\[
+  r_R(\tau) = \mathrm{judge}(\text{answer}, \text{gold}) - \lambda_R\,c_R(\tau)
+\]
+where $c_R(\tau) = $ number of tool calls (each costs 0.005--0.01 reward
+units) and $\mathrm{judge}$ returns $\{0.0, 0.5, 1.0\}$ via gpt-4o
+following the LongMemEval paper's protocol.
+
+\paragraph{Write episodes.} One conversation turn per episode (Decision~C
+in our design doc). The model sees the focal turn, two prior turns, and a
+top-$k$ snapshot of pre-existing entities. It emits up to four write ops.
+The episode ends. Reward is computed by:
+\[
+  r_W(\tau) = \frac{1}{|Q|} \sum_{q \in Q}
+              \mathrm{judge}\bigl(R_{\text{frozen}}(q, M_\tau), \text{gold}_q\bigr)
+              - \lambda_W \, c_W(\tau)
+\]
+where $Q$ is a battery of LoCoMo questions whose evidence label includes
+the focal turn's dia\_id, $M_\tau$ is the resulting memory state after
+applying $\tau$'s ops, $R_{\text{frozen}}$ is the read policy held fixed
+during this phase, and
+$c_W(\tau) = \alpha\,n_{\text{ops}} + \beta\,n_{\text{lookups}} +
+\gamma\,n_{\text{entities}}$.
+
+The choice of $Q$ is critical and uses the existing LoCoMo evidence
+labels---no new annotation needed. For each turn $t$, $Q$ is exactly the
+LoCoMo questions that name $t$ as evidence. This gives a per-turn
+counterfactual signal: ``did $W$ preserve enough information to answer the
+questions that depend on this turn?''
+
+\subsection{Co-training algorithm}
+
+\begin{verbatim}
+INITIALIZE
+  W_0 = LoRA on Qwen3-4B (random or SFT-warmed)
+  R_0 = LoRA on Qwen3-4B (random or SFT-warmed)
+  R_frozen for first iteration = HeuristicPolicy
+                                 (deterministic Python; we have no R_0 yet)
+
+FOR t in 1..T:                                       # T = 5
+  # Phase A_t: train R, freeze W
+  build memory M with W_{t-1} (or default chunking for t=1)
+  for s in 1..S_R:                                   # S_R = 200
+    sample G read rollouts per (Q, gold)
+    GRPO step on R using r_R
+  R_t := R after this phase
+
+  # Phase B_t: train W, freeze R
+  for s in 1..S_W:                                   # S_W = 100
+    sample G write rollouts per turn
+    for each rollout, run R_t on the held-out Q-battery for cost+reward
+    GRPO step on W using r_W
+  W_t := W after this phase
+
+  evaluate(R_t, W_t) on held-out splits
+  if not_improving: break
+\end{verbatim}
+
+The cost regulariser keeps the write policy from learning ``store
+everything'' as a strategy. The held-out evaluation lets us stop early.
+
+\subsection{Implementation}
+
+We use Tinker~\cite{tinker2025}, Thinking Machines' managed RL training
+service. The base model lives on Tinker's GPU cluster. We attach a
+rank-32 LoRA. Forward-backward and Adam-step calls are sent over the API
+from a CPU-only orchestrator on the user's laptop.
+
+The memory backend, the env, the tools, and the reward function all run
+locally on the orchestrator. A typical training step:
+\begin{enumerate}
+  \item Tinker samples $G$ rollouts on its cluster.
+  \item Each rollout's tool calls execute locally; results are streamed
+    back to Tinker for the next sample.
+  \item When the rollout terminates, the local reward function runs
+    (judge call to gpt-4o for read; held-out QA battery for write).
+  \item Datums (model input + sampled tokens + advantages) are sent back
+    to Tinker for forward-backward + optim-step.
+\end{enumerate}
+
+The total data volume per step is small: $\sim$8 trajectories, each
+$\sim$1k tokens. Compute and storage stay manageable.
+
+\subsection{Engineering notes}
+
+\paragraph{Chunking matters more than retrieval.} Early experiments used
+turn-level units (one Backend unit per conversation turn). Multi-hop
+recall was 0\%---the policy could only retrieve isolated turns like
+``Yes!'' or ``Bye!''. We switched to overlapping windows of 6 consecutive
+turns with a date+session header at the top:
+\begin{quote}
+\small\texttt{[1:56 pm on 8 May, 2023 | session 1]}\\
+\texttt{Caroline: Hey Mel!}\\
+\texttt{Melanie: Hey Caroline!}\\
+\texttt{Caroline: I went to a LGBTQ support group yesterday\ldots}
+\end{quote}
+The window provides enough text for embeddings to be meaningful, the
+date header lets the answer LLM resolve relative dates (``yesterday'')
+against an absolute reference, and the overlap (stride 3) prevents
+important spans from being split across chunk boundaries.
+
+\paragraph{Reward variance.} GRPO needs reward variance within a group
+or it gets no learning signal. With group size $G=8$ and Tinker's default
+sampling temperature ($\sim$1.0), this is rarely a problem at training
+scale. We additionally use the cookbook's
+\texttt{do\_group\_rollout\_and\_filter\_constant\_reward} which drops
+groups with zero variance entirely. \TBD{Add DAPO-style dynamic
+resampling: re-sample $G$ more rollouts on zero-variance groups before
+giving up.}
+
+\paragraph{Curriculum.} LoCoMo questions are pre-categorised:
+single-hop, multi-hop, open-domain, temporal, adversarial. We start the
+read policy on the union of single-hop and temporal (where the policy
+can succeed early), and mix in multi-hop and adversarial after the first
+$\sim$50 GRPO steps. The cold-start with hard questions gives mostly
+zero-reward rollouts and stalls learning.
+
+% --------------------------------------------------------------------------
+\section{Datasets and Evaluation}
+
+\subsection{Training data}
+
+\textbf{LoCoMo}~\cite{maharana2024locomo} is the primary training set. It
+contains 10 long peer-to-peer conversations with $\sim$200 questions
+each (1,986 total). Each question is annotated with category and with an
+\emph{evidence} list of dia\_ids whose content the question depends on.
+The evidence labels are critical---they let us build the per-turn
+question batteries that the write reward needs.
+
+We split at the conversation level: 6 train, 2 dev, 2 held-out test.
+Same conversation never appears in two splits.
+
+\subsection{Evaluation}
+
+We report on three benchmarks:
+\begin{enumerate}
+  \item \textbf{LoCoMo held-out}: 2 conversations, $\sim$400 questions,
+    in-domain (similar distribution to training but unseen
+    conversations).
+  \item \textbf{LongMemEval-S}~\cite{wu2024longmemeval}: 500 questions,
+    $\sim$115k tokens / 30--40 sessions per question. Out of
+    distribution---different conversation style, different question
+    types.
+  \item \textbf{TemporalBench} (ours): 6-axis behavioural temporal
+    benchmark testing proactivity, deadline tracking, gap-aware
+    resumption, staleness detection, rhythm recognition, and commitment
+    follow-through. \TBD{Build and release; spec lives at
+    \texttt{TEMPORAL-BENCH-SPEC.md}.}
+\end{enumerate}
+
+We use gpt-4o as the judge across all benchmarks, following the
+LongMemEval paper protocol.
+
+\subsection{Baselines}
+
+We compare against the strongest publicly-available memory systems:
+\begin{itemize}
+  \item \textbf{Naive RAG}: dense retrieval over conversation chunks,
+    no learned policy.
+  \item \textbf{Mem0}~\cite{chhikara2024mem0}.
+  \item \textbf{Mastra Observational Memory}~\cite{mastra2025om}.
+  \item \textbf{Zep}~\cite{rasmussen2024zep}.
+  \item \textbf{PIE} (our prior system; PIE-temporal).
+  \item \textbf{HeuristicPolicy} (our handwritten read-side teacher),
+    bounded by SFT data quality.
+\end{itemize}
+
+% --------------------------------------------------------------------------
+\section{Experiments}
+
+\TBD{Fill in once Phase A and Phase B runs land.}
+
+\subsection{Main results}
+
+Table~\ref{tab:main} reports the headline numbers across LoCoMo and
+LongMemEval-S.
+
+\begin{table}[h]
+\centering
+\caption{Main results. \TBD{fill}}
+\label{tab:main}
+\begin{tabular}{lcccc}
+\toprule
+System & LoCoMo (held-out) & LongMemEval-S & TemporalBench & Cost \\
+\midrule
+Naive RAG               & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+Mem0                    & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+Mastra OM (gpt-5-mini)  & \TBD{} & 94.87 (reported) & \TBD{} & \TBD{} \\
+Zep                     & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+PIE (temporal, ours)    & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+\midrule
+\textsf{mempol-Phase-A} (read trained) & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+\textsf{mempol-Phase-B} (W trained, R fixed) & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+\textsf{mempol-Cotrained} (R + W joint)  & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Note for the reader.} The numbers above are pending the runs
+described in section~3.5. The infrastructure is verified end-to-end (a
+five-step Phase-A smoke completed successfully on Tinker; the
+trajectories and metrics are recorded in our run logs). The remaining
+work is compute, not engineering.
+
+\subsection{Per-category breakdown}
+
+\TBD{Per-category accuracy on LoCoMo: single-hop, multi-hop, open-domain,
+temporal, adversarial. Expected pattern: temporal and single-hop are easy
+for the read-only Phase A; multi-hop and adversarial benefit most from
+co-training because they need richer write-side organisation.}
+
+\subsection{Backend transfer}
+
+Train the policy on FlatBackend; evaluate on FlatBackend, MastraBackend,
+and PIEBackend. \TBD{Fill the 3$\times$3 transfer table.} Hypothesis:
+within $\sim$5 points across backends, demonstrating the policy learned
+op semantics rather than backend quirks.
+
+\subsection{Ablations}
+
+We plan five:
+\begin{itemize}
+  \item Action-vocabulary size: 4 ops (Mem0-like) vs.\ 8 vs.\ 12 (full).
+  \item Cost coefficient $\lambda_W$: 0 (no penalty), 0.001, 0.01, 0.1.
+  \item Frozen R for Phase B: HeuristicPolicy vs.\ Phase-A LoRA vs.\
+    larger Phase-A LoRA.
+  \item Curriculum: easy $\to$ hard vs.\ random order.
+  \item Group size $G$: 4 vs.\ 8 vs.\ 16.
+\end{itemize}
+\TBD{Fill once main results land.}
+
+% --------------------------------------------------------------------------
+\section{Analysis}
+
+\subsection{What does the trained read policy actually do?}
+
+\TBD{Qualitative trajectory analysis. Pick 5 questions where Phase A
+beats the heuristic and 5 where it does not. For each, show the heuristic
+vs.\ trained trajectory side by side.}
+
+\subsection{What does the trained write policy actually do?}
+
+\TBD{Show the entity counts and op distribution per category. Hypothesis:
+the trained W is more aggressive on \texttt{create\_entity} for proper
+nouns and more conservative (\texttt{noop}) for chitchat, beating the
+heuristic on both dimensions.}
+
+\subsection{Co-training dynamics}
+
+\TBD{Plot reward curves across outer iterations $t=1\ldots T$. Look for
+the AlphaZero-style monotone improvement signature.}
+
+% --------------------------------------------------------------------------
+\section{Discussion}
+
+\subsection{What we learned}
+
+The two findings we expect to centre the discussion on:
+\begin{enumerate}
+  \item Granularity of the storage substrate matters more than the read
+    policy's sophistication. Replacing turn-level units with windowed
+    chunks (six turns, stride three) gave us a 0\% $\to$ \TBD{X}\%
+    improvement on multi-hop \emph{before} any RL training.
+  \item The deferred-reward signal for the write policy is informative
+    but sparse. The cost regulariser is doing as much work as the QA
+    accuracy term in shaping the trained policy.
+\end{enumerate}
+
+\subsection{Limitations}
+
+\paragraph{Single-user training data.} The current training set is
+LoCoMo's two-speaker peer chats. Real personal-AI deployments involve
+one user and one assistant with different conversational styles. We do
+not yet show that policies trained on LoCoMo transfer to those.
+\TBD{Run on filtered ChatGPT-export data once we have one.}
+
+\paragraph{Mostly synthetic compute.} Tinker's training service is in
+private beta. Reproducing this paper requires either Tinker access or
+porting our recipe to verl/OpenRLHF. We provide both code paths.
+
+\paragraph{Cost.} A full co-training run is \$1.5--2.5K of Tinker
+compute. This is high for academic reproducibility. We will release
+trained checkpoints publicly.
+
+\paragraph{No write-policy curriculum.} We curriculumise the read side
+on LoCoMo's question categories. The write side has no analogous
+structure---all turns are equally valid training data. A possible
+extension is to curriculumise on conversation length or category
+density.
+
+\subsection{Future work}
+
+\paragraph{Multi-backend tools at runtime.} Each backend exposes only
+the read ops. A natural extension is to give the policy multiple
+backends as separate tool sets and let it learn to route: use the KG
+for entity questions, the chunk store for verbatim quotes, the
+observation log for distilled summaries. This is the natural sequel.
+
+\paragraph{Longer write episodes.} We use per-turn write episodes for
+clean credit assignment. Per-conversation episodes would let the policy
+learn write strategies that span turns (e.g., ``defer this decision and
+revisit if it comes up again''). Cost: harder credit assignment and
+longer episodes.
+
+\paragraph{Other applications.} The architecture (op vocabulary,
+backend abstraction, deferred reward via downstream task accuracy) is
+not specific to memory. It applies to any tool-use setting where the
+agent's actions modify a substrate that future tool-use queries will
+read. Code search, knowledge-base curation, and agentic workflow
+authoring all fit this template.
+
+% --------------------------------------------------------------------------
+\section{Conclusion}
+
+We presented a learned memory operating policy for long-horizon LLM
+agents. Read and write operations are actions of two LoRA adapters
+trained jointly with GRPO. The reward for the write policy is the
+read policy's accuracy on a held-out question battery whose answers
+depend on the turn the write policy saw---a deferred signal that
+requires no extra annotation when LoCoMo evidence labels are
+available.
+
+\TBD{Closing paragraph with the headline number once experiments land.}
+The key idea: facts in the store, strategy in the weights. The store
+holds the user's data. The weights hold the strategy that any user can
+share.
+
+% --------------------------------------------------------------------------
+\paragraph{Reproducibility.} All code is at
+\url{https://github.com/USERNAME/mempol} (TODO: replace once pushed).
+The training recipe drops into the
+\texttt{tinker-cookbook}~\cite{tinker2025} repository as
+\texttt{tinker\_cookbook/recipes/memory\_rl/}.
+
+\paragraph{Acknowledgements.} \TBD{Add when ready.}
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}
