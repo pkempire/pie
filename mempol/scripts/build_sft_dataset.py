@@ -128,10 +128,29 @@ def build(out_path: Path, n_convs: int, turns_per_conv: int,
           n_prior_in_context: int = 2) -> int:
     convs = load_locomo(n_convs=n_convs)
     policy = HeuristicWritePolicy()
-    written = 0
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    with out_path.open("w") as f:
+
+    # Resume support: skip conversations already present in the output file.
+    done_conv_ids: set[str] = set()
+    if out_path.exists():
+        try:
+            for line in out_path.read_text().splitlines():
+                meta = (json.loads(line).get("metadata") or {})
+                cid = meta.get("conv_id")
+                if cid:
+                    done_conv_ids.add(cid)
+            if done_conv_ids:
+                logger.info("Resume mode: %d conversations already in %s; "
+                            "skipping them.", len(done_conv_ids), out_path)
+        except Exception as e:
+            logger.warning("Could not parse existing output for resume: %s", e)
+
+    written = 0
+    # Append-mode so resume actually appends, not overwrites.
+    with out_path.open("a") as f:
         for conv, _qas in convs:
+            if conv.sample_id in done_conv_ids:
+                continue
             backend = PIEBackend()                 # one shared backend per conv
             for ti, t in enumerate(conv.turns[:turns_per_conv]):
                 prior = conv.turns[max(0, ti - n_prior_in_context):ti]
