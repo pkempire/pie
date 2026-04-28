@@ -33,38 +33,47 @@
 \maketitle
 
 \begin{abstract}
-Every memory system shipping in 2026---Mem0, Letta, Mastra, Zep, our own
-KGmem---decides what to write and how to read with code a person typed by
-hand. The thresholds are fixed. The prompts are fixed. The schedules are
-fixed. None of these rules update when the system makes a mistake. The
-agent gets older but the operating system in front of its memory does not.
+Memory systems for LLM agents---Mem0, Letta, Mastra, Zep, our own
+KGmem---each pair an external store with a hand-written control layer
+that decides what to write and how to read. The thresholds, prompts, and
+schedules in that layer are typically fixed at design time and do not
+update from downstream outcomes. We ask whether those decisions can
+instead be learned.
 
-We replace the operating system with a learned policy. Memory operations
-become actions of a LoRA~\cite{hu2021lora} adapter on a 4B parameter base
-model. A write policy decides what to store from each conversation turn. A
-read policy decides how to search memory for an answer. They share the
-same op vocabulary across three different storage backends: a flat chunk
-store, a typed-transition knowledge graph, and a Mastra-style
-observational text log~\cite{mastra2025om}. Both policies train with
+Concretely, we treat memory operations as actions of a LoRA~\cite{hu2021lora}
+adapter on a 4B-parameter base model and train two policies that share an
+op vocabulary: a write policy that decides what to store from each
+conversation turn, and a read policy that decides how to search memory
+for an answer. The same vocabulary compiles to three storage backends---a
+flat chunk store, a typed-transition knowledge graph, and a Mastra-style
+observation log~\cite{mastra2025om}---and both policies train with
 GRPO~\cite{shao2024deepseekmath}.
 
-The hard part of training the write side is reward. Outcome supervision is
-sparse and noisy: a single judge call to a frozen reader is expensive and
-collapses to zero whenever the reader fails for unrelated reasons. We
-contribute a second, dense signal we call \emph{evidence coverage}.
-LoCoMo~\cite{maharana2024locomo} annotates every question with the
-dialogue turns it depends on; the knowledge graph records which dialogue
-turn produced each entity. Coverage is the fraction of the question's
-required dialogue turns that the policy actually preserved in the graph.
-It is deterministic, free, and dense. We blend it with the judge term
-($w_{\text{cov}} = 0.6$, $w_{\text{qa}} = 0.4$) and report ablations.
+The harder side to train is the write policy, because outcome supervision
+on memory writes is sparse, delayed, and noisy: a single judge call to a
+frozen reader is expensive and collapses to zero whenever the reader
+fails for unrelated reasons. We propose a second, dense signal we call
+\emph{evidence coverage}. LoCoMo~\cite{maharana2024locomo} labels every
+question with the dialogue turns it depends on, and the knowledge graph
+records which dialogue turn produced each entity, so coverage is simply
+the fraction of a question's required turns that the write policy
+preserved. It is deterministic and free to compute. We blend it with the
+judge term ($w_{\text{cov}} = 0.6$, $w_{\text{qa}} = 0.4$) and report the
+mixture as an ablation.
 
 We evaluate on LoCoMo~\cite{maharana2024locomo} and
 LongMemEval~\cite{wu2024longmemeval}. \TBD{report headline numbers once
-the long Phase~A and Phase~B runs land.} The single trained adapter runs
-unchanged across the three backends, with~\TBD{Z}\% drop on transfer.
-Facts stay in the store. The strategy is in the weights. One adapter
-serves any user; their store stays theirs.
+the long Phase~A and Phase~B runs land.} A single trained adapter runs
+across the three backends with \TBD{Z}\% drop on transfer. The framing
+we want to leave the reader with: facts in the store, strategy in the
+weights---one adapter serving any user without their store leaving their
+device.
+
+A caveat we return to in the limitations section: the dense reward
+signal we lean on requires per-question evidence annotations, which
+research benchmarks have but real personal-AI deployments do not. We
+discuss two routes to closing that gap (LLM-extracted weak evidence and
+next-turn implicit feedback) but do not yet evaluate them.
 \end{abstract}
 
 % --------------------------------------------------------------------------
@@ -129,30 +138,44 @@ about three weeks ago.
 Each of these uses a memory system. Each system has a way to write things
 down and a way to read them back. And each was hand-built.
 
-\paragraph{The hand-coded gap.} Look at the popular open-source memory
-systems for LLM agents:
+\paragraph{Where the design choices currently live.} Looking at popular
+open-source memory systems for LLM agents, a pattern emerges: each
+ships an external store paired with a hand-tuned control layer.
 \begin{itemize}
   \item \textbf{Mem0}~\cite{chhikara2024mem0} stores facts as flat
-    key-value pairs. When a new fact arrives, an LLM-as-judge prompt picks
-    one of \texttt{ADD/UPDATE/DELETE/NONE}. The thresholds are fixed.
-  \item \textbf{Letta / MemGPT}~\cite{zhang2024memgpt} treats memory as
-    operating-system tiers. The LLM uses fixed function calls to move
-    things between tiers. The promotion rules are hard-coded.
+    key-value pairs. On each new turn an LLM-as-judge prompt picks one
+    of \texttt{ADD/UPDATE/DELETE/NONE}. The decision rule (the prompt
+    and its thresholds) ships fixed.
+  \item \textbf{Letta / MemGPT}~\cite{zhang2024memgpt} models memory as
+    OS tiers (working, recall, archival) and uses an LLM to move items
+    between tiers via prompted function calls. The promotion rules are
+    written by hand.
   \item \textbf{Zep / Graphiti}~\cite{rasmussen2024zep} keeps a temporal
-    knowledge graph. Edges have valid times. The invalidation rules are
-    fixed.
-  \item \textbf{Mastra}~\cite{mastra2025om} uses two background agents,
-    Observer and Reflector, to compress the chat into a dense observation
-    log. The compression schedule is fixed.
-  \item \textbf{Our own PIE} keeps typed entities with state transitions.
-    A 3-tier resolver decides if a new mention matches an existing entity.
-    The thresholds are fixed: 0.85 for string match, 0.85 for embedding
-    accept, 0.65 for reject.
+    knowledge graph in which edges carry valid-time intervals. The
+    rules for when an edge becomes invalid are fixed.
+  \item \textbf{Mastra}~\cite{mastra2025om} compresses raw turns into a
+    dated bullet observation log using two background agents (Observer
+    and Reflector). The compression schedule and prompts are fixed.
+  \item \textbf{KGmem} (the lead author's prior system, also one of our
+    backends) keeps typed entities with state transitions and resolves
+    new mentions against existing entities through a 3-tier
+    string/embedding/LLM cascade. The cascade thresholds---0.85 for
+    string match, 0.85 for embedding accept, 0.65 for reject---are
+    constants chosen by inspection, not learned from outcomes.
 \end{itemize}
+None of this is a criticism: hand-tuned control layers are a reasonable
+starting point and many of these systems work well in practice. The open
+question is whether the same control decisions can be improved by RL
+against the same answer-correctness signal we use for evaluation, and
+whether the resulting policy generalises across stores.
 
-In every case, the rules for what to write and how to read are written by
-humans. None of the rules update when the system makes a mistake. None of
-them improve from being used.
+In each system, the rules for what to write and how to read sit in
+human-authored code. The store grows from use---facts come in, get
+edited, get retrieved---but the control layer that picks the write
+op or the search strategy is the same on day 1 and on day 100. A natural
+question is whether those control decisions can be learned from the same
+outcome signal that we already use to evaluate the system: did the
+agent answer correctly later?
 
 \paragraph{What we do.} We treat memory operations as actions of a small
 learned policy. The policy is a low-rank adapter
@@ -852,6 +875,24 @@ The two findings we expect to centre the discussion on:
 \end{enumerate}
 
 \subsection{Limitations}
+
+\paragraph{The reward signal is benchmark-shaped.} The evidence-coverage
+term that anchors our write reward depends on LoCoMo's per-question
+\texttt{evidence} dia\_ids. Production deployments do not ship with
+those labels: a real ChatGPT user does not annotate ``this answer
+required turn 47 from session 9.'' If the only signal one can get in
+production is implicit (the user's next message accepts or rejects the
+agent's reply), the reward becomes much sparser and noisier than what we
+train against. We see two plausible routes to closing the gap. \emph{Weak
+evidence mining}: at the end of a session, an LLM can read the transcript
+plus the user's final responses and label which turns were causally
+relevant; this mirrors how the LoCoMo annotators built their labels and
+costs a few cents per session. \emph{Next-turn implicit reward}: treat
+user-typed corrections, follow-up clarifications, and repeated queries as
+weak negative signal on the immediately preceding write op. Both are open
+questions; we do not yet evaluate either, and a future version of this
+paper should report whether a write policy trained against weak evidence
+matches one trained against gold evidence.
 
 \paragraph{Single-user training data.} The current training set is
 LoCoMo's two-speaker peer chats. Real personal-AI deployments involve
