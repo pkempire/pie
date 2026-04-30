@@ -70,12 +70,20 @@ def main():
                     logger.warning("embedding failed for %s: %s — continuing",
                                    card.get("name"), e)
 
+            # `kind` is the primary classification axis; `type` is kept as a
+            # legacy mirror for old queries. If the seed file uses the legacy
+            # `type` field instead of `kind`, mirror it.
+            kind = card.get("kind") or card.get("type") or "tool"
             cid = db.upsert_component(
                 conn,
                 slug=slug,
                 name=card["name"],
                 aliases_json=card.get("aliases") or [],
-                type=card.get("type", "tool"),
+                type=kind,                                 # legacy mirror
+                kind=kind,
+                runtime=card.get("runtime", "mixed"),
+                deployment=card.get("deployment", "both"),
+                stack_layer=card.get("stack_layer", "orchestration"),
                 one_liner=card.get("one_liner", ""),
                 summary=card.get("summary", ""),
                 capability_long=card.get("capability_long", ""),

@@ -17,28 +17,49 @@ CREATE TABLE IF NOT EXISTS components (
     slug                TEXT    UNIQUE NOT NULL,           -- "browserbase", "stagehand"
     name                TEXT    NOT NULL,                  -- canonical display name
     aliases_json        TEXT    NOT NULL DEFAULT '[]',      -- alternative names
-    type                TEXT    NOT NULL,                  -- tool|library|api|mcp_server|model_api|framework|template|infra|sdk
-    one_liner           TEXT    NOT NULL DEFAULT '',       -- one sentence (< 140 chars)
-    summary             TEXT    NOT NULL DEFAULT '',       -- 2-3 sentences
-    capability_long     TEXT    NOT NULL DEFAULT '',       -- 1-2 paragraphs
+
+    -- ── Multi-axis taxonomy ────────────────────────────────────────────────
+    -- A flat `type` was too coarse. Four axes cover the questions a planner
+    -- actually wants to ask:
+    --   kind        what kind of thing it is
+    --   runtime     how you run it
+    --   deployment  where it lives
+    --   stack_layer where in the architecture stack
+    -- The legacy `type` column is kept (deprecated) for compatibility with
+    -- existing queries; it shadows `kind`.
+    type                TEXT    NOT NULL,                  -- DEPRECATED — mirrors `kind`
+    kind                TEXT    NOT NULL DEFAULT 'tool',
+       -- model | sdk | framework | api | mcp_server | infra | template | tool | dataset | application
+    runtime             TEXT    NOT NULL DEFAULT 'mixed',
+       -- python | typescript | cross | hosted | mcp | mixed
+    deployment          TEXT    NOT NULL DEFAULT 'both',
+       -- local | self_hosted | hosted_only | both
+    stack_layer         TEXT    NOT NULL DEFAULT 'orchestration',
+       -- foundation_model | inference_proxy | runtime_infra | client_library
+       -- | orchestration | application | data
+
+    one_liner           TEXT    NOT NULL DEFAULT '',
+    summary             TEXT    NOT NULL DEFAULT '',
+    capability_long     TEXT    NOT NULL DEFAULT '',
     homepage_url        TEXT,
     github_url          TEXT,
     docs_url            TEXT,
-    mcp_url             TEXT,                              -- if it's an MCP server
-    pricing_model       TEXT,                              -- free|freemium|paid|oss
+    mcp_url             TEXT,
+    pricing_model       TEXT,                              -- free|freemium|paid|oss|usage_based
     hosted_or_self      TEXT,                              -- hosted|self_hosted|both
-    license             TEXT,                              -- MIT|Apache-2.0|proprietary|...
-    embedding_json      TEXT,                              -- JSON-encoded float[1536]
-    importance          REAL    NOT NULL DEFAULT 0.0,      -- decays without reinforcement
-    last_verified_at    TEXT,                              -- ISO-8601 of last successful enrichment
-    last_referenced_at  TEXT,                              -- ISO-8601 of last query/plan touch
+    license             TEXT,
+    embedding_json      TEXT,
+    importance          REAL    NOT NULL DEFAULT 0.0,
+    last_verified_at    TEXT,
+    last_referenced_at  TEXT,
     created_at          TEXT    NOT NULL DEFAULT (datetime('now')),
     updated_at          TEXT    NOT NULL DEFAULT (datetime('now')),
-    -- Free-form structured extras (latest version, github stars, etc.)
     extras_json         TEXT    NOT NULL DEFAULT '{}'
 );
-CREATE INDEX IF NOT EXISTS idx_components_type ON components(type);
-CREATE INDEX IF NOT EXISTS idx_components_importance ON components(importance);
+CREATE INDEX IF NOT EXISTS idx_components_kind        ON components(kind);
+CREATE INDEX IF NOT EXISTS idx_components_runtime     ON components(runtime);
+CREATE INDEX IF NOT EXISTS idx_components_stack_layer ON components(stack_layer);
+CREATE INDEX IF NOT EXISTS idx_components_importance  ON components(importance);
 
 
 -- ─── Tags / capability concepts ──────────────────────────────────────────────
