@@ -281,8 +281,14 @@ class WriteReward:
                 logger.warning("WriteReward: answer-gain failed (%s)", e)
 
         # 3c. Reader-overlap (logged only; no longer in reward).
+        # SKIPPED when w_overlap=0 (the default). Each call costs ~4 reader
+        # runs against full_text + reformulate LLM calls, so leaving it on
+        # for diagnostics-only burns ~10s + ~$0.01 per rollout pointlessly.
+        # If you want overlap as a logged metric, set MEMPOL_W_OVERLAP=1e-6.
         overlap_result: OverlapResult | None = None
-        if self.full_text_backend is not None and self.reader is not None:
+        if (self.w_overlap > 0
+            and self.full_text_backend is not None
+            and self.reader is not None):
             try:
                 overlap_result = battery_reader_overlap(
                     backend=self.backend,
@@ -295,11 +301,15 @@ class WriteReward:
                 pass
         mean_overlap = overlap_result.mean_overlap if overlap_result else 0.0
 
-        # 4. QA judge — optional anchoring term.
+        # 4. QA judge — anchoring term.
+        # FAST PATH: when counterfactual ran, its full_state_score is the
+        # mean judge score over the same battery against the same KG. Reuse
+        # it instead of re-running 4 questions × 2 LLM calls per rollout.
+        # Slow path (no counterfactual) recomputes from scratch.
         mean_qa = 0.0
-        if self.w_qa > 0 and self.r_runner is not None:
-            loop = asyncio.get_running_loop()
-
+        if cf_result is not None:
+            mean_qa = cf_result.full_state_score
+        elif self.w_qa > 0 and self.r_runner is not None:
             async def _score_one(question: str, gold: str) -> float:
                 try:
                     answer = await loop.run_in_executor(
