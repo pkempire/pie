@@ -44,6 +44,7 @@ class _Turn:
     text: str
     msg_id: str
     conv_id: str
+    timestamp: float = 0.0
 
 
 def _flatten_chatgpt_export(path: Path) -> list[_Turn]:
@@ -79,7 +80,7 @@ def _flatten_chatgpt_export(path: Path) -> list[_Turn]:
                 items.append((ts, m.get("role", ""), text, str(m.get("id", ""))))
         items.sort(key=lambda x: x[0])
         for ts, role, text, mid in items:
-            out.append(_Turn(idx=len(out), role=role, text=text, msg_id=mid, conv_id=cid))
+            out.append(_Turn(idx=len(out), role=role, text=text, msg_id=mid, conv_id=cid, timestamp=ts))
     return out
 
 

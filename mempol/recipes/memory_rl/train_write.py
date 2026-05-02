@@ -62,7 +62,7 @@ class CLIConfig:
     learning_rate: float = 4e-5
     batch_size: int = 4               # write-side prompts per GRPO step
     seed: int = 2
-    max_tokens: int = 512             # write episodes are short — small per-turn budget
+    max_tokens: int = 2048
     eval_every: int = 0
     max_steps: int | None = None
 
@@ -86,9 +86,9 @@ class CLIConfig:
     n_convs: int = 8
     train_frac: float = 0.8
     group_size: int = 8               # G — rollouts per write episode for GRPO
-    max_turns: int = 4                # max ops per write episode
-    max_battery_per_turn: int = 6     # held-out QA battery cap (cost control)
-    n_prior_turns_in_context: int = 2
+    max_turns: int = 32               # runtime/tool budget, not a semantic cap
+    max_battery_per_turn: int = 0     # 0 = all Qs for that datum
+    n_prior_turns_in_context: int = 12
 
     # ── Frozen R (the judge that evaluates W's memory state) ──
     # v1: empty string → use HeuristicPolicy. v2: "tinker://..." path.

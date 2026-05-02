@@ -8,7 +8,6 @@ Every op + observation is logged into the Trace so traces double as SFT data.
 """
 from __future__ import annotations
 import json
-import re
 from typing import Any
 
 from .. import llm, config
@@ -17,20 +16,16 @@ from .base import ReadPolicy, Step, Trace
 from .v0_naive import answer_with_context
 
 
-_TEMPORAL_HINTS = re.compile(
-    r"\b(when|date|time|year|month|week|day|before|after|since|first|last|recent|earliest|latest)\b",
-    re.IGNORECASE,
-)
-_MULTIHOP_HINTS = re.compile(
-    r"\b(both|also|else|other|together|relate|connection|why|because|how does|fields|topics)\b",
-    re.IGNORECASE,
-)
-
-
 _REFORMULATE_PROMPT = (
     "Rewrite the user's question into a short, dense search query optimised for "
     "lexical+semantic retrieval over a personal conversation log. "
     "Keep proper nouns. Drop filler. Output ONLY the query string."
+)
+_ROUTE_PROMPT = (
+    "Route this memory question for retrieval. Decide whether answering likely "
+    "requires following relationships across multiple remembered entities or "
+    "events, and whether explicit time reasoning matters. Return strict JSON "
+    "with booleans: needs_expand, needs_time_reasoning, reason."
 )
 
 
@@ -45,12 +40,24 @@ def _reformulate(q: str) -> str:
     return out or q
 
 
-def _is_temporal(q: str) -> bool:
-    return bool(_TEMPORAL_HINTS.search(q))
-
-
-def _is_multihop(q: str) -> bool:
-    return bool(_MULTIHOP_HINTS.search(q))
+def _route_question(q: str) -> dict[str, Any]:
+    try:
+        raw = llm.chat(
+            [
+                {"role": "system", "content": _ROUTE_PROMPT},
+                {"role": "user", "content": q},
+            ],
+            model=config.REFORMULATE_MODEL,
+            json_mode=True,
+        )
+        obj = json.loads(raw)
+        return {
+            "needs_expand": bool(obj.get("needs_expand")),
+            "needs_time_reasoning": bool(obj.get("needs_time_reasoning")),
+            "reason": str(obj.get("reason", "")),
+        }
+    except Exception:
+        return {"needs_expand": False, "needs_time_reasoning": False, "reason": "route_parse_failed"}
 
 
 class HeuristicPolicy(ReadPolicy):
@@ -62,11 +69,13 @@ class HeuristicPolicy(ReadPolicy):
         final_k: int = 6,
         do_reformulate: bool = True,
         do_expand: bool = True,
+        do_route: bool = True,
     ) -> None:
         self.first_k = first_k
         self.final_k = final_k
         self.do_reformulate = do_reformulate
         self.do_expand = do_expand
+        self.do_route = do_route
 
     def run(self, question: str, backend: Backend) -> Trace:
         t = Trace(qid="", question=question, backend=backend.name, policy=self.name)
@@ -76,6 +85,12 @@ class HeuristicPolicy(ReadPolicy):
         if self.do_reformulate:
             q_search = _reformulate(question)
             t.steps.append(Step("reformulate", {}, q_search[:120]))
+        route = _route_question(question) if self.do_route else {
+            "needs_expand": False,
+            "needs_time_reasoning": False,
+            "reason": "route_disabled",
+        }
+        t.steps.append(Step("route", {}, json.dumps(route)[:160]))
 
         # 2. First retrieval
         hits = backend.retrieve(q_search, k=self.first_k, source="hybrid")
@@ -83,7 +98,7 @@ class HeuristicPolicy(ReadPolicy):
         t.n_retrievals += 1
 
         # 3. Optional 1-hop expand for multi-hop queries
-        if self.do_expand and _is_multihop(question) and hits:
+        if self.do_expand and route.get("needs_expand") and hits:
             seed_uids = [h.unit.uid for h in hits[:3]]
             extra = backend.expand(seed_uids, k_per=2)
             if extra:

@@ -18,6 +18,7 @@ import argparse
 import json
 import time
 from dataclasses import asdict
+from datetime import datetime, timezone
 from pathlib import Path
 
 from mempol import config
@@ -25,6 +26,12 @@ from mempol.backends.pie_kg import PIEBackend
 from mempol.data.necessity_miner import _flatten_chatgpt_export
 from mempol.policies.v1_write import HeuristicWritePolicy
 from mempol.recipes.memory_rl.write_tools import WriteTool
+
+
+def _ts_text(ts: float) -> str:
+    if not ts:
+        return ""
+    return datetime.fromtimestamp(ts, tz=timezone.utc).isoformat()
 
 
 def dump_world_model_md(backend: PIEBackend, out_path: Path) -> Path:
@@ -77,6 +84,8 @@ def run(
     max_convs: int = 3,
     max_turns_per_conv: int = 40,
     candidate_roles: tuple[str, ...] = ("user", "assistant"),
+    sleep_sec: float = 0.0,
+    context_turns: int = 6,
 ) -> dict:
     print(f"[simulate] flattening {conversations_json}…")
     turns = _flatten_chatgpt_export(conversations_json)
@@ -110,18 +119,27 @@ def run(
                     n_skipped += 1
                     continue
                 n_total_turns += 1
-                ts = float(ti)  # turn-index as time proxy
+                ts = float(turn.timestamp or ti)
+                recent = conv_turns[max(0, ti - context_turns):ti]
+                recent_context = "\n".join(
+                    f"T{j} {t.role}: {t.text[:400]}"
+                    for j, t in enumerate(recent, start=max(0, ti - context_turns))
+                )
                 decision = policy.step(
-                    turn_text=turn.text[:1500],
+                    turn_text=f"{turn.role}: {turn.text[:1500]}",
                     dia_id=f"{cid[:8]}::T{ti}",
                     timestamp=ts,
                     backend=backend,
                     write_tool=write_tool,
+                    observation_time_text=_ts_text(turn.timestamp),
+                    recent_context_text=recent_context,
                 )
                 f.write(json.dumps({
                     "conv_id": cid,
                     "turn_idx": ti,
                     "role": turn.role,
+                    "timestamp": ts,
+                    "observation_time": _ts_text(turn.timestamp),
                     "text": turn.text[:300],
                     "lookup_matches": [
                         {"uid": m["uid"][:8], "name": m["name"], "type": m["type"],
@@ -131,6 +149,7 @@ def run(
                     "raw_ops": decision.raw_ops,
                     "applied_ops": decision.applied_ops,
                     "errors": decision.errors,
+                    "context_turns_used": len(recent),
                 }) + "\n")
                 for op in decision.applied_ops:
                     op_counter[op["op"]] = op_counter.get(op["op"], 0) + 1
@@ -138,6 +157,8 @@ def run(
                     print(f"  conv {ci+1}/{len(conv_ids)} turn {ti+1}/{len(conv_turns)} "
                           f"  entities={len(backend.wm.entities)} "
                           f"  ops={op_counter}", flush=True)
+                if sleep_sec > 0:
+                    time.sleep(sleep_sec)
 
     # Persist world model + summary.
     md_path = dump_world_model_md(backend, out_dir / "world_model.md")
@@ -148,6 +169,7 @@ def run(
         "conversations_json": str(conversations_json),
         "max_convs": max_convs,
         "max_turns_per_conv": max_turns_per_conv,
+        "context_turns": context_turns,
         "n_convs_processed": len(conv_ids),
         "n_turns_processed": n_total_turns,
         "n_turns_skipped_by_role": n_skipped,
@@ -177,6 +199,9 @@ if __name__ == "__main__":
     ap.add_argument("--max-convs", type=int, default=3)
     ap.add_argument("--max-turns-per-conv", type=int, default=40)
     ap.add_argument("--run-name", default=None)
+    ap.add_argument("--sleep-sec", type=float, default=0.0,
+                    help="pause after each turn so the dashboard can show decisions arriving")
+    ap.add_argument("--context-turns", type=int, default=6)
     args = ap.parse_args()
 
     if args.out_dir is None:
@@ -188,4 +213,6 @@ if __name__ == "__main__":
         out_dir=args.out_dir,
         max_convs=args.max_convs,
         max_turns_per_conv=args.max_turns_per_conv,
+        sleep_sec=args.sleep_sec,
+        context_turns=args.context_turns,
     )

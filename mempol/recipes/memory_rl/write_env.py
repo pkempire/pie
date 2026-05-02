@@ -2,10 +2,10 @@
 
 Mirrors the read-side `memory_env.py` but with three structural differences:
 
-  1. Per-turn episodes. One Tinker `Env` covers ONE conversation turn (Decision
-     1 option C in the design doc). The W policy sees the turn + a snapshot of
-     the existing memory and emits ≤4 write ops, then the env terminates.
-     This gives clean credit assignment per turn.
+  1. Per-turn episodes. This is the current smoke/SFT/GRPO scaffold, not the
+     final continual-memory training environment. The final loop should score
+     chronological chunk/session episodes against future QA, because memory
+     quality is a property of an accumulated state, not a single isolated turn.
 
   2. Tools are write-side: lookup_entity, create_entity, update_state,
      merge_entities, add_relation, mark_contradiction, forget, noop. Plus
@@ -109,9 +109,10 @@ For each tool call:
 {"name": "<tool_name>", "arguments": {<args>}}
 </tool_call>
 
-You may emit 0–4 tool calls per turn. The episode ends when you stop emitting
-tool calls. Reward is computed AFTER the episode by querying your stored
-memory against held-out questions.
+Emit as many tool calls as are useful, then stop. The runtime may still impose
+a max trajectory/token budget to prevent infinite loops, but there is no
+semantic "four calls only" rule. Reward is computed AFTER the episode by
+querying your stored memory against held-out questions.
 """
 
 
@@ -177,7 +178,7 @@ class WriteEnvGroupBuilder(EnvGroupBuilder):
         model_name: str,
         renderer_name: str | None,
         group_size: int,
-        max_turns: int = 4,
+    max_turns: int = 32,
         format_coef: float = 0.0,
         max_trajectory_tokens: int = 4 * 1024,
         max_generation_tokens: int | None = None,
@@ -214,13 +215,15 @@ class WriteEnvGroupBuilder(EnvGroupBuilder):
             # the QA-judge backbone; otherwise the heuristic R is the
             # default (resolved inside WriteReward.__post_init__).
             r_runner = resolve_r_runner_from_env()
-            # Reward-mix knobs. Defaults match write_reward.DEFAULT_W_GAIN /
-            # DEFAULT_W_QA: the dense signal is now answer-gain over a
-            # random-K baseline (replacing the broken dia_id-overlap term),
-            # blended with absolute judge-on-post-W as a smaller anchor.
+            # Reward-mix knobs. Defaults reflect the v3 reward (per-op
+            # counterfactual marginal utility as the primary dense signal,
+            # absolute judge as an anchor). Legacy answer-gain and
+            # reader-overlap weights default to 0; bump them via env vars
+            # for ablation runs.
             import os as _os
-            w_gain    = float(_os.environ.get("MEMPOL_W_GAIN",    "0.7"))
+            w_cf      = float(_os.environ.get("MEMPOL_W_CF",      "0.7"))
             w_qa      = float(_os.environ.get("MEMPOL_W_QA",      "0.3"))
+            w_gain    = float(_os.environ.get("MEMPOL_W_GAIN",    "0.0"))
             w_overlap = float(_os.environ.get("MEMPOL_W_OVERLAP", "0.0"))
             k_max     = int(_os.environ.get("MEMPOL_K_MAX",       "12"))
             reward_fn = WriteReward(
@@ -230,8 +233,9 @@ class WriteEnvGroupBuilder(EnvGroupBuilder):
                 r_runner=r_runner,
                 write_tool=wtool,
                 conv_id=self.datum.get("conv_id", ""),
-                w_gain=w_gain,
+                w_cf=w_cf,
                 w_qa=w_qa,
+                w_gain=w_gain,
                 w_overlap=w_overlap,
                 k_max=k_max,
                 full_text_cache=self.datum.get("full_text_cache"),
@@ -321,12 +325,8 @@ class WriteRLDatasetBuilder(RLDatasetBuilder):
     batch_size: int = 8
     group_size: int = 4
     max_turns: int = 4
-    max_battery_per_turn: int = 6        # cap battery size for cost control
-    min_battery_per_turn: int = 2        # FIX (audit #6): drop battery_size=1
-                                          # turns. Smoke showed they ALWAYS produce
-                                          # zero variance → cookbook drops the
-                                          # group → wasted compute. Filtering
-                                          # roughly doubles effective signal/$.
+    max_battery_per_turn: int = 0        # 0 = use all Qs for this turn
+    min_battery_per_turn: int = 1
     n_prior_turns_in_context: int = 2
     seed: int = 0
     renderer_name: str | None = None
@@ -362,8 +362,11 @@ class WriteRLDatasetBuilder(RLDatasetBuilder):
                     qas_for_turn = evidence_index.get(t.dia_id, [])
                     if len(qas_for_turn) < self.min_battery_per_turn:
                         continue                       # too few Qs → no GRPO variance
-                    # Cap battery size so reward cost stays bounded.
-                    battery = qas_for_turn[: self.max_battery_per_turn]
+                    battery = (
+                        qas_for_turn
+                        if self.max_battery_per_turn <= 0
+                        else qas_for_turn[: self.max_battery_per_turn]
+                    )
                     prior_turns = conv.turns[max(0, ti - self.n_prior_turns_in_context):ti]
                     prior_text = "\n".join(
                         f"  {pt.dia_id} {pt.speaker}: {pt.text}" for pt in prior_turns

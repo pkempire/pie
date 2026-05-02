@@ -85,6 +85,11 @@ def _load_rollout(path: Path) -> dict:
         return {}
 
 
+def _latest_jsonl_rows(path: Path, limit: int = 200) -> list[dict]:
+    rows = _read_jsonl(path)
+    return rows[-limit:]
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Trajectory rendering
 # ─────────────────────────────────────────────────────────────────────────────
@@ -215,6 +220,209 @@ def _render_kg_summary(rollout: dict) -> None:
         ], use_container_width=True)
 
 
+def _render_decision_run(log_path: Path, run_name: str) -> None:
+    """Render `simulate_on_real_export.py` output.
+
+    This is the practical "watch the writer decide" view: every row is one
+    turn, with lookup matches, raw LLM ops, applied ops, and errors.
+    """
+    decisions_path = log_path / "decisions.jsonl"
+    if not decisions_path.exists() and (log_path / "write_decisions.jsonl").exists():
+        decisions_path = log_path / "write_decisions.jsonl"
+    rows = _latest_jsonl_rows(decisions_path)
+    if not rows:
+        st.info(f"{run_name}: waiting for {decisions_path}")
+        return
+
+    op_counts = Counter()
+    err_count = 0
+    for r in rows:
+        for op in r.get("applied_ops") or []:
+            op_counts[op.get("op", "?")] += 1
+        if r.get("errors"):
+            err_count += 1
+
+    summary = {}
+    summary_path = log_path / "summary.json"
+    if summary_path.exists():
+        try:
+            summary = json.loads(summary_path.read_text())
+        except Exception:
+            summary = {}
+    latest = rows[-1]
+    summary_is_stale = (
+        summary_path.exists()
+        and decisions_path.exists()
+        and summary_path.stat().st_mtime < decisions_path.stat().st_mtime
+    )
+
+    live_entities = latest.get("n_entities_so_far")
+    live_transitions = latest.get("n_transitions_so_far")
+    live_relationships = latest.get("n_relationships_so_far")
+    if live_entities is None:
+        live_entities = summary.get("n_entities_final", "live")
+    if live_transitions is None:
+        live_transitions = summary.get("n_transitions_final", "live")
+    if live_relationships is None:
+        live_relationships = summary.get("n_relationships_final", "live")
+
+    st.subheader("Live write decisions")
+    c1, c2, c3, c4, c5, c6 = st.columns(6)
+    c1.metric("turn rows", len(rows))
+    c2.metric("entities", live_entities)
+    c3.metric("transitions", live_transitions)
+    c4.metric("relations", live_relationships)
+    c5.metric("errors", err_count)
+    c6.metric("ops", sum(op_counts.values()))
+    if summary_is_stale:
+        st.caption("summary.json is older than decisions.jsonl; showing live counters from the latest decision row.")
+    if op_counts:
+        st.caption("**Applied ops:** " + " · ".join(
+            f"{n}×{op}" for op, n in op_counts.most_common()
+        ))
+
+    st.markdown("### Latest turn")
+    st.code(latest.get("text", ""), language="markdown")
+
+    cols = st.columns(3)
+    with cols[0]:
+        st.markdown("**Lookup matches**")
+        st.json(latest.get("lookup_matches") or [])
+    with cols[1]:
+        st.markdown("**Raw ops**")
+        st.json(latest.get("raw_ops") or [])
+    with cols[2]:
+        st.markdown("**Applied ops / errors**")
+        st.json({
+            "applied_ops": latest.get("applied_ops") or [],
+            "errors": latest.get("errors") or [],
+        })
+
+    st.markdown("---")
+    st.subheader("Recent decisions")
+    table = []
+    for r in reversed(rows[-50:]):
+        table.append({
+            "turn": r.get("turn_idx"),
+            "role": r.get("role"),
+            "entities": r.get("n_entities_so_far"),
+            "lookups": len(r.get("lookup_matches") or []),
+            "text": (r.get("text") or "")[:120],
+            "ops": ", ".join(op.get("op", "?") for op in r.get("applied_ops") or []),
+            "errors": "; ".join(r.get("errors") or []),
+        })
+    st.dataframe(table, use_container_width=True)
+
+    md_path = log_path / "world_model.md"
+    if md_path.exists():
+        with st.expander("world_model.md", expanded=False):
+            st.markdown(md_path.read_text(errors="replace")[:40_000])
+    for md_path in sorted(log_path.glob("*_world_model.md"))[:3]:
+        with st.expander(md_path.name, expanded=False):
+            st.markdown(md_path.read_text(errors="replace")[:40_000])
+
+    qa_path = log_path / "qa_results.jsonl"
+    if qa_path.exists():
+        qa_rows = _latest_jsonl_rows(qa_path, limit=1000)
+        if qa_rows:
+            scores = [float(r.get("score", 0.0)) for r in qa_rows]
+            st.subheader("QA eval")
+            c1, c2 = st.columns(2)
+            c1.metric("questions", len(qa_rows))
+            c2.metric("avg score", f"{sum(scores) / max(1, len(scores)):.3f}")
+            st.dataframe([
+                {
+                    "score": r.get("score"),
+                    "category": r.get("category_name"),
+                    "question": (r.get("question") or "")[:140],
+                    "answer": (r.get("answer") or "")[:140],
+                    "gold": (r.get("gold") or "")[:140],
+                }
+                for r in reversed(qa_rows[-200:])
+            ], use_container_width=True)
+
+
+def _render_smoke_trace_run(log_path: Path, run_name: str) -> None:
+    """Render `smoke_write.py` trace.jsonl output."""
+    trace_path = log_path / "trace.jsonl"
+    rows = _latest_jsonl_rows(trace_path)
+    if not rows:
+        st.info(f"{run_name}: waiting for {trace_path}")
+        return
+
+    st.subheader("Write reward smoke trace")
+    c1, c2, c3, c4 = st.columns(4)
+    rewards = [float(r.get("reward", 0.0)) for r in rows]
+    c1.metric("rollouts", len(rows))
+    c2.metric("avg reward", f"{sum(rewards)/max(1, len(rewards)):.3f}")
+    c3.metric("max reward", f"{max(rewards):.3f}")
+    c4.metric("avg qa", f"{sum(float(r.get('qa_mean', 0.0)) for r in rows)/max(1, len(rows)):.3f}")
+
+    by_op = Counter()
+    for r in rows:
+        for op in r.get("ops_applied") or []:
+            by_op[op] += 1
+    if by_op:
+        st.caption("**Ops:** " + " · ".join(f"{n}×{op}" for op, n in by_op.most_common()))
+
+    st.dataframe([
+        {
+            "datum": r.get("datum_idx"),
+            "group": r.get("g"),
+            "dia_id": r.get("turn_dia_id"),
+            "battery": r.get("battery_size"),
+            "ops": ", ".join(r.get("ops_applied") or []),
+            "entities": r.get("n_entities"),
+            "qa_mean": r.get("qa_mean"),
+            "reward": r.get("reward"),
+        }
+        for r in reversed(rows[-100:])
+    ], use_container_width=True)
+
+    summary_path = log_path / "summary.json"
+    if summary_path.exists():
+        with st.expander("summary.json", expanded=True):
+            st.json(json.loads(summary_path.read_text()))
+
+
+def _render_future_eval_run(log_path: Path, run_name: str) -> None:
+    """Render `future_eval.py` rows.jsonl output."""
+    rows_path = log_path / "rows.jsonl"
+    rows = _latest_jsonl_rows(rows_path, limit=1000)
+    if not rows:
+        st.info(f"{run_name}: waiting for {rows_path}")
+        return
+
+    by_backend: dict[str, list[dict]] = defaultdict(list)
+    for r in rows:
+        by_backend[r.get("backend", "?")].append(r)
+
+    st.subheader("Future-query eval")
+    cards = st.columns(max(1, min(5, len(by_backend))))
+    for i, (name, rs) in enumerate(sorted(by_backend.items())):
+        avg = sum(float(r.get("score", 0.0)) for r in rs) / max(1, len(rs))
+        chars = sum(float(r.get("retrieved_chars", 0.0)) for r in rs) / max(1, len(rs))
+        cards[i % len(cards)].metric(name, f"{avg:.3f}", f"{chars:.0f} chars/q")
+
+    st.dataframe([
+        {
+            "query_idx": r.get("query_idx"),
+            "backend": r.get("backend"),
+            "score": r.get("score"),
+            "retrieved_chars": r.get("retrieved_chars"),
+            "compression": r.get("compression_ratio"),
+            "query": (r.get("query") or "")[:140],
+            "answer": (r.get("answer") or "")[:140],
+        }
+        for r in reversed(rows[-200:])
+    ], use_container_width=True)
+
+    summary_path = log_path / "summary.json"
+    if summary_path.exists():
+        with st.expander("summary.json", expanded=True):
+            st.json(json.loads(summary_path.read_text()))
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Per-step op-mix history (reads metrics.jsonl over time)
 # ─────────────────────────────────────────────────────────────────────────────
@@ -243,7 +451,33 @@ def _render_run(log_path: Path, run_name: str) -> None:
     rollouts_dir = log_path / "rollouts"
     rows = _read_jsonl(metrics_path)
     if not rows:
-        st.info(f"{run_name}: no metrics yet (waiting for {metrics_path})")
+        if (log_path / "decisions.jsonl").exists():
+            _render_decision_run(log_path, run_name)
+            return
+        if (log_path / "trace.jsonl").exists():
+            _render_smoke_trace_run(log_path, run_name)
+            return
+        if (log_path / "rows.jsonl").exists():
+            _render_future_eval_run(log_path, run_name)
+            return
+        if rollouts_dir.exists() and _list_rollouts(rollouts_dir):
+            st.subheader("Rollout dumps")
+            rollouts = _list_rollouts(rollouts_dir)
+            pick = st.selectbox(
+                "open one",
+                options=[p.relative_to(log_path) for p in rollouts[:50]],
+                format_func=str,
+            )
+            if pick:
+                r = _load_rollout(log_path / pick)
+                _render_trajectory(r, key_prefix="picked")
+                with st.expander("KG snapshot", expanded=False):
+                    _render_kg_summary(r)
+            return
+        st.info(
+            f"{run_name}: no known logs yet. Waiting for one of: "
+            f"{metrics_path.name}, decisions.jsonl, trace.jsonl, rows.jsonl, rollouts/"
+        )
         return
 
     series = _flatten_metrics(rows)

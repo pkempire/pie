@@ -52,6 +52,7 @@ from typing import Any, Callable
 from mempol.backends.base import Backend
 from mempol.backends.pie_kg import PIEBackend
 from mempol.eval.answer_gain import battery_answer_gain, GainResult
+from mempol.eval.counterfactual import per_op_counterfactual, PerOpReward
 from mempol.eval.evidence_coverage import battery_coverage
 from mempol.eval.judge import judge as _judge_sync
 from mempol.eval.reader_overlap import (
@@ -119,14 +120,22 @@ DEFAULT_COST_PER_ENTITY = 0.0
 # entities, so the intersection was bounded near zero regardless of write
 # quality. Confirmed on a smoke run: overlap=0.045 vs qa_mean=0.542.
 #
-# v2 (current): answer-gain over a random-K baseline as the dense signal.
-# For each question, judge(R, post_W_KG) - judge(R, random_K_sample). This
-# directly measures the value the W policy adds over content-agnostic
-# subsampling at the same retention budget. Cached per (conv, q, K) so the
-# random baseline is judged once over the whole training run.
-DEFAULT_W_GAIN = 0.7        # weight on answer-gain (post-W vs random-K)
-DEFAULT_W_QA   = 0.3        # weight on absolute judge(R, post-W)
-DEFAULT_W_OVERLAP = 0.0     # legacy, kept for ablations only
+# v2 (deprecated): answer-gain over a random-K baseline. Trajectory-level
+# scalar — judge(R, post_W_KG) - judge(R, random_K_sample). Kept as a
+# secondary anchor in v3.
+#
+# v3 (current): per-op counterfactual marginal utility. For each mutating
+# write op a_i in the trajectory:
+#   delta(a_i, q) = judge(R, M_full, q) - judge(R, M_full \ a_i, q)
+#   R_op(a_i)     = mean_q delta - cost_per_mut
+#   R_traj        = sum_i R_op(a_i)
+# Lookups and noops are not ablated (their effect on M_full is zero).
+# This gives GRPO per-op resolution instead of trajectory-level diffusion.
+# See mempol/eval/counterfactual.py for derivation and rationale.
+DEFAULT_W_CF      = 0.7        # weight on per-op counterfactual marginal utility
+DEFAULT_W_QA      = 0.3        # weight on absolute judge(R, post-W) — anchors the policy
+DEFAULT_W_GAIN    = 0.0        # weight on trajectory-level random-K answer_gain (deprecated)
+DEFAULT_W_OVERLAP = 0.0        # weight on dia_id-overlap (deprecated; kept for ablations)
 
 # Hard retention budget: the post-W KG is pruned to at most this many
 # entities before scoring. The number 12 is calibrated to LoCoMo turn-level
@@ -172,19 +181,18 @@ class WriteReward:
     reader: Any = None
     r_runner: Callable[[str, PIEBackend], str] | None = None
     write_tool: Any = None
-    conv_id: str = ""                                # keys baseline_cache
-    w_gain: float = DEFAULT_W_GAIN                   # answer-gain weight (NEW)
-    w_qa: float = DEFAULT_W_QA
-    w_overlap: float = DEFAULT_W_OVERLAP             # legacy, default 0
+    conv_id: str = ""                                # keys caches
+    # Reward mix. Defaults reflect the v3 per-op counterfactual reward:
+    w_cf: float = DEFAULT_W_CF                       # primary signal
+    w_qa: float = DEFAULT_W_QA                       # absolute-judge anchor
+    w_gain: float = DEFAULT_W_GAIN                   # legacy trajectory answer-gain
+    w_overlap: float = DEFAULT_W_OVERLAP             # legacy dia_id overlap
     k_max: int = DEFAULT_K_MAX
     cost_per_op: float = DEFAULT_COST_PER_OP
     cost_per_lookup: float = DEFAULT_COST_PER_LOOKUP
     cost_per_entity: float = DEFAULT_COST_PER_ENTITY
     full_text_cache: dict[str, set[str]] | None = None
-    # Cache of (conv_id, q, K) -> baseline judge score for answer-gain.
-    # Caller passes a dict that persists across rollouts of one conv so the
-    # random-K baseline is judged at most once per (conv, q, K).
-    baseline_cache: dict | None = None
+    baseline_cache: dict | None = None               # for v2 answer-gain (legacy)
     # Internal: per-evaluation metrics for logging
     _last_metrics: dict[str, float] = field(default_factory=dict)
 
@@ -219,17 +227,44 @@ class WriteReward:
         n_pruned = enforce_budget(self.backend, k_max=self.k_max)
 
         # 3. Dense signals.
-        #    a) Answer-gain (current default) — judge margin over random-K.
-        #    b) Coverage / reader-overlap (legacy, logged for ablations).
+        #    PRIMARY (v3): per-op counterfactual marginal utility.
+        #      For each mutating op, leave-one-out replay → per-op delta
+        #      against the QA battery. Sum to a trajectory-level scalar
+        #      that GRPO uses as reward, but per-op deltas are logged for
+        #      analysis and (later) PRM training.
+        #    LEGACY: answer-gain over random-K (trajectory-level scalar) and
+        #      reader-overlap (dia_id intersection). Both kept as logged
+        #      diagnostics; only contribute to reward if their weight > 0.
         cov_result = battery_coverage(self.backend, self.query_battery)
-        gain_result: GainResult | None = None
-        mean_gain = 0.0
         loop = asyncio.get_running_loop()
 
-        if self.w_gain > 0 and self.full_text_backend is not None and self.reader is not None:
+        # 3a. Per-op counterfactual (the primary signal).
+        cf_result: PerOpReward | None = None
+        cf_reward = 0.0
+        if (self.w_cf > 0
+            and self.write_tool is not None
+            and getattr(self.write_tool, "ops_log", None)
+            and self.reader is not None):
             try:
-                # answer_gain runs sync judge calls inside; offload to a
-                # thread so we don't block the event loop.
+                cf_result = await per_op_counterfactual(
+                    ops_log=list(self.write_tool.ops_log),
+                    battery=self.query_battery,
+                    reader=self.reader,
+                    current_dia_id=getattr(self.write_tool, "current_dia_id", ""),
+                    current_timestamp=float(getattr(self.write_tool,
+                                                      "current_timestamp", 0.0)),
+                    cost_per_mut=self.cost_per_op,
+                )
+                cf_reward = cf_result.trajectory_reward
+            except Exception as e:
+                logger.warning("WriteReward: per-op counterfactual failed (%s)", e)
+
+        # 3b. Trajectory-level answer-gain (legacy; only runs if w_gain>0).
+        gain_result: GainResult | None = None
+        mean_gain = 0.0
+        if (self.w_gain > 0 and self.full_text_backend is not None
+            and self.reader is not None):
+            try:
                 def _run_gain():
                     return battery_answer_gain(
                         backend=self.backend,
@@ -245,7 +280,7 @@ class WriteReward:
             except Exception as e:
                 logger.warning("WriteReward: answer-gain failed (%s)", e)
 
-        # Reader-overlap kept for logging only (legacy diagnostic).
+        # 3c. Reader-overlap (logged only; no longer in reward).
         overlap_result: OverlapResult | None = None
         if self.full_text_backend is not None and self.reader is not None:
             try:
@@ -312,31 +347,44 @@ class WriteReward:
         )
 
         reward = (
-            self.w_gain * mean_gain
-            + self.w_qa * mean_qa
+            self.w_cf      * cf_reward
+            + self.w_qa    * mean_qa
+            + self.w_gain  * mean_gain
             + self.w_overlap * mean_overlap
             - cost
         )
         self._last_metrics = {
-            "answer_gain_mean":   mean_gain,             # primary signal
-            "qa_mean":            mean_qa,
-            "reader_overlap_mean": mean_overlap,         # legacy diagnostic
-            "coverage_mean":      cov_result.mean_coverage,  # legacy diagnostic
-            "cost_total":         cost,
-            "n_ops":              float(n_ops_total),
-            "n_lookups":          float(n_lookups),
-            "n_mutations":        float(n_mutations),
-            "n_noops":            float(n_noops),
-            "n_entities":         float(n_entities),
-            "n_pruned":           float(n_pruned),
-            "k_max":              float(self.k_max),
-            "battery_size":       float(len(self.query_battery)),
-            "stored_dia_ids":     float(cov_result.n_stored_dia_ids),
+            "counterfactual_reward": cf_reward,            # PRIMARY — per-op leave-one-out summed
+            "qa_mean":               mean_qa,              # absolute judge anchor
+            "answer_gain_mean":      mean_gain,            # legacy trajectory random-K margin
+            "reader_overlap_mean":   mean_overlap,         # legacy dia_id overlap
+            "coverage_mean":         cov_result.mean_coverage,  # legacy gold-evidence coverage
+            "cost_total":            cost,
+            "n_ops":                 float(n_ops_total),
+            "n_lookups":             float(n_lookups),
+            "n_mutations":           float(n_mutations),
+            "n_noops":               float(n_noops),
+            "n_entities":            float(n_entities),
+            "n_pruned":              float(n_pruned),
+            "k_max":                 float(self.k_max),
+            "battery_size":          float(len(self.query_battery)),
+            "stored_dia_ids":        float(cov_result.n_stored_dia_ids),
             "evidence_hit_frac": (
                 cov_result.n_evidence_dia_ids_hit
                 / max(cov_result.n_evidence_dia_ids_total, 1)
             ),
         }
+        # Counterfactual-specific diagnostics (per-op deltas + ablation count).
+        if cf_result is not None:
+            self._last_metrics["n_ops_ablated"]    = float(cf_result.n_ablated)
+            self._last_metrics["full_state_score"] = float(cf_result.full_state_score)
+            # Mean and max per-op delta give a sense of "how much did the
+            # best/typical write contribute?" — useful for reading curves.
+            if cf_result.per_op_deltas:
+                deltas = [d for _, d in cf_result.per_op_deltas]
+                self._last_metrics["per_op_delta_mean"] = sum(deltas) / len(deltas)
+                self._last_metrics["per_op_delta_max"]  = max(deltas)
+                self._last_metrics["per_op_delta_min"]  = min(deltas)
         if gain_result is not None:
             self._last_metrics["baseline_cache_misses"] = float(
                 gain_result.n_random_baseline_calls)

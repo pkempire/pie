@@ -73,6 +73,7 @@ def _entity_to_text(e: Entity) -> str:
 def _entity_to_hit(e: Entity, score: float, source: str, n_transitions: int = 0) -> Hit:
     """Module-level helper. n_transitions is passed by callers that hold
     the WorldModel reference; default 0 for callers that don't need it."""
+    state = e.current_state or {}
     return Hit(
         unit=Unit(
             uid=e.id,
@@ -80,9 +81,14 @@ def _entity_to_hit(e: Entity, score: float, source: str, n_transitions: int = 0)
             metadata={
                 "name": e.name,
                 "type": e.type.value,
-                "current_state": e.current_state,
+                "current_state": state,
                 "first_seen": e.first_seen,
                 "last_seen": e.last_seen,
+                "timestamp": e.last_seen,
+                "observed_at": state.get("observed_at"),
+                "observed_at_timestamp": state.get("observed_at_timestamp"),
+                "valid_from": state.get("valid_from") or state.get("event_time") or state.get("event_date"),
+                "valid_until": state.get("valid_until"),
                 "n_transitions": n_transitions,
                 "importance": e.importance,
                 "aliases": list(e.aliases or []),
@@ -270,16 +276,32 @@ class PIEBackend(Backend):
     ) -> list[dict]:
         """Find existing entities matching `query`. Returns a JSONable list.
 
-        Uses BOTH string match and embedding similarity (PIE's tier-1 + tier-2).
+        Uses BM25 and embedding similarity to gather candidates. Candidate
+        retrieval is recall-oriented only; semantic resolution belongs to the
+        writer/LLM policy, not hard-coded fuzzy string thresholds.
         Returns top-k candidates with their key state — designed so the policy
         can decide whether to create a new entity or merge with an existing one.
         """
         candidates: dict[str, float] = {}
-        for entity, score in self.wm.find_by_string_match(query, threshold=0.6, entity_type=type):
-            candidates[entity.id] = max(candidates.get(entity.id, 0.0), score)
+
+        # Lexical candidate recall over the same entity text used by read
+        # retrieval. BM25 rank is not a same-entity decision.
+        index, uids = self._build_bm25_index()
+        q_tokens = _tokens(query or "")
+        bm25_scored = [(uids[i], index.score(q_tokens, i)) for i in range(len(uids))]
+        bm25_scored = [(u, s) for u, s in bm25_scored if s > 0]
+        bm25_scored.sort(key=lambda x: x[1], reverse=True)
+        for uid, score in bm25_scored[:top_k * 3]:
+            e = self.wm.entities.get(uid)
+            if not e:
+                continue
+            if type and e.type.value != type:
+                continue
+            candidates[uid] = max(candidates.get(uid, 0.0), min(0.95, float(score)))
+
         if self.wm.entities:
-            self._ensure_embeddings()
             try:
+                self._ensure_embeddings()
                 q_emb = llm.embed([query])[0].tolist()
                 for entity, score in self.wm.find_by_embedding(q_emb, top_k=top_k * 2, entity_type=type):
                     candidates[entity.id] = max(candidates.get(entity.id, 0.0), score)

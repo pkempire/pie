@@ -31,6 +31,7 @@ class WriteTool:
     current_turn_text: str = ""
     current_dia_id: str = ""
     current_timestamp: float = 0.0
+    current_observation_time_text: str = ""
     n_lookups: int = 0
     n_creates: int = 0
     n_updates: int = 0
@@ -39,76 +40,61 @@ class WriteTool:
     n_contradictions: int = 0
     n_forgets: int = 0
     n_noops: int = 0
+    # Append-only log of (op_name, args_dict) per applied tool call.
+    # Read by counterfactual.per_op_counterfactual to replay the trajectory
+    # minus a chosen op for leave-one-out reward attribution. Args are
+    # captured pre-execution so the replay sees the same intent the policy
+    # had, regardless of whether the original execution succeeded.
+    ops_log: list = field(default_factory=list)
 
-    # ── 1. Lookup (the policy MUST use these before writing) ──
-    @tool
-    def lookup_entity(self, query: str, type: str | None = None, top_k: int = 5) -> ToolResult:
-        """Find existing entities matching the query. Use BEFORE create_entity.
+    def _metadata(self) -> dict:
+        """Provenance that every write should carry in standalone evals."""
+        md = {
+            "source_dia_id": self.current_dia_id,
+            "observed_at_timestamp": self.current_timestamp,
+        }
+        if self.current_observation_time_text:
+            md["observed_at"] = self.current_observation_time_text
+        return {k: v for k, v in md.items() if v not in ("", None)}
 
-        Args:
-            query: name or short description
-            type: optional entity type filter ('person' | 'project' | 'tool' | 'organization' | 'belief' | 'decision' | 'concept' | 'period' | 'event' | 'goal')
-            top_k: number of candidates to return (max 10)
-        Returns:
-            JSON list of {uid, name, type, current_state, match_score, n_transitions, last_seen}
-            empty list if no match — safe to create new
-        """
+    def _with_write_metadata(self, state: dict | None) -> dict:
+        out = dict(state or {})
+        for k, v in self._metadata().items():
+            out.setdefault(k, v)
+        return out
+
+    # These plain Python implementations are intentionally separate from the
+    # @tool wrappers. When tinker_cookbook is installed, @tool may replace a
+    # method with a FunctionTool object, which is correct for RL env specs but
+    # not directly callable by local scripts and dashboards.
+
+    def _lookup_entity_impl(self, query: str, type: str | None = None, top_k: int = 5) -> ToolResult:
         self.n_lookups += 1
         results = self.backend.lookup_entity(query=query, type=type, top_k=min(int(top_k), 10))
         return simple_tool_result(json.dumps({"matches": results}, ensure_ascii=False))
 
-    @tool
-    def lookup_relation(self, source_uid: str, target_uid: str | None = None) -> ToolResult:
-        """Find existing relationships involving an entity (and optionally a target)."""
+    def _lookup_relation_impl(self, source_uid: str, target_uid: str | None = None) -> ToolResult:
         results = self.backend.lookup_relation(source_uid, target_uid)
         return simple_tool_result(json.dumps({"relations": results}, ensure_ascii=False))
 
-    # ── 2. Create / Update ──
-    # NOTE: there is no dedup guard. The policy can `lookup_entity` first, or
-    # not. Duplicates show up as: (a) more entities → higher storage cost →
-    # cost penalty in reward; (b) noisier retrieval at read time → lower QA
-    # accuracy → reward penalty. RL learns whether/when to look up.
-    @tool
-    def create_entity(self, name: str, type: str, state: dict | None = None) -> ToolResult:
-        """Create a new entity.
-
-        type ∈ {person, project, tool, organization, belief, decision, concept,
-                period, event, goal} (PIE's standard taxonomy — but the policy
-                is free to abuse types if a different mapping wins reward;
-                that's a learnable choice).
-        state is a JSON dict of attributes (e.g. {"status": "active", "description": "..."}).
-        """
+    def _create_entity_impl(self, name: str, type: str, state: dict | None = None) -> ToolResult:
         uid = self.backend.create_entity(
             name=name,
             type=type,
-            state=state or {},
+            state=self._with_write_metadata(state),
             source=self.current_dia_id,
             timestamp=self.current_timestamp,
         )
         self.n_creates += 1
         return simple_tool_result(json.dumps({"uid": uid, "name": name, "type": type}))
 
-    @tool
-    def update_state(
+    def _update_state_impl(
         self,
         uid: str,
         new_state: dict,
         transition_type: str = "update",
         trigger_summary: str = "",
     ) -> ToolResult:
-        """Update an existing entity's state.
-
-        transition_type ∈ {update, contradiction, resolution, archival}
-        - update: normal state evolution
-        - contradiction: new state conflicts with prior; both retained
-        - resolution: a prior contradiction is resolved
-        - archival: entity is no longer active
-        """
-        # Surface unknown-uid as an error tool result instead of a silent
-        # no-op. PIE's WorldModel.update_entity_state used to log a warning
-        # and return None — the policy never saw the mistake, so it kept
-        # hallucinating IDs. With an explicit error tool result the policy
-        # learns to lookup_entity first and use the returned uid verbatim.
         if uid not in self.backend.wm.entities:
             return simple_tool_result(json.dumps({
                 "ok": False, "uid": uid, "error": "entity not found",
@@ -116,7 +102,7 @@ class WriteTool:
             }))
         ok = self.backend.update_state(
             uid=uid,
-            new_state=new_state,
+            new_state=self._with_write_metadata(new_state),
             transition_type=transition_type,
             source=self.current_dia_id,
             timestamp=self.current_timestamp,
@@ -128,11 +114,7 @@ class WriteTool:
                 self.n_contradictions += 1
         return simple_tool_result(json.dumps({"ok": ok, "uid": uid, "transition_type": transition_type}))
 
-    # ── 3. Structural ops ──
-    @tool
-    def merge_entities(self, canonical_uid: str, alias_uid: str) -> ToolResult:
-        """Collapse alias_uid into canonical_uid. Moves transitions and
-        relationships. Use when lookup returns a high-similarity duplicate."""
+    def _merge_entities_impl(self, canonical_uid: str, alias_uid: str) -> ToolResult:
         missing = [u for u in (canonical_uid, alias_uid)
                    if u not in self.backend.wm.entities]
         if missing:
@@ -144,15 +126,9 @@ class WriteTool:
             self.n_merges += 1
         return simple_tool_result(json.dumps({"ok": ok, "canonical_uid": canonical_uid, "alias_uid": alias_uid}))
 
-    @tool
-    def add_relation(
+    def _add_relation_impl(
         self, source_uid: str, target_uid: str, rel_type: str, description: str = "",
     ) -> ToolResult:
-        """Add a relationship edge between two existing entities.
-
-        rel_type ∈ {uses, works_on, collaborates_with, related_to, part_of,
-                    caused_by, during, replaces, integrates_with}
-        """
         missing = [u for u in (source_uid, target_uid)
                    if u not in self.backend.wm.entities]
         if missing:
@@ -167,26 +143,20 @@ class WriteTool:
             self.n_relations += 1
         return simple_tool_result(json.dumps({"ok": ok, "source_uid": source_uid, "target_uid": target_uid, "type": rel_type}))
 
-    @tool
-    def mark_contradiction(self, uid: str, contradicting_state: dict) -> ToolResult:
-        """Flag that the current turn contradicts the entity's prior state.
-        Both states retained — useful when the truth is unclear."""
+    def _mark_contradiction_impl(self, uid: str, contradicting_state: dict) -> ToolResult:
         if uid not in self.backend.wm.entities:
             return simple_tool_result(json.dumps({
                 "ok": False, "uid": uid, "error": "entity not found",
             }))
         ok = self.backend.mark_contradiction(
-            uid=uid, contradicting_state=contradicting_state,
+            uid=uid, contradicting_state=self._with_write_metadata(contradicting_state),
             source=self.current_dia_id, timestamp=self.current_timestamp,
         )
         if ok:
             self.n_contradictions += 1
         return simple_tool_result(json.dumps({"ok": ok, "uid": uid}))
 
-    @tool
-    def forget(self, uid: str, reason: str = "") -> ToolResult:
-        """Archive (soft-delete) an entity. Preserves the transition history
-        but marks the entity as no longer active."""
+    def _forget_impl(self, uid: str, reason: str = "") -> ToolResult:
         if uid not in self.backend.wm.entities:
             return simple_tool_result(json.dumps({
                 "ok": False, "uid": uid, "error": "entity not found",
@@ -196,12 +166,108 @@ class WriteTool:
             self.n_forgets += 1
         return simple_tool_result(json.dumps({"ok": ok, "uid": uid, "reason": reason}))
 
-    @tool
-    def noop(self, reason: str = "") -> ToolResult:
-        """Mark this turn as not memory-worthy. Use for chitchat, fillers,
-        and turns whose content is already represented."""
+    def _noop_impl(self, reason: str = "") -> ToolResult:
         self.n_noops += 1
         return simple_tool_result(json.dumps({"ok": True, "reason": reason}))
+
+    # ── 1. Lookup (the policy MUST use these before writing) ──
+    # Each @tool wrapper appends (op_name, args) to self.ops_log BEFORE
+    # delegating to the impl, so per-op counterfactual replay can
+    # reconstruct the trajectory minus a chosen op without re-parsing the
+    # rendered tool calls. We capture the *intent* (the args the policy
+    # emitted), not the post-execution state — replays may produce
+    # different `ok` values when prior context has changed.
+    @tool
+    def lookup_entity(self, query: str, type: str | None = None, top_k: int = 5) -> ToolResult:
+        """Find existing entities matching the query. Use BEFORE create_entity."""
+        self.ops_log.append(("lookup_entity",
+                              {"query": query, "type": type, "top_k": top_k}))
+        return self._lookup_entity_impl(query=query, type=type, top_k=top_k)
+
+    @tool
+    def lookup_relation(self, source_uid: str, target_uid: str | None = None) -> ToolResult:
+        """Find existing relationships involving an entity (and optionally a target)."""
+        self.ops_log.append(("lookup_relation",
+                              {"source_uid": source_uid, "target_uid": target_uid}))
+        return self._lookup_relation_impl(source_uid=source_uid, target_uid=target_uid)
+
+    # ── 2. Create / Update ──
+    @tool
+    def create_entity(self, name: str, type: str, state: dict | None = None) -> ToolResult:
+        """Create a new entity.
+
+        type ∈ {person, project, tool, organization, belief, decision, concept,
+                period, event, goal}.
+        state is a JSON dict of attributes.
+        """
+        self.ops_log.append(("create_entity",
+                              {"name": name, "type": type, "state": state or {}}))
+        return self._create_entity_impl(name=name, type=type, state=state)
+
+    @tool
+    def update_state(
+        self, uid: str, new_state: dict,
+        transition_type: str = "update", trigger_summary: str = "",
+    ) -> ToolResult:
+        """Update an existing entity's state.
+
+        transition_type ∈ {update, contradiction, resolution, archival}.
+        """
+        self.ops_log.append(("update_state",
+                              {"uid": uid, "new_state": new_state,
+                               "transition_type": transition_type,
+                               "trigger_summary": trigger_summary}))
+        return self._update_state_impl(
+            uid=uid, new_state=new_state,
+            transition_type=transition_type, trigger_summary=trigger_summary,
+        )
+
+    # ── 3. Structural ops ──
+    @tool
+    def merge_entities(self, canonical_uid: str, alias_uid: str) -> ToolResult:
+        """Collapse alias_uid into canonical_uid."""
+        self.ops_log.append(("merge_entities",
+                              {"canonical_uid": canonical_uid, "alias_uid": alias_uid}))
+        return self._merge_entities_impl(canonical_uid=canonical_uid, alias_uid=alias_uid)
+
+    @tool
+    def add_relation(
+        self, source_uid: str, target_uid: str, rel_type: str, description: str = "",
+    ) -> ToolResult:
+        """Add a relationship edge between two existing entities."""
+        self.ops_log.append(("add_relation",
+                              {"source_uid": source_uid, "target_uid": target_uid,
+                               "rel_type": rel_type, "description": description}))
+        return self._add_relation_impl(
+            source_uid=source_uid, target_uid=target_uid,
+            rel_type=rel_type, description=description,
+        )
+
+    @tool
+    def mark_contradiction(self, uid: str, contradicting_state: dict) -> ToolResult:
+        """Flag that the current turn contradicts the entity's prior state."""
+        self.ops_log.append(("mark_contradiction",
+                              {"uid": uid, "contradicting_state": contradicting_state}))
+        return self._mark_contradiction_impl(uid=uid, contradicting_state=contradicting_state)
+
+    @tool
+    def forget(self, uid: str, reason: str = "") -> ToolResult:
+        """Archive (soft-delete) an entity."""
+        self.ops_log.append(("forget", {"uid": uid, "reason": reason}))
+        return self._forget_impl(uid=uid, reason=reason)
+
+    @tool
+    def noop(self, reason: str = "") -> ToolResult:
+        """Mark this turn as not memory-worthy."""
+        self.ops_log.append(("noop", {"reason": reason}))
+        return self._noop_impl(reason=reason)
+
+    # ── Op classification (used by counterfactual to skip non-mutating ops) ──
+    NON_MUTATING_OPS: tuple[str, ...] = ("lookup_entity", "lookup_relation", "noop")
+    MUTATING_OPS: tuple[str, ...] = (
+        "create_entity", "update_state", "merge_entities",
+        "add_relation", "mark_contradiction", "forget",
+    )
 
     # ── stats for reward shaping ──
     def write_stats(self) -> dict:

@@ -47,6 +47,7 @@ async def simulate_w_trajectory(
         timestamp=float(datum["turn_idx"] + seed_offset),
         backend=backend,
         write_tool=wtool,
+        observation_time_text=str(datum.get("session_date") or ""),
     )
 
     # Build a fake "history" so WriteReward can count ops via its tool_call regex.
@@ -101,7 +102,10 @@ async def main():
                 "session_date": t.session_date,
                 "prior_turns_text": "(skipped in smoke)",
                 "existing_entities_summary": "",
-                "query_battery": [(qa.question, qa.answer) for qa in qas_for_turn[:6]],
+                "query_battery": [
+                    (qa.question, qa.answer, list(qa.evidence or []))
+                    for qa in qas_for_turn[:6]
+                ],
             })
             if len(datums) >= args.max_datums:
                 break

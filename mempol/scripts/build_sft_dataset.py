@@ -94,6 +94,8 @@ def _heuristic_ops_for_turn(
     turn_text: str,
     dia_id: str,
     timestamp: float,
+    observation_time_text: str = "",
+    recent_context_text: str = "",
 ) -> list[dict]:
     """Run the heuristic write policy on one turn and return the ops it
     chose, formatted as Tinker-style tool_calls
@@ -113,6 +115,8 @@ def _heuristic_ops_for_turn(
         timestamp=timestamp,
         backend=backend,
         write_tool=write_tool,
+        observation_time_text=observation_time_text,
+        recent_context_text=recent_context_text,
     )
     ops = decision.raw_ops or []
     if not ops:
@@ -177,6 +181,8 @@ def build(out_path: Path, n_convs: int, turns_per_conv: int,
                     policy=policy, backend=backend,
                     turn_text=f"{t.speaker}: {t.text}",
                     dia_id=t.dia_id, timestamp=float(ti),
+                    observation_time_text=t.session_date,
+                    recent_context_text=prior_text,
                 )
                 assistant_msg = _build_assistant_message(ops)
 
