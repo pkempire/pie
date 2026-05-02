@@ -137,6 +137,26 @@ DEFAULT_W_QA      = 0.3        # weight on absolute judge(R, post-W) — anchors
 DEFAULT_W_GAIN    = 0.0        # weight on trajectory-level random-K answer_gain (deprecated)
 DEFAULT_W_OVERLAP = 0.0        # weight on dia_id-overlap (deprecated; kept for ablations)
 
+# Coverage floor — small weight on gold-coverage as a non-zero gradient
+# when counterfactual collapses to all-zero deltas (which happens when R
+# can't answer ANY battery question even with M_full, so every
+# leave-one-out also scores 0 and per-op deltas are uniformly 0).
+#
+# Why this is needed: per-op counterfactual is the right reward only when
+# R has discrimination capacity over the battery. Early in Phase B
+# training, before Phase A has produced a competent R, the heuristic R
+# fails on most multi-hop questions and full_state_score = 0, leaving
+# the policy with pure cost as the gradient signal. The coverage floor
+# breaks the chicken-and-egg by giving the policy SOMETHING to gradient
+# against — preserving evidence dia_ids — until R gets strong enough that
+# counterfactual takes over.
+#
+# Tuning: w_cov_floor=0.05 is empirically the smallest value that
+# produces non-zero advantages when counterfactual is degenerate without
+# overpowering the per-op signal once R becomes competent. Reported as
+# an ablation in the paper.
+DEFAULT_W_COV_FLOOR = 0.05
+
 # Hard retention budget: the post-W KG is pruned to at most this many
 # entities before scoring. The number 12 is calibrated to LoCoMo turn-level
 # episodes (typical conversation has ~50 turns × ~0.25 entities/turn = ~12)
@@ -187,6 +207,7 @@ class WriteReward:
     w_qa: float = DEFAULT_W_QA                       # absolute-judge anchor
     w_gain: float = DEFAULT_W_GAIN                   # legacy trajectory answer-gain
     w_overlap: float = DEFAULT_W_OVERLAP             # legacy dia_id overlap
+    w_cov_floor: float = DEFAULT_W_COV_FLOOR         # always-on coverage shaping term
     k_max: int = DEFAULT_K_MAX
     cost_per_op: float = DEFAULT_COST_PER_OP
     cost_per_lookup: float = DEFAULT_COST_PER_LOOKUP
@@ -356,16 +377,25 @@ class WriteReward:
             + self.cost_per_entity * n_entities
         )
 
+        # Coverage floor: small non-zero shaping when R can't differentiate
+        # KGs (full_state_score = 0 → all per-op deltas = 0 → counterfactual
+        # collapses). Active even when cf_reward is non-zero, but the small
+        # weight (~0.05) keeps it dominated by counterfactual once R is
+        # strong enough.
+        cov_floor = self.w_cov_floor * cov_result.mean_coverage
+
         reward = (
-            self.w_cf      * cf_reward
-            + self.w_qa    * mean_qa
-            + self.w_gain  * mean_gain
+            self.w_cf        * cf_reward
+            + self.w_qa      * mean_qa
+            + self.w_gain    * mean_gain
             + self.w_overlap * mean_overlap
+            + cov_floor
             - cost
         )
         self._last_metrics = {
             "counterfactual_reward": cf_reward,            # PRIMARY — per-op leave-one-out summed
             "qa_mean":               mean_qa,              # absolute judge anchor
+            "coverage_floor":        cov_floor,            # non-zero shaping when cf collapses
             "answer_gain_mean":      mean_gain,            # legacy trajectory random-K margin
             "reader_overlap_mean":   mean_overlap,         # legacy dia_id overlap
             "coverage_mean":         cov_result.mean_coverage,  # legacy gold-evidence coverage

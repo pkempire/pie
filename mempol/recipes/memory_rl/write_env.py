@@ -221,11 +221,12 @@ class WriteEnvGroupBuilder(EnvGroupBuilder):
             # reader-overlap weights default to 0; bump them via env vars
             # for ablation runs.
             import os as _os
-            w_cf      = float(_os.environ.get("MEMPOL_W_CF",      "0.7"))
-            w_qa      = float(_os.environ.get("MEMPOL_W_QA",      "0.3"))
-            w_gain    = float(_os.environ.get("MEMPOL_W_GAIN",    "0.0"))
-            w_overlap = float(_os.environ.get("MEMPOL_W_OVERLAP", "0.0"))
-            k_max     = int(_os.environ.get("MEMPOL_K_MAX",       "12"))
+            w_cf        = float(_os.environ.get("MEMPOL_W_CF",        "0.7"))
+            w_qa        = float(_os.environ.get("MEMPOL_W_QA",        "0.3"))
+            w_gain      = float(_os.environ.get("MEMPOL_W_GAIN",      "0.0"))
+            w_overlap   = float(_os.environ.get("MEMPOL_W_OVERLAP",   "0.0"))
+            w_cov_floor = float(_os.environ.get("MEMPOL_W_COV_FLOOR", "0.05"))
+            k_max       = int(_os.environ.get("MEMPOL_K_MAX",         "12"))
             reward_fn = WriteReward(
                 backend=backend,
                 query_battery=self.datum["query_battery"],
@@ -237,6 +238,7 @@ class WriteEnvGroupBuilder(EnvGroupBuilder):
                 w_qa=w_qa,
                 w_gain=w_gain,
                 w_overlap=w_overlap,
+                w_cov_floor=w_cov_floor,
                 k_max=k_max,
                 full_text_cache=self.datum.get("full_text_cache"),
                 baseline_cache=self.datum.get("baseline_cache"),
