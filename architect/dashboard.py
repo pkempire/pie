@@ -3,6 +3,12 @@
 Run:
     streamlit run architect/dashboard.py
 
+The sys.path injection at the top is intentional: streamlit invokes the
+file directly (not as `python -m architect.dashboard`), so the project
+root isn't on sys.path by default and `from architect import db` fails
+with ModuleNotFoundError. We prepend the project root before any
+package imports to fix that.
+
 Tabs:
   Components   browse, filter (kind / runtime / stack_layer / tag), search
   Graph        force-directed visualisation of relationships between components
@@ -24,8 +30,17 @@ from __future__ import annotations
 import json
 import math
 import sqlite3
+import sys
 from collections import Counter, defaultdict
 from pathlib import Path
+
+# Make `architect.*` importable when streamlit runs this file directly.
+# `streamlit run architect/dashboard.py` does NOT add the project root to
+# sys.path, so a bare `from architect import db` fails with
+# ModuleNotFoundError. Prepend the project root before any architect imports.
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(_PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(_PROJECT_ROOT))
 
 import streamlit as st
 

@@ -29,14 +29,36 @@ CREATE TABLE IF NOT EXISTS components (
     -- existing queries; it shadows `kind`.
     type                TEXT    NOT NULL,                  -- DEPRECATED — mirrors `kind`
     kind                TEXT    NOT NULL DEFAULT 'tool',
-       -- model | sdk | framework | api | mcp_server | infra | template | tool | dataset | application
+       -- model | sdk | framework | api | mcp_server | sandbox | infra |
+       -- template | tool | dataset | application | observability |
+       -- eval_framework
     runtime             TEXT    NOT NULL DEFAULT 'mixed',
        -- python | typescript | cross | hosted | mcp | mixed
     deployment          TEXT    NOT NULL DEFAULT 'both',
        -- local | self_hosted | hosted_only | both
     stack_layer         TEXT    NOT NULL DEFAULT 'orchestration',
-       -- foundation_model | inference_proxy | runtime_infra | client_library
-       -- | orchestration | application | data
+       -- 9-layer agent stack (refined per Lee Hanchung "Hidden Technical
+       -- Debt: Agent Runtime", Apr 2026, and the agent-design diagram):
+       --   foundation_model    the LLM itself
+       --   inference_proxy     OpenRouter, AI gateways
+       --   model_serving       where the LLM runs (Replicate, Modal-GPU)
+       --   client_library      SDKs you import (OpenAI SDK, Vercel AI SDK)
+       --   orchestration       agent harness / framework (LangGraph,
+       --                        Claude Agent SDK, Mastra)
+       --   agent_runtime       sandboxes where the agent's code runs
+       --                        (E2B, Modal Sandbox, Vercel Sandbox)
+       --   browser_runtime     headless-browser sandboxes (Browserbase,
+       --                        Steel.dev, Hyperbrowser)
+       --   memory              persistent memory layer (Mem0, Supermemory,
+       --                        Zep)
+       --   data                APIs, vector stores, search, mcp_servers
+       --   evaluation          eval frameworks (Braintrust, Promptfoo)
+       --   observability       traces / monitoring (LangSmith, Langfuse,
+       --                        Helicone, Arize Phoenix)
+       --   agent_config        markdown configs (prompts, skills,
+       --                        subagents, commands)
+       --   application         end-user products built on the rest of the
+       --                        stack (n8n templates, full apps)
 
     one_liner           TEXT    NOT NULL DEFAULT '',
     summary             TEXT    NOT NULL DEFAULT '',
