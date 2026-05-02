@@ -41,32 +41,34 @@ store grows from use; the control layer that picks what to commit
 typically does not.
 
 We frame memory as a budgeted decision problem. Given a hard retention
-budget $K$, the write policy decides which $K$ items from a
-conversation to commit to a knowledge graph, and is rewarded if a
-frozen reader can answer downstream questions from those $K$ items.
-The reward signal is \emph{reader-overlap}: for each question, take
-what a frozen reader retrieves from the full conversation text---the
-set of dialogue turns the reader believes are relevant---and score how
-many of those turns the post-write knowledge graph actually
-preserved. No per-question evidence annotation is required; in
-controlled studies this signal correlates with gold evidence coverage
-at within-turn Spearman $\rho \approx 0.61$, while gold coverage
-itself correlates almost perfectly ($\rho \approx 0.98$) with the
-trivial number-of-turns-kept feature, making it a misleading reward in
-isolation.
+budget $K$, the write policy emits a sequence of typed operations
+(\texttt{lookup\_entity}, \texttt{create\_entity},
+\texttt{update\_state}, \texttt{merge\_entities},
+\texttt{add\_relation}, \texttt{mark\_contradiction}, \texttt{forget},
+\texttt{noop}) into a typed-transition knowledge graph. The read side
+is held fixed: a hand-coded hybrid retriever fusing BM25 over entity
+text, dense embedding similarity, and named-entity lookup via
+reciprocal-rank fusion. A controlled audit on a paired 50-question
+LoCoMo sample showed this stack recovers roughly 75\% of the accuracy
+gap that pure entity-only retrieval introduces, so observed gains
+from the learned write policy are not artefacts of an underpowered
+reader.
 
-We train a LoRA adapter on a 4B-parameter open-source model with GRPO,
-where each episode is one conversation turn, the write policy emits up
-to four tool-call operations into a typed knowledge graph, and the
-reward blends reader-overlap ($w = 0.7$) with the reader's
-LLM-judge-scored answer accuracy on a held-out battery ($w = 0.3$).
-The reader is held fixed: a hand-coded composite of BM25 over entity
-text, dense embedding similarity, and named-entity lookup, fused via
-reciprocal-rank fusion (RRF). An audit on a paired 50-question LoCoMo
-sample showed this hybrid retriever recovers roughly 75\% of the
-accuracy gap that pure entity-only retrieval introduces, making it
-strong enough that gains from the learned write policy are not
-artefacts of an underpowered read backend.
+The technical contribution is the dense write reward.
+Trajectory-level signals (final-answer judge, random-$K$ margins,
+dia\_id-overlap with what the reader retrieves from full text) all
+yield one scalar per write trajectory that GRPO must then diffuse
+over a 4--12-token tool-call sequence; per-op resolution is lost.
+We propose \emph{per-op counterfactual marginal utility}: for each
+mutating write op $a_i$, we replay the trajectory minus $a_i$ and
+measure the per-question judge delta the omission produces against a
+held-out QA battery. The trajectory reward is the sum of per-op
+deltas, but each op carries its own credit signal at GRPO advantage
+time. Lookups and noops are skipped (their effect on the post-write
+graph is zero by construction). The result is a dense, per-op reward
+at roughly $5\times$ the cost of a trajectory-level signal. We blend
+this with the reader's absolute judge score as an anchor
+($w_{\text{cf}} = 0.7$, $w_{\text{qa}} = 0.3$).
 
 The success criterion is strict. A learned write policy must beat
 \emph{random subsampling at matched retention budget} on LoCoMo and
@@ -220,12 +222,13 @@ need to move user data into a shared corpus.
     is the write policy that picks which $K$ items to commit. Read
     becomes a hand-coded hybrid retrieval stack that the write policy
     optimises against.
-  \item A label-free dense reward, \emph{reader-overlap}, that
-    requires no per-question evidence annotations and is robust to the
-    $n_{\text{kept}}$ confound that defeats raw evidence-coverage. We
-    show coverage by itself correlates with the trivial
-    turns-kept feature at $\rho \approx 0.98$, making the budgeted
-    formulation necessary.
+  \item \textbf{Per-op counterfactual marginal utility} as the dense
+    reward for memory-write GRPO. Each mutating op gets credit equal
+    to the per-question judge delta its omission would cause, summed
+    over a held-out battery. This is the COMA-style attribution
+    \cite{foerster2018coma} applied at the op granularity our typed
+    op vocabulary makes natural, and it gives GRPO per-op resolution
+    that trajectory-level rewards lose to uniform diffusion.
   \item A backend-retriever-aligned evaluation protocol that controls
     for the dominant confound in memory-system evaluation: an audit on
     a paired LoCoMo sample shows mismatched retrievers can swing QA
@@ -539,53 +542,66 @@ Crucially, this means a policy cannot win the dense reward by
 ``store every dia\_id verbatim''---the budget makes that strategy
 infeasible by construction.
 
-\paragraph{Reward.} The reward blends a label-free \emph{reader-overlap}
-signal with a judged QA term, minus a residual op-cost regulariser:
-\begin{align}
-  r_W(\tau) \;=\; w_{\text{ov}} \cdot
-    \mathrm{overlap}(R, F, M_\tau, Q)
-  + w_{\text{qa}} \cdot \frac{1}{|Q|} \sum_{q \in Q}
-      \mathrm{judge}\bigl(R(q, M_\tau), \mathrm{gold}_q\bigr)
-  - \lambda_W \, c_W(\tau)
-\end{align}
-where, for the held-out battery $Q$,
-\[
-  \mathrm{overlap}(R, F, M_\tau, Q) \;=\;
-    \frac{1}{|Q|} \sum_{q \in Q}
-    \frac{|\,\mathrm{dia}(R, F, q) \,\cap\, \mathrm{dia}(M_\tau)\,|}
-         {|\mathrm{dia}(R, F, q)|}.
-\]
-$F$ is a flat backend populated with the full conversation text;
-$R(q, F)$ is the frozen reader's retrieval given full text;
-$\mathrm{dia}(R, F, q)$ is the set of \texttt{dia\_id}s those
-retrieved units reference. $\mathrm{dia}(M_\tau)$ is the set of
-\texttt{dia\_id}s reachable through entity provenance
-(\texttt{Entity.created\_from}) and transition triggers
-(\texttt{StateTransition.trigger\_conversation\_id}) in the
-budget-pruned post-W KG. The reader $R$ is held fixed across Phase~B.
+\paragraph{Reward.} Let $\tau = (a_1, a_2, \dots, a_n)$ be the
+sequence of ops the policy emitted in this episode, and let
+$\mathcal{M}(\tau) \subseteq \{1,\dots,n\}$ index the
+\emph{mutating} ops (every op except \texttt{lookup\_*} and
+\texttt{noop}, which by construction leave the post-W graph
+unchanged). Write $M_\tau$ for the post-budget memory state when all
+of $\tau$ is replayed and $M_{\tau\setminus i}$ for the state when
+$\tau$ is replayed without $a_i$. The per-op marginal utility is
+\begin{equation}
+  \Delta_i(\tau, Q) \;=\; \frac{1}{|Q|} \sum_{q \in Q}
+    \Bigl[\, \mathrm{judge}\!\bigl(R(q, M_\tau), \mathrm{gold}_q\bigr)
+        \;-\; \mathrm{judge}\!\bigl(R(q, M_{\tau\setminus i}), \mathrm{gold}_q\bigr) \Bigr].
+\end{equation}
+The trajectory reward GRPO sees is then
+\begin{equation}
+  r_W(\tau) \;=\; w_{\text{cf}} \!\!
+    \sum_{i \in \mathcal{M}(\tau)} \!\! \Delta_i(\tau, Q)
+  \;+\; w_{\text{qa}} \cdot \frac{1}{|Q|} \sum_{q \in Q}
+      \mathrm{judge}\!\bigl(R(q, M_\tau), \mathrm{gold}_q\bigr)
+  \;-\; \lambda_W \, c_W(\tau).
+\end{equation}
+We default to $w_{\text{cf}} = 0.7$, $w_{\text{qa}} = 0.3$,
+$\lambda_W = 0.001$, $K_{\max} = 12$. The QA term anchors the policy
+to the actual downstream task; the per-op term provides the
+attribution. Op cost $c_W(\tau)$ is small because the hard budget
+already does most of the regularising; we report it for diagnostic
+logging more than for reward shaping.
 
-We default to $w_{\text{ov}} = 0.7$, $w_{\text{qa}} = 0.3$,
-$\lambda_W = 0.001$, $K_{\max} = 12$. The cost coefficient is small
-because the hard budget already does most of the regularising;
-$c_W(\tau)$ is reported per-trajectory for diagnostic logging more
-than for reward shaping.
+\paragraph{Why per-op counterfactual.} Trajectory-level rewards
+(final-answer judge, random-$K$ margins, dia\_id-overlap with what the
+reader retrieves from full text) all yield one scalar per write
+trajectory. GRPO uses that scalar as the trajectory advantage and
+diffuses it uniformly over the 4--12 emitted tokens. The signal-to-
+noise ratio per op is poor; entropy collapse and slow convergence
+follow. Per-op counterfactual replaces the diffused signal with a
+sum of per-op deltas, each computable with one extra reader+judge
+pass per mutating op per question. At typical per-trajectory budgets
+($|\mathcal{M}| \approx 2$, $|Q| \approx 4$) this is roughly
+$5\times$ the cost of a trajectory-level signal but gives GRPO the
+per-op resolution it needs. The technique is the analogue of the
+COMA-style counterfactual baseline from cooperative multi-agent RL
+\cite{foerster2018coma}, applied at the op granularity that our typed
+op vocabulary makes natural. Concurrent memory-RL work
+(Memory-R1~\cite{memoryR1}, DeltaMem~\cite{deltamem},
+Mem-$\alpha$~\cite{memalpha}) trains memory managers with composite
+trajectory-level rewards; per-op counterfactual attribution is, to
+our knowledge, novel in this setting.
 
-\paragraph{Why reader-overlap.} The earlier version of this paper used
-\emph{evidence coverage}---the fraction of a question's gold dia\_ids
-preserved in the post-W KG---as the dense signal. A subsequent audit
-showed coverage is dominated by a single confound: the number of
-turns kept correlates with gold coverage at Spearman $\rho \approx
-0.98$ on LoCoMo, so any policy that retains more turns trivially
-scores higher under coverage, regardless of \emph{which} turns it
-retains. Reader-overlap solves this in two ways: the hard budget
-removes the keep-more-stuff degree of freedom, and the target set is
-defined by what the reader actually retrieves rather than by gold
-labels, which sidesteps both the confound and the deployment problem
-that real personal-AI data does not ship with per-question evidence
-labels. In a controlled study, reader-overlap correlates with gold
-coverage at within-turn $\rho \approx 0.61$, which is far below
-$0.98$ but, critically, the residual signal it captures \emph{is} the
-content-sensitive part of the original.
+\paragraph{What we deprecated.} Earlier drafts of this paper used
+\emph{evidence coverage} (fraction of a question's gold dia\_ids
+preserved) and then \emph{reader-overlap} (jaccard of dia\_ids the
+reader retrieves from full text vs.\ those preserved in the KG). An
+audit found that gold coverage correlates with the trivial
+turns-kept feature at Spearman $\rho \approx 0.98$, making it
+non-content-sensitive. Reader-overlap was less brittle but
+structurally bounded low because the reader retrieves chunks of
+$\sim$6 dia\_ids each from full text whereas the post-W graph
+stores entities tagged with single dia\_ids. Both signals are kept
+as logged diagnostics for ablation comparison; the v3 reward sets
+their weights to 0.
 
 \subsection{Co-training algorithm}
 
