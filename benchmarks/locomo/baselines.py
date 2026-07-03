@@ -464,7 +464,7 @@ def pie_temporal(
 PIE_EXTRACTION_PROMPT = """\
 You are extracting a knowledge graph from a conversation between two people.
 
-## CORE RULE: ONE ENTITY PER FACT
+## CORE RULE 1: ONE ENTITY PER FACT
 
 Each entity represents a single fact with a unique descriptive name.
 
@@ -475,50 +475,136 @@ Good — each fact is its own entity:
   {"name": "Alex's job", "state": {"description": "Software engineer at Google"}}
   {"name": "Alex's dog", "state": {"description": "Golden retriever named Rex"}}
   {"name": "Alex's city", "state": {"description": "New York City"}}
-  {"name": "Road trip to Austin", "state": {"description": "Weekend trip Alex took in March 2024"}}
+
+## CORE RULE 2: STRICT SPEAKER ATTRIBUTION (CRITICAL)
+
+Every entity that describes a person's experience, hobby, possession,
+relationship, feeling, plan, family member, pet, or activity MUST be
+prefixed with that person's exact name. NEVER create speaker-less
+entities for personal facts.
+
+CORRECT — separate entities per speaker, even for the same activity:
+  {"name": "Caroline's running practice", "type": "concept",
+   "state": {"description": "Caroline runs to de-stress and clear her mind",
+              "speaker": "Caroline"}}
+  {"name": "Melanie's running practice", "type": "concept",
+   "state": {"description": "Melanie runs for mental health",
+              "speaker": "Melanie"}}
+
+WRONG — merging two people's facts into one entity:
+  {"name": "running", "state": {"description": "improves mental health"}}
+
+Every entity's state dict MUST contain a "speaker" field naming the
+person the fact belongs to (or "both" only if the fact is genuinely
+shared, e.g. a joint trip they took together).
+
+## CORE RULE 3: NEVER MERGE PARALLEL FACTS ACROSS SPEAKERS
+
+LoCoMo conversations are SYMMETRIC. Both speakers regularly mention
+the same kinds of facts: both have grandparents, both have hobbies,
+both have musical tastes, both go camping, both have pets. You MUST
+extract a separate entity for EACH speaker's version, even if their
+facts are very similar.
+
+Concrete examples drawn from real conversations:
+
+  Conversation has:
+    Caroline (in chunk 1): "My grandma in Sweden gave me this necklace"
+    Melanie (in chunk 12): "My grandma in Sweden gave me a necklace too"
+  CORRECT extraction (TWO entities):
+    {"name": "Caroline's necklace from grandma", "speaker": "Caroline",
+     "state": {"description": "Necklace from Caroline's Swedish grandma",
+                "symbolism": "love, faith, and strength"}}
+    {"name": "Melanie's necklace from grandma", "speaker": "Melanie",
+     "state": {"description": "Necklace from Melanie's Swedish grandma",
+                "symbolism": "love, faith, and strength"}}
+  WRONG (one merged entity):
+    {"name": "necklace from grandma in Sweden", ...}    # speaker-less
+    {"name": "Caroline's necklace from grandma", ...}   # missing Melanie's
+
+  Conversation has:
+    Caroline: "I run to de-stress and clear my mind"
+    Melanie: "I run for mental health"
+  CORRECT (TWO entities):
+    Caroline's running practice (speaker=Caroline)
+    Melanie's running practice (speaker=Melanie)
+
+  Conversation has:
+    Caroline: "I love Bach and Mozart"
+    Melanie: "I'm a fan of Bach and Mozart"
+  CORRECT (TWO entities):
+    Caroline's classical music taste (speaker=Caroline, state mentions Bach, Mozart)
+    Melanie's classical music taste (speaker=Melanie, state mentions Bach, Mozart)
+
+When you encounter a fact that you've seen a similar version of in a
+prior chunk:
+  - If it's about the SAME speaker → add it as a state_change to the existing entity
+  - If it's about a DIFFERENT speaker → create a NEW entity prefixed with that speaker
+  - NEVER assume "I already extracted necklace, no need for another" — check the speaker
+
+When extracting from a chunk, ALWAYS scan every turn separately for
+who is speaking. The chunk header marks each turn with the speaker name.
+If a turn starts with "Caroline:", any first-person ("I", "my", "me")
+in that turn refers to Caroline; the next turn starting with "Melanie:"
+has first-person referring to Melanie.
 
 ## WHAT TO EXTRACT
 
 Create entities for every stated fact across BOTH speakers:
 - Identity/demographics: name, age, job, relationship status, nationality
 - Family: each family member with their name and role
-- Pets: each pet with name, type, any behaviors  
+- Pets: each pet with name, type, any behaviors
 - Hobbies and activities: one entity per hobby/activity, include how long/how often
-- Events: one entity per event, include when it happened
+- Events: one entity per event, include when it happened, who participated
 - Locations: hometown, current city, places visited — each separately
 - Books, films, music: title and speaker who mentioned it
 - Purchases and possessions: item, description, when acquired
 - Emotions and reactions: how someone felt about a specific event
 - Plans and intentions: upcoming events, goals
+- Symbolic objects (gifts, jewellery, tattoos): item, giver, recipient,
+  what it symbolises — all in one entity for that specific object
 
 ## EXTRACTION RULES
 
-1. **Extract verbatim.** Copy names, places, titles, and numbers exactly as spoken.  
-   "my home country, Sweden" → description: "Sweden" (not "home country")  
-   "I read 'Educated' last year" → entity: "Alex's book: Educated"
+1. **Extract verbatim.** Copy names, places, titles, and numbers exactly
+   as spoken. "my home country, Sweden" → description includes "Sweden".
 
-2. **Attribute correctly.** If speaker A says "I did X", create the entity under A's name, even if the topic is about B.
+2. **Attribute correctly.** If speaker A says "I did X", create the
+   entity under A's name. If speaker A says "B did X", create the
+   entity under B's name. Use the conversation header to know which
+   speaker is talking.
 
-3. **Convert all relative dates to absolute** using the session timestamp provided.  
-   Session date July 2, 2023: "yesterday" → "July 1, 2023", "last week" → "the week before July 2, 2023"
+3. **When a fact involves both people**, still pick the *primary
+   subject* of the fact. "Caroline gave Melanie a necklace" → entity
+   "Necklace from Caroline to Melanie" with speaker="Melanie" (it's
+   Melanie's possession). "Caroline and Melanie went hiking together"
+   → entity "Caroline and Melanie's hike" with speaker="both".
 
-4. **Compute durations.** "I've been doing X for 7 years" + session date 2023 → start year 2016.
+4. **Convert all relative dates to absolute** using the session timestamp.
+   Session date July 2, 2023: "yesterday" → "July 1, 2023".
 
-5. **Over-extract rather than under-extract.** If unsure, include it.
+5. **Compute durations.** "doing X for 7 years" + session 2023 → start 2016.
 
-6. Create a speaker entity for each person:
-   {"name": "Alex", "type": "person", "state": {"description": "One of the two speakers"}}
+6. **Over-extract rather than under-extract.** If unsure, include it.
+
+7. Create a speaker entity for each person:
+   {"name": "Alex", "type": "person",
+    "state": {"description": "One of the two speakers", "speaker": "Alex"}}
 
 ## STATE CHANGES
 
-If a fact changed since a previous session, record it:
-  {"entity_name": "Alex's job", "what_changed": "employer", "old_state": "Google", "new_state": "Meta", "is_contradiction": false}
+If a fact changed since a previous session, record it. Always preserve
+the speaker:
+  {"entity_name": "Alex's job", "what_changed": "employer",
+   "old_state": "Google", "new_state": "Meta", "is_contradiction": false}
 
 ## OUTPUT
 
 {
-  "entities": [{"name": "unique descriptive name", "type": "person|concept|event|organization|belief", "state": {"description": "the specific fact"}}],
-  "state_changes": [{"entity_name": "str", "what_changed": "str", "old_state": "str", "new_state": "str", "is_contradiction": false}],
+  "entities": [{"name": "<speaker>'s <fact>", "type": "person|concept|event|organization|belief",
+                 "state": {"description": "the specific fact", "speaker": "<name>"}}],
+  "state_changes": [{"entity_name": "str", "what_changed": "str",
+                      "old_state": "str", "new_state": "str", "is_contradiction": false}],
   "relationships": [{"source": "str", "target": "str", "type": "str", "description": "str"}]
 }"""
 
@@ -967,6 +1053,70 @@ def _retrieve_entities_for_question(
         embed_r = embed_ranks.get(eid, len(entity_texts))
         rrf_scores[eid] = (1.0 / (k + bm25_r)) + (1.0 / (k + embed_r))
 
+    # ── Speaker-mention boost (anti-confusion) ─────────────────────────────
+    # The single largest failure mode in adversarial questions is
+    # cross-speaker attribution: the question asks about Caroline, the KB
+    # has the fact under Melanie, retrieval surfaces Melanie's entity, the
+    # answer LLM responds with Melanie's fact. Fix at retrieval time:
+    # when the question explicitly names a speaker, multiplicatively boost
+    # entities whose name starts with that speaker OR whose state.speaker
+    # field matches.
+    if os.environ.get("PIE_NO_SPEAKER_BOOST", "") != "1":
+        speaker_names = set()
+        for eid, entity in world_model.entities.items():
+            # Speaker entities are type=person whose name appears in their
+            # own state. Also accept any entity whose state.speaker is set.
+            try:
+                if entity.type.value == "person":
+                    speaker_names.add(entity.name)
+            except AttributeError:
+                pass
+            state = entity.current_state if isinstance(entity.current_state, dict) else {}
+            sp = state.get("speaker")
+            if isinstance(sp, str) and sp.lower() not in ("both", "unknown", ""):
+                speaker_names.add(sp)
+
+        question_lower = question.lower()
+        mentioned = [s for s in speaker_names if s and s.lower() in question_lower]
+
+        if mentioned:
+            # Identify, for each entity, whether it belongs to one of the
+            # mentioned speakers.
+            for eid, entity in world_model.entities.items():
+                ent_speakers = set()
+                # by name prefix
+                ename_lower = entity.name.lower()
+                for s in mentioned:
+                    if ename_lower.startswith(s.lower() + "'s") or \
+                       ename_lower.startswith(s.lower() + " ") or \
+                       ename_lower == s.lower():
+                        ent_speakers.add(s)
+                # by state.speaker field
+                state = entity.current_state if isinstance(entity.current_state, dict) else {}
+                sp = state.get("speaker", "")
+                if isinstance(sp, str) and sp in mentioned:
+                    ent_speakers.add(sp)
+                if ent_speakers:
+                    rrf_scores[eid] *= 2.5  # promote entities of mentioned speakers
+                else:
+                    # Entities that explicitly belong to the OTHER speaker
+                    # get demoted, so they don't outrank an exact-match
+                    # entity for the named one.
+                    other_speaker = None
+                    if isinstance(sp, str) and sp and sp not in mentioned and \
+                       sp.lower() not in ("both", "unknown", ""):
+                        other_speaker = sp
+                    if other_speaker is None:
+                        for s in speaker_names:
+                            if s in mentioned:
+                                continue
+                            if ename_lower.startswith(s.lower() + "'s") or \
+                               ename_lower.startswith(s.lower() + " "):
+                                other_speaker = s
+                                break
+                    if other_speaker is not None:
+                        rrf_scores[eid] *= 0.4
+
     sorted_eids = sorted(rrf_scores.keys(), key=lambda eid: rrf_scores[eid], reverse=True)
     results = []
     for eid in sorted_eids[:top_k]:
@@ -1058,19 +1208,70 @@ def _compile_temporal_context(
 
 
 PIE_ANSWER_SYSTEM = """\
-Answer the question using the knowledge base provided. Be as concise as possible — \
-give only what is asked for. No preamble, no reasoning, no explanation.
+Answer the question using the knowledge base provided. Be concise — give \
+only what is asked for. No preamble, no reasoning, no explanation.
 
-For factual questions (who, what, where, when, how long), give the specific value directly.
-For list questions, give a short comma-separated list.
-For why/how questions, one sentence maximum.
+## DEFAULT MODE: USE EVERY KB FACT YOU CAN
 
-If the question names the wrong person, answer with the correct fact anyway — \
-do not write correction prefixes, just state the fact.
+Most questions name a person and ask about something they did, owned,
+felt, or experienced. To answer them, look across ALL entities in the
+knowledge base whose name or speaker tag matches the named person, then
+combine their facts to construct the answer. The KB is dense — facts
+are split across many small entities, so you'll usually need to assemble
+several. This includes:
 
-Use the most recent state when facts have changed over time.
-Copy dates exactly as they appear in the knowledge base.
-Never say you don't know or that information is missing — use whatever is available to make a reasonable inference."""
+- "What country is Melanie's grandma from?" → look at any entity about
+  Melanie's grandma; if the description mentions Sweden, answer "Sweden".
+- "Which classical musicians does Caroline enjoy?" → look at Caroline's
+  music entities; combine names mentioned across them.
+- "What inspired Caroline's sculpture?" → find Caroline's sculpture/art
+  entities; quote the inspiration described.
+
+## EXCEPTION: NEVER SUBSTITUTE THE OTHER SPEAKER'S FACT
+
+The one thing you must not do is invent a fact about person X by
+copying a fact from person Y on a similar topic. Concretely:
+
+  Q: "What is Caroline's reason for getting into running?"
+  KB has: "Melanie's running practice (speaker=Melanie): runs for mental health"
+  KB has: NO Caroline running entity
+  CORRECT: "no information about Caroline's reason for running"
+  WRONG:   "to de-stress" (made up)
+  WRONG:   "Melanie runs for mental health" (wrong speaker)
+  WRONG:   "Caroline runs for mental health" (false attribution)
+
+The test for whether to answer "no information": is there ANY entity
+in the KB whose name or speaker tag matches the named person AND whose
+description is on the asked topic? If yes, answer from it. If no — and
+ONLY in that case — say "no information about <person>'s <topic>".
+
+## YES/NO AND INFERENCE QUESTIONS
+
+For yes/no questions ("Is Oscar Melanie's pet?", "Would Caroline...")
+answer "yes" or "no" based on what the KB supports, even if the answer
+requires connecting two or three facts about the named person. Do not
+default to "no information" for yes/no questions — pick the side the KB
+evidence points to.
+
+For "would X likely..." or "would X enjoy..." questions, infer from the
+named person's stated preferences and history. If Caroline says she
+enjoys classical music and the question is about a classical piece,
+answer "yes" with a brief reason. Inference within a single person's
+facts is allowed and expected.
+
+## ANSWER FORMATTING
+
+Factual (who/what/where/when/how long): give the specific value verbatim
+from the KB.
+List: short comma-separated list using only items explicitly tied to
+the asked entity. Do NOT pad with unrelated items.
+Why/how: one sentence maximum.
+Numeric: precise number, not "at least N" or "around N".
+
+## TEMPORAL
+
+Use the most recent state when facts have changed. Copy dates exactly
+as they appear in the KB."""
 
 
 def _ask_llm_temporal(

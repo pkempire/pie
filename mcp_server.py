@@ -24,6 +24,7 @@ Usage (Claude Desktop or Cursor):
 
 import json
 import logging
+import os
 import sys
 import time
 from collections import defaultdict
@@ -31,6 +32,13 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).parent
 sys.path.insert(0, str(PROJECT_ROOT))
+
+# Load .env before anything else needs API keys
+try:
+    from dotenv import load_dotenv
+    load_dotenv(PROJECT_ROOT / ".env")
+except ImportError:
+    pass
 
 from mcp.server.fastmcp import FastMCP
 
@@ -612,6 +620,304 @@ def ingest_conversation(
         "relationships_found": len(extraction.relationships),
         "tokens_used": result["tokens"]["total"],
         "summary": extraction.summary or f"Ingested '{title}': {creates} new entities, {updates} updated.",
+    }, indent=2)
+
+
+# ── Granular CRUD tools ─────────────────────────────────────────────────────
+
+@mcp.tool()
+def create_entity(
+    name: str,
+    entity_type: str,
+    state: str = "{}",
+    aliases: str = "[]",
+    importance: float = 0.5,
+) -> str:
+    """Create a new entity in the knowledge graph directly.
+
+    No LLM extraction — just writes what you tell it. Use for quick
+    fact capture, project status updates, or adding new people/tools.
+
+    Args:
+        name: Entity name (e.g. "Hermes v1 launch", "New lead: Superbloom")
+        entity_type: One of: person, project, tool, organization, belief,
+                     decision, concept, period, event, goal
+        state: JSON dict of state fields (e.g. '{"status":"shipped","version":"1.0"}')
+        aliases: JSON list of alternate names (e.g. '["HermesAI","Hermes Agent"]')
+        importance: 0-1 importance score (default 0.5)
+    """
+    import json as _json
+    import time as _time
+    from pie.core.models import EntityType
+
+    try:
+        etype = EntityType(entity_type.lower())
+    except ValueError:
+        valid = [e.value for e in EntityType]
+        return _json.dumps({"error": f"Unknown type '{entity_type}'. Valid: {valid}"})
+
+    try:
+        state_dict = _json.loads(state)
+    except _json.JSONDecodeError:
+        return _json.dumps({"error": f"state must be valid JSON. Got: {state[:100]}"})
+
+    try:
+        alias_list = _json.loads(aliases)
+    except _json.JSONDecodeError:
+        alias_list = []
+
+    wm = _get_wm()
+    now = _time.time()
+
+    entity = wm.create_entity(
+        name=name,
+        type=etype,
+        state=state_dict,
+        source_conversation_id="mcp_direct",
+        timestamp=now,
+        aliases=alias_list if isinstance(alias_list, list) else [],
+    )
+    wm.rebuild_embedding_matrix()
+    wm.save()
+
+    global _retriever
+    _retriever = None
+
+    return _json.dumps({
+        "status": "created",
+        "name": name,
+        "entity_id": entity.id,
+        "type": entity_type,
+        "state": entity.current_state,
+    }, indent=2, default=str)
+
+
+@mcp.tool()
+def update_entity(
+    name: str,
+    new_state: str,
+    trigger: str = "Manual update via MCP",
+    is_contradiction: bool = False,
+) -> str:
+    """Update an existing entity's state and record the transition.
+
+    Merges new_state into the entity's current state (partial updates OK).
+    Only records a transition if something meaningfully changed.
+
+    Args:
+        name: Entity name (fuzzy-matched). E.g. "sponsorFind", "Hermes"
+        new_state: JSON dict of state fields to update (e.g. '{"status":"beta","users":50}')
+        trigger: Human-readable summary of what triggered this update
+        is_contradiction: If True, marks this as a contradiction transition
+    """
+    import json as _json
+    import time as _time
+
+    try:
+        state_dict = _json.loads(new_state)
+    except _json.JSONDecodeError:
+        return _json.dumps({"error": f"new_state must be valid JSON. Got: {new_state[:100]}"})
+
+    wm = _get_wm()
+    entity = wm.find_by_name(name)
+
+    if not entity:
+        return _json.dumps({"error": f"Entity not found: '{name}'. Try search() first."})
+
+    now = _time.time()
+    transition = wm.update_entity_state(
+        entity_id=entity.id,
+        new_state=state_dict,
+        source_conversation_id="mcp_direct",
+        timestamp=now,
+        trigger_summary=trigger,
+        is_contradiction=is_contradiction,
+    )
+
+    if transition is None:
+        return _json.dumps({
+            "status": "no_change",
+            "name": entity.name,
+            "entity_id": entity.id,
+            "reason": "State already contained these values — no transition recorded.",
+        }, indent=2)
+
+    wm.save()
+
+    global _retriever
+    _retriever = None
+
+    return _json.dumps({
+        "status": "updated",
+        "name": entity.name,
+        "entity_id": entity.id,
+        "transition_type": transition.transition_type.value,
+        "trigger": trigger,
+    }, indent=2, default=str)
+
+
+@mcp.tool()
+def add_relationship(
+    source_name: str,
+    target_name: str,
+    rel_type: str = "related_to",
+    description: str = "",
+) -> str:
+    """Create a relationship between two entities in the knowledge graph.
+
+    Args:
+        source_name: Name of the source entity (fuzzy-matched)
+        target_name: Name of the target entity (fuzzy-matched)
+        rel_type: Relationship type. One of: uses, works_on, collaborates_with,
+                  related_to, part_of, caused_by, during, replaces, integrates_with
+        description: Optional description of the relationship
+    """
+    import json as _json
+    import time as _time
+    from pie.core.models import RelationshipType
+
+    try:
+        rtype = RelationshipType(rel_type.lower())
+    except ValueError:
+        valid = [r.value for r in RelationshipType]
+        return _json.dumps({"error": f"Unknown relationship type '{rel_type}'. Valid: {valid}"})
+
+    wm = _get_wm()
+    source = wm.find_by_name(source_name)
+    target = wm.find_by_name(target_name)
+
+    if not source:
+        return _json.dumps({"error": f"Source entity not found: '{source_name}'"})
+    if not target:
+        return _json.dumps({"error": f"Target entity not found: '{target_name}'"})
+
+    now = _time.time()
+    rel = wm.add_relationship(
+        source_id=source.id,
+        target_id=target.id,
+        rel_type=rtype,
+        description=description,
+        source_conversation_id="mcp_direct",
+        timestamp=now,
+    )
+
+    if rel is None:
+        return _json.dumps({
+            "status": "already_exists",
+            "source": source.name,
+            "target": target.name,
+            "type": rel_type,
+        }, indent=2)
+
+    wm.save()
+    return _json.dumps({
+        "status": "created",
+        "relationship_id": rel.id,
+        "source": source.name,
+        "target": target.name,
+        "type": rel_type,
+        "description": description,
+    }, indent=2, default=str)
+
+
+@mcp.tool()
+def add_note(
+    entity_name: str,
+    note: str,
+) -> str:
+    """Add a quick note/fact about an entity. Stores as a state update.
+
+    Use for reminders, quick observations, or lightweight annotations.
+    The note is appended to the entity's 'notes' field with a timestamp.
+
+    Args:
+        entity_name: Entity to annotate (fuzzy-matched)
+        note: The note text to add
+    """
+    import json as _json
+    import time as _time
+
+    wm = _get_wm()
+    entity = wm.find_by_name(entity_name)
+
+    if not entity:
+        return _json.dumps({"error": f"Entity not found: '{entity_name}'"})
+
+    now = _time.time()
+    current_notes = entity.current_state.get("notes", "") if isinstance(entity.current_state, dict) else ""
+    timestamp = __import__("datetime").datetime.now().strftime("%Y-%m-%d %H:%M")
+    new_note = f"[{timestamp}] {note}"
+    updated_notes = f"{current_notes}\n{new_note}".strip() if current_notes else new_note
+
+    wm.update_entity_state(
+        entity_id=entity.id,
+        new_state={"notes": updated_notes},
+        source_conversation_id="mcp_direct",
+        timestamp=now,
+        trigger_summary=f"Note added: {note[:100]}",
+    )
+    wm.save()
+
+    global _retriever
+    _retriever = None
+
+    return _json.dumps({
+        "status": "noted",
+        "entity": entity.name,
+        "note": note,
+    }, indent=2)
+
+
+@mcp.tool()
+def delete_entity(
+    name: str,
+) -> str:
+    """Archive an entity (marks as archived, doesn't fully delete).
+
+    The entity remains in the graph with status='archived' and gets a
+    final ARCHIVAL transition recorded. Not reversible via MCP.
+
+    Args:
+        name: Entity name to archive (fuzzy-matched)
+    """
+    import json as _json
+    import time as _time
+
+    wm = _get_wm()
+    entity = wm.find_by_name(name)
+
+    if not entity:
+        return _json.dumps({"error": f"Entity not found: '{name}'"})
+
+    now = _time.time()
+    from pie.core.models import TransitionType
+
+    old_state = entity.current_state
+    new_state = dict(old_state) if isinstance(old_state, dict) else {"description": str(old_state)}
+    new_state["status"] = "archived"
+
+    wm.record_transition(
+        entity_id=entity.id,
+        from_state=old_state,
+        to_state=new_state,
+        transition_type=TransitionType.ARCHIVAL,
+        trigger_conversation_id="mcp_direct",
+        trigger_summary="Entity archived via MCP",
+        timestamp=now,
+    )
+
+    entity.current_state = new_state
+    entity.last_seen = now
+
+    wm.save()
+
+    global _retriever
+    _retriever = None
+
+    return _json.dumps({
+        "status": "archived",
+        "name": entity.name,
+        "entity_id": entity.id,
     }, indent=2)
 
 

@@ -34,56 +34,49 @@
 
 \begin{abstract}
 Long-running language-model agents accumulate context faster than any
-context window can hold, so they store some of it externally. The
-question is what to keep. Today's memory systems---Mem0, Letta, Mastra,
-Zep, our own KGmem---answer that question with hand-written code. The
-store grows from use; the control layer that picks what to commit
-typically does not.
+context window can hold, so they store some of it externally. Every
+published memory system---Mem0, Letta, Mastra, Zep, our own
+KGmem---decides what to commit using hand-written prompts and
+heuristics. We ask whether the same decisions can be made by a learned
+policy supervised by downstream answer correctness, the same signal
+already used to evaluate the system.
 
-We frame memory as a budgeted decision problem. Given a hard retention
-budget $K$, the write policy emits a sequence of typed operations
-(\texttt{lookup\_entity}, \texttt{create\_entity},
-\texttt{update\_state}, \texttt{merge\_entities},
-\texttt{add\_relation}, \texttt{mark\_contradiction}, \texttt{forget},
-\texttt{noop}) into a typed-transition knowledge graph. The read side
-is held fixed: a hand-coded hybrid retriever fusing BM25 over entity
-text, dense embedding similarity, and named-entity lookup via
-reciprocal-rank fusion. A controlled audit on a paired 50-question
-LoCoMo sample showed this stack recovers roughly 75\% of the accuracy
-gap that pure entity-only retrieval introduces, so observed gains
-from the learned write policy are not artefacts of an underpowered
-reader.
+Memory becomes a budgeted decision problem. Under a hard retention
+budget $K$, a write policy emits a short sequence of typed operations
+(\texttt{create\_entity}, \texttt{update\_state}, \texttt{add\_relation},
+\texttt{mark\_contradiction}, \texttt{forget}, and others) into a
+typed-transition knowledge graph; a fixed hybrid retriever fuses BM25,
+dense, and named-entity lookups for the read side. The technical
+obstacle is credit assignment: the policy emits four to twelve tokens
+of tool calls per turn, but the reward only arrives later, when a
+held-out question gets answered well or badly. Concurrent memory-RL
+work (Memory-R1, Mem-$\alpha$) feeds GRPO a single trajectory-level
+scalar that diffuses uniformly over those tokens; per-op resolution is
+lost.
 
-The technical contribution is the dense write reward.
-Trajectory-level signals (final-answer judge, random-$K$ margins,
-dia\_id-overlap with what the reader retrieves from full text) all
-yield one scalar per write trajectory that GRPO must then diffuse
-over a 4--12-token tool-call sequence; per-op resolution is lost.
-We propose \emph{per-op counterfactual marginal utility}: for each
-mutating write op $a_i$, we replay the trajectory minus $a_i$ and
-measure the per-question judge delta the omission produces against a
-held-out QA battery. The trajectory reward is the sum of per-op
-deltas, but each op carries its own credit signal at GRPO advantage
-time. Lookups and noops are skipped (their effect on the post-write
-graph is zero by construction). The result is a dense, per-op reward
-at roughly $5\times$ the cost of a trajectory-level signal. We blend
-this with the reader's absolute judge score as an anchor
-($w_{\text{cf}} = 0.7$, $w_{\text{qa}} = 0.3$).
+We propose \emph{per-op counterfactual marginal utility}. For each
+mutating op $a_i$ in a write trajectory, we replay the trajectory
+without it and measure how the held-out QA judge score changes. The op
+gets credit equal to the difference. The trajectory reward GRPO sees is
+the sum of these per-op deltas, but each op now carries its own
+signal at advantage time. Lookups and noops are skipped --- their
+effect on the post-write graph is zero by construction --- which keeps
+the cost at roughly $5\times$ a trajectory-level signal in exchange
+for per-op resolution. The technique is the COMA cooperative-RL
+baseline applied at the granularity our typed op vocabulary makes
+natural; the closest concurrent memory-RL work that gives op-level
+rewards (DeltaMem) uses a state-distance signal, not an
+outcome-attribution one.
 
 The success criterion is strict. A learned write policy must beat
-\emph{random subsampling at matched retention budget} on LoCoMo and
-LongMemEval-S; this is the content-agnostic efficiency frontier any
-contribution has to clear. It must also beat a BM25-based heuristic
-write policy that selects turns by query overlap. \TBD{Report headline
-numbers once the long Phase~B run lands. Anchor: random subsampling at
-$F = 0.1$ on LoCoMo achieves $\sim 4\%$ judge-graded QA, BM25 heuristic
-at the same $F$ achieves $\sim 63\%$ on LongMemEval-S; the learned
-policy needs to land above the latter.}
+random subsampling at matched retention budget --- the content-agnostic
+efficiency frontier --- and a BM25 heuristic that picks turns by query
+overlap, on both LoCoMo and LongMemEval-S. \TBD{Headline numbers fill
+in once the Phase~B run lands.}
 
-The framing we want to leave the reader with: facts live in the store,
-strategy lives in the weights. A single trained adapter can run
-against any user's local store, with no per-user fine-tuning and no
-need to move user data into a shared corpus.
+Facts live in the store, strategy lives in the weights. The store
+holds whatever the user gives it; the strategy transfers without
+moving any of their data.
 \end{abstract}
 
 % --------------------------------------------------------------------------
@@ -139,235 +132,266 @@ actually answerable.}
 
 \section{Introduction}
 
-Long-running AI assistants need long-running memory. ChatGPT remembers
-user preferences across sessions; Claude keeps notes within a project; a
-coding agent should be able to recall the design choices it made
-yesterday. Each of these uses an external memory store paired with a
-control layer that decides what to write down and what to read back. The
-store grows from use, but the control layer typically does not.
+\paragraph{The problem in one sentence.} Long-running AI assistants
+need long-running memory; today every system that does this in
+production hand-codes the decision of what to write down. Mem0 prompts
+an LLM to choose between \texttt{ADD/UPDATE/DELETE/NOOP} on each new
+turn~\cite{chhikara2024mem0}. Letta moves items between three OS-style
+memory tiers via prompted function calls~\cite{zhang2024memgpt}. Zep
+maintains a knowledge graph whose edges expire under hand-written
+rules~\cite{rasmussen2024zep}. Mastra runs two background LLM agents
+(\emph{Observer} and \emph{Reflector}) that compress raw turns into a
+bullet log on a fixed schedule and reach $94.87\%$ on LongMemEval with
+GPT-5-mini~\cite{mastra2025om}. KGmem, the prior-art typed-transition
+graph from the lead author that we use as one of our three backends,
+resolves new mentions against existing entities via a three-tier
+string/embedding/LLM cascade with thresholds chosen by inspection.
+Each of these works in practice. Each is also a place where the
+control logic is frozen --- the system cannot improve from the same
+signal that was used to evaluate it.
 
-\paragraph{Where the design choices currently live.} Across popular
-open-source memory systems for LLM agents, a pattern emerges: each
-pairs an external store with a hand-tuned control layer.
-\begin{itemize}
-  \item \textbf{Mem0}~\cite{chhikara2024mem0} stores facts as flat
-    key-value pairs. On each new turn, an LLM-as-judge prompt selects
-    one of \texttt{ADD/UPDATE/DELETE/NONE}. The prompt and its
-    thresholds are fixed.
-  \item \textbf{Letta / MemGPT}~\cite{zhang2024memgpt} models memory as
-    OS-style tiers (working, recall, archival) and moves items between
-    tiers via prompted function calls. The promotion rules are written
-    by hand.
-  \item \textbf{Zep / Graphiti}~\cite{rasmussen2024zep} maintains a
-    temporal knowledge graph in which edges carry valid-time intervals.
-    The rules for when an edge becomes invalid are fixed.
-  \item \textbf{Mastra}~\cite{mastra2025om} compresses raw turns into a
-    dated bullet observation log using two background agents
-    (\emph{Observer} and \emph{Reflector}). The compression schedule
-    and prompts are fixed.
-  \item \textbf{KGmem} (the lead author's prior system, used as one of
-    our backends) keeps typed entities with state transitions, and
-    resolves new mentions against existing entities through a three-tier
-    string/embedding/LLM cascade. The cascade thresholds (0.85 for
-    string match, 0.85 for embedding accept, 0.65 for reject) are
-    constants chosen by inspection.
-\end{itemize}
-None of this is a criticism: hand-tuned control layers are a reasonable
-starting point and most of these systems work well in practice. The
-open question we take up is whether the same control decisions can be
-improved by RL against the same answer-correctness signal already used
-to evaluate the system, and whether the resulting policy generalises
-across storage substrates.
+\paragraph{Why hand-coding is fragile.} A prompt cannot adapt to one
+user's writing style without being rewritten. A threshold cannot tell
+that a particular conversation has many proper nouns and few facts,
+or the reverse. A static rule cannot learn from its own mistakes:
+when Mem0 fails to extract a fact (the Mem0 paper itself reports a
+$\sim 40\%$ extraction-failure rate), the system has no way to
+attribute the failure or update the rule. The recent Memory-R1 work
+\cite{memoryR1} answers this by training a memory manager with
+reinforcement learning end-to-end on QA accuracy. Mem-$\alpha$
+\cite{memalpha2025} and DeltaMem~\cite{deltamem2026} extend the same
+idea with richer memory ontologies and longer episode horizons.
+The direction is right; the open question is the shape of the reward
+that turns ``the agent answered well'' into a useful gradient on
+``which write op deserved the credit?''
 
-\paragraph{What we do.} We treat memory operations as actions of a
-learned policy implemented as a low-rank adapter
-(LoRA)~\cite{hu2021lora} on a 4B-parameter open-source language model.
-The actions are tool calls into a memory backend. We define a single
-op vocabulary covering both sides of the system: read ops
-(\texttt{memory\_search}, \texttt{memory\_expand},
-\texttt{memory\_filter}, \texttt{memory\_rerank}) and write ops
-(\texttt{lookup\_entity}, \texttt{create\_entity},
-\texttt{update\_state}, \texttt{merge\_entities}, \texttt{add\_relation},
-\texttt{mark\_contradiction}, \texttt{forget}, \texttt{noop}).
+\paragraph{The credit-assignment problem, made concrete.} A write
+policy that ingests one conversation turn typically emits two to four
+tool calls --- maybe a \texttt{lookup\_entity} to check whether
+``Caroline'' already exists, then a \texttt{create\_entity} that adds
+her, then an \texttt{add\_relation} that links her to the LGBTQ support
+group she mentioned, then a \texttt{noop} on the next turn that's just
+a greeting. After this, future questions get asked. The reader
+retrieves from whatever the write policy left behind and tries to
+answer. The judge returns one number per question. GRPO~\cite{shao2024deepseekmath},
+the standard critic-free RL algorithm for this kind of training, takes
+the trajectory's reward and applies it as a uniform advantage to every
+emitted token. So the four-token \texttt{create\_entity} call and the
+four-token \texttt{noop} get the same gradient signal, despite making
+opposite contributions to the answer. This is the diffuse-credit
+problem and concurrent memory-RL work runs into it directly: Memory-R1
+uses final-answer EM as a single per-trajectory scalar; Mem-$\alpha$
+pools accuracy across an entire dialogue.
 
-The \emph{read} policy answers questions. Its reward is judged answer
-correctness, minus a small per-tool-call cost. We train it with
-GRPO~\cite{shao2024deepseekmath}, DeepSeek's critic-free simplification
-of PPO that has become the default RL algorithm for tool-use training.
+\paragraph{Our solution.} We propose \emph{per-op counterfactual
+marginal utility}. For each mutating op $a_i$ the policy emitted, we
+replay the trajectory without it, run the same reader against the
+counterfactual memory state, and ask the judge whether each held-out
+question still gets answered. The op's credit is the average drop in
+judge score it would have caused by being absent. Lookups and noops
+are skipped because their effect on the post-write graph is zero by
+construction; only the mutating ops get attribution. The trajectory
+reward GRPO sees is the sum of per-op deltas, but each op now
+contributes its own credit signal at advantage time. The technique is
+the COMA counterfactual baseline from cooperative multi-agent RL
+\cite{foerster2018coma} applied at the op granularity our typed
+vocabulary makes natural. The closest concurrent memory-RL work that
+gives op-level rewards is DeltaMem~\cite{deltamem2026}, which uses a
+state-distance signal (Memory-Levenshtein); ours is the first
+outcome-attribution variant in this setting.
 
-The \emph{write} policy ingests a conversation turn at a time. Its
-reward is deferred: after the write trajectory ends, the read policy
-answers a held-out battery of questions that depend on the turn the
-write policy just saw. The reward blends evidence-coverage (a
-deterministic, dense signal computed from the resulting graph's
-provenance) with the read policy's judged answer accuracy on the
-battery, minus a storage cost.
-
-The two policies are trained in alternation: train the read policy
-against the current memory state, then freeze the read policy and train
-the write policy against the read policy's evaluation. Repeat.
-
-\paragraph{Why this matters.} For research, the contribution is a
-\emph{learned operating system} for memory---facts in the store,
-strategy in the weights---and a backend-agnostic op vocabulary that
-makes the strategy transferable. For deployment, the same observation
-implies a useful asymmetry: a single trained adapter can run against
-any user's personal store, with no per-user fine-tuning needed and no
-need to move user data into a shared corpus.
+\paragraph{Why this matters.} The framing has two payoffs. For
+research, it makes memory a \emph{learned operating system} ---
+strategy in the weights, facts in the store --- with a backend-agnostic
+op vocabulary that compiles to three different storage substrates we
+test. For deployment, the same property gives a useful asymmetry: a
+single trained adapter can run against any user's local store, no
+per-user fine-tuning, no need to move user data into a shared corpus.
+The store holds whatever the user gives it; the strategy transfers
+without moving any of their data.
 
 \paragraph{Contributions.}
 \begin{enumerate}
-  \item A reframing of LLM memory as a \emph{budgeted decision
-    problem}: under a hard retention budget $K$, the learnable layer
-    is the write policy that picks which $K$ items to commit. Read
-    becomes a hand-coded hybrid retrieval stack that the write policy
-    optimises against.
+  \item A reframing of LLM-agent memory as a \emph{budgeted decision
+    problem}: under a hard retention budget $K_{\max}$, the learnable
+    layer is the write policy that picks which $K$ items to commit.
+    Read becomes a hand-coded hybrid retrieval stack that the write
+    policy optimises against.
   \item \textbf{Per-op counterfactual marginal utility} as the dense
-    reward for memory-write GRPO. Each mutating op gets credit equal
-    to the per-question judge delta its omission would cause, summed
-    over a held-out battery. This is the COMA-style attribution
-    \cite{foerster2018coma} applied at the op granularity our typed
-    op vocabulary makes natural, and it gives GRPO per-op resolution
-    that trajectory-level rewards lose to uniform diffusion.
+    write reward for memory-RL GRPO. Adapted from the COMA cooperative
+    multi-agent baseline; novel in the memory-write setting, where
+    concurrent work uses either trajectory-level outcome rewards
+    (Memory-R1, Mem-$\alpha$) or state-distance per-op rewards
+    (DeltaMem) that don't directly say what the downstream reader
+    needs.
   \item A backend-retriever-aligned evaluation protocol that controls
-    for the dominant confound in memory-system evaluation: an audit on
-    a paired LoCoMo sample shows mismatched retrievers can swing QA
-    accuracy by $0.40$ in absolute terms (McNemar $p = 1.9 \times
-    10^{-6}$). Our read-side retriever fuses BM25, dense, and NER via
-    RRF, and we run training and evaluation on the same retriever.
-  \item Two clean baselines the learned policy must beat: random
-    subsampling at matched $F$ (the efficiency frontier; trivial to
-    compute, hard to dominate at low $F$) and a BM25-based heuristic
-    write policy. We report the area under the efficiency curve
-    (AUEC) as the headline metric, with statistical significance via
-    paired McNemar tests stratified by question category.
+    for the dominant confound in memory-system comparison: a paired
+    LoCoMo audit shows mismatched retrievers can swing QA accuracy by
+    $0.40$ in absolute terms (McNemar $p = 1.9\!\times\!10^{-6}$). We
+    run training and evaluation on the same hybrid retriever (BM25 +
+    dense + NER fused with RRF).
+  \item Two strict baselines the learned policy must beat: random
+    subsampling at matched $F$ (the content-agnostic efficiency
+    frontier) and a BM25 heuristic that picks turns by query overlap.
+    We report area under the efficiency curve (AUEC) as the headline
+    metric.
   \item Empirical results on LoCoMo and LongMemEval-S, plus a
-    head-to-head against KGmem's hand-coded extraction pipeline on
-    personal ChatGPT-export data with self-generated questions.
-    \TBD{Numbers fill in once the long Phase~B run completes.}
+    head-to-head against KGmem's hand-coded extraction on personal
+    ChatGPT-export data with self-generated questions
+    (Section~\ref{sec:eval-modes} Mode~C). \TBD{Numbers fill in once
+    the long Phase~B run completes.}
 \end{enumerate}
+
+Figure~\ref{fig:overview} shows the data-flow once. The rest of the
+paper goes through the parts in order: related work in
+\S\ref{sec:related}, the op vocabulary and reward in \S\ref{sec:method},
+benchmarks and baselines in \S\ref{sec:exp-main}, and a discussion of
+what we believe and what we don't in \S\ref{sec:discussion}.
 
 % --------------------------------------------------------------------------
 \section{Related Work}
+\label{sec:related}
 
-\subsection{Memory systems for LLM agents}
+The right way to navigate the memory-systems literature is along two
+orthogonal axes: where do the facts live, and where does the write
+control come from. Table~\ref{tab:landscape} places each major system on
+the grid; the cell we sit in (external store, learned ops) is also the
+smallest and the most recently populated.
 
-The space splits along two axes: where facts live (in the model weights or
-in an external store), and how the operations on those facts are
-controlled (hand-coded or learned).
+\begin{table}[h]
+\centering
+\small
+\caption{The memory-systems design grid. Rows are storage substrate;
+  columns are how the write decisions are made. The published memory-RL
+  cluster (right column) all use trajectory-level outcome rewards
+  except DeltaMem (state-distance) and ours (per-op outcome
+  attribution).}
+\label{tab:landscape}
+\begin{tabular}{p{0.27\linewidth} p{0.32\linewidth} p{0.32\linewidth}}
+\toprule
+\textbf{Substrate} & \textbf{Hand-coded ops} & \textbf{Learned ops} \\
+\midrule
+Flat KV / chunk index   &
+  Mem0~\cite{chhikara2024mem0}, naïve RAG & --- \\
+Tiered OS-style memory  &
+  Letta / MemGPT~\cite{zhang2024memgpt} & --- \\
+Knowledge graph         &
+  Zep / Graphiti~\cite{rasmussen2024zep}, KGmem &
+  \textbf{this work}, DeltaMem~\cite{deltamem2026} \\
+Observation / summary log &
+  Mastra OM~\cite{mastra2025om}, Generative Agents~\cite{park2023generative} &
+  Mem-$\alpha$~\cite{memalpha2025}, Memory-R1~\cite{memoryR1} \\
+Model weights           &
+  ROME / MEMIT~\cite{meng2022rome}, per-user fine-tuning,
+  Cartridges~\cite{cartridges2025} & --- \\
+Implicit (test-time recurrence) &
+  Recursive Language Models~\cite{rlm2025},
+  Titans~\cite{titans2025} & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\paragraph{Facts in an external store, hand-coded ops.} Most production
-systems sit here. \textbf{Mem0}~\cite{chhikara2024mem0} stores facts in a
-vector index and uses an LLM-as-judge prompt for each new turn to choose
-between ADD, UPDATE, DELETE, or NONE. \textbf{Letta} (formerly
-MemGPT)~\cite{zhang2024memgpt} keeps a tiered memory (working, recall,
-archival) and uses LLM function calls to move things between tiers.
-\textbf{Zep / Graphiti}~\cite{rasmussen2024zep} stores a bi-temporal
-knowledge graph---each edge has a valid-time interval and an
-ingestion-time. \textbf{Mastra Observational
-Memory}~\cite{mastra2025om} uses two background agents (Observer and
-Reflector) to compress the chat history into a dense bullet-point
-observation log; it reports the highest published score on LongMemEval
-(94.87\% with gpt-5-mini). \textbf{Generative
-Agents}~\cite{park2023generative} run periodic reflection cycles that
-condense raw observations into higher-level beliefs. In all of these, the
-schedule, thresholds, and prompts that decide what to remember are
-designed by hand.
+\subsection{The hand-coded column}
 
-\paragraph{Facts in the weights.} A different line modifies model
-parameters per user or per fact. \textbf{ROME / MEMIT}~\cite{meng2022rome}
-do surgical edits to feed-forward layer activations to insert specific
-facts. Per-user fine-tuning embeds a user's history into a LoRA adapter.
-These approaches give very tight retrieval (no search needed---the model
-just knows) but fragment the model fleet (one adapter per user) and risk
-catastrophic forgetting.
+Most production systems live here. The pattern is uniform: a prompt
+written by a researcher decides what to commit, sometimes with
+heuristics that fire afterward. Mem0 and Letta cap retention by tier or
+recency; Zep maintains valid-time intervals on KG edges; Mastra runs an
+\emph{Observer} pass to extract candidate facts and a \emph{Reflector}
+pass to compress the trail. Mastra's $94.87\%$ on LongMemEval with
+GPT-5-mini is the strongest published number, but the cost is paid in
+LLM calls at write time --- the Reflector runs on every conversation
+chunk, regardless of whether the fact it extracts will ever be queried.
+Mem0's own paper reports a $\sim 40\%$ extraction-failure rate, which
+is the visible signature of the underlying issue: a hand-tuned prompt
+can't tell which extractions matter for the answers users will
+eventually ask. Generative Agents~\cite{park2023generative} run
+periodic reflection cycles that condense observations into higher-level
+beliefs by the same template. Recursive Language
+Models~\cite{rlm2025} sit in a different cell entirely --- they do
+no write-time work and instead use a test-time outer loop to decide
+how deeply to decompress the input context per query. RLM with
+Gemini 3 Flash hits $89.8\%$ on LongMemEval, a strong result that
+suggests \emph{when to spend test-time compute on memory} may be as
+important as \emph{what to commit}. We treat RLM as orthogonal: a
+trained mempol write policy could be paired with an RLM-style read
+loop, and the two contributions would compose.
 
-\paragraph{Facts in the store, ops learned.} This cell is the smallest
-and is where we sit. The closest precedent is \textbf{ACE}~\cite{ace2026}
-(under review at ICLR 2026), which evolves text-form ``playbooks'' based
-on agent execution feedback---but the playbook is a single prompt
-document, not a structured memory store. \textbf{Voyager}~\cite{wang2023voyager}
-maintains a Minecraft skill library that grows over time, with the LLM
-deciding what to add---but additions are trial-and-error, not RL-trained.
+\subsection{The learned-ops column}
 
-\subsection{Reinforcement learning for tool use}
+Concurrent published work in this cell is small but growing.
+\textbf{Memory-R1}~\cite{memoryR1} trains a Memory Manager (ADD,
+UPDATE, DELETE, NOOP) and an Answer Agent jointly with PPO/GRPO on
+$152$ QA pairs from LoCoMo, MSC, and LongMemEval; the reward is final
+QA accuracy at the trajectory level. \textbf{Mem-$\alpha$}~\cite{memalpha2025}
+uses a richer memory ontology (core, episodic, semantic) and reports
+$13\times$ generalisation in horizon length (training at 30k tokens,
+testing at 400k). \textbf{DeltaMem}~\cite{deltamem2026} is the closest
+to ours: it gives op-level rewards via a Memory-based Levenshtein
+Distance on the post-write state. The difference between DeltaMem's
+reward and ours is exactly the difference between asking ``did the op
+change the memory in a structured way?'' and ``did the op change what
+the reader can answer?''. Both are reasonable. Ours is more directly
+aligned with the downstream task; theirs is cheaper to compute.
+The earlier non-RL precedents are \textbf{ACE}~\cite{ace2026} (evolves
+text-form playbooks based on execution feedback, but the playbook is a
+single prompt) and \textbf{Voyager}~\cite{wang2023voyager} (maintains a
+Minecraft skill library, with the LLM deciding what to add by
+trial-and-error rather than RL).
 
-The general framework is: an LLM emits tool calls as actions, an
-environment runs them and returns observations, the episode ends with a
-verifiable reward, and we train the LLM to emit better tool sequences.
+\subsection{The RL machinery we use}
 
-\textbf{RLHF}~\cite{ouyang2022rlhf} pioneered using RL on language model
-outputs, but with reward models trained from human preferences and PPO as
-the algorithm. \textbf{PPO}~\cite{schulman2017ppo} requires a critic
-network to estimate baseline rewards.
-
-\textbf{GRPO}~\cite{shao2024deepseekmath} drops the critic. Instead, for
-each prompt, sample a group of $G$ rollouts, compute the reward of each,
-and use the group mean as the baseline. The advantage of rollout $i$ is
-$(r_i - \bar r) / \mathrm{std}(r)$. This works exceptionally well when the
-reward is verifiable (e.g.\ correct answer to a math problem). DeepSeek-R1
-demonstrated GRPO on chain-of-thought; it is now the default RL algorithm
-for tool-use training.
-
+\textbf{GRPO}~\cite{shao2024deepseekmath} is the critic-free
+simplification of PPO that has become the default for tool-use
+training. For each prompt, sample $G$ rollouts; the advantage of
+rollout $i$ is $(r_i - \bar{r})/\mathrm{std}(r)$. The group acts as a
+zero-bias baseline. This works well when reward is verifiable (math,
+code, judge-graded QA) and is what we use.
 \textbf{Search-R1}~\cite{jin2025searchr1} applies GRPO to multi-turn
-search-then-answer over Wikipedia. Each rollout is a sequence of search
-queries followed by a final answer; reported gains are +41\% over RAG
-baselines on NaturalQuestions with Qwen2.5-7B. We use the
-Tinker-cookbook reproduction of Search-R1 as the structural template
-for our environment; the present work extends that template to the
-memory setting and adds a write side.
+search-then-answer; we use the Tinker-cookbook reproduction of
+Search-R1 as the structural template for our environment.
+\textbf{Reflexion}~\cite{shinn2023reflexion} and verbal-RL approaches
+update natural-language self-reflections rather than weights; they are
+fast and cheap but plateau because the policy is a static prompt.
+\textbf{Curriculum learning}~\cite{bengio2009curriculum} appears here
+because we use it on the read side: LoCoMo's question categories give
+us a natural easy-to-hard ordering. \textbf{LoRA}~\cite{hu2021lora} is
+the adapter form-factor; we use rank-32 on
+Qwen3-4B-Instruct~\cite{tinker2025}, trained via Tinker.
 
-\textbf{Reflexion}~\cite{shinn2023reflexion} and verbal RL approaches
-update natural-language ``self-reflections'' rather than weights. They are
-fast and cheap but plateau quickly because the policy is a static prompt.
+\subsection{Temporal awareness as a separate axis}
 
-\textbf{Curriculum learning}~\cite{bengio2009curriculum} is a classic
-finding we make use of: starting an RL agent on easy tasks gives reward
-signal that bootstraps learning on harder tasks. We use LoCoMo's question
-categories as a curriculum (easy single-hop $\to$ hard multi-hop and
-adversarial).
+A distinct cluster of recent work shows that LLM agents fail at
+\emph{behaving in time} --- not at computing date arithmetic, but at
+deciding when to act. \textbf{Temporally Blind}~\cite{tictoc2025}
+introduces TicToc, a 76-scenario benchmark that scores agent decisions
+about when to refetch stale context; the best model alignment with
+human preferences is $65\%$. \textbf{Real-Time
+Deadlines}~\cite{realtimedeadlines2026} shows GPT-5.1 closes $4\%$ of
+deals in time-pressured negotiation without a clock-in-prompt and
+$32\%$ with one. \textbf{Robotouille}~\cite{robotouille2025} reports a
+$47\% \to 11\%$ collapse for ReAct agents the moment planning has to
+interleave synchronous and asynchronous actions. These are
+benchmarks of \emph{behaviour}, not benchmarks of date-arithmetic
+(Test of Time~\cite{testoftime2024} and Time-R1~\cite{timer1_2025}
+cover the latter, with synthetic curricula and dedicated three-stage
+RL respectively). The TemporalBench we propose
+in~\S\ref{sec:datasets} extends TicToc's single-axis scoring to six
+axes of behaviour and is positioned squarely in this cluster.
 
-\subsection{Joint training of two policies}
+\subsection{What's missing, and what we add}
 
-\textbf{CoSearch}~\cite{ace2026} (concurrent ICLR work) jointly trains a
-reasoning policy (an LLM that decides what to search) and a document
-ranker (a scoring head that re-orders candidates) via RL on agentic
-search. Their ranker is a learned scoring function, not an action policy
-in the same sense as our W and R. The shared idea worth taking is
-\emph{joint training of two model components that interact through a
-shared substrate}; we extend that pattern to two action policies that
-share an op vocabulary across read and write sides of memory.
-\textbf{HippoRAG}~\cite{guu2024hipporag} uses Personalised PageRank over a
-graph of memories---inspired by the hippocampus---but uses no RL. Our
-approach extends the joint-training idea from query-time
-(reasoning+ranking) to ingestion-time (write+read).
-
-\subsection{Adapter-based fine-tuning}
-
-\textbf{LoRA}~\cite{hu2021lora} adds small low-rank matrices alongside the
-attention layers of a frozen base model. Fine-tuning only the adapter
-keeps the base intact and produces a $\sim$50--200 MB artefact that can be
-applied to any copy of the same base. We use rank-32 adapters on
-Qwen3-4B-Instruct~\cite{tinker2025}, trained via Tinker---Thinking
-Machines Lab's managed RL training service that exposes the right
-primitives (forward-backward, sample, optim-step) for GRPO.
-
-\subsection{What is missing}
-
-Despite a crowded space, no published system combines all three:
-\begin{enumerate}
-  \item Discrete, interpretable memory operations (Mem0, Letta, and
-    KGmem all have these).
-  \item Operations chosen by a learned policy supervised by outcome
-    reward (Search-R1 has this for retrieval only).
-  \item A write side trained against deferred QA accuracy on a held-out
-    battery (no published system).
-\end{enumerate}
-
-That is the gap we close.
+Across the grid, no published system combines (i) discrete
+interpretable memory ops, (ii) chosen by a policy trained with
+outcome supervision, (iii) where the supervision attributes credit
+\emph{per op} rather than per trajectory or per state-distance.
+Memory-R1 and Mem-$\alpha$ have (i) and (ii) but not (iii); DeltaMem
+has (i), (ii), and a per-op signal but the signal is state-distance,
+not outcome-attribution. That is the gap we close.
 
 % --------------------------------------------------------------------------
 \section{Method}
+\label{sec:method}
 
 \subsection{The op vocabulary}
 
@@ -542,66 +566,83 @@ Crucially, this means a policy cannot win the dense reward by
 ``store every dia\_id verbatim''---the budget makes that strategy
 infeasible by construction.
 
-\paragraph{Reward.} Let $\tau = (a_1, a_2, \dots, a_n)$ be the
-sequence of ops the policy emitted in this episode, and let
-$\mathcal{M}(\tau) \subseteq \{1,\dots,n\}$ index the
-\emph{mutating} ops (every op except \texttt{lookup\_*} and
-\texttt{noop}, which by construction leave the post-W graph
-unchanged). Write $M_\tau$ for the post-budget memory state when all
-of $\tau$ is replayed and $M_{\tau\setminus i}$ for the state when
-$\tau$ is replayed without $a_i$. The per-op marginal utility is
+\paragraph{Reward, by example.} Suppose a policy ingests one turn and
+emits four ops: $a_1 = \texttt{lookup\_entity(``caroline'')}$,
+$a_2 = \texttt{create\_entity(``Caroline'', state=\{city: Boston\})}$,
+$a_3 = \texttt{noop}$, $a_4 = \texttt{add\_relation(Caroline,
+LGBTQ\_group, attended)}$. After the policy stops, four held-out
+questions about the next ten turns get asked, and the reader scores
+the resulting graph at $0.50$ averaged across the four. We now ask:
+which op deserved the credit? We replay the trajectory three times,
+each time leaving one mutating op out, and rescore. Suppose the
+scores come back as $0.30$ without $a_2$, $0.50$ without $a_3$, and
+$0.40$ without $a_4$. Then the per-op deltas are
+$\Delta_2 = 0.50 - 0.30 = +0.20$ (\texttt{create\_entity} did real
+work), $\Delta_3 = 0$ (the noop didn't matter; we don't even compute
+it), and $\Delta_4 = +0.10$ (\texttt{add\_relation} helped some). The
+trajectory-level reward GRPO sees is the sum, $+0.30$, but each op now
+contributes its own number at advantage time.
+
+\paragraph{Reward, formally.} Let $\tau = (a_1, \dots, a_n)$ be the
+sequence of ops, $\mathcal{M}(\tau)$ the indices of mutating ops
+(everything except \texttt{lookup\_*} and \texttt{noop}, which leave
+the post-W graph unchanged by construction), $M_\tau$ the post-budget
+memory state when all of $\tau$ is replayed, and $M_{\tau\setminus i}$
+the state when $\tau$ is replayed without $a_i$. The per-op marginal
+utility is
 \begin{equation}
   \Delta_i(\tau, Q) \;=\; \frac{1}{|Q|} \sum_{q \in Q}
     \Bigl[\, \mathrm{judge}\!\bigl(R(q, M_\tau), \mathrm{gold}_q\bigr)
-        \;-\; \mathrm{judge}\!\bigl(R(q, M_{\tau\setminus i}), \mathrm{gold}_q\bigr) \Bigr].
+        - \mathrm{judge}\!\bigl(R(q, M_{\tau\setminus i}), \mathrm{gold}_q\bigr) \Bigr],
 \end{equation}
-The trajectory reward GRPO sees is then
+and the trajectory reward is
 \begin{equation}
-  r_W(\tau) \;=\; w_{\text{cf}} \!\!
-    \sum_{i \in \mathcal{M}(\tau)} \!\! \Delta_i(\tau, Q)
-  \;+\; w_{\text{qa}} \cdot \frac{1}{|Q|} \sum_{q \in Q}
+  r_W(\tau) \;=\; w_{\text{cf}} \!\!\sum_{i \in \mathcal{M}(\tau)} \!\!
+      \Delta_i(\tau, Q)
+  \;+\; w_{\text{qa}} \!\cdot\! \frac{1}{|Q|} \sum_{q \in Q}
       \mathrm{judge}\!\bigl(R(q, M_\tau), \mathrm{gold}_q\bigr)
   \;-\; \lambda_W \, c_W(\tau).
 \end{equation}
-We default to $w_{\text{cf}} = 0.7$, $w_{\text{qa}} = 0.3$,
-$\lambda_W = 0.001$, $K_{\max} = 12$. The QA term anchors the policy
-to the actual downstream task; the per-op term provides the
-attribution. Op cost $c_W(\tau)$ is small because the hard budget
-already does most of the regularising; we report it for diagnostic
-logging more than for reward shaping.
+The QA term anchors the policy to absolute downstream accuracy; the
+counterfactual term provides per-op attribution. We default to
+$w_{\text{cf}} = 0.7$, $w_{\text{qa}} = 0.3$, $\lambda_W = 0.001$,
+$K_{\max} = 12$. Op cost $c_W(\tau)$ is small because the hard
+retention budget does most of the regularising; we report it for
+diagnostic logging.\footnote{Earlier drafts used \emph{evidence
+  coverage} (fraction of a question's gold dia\_ids preserved in $M_\tau$)
+  and \emph{reader-overlap} (Jaccard of dia\_ids the reader pulls from
+  full text vs.\ those in the KG). Coverage correlates with the trivial
+  turns-kept feature at Spearman $\rho \approx 0.98$, so it's not
+  content-sensitive. Reader-overlap is structurally bounded low because
+  the reader pulls 6-dia\_id chunks from full text but the KG stores
+  entities tagged with single dia\_ids. Both are kept as logged
+  diagnostics; the current reward sets their weights to zero. A small
+  coverage-floor term $w_{\mathrm{cov}} = 0.05$ remains as a safety net
+  to keep gradients alive when $\Delta_i$ collapses to zero across the
+  battery (e.g.\ when the reader can't answer any question against any
+  variant of the graph, an early-training failure mode).}
 
-\paragraph{Why per-op counterfactual.} Trajectory-level rewards
-(final-answer judge, random-$K$ margins, dia\_id-overlap with what the
-reader retrieves from full text) all yield one scalar per write
-trajectory. GRPO uses that scalar as the trajectory advantage and
-diffuses it uniformly over the 4--12 emitted tokens. The signal-to-
-noise ratio per op is poor; entropy collapse and slow convergence
-follow. Per-op counterfactual replaces the diffused signal with a
-sum of per-op deltas, each computable with one extra reader+judge
-pass per mutating op per question. At typical per-trajectory budgets
-($|\mathcal{M}| \approx 2$, $|Q| \approx 4$) this is roughly
-$5\times$ the cost of a trajectory-level signal but gives GRPO the
-per-op resolution it needs. The technique is the analogue of the
-COMA-style counterfactual baseline from cooperative multi-agent RL
-\cite{foerster2018coma}, applied at the op granularity that our typed
-op vocabulary makes natural. Concurrent memory-RL work
-(Memory-R1~\cite{memoryR1}, DeltaMem~\cite{deltamem},
-Mem-$\alpha$~\cite{memalpha}) trains memory managers with composite
-trajectory-level rewards; per-op counterfactual attribution is, to
-our knowledge, novel in this setting.
+\paragraph{Cost.} The counterfactual evaluation runs $1 +
+|\mathcal{M}(\tau)|$ replays times $|Q|$ reader+judge calls per
+trajectory. With our typical $|\mathcal{M}| \approx 2$ and $|Q| = 4$
+that's $\sim 12$ extra LLM calls per rollout, roughly $5\times$ the
+cost of a trajectory-level signal in exchange for per-op resolution.
+The replays themselves are local (no Tinker round-trips), parallelised
+via \texttt{asyncio.gather}, and reuse the full-state score as the
+$w_{\text{qa}}$ anchor so we do not pay for it twice.
 
-\paragraph{What we deprecated.} Earlier drafts of this paper used
-\emph{evidence coverage} (fraction of a question's gold dia\_ids
-preserved) and then \emph{reader-overlap} (jaccard of dia\_ids the
-reader retrieves from full text vs.\ those preserved in the KG). An
-audit found that gold coverage correlates with the trivial
-turns-kept feature at Spearman $\rho \approx 0.98$, making it
-non-content-sensitive. Reader-overlap was less brittle but
-structurally bounded low because the reader retrieves chunks of
-$\sim$6 dia\_ids each from full text whereas the post-W graph
-stores entities tagged with single dia\_ids. Both signals are kept
-as logged diagnostics for ablation comparison; the v3 reward sets
-their weights to 0.
+\paragraph{Connection to prior work.} The technique is the COMA
+counterfactual-baseline trick \cite{foerster2018coma} from cooperative
+multi-agent RL, applied at the op granularity. Concurrent memory-RL
+work uses different signals: Memory-R1~\cite{memoryR1} and
+Mem-$\alpha$~\cite{memalpha2025} attribute reward at the trajectory
+level (final QA accuracy as one scalar), while
+DeltaMem~\cite{deltamem2026} uses an op-level signal too but defines
+it as the Memory-Levenshtein distance between pre- and post-op
+states. State-distance asks ``did the op change the memory in a
+structured way?''; outcome-attribution asks ``did the op change what
+the reader can answer?''. The latter is more directly aligned with
+the downstream task and is what we propose.
 
 \subsection{Co-training algorithm}
 
@@ -737,24 +778,37 @@ locally on the orchestrator. A typical training step:
 The total data volume per step is small: $\sim$8 trajectories, each
 $\sim$1k tokens. Compute and storage stay manageable.
 
-\subsection{Engineering notes}
+\subsection{Substrate matters: a 0\% baseline before any RL}
+\label{sec:chunking}
 
-\paragraph{Chunking matters more than retrieval.} Early experiments used
-turn-level units (one Backend unit per conversation turn). Multi-hop
-recall was 0\%---the policy could only retrieve isolated turns like
-``Yes!'' or ``Bye!''. We switched to overlapping windows of 6 consecutive
-turns with a date+session header at the top:
+Before RL touches anything, the storage substrate has to be capable of
+expressing the answer. Our first attempt used turn-level units --- one
+backend chunk per conversation turn --- on the assumption that fine
+granularity would help a learned policy compose answers. Multi-hop
+recall was $0\%$. The policy could only retrieve isolated turns like
+``Yes!'' or ``Bye!''; multi-hop questions need spans of context that
+were getting split into single-utterance chunks too small for either
+BM25 or dense embeddings to anchor on. We replaced the turn-level
+chunks with overlapping six-turn windows at stride three, prefixing
+each window with a date-and-session header:
 \begin{quote}
 \small\texttt{[1:56 pm on 8 May, 2023 | session 1]}\\
 \texttt{Caroline: Hey Mel!}\\
 \texttt{Melanie: Hey Caroline!}\\
 \texttt{Caroline: I went to a LGBTQ support group yesterday\ldots}
 \end{quote}
-The window provides enough text for embeddings to be meaningful, the
-date header lets the answer LLM resolve relative dates (``yesterday'')
-against an absolute reference, and the overlap (stride~3) prevents
-important spans from being split across chunk boundaries
-(Figure~\ref{fig:chunk}).
+The window gives embeddings enough text to be meaningful, the date
+header lets the answer LLM resolve relative dates (``yesterday'')
+against an absolute reference, and the stride-3 overlap prevents
+important spans from being split across boundaries
+(Figure~\ref{fig:chunk}). \TBD{Quantify the lift: report
+$0\% \to X\%$ multi-hop recall on LoCoMo.} The lesson generalises:
+substrate granularity is a load-bearing design choice that any
+learned policy sits on top of. It is also the load-bearing design
+choice that requires no learning at all --- chunking is fixed before
+RL starts. The learned write policy is operating on a substrate that
+is already pre-tuned to be answerable in principle, which is the
+right baseline to compare against.
 
 \begin{figure}[h]
 \centering
@@ -780,6 +834,8 @@ header. Replaces turn-level units that gave 0\% multi-hop recall.}
 \label{fig:chunk}
 \end{figure}
 
+\subsection{Engineering notes}
+
 \paragraph{Reward variance.} GRPO needs reward variance within a group
 or it gets no learning signal. With group size $G=8$ and Tinker's default
 sampling temperature ($\sim$1.0), this is rarely a problem at training
@@ -796,19 +852,25 @@ can succeed early), and mix in multi-hop and adversarial after the first
 $\sim$50 GRPO steps. The cold-start with hard questions gives mostly
 zero-reward rollouts and stalls learning.
 
-\paragraph{Tool errors as feedback.} Early write rollouts emitted
-\texttt{update\_state(uid="d12:6", \ldots)} for entity uids the model
-had hallucinated. The KG layer originally logged a warning and returned
-\texttt{None}, so the policy got the same observation as a successful
-op---no negative signal. We changed every mutating tool to return
+\paragraph{Tool errors as feedback (a small finding that mattered).}
+Early write rollouts emitted \texttt{update\_state(uid=``d12:6'', \ldots)}
+for entity uids the model had hallucinated. The KG layer originally
+logged a warning and returned \texttt{None}, so the policy received the
+same observation as a successful op --- no negative signal at all.
+After we changed every mutating tool to return
 \texttt{\{"ok": false, "error": "entity not found",
-"hint": "lookup\_entity first"\}} when the target uid is missing. The
-in-trajectory feedback loop is what teaches the policy to call
-\texttt{lookup\_entity} before issuing a mutation; this matters more
-than any cost coefficient.
+"hint": "lookup\_entity first"\}}, the policy learned within a few
+hundred steps to issue a \texttt{lookup\_entity} before any mutation.
+The in-trajectory error feedback was a stronger teacher than any cost
+coefficient we tuned. We mention this not as a quirk but as a general
+prescription: when a learned policy emits structured tool calls, the
+environment's error messages \emph{are part of the reward landscape},
+and silent failures lose more learning than a heavy cost penalty
+recovers.
 
 % --------------------------------------------------------------------------
 \section{Datasets and Evaluation}
+\label{sec:datasets}
 
 \subsection{Training data}
 
@@ -834,9 +896,14 @@ We report on three benchmarks:
     distribution---different conversation style, different question
     types.
   \item \textbf{TemporalBench} (ours): a 6-axis benchmark of temporal
-    awareness as \emph{behaviour}, not as a reasoning skill. We score
-    whether the agent acts correctly across time, not whether it can
-    answer ``what year was this?''. The six axes:
+    awareness as \emph{behaviour}, not as a reasoning skill --- the
+    natural-progression benchmark from TicToc~\cite{tictoc2025} and
+    Real-Time Deadlines~\cite{realtimedeadlines2026}, which test
+    one axis each (when-to-refetch and deadline-awareness
+    respectively). Our scoring follows TicToc's pairwise human
+    preference protocol where applicable. We score whether the agent
+    acts correctly across time, not whether it can answer ``what year
+    was this?''. The six axes:
     \begin{enumerate}
       \item \textbf{Proactive surfacing}: does the agent volunteer
         time-relevant information without being asked?
@@ -1010,6 +1077,7 @@ the AlphaZero-style monotone improvement signature.}
 
 % --------------------------------------------------------------------------
 \section{Discussion}
+\label{sec:discussion}
 
 \subsection{What we learned}
 
@@ -1089,36 +1157,31 @@ authoring all fit this template.
 % --------------------------------------------------------------------------
 \section{Conclusion}
 
-This paper treats the control layer of a memory system---the part that
-chooses which memory operations to emit at write time and which
-queries to run at read time---as a learned policy rather than as
-hand-written code. Two LoRA adapters on a 4B-parameter base model share
-an op vocabulary and train with GRPO; the write policy's reward blends
-a deterministic evidence-coverage term with the read policy's judged
-answer accuracy on a held-out question battery. The same trained
-adapter compiles to three different storage backends, which makes the
-policy a substrate-agnostic layer rather than another competing memory
-system.
+We treat the control layer of an LLM-agent memory system as a learned
+policy rather than as hand-written code. The technical move is per-op
+counterfactual marginal utility as the dense write reward: each
+mutating op is credited by what would happen if it were left out,
+measured against a held-out QA battery and the same reader the rest of
+the system uses. This adapts the COMA cooperative-RL baseline to the
+op granularity our typed vocabulary makes natural, and is the first
+outcome-attribution per-op signal in the memory-RL setting (DeltaMem
+gives op-level rewards too, but defines them as state-distance, which
+isn't directly aligned with the downstream task).
 
-\TBD{Headline numbers once Phase~A and Phase~B runs land. Specifically:
-LoCoMo held-out, LongMemEval-S, and the head-to-head against the
-hand-coded KGmem extractor on the ChatGPT-export set
-(Section~\ref{sec:eval-modes}, Mode~C).}
+\TBD{Headline numbers once Phase~A and Phase~B runs land: LoCoMo
+held-out, LongMemEval-S, and the head-to-head against the hand-coded
+KGmem extractor on the ChatGPT-export set
+(\S\ref{sec:eval-modes}, Mode~C).}
 
-The result we want a future version of this work to deliver, beyond the
-benchmark numbers, is a write policy trained without any per-question
-evidence labels at all---using either next-turn implicit reward or
-LLM-mined weak evidence as the dense signal in place of LoCoMo's
-\texttt{evidence} field. That is the move that turns this from a
-benchmark-shaped technique into something deployable. The four-mode
-evaluation framework in Section~\ref{sec:eval-modes} is set up so the
-gap between gold-trained and label-free trained can be reported as one
-table.
-
-The framing we want to leave the reader with: facts live in the store,
-strategy lives in the weights. The store holds whatever the user
-chooses to give it. The strategy transfers between users without
-moving any of their data.
+The work the next version of this paper most needs to do is to remove
+its dependence on per-question evidence labels. Mode~D in
+\S\ref{sec:eval-modes} sketches the path --- the user's next message is
+the implicit reward signal in a deployed system --- and the four-mode
+evaluation grid is set up so the gap between gold-trained and
+label-free policies reports as one table. A learned write policy that
+matches gold-trained performance without any annotation is the move
+that turns this from a benchmark-shaped technique into something
+deployable.
 
 % --------------------------------------------------------------------------
 \paragraph{Reproducibility.} All code is at

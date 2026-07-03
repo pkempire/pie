@@ -291,6 +291,8 @@ def main():
                         choices=["full_context", "naive_rag", "pie_temporal",
                                  "pie_temporal_cached", "all"])
     parser.add_argument("-n", "--limit", type=int, default=None)
+    parser.add_argument("--n_convs", type=int, default=None,
+                        help="LoCoMo only: keep only the first N conversations.")
     parser.add_argument("--model", type=str, default="gpt-4o")
     parser.add_argument("--extraction-model", type=str, default="gpt-4o-mini")
     parser.add_argument("--judge-model", type=str, default="gpt-4o")
@@ -327,6 +329,20 @@ def main():
                 dataset = load_dataset(
                     PROJECT_ROOT / "benchmarks/locomo/data/locomo10.json")
                 items = flatten_qa(dataset)
+                if args.n_convs:
+                    keep_ids = []
+                    seen = set()
+                    for it in items:
+                        sid = it.get("sample_id")
+                        if sid not in seen:
+                            seen.add(sid)
+                            keep_ids.append(sid)
+                            if len(keep_ids) >= args.n_convs:
+                                break
+                    keep_set = set(keep_ids)
+                    items = [it for it in items if it.get("sample_id") in keep_set]
+                    logger.info(f"--n_convs={args.n_convs} → keeping convs {keep_ids} "
+                                f"({len(items)} questions)")
                 if args.limit:
                     items = items[:args.limit]
 

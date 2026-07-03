@@ -367,6 +367,7 @@ def pie_temporal(
     extraction_model: str = "gpt-4o-mini",
     top_k_entities: int = 15,
     max_context_chars: int = 30_000,
+    max_input_chars: int = 0,
 ) -> BaselineResult:
     """
     PIE's temporal approach:
@@ -385,7 +386,10 @@ def pie_temporal(
         # Step 1: Build or reuse world model
         if world_model is None:
             world_model = _build_world_model_for_question(
-                item, llm, extraction_model
+                item,
+                llm,
+                extraction_model,
+                max_input_chars=max_input_chars,
             )
 
         # Step 2: Retrieve relevant entities
@@ -542,6 +546,7 @@ def _build_world_model_for_question(
     extraction_model: str = "gpt-4o-mini",
     debug: bool = False,
     debug_log: list | None = None,
+    max_input_chars: int = 0,
 ) -> WorldModel:
     """
     Build a fresh world model from a question's haystack sessions.
@@ -561,14 +566,12 @@ def _build_world_model_for_question(
     if debug:
         print(f"    Processing {len(conversations)} sessions...")
 
-    MAX_INPUT_CHARS = 6_000
-
     for i, convo in enumerate(conversations):
         # Format single session for extraction
         batch_text = _format_conversations_for_extraction([convo])
 
-        if len(batch_text) > MAX_INPUT_CHARS:
-            batch_text = batch_text[:MAX_INPUT_CHARS] + "\n\n[... session truncated ...]"
+        if max_input_chars and len(batch_text) > max_input_chars:
+            batch_text = batch_text[:max_input_chars] + "\n\n[... session truncated ...]"
 
         # Build context preamble from current world model state
         context = ""
@@ -1094,6 +1097,7 @@ class PIETemporalCachedBaseline:
         embed_model: str = "text-embedding-3-large",
         top_k_entities: int = 15,
         max_context_chars: int = 30_000,
+        max_input_chars: int = 0,
     ):
         from pathlib import Path
         from benchmarks.common.cache import CachedWorldModel
@@ -1107,6 +1111,7 @@ class PIETemporalCachedBaseline:
         self.embed_model = embed_model
         self.top_k_entities = top_k_entities
         self.max_context_chars = max_context_chars
+        self.max_input_chars = max_input_chars
         
         # Cache of loaded CachedWorldModels by question_id
         self._cached_models: dict[str, CachedWorldModel] = {}
@@ -1124,7 +1129,10 @@ class PIETemporalCachedBaseline:
         
         def build_fn():
             return _build_world_model_for_question(
-                item, self.llm, self.extraction_model
+                item,
+                self.llm,
+                self.extraction_model,
+                max_input_chars=self.max_input_chars,
             )
         
         cached_wm = CachedWorldModel.load_or_build(
@@ -1362,6 +1370,7 @@ def pie_temporal_cached(
     extraction_model: str = "gpt-4o-mini",
     top_k_entities: int = 15,
     max_context_chars: int = 30_000,
+    max_input_chars: int = 0,
 ) -> BaselineResult:
     """
     Function wrapper for PIETemporalCachedBaseline.
@@ -1385,6 +1394,7 @@ def pie_temporal_cached(
         extraction_model=extraction_model,
         top_k_entities=top_k_entities,
         max_context_chars=max_context_chars,
+        max_input_chars=max_input_chars,
     )
     return baseline.run(item)
 
