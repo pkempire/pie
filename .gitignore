@@ -173,3 +173,8 @@ gepa_state.bin
 
 # ── Local-only archive of old drafts (kept on disk, not in repo) ──
 legacy/local/
+
+# Generated wiki site (rebuild with research/scripts/build.py)
+research/wiki/_site/
+# Personal business docs
+research/content/lucid-academy-research-residency.md
