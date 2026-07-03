@@ -87,8 +87,12 @@ TemporalOS_Spec.docx
 VIDEO-*.md
 fix-entity-resolution.patch
 
-# ── Docs folder (internal notes) ──
-docs/
+# ── Docs folder ──
+# Canonical project docs in docs/ should be version-controlled. Keep only generated
+# or private drafts out of Git.
+docs/generated/
+docs/private/
+docs/*.local.md
 
 # ── Personal system prompts for other projects ──
 system_prompt_lucid_academy.md
@@ -148,3 +152,24 @@ paper/*.fdb_latexmk
 # scratch
 output/
 inbox/
+*.bbl
+*.blg
+.pytest_cache/
+benchmark_results/2026*/
+
+# ── Reference clones of other people's repos (read-only, not ours to ship) ──
+external/
+
+# ── Heavy JS deps ──
+**/node_modules/
+
+# ── SQLite write-ahead files ──
+*.db-shm
+*.db-wal
+
+# ── Generated caches / optimizer state ──
+benchmarks/cache/
+gepa_state.bin
+
+# ── Local-only archive of old drafts (kept on disk, not in repo) ──
+legacy/local/
