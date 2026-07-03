@@ -1,0 +1,518 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{enumitem}
+
+\title{Long Horizon AI Memory Research Handoff: Revised Annotated Table of Contents}
+\author{Parth Kocheta}
+\date{Draft spine prepared June 2026}
+
+\setlist[itemize]{leftmargin=1.2em}
+\setlist[enumerate]{leftmargin=1.4em}
+
+\begin{document}
+\maketitle
+
+\section*{Purpose of This File}
+
+This file is the report spine. It is not the final report. It fixes the main problem in the first outline: our private names should not lead the report. The final report should start from the established research language, then map each repo artifact onto that language.
+
+\section*{Writing Rule for the Final Report}
+
+Use established terms first. Use repo names second. For example, say ``agent trace store'' or ``event sourced research log'' before saying ``Research Ledger.'' Say ``provenance backed memory representation'' before saying ``MemoryState.'' If a repo term is only an internal implementation name, mark it as such.
+
+\section*{Research Anchors Used to Revise This Spine}
+
+The final report should cite these sources before introducing our own implementation names.
+
+\begin{itemize}
+  \item \href{https://arxiv.org/abs/2512.13564}{Memory in the Age of AI Agents} for the forms, functions, and dynamics framing of agent memory.
+  \item \href{https://arxiv.org/abs/2603.07670}{Memory for Autonomous LLM Agents} for the write, manage, read loop and the link between memory, perception, and action.
+  \item \href{https://arxiv.org/abs/2606.06448}{Agent Memory: Characterization and System Implications of Stateful Long Horizon Workloads} for construction, retrieval, generation cost profiling and system level tradeoffs.
+  \item \href{https://arxiv.org/abs/2501.13956}{Zep: A Temporal Knowledge Graph Architecture for Agent Memory} for temporal knowledge graphs, dynamic conversational data, and historical relationships.
+  \item \href{https://arxiv.org/abs/2605.20616}{Auto Dreamer} for two speed memory, offline consolidation, GRPO training, and counterfactual utility.
+  \item \href{https://martinfowler.com/eaaDev/EventSourcing.html}{Event Sourcing} for append only state changes, replay, temporal queries, and state reconstruction.
+  \item \href{https://arxiv.org/abs/2606.04990}{From Agent Traces to Trust} for agent trace elements, execution provenance, memory reads, memory writes, tool calls, and evidence tracing.
+  \item \href{https://mastra.ai/research/observational-memory}{Mastra Observational Memory} and \href{https://www.emergence.ai/blog/sota-on-longmemeval-with-rag}{Emergence Mem} as current product or engineering claims on LongMemEval. Treat these as company reported results unless independently reproduced.
+\end{itemize}
+
+\section*{Proposed Report Title}
+
+\textbf{Long Horizon AI Memory: A Handoff Report on Agent Memory, Temporal State, Evidence Retrieval, Consolidation, and Project Continuity}
+
+\tableofcontents
+
+\newpage
+
+\section{Executive Summary}
+
+\subsection{The Core Problem}
+Explain the problem in one paragraph: current agents often lose continuity across long tasks because they do not reliably store, retrieve, update, and act on past experience under a limited context budget.
+
+\subsection{The Main Finding From This Project}
+State the highest confidence finding: raw traces must remain available, compressed memory must keep provenance, and time aware state is useful but does not replace retrieval.
+
+\subsection{What Was Built}
+Summarize the implemented systems: benchmark harnesses, retrieval backends, PIE temporal world model, universal evidence substrate, temporal state layer, research log, consolidation experiments, RL scaffolds, dashboards, and content drafts.
+
+\subsection{What Has Real Evidence}
+Name the result sets that are most credible. Include the LongMemEval balanced runs, LoCoMo three conversation run, continuity teacher run, GEPA consolidator probe, reflector matrix, critic probe, and temporal reconstruction demo.
+
+\subsection{What Is Not Yet Proven}
+Clearly state that full RL training, exact Mastra replication, exact RLM implementation, production scale universal ingestion, and a true AI scientist memory system remain unfinished.
+
+\subsection{Recommended Next Bet}
+Recommend one focused path: build a learned agent continuity layer over raw traces, provenance backed state, temporal validity, retrieval, offline consolidation, and action decisions.
+
+\section{Field Context and Literature Anchors}
+
+\subsection{Why This Report Starts With Literature}
+Explain that the project created many internal names, but most map to existing research areas. The report should use established language so the work is easier to evaluate.
+
+\subsection{Agent Memory Surveys}
+Use recent surveys as the top level map. Cover the 2025 and 2026 agent memory surveys that organize memory by form, function, dynamics, temporal scope, representation, and control policy.
+
+\subsection{Memory as a Write, Manage, Read Loop}
+Introduce the standard loop used in recent surveys: form memory from experience, manage or consolidate it, then retrieve it for future action.
+
+\subsection{Retrieval Augmented Generation and Its Limits}
+Define RAG as retrieval of external information for generation. Explain why RAG alone is not the same as agent memory, especially when data changes over time.
+
+\subsection{Context Engineering and Its Limits}
+Define context engineering as building the prompt and tool context for a model call. Explain why it is necessary but not enough for long horizon memory.
+
+\subsection{Temporal Knowledge Graphs}
+Use Zep and Graphiti as the main reference for temporal knowledge graphs in agent memory. Cover episodes, entities, facts, relations, valid time, and ingestion time.
+
+\subsection{Temporal Databases and Event Sourcing}
+Connect state reconstruction to older database and software architecture ideas. Cover valid time, transaction time, append only event logs, replay, snapshots, and time travel queries.
+
+\subsection{Agent Traces and Execution Provenance}
+Define agent traces as records of model calls, reasoning steps, retrievals, tool calls, observations, memory reads, memory writes, actions, and outputs.
+
+\subsection{Offline Memory Consolidation}
+Use Auto Dreamer, sleep style memory papers, and consolidation systems as the anchor. Explain the distinction between fast online acquisition and slow offline consolidation.
+
+\subsection{Policy Learned Memory Management}
+Cover Memory R1, GRPO based memory work, Search R1 style tool policies, and the idea of training memory management from downstream task reward.
+
+\subsection{Long Term Memory Benchmarks}
+Cover LongMemEval, LongMemEval V2, LoCoMo, BEAM if used, Persona style memory datasets, and why benchmark choice changes what is rewarded.
+
+\subsection{Temporal Awareness Benchmarks}
+Cover TicToc, Real Time Deadlines, Robotouille, Time R1, and the difference between temporal reasoning and elapsed time aware control.
+
+\subsection{Production Memory Systems}
+Cover Mastra Observational Memory, Mem0, Zep, Letta context repositories, Honcho, Supermemory, Emergence Mem, and other current systems. Separate peer reviewed results from company blog claims.
+
+\subsection{What the Field Seems to Agree On}
+Summarize the shared pattern: keep raw experience, retrieve exact evidence, compress selectively, track updates, expose provenance, measure cost, and evaluate on downstream tasks.
+
+\subsection{What the Field Has Not Solved}
+Name the gaps: trustworthy consolidation, learned forgetting, temporal action timing, stale context detection, multi source personal data, project continuity, and scalable evaluation.
+
+\section{Formal Problem Statement}
+
+\subsection{Agent Memory as a Control Problem}
+Define the agent memory problem as choosing what to write, what to keep, what to retrieve, what to refresh, and what to place in context before the next action.
+
+\subsection{Inputs}
+List the inputs: prior traces, raw data sources, current task, current time, permissions, token budget, tool budget, latency budget, and user preferences.
+
+\subsection{Outputs}
+List the outputs: selected evidence, compressed memory, current state estimates, stale state warnings, action choice, context pack, answer, and logged trace.
+
+\subsection{Objective}
+State the objective: maximize downstream task success and evidence support while minimizing stale claims, unnecessary context, unnecessary tool calls, latency, and unsafe actions.
+
+\subsection{Why This Is Not Just Better Search}
+Explain that search finds relevant evidence, but the system also has to maintain state, detect updates, decide when data is stale, and learn from outcomes.
+
+\subsection{Why This Is Not Just Summarization}
+Explain that summaries can lose evidence, dates, contradictions, and uncertainty. The system must keep raw sources and make compressed views auditable.
+
+\subsection{Why This Is Not Just a Knowledge Graph}
+Explain that graphs help with changing entities and relations, but the system also needs raw traces, retrieval, cost control, consolidation, and action policies.
+
+\subsection{Why This Is Not Just a Data Lake}
+Explain that a data lake stores data. This project studies how agents select, update, and act on data over time.
+
+\section{Terminology Crosswalk}
+
+\subsection{Why This Section Exists}
+Explain that many repo names are internal handles. The final report should map them to known terms from information retrieval, databases, agent tracing, and memory research.
+
+\subsection{Raw Record, Observation, or Source Document}
+\textbf{Repo term: Artifact.} Define this as the immutable raw item from which evidence is drawn. This maps to source documents in information retrieval, observations in agent systems, and source records in provenance systems.
+
+\subsection{Evidence Unit, Passage, or Span}
+\textbf{Repo term: Span.} Define this as the smallest addressable evidence slice used for retrieval and citation. This maps to passages in RAG, evidence spans in QA, code ranges in software tools, and provenance pointers in data systems.
+
+\subsection{Memory Representation or State Estimate}
+\textbf{Repo term: MemoryState.} Define this as a compressed, revisable representation backed by evidence. It may be a fact, preference, procedure, belief, project status, or task state. It should not be presented as a new memory type.
+
+\subsection{State Change, Delta, or Event}
+\textbf{Repo term: StateTransition.} Define this as a change from one state to another, grounded in evidence and time. This maps to event sourcing, temporal database updates, and transition logs.
+
+\subsection{Agent Trace Element}
+\textbf{Repo term: TraceEvent.} Define this as one recorded step in an agent run. It can include retrieval, a model call, a tool call, a memory write, an action, a judge score, or a human correction.
+
+\subsection{Validity Window}
+\textbf{Repo fields: valid\_from and valid\_until.} Define this using temporal database language. It is the period during which a state is believed to be true in the world.
+
+\subsection{Observation Time and Ingestion Time}
+\textbf{Repo fields: observed\_at and created\_at.} Define these separately from validity time. Observation time is when the system saw evidence. Ingestion time is when the system stored it.
+
+\subsection{Active Process}
+\textbf{Repo term: ActiveProcess.} Define this as a time dependent task or condition that needs future checking. Examples include a running experiment, pending reply, stale cache, blocked subagent, or deadline.
+
+\subsection{Context Pack}
+\textbf{Repo term: Context pack.} Define this as a selected, ordered set of evidence and state placed into a model context under a budget.
+
+\subsection{Event Sourced Research Log}
+\textbf{Repo term: Research Ledger.} Define this as an append friendly record of project activity, including commits, files, docs, benchmark runs, decisions, and notes. Explain that ``Research Ledger'' is an internal product name.
+
+\subsection{Evidence Backed Memory Substrate}
+\textbf{Repo term: Universal Core.} Define this as the generic storage layer for raw records, evidence units, compressed memory, and traces. Explain that ``Universal Core'' is an internal code module name, not a research claim.
+
+\section{Conceptual Model}
+
+\subsection{Layer 1: Raw Experience}
+Describe the raw trace stream: chats, tool calls, commits, files, emails, notes, calendar entries, benchmark episodes, screenshots, and logs.
+
+\subsection{Layer 2: Evidence Index}
+Describe chunking, span extraction, metadata, embeddings, lexical indexes, code structure indexes, time indexes, and provenance links.
+
+\subsection{Layer 3: Memory Representations}
+Describe compressed facts, procedures, plans, beliefs, project states, entity records, and current task state. Explain that these are views over raw evidence.
+
+\subsection{Layer 4: Temporal State}
+Describe valid time, observed time, state transitions, active processes, stale data, and current state reconstruction.
+
+\subsection{Layer 5: Retrieval and Context Assembly}
+Describe query reformulation, hybrid retrieval, adjacent context expansion, reranking, timeline synthesis, and budgeted context packing.
+
+\subsection{Layer 6: Consolidation}
+Describe offline merging, abstraction, deduplication, contradiction handling, forgetting, archive, and active memory budgeting.
+
+\subsection{Layer 7: Policy Learning}
+Describe teacher traces, supervised fine tuning, preference data, outcome reward, GRPO, learned retrieval, learned consolidation, and learned action choice.
+
+\subsection{Layer 8: Product Surface}
+Describe dashboards, context preview, memory editing, project timelines, daily reports, benchmark reports, and context injection into agent tools.
+
+\section{Project Timeline}
+
+\subsection{Phase 1: PIE and Personal Temporal Memory}
+Explain the original goal, the entity and transition world model, the MCP demo, and the lessons from personal chat ingestion.
+
+\subsection{Phase 2: Public Benchmarks}
+Explain the move to LoCoMo and LongMemEval, and why benchmark work exposed retrieval, provenance, and entity update issues.
+
+\subsection{Phase 3: Write Policy Reward}
+Explain the per write counterfactual idea, why it was attractive, and why exact utility assignment was too slow and noisy.
+
+\subsection{Phase 4: Cheap Utility Critic}
+Explain the critic counterfactual probe and why it remains an unfinished idea.
+
+\subsection{Phase 5: Offline Consolidation}
+Explain GEPA consolidation and the later connection to Auto Dreamer style two speed memory.
+
+\subsection{Phase 6: Read Time State Reconstruction}
+Explain timeline synthesis and the synthetic state at time demo. State clearly that the current code is not a true recursive language model.
+
+\subsection{Phase 7: Evidence Backed Memory Substrate}
+Explain the generic artifact, span, memory, and trace layer as an implementation substrate, not a new taxonomy.
+
+\subsection{Phase 8: Project Experience Store}
+Explain Git ingestion, repo day reports, context packs, and the move toward long running project continuity.
+
+\subsection{Phase 9: Continuity Teacher}
+Explain the newest teacher policy, what it does, why it is useful for trace collection, and why it is not a trained policy yet.
+
+\section{Repository Map}
+
+\subsection{Top Level Folders}
+Explain the purpose and current value of \texttt{mempol}, \texttt{pie}, \texttt{research}, \texttt{paper}, \texttt{docs}, \texttt{scripts}, \texttt{benchmarks}, \texttt{external}, \texttt{architect}, and \texttt{visual-memory}.
+
+\subsection{\texttt{mempol/core}}
+Map this to the evidence backed memory substrate. Explain schema, SQLite store, retrieval, writer, and adapters.
+
+\subsection{\texttt{mempol/backends}}
+Map this to benchmark memory backends. Explain raw turn stores, hybrid retrieval, PIE KG, Mastra inspired observational memory, GitMem, and provider selection.
+
+\subsection{\texttt{mempol/policies}}
+Map this to read and write behavior. Explain naive, heuristic, write, timeline synthesis, and continuity teacher policies.
+
+\subsection{\texttt{mempol/data}}
+Map this to benchmark loaders and evidence mining.
+
+\subsection{\texttt{mempol/eval}}
+Map this to scoring, answer gain, counterfactuals, evidence coverage, judges, and QA generation.
+
+\subsection{\texttt{mempol/recipes/memory\_rl}}
+Map this to unfinished learned policy environments. Explain what exists and what has not been trained.
+
+\subsection{\texttt{mempol/dspy\_consolidator}}
+Map this to prompt optimized consolidation experiments.
+
+\subsection{\texttt{mempol/ledger}}
+Map this to the event sourced project experience log.
+
+\subsection{\texttt{mempol/temporal}}
+Map this to temporal state, transitions, active processes, context decisions, and outcomes.
+
+\subsection{\texttt{research}}
+Map papers, systems, concepts, content drafts, and the static wiki.
+
+\subsection{\texttt{paper}}
+Map the old paper draft, literature review notes, and the new handoff report.
+
+\subsection{\texttt{external}}
+Map local RLM, H Net, LongMemEval RLM, and TimeM repositories. Explain which are references, not integrated baselines.
+
+\section{Docs and Staleness Audit}
+
+\subsection{Current Canonical Docs}
+List the artifact inventory, application eval map, temporal context engine spec, and current result summaries.
+
+\subsection{Useful but Partial Docs}
+List AI lakehouse HLD, AI scientist memory backend, agent workflow notes, and older literature reviews.
+
+\subsection{Stale or Misleading Docs}
+List old paper drafts, per operation counterfactual framing, duplicate video drafts, old architecture diagrams, and toy result claims.
+
+\subsection{What Should Become the Source of Truth}
+Define the final documentation layout: handoff report, experiment registry, literature index, repo map, result manifests, and glossary.
+
+\section{Benchmarks and Results}
+
+\subsection{Benchmark Validity Rules}
+State that each result must report data split, sample size, model, judge, prompt, cost, error count, and whether the method saw the full answer context.
+
+\subsection{LongMemEval}
+Explain the benchmark and why it is currently the most useful public chat memory benchmark in this repo.
+
+\subsection{LongMemEval Methods in Plain Language}
+Rename old cells into clear names: turn RAG, session RAG, hybrid retrieval, expanded hybrid retrieval, timeline synthesis, continuity teacher, PIE cached KG, PIE fresh ingest, Mastra inspired observations, hand reflector, and GEPA reflector.
+
+\subsection{LongMemEval Results}
+Report the completed balanced merged run and the continuity teacher run. Emphasize that the continuity teacher result is promising but not SOTA.
+
+\subsection{LongMemEval Error Analysis}
+Discuss failures on preference questions, multi session reasoning, input length limits, high context cost, and judge noise.
+
+\subsection{LoCoMo}
+Explain why LoCoMo is useful for evidence linked dialogue memory and why it exposed weaknesses in PIE.
+
+\subsection{LoCoMo Results}
+Report the three conversation run and explain why PIE underperformed.
+
+\subsection{GEPA Consolidator}
+Explain the tiny result, the longer interrupted run, and why this is a feasibility artifact, not a claim.
+
+\subsection{Reflector Backend Matrix}
+Explain the toy matrix and the caveat that the Mastra cell is Mastra inspired unless exact Mastra is wired.
+
+\subsection{Critic Counterfactual}
+Explain the toy critic result and how it relates to reducing the cost of counterfactual utility estimation.
+
+\subsection{Temporal Reconstruction Demo}
+Explain the synthetic event log demo and why it is useful for education but not enough for a research result.
+
+\subsection{Result Reliability Table}
+Create a table with path, method, sample size, score, cost if known, conclusion, and reliability level.
+
+\section{System Designs Tested}
+
+\subsection{Typed Temporal World Model}
+\textbf{Repo system: PIE.} Explain entities, relations, transitions, benefits, failures, and current role as a baseline or view.
+
+\subsection{Flat Retrieval}
+Explain BM25, dense retrieval, hybrid retrieval, reciprocal rank fusion, top k, adjacent turn expansion, and budgeted context.
+
+\subsection{Read Time Timeline Synthesis}
+Explain evidence retrieval, grouping by time, extracting timeline items, reconstructing answer relevant state, and answering with citations.
+
+\subsection{Observation and Reflection Style Memory}
+Explain Mastra inspired observer and reflector ideas, and clearly separate our implementation from exact Mastra.
+
+\subsection{Offline Consolidation}
+Explain working regions, replacement sets, evidence inspection, abstraction, dedupe, contradiction handling, and budgeted active memory.
+
+\subsection{Continuity Teacher}
+Explain the teacher as a trace generator: route, retrieve, expand, synthesize temporary states, reconstruct timeline, decide action, answer, and log.
+
+\subsection{Learned Memory Policy}
+Explain existing RL environments, action spaces, rewards, and missing training runs.
+
+\subsection{Project Experience Log}
+Explain repo ingestion, commit history, file snapshots, run logs, day reports, and next session context.
+
+\subsection{Universal Ingestion}
+Explain the data source plan, deterministic ETL, metadata, daily partitions, permissions, and learned organization.
+
+\section{First Principles Lessons}
+
+\subsection{Keep Raw Sources}
+Compressed memory is useful only if raw evidence stays available for audit and recovery.
+
+\subsection{Compress Into Views, Not Truth}
+Memory records should be treated as revisable views over evidence, not final truth.
+
+\subsection{Track Change, Not Only Current Facts}
+Transitions preserve information about how state changed, which is often useful for future tasks.
+
+\subsection{Separate Valid Time From Ingestion Time}
+Use temporal database language to avoid confusing when something was true with when the system learned it.
+
+\subsection{Measure Utility at the Task Level}
+Single memory write quality is hard to judge. Outcome level task performance is more stable, but gives weaker credit assignment.
+
+\subsection{Use Offline Compute for Consolidation}
+Online writes should be simple and safe. More expensive abstraction and dedupe can happen after the session.
+
+\subsection{Evaluate Under Budget}
+Accuracy without token cost, tool cost, latency, and storage size is incomplete.
+
+\subsection{Project Continuity Is a Stronger Wedge Than Generic Memory}
+It has clear raw traces, real downstream tasks, public eval analogs, and direct product value.
+
+\section{Application Map}
+
+\subsection{Personal Assistant Memory}
+Explain data sources, value, risks, and benchmark links.
+
+\subsection{Context Injection App}
+Explain previewable context packs for Claude, Codex, ChatGPT, and other tools.
+
+\subsection{Research and Project Continuity}
+Explain working theory, experiment logs, failed attempts, papers, code, runs, and next actions.
+
+\subsection{AI Scientist Memory}
+Explain PaperBench, AstaBench, AI Scientist, Kosmos, experiment managers, and evidence grounded hypotheses.
+
+\subsection{Software Engineering Agents}
+Explain repo context, tests, APIs, architecture decisions, commits, issues, and implementation plans.
+
+\subsection{Multi Agent Orchestration}
+Explain subagent traces, task state, blockers, handoffs, partial outputs, and deadlines.
+
+\subsection{Temporal Planning}
+Explain plan versus actual traces, duration calibration, active workload, and planning fallacy reduction.
+
+\subsection{Proactive Agents}
+Explain wait, refresh, remind, interrupt, and user preference learning.
+
+\subsection{Enterprise and Sales Memory}
+Explain accounts, stakeholders, call transcripts, objections, stages, privacy, and public evals.
+
+\subsection{Web Agent Freshness}
+Explain cached pages, stale tool results, web snapshots, and refresh policies.
+
+\subsection{Deferred Applications}
+Explain why finance, life analytics, visual memory, and broad enterprise memory are not the first wedge.
+
+\section{Research Program}
+
+\subsection{Claim to Test}
+State the claim: a provenance backed, time conditioned memory policy improves long running agent continuation under fixed context and tool budgets.
+
+\subsection{Evaluation Package}
+Use LongMemEval budget curves, TicToc action timing, Robotouille active processes, and a repo continuation eval.
+
+\subsection{Ablations}
+Compare raw turn retrieval, session retrieval, hybrid retrieval, timeline synthesis, offline consolidation, continuity teacher, and learned continuity policy.
+
+\subsection{Metrics}
+Use answer accuracy, evidence support, temporal validity, stale claim rate, abstention quality, token cost, tool cost, latency, storage size, and retrieval to storage ratio.
+
+\subsection{Training Data}
+Use teacher traces, benchmark traces, repo continuation traces, user corrections, memory edits, run outcomes, and project outcomes.
+
+\subsection{Training Stages}
+Use teacher trace collection, supervised fine tuning, learned retrieval, learned consolidation, learned action choice, and reward optimization.
+
+\subsection{Reward}
+Define reward as task success plus evidence support plus temporal validity plus correct action timing minus token cost, tool cost, latency, unsupported claims, stale claims, and bad interruptions.
+
+\subsection{Scaling}
+Use resumable runners, sharding, cached embeddings, batch queues, cloud workers, result manifests, dashboards, and workflow orchestration.
+
+\section{Engineering Plan}
+
+\subsection{Clean Names}
+Rename benchmark cells and docs to plain names that say what the method does.
+
+\subsection{Fix Known Bugs}
+Fix input length chunking, stale cached KG confusion, PIE duplicate entities, lookup issues, disk usage, and unsupported model parameters.
+
+\subsection{Harden Benchmarks}
+Make LongMemEval and LoCoMo runs resumable, sharded, auditable, and cost tracked.
+
+\subsection{Wire Exact Baselines}
+Wire exact Mastra where possible, exact RLM where possible, H Net chunking, and any published open source memory systems with compatible licenses.
+
+\subsection{Continuity Teacher V2}
+Reduce context cost, improve preference and multi session behavior, fix large embedding inputs, and export better traces.
+
+\subsection{Offline Consolidator V1}
+Build working region selection, consolidation, replacement sets, result scoring, and budget curves.
+
+\subsection{Learned Policy V1}
+Train a small policy on teacher traces before trying full RL.
+
+\subsection{Project Continuity Demo}
+Use this repo as the first real data source. Ingest commits, docs, scripts, result folders, and notes. Produce a next session context pack and verify it on a held out task.
+
+\subsection{Observability}
+Build a dashboard for raw sources, evidence spans, memory views, state transitions, retrievals, answers, outcomes, and benchmark comparisons.
+
+\section{Handoff to the OpenAI Team}
+
+\subsection{Where to Start}
+List the five most important docs, five most important code folders, and five most important result folders.
+
+\subsection{What to Trust}
+Mark which results are strongest, which are probes, and which are only demos.
+
+\subsection{What to Review}
+Ask reviewers to check benchmark validity, judge prompts, leakage, sample size, cost reporting, and source citations.
+
+\subsection{What to Ignore First}
+Name stale drafts, toy demos, duplicated result folders, and old names that caused confusion.
+
+\subsection{One Week Plan}
+Define the first sprint: freeze result registry, rerun LongMemEval with clear methods, fix continuity teacher bugs, write benchmark report, and produce a project continuity demo.
+
+\section{Appendices}
+
+\subsection{Appendix A: Full Repo Map}
+One sentence per important folder and file.
+
+\subsection{Appendix B: Literature Index}
+Every paper, system, publication date, benchmark, method, and relevance.
+
+\subsection{Appendix C: Experiment Registry}
+Every result folder, command if known, sample size, model, judge, metric, and conclusion.
+
+\subsection{Appendix D: Name Crosswalk}
+Old repo name, clear method name, formal research term, and file path.
+
+\subsection{Appendix E: Glossary}
+Define every term used in the report.
+
+\subsection{Appendix F: Known Issues}
+Bug list with path, impact, and fix.
+
+\subsection{Appendix G: Commands}
+Exact commands for reproducing core runs.
+
+\subsection{Appendix H: Public Artifacts}
+Essays, video scripts, diagrams, dashboards, screenshots, and demos that can be shipped.
+
+\end{document}

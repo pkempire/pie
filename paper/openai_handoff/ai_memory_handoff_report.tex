@@ -1,0 +1,404 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{enumitem}
+
+\title{Long Horizon AI Memory Research Handoff}
+\author{Parth Kocheta}
+\date{June 2026}
+
+\setlist[itemize]{leftmargin=1.2em}
+\setlist[enumerate]{leftmargin=1.4em}
+
+\begin{document}
+\maketitle
+
+\section*{Purpose}
+
+This report is a handoff for the AI memory work in this repository. It explains what was tried, what exists in code, what the results show, what is weak, and what should happen next.
+
+The main correction from earlier drafts is simple. We should not lead with private repo names such as Research Ledger, Universal Core, Artifact, Span, or MemoryState. These are implementation names. The report should lead with the established research ideas: agent memory, retrieval, trace stores, provenance, temporal databases, event sourcing, offline consolidation, and learned memory management.
+
+\section{Short Answer}
+
+The project is about \textbf{long horizon agent continuity}. An agent should be able to resume work across days or months, use raw evidence, know what changed, avoid stale claims, and improve its own memory policies from future outcomes.
+
+The strongest current technical direction is not a typed knowledge graph by itself, and not a vector database by itself. It is:
+
+\begin{quote}
+Keep raw traces. Build evidence indexes over them. Maintain compressed views with provenance. Track time and state changes. Use offline consolidation to compress accumulated experience. Train or optimize the read, write, and consolidation policies against downstream task success under a token and tool budget.
+\end{quote}
+
+The repository has useful parts of this system, but the work did not compound cleanly because many experiments were started before the result registry, terminology, baselines, and stopping rules were stable.
+
+\section{What The Field Already Calls This}
+
+Recent agent memory surveys frame memory as a system, not as one database feature. \href{https://arxiv.org/abs/2512.13564}{Memory in the Age of AI Agents} organizes the field by memory form, memory function, and memory dynamics. \href{https://arxiv.org/abs/2603.07670}{Memory for Autonomous LLM Agents} uses a write, manage, read loop. \href{https://arxiv.org/abs/2606.06448}{Agent Memory: Characterization and System Implications of Stateful Long Horizon Workloads} studies construction, retrieval, and generation cost across memory systems.
+
+That language is better than our internal names. The useful mapping is:
+
+\begin{longtable}{p{0.22\linewidth} p{0.34\linewidth} p{0.34\linewidth}}
+\toprule
+Repo term & Better term & Meaning \\
+\midrule
+Artifact & raw record or observation & An immutable source item such as a message, file, commit, email, tool call, or benchmark episode. \\
+Span & evidence unit or passage & A citeable slice of a raw record, such as code lines, a diff hunk, a transcript segment, or a table row. \\
+MemoryState & memory representation or state estimate & A compressed view backed by evidence. It can be a fact, preference, procedure, belief, project status, or task state. \\
+StateTransition & state change or event & A change from one state to another, with time and evidence. This maps to event sourcing and temporal database updates. \\
+TraceEvent & agent trace element & One recorded step in an agent run, such as a retrieval, model call, tool call, memory write, action, answer, judge score, or human correction. \\
+Research Ledger & event sourced project log & An append friendly project record built from commits, files, docs, benchmark runs, decisions, and notes. This is an internal product name. \\
+Universal Core & evidence backed memory substrate & The generic storage layer for raw records, evidence units, compressed memory, and traces. This is an internal code module name. \\
+\bottomrule
+\end{longtable}
+
+\section{Literature Synthesis}
+
+\subsection{The High Confidence Map}
+
+The repo literature review had the right shape. The field is crowded in structured memory and more open in learned memory control.
+
+\begin{itemize}
+  \item Structured memory systems include temporal knowledge graphs, hierarchical temporal memory, multi graph memory, and product memory systems such as Zep, Mem0, Mastra, Letta, Honcho, OMEGA, TiMem, EverMemOS, MAGMA, and AriadneMem.
+  \item Learned memory systems include H Net for learned segmentation, Auto Dreamer for learned offline consolidation, Recursive Language Models for read time context inspection, Cartridges and Titans for latent or cache based memory, Search R1 and Graph R1 for learned retrieval tool use, and Memory R1, Mem Alpha, DeltaMem, and AgeMem for learned memory operations.
+  \item The strongest pattern is not one store. It is a control problem over construction, consolidation, retrieval, and action.
+\end{itemize}
+
+\subsection{Papers That Changed The Project}
+
+These are the papers and systems that should shape the next version of the work. This table uses the repo literature review as the main source and should be checked before any public claim.
+
+\begin{longtable}{p{0.20\linewidth} p{0.24\linewidth} p{0.24\linewidth} p{0.22\linewidth}}
+\toprule
+Work & Core idea & Result or status in notes & Direct implication \\
+\midrule
+Auto Dreamer & Fast online acquisition plus slow learned offline consolidation over working regions. & Reports stronger task success with much smaller active memory banks on ScienceWorld, ALFWorld, and WebArena. & Move from single turn writes to region consolidation. Treat memory bank size as part of the objective. \\
+H Net & Learned dynamic chunking instead of fixed token or turn chunks. & Notes report better scaling and strong data efficiency in weak tokenization domains. & Stop treating chunk size as an engineering constant. Learn or optimize boundaries. \\
+Cartridges & Corpus specific latent memory artifacts trained offline. & Notes report large memory and throughput gains for fixed corpora. & External text memory is not the only path. For stable corpora, latent or cache based memory may dominate. \\
+Recursive Language Models & Read time decomposition, recursive inspection, and aggregation over long context. & Repo notes cite high LongMemEval performance with DSPy scaffolding. Exact numbers need verification. & Smart read time control can beat many write time systems. Do not over invest in extraction alone. \\
+CoSearch & Jointly trains reasoning and retrieval or ranking with GRPO. & Notes report large gaps between oracle and fixed retrieval. & Frozen retrieval can become the bottleneck. Retrieval should be learned or optimized too. \\
+AgeMem & RL memory management integrated into the agent policy. & Notes list it as a direct learned memory management competitor. & Learned memory ops are now a field direction, not a private thesis. \\
+AriadneMem & Entropy aware gating, conflict aware coarsening, temporal edges, and bridge discovery. & Notes report LoCoMo gains and lower runtime. & Multi hop and temporal update failures are already targeted by other systems. We need a sharper claim. \\
+TiMem & Temporal memory tree from raw observations to higher abstractions. & Notes report strong LoCoMo and LongMemEval S results with shorter recalled memory. & Hierarchical consolidation is a strong baseline against typed KG extraction. \\
+EverMemOS & Memory cells, memory scenes, semantic consolidation, and reconstructive recollection. & Notes report strong LoCoMo and LongMemEval claims. & The memory OS framing is crowded. Avoid generic memory OS claims. \\
+Zep and Graphiti & Temporal knowledge graph with changing facts and historical relationships. & Zep paper reports strong DMR and temporal memory results. & Use valid time and ingestion time from temporal database theory. Do not present this as our invention. \\
+Mastra Observational Memory & Observer and reflector produce a stable observation log. & Company report claims 94.87\% on LongMemEval with gpt 5 mini. & Strong write time inference is hard to beat. Exact Mastra must be reproduced before comparing. \\
+Memory R1 & Learns memory manager operations with outcome driven RL. & Direct competitor for ADD, UPDATE, DELETE, NOOP style memory policies. & Our RL framing must compare against trajectory level reward, not only hand prompts. \\
+DeltaMem & Operation level memory edits with memory distance reward. & Closest comparison to operation level memory reward in our notes. & Per operation reward is not enough as a novelty claim. Our distinction is outcome based attribution. \\
+GEPA & Evolves prompts or programs from traces using reflection and Pareto selection. & Notes report far fewer rollouts than GRPO on several tasks. & Try GEPA before expensive RL for consolidator prompts and tool instructions. \\
+TicToc & Tool use decisions misalign with human time perception. & Notes report best model near 65\% human alignment. & Temporal awareness should be evaluated as action timing, not only date reasoning. \\
+Real Time Deadlines & LLMs handle turn budgets better than wall clock deadlines. & Notes report large gains when time updates are injected. & Current time must be a maintained runtime variable. \\
+Robotouille & Async side effects break sequential ReAct planning. & Notes report a large sync to async performance drop for gpt 4o ReAct. & Active process state is necessary for agents that wait, parallelize, or resume tasks. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Write Time Compression Versus Read Time Decompression}
+
+The most useful design axis in our notes is where the system spends compute.
+
+Write time compression systems spend compute during ingestion. They extract observations, facts, graph edges, or summaries before the question is known. Mastra Observational Memory, Mem0, Zep, PIE, TiMem, and Auto Dreamer are in this family. These systems can be fast at query time, but they can lose information during extraction.
+
+Read time decompression systems keep raw context and spend compute at query time. Recursive Language Models and aggressive RAG are in this family. These systems preserve source information but can be slow and may rediscover the same structure for each query.
+
+The best research path is the hybrid path. Append raw logs cheaply online. Consolidate offline with hindsight. Retrieve from both raw evidence and compressed views. This is the path closest to Auto Dreamer, Mastra's observer and reflector pattern, and our newer continuity teacher experiments.
+
+\subsection{Why Auto Dreamer Changed The Direction}
+
+Auto Dreamer is more important to this project than earlier drafts admitted. It decouples fast per session acquisition from slow offline consolidation. The consolidator rewrites a working region of memory into a compact replacement set and is trained with GRPO using downstream task reward and a counterfactual utility term. The paper reports better task success with much smaller active memory banks on ScienceWorld, ALFWorld, and WebArena.
+
+This weakens the case for per turn memory writes as the main paper thesis. It suggests a better unit of learning: not one write from one turn, but a region of experience plus the future tasks that region helps.
+
+\subsection{Why Per Operation Counterfactual Credit Is Still Useful}
+
+The per operation counterfactual idea is not dead. It is a real credit assignment idea. It adapts COMA style counterfactual credit assignment to memory operations. Instead of giving every write operation the same trajectory reward, it asks whether the future answer gets worse when a specific write is removed.
+
+The problem is cost. Exact counterfactuals are too expensive if we run them for every operation. The right use is smaller:
+
+\begin{itemize}
+  \item Use exact counterfactuals on sampled operations.
+  \item Train a critic to predict utility.
+  \item Use the critic to guide consolidation or memory pruning.
+  \item Compare this against Auto Dreamer style random masking.
+\end{itemize}
+
+The repo has a tiny critic result, but not enough to claim success.
+
+\subsection{Temporal Awareness Is A Separate Thread}
+
+The temporal literature splits into two problems.
+
+Temporal reasoning asks whether a model can compute dates, order events, and infer time relations. Test of Time, Time R1, TDBench, and STG LLM are in this family.
+
+Temporal awareness asks whether an agent behaves correctly as real time passes. TicToc, Real Time Deadlines, and Robotouille are closer to this project. The failure is not date arithmetic. The failure is deciding when to refresh, wait, interrupt, replan, or treat cached information as stale.
+
+Our temporal state code should be framed as an external runtime layer for this second problem. It is not enough to inject timestamps. The system needs valid time, observation time, active processes, stale state, and outcome logs.
+
+\section{What Exists In The Repository}
+
+\subsection{Core Code}
+
+\begin{longtable}{p{0.28\linewidth} p{0.60\linewidth}}
+\toprule
+Path & Role \\
+\midrule
+\texttt{mempol/core} & Generic evidence backed storage. It contains raw records, evidence spans, compressed memory states, trace events, SQLite persistence, retrieval, writers, and adapters. Useful but still simple. \\
+\texttt{mempol/backends} & Benchmark memory backends. Includes flat retrieval, PIE KG, Mastra inspired memory, GitMem, and provider selection. \\
+\texttt{mempol/policies} & Read and write policies. Includes naive and heuristic policies, the earlier write policy, timeline synthesis, and the newer continuity teacher. \\
+\texttt{mempol/data} & LoCoMo and LongMemEval loading plus evidence helpers. \\
+\texttt{mempol/eval} & Judges, answer gain, counterfactuals, evidence coverage, reader overlap, and metric utilities. \\
+\texttt{mempol/recipes/memory\_rl} & Early RL environments for read, write, and universal memory policies. This is scaffolding, not a trained result. \\
+\texttt{mempol/dspy\_consolidator} & DSPy and GEPA consolidation experiments. Useful for prompt optimized offline consolidation. \\
+\texttt{mempol/ledger} & Repo and project trace ingestion. It ingests Git history, files, docs, run logs, and produces day reports and context packs. \\
+\texttt{mempol/temporal} & Temporal state layer. It stores temporal states, transitions, active processes, context decisions, and outcome events. \\
+\texttt{pie} & Older typed transition knowledge graph and MCP product. Useful as a baseline and temporal memory demo, but not the final core. \\
+\texttt{research} & The strongest non code asset. It contains paper notes, system notes, concept notes, and content drafts. \\
+\texttt{paper/lit-review} & The best existing literature synthesis. This report should absorb it, not replace it. \\
+\texttt{external} & Local reference repos for RLM, LongMemEval RLM, H Net, and TimeM. These are references, not fully wired baselines. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Important Docs}
+
+\begin{itemize}
+  \item \texttt{docs/PROJECT\_ARTIFACT\_INVENTORY.md} is the best current map of what exists and what is worth keeping.
+  \item \texttt{docs/APPLICATION\_EVAL\_MAP.md} is the best map from product use cases to public evals.
+  \item \texttt{paper/lit-review/AGENT\_MEMORY\_LITERATURE\_INDEX.md} is the best literature index.
+  \item \texttt{paper/lit-review/LITERATURE-REVIEW.md} has the clearest older framing around learned write policies.
+  \item \texttt{paper/lit-review/temporal.md} has the clearest distinction between reasoning over time and behaving in time.
+  \item \texttt{research/concepts/sleep-consolidation.md} and \texttt{research/concepts/write-time-vs-read-time.md} are the most important concept notes for the current direction.
+\end{itemize}
+
+\section{What The Experiments Show}
+
+\subsection{LongMemEval}
+
+LongMemEval is the best current public benchmark in this repo. It tests long term chat memory across categories such as single session user facts, multi session reasoning, preferences, temporal reasoning, knowledge updates, and assistant details.
+
+The completed balanced core run is in \texttt{mempol/results/lme\_core\_shards\_merged}. It found:
+
+\begin{longtable}{p{0.42\linewidth} r p{0.38\linewidth}}
+\toprule
+Method & Accuracy & Interpretation \\
+\midrule
+Timeline Synthesis & 71.7\% & Read time reconstruction beats simpler retrieval on this sample. \\
+Turn RAG & 68.3\% & Strong simple baseline. It should not be dismissed. \\
+Hybrid Search & 62.5\% & Lower than expected. Needs error review and method naming cleanup. \\
+Rerank & 61.7\% & Did not help enough in this run. \\
+\bottomrule
+\end{longtable}
+
+The newer continuity teacher run is in \texttt{mempol/results/lme\_continuity\_teacher\_balanced\_5}. It found:
+
+\begin{longtable}{p{0.42\linewidth} r p{0.38\linewidth}}
+\toprule
+Method & Accuracy & Interpretation \\
+\midrule
+Hybrid Search & 60.0\% & Basic retrieval missed several update and multi session cases. \\
+Turn RAG & 70.0\% & Stronger than hybrid in this sample. \\
+Timeline Synthesis & 73.3\% & Still the best simple research result in the repo. \\
+Continuity Teacher & 73.3\% & Tied timeline synthesis, with more cost and more steps. It is useful as a trace generator, not yet a better system. \\
+\bottomrule
+\end{longtable}
+
+This is the most honest reading: the continuity teacher did not beat timeline synthesis on 30 rows, but it matched it while exposing a richer tool trace. That trace is useful for later SFT or RL.
+
+\subsection{LoCoMo}
+
+The LoCoMo matrix is in \texttt{mempol/results/locomo\_matrix\_3conv\_core}. It found:
+
+\begin{longtable}{p{0.42\linewidth} r p{0.38\linewidth}}
+\toprule
+Method & Accuracy & Interpretation \\
+\midrule
+Flat baseline & 58.6\% & Simple retrieval beat the typed KG on the tested conversations. \\
+Flat v1 & 53.6\% & The modified flat method was worse. This needs error review before reuse. \\
+PIE cached KG & 46.2\% & The typed world model underperformed because extraction, entity resolution, and evidence recall were weak. \\
+\bottomrule
+\end{longtable}
+
+The lesson is not that temporal graphs are useless. The lesson is that a graph built by brittle extraction can lose to raw retrieval if provenance, speaker attribution, and deduplication are wrong.
+
+\subsection{PIE}
+
+PIE is valuable as a typed temporal memory baseline. It stores entities, relations, and per entity state transitions. Its best structural idea is that contradictions and updates should be stored as transitions rather than overwrites.
+
+It is not currently a strong benchmark system. The LoCoMo runs show duplicate entities, speaker confusion, lookup failures, weak evidence recall, and unbounded growth.
+
+\subsection{GEPA Consolidator}
+
+The GEPA consolidator has a tiny result in \texttt{mempol/results/gepa\_consolidator}. The reported result is baseline 60\% and GEPA 80\% on 5 questions. This is not a paper result. It is only a sign that prompt optimized consolidation is worth scaling.
+
+The longer user run showed GEPA generating better consolidation instructions, especially around attribution, provenance, date resolution, and duplicate merging. It was too slow and incomplete to use as a final result.
+
+\subsection{Critic Counterfactual}
+
+The critic counterfactual probe is in \texttt{output/experiments/critic\_counterfactual.json}. It is a toy result with Pearson 0.707 and MAE 0.03 on tiny sampled deltas. It supports a possible direction: learn a cheap utility critic from exact counterfactual samples. It does not prove the approach.
+
+\subsection{Temporal Reconstruction Demo}
+
+The synthetic reconstruction demo is in \texttt{output/experiments/rlm\_temporal\_reconstruction.json}. It showed flat retrieval at 66.7\% and reconstruction at 83.3\%, with one judge issue. This is a useful teaching demo for state at time queries. It is not a true recursive language model and should not be called one.
+
+\section{What Went Wrong}
+
+This project did not fail because the ideas were weak. It failed to compound because the work loop was not strict enough.
+
+\begin{enumerate}
+  \item Too many names were introduced before the underlying ideas were tied to the literature. This made the project feel more novel than it was and made it harder to explain.
+  \item Too many experiments were called runs before they had sample size, baselines, cost, and reliability checks.
+  \item The project often moved to a new architecture before finishing the previous evaluation.
+  \item There was no single experiment registry at the start. Results lived in many folders with similar names.
+  \item Baseline names such as flat v0 and flat v1 hid what the methods actually did.
+  \item The repository mixed product prototypes, research drafts, benchmark code, personal data tools, and video scripts without a strict source of truth.
+  \item The early per operation reward idea was clever, but exact counterfactual reward was too expensive. This should have forced an earlier pivot to sampled counterfactuals, learned critics, or region level consolidation.
+  \item The project did not freeze a benchmark target early enough. LoCoMo, LongMemEval, personal data, project ledgers, and temporal awareness all pulled the design in different directions.
+\end{enumerate}
+
+The main lesson is that agent memory research needs a benchmark first, a result registry second, and architecture third. We often did the reverse.
+
+\section{What Is Actually Worth Keeping}
+
+\subsection{Keep}
+
+\begin{itemize}
+  \item LongMemEval matrix and dashboards. This is the best current evaluation harness.
+  \item Timeline synthesis. It produced the clearest nontrivial benchmark gain.
+  \item Continuity teacher. It is not a better model yet, but it creates useful traces.
+  \item Research literature notes. They are strong and should become the related work section.
+  \item PIE as a temporal baseline and product demo, not as the core research substrate.
+  \item Ledger ingestion for project continuity. This is the most product relevant direction.
+  \item GEPA consolidator code, but only if scaled with a clean result.
+  \item Critic counterfactual code, but only as a utility critic experiment.
+\end{itemize}
+
+\subsection{Demote}
+
+\begin{itemize}
+  \item Per operation counterfactual as the headline thesis. It is useful but not the main direction unless the critic is scaled.
+  \item Mastra inspired results unless exact Mastra is wired or the name is changed.
+  \item Synthetic temporal reconstruction as a research claim.
+  \item Universal Core as a public concept. It is a code substrate, not a paper contribution.
+\end{itemize}
+
+\subsection{Archive After Indexing}
+
+\begin{itemize}
+  \item Duplicate video drafts.
+  \item Old architecture docs that do not match current code.
+  \item Tiny result folders that are superseded by canonical summaries.
+  \item Old paper framing around full co training unless the training run is revived.
+\end{itemize}
+
+\section{Recommended Research Direction}
+
+\subsection{Claim}
+
+The strongest claim to test is:
+
+\begin{quote}
+A provenance backed, time conditioned memory policy improves long running agent continuation under fixed context and tool budgets.
+\end{quote}
+
+This claim is specific enough to evaluate and broad enough to matter.
+
+\subsection{System}
+
+The system should have five parts.
+
+\begin{enumerate}
+  \item A raw trace store. It keeps chats, tool calls, files, commits, runs, docs, and outputs.
+  \item An evidence index. It makes source spans searchable by text, time, metadata, code structure, and provenance.
+  \item A memory view layer. It stores compressed facts, procedures, project states, and active processes with source spans.
+  \item A read and action policy. It decides what to retrieve, what to trust, what to refresh, whether to answer, and what to put in context.
+  \item An offline consolidator. It rewrites working regions into compact memory while preserving provenance and measuring future utility.
+\end{enumerate}
+
+\subsection{Evaluation Package}
+
+Run four evals, not one.
+
+\begin{itemize}
+  \item LongMemEval for long term chat memory and update questions.
+  \item TicToc or a similar temporal tool use eval for refresh and stale context decisions.
+  \item Robotouille for async planning and active process state.
+  \item A repo continuation eval built from this project, where the system must resume real research work from prior traces.
+\end{itemize}
+
+\subsection{Training Plan}
+
+\begin{enumerate}
+  \item Collect teacher traces from continuity teacher and timeline synthesis.
+  \item Use those traces for supervised fine tuning of a small controller.
+  \item Train or optimize an offline consolidator with GEPA first, because it is cheaper than full GRPO.
+  \item Add sampled exact counterfactuals to train a utility critic.
+  \item Use GRPO only after the environment, reward, and baselines are stable.
+\end{enumerate}
+
+\section{Concrete Next Sprint}
+
+If a team continues this work, the next sprint should be narrow.
+
+\begin{enumerate}
+  \item Freeze a result registry. Every run gets a manifest with command, data split, model, judge, sample size, cost, error count, and git commit.
+  \item Rename every benchmark strategy by what it does. Remove names like flat v0 from user facing reports.
+  \item Fix LongMemEval input length failures by hard splitting oversized chunks before embedding or model calls.
+  \item Run LongMemEval on 60 to 120 rows with turn RAG, timeline synthesis, continuity teacher, and one consolidation method.
+  \item Build the repo continuation eval from this repository. The task should ask what changed, what is stale, what result exists, what code to run, and what to do next.
+  \item Scale GEPA consolidation on a fixed subset and compare against the hand prompt and timeline synthesis.
+  \item Write a result report before starting any new architecture.
+\end{enumerate}
+
+\section{Final Reflection}
+
+The project produced real insight, but not enough finished evidence. The best insight is that memory should be evaluated as a control layer over experience, not as a store type. The second best insight is that raw traces, evidence spans, compressed views, temporal validity, and offline consolidation are all needed together. The third best insight is negative: typed extraction alone is not enough, and clever schemas do not matter if provenance, retrieval, and evaluation are weak.
+
+If we had restarted this six months ago with better discipline, the plan would have been:
+
+\begin{enumerate}
+  \item Pick LongMemEval as the first public benchmark.
+  \item Build one clean harness with cost and trace logging.
+  \item Run simple baselines until they were fully understood.
+  \item Add one new idea at a time.
+  \item Keep a single result registry.
+  \item Only name a system after it beat a baseline at meaningful scale.
+\end{enumerate}
+
+There is still a meaningful project here. It is not the current pile of names. It is the unfinished system underneath them: a learned continuity layer for agents that keeps source evidence, tracks time and change, consolidates experience offline, and learns which context helps future work.
+
+\appendix
+
+\section{Core Source Paths}
+
+\begin{itemize}
+  \item \texttt{paper/lit-review/AGENT\_MEMORY\_LITERATURE\_INDEX.md}
+  \item \texttt{paper/lit-review/LITERATURE-REVIEW.md}
+  \item \texttt{paper/lit-review/memory-systems.md}
+  \item \texttt{paper/lit-review/rl-memory.md}
+  \item \texttt{paper/lit-review/temporal.md}
+  \item \texttt{paper/lit-review/deep-dives.md}
+  \item \texttt{docs/PROJECT\_ARTIFACT\_INVENTORY.md}
+  \item \texttt{docs/APPLICATION\_EVAL\_MAP.md}
+  \item \texttt{docs/results/2026-06-16-continuity-teacher-longmemeval-probe.md}
+  \item \texttt{research/concepts/sleep-consolidation.md}
+  \item \texttt{research/concepts/write-time-vs-read-time.md}
+  \item \texttt{research/systems/pie.md}
+  \item \texttt{research/systems/auto-dreamer.md}
+  \item \texttt{research/systems/mastra-om.md}
+\end{itemize}
+
+\section{Core Result Paths}
+
+\begin{itemize}
+  \item \texttt{mempol/results/lme\_core\_shards\_merged/summary.json}
+  \item \texttt{mempol/results/lme\_continuity\_teacher\_balanced\_5/summary.json}
+  \item \texttt{mempol/results/locomo\_matrix\_3conv\_core/summary.json}
+  \item \texttt{mempol/results/gepa\_consolidator/summary.json}
+  \item \texttt{mempol/results/reflector\_matrix/summary.json}
+  \item \texttt{output/experiments/critic\_counterfactual.json}
+  \item \texttt{output/experiments/rlm\_temporal\_reconstruction.json}
+\end{itemize}
+
+\end{document}
