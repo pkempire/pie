@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Substrate design space</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+       max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem;
+       color: #1a1a1a; line-height: 1.55; font-size: 16px; }
+h1, h2, h3 { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+             font-weight: 500; line-height: 1.3; margin-top: 1.5em; }
+h1 { font-size: 22px; margin-top: 0; }
+h2 { font-size: 18px; border-top: 1px solid #eee; padding-top: 1em; }
+h3 { font-size: 16px; }
+a { color: #0a58ca; text-decoration: none; border-bottom: 1px dotted #0a58ca; }
+a:hover { background: #f0f4ff; }
+.dead-link { color: #a00; text-decoration: line-through; }
+nav { font-size: 13px; color: #666; margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem; border-bottom: 1px solid #eee; }
+nav a { color: #666; border-bottom: none; margin-right: 1em; }
+.meta { font-size: 13px; color: #666; margin-bottom: 1rem; }
+.meta dt { font-weight: 500; color: #444; display: inline-block; min-width: 8em; }
+.meta dd { display: inline; margin: 0 1.5em 0 0; }
+.meta div { margin: 4px 0; }
+code { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+       background: #f5f5f5; padding: 1px 5px; border-radius: 3px; font-size: 14px; }
+pre { background: #f5f5f5; padding: 12px; border-radius: 6px; overflow-x: auto;
+      font-family: ui-monospace, "SF Mono", Monaco, monospace; font-size: 13px;
+      line-height: 1.5; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 6px 12px; font-size: 14px; }
+th { background: #f5f5f5; font-weight: 500; }
+blockquote { border-left: 3px solid #ddd; margin: 1em 0; padding: 0.25em 1em;
+             color: #555; font-style: italic; }
+.backlinks { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #eee;
+             font-size: 13px; color: #666; }
+.backlinks h3 { font-size: 14px; margin: 0 0 0.5em; color: #444; }
+.backlinks ul { list-style: none; padding-left: 0; }
+.backlinks li { padding: 2px 0; }
+.tag-list { font-size: 12px; color: #888; margin: 4px 0; }
+.tag-list span { background: #f0f0f0; padding: 2px 8px; border-radius: 3px;
+                 margin-right: 4px; display: inline-block; margin-bottom: 4px; }
+ul, ol { padding-left: 1.5em; }
+li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<nav>
+<a href="../index.html">home</a>
+<a href="../goals.html">goals</a>
+<a href="../papers.html">papers</a>
+<a href="../concepts.html">concepts</a>
+<a href="../systems.html">systems</a>
+<a href="../contents.html">content</a>
+<a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener">source</a>
+</nav>
+<dl class="meta"><div><dt>Category</dt><dd>design-space-axis</dd></div></dl>
+<div class="tag-list"><span>substrate</span><span>storage</span><span>KG</span><span>vector</span><span>git</span><span>filesystem</span><span>log</span></div>
+<h1>Substrate design space</h1>
+<p>The data structure your memory lives in. Most architectural debates about LLM memory are actually substrate debates dressed up. Pick the substrate, much else follows.</p>
+<h2>The six families</h2>
+<p><strong>1. Flat vector store (KV with embeddings).</strong> Each entry is a chunk of text with an embedding. Retrieval = nearest neighbor.
+- Examples: <a href="../systems/mem0.html">Mem0</a>, naive RAG.
+- Pro: simple, fast, well-tooled.
+- Con: no structure, no relationships, no temporal axis.</p>
+<p><strong>2. Hierarchical summary tree.</strong> Levels of summaries with explicit parent-child links. Lower levels are detail; higher levels are abstraction.
+- Examples: <a href="../papers/2601.02845-timem.html">TiMem</a> (5-level temporal hierarchy), <a href="../papers/2510.16392-rgmem.html">RGMem</a> (RG-flow inspired).
+- Pro: matches how researchers actually organize.
+- Con: hierarchy rigid; reorganization expensive.</p>
+<p><strong>3. Typed knowledge graph.</strong> Entities (typed nodes) + relationships (typed edges) + state transitions per entity.
+- Examples: <a href="../systems/pie.html">PIE</a>, Zep/Graphiti (with bi-temporal edges).
+- Pro: structured queries possible.
+- Con: extraction is lossy and brittle; schema fights are constant.</p>
+<p><strong>4. Observation log + consolidated layer.</strong> Raw turns appended cheaply; consolidator builds structured layer asynchronously.
+- Examples: <a href="../papers/2605.20616-auto-dreamer.html">Auto-Dreamer</a> (RL-trained consolidator), Mastra OM (Observer + Reflector), SCM.
+- Pro: hindsight in consolidation, defers expensive compute.
+- Con: requires the consolidator to actually be good.</p>
+<p><strong>5. Commit-graph / git-shaped.</strong> Atomic bundles of changes (commits) with parent links, branches for divergent state, merges for reconciliation.
+- Examples: <a href="../systems/gitmem.html">GitMem (internal)</a> (internal), Mesa filesystem (Apr 2026, agent-workflows).
+- Pro: temporal queries trivial, contradictions are real branches, full audit trail.
+- Con: substrate complexity overkill for most use cases.</p>
+<p><strong>6. Filesystem / files.</strong> Memory IS a directory tree of markdown/JSON files. Agents do <code>ls</code>, <code>cat</code>, <code>grep</code>, <code>write_file</code>.
+- Examples: Letta filesystem, Mesa filesystem.
+- Pro: human-readable, git-versionable, no schema battles.
+- Con: navigation is the agent's burden.</p>
+<h2>What the field is actually choosing</h2>
+<p>The high LoCoMo scores cluster in two families: <strong>observation log + consolidated layer</strong> (Auto-Dreamer, SCM, EverMemOS in spirit) and <strong>typed knowledge graphs</strong> (Zep, MIRIX, Amory). Vector stores (Mem0) trail. Filesystem and commit-graph are newer and underexplored.</p>
+<p>A reasonable read: substrate matters less than people think above some quality floor. <a href="../papers/2512.12818-hindsight.html">Hindsight's</a> Backboard baseline (90.0%) beats their full system (89.61%) on LoCoMo — that's a vector-store-plus-good-base-model beating a temporal-KG-plus-reflection-loop. Implies for many use cases, the substrate is not the bottleneck.</p>
+<h2>When each substrate genuinely wins</h2>
+<ul>
+<li><strong>Vector store</strong>: high-QPS reads, no temporal axis needed, single-user.</li>
+<li><strong>Hierarchical summary</strong>: human-readable navigation needed, multi-scale abstraction.</li>
+<li><strong>Typed KG</strong>: explicit relationship queries needed, structured downstream tasks.</li>
+<li><strong>Observation log + consolidator</strong>: long-horizon, want hindsight in writes, can defer compute.</li>
+<li><strong>Commit-graph</strong>: branching/merging is first-class, audit trail matters, multi-collaborator.</li>
+<li><strong>Filesystem</strong>: human-readable matters more than agent ergonomics, version control needed.</li>
+</ul>
+<h2>What we'd build for our work</h2>
+<p>For the <a href="../concepts/sleep-consolidation.html">Sleep consolidation</a> direction: substrate = observation log L1 + flat consolidated L3. Simple. The consolidator's prompt (optimized by <a href="../concepts/gepa-vs-grpo.html">GEPA</a>) does the work; the substrate doesn't need to be sophisticated.</p>
+<p>For long-horizon project tracking specifically: filesystem + git is hard to beat. The substrate complements existing developer tooling.</p>
+<h2>See also</h2>
+<ul>
+<li><a href="../concepts/sleep-consolidation.html">Sleep consolidation</a> — observation log + consolidated layer family</li>
+<li><a href="../concepts/multi-agent-delegation.html">Multi-agent delegation</a> — substrate for shared orchestrator state</li>
+<li><a href="../papers/2605.20616-auto-dreamer.html">Auto-Dreamer</a> — example of disciplined substrate-typing (semantic vs procedural entries)</li>
+</ul>
+<div class="backlinks"><h3>Referenced by</h3><ul>
+  <li><a href="../concepts/belief-revision.html">Belief revision</a> <span style="color:#999">[concept]</span></li>
+  <li><a href="../systems/gitmem.html">GitMem (internal)</a> <span style="color:#999">[system]</span></li>
+  <li><a href="../contents/01-working-memory-intro-TOC-v2.html">Memory in language models — annotated TOC</a> <span style="color:#999">[content]</span></li>
+</ul></div>
+</body>
+</html>

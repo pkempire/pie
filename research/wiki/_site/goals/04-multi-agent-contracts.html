@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Goal 04 — Contract-based multi-agent orchestration</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+       max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem;
+       color: #1a1a1a; line-height: 1.55; font-size: 16px; }
+h1, h2, h3 { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+             font-weight: 500; line-height: 1.3; margin-top: 1.5em; }
+h1 { font-size: 22px; margin-top: 0; }
+h2 { font-size: 18px; border-top: 1px solid #eee; padding-top: 1em; }
+h3 { font-size: 16px; }
+a { color: #0a58ca; text-decoration: none; border-bottom: 1px dotted #0a58ca; }
+a:hover { background: #f0f4ff; }
+.dead-link { color: #a00; text-decoration: line-through; }
+nav { font-size: 13px; color: #666; margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem; border-bottom: 1px solid #eee; }
+nav a { color: #666; border-bottom: none; margin-right: 1em; }
+.meta { font-size: 13px; color: #666; margin-bottom: 1rem; }
+.meta dt { font-weight: 500; color: #444; display: inline-block; min-width: 8em; }
+.meta dd { display: inline; margin: 0 1.5em 0 0; }
+.meta div { margin: 4px 0; }
+code { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+       background: #f5f5f5; padding: 1px 5px; border-radius: 3px; font-size: 14px; }
+pre { background: #f5f5f5; padding: 12px; border-radius: 6px; overflow-x: auto;
+      font-family: ui-monospace, "SF Mono", Monaco, monospace; font-size: 13px;
+      line-height: 1.5; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 6px 12px; font-size: 14px; }
+th { background: #f5f5f5; font-weight: 500; }
+blockquote { border-left: 3px solid #ddd; margin: 1em 0; padding: 0.25em 1em;
+             color: #555; font-style: italic; }
+.backlinks { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #eee;
+             font-size: 13px; color: #666; }
+.backlinks h3 { font-size: 14px; margin: 0 0 0.5em; color: #444; }
+.backlinks ul { list-style: none; padding-left: 0; }
+.backlinks li { padding: 2px 0; }
+.tag-list { font-size: 12px; color: #888; margin: 4px 0; }
+.tag-list span { background: #f0f0f0; padding: 2px 8px; border-radius: 3px;
+                 margin-right: 4px; display: inline-block; margin-bottom: 4px; }
+ul, ol { padding-left: 1.5em; }
+li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<nav>
+<a href="../index.html">home</a>
+<a href="../goals.html">goals</a>
+<a href="../papers.html">papers</a>
+<a href="../concepts.html">concepts</a>
+<a href="../systems.html">systems</a>
+<a href="../contents.html">content</a>
+<a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener">source</a>
+</nav>
+<dl class="meta"><div><dt>Status</dt><dd><code>parked</code></dd></div><div><dt>Priority</dt><dd>4</dd></div><div><dt>Budget</dt><dd>n/a (parked)</dd></div></dl>
+<div class="tag-list"><span>multi-agent</span><span>contracts</span><span>orchestration</span><span>parked</span></div>
+<h1>Goal 04 — Contract-based multi-agent orchestration</h1>
+<h2>What this is</h2>
+<p>A protocol layer for LLM-agent delegation that treats every spawned task as a <strong>contract</strong> with explicit deadline, budget, checkpoint cadence, and acceptable-partial-result. The orchestrator polls contracts, can interrupt mid-execution, reallocates budget across subagents.</p>
+<p>See <a href="../concepts/multi-agent-delegation.html">Multi-agent delegation</a> for the full concept page.</p>
+<h2>Status: parked</h2>
+<p>Not the priority right now. Goal 01 (GEPA consolidator on LoCoMo) and Goal 02 (Auto-Dreamer reproduction) are ahead because they have direct paper-shaped output. This goal would require building substantial infrastructure (contract protocol, orchestrator loop, subagent SDK) before producing a single benchmark number.</p>
+<h2>When we'd unpark</h2>
+<ul>
+<li>If Goal 01 succeeds and we want a second-paper direction</li>
+<li>If we get external interest in the contract protocol as standalone infrastructure</li>
+<li>If <a href="../papers/2601.18137-deepplanning.html">DeepPlanning</a>-shaped benchmarks become a clear publication target</li>
+</ul>
+<h2>Related</h2>
+<ul>
+<li>Concept: <a href="../concepts/multi-agent-delegation.html">Multi-agent delegation</a> — full design and parallelization wins</li>
+<li>Paper: <a href="../papers/2601.18137-deepplanning.html">DeepPlanning</a> — the eval target</li>
+<li>Paper: <a href="../papers/2507.07957-mirix.html">MIRIX</a> — closest existing multi-agent memory system</li>
+</ul>
+
+</body>
+</html>

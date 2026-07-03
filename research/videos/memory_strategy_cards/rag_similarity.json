@@ -1,0 +1,26 @@
+[
+  {
+    "name": "move_tense",
+    "a": "I will move to New York next month.",
+    "b": "I moved to New York last month.",
+    "cosine": 0.8277
+  },
+  {
+    "name": "milk_tense",
+    "a": "I will buy milk after work.",
+    "b": "I bought milk after work.",
+    "cosine": 0.8917
+  },
+  {
+    "name": "preference_update",
+    "a": "I am vegetarian.",
+    "b": "I am pescatarian now.",
+    "cosine": 0.6141
+  },
+  {
+    "name": "unrelated",
+    "a": "I will buy milk after work.",
+    "b": "My laptop battery is broken.",
+    "cosine": 0.1621
+  }
+]

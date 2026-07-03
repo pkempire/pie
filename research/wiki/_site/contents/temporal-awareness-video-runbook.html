@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>temporal-awareness-video-runbook</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+       max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem;
+       color: #1a1a1a; line-height: 1.55; font-size: 16px; }
+h1, h2, h3 { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+             font-weight: 500; line-height: 1.3; margin-top: 1.5em; }
+h1 { font-size: 22px; margin-top: 0; }
+h2 { font-size: 18px; border-top: 1px solid #eee; padding-top: 1em; }
+h3 { font-size: 16px; }
+a { color: #0a58ca; text-decoration: none; border-bottom: 1px dotted #0a58ca; }
+a:hover { background: #f0f4ff; }
+.dead-link { color: #a00; text-decoration: line-through; }
+nav { font-size: 13px; color: #666; margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem; border-bottom: 1px solid #eee; }
+nav a { color: #666; border-bottom: none; margin-right: 1em; }
+.meta { font-size: 13px; color: #666; margin-bottom: 1rem; }
+.meta dt { font-weight: 500; color: #444; display: inline-block; min-width: 8em; }
+.meta dd { display: inline; margin: 0 1.5em 0 0; }
+.meta div { margin: 4px 0; }
+code { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+       background: #f5f5f5; padding: 1px 5px; border-radius: 3px; font-size: 14px; }
+pre { background: #f5f5f5; padding: 12px; border-radius: 6px; overflow-x: auto;
+      font-family: ui-monospace, "SF Mono", Monaco, monospace; font-size: 13px;
+      line-height: 1.5; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 6px 12px; font-size: 14px; }
+th { background: #f5f5f5; font-weight: 500; }
+blockquote { border-left: 3px solid #ddd; margin: 1em 0; padding: 0.25em 1em;
+             color: #555; font-style: italic; }
+.backlinks { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #eee;
+             font-size: 13px; color: #666; }
+.backlinks h3 { font-size: 14px; margin: 0 0 0.5em; color: #444; }
+.backlinks ul { list-style: none; padding-left: 0; }
+.backlinks li { padding: 2px 0; }
+.tag-list { font-size: 12px; color: #888; margin: 4px 0; }
+.tag-list span { background: #f0f0f0; padding: 2px 8px; border-radius: 3px;
+                 margin-right: 4px; display: inline-block; margin-bottom: 4px; }
+ul, ol { padding-left: 1.5em; }
+li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<nav>
+<a href="../index.html">home</a>
+<a href="../goals.html">goals</a>
+<a href="../papers.html">papers</a>
+<a href="../concepts.html">concepts</a>
+<a href="../systems.html">systems</a>
+<a href="../contents.html">content</a>
+<a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener">source</a>
+</nav>
+
+
+<h1>Temporal Awareness Video Runbook</h1>
+<p>Goal: publish a strong technical video tonight without turning editing into a second research project.</p>
+<h2>The artifact</h2>
+<p>One talking-head educational video:</p>
+<ul>
+<li>Length: 10-16 minutes.</li>
+<li>Spine: you talking directly to camera.</li>
+<li>Inserts: paper screenshots, terminal demos, simple diagrams.</li>
+<li>Style: field note from someone building the system, not a polished documentary.</li>
+</ul>
+<h2>File workflow</h2>
+<p>Use the external SSD for raw media and keep the MacBook for project/proxy/export files.</p>
+<pre><code class="language-text">External SSD/
+  working-memory/
+    2026-06-06-temporal-awareness/
+      00_raw/
+        camera/
+        screen/
+        audio/
+      01_proxies/
+      02_project/
+      03_assets/
+        papers/
+        figures/
+        terminal-clips/
+      04_exports/
+      05_archive/
+</code></pre>
+<p>Do not edit directly out of Downloads/Desktop. Put the 10GB ZV-E10 file in <code>00_raw/camera/</code> and leave it untouched.</p>
+<h2>Mac commands</h2>
+<p>Check the file:</p>
+<pre><code class="language-bash">ffprobe -hide_banner &quot;/Volumes/YOUR_SSD/working-memory/2026-06-06-temporal-awareness/00_raw/camera/clip.mp4&quot;
+</code></pre>
+<p>Create an edit-friendly proxy:</p>
+<pre><code class="language-bash">ffmpeg -i &quot;/Volumes/YOUR_SSD/working-memory/2026-06-06-temporal-awareness/00_raw/camera/clip.mp4&quot; \
+  -vf &quot;scale=1280:-2&quot; -c:v libx264 -preset veryfast -crf 24 -c:a aac -b:a 160k \
+  &quot;/Volumes/YOUR_SSD/working-memory/2026-06-06-temporal-awareness/01_proxies/clip_proxy.mp4&quot;
+</code></pre>
+<p>Extract audio for transcription:</p>
+<pre><code class="language-bash">ffmpeg -i &quot;/Volumes/YOUR_SSD/working-memory/2026-06-06-temporal-awareness/00_raw/camera/clip.mp4&quot; \
+  -vn -ac 1 -ar 16000 -c:a pcm_s16le \
+  &quot;/Volumes/YOUR_SSD/working-memory/2026-06-06-temporal-awareness/00_raw/audio/voice.wav&quot;
+</code></pre>
+<p>If you want quick OpenAI transcription:</p>
+<pre><code class="language-bash">python - &lt;&lt;'PY'
+from openai import OpenAI
+from pathlib import Path
+
+audio = Path(&quot;/Volumes/YOUR_SSD/working-memory/2026-06-06-temporal-awareness/00_raw/audio/voice.wav&quot;)
+out = audio.with_suffix(&quot;.transcript.txt&quot;)
+client = OpenAI()
+with audio.open(&quot;rb&quot;) as f:
+    tr = client.audio.transcriptions.create(model=&quot;gpt-4o-transcribe&quot;, file=f)
+out.write_text(tr.text)
+print(out)
+PY
+</code></pre>
+<p>If <code>gpt-4o-transcribe</code> is unavailable in the account, use Premiere's built-in transcription or Whisper locally.</p>
+<h2>Fastest edit path</h2>
+<p>Use Premiere or DaVinci Resolve, whichever opens the ZV-E10 footage more smoothly. If the Windows PC is slow, do not fight it tonight. Use the MacBook with proxies.</p>
+<p>Cut in this order:</p>
+<ol>
+<li>Put the talking-head recording on the timeline.</li>
+<li>Remove dead air and obvious stumbles.</li>
+<li>Drop in the paper screenshots over the exact claims.</li>
+<li>Drop in terminal clips for the two demos.</li>
+<li>Add three simple title cards: "reasoning", "awareness", "memory".</li>
+<li>Normalize audio.</li>
+<li>Export 1080p H.264.</li>
+</ol>
+<p>Do not animate everything. The audience needs clarity and conviction more than motion graphics.</p>
+<h2>Audio cleanup</h2>
+<p>In Premiere:</p>
+<ul>
+<li>Essential Sound -&gt; Dialogue.</li>
+<li>Loudness auto-match.</li>
+<li>Light noise reduction only; do not overprocess.</li>
+<li>Add a limiter around <code>-1 dB</code>.</li>
+</ul>
+<p>If using ffmpeg only:</p>
+<pre><code class="language-bash">ffmpeg -i input.mp4 -af &quot;loudnorm=I=-16:TP=-1.5:LRA=11&quot; -c:v copy output_loudnorm.mp4
+</code></pre>
+<h2>Inserts to capture</h2>
+<p>Paper screenshots:</p>
+<ul>
+<li>TicToc abstract line: no model above 65% alignment with timestamps.</li>
+<li>Real-Time Deadlines abstract: 32% vs 4%, and turn-based deadlines near-perfect.</li>
+<li>Robotouille abstract: ReAct GPT-4o 47% synchronous vs 11% asynchronous.</li>
+<li>GEPA abstract: up to 35x fewer rollouts than GRPO.</li>
+</ul>
+<p>Terminal clips:</p>
+<pre><code class="language-bash">python scripts/temporal_memory_demo.py
+python scripts/rlm_temporal_reconstruction.py
+python scripts/reflector_backend_matrix.py --max-questions 30 --max-chunks 8
+</code></pre>
+<p>Only show the last command if the hand/GEPA cells finish cleanly. Otherwise frame it honestly as "the comparison harness now exists; full run in progress."</p>
+<h2>Publish package</h2>
+<p>Title options:</p>
+<ul>
+<li>The Clock AI Agents Cannot Feel</li>
+<li>Why AI Agents Are Time-Blind</li>
+<li>Memory Is Not a Fact. It Is a State Transition.</li>
+</ul>
+<p>Description skeleton:</p>
+<pre><code class="language-text">LLM agents can reason about dates, but they do not maintain elapsed time as part of their own state. This video separates temporal reasoning, temporal awareness, and temporal memory, then shows why flat memory systems fail when facts change over time.
+
+Sources:
+- Temporal Blindness / TicToc: https://arxiv.org/abs/2510.23853
+- Real-Time Deadlines: https://arxiv.org/abs/2601.13206
+- Robotouille: https://arxiv.org/abs/2502.05227
+- GEPA: https://arxiv.org/abs/2507.19457
+
+Code/demos: link repo when cleaned enough.
+</code></pre>
+<p>Thumbnail:</p>
+<pre><code class="language-text">AI AGENTS
+CAN'T FEEL TIME
+</code></pre>
+<p>Visual: your face, a clock, and a memory graph/timeline.</p>
+<h2>Do not do tonight</h2>
+<ul>
+<li>Do not build a full Manim/Welch Labs animation.</li>
+<li>Do not clean the entire wiki.</li>
+<li>Do not rewrite the paper.</li>
+<li>Do not wait for perfect LoCoMo numbers before publishing the temporal-awareness video.</li>
+<li>Do not use personal PIE data unless it makes the story clearer and safe.</li>
+</ul>
+<p>The shippable thing tonight is the conceptual video plus two small demos. The research paper waits for the full GEPA/reflector matrix.</p>
+
+</body>
+</html>

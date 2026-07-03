@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>DeepPlanning: Benchmarking Long-Horizon Agentic Planning with Verifiable Constraints</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+       max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem;
+       color: #1a1a1a; line-height: 1.55; font-size: 16px; }
+h1, h2, h3 { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+             font-weight: 500; line-height: 1.3; margin-top: 1.5em; }
+h1 { font-size: 22px; margin-top: 0; }
+h2 { font-size: 18px; border-top: 1px solid #eee; padding-top: 1em; }
+h3 { font-size: 16px; }
+a { color: #0a58ca; text-decoration: none; border-bottom: 1px dotted #0a58ca; }
+a:hover { background: #f0f4ff; }
+.dead-link { color: #a00; text-decoration: line-through; }
+nav { font-size: 13px; color: #666; margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem; border-bottom: 1px solid #eee; }
+nav a { color: #666; border-bottom: none; margin-right: 1em; }
+.meta { font-size: 13px; color: #666; margin-bottom: 1rem; }
+.meta dt { font-weight: 500; color: #444; display: inline-block; min-width: 8em; }
+.meta dd { display: inline; margin: 0 1.5em 0 0; }
+.meta div { margin: 4px 0; }
+code { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+       background: #f5f5f5; padding: 1px 5px; border-radius: 3px; font-size: 14px; }
+pre { background: #f5f5f5; padding: 12px; border-radius: 6px; overflow-x: auto;
+      font-family: ui-monospace, "SF Mono", Monaco, monospace; font-size: 13px;
+      line-height: 1.5; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 6px 12px; font-size: 14px; }
+th { background: #f5f5f5; font-weight: 500; }
+blockquote { border-left: 3px solid #ddd; margin: 1em 0; padding: 0.25em 1em;
+             color: #555; font-style: italic; }
+.backlinks { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #eee;
+             font-size: 13px; color: #666; }
+.backlinks h3 { font-size: 14px; margin: 0 0 0.5em; color: #444; }
+.backlinks ul { list-style: none; padding-left: 0; }
+.backlinks li { padding: 2px 0; }
+.tag-list { font-size: 12px; color: #888; margin: 4px 0; }
+.tag-list span { background: #f0f0f0; padding: 2px 8px; border-radius: 3px;
+                 margin-right: 4px; display: inline-block; margin-bottom: 4px; }
+ul, ol { padding-left: 1.5em; }
+li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<nav>
+<a href="../index.html">home</a>
+<a href="../goals.html">goals</a>
+<a href="../papers.html">papers</a>
+<a href="../concepts.html">concepts</a>
+<a href="../systems.html">systems</a>
+<a href="../contents.html">content</a>
+<a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener">source</a>
+</nav>
+<dl class="meta"><div><dt>Authors</dt><dd>Qwen team / Alibaba</dd></div><div><dt>Published</dt><dd>2026-01-28</dd></div><div><dt>arXiv</dt><dd><a href="https://arxiv.org/abs/2601.18137">2601.18137</a></dd></div><div><dt>Approach</dt><dd><code>benchmark</code></dd></div><div><dt>Relevance</dt><dd>high</dd></div><div><dt>Benchmarks</dt><dd>DeepPlanning</dd></div></dl>
+<div class="tag-list"><span>benchmark</span><span>long-horizon</span><span>planning</span><span>constraints</span><span>applied</span></div>
+<h1>DeepPlanning: Benchmarking Long-Horizon Agentic Planning with Verifiable Constraints</h1>
+<h2>Quick read</h2>
+<p>The hardest published applied long-horizon planning benchmark as of 2026. Multi-day travel + multi-product shopping with cross-item constraints and coupon optimization. Top model (GPT-5.2-high) hits 44.6% average case accuracy — enormous headroom. Performance drops monotonically as horizon length (days in travel plan) increases.</p>
+<h2>Why it matters to us</h2>
+<p>If we ship the contract/checkpoint orchestration system, this is the primary target. Beating GPT-5.2-high by 5-10pp on travel planning is a publishable result. The failure mode (cascading constraint violations across multi-step plans) is exactly what dynamic checkpoint-and-reallocation addresses.</p>
+<h2>Method in one paragraph</h2>
+<p>Verifiable-constraint-shaped evaluation: each plan is checked against explicit hard constraints (budget, schedule overlaps, item compatibility, coupon eligibility). Case-level accuracy = 1 if all constraints satisfied, 0 otherwise. No LLM judge needed.</p>
+<h2>Results in numbers</h2>
+<ul>
+<li>GPT-5.2-high avg case acc: <strong>44.6%</strong></li>
+<li>GPT-5.2-high travel case acc: <strong>35.0%</strong></li>
+<li>Claude-4.5-Opus reasoning travel: <strong>22.7%</strong></li>
+<li>Composite scores (constraint-level) higher: GPT-5.2 at 85.8, Claude at 75.1</li>
+<li>Drop: 7-day itineraries score substantially worse than 2-day</li>
+</ul>
+<p>The gap between constraint-level (85.8) and case-level (35) reveals: models satisfy <em>most</em> constraints but fail to satisfy <em>all</em> — exactly the cascading-failure mode.</p>
+<h2>What they don't do</h2>
+<ul>
+<li>No middleware / orchestration layer studied — they test base models directly.</li>
+<li>No checkpoint or interrupt-and-replan capability evaluated.</li>
+<li>Cost not reported clearly.</li>
+</ul>
+<h2>Open questions / followups</h2>
+<ul>
+<li>What's a representative subset for cheap iteration? (Day-2 and Day-3 travel cases, probably.)</li>
+<li>How does verbose chain-of-thought compare to terse on these constraints?</li>
+</ul>
+<div class="backlinks"><h3>Referenced by</h3><ul>
+  <li><a href="../goals/04-multi-agent-contracts.html">Goal 04 — Contract-based multi-agent orchestration</a> <span style="color:#999">[goal]</span></li>
+  <li><a href="../goals/04-multi-agent-contracts.html">Goal 04 — Contract-based multi-agent orchestration</a> <span style="color:#999">[goal]</span></li>
+  <li><a href="../concepts/multi-agent-delegation.html">Multi-agent delegation</a> <span style="color:#999">[concept]</span></li>
+  <li><a href="../papers/2604.11978-horizon.html">The Long-Horizon Task Mirage? Diagnosing Where and Why Agentic Systems Break</a> <span style="color:#999">[paper]</span></li>
+</ul></div>
+</body>
+</html>

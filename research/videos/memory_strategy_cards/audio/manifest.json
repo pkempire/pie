@@ -1,0 +1,90 @@
+[
+  {
+    "index": 0,
+    "key": "00_hook",
+    "title": "00. Hook",
+    "file": "audio/00_00_hook.mp3",
+    "duration": 33.456,
+    "text": "Most debates about AI memory are confused because people compare different layers of the system as if they were the same thing.\n\nA vector database, a knowledge graph, a summary log, a trained KV cache, and an RL memory policy are not competing answers to one question.\n\nThey answer different questions.\n\nWhat gets stored? When is compute spent? What is retrieved? What is learned? And how does the system know if the memory helped?\n\nThis video is a map."
+  },
+  {
+    "index": 1,
+    "key": "01_rag",
+    "title": "01. RAG",
+    "file": "audio/01_01_rag.mp3",
+    "duration": 58.704,
+    "text": "The simplest strategy is retrieval augmented generation.\n\nStore documents or chunks. Embed them. At question time, retrieve the top matching passages and put them into the prompt.\n\nRAG is great when the problem is external facts or document lookup.\n\nBut RAG does not know what is currently true. It mostly knows what text is similar.\n\nSo \u201cI will move to New York\u201d and \u201cI moved to New York\u201d can both look relevant, even though they imply different states of the world.\n\nAs a concrete check, with `text-embedding-3-small`, \u201cI will buy milk after work\u201d and \u201cI bought milk after work\u201d score about 0.89 cosine similarity. An unrelated sentence about a broken laptop scores about 0.16.\n\nThat is the point. Similarity is useful, but it is not the same thing as current truth."
+  },
+  {
+    "index": 2,
+    "key": "02_temporal_knowledge_graphs",
+    "title": "02. Temporal Knowledge Graphs",
+    "file": "audio/02_02_temporal_knowledge_graphs.mp3",
+    "duration": 36.456,
+    "text": "The next strategy is structured memory.\n\nInstead of storing only text chunks, extract entities, relations, and facts.\n\nIf the user changes jobs, moves cities, or updates a preference, a temporal graph can keep the old fact and the new fact with time attached.\n\nThis helps with questions like, \u201cwhat was true then?\u201d or \u201cwhat changed?\u201d\n\nThe risk is extraction quality.\n\nIf the system merges the wrong person, misses a fact, or writes the wrong edge, the graph can become clean looking but wrong."
+  },
+  {
+    "index": 3,
+    "key": "03_observation_logs",
+    "title": "03. Observation Logs",
+    "file": "audio/03_03_observation_logs.mp3",
+    "duration": 37.608,
+    "text": "Mastra\u2019s Observational Memory is a useful version of a different strategy.\n\nIt uses background agents, an Observer and a Reflector, to turn long conversations into a dense observation log.\n\nYour agent does not retrieve raw messages forever. It sees a compact running record.\n\nThis can work very well on chat memory benchmarks because the hard work is prepaid.\n\nBut it also means the observer and reflector matter a lot. If they miss something, the compact log may not contain what the future question needs."
+  },
+  {
+    "index": 4,
+    "key": "04_timeline_reconstruction",
+    "title": "04. Timeline Reconstruction",
+    "file": "audio/04_04_timeline_reconstruction.mp3",
+    "duration": 35.52,
+    "text": "Another strategy is to keep the event log and reconstruct state at read time.\n\nSuppose the user lived in Boston, moved to New York in August, and later asks, \u201cwhere did I live in May?\u201d\n\nA flat store may retrieve New York because it is the latest or most similar fact.\n\nTimeline reconstruction sorts the relevant events, replays them up to May, and answers Boston.\n\nThis is not magic. It is the same basic idea as event sourcing and temporal databases, applied to agent memory."
+  },
+  {
+    "index": 5,
+    "key": "05_offline_consolidation",
+    "title": "05. Offline Consolidation",
+    "file": "audio/05_05_offline_consolidation.mp3",
+    "duration": 34.704,
+    "text": "Online memory writes are usually too early.\n\nTurn 12 may look unimportant until turn 80 makes it important.\n\nOffline consolidation separates fast acquisition from slow compression.\n\nDuring the session, keep the raw trace. Later, with hindsight, rewrite a working region into a smaller, better memory.\n\nMastra\u2019s Reflector is in this family as a prompt based consolidator.\n\nAuto-Dreamer is the learned version: it trains the consolidator with downstream task reward and a compactness objective."
+  },
+  {
+    "index": 6,
+    "key": "06_recursive_read_time_memory",
+    "title": "06. Recursive Read-Time Memory",
+    "file": "audio/06_06_recursive_read_time_memory.mp3",
+    "duration": 29.112,
+    "text": "Instead of deciding everything at write time, you can spend compute at read time.\n\nRecursive Language Models treat the long context like something the model can inspect in parts.\n\nThe model decomposes the question, reads relevant slices, aggregates partial answers, and decides whether to inspect more.\n\nThis is powerful when the raw context is huge and each question needs a different slice.\n\nThe tradeoff is latency and cost per query."
+  },
+  {
+    "index": 7,
+    "key": "07_learned_memory_policies",
+    "title": "07. Learned Memory Policies",
+    "file": "audio/07_07_learned_memory_policies.mp3",
+    "duration": 34.248,
+    "text": "The next strategy is not a storage format. It is a controller.\n\nCreate an environment where the model can search raw traces, retrieve memory, write memory, update memory, delete memory, or answer.\n\nThen reward it for future task success, evidence support, temporal correctness, and low cost.\n\nThis is what work like Memory-R1 points toward.\n\nThe hard part is credit assignment.\n\nIf the answer is wrong 200 turns later, which earlier memory operation deserved the blame?"
+  },
+  {
+    "index": 8,
+    "key": "08_learned_chunking",
+    "title": "08. Learned Chunking",
+    "file": "audio/08_08_learned_chunking.mp3",
+    "duration": 34.2,
+    "text": "Before memory, there is a smaller question: what is the unit?\n\nMost RAG systems cut text into fixed windows.\n\nBut the useful boundary might be a topic shift, a code function, a claim, a plan, a contradiction, or a whole task episode.\n\nLearned chunking is the idea that boundaries should be learned from downstream use, not hard coded as 800 tokens.\n\nFor RAG it improves retrieval units.\n\nFor memory it improves the regions that get consolidated."
+  },
+  {
+    "index": 9,
+    "key": "09_latent_and_kv_cache_memory",
+    "title": "09. Latent And KV Cache Memory",
+    "file": "audio/09_09_latent_and_kv_cache_memory.mp3",
+    "duration": 37.416,
+    "text": "The final card is not text memory at all.\n\nRAG stores text. A knowledge graph stores symbols. KV and latent memory store model state.\n\nCartridges train a small reusable KV cache for a large corpus, so future queries can load the cache instead of reprocessing all the text.\n\nTitans adds a neural long term memory module that learns to memorize at test time.\n\nThese methods are fast and compact, but harder to inspect and cite.\n\nThat makes them powerful for stable corpora, but less ideal when the system must show exact evidence."
+  },
+  {
+    "index": 10,
+    "key": "10_synthesis",
+    "title": "10. Synthesis",
+    "file": "audio/10_10_synthesis.mp3",
+    "duration": 41.808,
+    "text": "The winning system is probably not one card.\n\nIt keeps raw traces forever.\n\nIt indexes exact evidence spans.\n\nIt builds compressed memory views with provenance.\n\nIt tracks time, validity, and state changes.\n\nIt consolidates offline with hindsight.\n\nIt spends read time compute only when the question is hard.\n\nAnd eventually, the controller over all of this is learned from downstream outcomes.\n\nSo the real question is not \u201cvector database or knowledge graph?\u201d\n\nThe real question is:\n\nGiven the task, current time, raw history, and budget, what should the agent see next?"
+  }
+]

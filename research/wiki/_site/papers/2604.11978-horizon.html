@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Long-Horizon Task Mirage? Diagnosing Where and Why Agentic Systems Break</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+       max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem;
+       color: #1a1a1a; line-height: 1.55; font-size: 16px; }
+h1, h2, h3 { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+             font-weight: 500; line-height: 1.3; margin-top: 1.5em; }
+h1 { font-size: 22px; margin-top: 0; }
+h2 { font-size: 18px; border-top: 1px solid #eee; padding-top: 1em; }
+h3 { font-size: 16px; }
+a { color: #0a58ca; text-decoration: none; border-bottom: 1px dotted #0a58ca; }
+a:hover { background: #f0f4ff; }
+.dead-link { color: #a00; text-decoration: line-through; }
+nav { font-size: 13px; color: #666; margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem; border-bottom: 1px solid #eee; }
+nav a { color: #666; border-bottom: none; margin-right: 1em; }
+.meta { font-size: 13px; color: #666; margin-bottom: 1rem; }
+.meta dt { font-weight: 500; color: #444; display: inline-block; min-width: 8em; }
+.meta dd { display: inline; margin: 0 1.5em 0 0; }
+.meta div { margin: 4px 0; }
+code { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+       background: #f5f5f5; padding: 1px 5px; border-radius: 3px; font-size: 14px; }
+pre { background: #f5f5f5; padding: 12px; border-radius: 6px; overflow-x: auto;
+      font-family: ui-monospace, "SF Mono", Monaco, monospace; font-size: 13px;
+      line-height: 1.5; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 6px 12px; font-size: 14px; }
+th { background: #f5f5f5; font-weight: 500; }
+blockquote { border-left: 3px solid #ddd; margin: 1em 0; padding: 0.25em 1em;
+             color: #555; font-style: italic; }
+.backlinks { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #eee;
+             font-size: 13px; color: #666; }
+.backlinks h3 { font-size: 14px; margin: 0 0 0.5em; color: #444; }
+.backlinks ul { list-style: none; padding-left: 0; }
+.backlinks li { padding: 2px 0; }
+.tag-list { font-size: 12px; color: #888; margin: 4px 0; }
+.tag-list span { background: #f0f0f0; padding: 2px 8px; border-radius: 3px;
+                 margin-right: 4px; display: inline-block; margin-bottom: 4px; }
+ul, ol { padding-left: 1.5em; }
+li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<nav>
+<a href="../index.html">home</a>
+<a href="../goals.html">goals</a>
+<a href="../papers.html">papers</a>
+<a href="../concepts.html">concepts</a>
+<a href="../systems.html">systems</a>
+<a href="../contents.html">content</a>
+<a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener">source</a>
+</nav>
+<dl class="meta"><div><dt>Authors</dt><dd>"Wang, Xinyu Jessica", "Bai, Haoyue" et al.</dd></div><div><dt>Published</dt><dd>2026-04-13</dd></div><div><dt>arXiv</dt><dd><a href="https://arxiv.org/abs/2604.11978">2604.11978</a></dd></div><div><dt>Approach</dt><dd><code>benchmark</code></dd></div><div><dt>Relevance</dt><dd>high</dd></div><div><dt>Benchmarks</dt><dd>HORIZON</dd></div></dl>
+<div class="tag-list"><span>benchmark</span><span>diagnostic</span><span>long-horizon</span><span>failure-attribution</span><span>HORIZON</span><span>Dawn-Song</span><span>agentic</span></div>
+<h1>HORIZON: Diagnosing Where and Why Agentic Systems Break</h1>
+<h2>Quick read</h2>
+<p>Dawn Song's group at Berkeley + Wisconsin. Cross-domain benchmark <em>purpose-built for long-horizon failure attribution</em>. 3100+ trajectories across 4 agentic domains, evaluated on GPT-5 variants + Claude models. The LLM-as-Judge pipeline is validated against human annotation at κ=0.84 — strong agreement. Public leaderboard at xwang2775.github.io/horizon-leaderboard, open for community submissions.</p>
+<h2>Why this matters strategically</h2>
+<p>This is the <strong>commercialization-anchor eval</strong> we've been missing. LoCoMo measures one specific thing (multi-session conversational QA). HORIZON measures failure modes across 4 agentic domains. A system that lands top-3 on HORIZON gets attention from anyone building production long-horizon agents (Cursor, Devin, Claude Code, Decagon, Sierra).</p>
+<p>For <a href="../goals/01-gepa-consolidator-on-locomo.html">Goal 01</a>: the natural extension after LoCoMo is HORIZON. The consolidator+GEPA architecture, if it works on LoCoMo, should transfer to HORIZON's broader cross-domain shape — same primitives (raw log → consolidated state → answer), just more domains.</p>
+<h2>See also</h2>
+<ul>
+<li><a href="../concepts/multi-agent-delegation.html">Multi-agent delegation</a> — long-horizon planning failure modes</li>
+<li><a href="../concepts/sleep-consolidation.html">Sleep consolidation</a> — the architecture we'd evaluate against HORIZON</li>
+<li><a href="../papers/2601.18137-deepplanning.html">DeepPlanning</a> — sibling long-horizon benchmark</li>
+<li><a href="../papers/2502.05227-robotouille.html">Robotouille</a> — sibling failure-mode-focused benchmark</li>
+<li>HORIZON leaderboard: https://xwang2775.github.io/horizon-leaderboard/</li>
+</ul>
+
+</body>
+</html>

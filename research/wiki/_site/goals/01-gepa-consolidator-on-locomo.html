@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Goal 01 — GEPA-optimised consolidator on LoCoMo</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+       max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem;
+       color: #1a1a1a; line-height: 1.55; font-size: 16px; }
+h1, h2, h3 { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+             font-weight: 500; line-height: 1.3; margin-top: 1.5em; }
+h1 { font-size: 22px; margin-top: 0; }
+h2 { font-size: 18px; border-top: 1px solid #eee; padding-top: 1em; }
+h3 { font-size: 16px; }
+a { color: #0a58ca; text-decoration: none; border-bottom: 1px dotted #0a58ca; }
+a:hover { background: #f0f4ff; }
+.dead-link { color: #a00; text-decoration: line-through; }
+nav { font-size: 13px; color: #666; margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem; border-bottom: 1px solid #eee; }
+nav a { color: #666; border-bottom: none; margin-right: 1em; }
+.meta { font-size: 13px; color: #666; margin-bottom: 1rem; }
+.meta dt { font-weight: 500; color: #444; display: inline-block; min-width: 8em; }
+.meta dd { display: inline; margin: 0 1.5em 0 0; }
+.meta div { margin: 4px 0; }
+code { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+       background: #f5f5f5; padding: 1px 5px; border-radius: 3px; font-size: 14px; }
+pre { background: #f5f5f5; padding: 12px; border-radius: 6px; overflow-x: auto;
+      font-family: ui-monospace, "SF Mono", Monaco, monospace; font-size: 13px;
+      line-height: 1.5; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 6px 12px; font-size: 14px; }
+th { background: #f5f5f5; font-weight: 500; }
+blockquote { border-left: 3px solid #ddd; margin: 1em 0; padding: 0.25em 1em;
+             color: #555; font-style: italic; }
+.backlinks { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #eee;
+             font-size: 13px; color: #666; }
+.backlinks h3 { font-size: 14px; margin: 0 0 0.5em; color: #444; }
+.backlinks ul { list-style: none; padding-left: 0; }
+.backlinks li { padding: 2px 0; }
+.tag-list { font-size: 12px; color: #888; margin: 4px 0; }
+.tag-list span { background: #f0f0f0; padding: 2px 8px; border-radius: 3px;
+                 margin-right: 4px; display: inline-block; margin-bottom: 4px; }
+ul, ol { padding-left: 1.5em; }
+li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<nav>
+<a href="../index.html">home</a>
+<a href="../goals.html">goals</a>
+<a href="../papers.html">papers</a>
+<a href="../concepts.html">concepts</a>
+<a href="../systems.html">systems</a>
+<a href="../contents.html">content</a>
+<a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener">source</a>
+</nav>
+<dl class="meta"><div><dt>Status</dt><dd><code>active</code></dd></div><div><dt>Started</dt><dd>2026-05-26</dd></div><div><dt>Priority</dt><dd>1</dd></div><div><dt>Budget</dt><dd>$200 across initial experiments</dd></div></dl>
+<div class="tag-list"><span>GEPA</span><span>DSPy</span><span>consolidator</span><span>LoCoMo</span><span>active</span></div>
+<h1>Goal 01 — GEPA-optimised consolidator on LoCoMo</h1>
+<h2>What we're trying to prove</h2>
+<p>The consolidator prompt that runs offline over a raw observation log is the right target for prompt-evolution optimization. Specifically: <a href="../papers/2507.19457-gepa.html">GEPA</a> applied to a consolidator prompt should match or beat hand-coded consolidation on LoCoMo at a fraction of the compute cost of GRPO-based alternatives like <a href="../papers/2605.20616-auto-dreamer.html">Auto-Dreamer</a>.</p>
+<p>If true, we can publish "GEPA on consolidator &gt; hand-coded consolidator" with cheap reproducibility (no GPU access needed). If not true, we learn the actual ceiling of prompt-only optimization for this task.</p>
+<h2>Current state (2026-05-26)</h2>
+<p><strong>Baseline loop works.</strong> DSPy module is built, smoke-tested, producing real consolidated entries with correct speaker attribution.</p>
+<table>
+<thead>
+<tr>
+<th>Run</th>
+<th>Model</th>
+<th>Chunks</th>
+<th>Qs</th>
+<th>Overall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mini smoke</td>
+<td>gpt-5-mini</td>
+<td>1 (30 turns)</td>
+<td>5</td>
+<td><strong>50%</strong></td>
+</tr>
+<tr>
+<td>Scale</td>
+<td>gpt-4o-mini</td>
+<td>3 (90 turns)</td>
+<td>10</td>
+<td>20%</td>
+</tr>
+</tbody>
+</table>
+<p>Cost: ~$0.30 per full conv-26 baseline run with gpt-5-mini. ~$0.05 with gpt-4o-mini.</p>
+<p>Files:
+- <code>mempol/dspy_consolidator/consolidator.py</code> — the DSPy module
+- <code>mempol/dspy_consolidator/run_baseline.py</code> — end-to-end runner
+- <code>mempol/results/dspy_consolidator_baseline_conv-26.jsonl</code> — trace</p>
+<h2>Next steps in order</h2>
+<ol>
+<li><strong>Full conv-26 baseline</strong> with gpt-5-mini — establish the hand-coded number (~$0.30, 10 min).</li>
+<li><strong>GEPA wrapper</strong> — <code>scripts/run_gepa_consolidator.py</code> that wraps the DSPy module with the LoCoMo judge metric and runs GEPA optimization (~200 rollouts, $30-50, half a day).</li>
+<li><strong>Compare</strong>: GEPA-evolved consolidator vs hand-coded baseline on conv-26 (in-distribution) and convs 30/41 (held-out).</li>
+<li><strong>Report numbers</strong> — produce a clean Goal-01 result page with the curves.</li>
+</ol>
+<h2>Success criterion</h2>
+<p>GEPA-evolved consolidator beats the hand-coded baseline by ≥5pp on conv-26 held-out and ≥3pp on cross-conv generalization. Anything less is interesting but not a result we'd lead with.</p>
+<h2>Stretch (if Goal 01 succeeds)</h2>
+<p>Reproduce <a href="../papers/2605.20616-auto-dreamer.html">Auto-Dreamer</a>'s ScienceWorld setup with GEPA instead of GRPO. Direct comparison: same architecture, 35× less compute (claim from GEPA paper). If it works, that's a strong paper-shaped result that anchors the publication.</p>
+<h2>Related</h2>
+<ul>
+<li>Concept: <a href="../concepts/sleep-consolidation.html">Sleep consolidation</a> (architectural pattern)</li>
+<li>Concept: <a href="../concepts/gepa-vs-grpo.html">GEPA vs GRPO</a> (training-method choice)</li>
+<li>Concept: <a href="../concepts/memory-budget-curves.html">Memory budget curves</a> (the reporting discipline)</li>
+<li>System: <a href="../systems/auto-dreamer.html">Auto-Dreamer</a> (the SOTA we'd compete with on agent envs)</li>
+<li>Paper: <a href="../papers/2605.20616-auto-dreamer.html">Auto-Dreamer: Learning Offline Memory Consolidation for Language Agents</a>, <a href="../papers/2507.19457-gepa.html">GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning</a></li>
+</ul>
+<div class="backlinks"><h3>Referenced by</h3><ul>
+  <li><a href="../papers/2507.19457-gepa.html">GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning</a> <span style="color:#999">[paper]</span></li>
+  <li><a href="../contents/04-sleep-consolidation-live.html">Sleep-phase consolidation: building an offline memory consolidator (live)</a> <span style="color:#999">[content]</span></li>
+  <li><a href="../papers/2604.11978-horizon.html">The Long-Horizon Task Mirage? Diagnosing Where and Why Agentic Systems Break</a> <span style="color:#999">[paper]</span></li>
+</ul></div>
+</body>
+</html>

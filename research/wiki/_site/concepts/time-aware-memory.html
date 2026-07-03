@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Time-aware memory</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+       max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem;
+       color: #1a1a1a; line-height: 1.55; font-size: 16px; }
+h1, h2, h3 { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+             font-weight: 500; line-height: 1.3; margin-top: 1.5em; }
+h1 { font-size: 22px; margin-top: 0; }
+h2 { font-size: 18px; border-top: 1px solid #eee; padding-top: 1em; }
+h3 { font-size: 16px; }
+a { color: #0a58ca; text-decoration: none; border-bottom: 1px dotted #0a58ca; }
+a:hover { background: #f0f4ff; }
+.dead-link { color: #a00; text-decoration: line-through; }
+nav { font-size: 13px; color: #666; margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem; border-bottom: 1px solid #eee; }
+nav a { color: #666; border-bottom: none; margin-right: 1em; }
+.meta { font-size: 13px; color: #666; margin-bottom: 1rem; }
+.meta dt { font-weight: 500; color: #444; display: inline-block; min-width: 8em; }
+.meta dd { display: inline; margin: 0 1.5em 0 0; }
+.meta div { margin: 4px 0; }
+code { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+       background: #f5f5f5; padding: 1px 5px; border-radius: 3px; font-size: 14px; }
+pre { background: #f5f5f5; padding: 12px; border-radius: 6px; overflow-x: auto;
+      font-family: ui-monospace, "SF Mono", Monaco, monospace; font-size: 13px;
+      line-height: 1.5; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 6px 12px; font-size: 14px; }
+th { background: #f5f5f5; font-weight: 500; }
+blockquote { border-left: 3px solid #ddd; margin: 1em 0; padding: 0.25em 1em;
+             color: #555; font-style: italic; }
+.backlinks { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #eee;
+             font-size: 13px; color: #666; }
+.backlinks h3 { font-size: 14px; margin: 0 0 0.5em; color: #444; }
+.backlinks ul { list-style: none; padding-left: 0; }
+.backlinks li { padding: 2px 0; }
+.tag-list { font-size: 12px; color: #888; margin: 4px 0; }
+.tag-list span { background: #f0f0f0; padding: 2px 8px; border-radius: 3px;
+                 margin-right: 4px; display: inline-block; margin-bottom: 4px; }
+ul, ol { padding-left: 1.5em; }
+li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<nav>
+<a href="../index.html">home</a>
+<a href="../goals.html">goals</a>
+<a href="../papers.html">papers</a>
+<a href="../concepts.html">concepts</a>
+<a href="../systems.html">systems</a>
+<a href="../contents.html">content</a>
+<a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener">source</a>
+</nav>
+<dl class="meta"><div><dt>Our status</dt><dd><code>ship-tonight</code></dd></div><div><dt>Category</dt><dd>capability-gap</dd></div></dl>
+<div class="tag-list"><span>temporal</span><span>time</span><span>memory</span><span>agents</span><span>video-script</span></div>
+<h1>Time-aware memory</h1>
+<h2>Working title</h2>
+<p>The Clock Agents Cannot Feel</p>
+<h2>One-sentence thesis</h2>
+<p>LLM agents do not fail at time because they cannot solve date puzzles. They fail because they do not maintain elapsed time as part of their own state, and memory systems make that failure permanent when they store changing human context as timeless facts.</p>
+<h2>The distinction the whole video depends on</h2>
+<p>People say "temporal" and mean three different things.</p>
+<p><strong>Temporal reasoning</strong> is reasoning <em>about</em> time. Given dates, durations, and events, can the model compute what happened first, what happened next, or what was true on a stated date?</p>
+<p><strong>Temporal awareness</strong> is behaving <em>inside</em> time. Can the agent sense that eight hours passed since a tool call, that a deadline is approaching, that a background task should now be done, or that a cached answer is no longer safe?</p>
+<p><strong>Temporal memory</strong> is reconstructing state <em>across</em> time. Can the memory system answer not just "what is true now?" but "what was true in May?", "when did this change?", and "how stale is this belief?"</p>
+<p>Most systems improve temporal reasoning and call it time awareness. That is the bug. Giving a model a timestamp gives it a number to read. It does not give the agent a clock it can feel.</p>
+<h2>Recording script</h2>
+<p>Here is the problem in one example.</p>
+<p>Imagine I tell my assistant two things:</p>
+<pre><code class="language-text">I am angry right now.
+I am vegetarian.
+</code></pre>
+<p>Most memory systems write both of these the same way. They embed the sentence, store it in a vector database, maybe attach a timestamp, and later retrieve it if the query is similar.</p>
+<p>But these are not the same kind of truth.</p>
+<p>"I am angry" might stop being useful in twenty minutes. "I am vegetarian" might remain useful for years. A flat memory store does not know that. To the database, both are just facts. To a human, one is a mood and one is a durable preference. The difference is time.</p>
+<p>This is why I think the next important layer in agent memory is not just better retrieval. It is time-aware state.</p>
+<p>And this is where the field is confusing two different capabilities.</p>
+<p>Temporal reasoning is when a model solves a puzzle about time. If I say, "The meeting was three days after Friday," can it compute Monday? That is reasoning over time as content.</p>
+<p>Temporal awareness is different. It is the agent knowing that time is passing while it exists. If a user asked for the weather at 9 AM and asks again at 5 PM, should the agent reuse the cached weather or call the tool again? If a negotiation has a five-minute deadline, should it become more urgent as the deadline approaches? If a task started in the background, should the agent come back to it after enough time has elapsed?</p>
+<p>That is not date math. That is a maintained state variable.</p>
+<p>The evidence is now pretty direct.</p>
+<p>In TicToc, from Cheng et al., the benchmark asks whether agents make human-aligned tool-use decisions when time has passed between turns. The paper reports that no model gets above 65% normalized alignment even when timestamp information is provided. The authors explicitly argue that naive prompt-based fixes have limited effectiveness. Source: <a href="https://arxiv.org/abs/2510.23853">arXiv 2510.23853</a>.</p>
+<p>In Real-Time Deadlines, Sehgal, Guntuku, and Ungar put LLM negotiators under wall-clock deadlines. GPT-5.1 closes 4% of deals when it only knows the global time limit. If the remaining time is injected every turn, closure rises to 32%. The same models do almost perfectly under turn-based limits. That means the missing capability is not strategy. It is internal tracking of elapsed real time. Source: <a href="https://arxiv.org/abs/2601.13206">arXiv 2601.13206</a>.</p>
+<p>In Robotouille, the same planning tasks become much harder when actions take time and overlap. ReAct with GPT-4o gets 47% on synchronous tasks and 11% on asynchronous ones. Same model, same broad task family, but now the world keeps moving while the agent acts. Source: <a href="https://arxiv.org/abs/2502.05227">arXiv 2502.05227</a>.</p>
+<p>These are three different papers, but to me they point at one missing variable: elapsed time is not maintained by the agent.</p>
+<p>A transformer sees tokens. It does not experience waiting. Between a message at 9 AM and a message at 5 PM, the model does not live through eight hours. It receives a new context window. You can paste "current_time: 5 PM" into the prompt, and that helps, but it is still just another token. The agent is reading a clock, not running on one.</p>
+<p>That distinction matters for memory.</p>
+<p>Because if the model is time-blind, and the memory system is also time-blind, the whole agent becomes time-blind twice. The model cannot feel duration, and the database stores old facts as if they are permanently current.</p>
+<p>This is why conflict resolution by overwriting is so destructive.</p>
+<p>Suppose a memory system has:</p>
+<pre><code class="language-text">2024: user is vegetarian
+2026: user is pescatarian
+</code></pre>
+<p>A normal memory system says: contradiction detected, update the fact. Delete or overwrite vegetarian. Current state: pescatarian.</p>
+<p>That seems reasonable. But it destroyed the most important information: the transition.</p>
+<p>The useful memory is not just "user is pescatarian." The useful memory is:</p>
+<pre><code class="language-text">diet: vegetarian -&gt; pescatarian
+changed: 2026
+previous state lasted: about two years
+current confidence: high
+future update rate: probably months to years, not minutes
+</code></pre>
+<p>The delta is the intelligence. The fact that the person changed tells you more than either snapshot alone.</p>
+<p>This is the bridge from temporal awareness to temporal memory.</p>
+<p>Temporal awareness is the agent's missing clock. Temporal memory is the store that preserves how the world changes across that clock.</p>
+<p>The unit of memory should not be the fact. It should not even be the chunk. The unit of memory should be the state transition.</p>
+<p>That means every retrieved memory should carry:</p>
+<pre><code class="language-text">what changed
+when it changed
+what it replaced
+how long it is expected to remain valid
+how confident we are now
+what evidence supports it
+</code></pre>
+<p>Now retrieval changes.</p>
+<p>A flat store returns:</p>
+<pre><code class="language-text">The user is vegetarian.
+The user is pescatarian.
+</code></pre>
+<p>A temporal store returns:</p>
+<pre><code class="language-text">Diet changed from vegetarian to pescatarian in July.
+The newer state supersedes the older one.
+Diet facts usually change slowly, so current confidence is high.
+</code></pre>
+<p>That is not just more metadata. It changes the answer the model is able to give.</p>
+<p>We built a small version of this in this repo.</p>
+<p>In <code>scripts/temporal_memory_demo.py</code>, a flat store and a temporal store ingest the same facts. Thirty days later, the flat store still answers "yes" to "is the user angry right now?" because it retrieves the old anger sentence. The temporal store annotates the mood as expired and answers no. On that small controlled test, flat gets 75%, temporal gets 100%.</p>
+<p>In <code>scripts/rlm_temporal_reconstruction.py</code>, the flat baseline retrieves whichever fact is semantically closest. When asked "Where did the user live in May?", it says NYC because the later NYC fact is highly relevant. The read-time reconstruction system builds a timeline and answers Boston. On that controlled test, flat gets 67%, RLM-style reconstruction gets 83%, and one of the misses is judge noise because the answer "vegetarian as of March" is actually correct.</p>
+<p>The important part is not the tiny synthetic score. The important part is the failure mode. Flat retrieval has no natural way to answer "what was true at T?" once a fact changes. It retrieves facts; it does not reconstruct state.</p>
+<p>This suggests a clean architecture:</p>
+<pre><code class="language-text">raw event log
+  -&gt; read-time reconstruction: what was true at T?
+  -&gt; write-time consolidation: what transitions are worth storing?
+  -&gt; temporal retrieval: return memories with validity, supersession, and confidence
+</code></pre>
+<p>Read-time reconstruction solves the question "what was true then?"</p>
+<p>Write-time consolidation solves the storage problem: you cannot keep every raw event forever, so you compress the event log into durable transitions.</p>
+<p>Temporal retrieval solves the prompt problem: the model does not just see text; it sees the temporal status of the text.</p>
+<p>This is where the current research thread connects to GEPA and RL.</p>
+<p>The hard question is: how do we learn which memories to write?</p>
+<p>One path is brute-force counterfactuals: delete a candidate memory and rerun the whole future QA suite. If answers get worse, that memory was valuable. This is scientifically clean but computationally insane. It makes every write decision cost many model calls.</p>
+<p>The better path is to learn a critic. Compute exact counterfactual deltas for a small sample of writes, train a cheap predictor of write utility, and use that critic to score the rest. This repo has a first controlled version in <code>scripts/critic_counterfactual_smoke.py</code>: exact per-op deltas for a few operations train a tiny critic that predicts held-out op advantage with much fewer rollouts. It is not the final result, but it points at the right optimization target.</p>
+<p>The other path is GEPA: use language feedback from failed trajectories to evolve the consolidator prompt. GEPA is relevant because it extracts much more signal from each rollout than scalar RL. The GEPA paper reports that it beats GRPO by 6% on average across six tasks while using up to 35x fewer rollouts. Source: <a href="https://arxiv.org/abs/2507.19457">arXiv 2507.19457</a>.</p>
+<p>That is why our strongest near-term experiment is not "train everything end-to-end immediately." It is:</p>
+<pre><code class="language-text">Compare raw retrieval, temporal KG, Mastra-style observational memory,
+hand-written consolidation, and GEPA-learned consolidation
+on the same LoCoMo questions, with the same reader and judge.
+</code></pre>
+<p>We already have partial numbers on conv-26:</p>
+<pre><code class="language-text">flat raw retrieval: 56.7%
+cached PIE temporal KG: 70.0%
+Mastra observational memory: 40.0%
+</code></pre>
+<p>The missing cells are hand-written consolidation and GEPA-learned consolidation. Those are currently running or runnable from <code>scripts/reflector_backend_matrix.py</code>.</p>
+<p>So the video conclusion is not "I have solved time-aware agents."</p>
+<p>The honest conclusion is better:</p>
+<p>Current agents are missing a clock. Timestamp injection helps but does not solve the missing state variable. Flat memory makes the problem worse because it stores changing context as timeless facts. The fix is a temporal world model where memory is a trajectory of state transitions, and the research problem is learning which transitions to preserve under a budget.</p>
+<p>That is the publishable idea.</p>
+<p>Not "my vector DB has timestamps."</p>
+<p>Not "my prompt says current date."</p>
+<p>But:</p>
+<pre><code class="language-text">agents need a clock;
+memory needs transitions;
+retrieval needs temporal validity;
+learning needs future utility under budget.
+</code></pre>
+<p>Once you see that, a lot of agent failures stop looking random.</p>
+<p>The agent does not pick up a dropped thread because it has no model of how long the thread has been stale.</p>
+<p>It does not know a cached answer expired because expiration is not represented.</p>
+<p>It cannot orchestrate multi-agent work because it does not maintain live state for what each worker is doing over time.</p>
+<p>It cannot be proactive because proactivity is choosing when to act, and choosing when to act requires a clock.</p>
+<p>We have spent two years giving agents tools, retrieval, and longer context windows.</p>
+<p>The next layer is time.</p>
+<p>Not time as a string in the prompt.</p>
+<p>Time as a state variable the system maintains.</p>
+<p>Time as validity in memory.</p>
+<p>Time as the thing that turns a pile of facts into a changing world.</p>
+<h2>Demo beats for the video</h2>
+<p>Use these as screen inserts.</p>
+<ol>
+<li><strong>Cold open:</strong> two cards: "I am angry right now" vs "I am vegetarian." Draw half-life curves: mood decays fast, diet decays slowly.</li>
+<li><strong>Paper evidence:</strong> show TicToc 65%, Real-Time Deadlines 4% to 32%, Robotouille 47% to 11%.</li>
+<li><strong>Your code demo 1:</strong> run <code>python scripts/temporal_memory_demo.py</code>. Show flat memory saying the user is still angry. Show temporal memory marking the mood expired.</li>
+<li><strong>Your code demo 2:</strong> run <code>python scripts/rlm_temporal_reconstruction.py</code>. Show "Where did the user live in May?" Flat says NYC; reconstruction says Boston.</li>
+<li><strong>Research result in progress:</strong> show <code>scripts/reflector_backend_matrix.py</code> comparing flat, KG, Mastra, hand consolidation, GEPA consolidation.</li>
+<li><strong>Closing visual:</strong> event log becomes transition graph becomes time-aware retrieval prompt.</li>
+</ol>
+<h2>Tonight publishing plan</h2>
+<p>If recording tonight, do not over-edit.</p>
+<p>Record in sections:</p>
+<ol>
+<li>Hook: angry vs vegetarian.</li>
+<li>Distinction: reasoning vs awareness vs memory.</li>
+<li>Evidence: three papers.</li>
+<li>Demo: temporal memory and RLM reconstruction.</li>
+<li>Research direction: transition memory + learned consolidation.</li>
+<li>Close: agents need a clock.</li>
+</ol>
+<p>For editing, use paper screenshots, terminal clips, and simple diagrams. Avoid full animation. This wants to feel like a serious researcher's field note, not a generic explainer.</p>
+<h2>Related repo artifacts</h2>
+<ul>
+<li><code>scripts/temporal_memory_demo.py</code> - controlled flat vs temporal retrieval demo.</li>
+<li><code>scripts/rlm_temporal_reconstruction.py</code> - read-time timeline reconstruction demo.</li>
+<li><code>scripts/critic_counterfactual_smoke.py</code> - cheap learned critic for counterfactual write utility.</li>
+<li><code>scripts/reflector_backend_matrix.py</code> - backend/reflector comparison matrix on LoCoMo.</li>
+<li><code>scripts/compare_pie_vs_gepa.py</code> - PIE vs hand vs GEPA consolidator comparison.</li>
+<li><code>mempol/results/gepa_consolidator/summary.json</code> - current tiny GEPA result: 60% baseline vs 80% GEPA on 5 questions.</li>
+<li><code>mempol/results/reflector_matrix/</code> - partial backend matrix traces.</li>
+<li><code>output/experiments/temporal_memory_demo.json</code> - current temporal demo output.</li>
+<li><code>output/experiments/rlm_temporal_reconstruction.json</code> - current reconstruction demo output.</li>
+</ul>
+<h2>Sources</h2>
+<ul>
+<li><a href="https://arxiv.org/abs/2510.23853">Temporal Blindness in Multi-Turn LLM Agents</a> - TicToc; no model above 65% normalized alignment with timestamps.</li>
+<li><a href="https://arxiv.org/abs/2601.13206">Real-Time Deadlines Reveal Temporal Awareness Failures</a> - GPT-5.1 deal closure 4% without remaining-time updates vs 32% with updates; turn-based deadlines near-perfect.</li>
+<li><a href="https://arxiv.org/abs/2502.05227">Robotouille</a> - ReAct GPT-4o 47% synchronous vs 11% asynchronous.</li>
+<li><a href="https://arxiv.org/abs/2501.13956">Zep: A Temporal Knowledge Graph Architecture for Agent Memory</a> - temporal KG direction.</li>
+<li><a href="https://arxiv.org/abs/2507.19457">GEPA</a> - reflective prompt evolution, up to 35x fewer rollouts than GRPO in the paper's experiments.</li>
+</ul>
+<div class="backlinks"><h3>Referenced by</h3><ul>
+  <li><a href="../concepts/belief-revision.html">Belief revision</a> <span style="color:#999">[concept]</span></li>
+  <li><a href="../systems/gitmem.html">GitMem (internal)</a> <span style="color:#999">[system]</span></li>
+  <li><a href="../goals/03-public-research-wiki.html">Goal 03 — Public research wiki + educational content</a> <span style="color:#999">[goal]</span></li>
+  <li><a href="../goals/03-public-research-wiki.html">Goal 03 — Public research wiki + educational content</a> <span style="color:#999">[goal]</span></li>
+  <li><a href="../contents/01-working-memory-intro-TOC-v2.html">Memory in language models — annotated TOC</a> <span style="color:#999">[content]</span></li>
+  <li><a href="../systems/zep.html">Zep / Graphiti</a> <span style="color:#999">[system]</span></li>
+</ul></div>
+</body>
+</html>

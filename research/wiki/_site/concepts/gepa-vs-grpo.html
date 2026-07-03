@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GEPA vs GRPO</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+       max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem;
+       color: #1a1a1a; line-height: 1.55; font-size: 16px; }
+h1, h2, h3 { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+             font-weight: 500; line-height: 1.3; margin-top: 1.5em; }
+h1 { font-size: 22px; margin-top: 0; }
+h2 { font-size: 18px; border-top: 1px solid #eee; padding-top: 1em; }
+h3 { font-size: 16px; }
+a { color: #0a58ca; text-decoration: none; border-bottom: 1px dotted #0a58ca; }
+a:hover { background: #f0f4ff; }
+.dead-link { color: #a00; text-decoration: line-through; }
+nav { font-size: 13px; color: #666; margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem; border-bottom: 1px solid #eee; }
+nav a { color: #666; border-bottom: none; margin-right: 1em; }
+.meta { font-size: 13px; color: #666; margin-bottom: 1rem; }
+.meta dt { font-weight: 500; color: #444; display: inline-block; min-width: 8em; }
+.meta dd { display: inline; margin: 0 1.5em 0 0; }
+.meta div { margin: 4px 0; }
+code { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+       background: #f5f5f5; padding: 1px 5px; border-radius: 3px; font-size: 14px; }
+pre { background: #f5f5f5; padding: 12px; border-radius: 6px; overflow-x: auto;
+      font-family: ui-monospace, "SF Mono", Monaco, monospace; font-size: 13px;
+      line-height: 1.5; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 6px 12px; font-size: 14px; }
+th { background: #f5f5f5; font-weight: 500; }
+blockquote { border-left: 3px solid #ddd; margin: 1em 0; padding: 0.25em 1em;
+             color: #555; font-style: italic; }
+.backlinks { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #eee;
+             font-size: 13px; color: #666; }
+.backlinks h3 { font-size: 14px; margin: 0 0 0.5em; color: #444; }
+.backlinks ul { list-style: none; padding-left: 0; }
+.backlinks li { padding: 2px 0; }
+.tag-list { font-size: 12px; color: #888; margin: 4px 0; }
+.tag-list span { background: #f0f0f0; padding: 2px 8px; border-radius: 3px;
+                 margin-right: 4px; display: inline-block; margin-bottom: 4px; }
+ul, ol { padding-left: 1.5em; }
+li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<nav>
+<a href="../index.html">home</a>
+<a href="../goals.html">goals</a>
+<a href="../papers.html">papers</a>
+<a href="../concepts.html">concepts</a>
+<a href="../systems.html">systems</a>
+<a href="../contents.html">content</a>
+<a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener">source</a>
+</nav>
+<dl class="meta"><div><dt>Category</dt><dd>training-method</dd></div></dl>
+<div class="tag-list"><span>RL</span><span>prompt-optimization</span><span>GRPO</span><span>GEPA</span><span>DSPy</span></div>
+<h1>GEPA vs GRPO</h1>
+<p>Two ways to optimize an LLM-based system against a verifiable reward. They differ in the <em>gradient signal</em>: GRPO uses scalar policy gradients computed from group-relative advantages; GEPA uses natural-language reflection on full trajectories.</p>
+<h2>GRPO in one paragraph</h2>
+<p>Group Relative Policy Optimization, from <a href="../papers/2402.03300-deepseekmath-grpo.html">DeepSeekMath (Shao et al. 2024)</a>. For each prompt, sample G rollouts from the current policy. Compute reward of each rollout. Advantage of rollout i = (r_i − mean_r) / std_r. Standard policy-gradient update with this advantage. No value/critic network. Works when reward is verifiable (exact match, judge, task success).</p>
+<p>GRPO is what powers Search-R1, DeepSeek-R1, Memory-R1, <a href="../papers/2605.20616-auto-dreamer.html">Auto-Dreamer</a>, Mem-α. Default RL algorithm for tool-use training.</p>
+<h2>GEPA in one paragraph</h2>
+<p>Genetic-Pareto reflective prompt evolution, from <a href="../papers/2507.19457-gepa.html">GEPA (Agrawal et al. 2025)</a>. ICLR 2026 Oral. Given a system built from one or more LLM prompts: sample trajectories, reflect on failures in natural language ("the model conflated X with Y"), propose specific prompt edits, test them on a small batch, maintain a Pareto frontier of complementary prompt variants, combine winning lessons across the frontier.</p>
+<p>The shift: a scalar reward is one bit per rollout; a natural-language critique is hundreds of bits per rollout. For the same compute budget, reflection-based search extracts much more signal per sample.</p>
+<h2>The numbers</h2>
+<p>GEPA's paper reports vs GRPO across 6 tasks:
+- +6% on average, +20% on best
+- 35× fewer rollouts at matched/better quality
+- vs MIPROv2 (prior prompt optimizer SOTA): +10% on average, +12% on AIME-2025</p>
+<h2>When each wins</h2>
+<p><strong>GRPO wins when:</strong>
+- The capability needed isn't in the base model (must shift weights)
+- Reward is dense and cheap to compute (e.g. token-level)
+- Training compute is cheap; you can afford thousands of rollouts
+- You want a portable artifact (the LoRA weights)</p>
+<p><strong>GEPA wins when:</strong>
+- The capability IS in the base model, just badly invoked
+- Reward is expensive (LLM-judge, end-to-end task)
+- Training compute is the bottleneck
+- You're using a closed model (can't fine-tune)
+- The system is built from explicit prompts (DSPy-shaped)</p>
+<h2>What GEPA can't do</h2>
+<ul>
+<li>Change model knowledge or fundamental capability — only optimize how it's invoked</li>
+<li>Train models for non-verifiable open-ended generation</li>
+<li>Run during deployment (it's offline, like any optimizer)</li>
+</ul>
+<h2>What this means for memory systems</h2>
+<p>The open opportunity: every paper in the <a href="../concepts/sleep-consolidation.html">Sleep consolidation</a> cluster that uses GRPO (Memory-R1, Mem-α, <a href="../papers/2605.20616-auto-dreamer.html">Auto-Dreamer</a>) is potentially replaceable by GEPA. The consolidator prompt is exactly the kind of stationary, low-dimensional target GEPA is built for. Same architecture, same reward signal, much cheaper training.</p>
+<p>If GEPA can match Auto-Dreamer's numbers at 1/35th the compute, the practical implication is enormous: consolidation training becomes a thing you do on a laptop for $50, not on 8× H100 for $2k.</p>
+<p>If GEPA can't match — equally informative. It tells us that operations-level decisions in long-horizon memory genuinely need weight-level fine-tuning, and prompt-only optimization caps out below the SOTA.</p>
+<h2>Practical setup</h2>
+<pre><code class="language-python">import dspy
+from dspy.teleprompt import GEPA
+
+# Define the program as DSPy modules.
+class Consolidator(dspy.Module):
+    def __init__(self):
+        self.summarize = dspy.ChainOfThought(
+            &quot;working_region, source_traces -&gt; consolidated_entries&quot;
+        )
+    def forward(self, region, traces):
+        return self.summarize(working_region=region, source_traces=traces)
+
+# Metric is end-to-end task reward over the consolidated bank.
+def task_reward(example, prediction, trace=None):
+    bank = prediction.consolidated_entries
+    return run_task_agent(example.tasks, bank).success_rate
+
+# Train.
+gepa = GEPA(metric=task_reward, num_threads=4)
+optimized = gepa.compile(Consolidator(), trainset=scienceworld_trajectories)
+</code></pre>
+<p>The hard part is the metric (running the task agent inside the training loop). Same problem GRPO has.</p>
+<h2>See also</h2>
+<ul>
+<li><a href="../papers/2402.03300-deepseekmath-grpo.html">GRPO paper</a></li>
+<li><a href="../papers/2507.19457-gepa.html">GEPA paper</a></li>
+<li><a href="../papers/2605.20616-auto-dreamer.html">Auto-Dreamer</a> — uses GRPO; the natural ablation target</li>
+<li><a href="../concepts/sleep-consolidation.html">Sleep consolidation</a> — where this matters most</li>
+</ul>
+<div class="backlinks"><h3>Referenced by</h3><ul>
+  <li><a href="../contents/01-working-memory-intro-FULL.html">AI memory, from scratch: working memory, episodic memory, and everything the field gets wrong</a> <span style="color:#999">[content]</span></li>
+  <li><a href="../systems/auto-dreamer.html">Auto-Dreamer</a> <span style="color:#999">[system]</span></li>
+  <li><a href="../papers/2507.19457-gepa.html">GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning</a> <span style="color:#999">[paper]</span></li>
+  <li><a href="../goals/01-gepa-consolidator-on-locomo.html">Goal 01 — GEPA-optimised consolidator on LoCoMo</a> <span style="color:#999">[goal]</span></li>
+  <li><a href="../goals/01-gepa-consolidator-on-locomo.html">Goal 01 — GEPA-optimised consolidator on LoCoMo</a> <span style="color:#999">[goal]</span></li>
+  <li><a href="../goals/02-autodreamer-reproduction.html">Goal 02 — Reproduce Auto-Dreamer with GEPA on ScienceWorld</a> <span style="color:#999">[goal]</span></li>
+  <li><a href="../goals/02-autodreamer-reproduction.html">Goal 02 — Reproduce Auto-Dreamer with GEPA on ScienceWorld</a> <span style="color:#999">[goal]</span></li>
+  <li><a href="../goals/03-public-research-wiki.html">Goal 03 — Public research wiki + educational content</a> <span style="color:#999">[goal]</span></li>
+  <li><a href="../goals/03-public-research-wiki.html">Goal 03 — Public research wiki + educational content</a> <span style="color:#999">[goal]</span></li>
+  <li><a href="../goals/05-footnote-product.html">Goal 05 — Footnote: AI video annotation product</a> <span style="color:#999">[goal]</span></li>
+  <li><a href="../goals/05-footnote-product.html">Goal 05 — Footnote: AI video annotation product</a> <span style="color:#999">[goal]</span></li>
+  <li><a href="../contents/01-working-memory-intro-TOC-v2.html">Memory in language models — annotated TOC</a> <span style="color:#999">[content]</span></li>
+  <li><a href="../systems/pie.html">PIE (typed-transition KG)</a> <span style="color:#999">[system]</span></li>
+  <li><a href="../concepts/sleep-consolidation.html">Sleep consolidation</a> <span style="color:#999">[concept]</span></li>
+  <li><a href="../concepts/substrate-design-space.html">Substrate design space</a> <span style="color:#999">[concept]</span></li>
+  <li><a href="../concepts/write-time-vs-read-time.html">Write-time vs read-time compression</a> <span style="color:#999">[concept]</span></li>
+</ul></div>
+</body>
+</html>

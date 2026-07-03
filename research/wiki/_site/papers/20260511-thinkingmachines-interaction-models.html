@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Interaction Models: A Scalable Approach to Human-AI Collaboration</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+       max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem;
+       color: #1a1a1a; line-height: 1.55; font-size: 16px; }
+h1, h2, h3 { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+             font-weight: 500; line-height: 1.3; margin-top: 1.5em; }
+h1 { font-size: 22px; margin-top: 0; }
+h2 { font-size: 18px; border-top: 1px solid #eee; padding-top: 1em; }
+h3 { font-size: 16px; }
+a { color: #0a58ca; text-decoration: none; border-bottom: 1px dotted #0a58ca; }
+a:hover { background: #f0f4ff; }
+.dead-link { color: #a00; text-decoration: line-through; }
+nav { font-size: 13px; color: #666; margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem; border-bottom: 1px solid #eee; }
+nav a { color: #666; border-bottom: none; margin-right: 1em; }
+.meta { font-size: 13px; color: #666; margin-bottom: 1rem; }
+.meta dt { font-weight: 500; color: #444; display: inline-block; min-width: 8em; }
+.meta dd { display: inline; margin: 0 1.5em 0 0; }
+.meta div { margin: 4px 0; }
+code { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+       background: #f5f5f5; padding: 1px 5px; border-radius: 3px; font-size: 14px; }
+pre { background: #f5f5f5; padding: 12px; border-radius: 6px; overflow-x: auto;
+      font-family: ui-monospace, "SF Mono", Monaco, monospace; font-size: 13px;
+      line-height: 1.5; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 6px 12px; font-size: 14px; }
+th { background: #f5f5f5; font-weight: 500; }
+blockquote { border-left: 3px solid #ddd; margin: 1em 0; padding: 0.25em 1em;
+             color: #555; font-style: italic; }
+.backlinks { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #eee;
+             font-size: 13px; color: #666; }
+.backlinks h3 { font-size: 14px; margin: 0 0 0.5em; color: #444; }
+.backlinks ul { list-style: none; padding-left: 0; }
+.backlinks li { padding: 2px 0; }
+.tag-list { font-size: 12px; color: #888; margin: 4px 0; }
+.tag-list span { background: #f0f0f0; padding: 2px 8px; border-radius: 3px;
+                 margin-right: 4px; display: inline-block; margin-bottom: 4px; }
+ul, ol { padding-left: 1.5em; }
+li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<nav>
+<a href="../index.html">home</a>
+<a href="../goals.html">goals</a>
+<a href="../papers.html">papers</a>
+<a href="../concepts.html">concepts</a>
+<a href="../systems.html">systems</a>
+<a href="../contents.html">content</a>
+<a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener">source</a>
+</nav>
+<dl class="meta"><div><dt>Authors</dt><dd>Thinking Machines Lab</dd></div><div><dt>Published</dt><dd>2026-05-11</dd></div><div><dt>Approach</dt><dd><code>infrastructure</code></dd></div><div><dt>Relevance</dt><dd>high</dd></div><div><dt>Benchmarks</dt><dd>TimeSpeak, CueSpeak, RepCount-A, ProactiveVideoQA</dd></div></dl>
+<div class="tag-list"><span>thinking-machines</span><span>continuous-time</span><span>streaming</span><span>multimodal</span><span>background-agent</span></div>
+<h1>Interaction Models: Thinking Machines Lab, May 11, 2026</h1>
+<h2>Quick read</h2>
+<p>TML's flagship architecture: time-aligned 200ms micro-turns that interleave input and output streams. 276B MoE (12B active). The model has a direct sense of elapsed time built into the architecture — answers "how long did this take" without seeing a timestamp. Scores 64.7 on TimeSpeak vs GPT-Realtime-2 minimal's 4.3.</p>
+<h2>Why it matters to us</h2>
+<p>This solves continuous-time perception at the model level — for seconds-to-minutes. Crucial implications:</p>
+<ol>
+<li>Closed APIs (GPT-5, Claude) will remain turn-based for some time; we cannot replicate this with prompt engineering.</li>
+<li>They explicitly state long-session context management is unsolved.</li>
+<li>They explicitly use a "split: interaction model + background model" architecture, validating our intuition that long-horizon state needs a separate reasoner.</li>
+</ol>
+<p>The long-horizon week-to-month state layer is the unclaimed opening.</p>
+<h2>Method in one paragraph</h2>
+<p>Multi-stream architecture: at each 200ms tick, the model receives a chunk of audio/video/text input AND emits a chunk of output, in parallel. Streaming bidirectional. Built-in timing structure means duration is structural, not metadata. Encoder-free early fusion. Mixture-of-experts (276B total / 12B active).</p>
+<h2>Results in numbers</h2>
+<ul>
+<li>TimeSpeak: 64.7 (best baseline GPT-Realtime-2 minimal: 4.3)</li>
+<li>Other benchmarks: CueSpeak, RepCount-A, ProactiveVideoQA — all custom-built by TML because no existing benchmarks measured the right thing</li>
+</ul>
+<h2>What they don't do</h2>
+<ul>
+<li>Long-session memory across days/weeks (explicitly flagged as open)</li>
+<li>Their background model is not yet a sophisticated long-horizon reasoner</li>
+<li>Doesn't address project-state tracking or research workflows</li>
+</ul>
+<h2>Open questions / followups</h2>
+<ul>
+<li>How long can a session actually run before context management breaks?</li>
+<li>What's the background model's actual architecture and capability?</li>
+<li>Can we build a persistent state layer that interfaces with their interaction model?</li>
+</ul>
+<div class="backlinks"><h3>Referenced by</h3><ul>
+  <li><a href="../contents/01-working-memory-intro-FULL.html">AI memory, from scratch: working memory, episodic memory, and everything the field gets wrong</a> <span style="color:#999">[content]</span></li>
+  <li><a href="../contents/01-working-memory-intro-TOC-v2.html">Memory in language models — annotated TOC</a> <span style="color:#999">[content]</span></li>
+</ul></div>
+</body>
+</html>

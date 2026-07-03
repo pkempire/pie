@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sleep-phase consolidation: building an offline memory consolidator (live)</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+       max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem;
+       color: #1a1a1a; line-height: 1.55; font-size: 16px; }
+h1, h2, h3 { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+             font-weight: 500; line-height: 1.3; margin-top: 1.5em; }
+h1 { font-size: 22px; margin-top: 0; }
+h2 { font-size: 18px; border-top: 1px solid #eee; padding-top: 1em; }
+h3 { font-size: 16px; }
+a { color: #0a58ca; text-decoration: none; border-bottom: 1px dotted #0a58ca; }
+a:hover { background: #f0f4ff; }
+.dead-link { color: #a00; text-decoration: line-through; }
+nav { font-size: 13px; color: #666; margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem; border-bottom: 1px solid #eee; }
+nav a { color: #666; border-bottom: none; margin-right: 1em; }
+.meta { font-size: 13px; color: #666; margin-bottom: 1rem; }
+.meta dt { font-weight: 500; color: #444; display: inline-block; min-width: 8em; }
+.meta dd { display: inline; margin: 0 1.5em 0 0; }
+.meta div { margin: 4px 0; }
+code { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+       background: #f5f5f5; padding: 1px 5px; border-radius: 3px; font-size: 14px; }
+pre { background: #f5f5f5; padding: 12px; border-radius: 6px; overflow-x: auto;
+      font-family: ui-monospace, "SF Mono", Monaco, monospace; font-size: 13px;
+      line-height: 1.5; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 6px 12px; font-size: 14px; }
+th { background: #f5f5f5; font-weight: 500; }
+blockquote { border-left: 3px solid #ddd; margin: 1em 0; padding: 0.25em 1em;
+             color: #555; font-style: italic; }
+.backlinks { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #eee;
+             font-size: 13px; color: #666; }
+.backlinks h3 { font-size: 14px; margin: 0 0 0.5em; color: #444; }
+.backlinks ul { list-style: none; padding-left: 0; }
+.backlinks li { padding: 2px 0; }
+.tag-list { font-size: 12px; color: #888; margin: 4px 0; }
+.tag-list span { background: #f0f0f0; padding: 2px 8px; border-radius: 3px;
+                 margin-right: 4px; display: inline-block; margin-bottom: 4px; }
+ul, ol { padding-left: 1.5em; }
+li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<nav>
+<a href="../index.html">home</a>
+<a href="../goals.html">goals</a>
+<a href="../papers.html">papers</a>
+<a href="../concepts.html">concepts</a>
+<a href="../systems.html">systems</a>
+<a href="../contents.html">content</a>
+<a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener">source</a>
+</nav>
+
+
+<h1>Sleep-phase consolidation: building an offline memory consolidator</h1>
+<h2>Thesis</h2>
+<p>Every shipped LLM memory system synchronously decides what to remember at write time. That's the wrong place to make the decision — the right place is asynchronously, with hindsight, after multiple turns have arrived. We build the architecture from scratch in 30 minutes, train it with GEPA in another 10, and watch the consolidator prompt evolve in real time.</p>
+<h2>Why this video matters</h2>
+<p>Three things converge here that make a really compelling explainer:
+1. The neuroscience analog (CLS theory — hippocampus + cortex) is intuitive and visual
+2. The Auto-Dreamer paper is fresh (May 2026) and well-documented
+3. We have a live, working implementation that produces real numbers (60% → 80% in our smoke)</p>
+<p>The viewer gets: the architectural pattern, the math, the code, and the actual result on a real benchmark. Nobody else has covered this.</p>
+<h2>Outline (with timestamps)</h2>
+<h3>0:00 — Cold open (45 sec)</h3>
+<p><strong>Hook</strong>: Show terminal scrolling Auto-Dreamer-style consolidator output. Cut to the GEPA score graph going up. Voiceover: "I built a memory system that learns <em>what to remember</em> while you sleep. Score went from 60% to 80% with no fine-tuning. Here's how it works."</p>
+<ul>
+<li><strong>Asset</strong>: 5-second terminal recording of our <code>python scripts/run_gepa_consolidator.py --smoke</code> output</li>
+<li><strong>Asset</strong>: Simple line graph (Excalidraw) showing 0.6 → 0.8 over GEPA iterations</li>
+</ul>
+<h3>1:00 — The problem (3 min)</h3>
+<p>LLM agents have the same problem you do: you can't decide what's worth remembering while it's happening. You only know later, after you see how things played out.</p>
+<ul>
+<li><strong>Diagram</strong>: Excalidraw timeline. Top: conversation arriving. Bottom: each turn forces an LLM call: "store / update / delete / ignore". Show the bandwidth issue.</li>
+<li><strong>Reference</strong>: Mem0's self-reported 40% extraction-failure rate (need exact citation — verify from their paper before recording)</li>
+<li><strong>Reference</strong>: Show Memory-R1 + DeltaMem screenshots from their abstracts — every published system synchronizes write decisions</li>
+<li><strong>Cite</strong>: <a href="../papers/2605.20616-auto-dreamer.html">Auto-Dreamer</a> paper, <a href="../papers/2504.19413-mem0.html">Mem0</a></li>
+</ul>
+<h3>4:00 — The neuroscience analog (4 min)</h3>
+<p>Complementary learning systems theory. Hippocampus = fast, single-shot, episodic. Cortex = slow, statistical, semantic. Sleep transfers memories between them, biased toward what's behaviorally relevant.</p>
+<ul>
+<li><strong>Animation idea (Manim or Motion Canvas)</strong>: Two regions of a brain. Hippocampus accumulating colored dots during the day. At "night," dots flow to cortex with some merging, some discarded.</li>
+<li><strong>Reference</strong>: McClelland, McNaughton, O'Reilly 1995 — the foundational CLS paper</li>
+<li><strong>Reference</strong>: ML translation — <a href="../papers/2605.20616-auto-dreamer.html">Auto-Dreamer</a> explicitly cites CLS as design inspiration</li>
+</ul>
+<h3>8:00 — The architecture (5 min)</h3>
+<p>Two layers + an async bridge:
+- L1: raw observation log (append, no LLM)
+- Consolidator: bounded tool-use over a "working region"
+- L3: consolidated bank (read at QA time)</p>
+<p>Walk through the data flow with Excalidraw. Show working_region selection: recent writes ∪ entries retrieved during last K sessions.</p>
+<ul>
+<li><strong>Diagram</strong>: Excalidraw — three boxes (L1 raw log, consolidator process with tool icons, L3 bank). Arrows showing flow.</li>
+<li><strong>Reference</strong>: Auto-Dreamer Figure 1 (rerender ours, cite theirs)</li>
+<li><strong>Code asset</strong>: Show the <code>ConsolidatorSignature</code> from <code>mempol/dspy_consolidator/consolidator.py</code> — the DSPy module's input/output types</li>
+</ul>
+<h3>13:00 — Building it live in code (8 min)</h3>
+<p>Live screen recording in Cursor. Walk through:
+- The DSPy signature (input: working_region, source_traces → output: consolidated_entries)
+- The metric function (run consolidator → ingest into FlatBackend → answer LoCoMo questions → judge)
+- The runner script</p>
+<p>Run it on conv-26 chunk 1, narrate the output as the consolidated entries print to terminal.</p>
+<ul>
+<li><strong>Asset</strong>: Cursor screen recording with ScreenStudio</li>
+<li><strong>Code</strong>: live in repo at <code>mempol/dspy_consolidator/</code></li>
+<li><strong>Show</strong>: actual consolidator output for Caroline/Melanie chunk — Caroline's necklace gets correctly attributed</li>
+</ul>
+<h3>21:00 — Training it with GEPA (8 min)</h3>
+<p>Setup the GEPA loop. Explain: scalar reward = 1 bit; natural-language reflection = hundreds of bits. Show the actual reflection LM prompt template (DSPy GEPA internal).</p>
+<p>Run <code>--smoke</code>. Watch the score progression live.</p>
+<ul>
+<li><strong>Diagram (Excalidraw)</strong>: GEPA loop — sample trajectories → reflect on failures → propose new prompts → Pareto-frontier check</li>
+<li><strong>Show</strong>: original prompt (7 lines) vs evolved prompt (11 sections) — actual file diff</li>
+<li><strong>Result</strong>: 60% → 80% on our smoke</li>
+</ul>
+<h3>29:00 — What just happened, in 3 minutes (3 min)</h3>
+<p>The single most important thing GEPA added was the speaker-attribution rule: "the speaker field is the person whose life/knowledge the entry describes, NOT the turn's speaker." That single insight was what GEPA's reflection caught and rules-ified.</p>
+<p>Show the diff. Speak it out loud.</p>
+<ul>
+<li><strong>Asset</strong>: side-by-side text comparison of original vs evolved prompt, highlight the speaker-attribution paragraph</li>
+</ul>
+<h3>32:00 — What's next (2 min)</h3>
+<ul>
+<li>Goal 02: reproduce Auto-Dreamer's full ScienceWorld result with GEPA instead of GRPO (35× less compute claim)</li>
+<li>Goal 03: this wiki + content (link to channel page)</li>
+<li>Cite: HORIZON benchmark as next target</li>
+</ul>
+<p>End screen: pin to <a href="../goals/01-gepa-consolidator-on-locomo.html">Goal 01 page</a> in wiki + GitHub repo.</p>
+<h2>Required production assets</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Asset</th>
+<th>Format</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Terminal recording of smoke run</td>
+<td>mp4, 60s</td>
+<td>ScreenStudio on Mac during run</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Line graph: GEPA score over iterations</td>
+<td>SVG (Excalidraw)</td>
+<td>hand-drawn</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Animation: hippocampus → cortex consolidation</td>
+<td>30s video</td>
+<td>Motion Canvas or Manim</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Architecture diagram: 3 boxes + tool icons</td>
+<td>SVG (Excalidraw)</td>
+<td>hand-drawn</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Live code walkthrough (DSPy module)</td>
+<td>6 min recording</td>
+<td>ScreenStudio in Cursor</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Diff: original vs evolved prompt</td>
+<td>side-by-side text</td>
+<td>screenshot of git diff or VS Code</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Title card + end card</td>
+<td>static images</td>
+<td>Excalidraw</td>
+</tr>
+</tbody>
+</table>
+<h2>Reference material to cite</h2>
+<ul>
+<li><strong>Papers</strong>: Auto-Dreamer (arXiv 2605.20616), GEPA (2507.19457), McClelland-McNaughton-O'Reilly 1995 CLS</li>
+<li><strong>Systems for comparison</strong>: Mem0, Mastra OM, EverMemOS, TiMem</li>
+<li><strong>Wiki pages</strong> (link in description): all related concepts + goals + papers</li>
+</ul>
+<h2>Tweets / external content to reference (if relevant)</h2>
+<ul>
+<li>DSPy team's GEPA release thread (Khattab — confirm exact URL before publishing)</li>
+<li>Karpathy's tweets about "agent memory is the hardest problem" (find via search)</li>
+<li>AI2 / Asta team's autoresearch work (cite their Nature Co-Scientist piece if relevant)</li>
+</ul>
+<h2>What makes this video Karpathy-level vs cringe</h2>
+<p>Karpathy-level:
+- Show actual code, no slides
+- Run the experiment live; don't fake it
+- Explain the <em>why</em> before the <em>what</em> (CLS first, then architecture)
+- Honest about limits ("our smoke is 1 chunk, the real number needs the full run")
+- Cite real numbers from real papers verbatim
+- No "subscribe and like" tax; respect viewer time</p>
+<p>Cringe to avoid:
+- Clickbait title ("Why your AI has goldfish memory" — bad)
+- Generic stock footage of brains, neurons, etc.
+- AI-generated voiceover (use real voice; viewers can tell)
+- Slide-deck with bullet points (use hand-drawn diagrams or live code)
+- Recap-section padding ("So what did we learn?")</p>
+<h2>Engagement plan (signal-to-noise)</h2>
+<p>Every minute should teach a specific thing or build toward one. Cut anything that doesn't.</p>
+<ul>
+<li>Cold open: gives the punchline (the result) so viewer knows what they're getting</li>
+<li>Each section: one main idea, one diagram, one cite, then move on</li>
+<li>Code section: keep it short — show structure, not every line</li>
+<li>End: actionable links (wiki, repo, paper) for viewer to go deeper</li>
+</ul>
+<h2>Production timeline (if shipping in 2 weeks)</h2>
+<ul>
+<li>Day 1-2: refine outline, lock script</li>
+<li>Day 3-4: create all diagrams in Excalidraw</li>
+<li>Day 5: record code walkthrough segments in Cursor</li>
+<li>Day 6: record voiceover separately for clarity (multiple takes per section)</li>
+<li>Day 7: animation segment (CLS hippocampus → cortex) in Motion Canvas</li>
+<li>Day 8-10: edit in DaVinci Resolve</li>
+<li>Day 11: review pass, tighten edits</li>
+<li>Day 12: thumbnail, title, description</li>
+<li>Day 13: upload, schedule</li>
+<li>Day 14: publish</li>
+</ul>
+
+</body>
+</html>

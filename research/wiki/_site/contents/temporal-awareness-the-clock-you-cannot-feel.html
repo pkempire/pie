@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>temporal-awareness-the-clock-you-cannot-feel</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+       max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem;
+       color: #1a1a1a; line-height: 1.55; font-size: 16px; }
+h1, h2, h3 { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+             font-weight: 500; line-height: 1.3; margin-top: 1.5em; }
+h1 { font-size: 22px; margin-top: 0; }
+h2 { font-size: 18px; border-top: 1px solid #eee; padding-top: 1em; }
+h3 { font-size: 16px; }
+a { color: #0a58ca; text-decoration: none; border-bottom: 1px dotted #0a58ca; }
+a:hover { background: #f0f4ff; }
+.dead-link { color: #a00; text-decoration: line-through; }
+nav { font-size: 13px; color: #666; margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem; border-bottom: 1px solid #eee; }
+nav a { color: #666; border-bottom: none; margin-right: 1em; }
+.meta { font-size: 13px; color: #666; margin-bottom: 1rem; }
+.meta dt { font-weight: 500; color: #444; display: inline-block; min-width: 8em; }
+.meta dd { display: inline; margin: 0 1.5em 0 0; }
+.meta div { margin: 4px 0; }
+code { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+       background: #f5f5f5; padding: 1px 5px; border-radius: 3px; font-size: 14px; }
+pre { background: #f5f5f5; padding: 12px; border-radius: 6px; overflow-x: auto;
+      font-family: ui-monospace, "SF Mono", Monaco, monospace; font-size: 13px;
+      line-height: 1.5; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 6px 12px; font-size: 14px; }
+th { background: #f5f5f5; font-weight: 500; }
+blockquote { border-left: 3px solid #ddd; margin: 1em 0; padding: 0.25em 1em;
+             color: #555; font-style: italic; }
+.backlinks { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #eee;
+             font-size: 13px; color: #666; }
+.backlinks h3 { font-size: 14px; margin: 0 0 0.5em; color: #444; }
+.backlinks ul { list-style: none; padding-left: 0; }
+.backlinks li { padding: 2px 0; }
+.tag-list { font-size: 12px; color: #888; margin: 4px 0; }
+.tag-list span { background: #f0f0f0; padding: 2px 8px; border-radius: 3px;
+                 margin-right: 4px; display: inline-block; margin-bottom: 4px; }
+ul, ol { padding-left: 1.5em; }
+li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<nav>
+<a href="../index.html">home</a>
+<a href="../goals.html">goals</a>
+<a href="../papers.html">papers</a>
+<a href="../concepts.html">concepts</a>
+<a href="../systems.html">systems</a>
+<a href="../contents.html">content</a>
+<a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener">source</a>
+</nav>
+
+
+<h1>The Clock You Cannot Feel</h1>
+<h3>Why language models are time-blind — and why injecting a timestamp doesn't fix it</h3>
+<p><em>Working Memory. Script v2 — grounded + re-toned. Every number verified against the source paper (see citations). Production cues in [brackets].</em></p>
+<p><em>Voice note: this is a story about something I kept running into, not an argument I'm trying to win. Plain words, real first principles, real papers on screen. Karpathy energy — talk like a person who's actually built the thing.</em></p>
+<hr />
+<p>[SCREEN: two chat bubbles type in — red "ugh, I'm so angry right now" / green "btw I'm vegetarian"]</p>
+<p>Here are two messages a person sends an assistant, a minute apart. "Ugh, I'm so angry right now." And: "btw, I'm vegetarian."</p>
+<p>Watch what a memory system does with them. Both get embedded — turned into a vector, dropped into a database, stamped with the same timestamp, stored at full confidence. To the database they're the same kind of thing: a fact about the user, now known. Same operation. Same write.</p>
+<p>[SCREEN: cut to half_life_curves.png — hold on it]</p>
+<p>But look at this. The anger has a half-life of <em>minutes</em> — three minutes later it's already half-untrue, and acting on it is wrong. "Vegetarian" has a half-life of <em>years</em>. One of these facts rots almost immediately; the other is basically permanent. And the store can't tell them apart, because it wrote both as a flat line that never bends. There's no time axis in there at all. A mood and an identity look identical to it.</p>
+<p>[YOUR EXPERIENCE — insert here: I actually hit this building my own memory system over my real life. Tell the specific stale-fact story — the thing it surfaced that was true weeks ago and embarrassingly wrong today. This grounds the whole piece in something you lived, not a thought experiment.]</p>
+<p>And here's the part I find genuinely interesting: that blindness doesn't start in the database. The database inherited it from the model. The model has the exact same hole.</p>
+<hr />
+<h2>Two things wearing the same word</h2>
+<p>There's a confusion buried in the word "temporal," and once you see it you can't unsee it.</p>
+<p>One thing we call temporal is <strong>reasoning about time</strong> — time as content you compute over. What year was a contract signed if it was discussed "last summer" and it's now February? Which event came first? How many days between these dates? Here the model is a calculator and time is just numbers on the tape. And this is improving fast — there's a line of work training models on staged temporal curricula that get genuinely good at it. It's the half we know how to fix.</p>
+<p>The other thing is <strong>awareness of time</strong> — time as a property of your own existence. The felt sense that duration is passing while you sit here. The difference is a calendar versus a heartbeat. A calendar is something you reason <em>about</em> — you point at it, do math on it. A heartbeat is something you <em>have</em> — you don't compute it, you feel it advancing, and it changes what you do without anyone telling you. When you've been waiting twenty minutes for someone, your body knows. That knowing is what these models don't have.</p>
+<p>And the trap is this: when people try to make a model "temporal," they almost always reach for the reasoning fix, because that's the half we can improve. They inject a timestamp into the prompt — <code>current_time: 2026-06-04</code> — and call it awareness. But that timestamp is just more content. Another number on the calendar. The model still has no heartbeat.</p>
+<hr />
+<h2>Why the blindness is structural</h2>
+<p>It's tempting to think bigger models will just grow out of this. I don't think they will, and the reason is architectural.</p>
+<p>A language model is a next-token predictor over a sequence. Its whole universe is the tokens in front of it. There's no background process, no clock ticking between your messages. When you write at nine in the morning and again at five in the evening, the model doesn't experience eight hours — it experiences <em>one token of separation</em>, maybe a timestamp string if you added one. The eight hours simply aren't in its world. It can't have "waited," because waiting needs a self that persists through time, and the model's self begins and ends inside a single forward pass.</p>
+<p>[SCREEN: paper screenshots — highlight the quoted lines as you read each number]</p>
+<p>And you can see this everywhere people have measured it. Three results, three different teams, and they're all secretly the <em>same</em> result:</p>
+<p>[SCREEN: TicToc paper, UMD — arXiv 2510.23853. Highlight: "no model achieving a normalized alignment rate better than 65% when given timestamp information"]</p>
+<p>The first is from a University of Maryland group — a benchmark called TicToc, 76 scenarios where an agent has to decide <em>when</em> to act: should it refetch, is a cached fact stale. The striking number isn't that models do badly. It's that <strong>even when you hand them the timestamp, no model gets past 65% alignment with human judgment.</strong> You give it the clock, and the ceiling barely moves. Their conclusion, in their words: prompt-based fixes have "limited effectiveness"; you need "targeted post-training rather than prompt engineering alone."</p>
+<p>[SCREEN: Robotouille paper, Cornell — arXiv 2502.05227. Highlight: "ReAct (gpt4-o) achieves 47% on synchronous tasks but only 11% on asynchronous tasks"]</p>
+<p>The second is from Cornell — Robotouille, a cooking-style planning benchmark. A standard agent gets <strong>47%</strong> when actions happen instantly, and <strong>11%</strong> the moment actions take real, varying time — when the pasta is cooking in the background while you're supposed to do something else. It can plan a sequence. It falls apart when the world keeps moving between its turns.</p>
+<p>[SCREEN: Real-Time Deadlines paper, UPenn — arXiv 2601.13206. Highlight: "32% vs. 4%" and "708% relative improvement"]</p>
+<p>The third is from Penn — a negotiation against a real wall-clock deadline. Without the clock fed in, the model closes <strong>4%</strong> of its deals. It runs out of time because it never feels time running out.</p>
+<p>Sixty-five percent. Forty-seven to eleven. Four percent. Three tasks, one hole: no sense of elapsed time.</p>
+<hr />
+<h2>The tell</h2>
+<p>Now here's the result that actually convinced me, from that same Penn paper, because it's the one you wouldn't predict.</p>
+<p>They tried the obvious fix — feed the model the clock — and it worked: deal closure jumped from 4% to 32%, a seven-fold improvement. So injection isn't useless. But then they compared <em>two kinds</em> of clock. One was a precise numeric countdown: [SCREEN highlight] <code>"(137 seconds left)"</code>. The other was a vague qualitative nudge: [SCREEN highlight] <code>"(Deadline approaching—act with urgency.)"</code>. No number at all.</p>
+<p>The vague one won. Significantly — p less than 0.001.</p>
+<p>Sit with that. If the model were <em>reasoning</em> about time, the precise number should win — more information, better decision. Instead the fuzzy emotional cue did better. Because you weren't giving it data to reason over. You were doing its proprioception <em>for</em> it — handing it the <em>feeling</em> of the deadline it can't generate on its own. The number is for a calculator. The urgency is for a body. The model wanted the body.</p>
+<p>That single comparison is the whole thing in miniature. Injecting timestamps treats a perception problem as an information problem. It helps a little — the way reading someone a clock helps a little — and then it hits a low ceiling, because you can't describe your way into a sense you don't have.</p>
+<hr />
+<h2>What the real fix looks like</h2>
+<p>So if numbers-in-the-prompt is the patch, what's the real thing? There are three honest answers, at three layers.</p>
+<p><strong>One: architecture.</strong> Build the clock into the model — weave elapsed time into the sequence itself, the way position is woven into a transformer, instead of pasting it on as metadata. This is the deep fix, and early versions exist that interleave input and output at a fixed real-time rate so duration is structural, not a string. [VERIFY before recording: the specific TimeSpeak score (~64.7 vs ~4.3) comes from a vendor blog, not a peer-reviewed paper — confirm the exact figure or state it as "a large reported jump" rather than the precise number.] The catch: it means training a new model. The turn-based APIs we all use are still blind.</p>
+<p><strong>Two: a runtime heartbeat.</strong> You don't have to retrain anything to fake a pulse. Build an agent loop where a background process emits "heartbeat" events — tokens that mean <em>time actually passed</em> — and can interrupt the model mid-task. Now elapsed time arrives as events the agent receives, instead of a string it has to remember to check. The pasta pings at five minutes. The deadline pings as it nears. This is buildable today, on blind models, and almost nobody's doing it.</p>
+<p><strong>Three: memory.</strong> This is the one closest to what I work on. A memory system inherits the model's blindness and makes it permanent — store a fact with a timestamp and the model will, again, fail to feel it. The real version annotates every retrieved fact with its staleness <em>as a sensation</em>: not "stored 2023-05-08," but "learned 47 days ago, on a topic that usually changes monthly — so treat this as probably-still-true, worth a check." You're not handing it a date. You're handing it the felt decay — the same thing the urgency cue did. Go back to those two curves [SCREEN: half_life_curves.png]: a time-aware store would let the red line fade and keep the green line solid. A flat store can't.</p>
+<hr />
+<h2>Where this leaves us</h2>
+<p>[SCREEN: black, one line types on]</p>
+<p>So here's where I've landed. Models are time-blind not because they can't do date math — they're getting good at that — but because they have no sense of their own duration. They can't feel time pass. And the field keeps treating a perception problem like an information problem: inject a timestamp, hand the blind man a description of red. It helps a little and then stops, hard.</p>
+<p>The real fix is to give the model a clock it can <em>feel</em> — in the architecture, in the runtime, or in the memory it reads from. One of those just started to exist. The other two you can build today, and almost no one has.</p>
+<p>Reasoning about time was the solvable half. Awareness of time is the open one — one of the few places left where you get to hand a model a genuinely new sense, instead of a slightly better prompt.</p>
+<p>Next time someone says they made their agent "time-aware," there's really only one question worth asking: did you give it a clock to <em>read</em>, or a clock it can <em>feel</em>?</p>
+<p>[SCREEN: end card]</p>
+<hr />
+<h3>Verified citations (checked against source PDFs, 2026-06-04)</h3>
+<ul>
+<li><strong>TicToc</strong> — <em>Your LLM Agents Are Temporally Blind</em>, Cheng, Soltani Moakhar, Fan, Hosseini, Faghih, Sodagar, Wang, Feizi (University of Maryland / RELAI.ai), arXiv <strong>2510.23853</strong>. 76 scenarios; best model ≤65% alignment even with timestamps; prompting has "limited effectiveness."</li>
+<li><strong>Robotouille</strong> — Gonzalez-Pumariega, Su Yean, Sunkara, Choudhury (Cornell), arXiv <strong>2502.05227</strong>. gpt-4o ReAct: 47% sync → 11% async (Table 2).</li>
+<li><strong>Real-Time Deadlines</strong> — Sehgal, Guntuku, Ungar (UPenn), arXiv <strong>2601.13206</strong>. GPT-5.1-chat-latest: 4.0% → 32.3% with time updates (708% rel.); URGENCY cue &gt; numeric countdown, p&lt;0.001.</li>
+<li><strong>[Unverified]</strong> architectural / TimeSpeak figure — confirm against a primary source before recording.</li>
+</ul>
+
+</body>
+</html>

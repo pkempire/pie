@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Belief revision</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+       max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem;
+       color: #1a1a1a; line-height: 1.55; font-size: 16px; }
+h1, h2, h3 { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+             font-weight: 500; line-height: 1.3; margin-top: 1.5em; }
+h1 { font-size: 22px; margin-top: 0; }
+h2 { font-size: 18px; border-top: 1px solid #eee; padding-top: 1em; }
+h3 { font-size: 16px; }
+a { color: #0a58ca; text-decoration: none; border-bottom: 1px dotted #0a58ca; }
+a:hover { background: #f0f4ff; }
+.dead-link { color: #a00; text-decoration: line-through; }
+nav { font-size: 13px; color: #666; margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem; border-bottom: 1px solid #eee; }
+nav a { color: #666; border-bottom: none; margin-right: 1em; }
+.meta { font-size: 13px; color: #666; margin-bottom: 1rem; }
+.meta dt { font-weight: 500; color: #444; display: inline-block; min-width: 8em; }
+.meta dd { display: inline; margin: 0 1.5em 0 0; }
+.meta div { margin: 4px 0; }
+code { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+       background: #f5f5f5; padding: 1px 5px; border-radius: 3px; font-size: 14px; }
+pre { background: #f5f5f5; padding: 12px; border-radius: 6px; overflow-x: auto;
+      font-family: ui-monospace, "SF Mono", Monaco, monospace; font-size: 13px;
+      line-height: 1.5; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 6px 12px; font-size: 14px; }
+th { background: #f5f5f5; font-weight: 500; }
+blockquote { border-left: 3px solid #ddd; margin: 1em 0; padding: 0.25em 1em;
+             color: #555; font-style: italic; }
+.backlinks { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #eee;
+             font-size: 13px; color: #666; }
+.backlinks h3 { font-size: 14px; margin: 0 0 0.5em; color: #444; }
+.backlinks ul { list-style: none; padding-left: 0; }
+.backlinks li { padding: 2px 0; }
+.tag-list { font-size: 12px; color: #888; margin: 4px 0; }
+.tag-list span { background: #f0f0f0; padding: 2px 8px; border-radius: 3px;
+                 margin-right: 4px; display: inline-block; margin-bottom: 4px; }
+ul, ol { padding-left: 1.5em; }
+li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<nav>
+<a href="../index.html">home</a>
+<a href="../goals.html">goals</a>
+<a href="../papers.html">papers</a>
+<a href="../concepts.html">concepts</a>
+<a href="../systems.html">systems</a>
+<a href="../contents.html">content</a>
+<a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener">source</a>
+</nav>
+<dl class="meta"><div><dt>Category</dt><dd>capability-gap</dd></div></dl>
+<div class="tag-list"><span>belief</span><span>revision</span><span>AGM</span><span>JTMS</span><span>contradictions</span><span>consistency</span></div>
+<h1>Belief revision</h1>
+<p>When new information contradicts what's already in memory, you have a choice: keep the old, accept the new, or reframe both. Every memory system today either appends-only or overrides on conflict. Neither matches how real cognition handles contradictions.</p>
+<h2>What current systems do</h2>
+<ul>
+<li><strong>Append-only (Mem0, naive RAG, observation logs)</strong>: contradictions sit side-by-side. The retriever returns both; the answer LLM picks one (often wrong).</li>
+<li><strong>Overwrite (most KG systems)</strong>: new value replaces old. History destroyed. Can't answer "what did they believe last week."</li>
+<li><strong>Mark-as-contradiction (PIE, some KG variants)</strong>: both states preserved with a flag. The reader must interpret. Usually does this poorly.</li>
+<li><strong>Bi-temporal edges (Zep / Graphiti)</strong>: valid-time interval shrinks when contradicted. Closest to right. Doesn't propagate.</li>
+</ul>
+<p>None of these do <em>belief revision</em> — re-evaluating dependent beliefs when an upstream claim changes status.</p>
+<h2>The classical AI primitives that exist but aren't used</h2>
+<ul>
+<li><strong>Truth Maintenance Systems (Doyle 1979)</strong>: nodes are propositions; justification links record why each is believed. Retracting a premise propagates to dependents. Well-understood algorithm; never integrated with LLM-extracted facts.</li>
+<li><strong>AGM Belief Revision (Alchourrón, Gärdenfors, Makinson 1985)</strong>: when new evidence contradicts the belief set, find the <em>minimal change</em> that restores consistency. Three operators: expansion, revision, contraction.</li>
+<li><strong>Dung's Argumentation Framework (1995)</strong>: arguments + attack relations + formal semantics (grounded, preferred, stable extensions). Status of each argument is computed, not stored.</li>
+</ul>
+<p>These are 30-50 year old techniques that LLM-memory systems haven't picked up.</p>
+<h2>Why integration hasn't happened</h2>
+<p>Three reasons:
+1. <strong>Schema mismatch</strong>: TMS nodes are propositions; LLM extractions are text. Identity of "the same fact across rephrasings" is fuzzy.
+2. <strong>Justification capture</strong>: LLM systems rarely log <em>why</em> they wrote a fact. Without justification links, retraction propagation has no graph to walk.
+3. <strong>Performance</strong>: AGM minimal-change computation is NP-hard in general; real implementations use heuristics. Adds overhead.</p>
+<p>None of these are insurmountable. (1) is solved by normalizing extractions to canonical entity-attribute-value tuples. (2) is solved by writing source-trajectory references at extraction time (<a href="../papers/2605.20616-auto-dreamer.html">Auto-Dreamer</a> does this). (3) is mitigated by bounding belief-set size.</p>
+<h2>What an LLM-memory system with belief revision would look like</h2>
+<p>Every memory entry carries:
+- Content (the claim)
+- Derivation: which prior entries (and source trajectories) it depends on
+- Status: Supported | Contested | Defeated (computed, not stored)
+- Attacks: which entries it contradicts</p>
+<p>When a new entry arrives that attacks an existing one, AGM revision picks the minimal-change update. Entries with broken justifications propagate Defeated downstream. The retriever at QA time only returns Supported entries by default; can return Contested with annotation when asked.</p>
+<h2>Concrete experiment that would test this</h2>
+<p>Take LoCoMo's adversarial questions (the ones that test handling of contradicting facts like Caroline's-then-Melanie's-running-practice). Run two pipelines: (a) append-only memory, (b) memory with explicit derivation + AGM revision. Compare accuracy specifically on the adversarial split.</p>
+<p>Hypothesis: belief-revision-augmented memory wins by 20+ points on adversarial (where the current PIE baseline collapses to 10.6%), with neutral effect on other categories.</p>
+<h2>Why this is unclaimed</h2>
+<p>The combination of (i) LLM-extracted memory, (ii) JTMS-shaped derivation tracking, (iii) AGM-style revision operators isn't in any published paper as of May 2026. Recent work (Conversation as Belief Revision, AAAI 2026) applies AGM to single-conversation logical consistency, not multi-week memory state.</p>
+<h2>See also</h2>
+<ul>
+<li><a href="../concepts/sleep-consolidation.html">Sleep consolidation</a> — consolidator could be the place to run revision passes</li>
+<li><a href="../concepts/time-aware-memory.html">Time-aware memory</a> — temporal validity + belief revision are different but compose</li>
+<li><a href="../concepts/substrate-design-space.html">Substrate design space</a> — derivation links require substrate support</li>
+</ul>
+<div class="backlinks"><h3>Referenced by</h3><ul>
+  <li><a href="../contents/01-ai-memory-deep-dive.html">AI memory, from scratch: what memory means for LLM agents</a> <span style="color:#999">[content]</span></li>
+  <li><a href="../contents/01-working-memory-intro-FULL.html">AI memory, from scratch: working memory, episodic memory, and everything the field gets wrong</a> <span style="color:#999">[content]</span></li>
+  <li><a href="../systems/gitmem.html">GitMem (internal)</a> <span style="color:#999">[system]</span></li>
+  <li><a href="../contents/01-working-memory-intro-TOC-v2.html">Memory in language models — annotated TOC</a> <span style="color:#999">[content]</span></li>
+  <li><a href="../systems/zep.html">Zep / Graphiti</a> <span style="color:#999">[system]</span></li>
+</ul></div>
+</body>
+</html>

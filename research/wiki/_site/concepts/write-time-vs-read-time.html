@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Write-time vs read-time compression</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+       max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem;
+       color: #1a1a1a; line-height: 1.55; font-size: 16px; }
+h1, h2, h3 { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+             font-weight: 500; line-height: 1.3; margin-top: 1.5em; }
+h1 { font-size: 22px; margin-top: 0; }
+h2 { font-size: 18px; border-top: 1px solid #eee; padding-top: 1em; }
+h3 { font-size: 16px; }
+a { color: #0a58ca; text-decoration: none; border-bottom: 1px dotted #0a58ca; }
+a:hover { background: #f0f4ff; }
+.dead-link { color: #a00; text-decoration: line-through; }
+nav { font-size: 13px; color: #666; margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem; border-bottom: 1px solid #eee; }
+nav a { color: #666; border-bottom: none; margin-right: 1em; }
+.meta { font-size: 13px; color: #666; margin-bottom: 1rem; }
+.meta dt { font-weight: 500; color: #444; display: inline-block; min-width: 8em; }
+.meta dd { display: inline; margin: 0 1.5em 0 0; }
+.meta div { margin: 4px 0; }
+code { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+       background: #f5f5f5; padding: 1px 5px; border-radius: 3px; font-size: 14px; }
+pre { background: #f5f5f5; padding: 12px; border-radius: 6px; overflow-x: auto;
+      font-family: ui-monospace, "SF Mono", Monaco, monospace; font-size: 13px;
+      line-height: 1.5; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 6px 12px; font-size: 14px; }
+th { background: #f5f5f5; font-weight: 500; }
+blockquote { border-left: 3px solid #ddd; margin: 1em 0; padding: 0.25em 1em;
+             color: #555; font-style: italic; }
+.backlinks { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #eee;
+             font-size: 13px; color: #666; }
+.backlinks h3 { font-size: 14px; margin: 0 0 0.5em; color: #444; }
+.backlinks ul { list-style: none; padding-left: 0; }
+.backlinks li { padding: 2px 0; }
+.tag-list { font-size: 12px; color: #888; margin: 4px 0; }
+.tag-list span { background: #f0f0f0; padding: 2px 8px; border-radius: 3px;
+                 margin-right: 4px; display: inline-block; margin-bottom: 4px; }
+ul, ol { padding-left: 1.5em; }
+li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<nav>
+<a href="../index.html">home</a>
+<a href="../goals.html">goals</a>
+<a href="../papers.html">papers</a>
+<a href="../concepts.html">concepts</a>
+<a href="../systems.html">systems</a>
+<a href="../contents.html">content</a>
+<a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener">source</a>
+</nav>
+<dl class="meta"><div><dt>Category</dt><dd>design-space-axis</dd></div></dl>
+<div class="tag-list"><span>compression</span><span>RAG</span><span>consolidation</span><span>test-time-compute</span></div>
+<h1>Write-time vs read-time compression</h1>
+<p>Memory systems are bifurcating into two camps based on <strong>where the compute is spent</strong>.</p>
+<h2>Write-time compression (the traditional path)</h2>
+<p>Compute happens at ingestion. As turns arrive, an LLM (or a hand-coded extractor) decides what to commit to the structured store. The store is queried cheaply at read time.</p>
+<p>Examples: <a href="../systems/mem0.html">Mem0</a>, <a href="../systems/mastra-om.html">Mastra Observational Memory</a>, <a href="../systems/zep.html">Zep / Graphiti</a>, <a href="../systems/pie.html">PIE (typed-transition KG)</a>, <a href="../papers/2605.20616-auto-dreamer.html">Auto-Dreamer</a>, <a href="../papers/2601.02845-timem.html">TiMem</a>.</p>
+<p>Pros:
+- Reads are fast (the hard work is done)
+- Storage is bounded by the extraction policy
+- Suitable for high-QPS deployment (many reads per write)</p>
+<p>Cons:
+- Extraction is lossy (Mem0 reports ~40% extraction-failure rate)
+- Decision quality at write time is limited by what's been seen so far (no hindsight)
+- Wrong extractions are sticky — unless explicitly revised, they persist</p>
+<h2>Read-time decompression (the new path)</h2>
+<p>No structured commit at write time. Store raw. At query time, the model uses tool calls to navigate, summarize, and reason over the raw store. The compute happens per query.</p>
+<p>Examples: <span class="dead-link">Recursive Language Models</span>, <span class="dead-link">search-r1</span>, naive RAG with aggressive expansion.</p>
+<p>Pros:
+- No information loss (always reading source)
+- Per-query budget can be tuned
+- Works well for sparse query loads (a few hard questions, lots of context)</p>
+<p>Cons:
+- High per-query cost
+- Latency scales with question hardness
+- Each query rediscovers the same structure</p>
+<h2>The numbers</h2>
+<p>Across LongMemEval (the standard benchmark):
+- <a href="../systems/mastra-om.html">Mastra OM</a> (write-time, gpt-5-mini): 94.87%
+- <span class="dead-link">RLM</span> (read-time, Gemini 3 Flash): 89.8%
+- <a href="../systems/mem0.html">Mem0</a> (write-time, gpt-4o): ~69%
+- Naive RAG (read-time): ~60%</p>
+<p>Strong write-time systems beat strong read-time systems on this benchmark — but the comparison is muddy because write-time systems pre-pay LLM costs that don't appear in per-query budgets.</p>
+<h2>The not-yet-popular third path: hybrid via sleep</h2>
+<p><a href="../concepts/sleep-consolidation.html">Sleep consolidation</a> is the synthesis. Write cheaply at ingestion (raw log, no LLM), consolidate asynchronously between sessions (offline compute, with hindsight), query the consolidated store cheaply at read time. Amortizes the LLM cost across many turns, gets the hindsight benefit, retains fast reads.</p>
+<p>This is where the field is moving. Auto-Dreamer, TiMem, SCM all instantiate this pattern in different ways. The question is <em>how to train the consolidator</em> — see <a href="../concepts/gepa-vs-grpo.html">GEPA vs GRPO</a>.</p>
+<h2>Implication for our work</h2>
+<p>When proposing a new memory system, locating it on this axis is the first question. mempol was originally framed as write-time-trained (RL on a write policy). The sleep-consolidation pivot moves us to the hybrid path — write cheaply, consolidate offline with <a href="../concepts/gepa-vs-grpo.html">GEPA</a>.</p>
+<h2>See also</h2>
+<ul>
+<li><a href="../concepts/noreplay-vs-retrieval.html">NoReplay vs retrieval-flavored memory</a> — the orthogonal evaluation axis</li>
+<li><a href="../concepts/sleep-consolidation.html">Sleep consolidation</a> — the architecture that bridges both</li>
+<li><a href="../concepts/gepa-vs-grpo.html">GEPA vs GRPO</a> — the training-method choice for the consolidator</li>
+</ul>
+<div class="backlinks"><h3>Referenced by</h3><ul>
+  <li><a href="../systems/mem0.html">Mem0</a> <span style="color:#999">[system]</span></li>
+  <li><a href="../concepts/memory-budget-curves.html">Memory budget curves</a> <span style="color:#999">[concept]</span></li>
+  <li><a href="../contents/01-working-memory-intro-TOC-v2.html">Memory in language models — annotated TOC</a> <span style="color:#999">[content]</span></li>
+  <li><a href="../concepts/noreplay-vs-retrieval.html">NoReplay vs retrieval-flavored memory</a> <span style="color:#999">[concept]</span></li>
+  <li><a href="../systems/pie.html">PIE (typed-transition KG)</a> <span style="color:#999">[system]</span></li>
+</ul></div>
+</body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Memory in language models — annotated TOC</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+       max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem;
+       color: #1a1a1a; line-height: 1.55; font-size: 16px; }
+h1, h2, h3 { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+             font-weight: 500; line-height: 1.3; margin-top: 1.5em; }
+h1 { font-size: 22px; margin-top: 0; }
+h2 { font-size: 18px; border-top: 1px solid #eee; padding-top: 1em; }
+h3 { font-size: 16px; }
+a { color: #0a58ca; text-decoration: none; border-bottom: 1px dotted #0a58ca; }
+a:hover { background: #f0f4ff; }
+.dead-link { color: #a00; text-decoration: line-through; }
+nav { font-size: 13px; color: #666; margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem; border-bottom: 1px solid #eee; }
+nav a { color: #666; border-bottom: none; margin-right: 1em; }
+.meta { font-size: 13px; color: #666; margin-bottom: 1rem; }
+.meta dt { font-weight: 500; color: #444; display: inline-block; min-width: 8em; }
+.meta dd { display: inline; margin: 0 1.5em 0 0; }
+.meta div { margin: 4px 0; }
+code { font-family: ui-monospace, "SF Mono", Monaco, monospace;
+       background: #f5f5f5; padding: 1px 5px; border-radius: 3px; font-size: 14px; }
+pre { background: #f5f5f5; padding: 12px; border-radius: 6px; overflow-x: auto;
+      font-family: ui-monospace, "SF Mono", Monaco, monospace; font-size: 13px;
+      line-height: 1.5; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; margin: 1em 0; }
+th, td { border: 1px solid #ddd; padding: 6px 12px; font-size: 14px; }
+th { background: #f5f5f5; font-weight: 500; }
+blockquote { border-left: 3px solid #ddd; margin: 1em 0; padding: 0.25em 1em;
+             color: #555; font-style: italic; }
+.backlinks { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #eee;
+             font-size: 13px; color: #666; }
+.backlinks h3 { font-size: 14px; margin: 0 0 0.5em; color: #444; }
+.backlinks ul { list-style: none; padding-left: 0; }
+.backlinks li { padding: 2px 0; }
+.tag-list { font-size: 12px; color: #888; margin: 4px 0; }
+.tag-list span { background: #f0f0f0; padding: 2px 8px; border-radius: 3px;
+                 margin-right: 4px; display: inline-block; margin-bottom: 4px; }
+ul, ol { padding-left: 1.5em; }
+li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<nav>
+<a href="../index.html">home</a>
+<a href="../goals.html">goals</a>
+<a href="../papers.html">papers</a>
+<a href="../concepts.html">concepts</a>
+<a href="../systems.html">systems</a>
+<a href="../contents.html">content</a>
+<a href="https://github.com/USERNAME/REPO" target="_blank" rel="noopener">source</a>
+</nav>
+
+
+<h1>Memory in language models</h1>
+<p><em>An annotated table of contents.</em></p>
+<blockquote>
+<p>The intro video is <strong>not</strong> a survey. It is one of those Distill-style guided tours where the reader leaves with a working mental model and a code repo. Researcher audience. Bleeding-edge papers cited matter-of-factly. Demos drive the narrative — every chapter has at least one live experiment we run on screen, with the result shown, interpreted, and connected back to a paper.</p>
+</blockquote>
+<h2>The series this episode opens</h2>
+<p>Three foundational episodes. Each watchable on its own. Together they form the canonical reference.</p>
+<ul>
+<li><strong>Ep 1 — Memory (this).</strong> Substrates, design axes, training methods, SOTA tour. The data-structure layer.</li>
+<li><strong>Ep 2 — Temporal reasoning.</strong> Time as a first-class axis: validity vs ingestion, decay, scheduling, bi-temporal queries. Why most current systems are "temporally blind" and what fixes it.</li>
+<li><strong>Ep 3 — World models and planning.</strong> The action layer. Memory + temporal → an agent that simulates before acting. Dreamer-flavored latent models, LLM-as-world-model, planning.</li>
+</ul>
+<p>Ep 1 ends with a clean handoff: <em>"the consolidator we just built treats time as a sort key. In the next episode we'll see why that's nowhere near enough."</em></p>
+<hr />
+<h2>Episode 1 — table of contents</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Chapter</th>
+<th>Target time</th>
+<th>Demo(s)</th>
+<th>Key papers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Cold open: the canonical fail</td>
+<td>2 min</td>
+<td>Show ChatGPT fail across sessions, live</td>
+<td>—</td>
+</tr>
+<tr>
+<td>1</td>
+<td>What we mean by memory (operational defs)</td>
+<td>6 min</td>
+<td>None — whiteboard</td>
+<td><a href="../papers/2309.02427-coala.html">Cognitive Architectures for Language Agents (CoALA)</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Why context isn't memory (mechanistic)</td>
+<td>8 min</td>
+<td>Cost curve as f(session length)</td>
+<td><a href="../papers/2402.17753-locomo.html">Evaluating Very Long-Term Conversational Memory of LLM Agents</a>, <a href="../papers/2410.10813-longmemeval.html">LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td>The naive baselines, profiled</td>
+<td>9 min</td>
+<td>Vector-search RAG failure trace</td>
+<td><a href="../papers/2504.19413-mem0.html">Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td>The hidden design axes</td>
+<td>9 min</td>
+<td>Substrate-axis grid plot</td>
+<td><a href="../concepts/write-time-vs-read-time.html">Write-time vs read-time compression</a>, <a href="../concepts/noreplay-vs-retrieval.html">NoReplay vs retrieval-flavored memory</a>, <a href="../concepts/memory-budget-curves.html">Memory budget curves</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td>The substrate zoo, re-derived</td>
+<td>12 min</td>
+<td>Same fact, six storage forms, side-by-side</td>
+<td><a href="../papers/2501.13956-zep.html">Zep: A Temporal Knowledge Graph Architecture for Agent Memory</a>, <a href="../papers/2601.02845-timem.html">TiMem: Temporal-Hierarchical Memory Consolidation for Long-Horizon Conversational Agents</a>, <a href="../papers/2604.20943-scm-sleep.html">SCM: Sleep-Consolidated Memory with Algorithmic Forgetting for Large Language Models</a>, <a href="../systems/gitmem.html">GitMem (internal)</a></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Sleep consolidation as the synthesis</td>
+<td>8 min</td>
+<td>Run a 30-line consolidator on conv-26</td>
+<td><a href="../papers/2605.20616-auto-dreamer.html">Auto-Dreamer: Learning Offline Memory Consolidation for Language Agents</a>, <a href="../papers/2604.20943-scm-sleep.html">SCM: Sleep-Consolidated Memory with Algorithmic Forgetting for Large Language Models</a></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Learning the consolidator (DSPy + GEPA)</td>
+<td>8 min</td>
+<td>Live GEPA optimization, +20pp visible</td>
+<td><a href="../papers/2507.19457-gepa.html">GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning</a>, <a href="../papers/2508.19828-memory-r1.html">Memory-R1: Enhancing LLM Agents to Manage and Utilize Memories via Reinforcement Learning</a></td>
+</tr>
+<tr>
+<td>8</td>
+<td>The SOTA tour, in axis-coordinates</td>
+<td>7 min</td>
+<td>Render leaderboard pareto plot</td>
+<td><a href="../papers/2601.02163-evermemos.html">EverMemOS: A Self-Organizing Memory Operating System for Structured Long-Horizon Reasoning</a>, <a href="../papers/2512.12818-hindsight.html">Hindsight is 20/20: Building Agent Memory that Retains, Recalls, and Reflects</a>, <a href="../papers/2601.06282-amory.html">Amory: Building Coherent Narrative-Driven Agent Memory through Agentic Reasoning</a>, <a href="../papers/2507.07957-mirix.html">MIRIX: Multi-Agent Memory System for LLM-Based Agents</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td>Open problems and the next episode</td>
+<td>4 min</td>
+<td>None — whiteboard</td>
+<td><a href="../concepts/belief-revision.html">Belief revision</a>, <a href="../concepts/time-aware-memory.html">Time-aware memory</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total: ~73 min.</strong> Cuttable to 55 by tightening Ch 5 to four substrates instead of six and skipping the GEPA live-run in Ch 7 (cut to pre-recorded clip).</p>
+<hr />
+<h2>Chapter-by-chapter notes</h2>
+<h3>0 — Cold open: the canonical fail (2 min)</h3>
+<p>The single tightest demonstration of why we're here. Two browser windows, two ChatGPT sessions, two days apart in the screen recording. Establish that this is a clean operational gap, not a debate.</p>
+<ul>
+<li><strong>Demo:</strong> Live screen capture. Session 1: "I'm allergic to penicillin." Session 2 next day, fresh chat: "What antibiotics should I avoid?" The model either refuses or guesses. Cut.</li>
+<li><strong>Voiceover beat:</strong> "This is the default. Every state-of-the-art deployed LLM forgets you the moment you close the tab. The thing we informally call memory is, behind the scenes, mostly retrieval — and as we'll see, retrieval and memory are not the same."</li>
+</ul>
+<p>No editorializing about the field. We're here to build, not litigate.</p>
+<hr />
+<h3>1 — What we mean by memory (operational defs) (6 min)</h3>
+<p>Set the vocabulary we'll use for the next hour. The vocabulary is CoALA's, lightly adapted. The point isn't to lecture the cog-psych framework, it's to make the rest of the video legible.</p>
+<ul>
+<li><strong>1.1</strong> The CoALA frame: working / episodic / semantic / procedural. One sentence each. Map onto current LLM stacks: context window / per-session log / weights or KG / tool routines and system prompts.</li>
+<li><strong>1.2</strong> The mapping is imperfect on purpose. Three specific places it breaks: (a) context windows are 6 orders of magnitude bigger than human working memory; (b) the model's weights blur semantic and procedural; (c) <strong>no consolidation loop exists by default</strong> — the missing piece.</li>
+<li><strong>1.3</strong> The operational definition we'll use for the rest of the episode: <em>persistent state across sessions that selectively retains and updates information about a user, environment, or task</em>. Each word load-bearing.</li>
+</ul>
+<p><strong>Papers:</strong> <a href="../papers/2309.02427-coala.html">Cognitive Architectures for Language Agents (CoALA)</a> (the cognitive architecture frame).</p>
+<p><strong>Novel angle:</strong> Most videos hand-wave the cog-arch mapping. We use CoALA's exact decomposition so that when we later show MIRIX as a "multi-agent episodic + procedural" system, the viewer has a slot for it. The cog-arch frame earns its place by making downstream taxonomies trivial.</p>
+<hr />
+<h3>2 — Why context isn't memory (mechanistic) (8 min)</h3>
+<p>The argument <em>"just make the context window bigger"</em> deserves a serious refutation, not a vibes-based one. Three mechanistic reasons + one cost demo.</p>
+<ul>
+<li><strong>2.1</strong> Long-context recall isn't flat. Cite the lost-in-the-middle finding and the more recent needle-in-haystack work. Show one curve.</li>
+<li><strong>2.2</strong> Cost scales linearly with state and is hit on <em>every</em> turn. Run the math live for a 50-turn-a-day user with 6 months of history.</li>
+<li><strong>2.3</strong> Context windows are single-tenant. Multi-user, multi-device, multi-agent — anything shared needs an external substrate.</li>
+<li><strong>2.4</strong> <strong>Demo:</strong> Plot turn cost in tokens vs session number on the LoCoMo conv-26 transcript. Cumulative cost curve. The curve is the picture that justifies the rest of the video.</li>
+</ul>
+<p><strong>Papers:</strong> <a href="../papers/2402.17753-locomo.html">Evaluating Very Long-Term Conversational Memory of LLM Agents</a>, <a href="../papers/2410.10813-longmemeval.html">LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory</a> (introduce the benchmarks we'll use throughout; one slide each, defer detail).</p>
+<p><strong>Novel angle:</strong> Most "why not just long context" debates are empirical. We frame it as three orthogonal failure modes: accuracy degradation, cost scaling, tenancy. The third is rarely discussed and is the one that actually matters for production.</p>
+<hr />
+<h3>3 — The naive baselines, profiled (9 min)</h3>
+<p>The two things every team tries first, and exactly where each breaks. We do not say "RAG is bad" — we show <em>which class of question</em> each baseline fails on.</p>
+<ul>
+<li><strong>3.1</strong> Baseline A: stuff-everything-in-context (oracle). We already paid for this in Ch 2. Now we show the score: ~71% on LoCoMo conv-26. Single-hop near-perfect; temporal questions at ~38%. The model has all the words and cannot reason across them.</li>
+<li><strong>3.2</strong> Baseline B: vector-search over the transcript at QA time. The Mem0-shaped pattern.</li>
+<li><strong>3.3</strong> <strong>Demo:</strong> A multi-hop failure trace. Print the top-5 retrieved chunks, highlight the gold chunk that wasn't retrieved (the "new job" sentence two sessions after the "moved cities" sentence). Show why semantic similarity is the wrong distance metric for multi-hop.</li>
+<li><strong>3.4</strong> Baseline C: schedule-based summarization. Better on multi-hop, worse on detail recall. Introduces the <em>staleness</em> failure mode that motivates Ch 6.</li>
+<li><strong>3.5</strong> <strong>Demo:</strong> A belief-revision failure on a summarized state. "Anna moved to Berlin (June)" → user later says "actually it was Munich" → summary still says Berlin → model still says Berlin. This is the canonical worked example we'll thread through the rest of the episode.</li>
+</ul>
+<p><strong>Papers:</strong> <a href="../papers/2504.19413-mem0.html">Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory</a> (their own paper reports ~40% extraction-failure rate, cite it).</p>
+<p><strong>Novel angle:</strong> Don't dunk on RAG. Profile it. Show the exact question class where it fails and why the embedding distribution makes that failure structural, not a tuning bug. We use real LoCoMo data so the viewer can rerun.</p>
+<hr />
+<h3>4 — The hidden design axes (9 min)</h3>
+<p>The single most useful chapter for a researcher. The field looks chaotic when you list systems. It clarifies when you decompose the design space into independent axes. Three axes. Four if you count the substrate.</p>
+<ul>
+<li><strong>4.1</strong> <strong>Axis 1 — write-time vs read-time compression.</strong> Where does the LLM cost land? Mem0, Mastra, EverMemOS, Amory, Zep, PIE pay at write time. Search-R1, RLM, naive RAG pay at read time. Auto-Dreamer pays <em>offline</em>, the third position.</li>
+<li><strong>4.2</strong> <strong>Axis 2 — bounded vs unbounded state.</strong> This is the axis NoReplay <a href="../concepts/noreplay-vs-retrieval.html">NoReplay vs retrieval-flavored memory</a> makes explicit. Almost every published "memory system" has unbounded state at QA time, which means they're partly testing retrieval. Show the Yang protocol cleanly.</li>
+<li><strong>4.3</strong> <strong>Axis 3 — single vs continuous time.</strong> Most systems treat memory as a flat set; a few (Zep, TiMem, TML) treat time as the spine. Foreshadows Ep 2.</li>
+<li><strong>4.4</strong> <strong>Axis 4 (orthogonal) — substrate.</strong> The data structure. Vector, tree, KG, log, commit-graph, FS. We do these in Ch 5.</li>
+<li><strong>4.5</strong> <strong>Demo:</strong> A 3-axis cube. Place 8 named systems as dots. The cube is the figure the viewer screenshots.</li>
+</ul>
+<p><strong>Concepts cited:</strong> <a href="../concepts/write-time-vs-read-time.html">Write-time vs read-time compression</a>, <a href="../concepts/noreplay-vs-retrieval.html">NoReplay vs retrieval-flavored memory</a>, <a href="../concepts/memory-budget-curves.html">Memory budget curves</a>, <a href="../concepts/time-aware-memory.html">Time-aware memory</a>.</p>
+<p><strong>Novel angle:</strong> Most public material lists substrates ("vector vs KG") or compares systems pairwise. The 3-axis decomposition is in nobody's YouTube video; we earned it from reading 27 papers and noticing that all the apparent disagreement reduces to position on these axes. This is the chapter people will cite the video for.</p>
+<hr />
+<h3>5 — The substrate zoo, re-derived (12 min)</h3>
+<p>Now that the axes exist, the substrate families fall out as engineering choices, not arbitrary buckets. Walk six. For each: (a) one-paragraph mechanism, (b) where it lands on the axes, (c) the named exemplar paper, (d) what it's good and bad at.</p>
+<ul>
+<li><strong>5.1 Flat vector store.</strong> Mem0. Cheap writes if pre-extracted; cheap reads via ANN. Great single-hop, structurally bad multi-hop and temporal.</li>
+<li><strong>5.2 Hierarchical summary tree.</strong> TiMem. Five temporal levels (turn → session → week → month → year). Stronger temporal, harder to invalidate locally.</li>
+<li><strong>5.3 Typed knowledge graph.</strong> Zep (bi-temporal — preview Ep 2), PIE. Multi-hop wins, but build cost is real.</li>
+<li><strong>5.4 Observation log + consolidator.</strong> Mastra-OM, Amory, Hindsight. The pattern that most resembles human episodic→semantic. Sets up Ch 6.</li>
+<li><strong>5.5 Renormalization-group memory.</strong> RGMem <a href="../papers/2510.16392-rgmem.html">RGMem: Renormalization Group-inspired Memory Evolution for Language Agents</a> — a beautiful physics-inspired pattern: coarse-grain stable patterns into higher-level memory blocks the way condensed-matter people coarse-grain spin lattices. Rarely covered. Worth four minutes for the elegance alone.</li>
+<li>
+<p><strong>5.6 Commit graph + filesystem.</strong> GitMem, Letta FS, Mesa FS. Memory as a versioned object with branches and merges. Underdeveloped substrate, but the right one for collaborative or multi-agent work.</p>
+</li>
+<li>
+<p><strong>Demo:</strong> A single belief — <em>"Anna moved to Berlin → Munich"</em> — stored six ways. Side-by-side panels. Same fact, six query paths. The figure that anchors substrate choice in your viewer's head for the rest of their career.</p>
+</li>
+</ul>
+<p><strong>Papers:</strong> <a href="../papers/2504.19413-mem0.html">Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory</a>, <a href="../papers/2601.02845-timem.html">TiMem: Temporal-Hierarchical Memory Consolidation for Long-Horizon Conversational Agents</a>, <a href="../papers/2501.13956-zep.html">Zep: A Temporal Knowledge Graph Architecture for Agent Memory</a>, <a href="../papers/2601.06282-amory.html">Amory: Building Coherent Narrative-Driven Agent Memory through Agentic Reasoning</a>, <a href="../papers/2512.12818-hindsight.html">Hindsight is 20/20: Building Agent Memory that Retains, Recalls, and Reflects</a>, <a href="../papers/2510.16392-rgmem.html">RGMem: Renormalization Group-inspired Memory Evolution for Language Agents</a>, <a href="../systems/gitmem.html">GitMem (internal)</a> (system page).</p>
+<p><strong>Novel angle:</strong> Most surveys list substrates without the connection back to axes. We derive each from the axis position. RGMem's renormalization-group framing is mentioned almost nowhere in public talks and is genuinely worth knowing — we give it real space.</p>
+<hr />
+<h3>6 — Sleep consolidation as the synthesis (8 min)</h3>
+<p>The pattern that resolves the write-time vs read-time tension by moving the expensive step off the user's path. The bio-motivated, operationally interesting third option.</p>
+<ul>
+<li><strong>6.1</strong> The two-system claim from cognitive neuroscience: fast encoder (hippocampus) + slow consolidator (cortex), bridged during sleep. The CLS literature. One slide of receipts, not a lecture.</li>
+<li><strong>6.2</strong> What that buys in an LLM stack: cheap writes (append), cheap reads (small fixed state), expensive batched consolidation in the gap. You can spend arbitrarily large compute offline if the user doesn't have to wait.</li>
+<li><strong>6.3</strong> The two cleanest research examples: <strong>SCM</strong> with algorithmic forgetting curves, and <strong>Auto-Dreamer</strong> with a CLS-inspired fast-slow split trained via GRPO.</li>
+<li><strong>6.4</strong> <strong>Demo:</strong> Write a 30-line consolidator prompt live. Run it on the conv-26 chunks. Show the structured-state output. Show the consolidator handling the belief-revision case from Ch 3 — "Anna moved to Munich, Berlin plan superseded" — propagating cleanly into the new state.</li>
+<li><strong>6.5</strong> Why this matters operationally. The cost-vs-performance pareto curve shifts; the latency-vs-quality pareto curve shifts. Both matter for shipping.</li>
+</ul>
+<p><strong>Papers:</strong> <a href="../papers/2605.20616-auto-dreamer.html">Auto-Dreamer: Learning Offline Memory Consolidation for Language Agents</a> (the canonical instance), <a href="../papers/2604.20943-scm-sleep.html">SCM: Sleep-Consolidated Memory with Algorithmic Forgetting for Large Language Models</a> (the forgetting-curve neighbor), <a href="../concepts/sleep-consolidation.html">Sleep consolidation</a> (the concept page).</p>
+<p><strong>Novel angle:</strong> Most public memory content stays at "RAG vs long-context." Sleep consolidation is the next-frontier idea most viewers haven't encountered. We earn it from first principles (the CLS argument), then show it running.</p>
+<hr />
+<h3>7 — Learning the consolidator (DSPy + GEPA) (8 min)</h3>
+<p>The most directly experimental chapter. The consolidator prompt is the right target for optimization because it lives offline (cost-tolerant) and has a clear outcome metric (downstream QA score). Two ways to learn it: prompt evolution and RL.</p>
+<ul>
+<li><strong>7.1</strong> Why the consolidator is the right thing to optimize. Argument from the design axes: writes are cheap, reads are cheap, the consolidator is where the LLM intelligence actually lives.</li>
+<li><strong>7.2</strong> Express the consolidator as a DSPy module. Show the signature on screen (~20 lines). The signature <em>is</em> the API contract between memory and the optimizer.</li>
+<li><strong>7.3</strong> <strong>Demo (the headline experiment of the episode):</strong> Run GEPA against the DSPy consolidator on conv-26. Live or replay. Show the baseline mean (60%), show the GEPA-evolved mean (80%), show the prompt diff between original and optimized. Watch the prompt evolve in front of the camera.</li>
+<li><strong>7.4</strong> The RL alternative: Memory-R1 and Auto-Dreamer train the consolidator with GRPO and outcome reward. 35× more rollouts than GEPA (citing the GEPA paper's own claim). Tradeoff: more compute, potentially more headroom.</li>
+<li><strong>7.5</strong> Where this lives in your stack today. A flag in your config that swaps consolidator versions. Talk through the engineering.</li>
+</ul>
+<p><strong>Papers:</strong> <a href="../papers/2507.19457-gepa.html">GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning</a>, <a href="../papers/2508.19828-memory-r1.html">Memory-R1: Enhancing LLM Agents to Manage and Utilize Memories via Reinforcement Learning</a>, <a href="../papers/2605.20616-auto-dreamer.html">Auto-Dreamer: Learning Offline Memory Consolidation for Language Agents</a>, <a href="../concepts/gepa-vs-grpo.html">GEPA vs GRPO</a> (concept page).</p>
+<p><strong>Novel angle:</strong> Live optimization of a memory component on camera is essentially absent from public content. This is the chapter that ties the whole video to a working repo. The on-screen +20pp delta is the visceral receipt that "the consolidator is the right target."</p>
+<hr />
+<h3>8 — The SOTA tour, in axis-coordinates (7 min)</h3>
+<p>Not a leaderboard. A <em>map.</em> For each major system, locate it on the axes from Ch 4 and the substrate from Ch 5. The viewer leaves with coordinates, not a ranking.</p>
+<ul>
+<li><strong>8.1</strong> <strong>EverMemOS</strong> — write-time, unbounded state, hierarchical with conflict resolution. 93.05% LoCoMo (as of recording). What its self-organizing layer actually does.</li>
+<li><strong>8.2</strong> <strong>Hindsight</strong> — write-time, observation log + reflective rewrite. 89.61%. The Backboard ablation result is genuinely interesting — we mention it as a one-line <em>"the simpler version of their own system is within noise of the full thing,"</em> without making it a polemic.</li>
+<li><strong>8.3</strong> <strong>Amory</strong> — narrative-driven write-time, observation-log substrate. 87.7%. The narrative-coherence loss is the interesting research contribution.</li>
+<li><strong>8.4</strong> <strong>MIRIX</strong> — multi-agent orchestration over typed memory. Six memory components, sub-agents that own them. 85.4%. The right thing to point at for Ep 2/3 (multi-agent memory is mostly unbuilt).</li>
+<li><strong>8.5</strong> <strong>Mastra OM</strong> — write-time, observation log + Reflector. 94.87% LongMemEval. We note its result honestly and flag that its write-time access pattern is different from oracle-context (foreshadows the NoReplay deep-dive episode).</li>
+<li><strong>8.6</strong> <strong>Demo:</strong> A pareto plot. X-axis: median tokens of state at QA time. Y-axis: LoCoMo overall. Each system as a dot. Color-coded by substrate family. This is the chart we link in the description.</li>
+</ul>
+<p><strong>Papers:</strong> <a href="../papers/2601.02163-evermemos.html">EverMemOS: A Self-Organizing Memory Operating System for Structured Long-Horizon Reasoning</a>, <a href="../papers/2512.12818-hindsight.html">Hindsight is 20/20: Building Agent Memory that Retains, Recalls, and Reflects</a>, <a href="../papers/2601.06282-amory.html">Amory: Building Coherent Narrative-Driven Agent Memory through Agentic Reasoning</a>, <a href="../papers/2507.07957-mirix.html">MIRIX: Multi-Agent Memory System for LLM-Based Agents</a> + mention of Mastra OM via the relevant tool/system page.</p>
+<p><strong>Novel angle:</strong> Plot in axis-coordinates instead of a flat leaderboard ranking. The viewer can predict where the next paper will land and what trade-off it'll make. This is the chapter that transitions the viewer from "consumer of the field" to "participant in the field."</p>
+<hr />
+<h3>9 — Open problems and the next episode (4 min)</h3>
+<p>End on what isn't solved. Three honest gaps; each is a paper waiting to be written.</p>
+<ul>
+<li><strong>9.1</strong> <strong>Belief revision.</strong> Cite <a href="../concepts/belief-revision.html">Belief revision</a>. The Anna-moved-to-Munich example we've been threading all episode. Even Zep's bi-temporal model requires the agent to detect the revision intent. No clean solution exists. Pointer to the paper-shaped opportunity.</li>
+<li><strong>9.2</strong> <strong>Continuous time perception.</strong> Cite <a href="../concepts/time-aware-memory.html">Time-aware memory</a>, <a href="../papers/2510.23853-temporally-blind.html">Your LLM Agents are Temporally Blind: The Misalignment Between Tool Use Decisions and Human Time Perception</a>, and <a href="../papers/20260511-thinkingmachines-interaction-models.html">Interaction Models: A Scalable Approach to Human-AI Collaboration</a>. The next-episode preview. <em>"Most current systems treat time as a sort key. As we'll see in Ep 2, that's nowhere near enough."</em></li>
+<li><strong>9.3</strong> <strong>Multi-agent shared memory.</strong> Almost nobody has built this. MIRIX is the closest production-shape, the multi-agent-delegation concept page is the conceptual frame.</li>
+<li><strong>9.4</strong> Reading list (8 items, paced for an end-card). Three benchmarks, three architectures, two concepts. All link to wiki pages.</li>
+</ul>
+<p><strong>Papers:</strong> <a href="../concepts/belief-revision.html">Belief revision</a>, <a href="../concepts/time-aware-memory.html">Time-aware memory</a>, <a href="../concepts/multi-agent-delegation.html">Multi-agent delegation</a>, <a href="../papers/2510.23853-temporally-blind.html">Your LLM Agents are Temporally Blind: The Misalignment Between Tool Use Decisions and Human Time Perception</a>, <a href="../papers/20260511-thinkingmachines-interaction-models.html">Interaction Models: A Scalable Approach to Human-AI Collaboration</a>.</p>
+<p><strong>Novel angle:</strong> Don't survey open problems generically. Each one is connected back to a specific demo we ran in the episode that exposes the gap. Belief revision motivated by our Ch 3 + Ch 6 example. Time perception motivated by the temporal sub-score on LoCoMo. Multi-agent motivated by the MIRIX architecture we just located in axis-coordinates.</p>
+<hr />
+<h2>Demos and experiments — master list</h2>
+<p>Eight experiments, eight figures. All scripted, all from the <code>mempol</code> and <code>personal-intelligence-system/research</code> repos. Each can be pre-recorded if live shooting is too brittle.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Demo</th>
+<th>Pre-record?</th>
+<th>Approx. wall-clock</th>
+<th>Repo location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>ChatGPT forgets across sessions</td>
+<td>live</td>
+<td>90s</td>
+<td>screen recording</td>
+</tr>
+<tr>
+<td>2</td>
+<td>LoCoMo conv-26 cumulative cost curve</td>
+<td>replay</td>
+<td>30s</td>
+<td>new util <code>scripts/footnote_for_video/cost_curve.py</code> (write)</td>
+</tr>
+<tr>
+<td>2-eval</td>
+<td>Full-context oracle on conv-26 → 71%</td>
+<td>replay</td>
+<td>60s</td>
+<td><code>mempol.run_full_context_baseline</code></td>
+</tr>
+<tr>
+<td>3-A</td>
+<td>Multi-hop RAG failure trace</td>
+<td>replay</td>
+<td>60s</td>
+<td><code>mempol.demo.rag_failure</code> (write)</td>
+</tr>
+<tr>
+<td>3-B</td>
+<td>Belief-revision in summarized state</td>
+<td>replay</td>
+<td>45s</td>
+<td><code>mempol.demo.summary_staleness</code> (write)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>One fact, six storage forms</td>
+<td>static</td>
+<td>n/a</td>
+<td>Excalidraw + code snippets</td>
+</tr>
+<tr>
+<td>6</td>
+<td>30-line consolidator on conv-26</td>
+<td>replay</td>
+<td>90s</td>
+<td><code>mempol.demo.consolidator_minimal</code> (write)</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Live GEPA optimization, +20pp</strong></td>
+<td>replay</td>
+<td>2 min</td>
+<td>already exists: <code>scripts/run_gepa_consolidator.py</code> + <code>scripts/gepa_live.py</code> dashboard</td>
+</tr>
+<tr>
+<td>8</td>
+<td>SOTA pareto plot, axis-coordinates</td>
+<td>replay</td>
+<td>30s</td>
+<td><code>paper_leaderboard/render_pareto.py</code> (write)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status:</strong> demo 7 is already runnable (the smoke landed +20pp on conv-26). Demos 2-eval, 3-A exist as scripts (need light wrapping for video capture). Demos 2, 3-B, 6, 8 are new — 1–2 hours of code each. Demo 5 is design work in Excalidraw.</p>
+<hr />
+<h2>Cited material from the wiki — episode 1</h2>
+<p>Direct references, in citation order. Every one links into <code>research/wiki/</code> for the viewer that wants the receipts.</p>
+<p><strong>Papers (16):</strong>
+<a href="../papers/2402.17753-locomo.html">Evaluating Very Long-Term Conversational Memory of LLM Agents</a> · <a href="../papers/2410.10813-longmemeval.html">LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory</a> · <a href="../papers/2309.02427-coala.html">Cognitive Architectures for Language Agents (CoALA)</a> · <a href="../papers/2504.19413-mem0.html">Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory</a> · <a href="../papers/2501.13956-zep.html">Zep: A Temporal Knowledge Graph Architecture for Agent Memory</a> · <a href="../papers/2601.02845-timem.html">TiMem: Temporal-Hierarchical Memory Consolidation for Long-Horizon Conversational Agents</a> · <a href="../papers/2604.20943-scm-sleep.html">SCM: Sleep-Consolidated Memory with Algorithmic Forgetting for Large Language Models</a> · <a href="../papers/2605.20616-auto-dreamer.html">Auto-Dreamer: Learning Offline Memory Consolidation for Language Agents</a> · <a href="../papers/2510.16392-rgmem.html">RGMem: Renormalization Group-inspired Memory Evolution for Language Agents</a> · <a href="../papers/2601.06282-amory.html">Amory: Building Coherent Narrative-Driven Agent Memory through Agentic Reasoning</a> · <a href="../papers/2512.12818-hindsight.html">Hindsight is 20/20: Building Agent Memory that Retains, Recalls, and Reflects</a> · <a href="../papers/2601.02163-evermemos.html">EverMemOS: A Self-Organizing Memory Operating System for Structured Long-Horizon Reasoning</a> · <a href="../papers/2507.07957-mirix.html">MIRIX: Multi-Agent Memory System for LLM-Based Agents</a> · <a href="../papers/2507.19457-gepa.html">GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning</a> · <a href="../papers/2508.19828-memory-r1.html">Memory-R1: Enhancing LLM Agents to Manage and Utilize Memories via Reinforcement Learning</a> · <a href="../papers/2510.23853-temporally-blind.html">Your LLM Agents are Temporally Blind: The Misalignment Between Tool Use Decisions and Human Time Perception</a></p>
+<p><strong>Concepts (7):</strong>
+<a href="../concepts/write-time-vs-read-time.html">Write-time vs read-time compression</a> · <a href="../concepts/noreplay-vs-retrieval.html">NoReplay vs retrieval-flavored memory</a> · <a href="../concepts/memory-budget-curves.html">Memory budget curves</a> · <a href="../concepts/substrate-design-space.html">Substrate design space</a> · <a href="../concepts/sleep-consolidation.html">Sleep consolidation</a> · <a href="../concepts/gepa-vs-grpo.html">GEPA vs GRPO</a> · <a href="../concepts/time-aware-memory.html">Time-aware memory</a> · <a href="../concepts/belief-revision.html">Belief revision</a></p>
+<p><strong>Systems (5):</strong>
+<a href="../systems/mem0.html">Mem0</a> · <a href="../systems/zep.html">Zep / Graphiti</a> · <a href="../systems/mastra-om.html">Mastra Observational Memory</a> · <a href="../systems/gitmem.html">GitMem (internal)</a> · <a href="../systems/evermemos.html">EverMemOS</a> · <a href="../systems/auto-dreamer.html">Auto-Dreamer</a></p>
+<hr />
+<h2>Tone reference (what we are emulating; what we are not)</h2>
+<p>We are emulating:
+- <strong>Sasha Rush, "The Annotated Transformer"</strong> — code interleaved with paper quotes, every concept defended against the paper.
+- <strong>Lilian Weng's blog notes</strong> — dense, opinionated, well-cited, never hot-take.
+- <strong>Distill.pub posts</strong> — interactive demos that drive the writing.
+- <strong>Karpathy's zero-to-hero series</strong> — build-from-zero pacing, cite SOTA in one matter-of-fact sentence.</p>
+<p>We are not emulating:
+- "AI explained" YouTube channels (too breathless, too survey-y).
+- "10 things wrong with X" Twitter-style essays (too polemical).
+- Academic survey papers (too taxonomy-first, demo-deficient).</p>
+<p>In voice terms: think <em>senior PhD student walking a junior PhD student through their lit review</em>. Knows the field cold, has opinions, but is teaching, not selling.</p>
+<hr />
+<h2>What still needs to be decided before filling out</h2>
+<p>Three open calls — answer these and I'll write the body:</p>
+<ul>
+<li><strong>Q1 — Length target.</strong> 55, 70, or 90 min final cut? Each shapes the per-chapter compression.</li>
+<li><strong>Q2 — Live or replayed demos?</strong> Live is more engaging, replay is safer. I'd recommend live for Demos 0 and 7, replay for the rest.</li>
+<li><strong>Q3 — Reading list at end.</strong> 8 items as proposed, or a longer 15-item version? Longer reading list is more researcher-y but eats screen time.</li>
+</ul>
+<p>Tell me on those three and I start writing the body section by section, starting with Ch 0–2 (which I'll send for tone-check before continuing).</p>
+
+</body>
+</html>

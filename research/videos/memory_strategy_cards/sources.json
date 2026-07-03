@@ -1,0 +1,98 @@
+[
+  {
+    "key": "RAG",
+    "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+    "url": "https://arxiv.org/abs/2005.11401",
+    "note": "Canonical RAG paper."
+  },
+  {
+    "key": "Zep / Graphiti",
+    "title": "Zep: A Temporal Knowledge Graph Architecture for Agent Memory",
+    "url": "https://arxiv.org/abs/2501.13956",
+    "note": "Temporal knowledge graph agent memory."
+  },
+  {
+    "key": "Graphiti repo",
+    "title": "Graphiti",
+    "url": "https://github.com/getzep/graphiti",
+    "note": "Open source temporal graph memory."
+  },
+  {
+    "key": "Mastra OM",
+    "title": "Observational Memory",
+    "url": "https://mastra.ai/docs/memory/observational-memory",
+    "note": "Observer plus Reflector memory system."
+  },
+  {
+    "key": "Mastra workshop",
+    "title": "Mastra Observational Memory Workshop",
+    "url": "https://github.com/mastra-ai/mastra-observational-memory-workshop",
+    "note": "Implementation details and thresholds."
+  },
+  {
+    "key": "Event Sourcing",
+    "title": "Event Sourcing",
+    "url": "https://martinfowler.com/eaaDev/EventSourcing.html",
+    "note": "State reconstruction from event logs."
+  },
+  {
+    "key": "Auto-Dreamer",
+    "title": "Auto-Dreamer: Learning Offline Memory Consolidation for Language Agents",
+    "url": "https://arxiv.org/abs/2605.20616",
+    "note": "Learned offline consolidation."
+  },
+  {
+    "key": "RLM",
+    "title": "Recursive Language Models as Memory Systems",
+    "url": "https://raw.works/recursive-language-models-as-memory-systems/",
+    "note": "Read-time recursive context inspection."
+  },
+  {
+    "key": "LongMemEval RLM",
+    "title": "longmemeval-rlm",
+    "url": "https://github.com/rawwerks/longmemeval-rlm",
+    "note": "RLM LongMemEval experiments."
+  },
+  {
+    "key": "Memory-R1",
+    "title": "Memory-R1: Enhancing Large Language Model Agents to Manage and Utilize Memories via Reinforcement Learning",
+    "url": "https://arxiv.org/abs/2508.19828",
+    "note": "RL memory management."
+  },
+  {
+    "key": "H-Net",
+    "title": "H-Net: Dynamic Chunking / Hierarchical Neural Tokenization",
+    "url": "https://arxiv.org/abs/2507.07955",
+    "note": "Learned boundaries."
+  },
+  {
+    "key": "H-Net repo",
+    "title": "H-Net repo",
+    "url": "https://github.com/goombalab/hnet",
+    "note": "Reference implementation."
+  },
+  {
+    "key": "Cartridges",
+    "title": "Cartridges: Lightweight and general-purpose long context representations via self-study",
+    "url": "https://arxiv.org/abs/2506.06266",
+    "note": "Corpus-specific trained KV cache."
+  },
+  {
+    "key": "Cartridges blog",
+    "title": "Cartridges: Storing long contexts in tiny caches with self-study",
+    "url": "https://hazyresearch.stanford.edu/blog/2025-06-08-cartridges",
+    "note": "Accessible explanation and headline results."
+  },
+  {
+    "key": "Cartridges repo",
+    "title": "HazyResearch/cartridges",
+    "url": "https://github.com/HazyResearch/cartridges",
+    "note": "Code for training cartridges."
+  },
+  {
+    "key": "Titans",
+    "title": "Titans: Learning to Memorize at Test Time",
+    "url": "https://arxiv.org/abs/2501.00663",
+    "note": "Neural long-term memory module."
+  }
+]
