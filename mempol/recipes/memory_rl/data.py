@@ -1,4 +1,4 @@
-"""LoCoMo → MemoryDatum (analog of SearchR1Datum from tinker-cookbook).
+"""Benchmark rows → MemoryDatum (analog of SearchR1Datum from tinker-cookbook).
 
 For multi-source training we accept LoCoMo + LongMemEval + (optional) MSC + WildChat
 synthetic. Each MemoryDatum is one (conversation, question, gold_answer) triple.
@@ -14,8 +14,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterator, Literal, TypedDict
 
-# Reuse our LoCoMo loader — already typed & tested.
 from mempol.data.locomo import Conversation, QA, load as load_locomo
+from mempol.data.longmemeval import load as load_longmemeval
 from mempol.eval.runner import conv_to_units
 
 
@@ -132,8 +132,13 @@ def locomo_to_memory_data(
     return to_data(convs[:n_train]), to_data(convs[n_train:])
 
 
-def longmemeval_to_memory_data(jsonl_path: Path) -> list[MemoryDatum]:
-    """Parser for LongMemEval. Caller passes a path; we don't bundle the data."""
+def longmemeval_jsonl_to_memory_data(jsonl_path: Path) -> list[MemoryDatum]:
+    """Compatibility parser for raw LongMemEval JSONL files.
+
+    Prefer `longmemeval_to_memory_data()` below for training: it goes through
+    `mempol.data.longmemeval.load`, which preserves session dates and chunking in
+    the same shape as LoCoMo.
+    """
     if not jsonl_path.exists():
         return []
     out = []
@@ -158,13 +163,81 @@ def longmemeval_to_memory_data(jsonl_path: Path) -> list[MemoryDatum]:
         out.append({
             "question": row["question"],
             "gold_answer": str(row.get("answer", "")),
-            "category": str(row.get("category", "single-hop")),
+            "category": str(row.get("question_type") or row.get("category") or "single-hop"),
             "data_source": "longmemeval",
-            "sample_id": str(row.get("qid", "?")),
-            "qid": str(row.get("qid", "?")),
+            "sample_id": str(row.get("question_id") or row.get("qid", "?")),
+            "qid": str(row.get("question_id") or row.get("qid", "?")),
             "conversation_units": units,
         })
     return out
+
+
+def _conv_qas_to_memory_data(
+    conv_qas: list[tuple[Conversation, list[QA]]],
+    data_source: str,
+) -> list[MemoryDatum]:
+    out: list[MemoryDatum] = []
+    for conv, qas in conv_qas:
+        units = _conv_to_serializable_units(conv)
+        for qa in qas:
+            out.append({
+                "question": qa.question,
+                "gold_answer": qa.answer,
+                "category": qa.category_name,
+                "data_source": data_source,
+                "sample_id": conv.sample_id,
+                "qid": qa.qid,
+                "conversation_units": units,
+            })
+    return out
+
+
+def _balanced_prefix(
+    conv_qas: list[tuple[Conversation, list[QA]]],
+    per_category: int,
+) -> list[tuple[Conversation, list[QA]]]:
+    if per_category <= 0:
+        return conv_qas
+    counts: dict[str, int] = {}
+    kept: list[tuple[Conversation, list[QA]]] = []
+    for conv, qas in conv_qas:
+        category = qas[0].category_name if qas else "unknown"
+        if counts.get(category, 0) >= per_category:
+            continue
+        kept.append((conv, qas))
+        counts[category] = counts.get(category, 0) + 1
+    return kept
+
+
+def longmemeval_to_memory_data(
+    variant: str = "longmemeval_s",
+    n_rows: int | None = None,
+    train_frac: float = 0.8,
+    seed: int = 0,
+    per_category: int = 0,
+    download: bool = True,
+) -> tuple[list[MemoryDatum], list[MemoryDatum]]:
+    """Split LongMemEval at row level for read-policy RL training.
+
+    Each LongMemEval row has one question and its own haystack sessions. We treat
+    one row as one environment knowledge base, then split rows into train/eval.
+    `per_category` is the training/eval equivalent of the matrix harness' balanced
+    sampling knob.
+    """
+    load_n = None if per_category > 0 else n_rows
+    rows = load_longmemeval(variant=variant, n_convs=load_n, download=download)
+    rows = _balanced_prefix(rows, per_category=per_category)
+    if n_rows is not None and n_rows > 0:
+        rows = rows[:n_rows]
+    rng = random.Random(seed)
+    rng.shuffle(rows)
+    n_train = max(1, int(len(rows) * train_frac)) if rows else 0
+    train_rows = rows[:n_train]
+    eval_rows = rows[n_train:]
+    return (
+        _conv_qas_to_memory_data(train_rows, data_source=variant),
+        _conv_qas_to_memory_data(eval_rows, data_source=variant),
+    )
 
 
 def mix_sources(

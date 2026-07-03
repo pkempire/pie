@@ -53,7 +53,7 @@ def main():
     print(f"  ingest done in {time.time()-t0:.1f}s")
 
     qas_to_run = qas if args.max_qs == 0 else qas[args.start_q:args.start_q + args.max_qs]
-    policy = _POLICIES[args.policy]()
+    policy = _POLICIES[args.policy](do_reformulate=False, do_route=False, do_expand=True)
     print(f"\n  evaluating {policy.name} on {len(qas_to_run)} qs…")
 
     traces_path = out_dir / f"traces_q{args.start_q}-{args.start_q + len(qas_to_run)}.jsonl"

@@ -98,27 +98,115 @@ class MemoryTool:
         """Filter the last hit set.
 
         Args:
-            predicate: 'session_lt' | 'session_gt' | 'session_eq' | 'speaker_eq'
-            value: int for session_*, str for speaker_eq
+            predicate: one of:
+              session_lt, session_gt, session_eq    — value: int (session number)
+              speaker_eq                             — value: str ("Caroline" / "Melanie" / etc.)
+              date_lt, date_gt                       — value: ISO date "YYYY-MM-DD"
+              date_between                           — value: "YYYY-MM-DD..YYYY-MM-DD"
+              type_eq                                — value: str (KG entity type, e.g. "person", "event")
+              keyword_in                             — value: str (substring in chunk text)
+              keyword_not_in                         — value: str (negation)
+            value: see per-predicate above
         """
         if not self.last_hits:
             return simple_tool_result(json.dumps({"note": "nothing to filter", "hits": []}))
+
+        # Helper for date predicates: parse from session_date or timestamp metadata.
+        def _ts(h: Hit) -> float | None:
+            m = h.unit.metadata
+            if "timestamp" in m and m["timestamp"] is not None:
+                try:
+                    return float(m["timestamp"])
+                except (TypeError, ValueError):
+                    pass
+            sd = m.get("session_date") or ""
+            # Best-effort parse: "1:56 pm on 8 May, 2023" or "2023-05-08"
+            import re as _re, time as _time
+            iso = _re.search(r"\d{4}-\d{2}-\d{2}", sd)
+            if iso:
+                try:
+                    return _time.mktime(_time.strptime(iso.group(), "%Y-%m-%d"))
+                except ValueError:
+                    pass
+            human = _re.search(r"(\d{1,2})\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*[,]?\s+(\d{4})", sd)
+            if human:
+                day, mon, year = human.group(1), human.group(2), human.group(3)
+                try:
+                    return _time.mktime(_time.strptime(f"{day} {mon} {year}", "%d %b %Y"))
+                except ValueError:
+                    pass
+            return None
+
+        def _parse_iso(s: str) -> float | None:
+            import time as _time
+            try:
+                return _time.mktime(_time.strptime(s.strip(), "%Y-%m-%d"))
+            except (ValueError, TypeError):
+                return None
+
         kept: list[Hit] = []
         for h in self.last_hits:
             m = h.unit.metadata
             keep = True
-            if predicate == "session_lt":
-                keep = (m.get("session", 0) < int(value))
-            elif predicate == "session_gt":
-                keep = (m.get("session", 0) > int(value))
-            elif predicate == "session_eq":
-                keep = (m.get("session", 0) == int(value))
-            elif predicate == "speaker_eq":
-                keep = (str(m.get("speaker", "")).lower() == str(value).lower())
+            try:
+                if predicate == "session_lt":
+                    keep = (m.get("session", 0) < int(value))
+                elif predicate == "session_gt":
+                    keep = (m.get("session", 0) > int(value))
+                elif predicate == "session_eq":
+                    keep = (m.get("session", 0) == int(value))
+                elif predicate == "speaker_eq":
+                    keep = (str(m.get("speaker", "")).lower() == str(value).lower())
+                elif predicate == "date_lt":
+                    ts, cutoff = _ts(h), _parse_iso(str(value))
+                    keep = (ts is not None and cutoff is not None and ts < cutoff)
+                elif predicate == "date_gt":
+                    ts, cutoff = _ts(h), _parse_iso(str(value))
+                    keep = (ts is not None and cutoff is not None and ts > cutoff)
+                elif predicate == "date_between":
+                    parts = str(value).split("..")
+                    if len(parts) == 2:
+                        lo, hi = _parse_iso(parts[0]), _parse_iso(parts[1])
+                        ts = _ts(h)
+                        keep = (ts is not None and lo is not None and hi is not None
+                                and lo <= ts <= hi)
+                    else:
+                        keep = False
+                elif predicate == "type_eq":
+                    keep = (str(m.get("type", "")).lower() == str(value).lower())
+                elif predicate == "keyword_in":
+                    keep = (str(value).lower() in (h.unit.text or "").lower())
+                elif predicate == "keyword_not_in":
+                    keep = (str(value).lower() not in (h.unit.text or "").lower())
+                else:
+                    return simple_tool_result(json.dumps({
+                        "error": f"unknown predicate: {predicate!r}",
+                        "valid": ["session_lt", "session_gt", "session_eq",
+                                   "speaker_eq", "date_lt", "date_gt",
+                                   "date_between", "type_eq",
+                                   "keyword_in", "keyword_not_in"],
+                    }))
+            except (TypeError, ValueError) as e:
+                return simple_tool_result(json.dumps({
+                    "error": f"filter {predicate}={value!r} failed: {e}",
+                }))
             if keep:
                 kept.append(h)
         self.last_hits = kept
-        return simple_tool_result(_format_observation(kept, note=f"filter {predicate}={value} kept {len(kept)}"))
+        return simple_tool_result(_format_observation(
+            kept, note=f"filter {predicate}={value} kept {len(kept)}"))
+
+    # ----- tool 5: top_n (truncate hit set) -----
+    @tool
+    def memory_top_n(self, n: int) -> ToolResult:
+        """Truncate the current hit set to the top-N by current order.
+
+        Useful after rerank to commit to a small set before answering.
+        """
+        n = max(1, min(int(n), 50))
+        self.last_hits = self.last_hits[:n]
+        return simple_tool_result(_format_observation(
+            self.last_hits, note=f"truncated to top-{n}"))
 
     # ----- tool 4: rerank -----
     @tool

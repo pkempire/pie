@@ -61,7 +61,12 @@ from mempol.recipes.memory_rl.tinker_compat import build_agent_tool_env
 from mempol.backends.flat import FlatBackend
 from mempol.backends.base import Backend, Unit
 
-from mempol.recipes.memory_rl.data import MemoryDatum, locomo_to_memory_data
+from mempol.recipes.memory_rl.data import (
+    MemoryDatum,
+    locomo_to_memory_data,
+    longmemeval_to_memory_data,
+    mix_sources,
+)
 from mempol.recipes.memory_rl.tools import MemoryTool
 from mempol.recipes.memory_rl.reward import JudgeReward
 
@@ -76,8 +81,15 @@ MEMORY_TASK_INSTRUCTIONS = """You are an expert assistant who answers questions 
 TOOLS
   memory_search(query, k=10, source="hybrid")  — search chunks. source ∈ {bm25, dense, hybrid}.
   memory_expand(seed_uids, k_per=2)            — pull adjacent chunks from the same session.
-  memory_filter(predicate, value)              — filter current hits. predicate ∈ {session_lt, session_gt, session_eq, speaker_eq}.
+  memory_filter(predicate, value)              — filter current hits. predicates:
+      session_lt|session_gt|session_eq, value=int       — by session number
+      speaker_eq, value=str                              — by speaker name
+      date_lt|date_gt, value="YYYY-MM-DD"                — by absolute date
+      date_between, value="YYYY-MM-DD..YYYY-MM-DD"       — by date range
+      type_eq, value=str                                 — by entity type (KG only)
+      keyword_in|keyword_not_in, value=str               — substring in text
   memory_rerank(strategy, query)               — reorder. strategy ∈ {dense, session_desc, session_asc}.
+  memory_top_n(n)                              — truncate to top-N (use after rerank).
 
 HOW TO SOLVE
 1. Read the question carefully. Note any temporal cues ("yesterday", "last week", "in May").
@@ -113,6 +125,7 @@ def _initial_messages(
         memory_tool.memory_expand.to_spec(),  # type: ignore[attr-defined]
         memory_tool.memory_filter.to_spec(),  # type: ignore[attr-defined]
         memory_tool.memory_rerank.to_spec(),  # type: ignore[attr-defined]
+        memory_tool.memory_top_n.to_spec(),  # type: ignore[attr-defined]
     ]
     prefix = renderer.create_conversation_prefix_with_tools(
         tools=tool_schemas, system_prompt=MEMORY_TASK_INSTRUCTIONS
@@ -169,6 +182,7 @@ class MemoryEnvGroupBuilder(EnvGroupBuilder):
                     mtool.memory_expand,
                     mtool.memory_filter,
                     mtool.memory_rerank,
+                    mtool.memory_top_n,
                 ],
                 initial_messages=initial_messages,
                 reward_fn=reward_fn,
@@ -204,7 +218,10 @@ class MemoryRLDataset(RLDataset):
 class MemoryRLDatasetBuilder(RLDatasetBuilder):
     """Top-level builder Tinker calls. Returns (train_dataset, eval_dataset)."""
     model_name_for_tokenizer: str
+    dataset: str = "locomo"  # locomo | longmemeval_s | longmemeval_oracle | mixed
     n_convs: int = 8
+    lme_rows: int = 120
+    lme_per_category: int = 0
     train_frac: float = 0.8
     batch_size: int = 16
     group_size: int = 8
@@ -215,9 +232,45 @@ class MemoryRLDatasetBuilder(RLDatasetBuilder):
     seed: int = 0
 
     async def __call__(self) -> tuple[RLDataset, RLDataset | None]:
-        train_data, eval_data = locomo_to_memory_data(
-            n_convs=self.n_convs, train_frac=self.train_frac, seed=self.seed,
-        )
+        if self.dataset == "locomo":
+            train_data, eval_data = locomo_to_memory_data(
+                n_convs=self.n_convs,
+                train_frac=self.train_frac,
+                seed=self.seed,
+            )
+        elif self.dataset in {"longmemeval", "longmemeval_s", "longmemeval_oracle", "longmemeval_m"}:
+            variant = "longmemeval_s" if self.dataset == "longmemeval" else self.dataset
+            train_data, eval_data = longmemeval_to_memory_data(
+                variant=variant,
+                n_rows=None if self.lme_rows <= 0 else self.lme_rows,
+                train_frac=self.train_frac,
+                seed=self.seed,
+                per_category=self.lme_per_category,
+            )
+        elif self.dataset == "mixed":
+            loc_train, loc_eval = locomo_to_memory_data(
+                n_convs=self.n_convs,
+                train_frac=self.train_frac,
+                seed=self.seed,
+            )
+            lme_train, lme_eval = longmemeval_to_memory_data(
+                variant="longmemeval_s",
+                n_rows=None if self.lme_rows <= 0 else self.lme_rows,
+                train_frac=self.train_frac,
+                seed=self.seed,
+                per_category=self.lme_per_category,
+            )
+            train_data = mix_sources(
+                {"locomo": loc_train, "longmemeval_s": lme_train},
+                weights={"locomo": 1.0, "longmemeval_s": 1.0},
+                seed=self.seed,
+            )
+            eval_data = loc_eval + lme_eval
+        else:
+            raise ValueError(
+                "dataset must be one of: locomo, longmemeval, longmemeval_s, "
+                "longmemeval_oracle, longmemeval_m, mixed"
+            )
         rng = random.Random(self.seed)
         rng.shuffle(train_data)
 

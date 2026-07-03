@@ -87,6 +87,8 @@ def chat(
         # Strip any sampler params the user might have passed — gpt-5/o-series reject them
         for bad in ("temperature", "top_p", "presence_penalty", "frequency_penalty"):
             kw.pop(bad, None)
+        if "max_tokens" in kw and "max_completion_tokens" not in kw:
+            kw["max_completion_tokens"] = kw.pop("max_tokens")
     if json_mode:
         kw["response_format"] = {"type": "json_object"}
     for attempt in range(3):

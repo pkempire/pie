@@ -63,7 +63,7 @@ def run(
 
     # 3. Eval
     qas_to_run = qas if max_qs is None else qas[:max_qs]
-    policy = _POLICIES[policy_name]()
+    policy = _POLICIES[args.policy](do_reformulate=False, do_route=False, do_expand=True)
     traces_path = out_dir / "traces.jsonl"
     print(f"\n  evaluating {policy.name} on {len(qas_to_run)}/{len(qas)} qs…")
 

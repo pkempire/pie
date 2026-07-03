@@ -13,6 +13,8 @@ from ..data.locomo import Conversation, QA, load
 from ..policies.base import ReadPolicy
 from ..policies.v0_naive import NaivePolicy
 from ..policies.v1_heuristic import HeuristicPolicy
+from ..policies.rlm_temporal import TemporalRLMPolicy
+from ..policies.temporal_ground import TemporalGroundPolicy
 from .judge import judge
 from .metrics import Result, summarise
 
@@ -51,6 +53,7 @@ def run(
     n_convs: int = 1,
     max_qs_per_conv: int | None = None,
     run_name: str = "smoke",
+    categories: set[int] | None = None,
 ) -> dict:
     convs = load(n_convs=n_convs)
     out_dir = config.RESULTS_DIR / run_name
@@ -63,6 +66,8 @@ def run(
         for ci, (conv, qas) in enumerate(convs):
             backend = backend_factory()
             backend.ingest(conv_to_units(conv))
+            if categories:
+                qas = [qa for qa in qas if qa.category in categories]
             qas_to_run = qas if max_qs_per_conv is None else qas[:max_qs_per_conv]
             print(f"[conv {ci+1}/{len(convs)}] {conv.sample_id}: ingested {len(conv.turns)} turns, running {len(qas_to_run)} qs")
             for qi, qa in enumerate(qas_to_run):
@@ -111,7 +116,12 @@ def run(
 
 
 _BACKENDS = {"flat": FlatBackend}
-_POLICIES = {"v0_naive": NaivePolicy, "v1_heuristic": HeuristicPolicy}
+_POLICIES = {
+    "v0_naive": NaivePolicy,
+    "v1_heuristic": HeuristicPolicy,
+    "rlm_temporal": TemporalRLMPolicy,
+    "temporal_ground": TemporalGroundPolicy,
+}
 
 
 def main():
@@ -122,14 +132,17 @@ def main():
     ap.add_argument("--n-convs", type=int, default=1)
     ap.add_argument("--max-qs", type=int, default=20, help="0 = all")
     ap.add_argument("--run-name", default="smoke")
+    ap.add_argument("--categories", default="", help="comma-separated LoCoMo category ids, e.g. '2' for temporal only")
     args = ap.parse_args()
     max_qs = None if args.max_qs == 0 else args.max_qs
+    categories = {int(c) for c in args.categories.split(",") if c.strip()} or None
     run(
         backend_factory=_BACKENDS[args.backend],
         policy=_POLICIES[args.policy](),
         n_convs=args.n_convs,
         max_qs_per_conv=max_qs,
         run_name=args.run_name,
+        categories=categories,
     )
 
 

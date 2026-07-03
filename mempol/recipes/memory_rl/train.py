@@ -1,4 +1,4 @@
-"""CLI for mempol read-policy RL training (Phase A) on LoCoMo.
+"""CLI for mempol read-policy RL training (Phase A).
 
 Mirrors `tinker_cookbook/recipes/search_tool/train.py` exactly: flat CLI args,
 constructed dataset_builder + train.Config inside cli_main. Args go via
@@ -19,6 +19,12 @@ Usage examples:
         learning_rate=4e-5 lora_rank=32 \\
         log_path=/tmp/mempol/phaseA_v1 \\
         wandb_project=mempol wandb_name=phaseA_v1
+
+    # LongMemEval read-policy training, balanced across categories
+    python -m tinker_cookbook.recipes.memory_rl.train \\
+        dataset=longmemeval_s lme_per_category=20 batch_size=4 group_size=8 \\
+        max_turns=6 learning_rate=4e-5 lora_rank=32 \\
+        log_path=/tmp/mempol/phaseA_lme_s
 """
 from __future__ import annotations
 import asyncio
@@ -47,8 +53,11 @@ class CLIConfig:
     eval_every: int = 0                   # 0 = no periodic eval (smoke runs)
     max_steps: int | None = None          # cap GRPO steps (None = full corpus)
 
-    # ── Dataset (LoCoMo) ──
+    # ── Dataset ──
+    dataset: str = "locomo"                 # locomo | longmemeval_s | longmemeval_oracle | mixed
     n_convs: int = 8                      # how many LoCoMo convs (max 10)
+    lme_rows: int = 120                   # 0 = all LongMemEval rows
+    lme_per_category: int = 0             # balanced LongMemEval prefix; overrides lme_rows loading
     train_frac: float = 0.8               # 8 train / 2 eval at default
     group_size: int = 8                   # G — rollouts per question for GRPO
     max_turns: int = 6                    # max op steps per episode before forced stop
@@ -69,7 +78,10 @@ async def cli_main(cfg: CLIConfig) -> None:
     builder = MemoryRLDatasetBuilder(
         model_name_for_tokenizer=cfg.model_name,
         renderer_name=renderer_name,
+        dataset=cfg.dataset,
         n_convs=cfg.n_convs,
+        lme_rows=cfg.lme_rows,
+        lme_per_category=cfg.lme_per_category,
         train_frac=cfg.train_frac,
         batch_size=cfg.batch_size,
         group_size=cfg.group_size,

@@ -96,6 +96,8 @@ class FlatBackend(Backend):
         self._emb: np.ndarray | None = None
 
     def ingest(self, units: list[Unit]) -> None:
+        if not units:
+            return
         for u in units:
             self._uid_to_idx[u.uid] = len(self.units)
             self.units.append(u)

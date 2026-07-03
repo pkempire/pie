@@ -1,8 +1,8 @@
-"""MastraBackend — Observational Memory (Observer + Reflector).
+"""Mastra-inspired Observational Memory backend (Observer + Reflector).
 
-Faithful reimplementation of Mastra's Observational Memory as documented at
-https://mastra.ai/docs/memory/observational-memory and
-https://mastra.ai/research/observational-memory (94.87% LongMemEval, gpt-5-mini).
+This is a Python baseline inspired by Mastra's Observational Memory, not the
+official Mastra implementation. Use it for ablations, not reproduction claims.
+Exact Mastra comparison should run the official TypeScript package.
 
 NOT vector retrieval. The architecture is:
 
@@ -19,10 +19,10 @@ prompt-caching pitch. We keep the `Backend.retrieve()` interface for compatibili
 by returning the full log as a sequence of Hits, but the policy can also call
 `get_full_context()` directly for the proper Mastra-shaped prompt.
 
-Default thresholds match Mastra's real defaults (30k / 40k). For LoCoMo's
-~21k-token conversations we expose `observer_token_threshold=3000` so the
-Observer fires multiple times across a single conversation — otherwise it
-would barely engage and we'd be measuring nothing.
+Official Mastra defaults are 30k / 40k. For LoCoMo's ~21k-token conversations
+this backend defaults lower so the Observer fires multiple times across a
+single conversation — otherwise it would barely engage and we'd be measuring
+almost only the recent raw window.
 """
 from __future__ import annotations
 import json
@@ -30,6 +30,8 @@ import re
 import time
 from dataclasses import dataclass, field
 from typing import Any
+
+import numpy as np
 
 from .. import config, llm
 from .base import Backend, Hit, Unit
@@ -139,6 +141,10 @@ class MastraBackend(Backend):
         self.observations: list[ObservationBlock] = []
         self.reflections: list[ReflectionBlock] = []
 
+        # Embedding index for semantic retrieval over observations
+        self._obs_embeddings: Any = None  # np.ndarray (N, D) or None
+        self._obs_index_dirty: bool = True
+
         self._stats = {
             "n_observer_runs": 0,
             "n_reflector_runs": 0,
@@ -156,16 +162,15 @@ class MastraBackend(Backend):
         self._maybe_run_observer(force=True)
 
     def retrieve(self, query: str, k: int = 10, source: str = "hybrid") -> list[Hit]:
-        """Returns the full Mastra-shaped context as synthetic hits.
+        """Semantic retrieval over observations + always-include reflections + recent raw.
 
-        For Mastra, `k` is mostly ignored — the whole log fits because of
-        compression. We still cap at a generous max so policies that
-        legitimately ask for top-k don't blow up token budgets.
+        Embeds the query, scores against observation embeddings via cosine
+        similarity, and returns top-k observations. Reflections and recent
+        raw turns are always appended as bonus context.
         """
-        max_units = max(k, 50)
         out: list[Hit] = []
 
-        # 1) reflections (condensed long-term) — high priority
+        # 1. Always include reflections (condensed long-term) — they're small
         for i, r in enumerate(self.reflections):
             out.append(Hit(
                 unit=Unit(
@@ -175,28 +180,57 @@ class MastraBackend(Backend):
                 score=1.0, source="reflection",
             ))
 
-        # 2) observations (recent observer bullets) — bulk of the log
-        for i, o in enumerate(self.observations):
-            out.append(Hit(
-                unit=Unit(
-                    uid=f"observ::{i}", text=o.markdown,
-                    metadata={
-                        "kind": "observation", "section_idx": i,
-                        "current_task": o.current_task,
-                        "date": o.date_label,
-                    },
-                ),
-                score=0.9, source="observation",
-            ))
+        # 2. Semantic search over observations
+        if self.observations:
+            self._reindex_observations()
+            if self._obs_embeddings is not None and len(self._obs_embeddings) > 0:
+                q_emb = llm.embed([query])[0]
+                q_emb = q_emb / (np.linalg.norm(q_emb) + 1e-8)
+                scores = np.dot(self._obs_embeddings, q_emb)
+                top_k = min(k, len(scores))
+                top_idx = np.argsort(scores)[-top_k:][::-1]
+                for idx in top_idx:
+                    o = self.observations[int(idx)]
+                    out.append(Hit(
+                        unit=Unit(
+                            uid=f"observ::{idx}", text=o.markdown,
+                            metadata={
+                                "kind": "observation", "section_idx": int(idx),
+                                "current_task": o.current_task, "date": o.date_label,
+                            },
+                        ),
+                        score=float(scores[idx]), source="observation",
+                    ))
 
-        # 3) recent raw turns (last keep_recent_n) — high-fidelity fallback
+        # 3. Recent raw turns (always appended as fallback)
         for t in self._all_turns[-self.keep_recent_n:]:
             out.append(Hit(
-                unit=Unit(uid=t.uid, text=t.text, metadata={"kind": "raw_turn", **t.metadata}),
-                score=0.6, source="recent_raw",
+                unit=Unit(
+                    uid=t.uid, text=t.text,
+                    metadata={"kind": "raw_turn", **t.metadata},
+                ),
+                score=0.4, source="recent_raw",
             ))
 
-        return out[:max_units]
+        return out
+
+    def _reindex_observations(self) -> None:
+        """(Re)build embedding index for all observation blocks."""
+        if not self._obs_index_dirty:
+            return
+        if not self.observations:
+            self._obs_embeddings = None
+            self._obs_index_dirty = False
+            return
+        texts = [o.markdown for o in self.observations]
+        try:
+            embs = llm.embed(texts)
+            # L2-normalize for cosine similarity via dot product
+            norms = np.linalg.norm(embs, axis=1, keepdims=True) + 1e-8
+            self._obs_embeddings = embs / norms
+            self._obs_index_dirty = False
+        except Exception as e:
+            print(f"[mastra] embedding index build failed: {e}")
 
     def expand(self, seed_uids: list[str], k_per: int = 2) -> list[Hit]:
         """Mastra has no graph. We approximate by returning observations
@@ -358,6 +392,7 @@ class MastraBackend(Backend):
             self._stats["n_observation_chars"] = sum(
                 len(o.markdown) for o in self.observations
             )
+            self._obs_index_dirty = True
         # whether we got a block or not, drain the buffer to avoid loops
         self._raw_buffer = []
 

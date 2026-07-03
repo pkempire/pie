@@ -59,6 +59,27 @@ python -m tinker_cookbook.recipes.memory_rl.train \\
     learning_rate=4e-5 lora_rank=32 save_every=20
 ```
 
+LongMemEval Phase-A read-policy training:
+
+```bash
+python -m tinker_cookbook.recipes.memory_rl.train \\
+    dataset=longmemeval_s lme_per_category=20 \\
+    batch_size=4 group_size=8 max_turns=6 \\
+    learning_rate=4e-5 lora_rank=32 \\
+    log_path=/tmp/mempol/phaseA_lme_s \\
+    wandb_project=mempol wandb_name=phaseA_lme_s
+```
+
+Mixed LoCoMo + LongMemEval training:
+
+```bash
+python -m tinker_cookbook.recipes.memory_rl.train \\
+    dataset=mixed n_convs=8 lme_per_category=20 \\
+    batch_size=4 group_size=8 max_turns=6 \\
+    learning_rate=4e-5 lora_rank=32 \\
+    log_path=/tmp/mempol/phaseA_mixed
+```
+
 Expected: ~10–25 GRPO steps before the policy reliably emits valid tool calls
 and the answer format. Watch `env/all/turns_per_episode` — if it stays at 1
 the model is just guessing without searching. If it grows past 2, the model is
@@ -130,8 +151,10 @@ WildChat-synth gives multi-domain coverage.
 
 ## TODO list (pre-first-Tinker-run)
 
-- [ ] Add `@tool` decorator to MemoryTool methods in `tools.py`
-- [ ] Verify `tinker_cookbook.rl.train.main` import path matches search_tool/train.py
+- [x] Add `@tool` decorator to MemoryTool methods in `tools.py`
+- [ ] Verify `tinker_cookbook.rl.train.main` import path matches the installed Tinker cookbook version
 - [ ] Add a Tree (FTS5) backend variant for the Backend/transfer ablation
 - [ ] Write `tests/test_memory_env.py` mirroring `tests/test_search_env.py`
-- [ ] Implement `WriteEnvGroupBuilder` for cotrain.py Phase B
+- [x] Implement `WriteEnvGroupBuilder` scaffold for cotrain.py Phase B
+- [ ] Replace write-policy fresh-KG-per-turn training with chronological accumulated-state episodes
+- [ ] Add trained read-policy checkpoint as a `longmemeval_matrix` cell
