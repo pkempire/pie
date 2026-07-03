@@ -1,0 +1,23 @@
+{
+  "name": "footnote-remotion",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "remotion studio",
+    "build": "remotion render",
+    "render": "remotion render src/index.tsx FootnoteComposition out.mp4 --props=footnote_props.json",
+    "upgrade": "remotion upgrade"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.286",
+    "@remotion/cli": "^4.0.286",
+    "@remotion/media-utils": "^4.0.286"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.1",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.6.3"
+  }
+}
