@@ -1,199 +1,114 @@
-# PIE — Personal Intelligence Engine
+# Personal Intelligence System
 
-PIE ingests your entire ChatGPT conversation history and builds a structured **temporal knowledge graph** of your life: every person, project, tool, belief, and decision — tracked across time with full state history.
+**Research code for agents that turn experience into expertise** — not just retrieval-memory,
+but the loop behind it: an append-only experience log, a sleep-time *studying* pass that
+compresses it into a compact expertise artifact (with time attached), and optimization of that
+pass against downstream task performance.
 
-Once built, you can query it conversationally ("what was I working on in January?"), browse it visually, get a daily briefing, or connect it to Claude via MCP so your AI has real memory of who you are.
+Read [APPROACH.md](APPROACH.md) for the problem statement — temporal blindness, the uncorrected
+planning fallacy, retrieval ≠ expertise, and the frozen consolidation loop — and how the pieces
+here attack it.
 
----
+## Start here: the demos
 
-## What you get
-
-- **A knowledge graph of your life** — entities extracted from your conversations: people, projects, tools, organizations, beliefs, decisions, concepts. Each with a full history of how it changed over time.
-- **Temporal queries** — ask natural language questions grounded in your actual data. "How has project X evolved?" "What did I decide about Y last year?"
-- **Visual explorer** — browse entities, timelines, and relationship graphs in the browser. No backend needed.
-- **Daily briefing** — a prioritized summary of what's active, stale, overdue, or coming up based on your world model.
-- **Claude MCP integration** — plug PIE into Claude Desktop so every conversation starts with real context about you.
-
----
-
-## Setup
-
-**Requirements:** Python 3.10+, an OpenAI API key.
+Each demo is one claim, one runnable script (~$0.01), deterministic scoring, committed results.
 
 ```bash
-git clone https://github.com/parthkocheta/pie
-cd pie
 pip install -r requirements.txt
-cp .env.example .env
-# Edit .env and add your OPENAI_API_KEY
+echo "OPENAI_API_KEY=sk-..." > .env
+python demos/01-stale-memory/run.py
 ```
 
-**Get your ChatGPT export:**  
-Go to [chatgpt.com](https://chatgpt.com) → Settings → Data controls → Export data. You'll get a `conversations.json` in your Downloads folder.
+| Demo | Claim | Result |
+|---|---|---|
+| [01-stale-memory](demos/01-stale-memory/) | Similarity search returns yesterday's truth; timeline replay answers "as of when" | flat 40% → replay **100%** on as-of-past questions |
 
----
+More in [demos/README.md](demos/README.md).
 
-## Run the ingestion pipeline
+## Verified results at larger scale
 
-This reads your conversations, extracts entities and state changes via LLM, and writes `output/world_model.json`.
+All from the eval matrix (`mempol/scripts/longmemeval_matrix.py`, `locomo_matrix.py`) with a
+3-bucket judge, honest baselines, and raw outputs on disk:
+
+| Finding | Numbers | Where |
+|---|---|---|
+| Timeline-synthesis reading beats similarity retrieval on LongMemEval-S (balanced, n=240) | **71.7%** vs turn-RAG 68.3% vs hybrid 62.5% | `mempol/policies/rlm_temporal.py` |
+| Tool-using "continuity teacher" ties it at 7× the steps — useful as a trace generator, not a system | 73.3% @ 7.3 steps vs 71.7% @ 4.6 | `mempol/policies/continuity.py` |
+| Typed knowledge-graph extraction *loses* to flat RAG on LoCoMo (n=1,491) | KG 46.2% vs flat 58.6% | honest negative; `mempol/scripts/locomo_matrix.py` |
+| Repo → memory-substrate ingestion works end to end | 541 artifacts, 3,124 spans, 16 days | `mempol/ledger/` |
+
+Unverified-but-promising (clearly labeled, not results yet): GEPA-evolved consolidator
+(+20pp on a 5-question smoke; held-out run pending), amortized write-utility critic
+(r≈0.71 on a toy sample).
+
+## The pieces
+
+```text
+demos/                  bite-size verified claims (start here)
+mempol/
+  core/                 universal Artifact/Span/MemoryState/TraceEvent substrate (SQLite)
+  ledger/               repo + git history -> experience log with day reports & context packs
+  temporal/             valid-time state store + as-of-T context compiler
+  policies/             read-time policies incl. timeline reconstruction (rlm_temporal.py)
+  strategies/           plugin registry of memory strategies for the eval matrix
+  backends/             flat / KG / Mastra-style / provider memory backends
+  dspy_consolidator/    DSPy consolidator + GEPA optimization (the studying pass)
+  recipes/memory_rl/    RL environment + tooling for training memory policies (tinker)
+  scripts/              eval matrices, dashboards, ingestion CLIs
+benchmarks/             LoCoMo / LongMemEval loaders and runners
+memory_providers/       Mem0 / Zep / Honcho / Supermemory shims (for head-to-head evals)
+research/               structured lit-review wiki: 30+ papers with verification tiers
+pie/                    the original temporal world model over personal exports (baseline + MCP)
+paper/                  paper drafts, lit reviews, postmortems
+docs/                   design docs, audits, the frontier review & current bet
+demos/ scripts/         graduated vs. in-progress experiments (see demos/README.md)
+```
+
+## Common commands
+
+Ingest this repo into the experience ledger, then compile an agent context pack:
 
 ```bash
-# Test run first (5 daily batches, ~$0.10)
-python run.py --test --no-web
-
-# Full run (all conversations from 2024 onward)
-python run.py --no-web --year 2024
-
-# Resume if interrupted
-python run.py --no-web --start-date 2024-06-01
-
-# Check what's in your world model
-python run.py --stats
+python3 -m mempol.ledger.ingest_repo --root . --run-name dev --max-files 500 --max-commits 80
+python3 -m mempol.ledger.day_report --run-name dev --day 2026-05-02 --limit 100
+python3 -m mempol.ledger.compile_context --run-name dev \
+  --task "What benchmark results should I trust?" --k 10 --token-budget 4500
 ```
 
-**Cost:** roughly $1–5 to process a full year of conversations using `gpt-4o-mini`. The `--test` flag limits to 5 batches so you can verify it works before committing.
-
----
-
-## Browse visually
-
-Start a local HTTP server in the project root:
+Run the LongMemEval strategy matrix (reportable numbers, not demos):
 
 ```bash
-python3 -m http.server 8000
+python3 -m mempol.scripts.longmemeval_matrix \
+  --variant longmemeval_s --out-dir mempol/results/lme_core --per-category 5 \
+  --cells legacy_naive_rag_turn,flat_v0,flat_v1,flat_rlm_temporal \
+  --answer-model gpt-5-mini --judge-model gpt-4o --embed-model text-embedding-3-large
 ```
 
-Then open in your browser:
-
-| URL | What it shows |
-|-----|---------------|
-| `http://localhost:8000/explorer.html` | Main dashboard — entity search, timeline, relationships, insights |
-| `http://localhost:8000/graph_viz.html` | Force-directed knowledge graph — people, projects, orgs as nodes |
-| `http://localhost:8000/eval_viewer.html` | Entity detail view with full transition history |
-| `http://localhost:8000/board.html` | Command center — goals, active projects, decisions |
-
----
-
-## Query your world model
-
-Interactive conversational interface over your world model:
+Tests:
 
 ```bash
-python3 -m pie.eval.query_interface --world-model output/world_model.json
+python3 -m pytest tests/
 ```
 
-Ask things like:
-- *"What projects was I working on in mid-2024?"*
-- *"How has my thinking on [topic] changed?"*
-- *"Who are the people I've collaborated with most?"*
+## House rules
 
-It retrieves relevant entities via embedding search, compiles their full state history into context, and answers with grounded citations.
+- **Nothing is a "result" until it ran end to end with honest baselines.** Smoke tests and
+  tiny-n runs are labeled as such, everywhere, always.
+- No LLM judges where deterministic scoring works — judges flip verdicts between identical
+  runs ([we've seen it](demos/01-stale-memory/README.md#why-no-llm-judge)).
+- Commit source, tests, harnesses, and compact result summaries. Never commit `.env`, personal
+  exports, run DBs, embedding caches, or full benchmark datasets.
+- Every serious run records: command, git SHA, dataset, models, budget knobs, metrics, output path.
+- If a run produces an insight, promote it to a tracked doc; if an experiment stalls, it stays
+  out of `demos/` until it graduates.
 
----
-
-## Daily briefing
+## Environment
 
 ```bash
-python briefing.py
+OPENAI_API_KEY=...   # most scripts
+TINKER_API_KEY=...   # RL training recipes only
 ```
 
-Prints a prioritized executive summary: what's active and moving, what's gone stale, what deadlines are approaching, what has the highest recent activity.
-
----
-
-## Connect to Claude (MCP)
-
-Add PIE as an MCP server so Claude Desktop has live access to your world model:
-
-```json
-{
-  "mcpServers": {
-    "pie": {
-      "command": "python3",
-      "args": ["/path/to/pie/mcp_server.py"],
-      "env": { "OPENAI_API_KEY": "sk-..." }
-    }
-  }
-}
-```
-
-See `claude_desktop_config.json` for the full template. Once connected, Claude can call tools like `get_temporal_briefing`, `search_entities`, `get_timeline`, and `get_commitments` before and after each conversation.
-
----
-
-## Repo structure
-
-```
-pie/                     # Core Python module
-  ingestion/
-    pipeline.py          # Main orchestrator — parses conversations, runs extraction, saves world model
-    prompts.py           # LLM prompts for entity/relationship extraction
-  core/
-    world_model.py       # In-memory + JSON-persisted graph store
-    models.py            # Entity, StateTransition, Relationship data models
-    llm.py               # OpenAI client wrapper (chat + embeddings)
-    dynamics.py          # Importance scoring, staleness, volatility
-    parser.py            # conversations.json → Conversation objects
-  resolution/
-    resolver.py          # 3-tier entity resolution (string → embedding → LLM)
-  retrieval/
-    context_compiler.py  # Subgraph → LLM-ready markdown with temporal context
-    temporal_retriever.py
-  eval/
-    query_interface.py   # Interactive query CLI
-    extraction_quality.py
-  config.py              # All thresholds and settings
-
-run.py                   # CLI entry point for ingestion pipeline
-briefing.py              # Daily briefing generator
-mcp_server.py            # MCP server for Claude Desktop integration
-
-explorer.html            # Main visual dashboard
-graph_viz.html           # Force-directed knowledge graph
-eval_viewer.html         # Entity detail + transition history
-board.html               # Command center view
-lib/                     # Vendored vis.js for graph rendering
-
-output/                  # Generated by pipeline (gitignored)
-  world_model.json       # Your knowledge graph (not committed — personal data)
-```
-
----
-
-## How it works
-
-**Ingestion pipeline** (`run.py` → `pie/ingestion/pipeline.py`):
-
-1. Parse `conversations.json` → group into daily batches
-2. For each batch: build a context preamble from existing world model state, format conversation text, call LLM with extraction prompt
-3. LLM returns JSON: entities (name, type, current state), state changes, relationships
-4. Entity resolution: for each extracted entity, run 3-tier matching against existing world model — fuzzy string match → embedding cosine similarity → LLM verification for ambiguous cases
-5. Write creates/updates/relationships to world model, save checkpoint every 5 batches
-6. After all batches: compute importance scores (transition count × recency decay), save final `output/world_model.json`
-
-**Entity types:** person, project, tool, organization, belief, decision, concept, period, event
-
-**Resolution tiers:**
-- Tier 1 (free): fuzzy string match ≥ 0.95 → auto-accept, 0.90 + same type → auto-accept
-- Tier 2 (cheap): embedding cosine similarity — accept > 0.85, reject < 0.70, ambiguous zone → Tier 3
-- Tier 3 (expensive): LLM yes/no prompt, defaults to "no" on ambiguity to avoid bad merges
-
----
-
-## Environment variables
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `OPENAI_API_KEY` | Yes | Used for extraction (gpt-4o-mini) and embeddings (text-embedding-3-large) |
-| `BRAVE_API_KEY` | No | Web grounding for new tool/org entities. Free tier at brave.com/search/api |
-
----
-
-## Cost estimate
-
-| Operation | Model | Approx cost |
-|-----------|-------|-------------|
-| Full ingestion (1 year) | gpt-4o-mini | ~$2–5 |
-| Entity resolution LLM calls | gpt-4o-mini | ~$0.50 |
-| Embeddings (text-embedding-3-large) | — | ~$0.50 |
-| Single query | gpt-4o-mini | ~$0.01 |
+MIT licensed. Older exploratory drafts live in `legacy/`; the honest status audit of everything
+in this repo is in `docs/ORIENTATION-AND-NEXT-BET-2026-06-21.md` and the July 2026 field review
+in `docs/FRONTIER-REVIEW-2026-07-01.md`.
