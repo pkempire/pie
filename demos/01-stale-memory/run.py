@@ -35,7 +35,7 @@ for line in (REPO/".env").read_text().splitlines() if (REPO/".env").exists() els
     if line.strip() and not line.startswith("#") and "=" in line:
         k,v=line.split("=",1); os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
 from openai import OpenAI
-client=OpenAI(); EMB="text-embedding-3-small"; GEN="gpt-4o-mini"
+client=OpenAI(); EMB="text-embedding-3-small"; GEN=os.environ.get("DEMO_MODEL","gpt-5-mini")
 
 # A timestamped life-log (month index 1..12 of one year).
 LOG = [
@@ -66,7 +66,9 @@ QUESTIONS = [
 MONTH={1:"Jan",2:"Feb",3:"Mar",4:"Apr",5:"May",6:"Jun",7:"Jul",8:"Aug",9:"Sep",10:"Oct",11:"Nov",12:"Dec"}
 ANSWER_STYLE="Answer in one sentence. If the question is yes/no, start with 'Yes' or 'No'."
 
-def chat(msgs, **kw): return client.chat.completions.create(model=GEN,messages=msgs,temperature=0,**kw).choices[0].message.content
+def chat(msgs, **kw):
+    kw.setdefault("max_completion_tokens", kw.pop("max_tokens", 600))
+    return client.chat.completions.create(model=GEN,messages=msgs,reasoning_effort="minimal",**kw).choices[0].message.content
 def embed(texts): return [d.embedding for d in client.embeddings.create(model=EMB,input=texts).data]
 def cosine(a,b):
     dot=sum(x*y for x,y in zip(a,b)); na=math.sqrt(sum(x*x for x in a)); nb=math.sqrt(sum(y*y for y in b)); return dot/(na*nb+1e-9)

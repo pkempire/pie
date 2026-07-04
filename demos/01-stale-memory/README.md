@@ -5,12 +5,17 @@ changes, it cannot answer "what was true as of month T" — it confidently retur
 value. A reader that first **reconstructs a timeline** of state changes from the raw log, then
 resolves the value at-or-before T, fixes this.
 
-**Result** (10 questions over a 9-event life-log, deterministic regex scoring, no LLM judge):
+**Result** (10 questions over a 9-event life-log, gpt-5-mini, deterministic regex scoring, no LLM judge):
 
 | Reader | Overall | "As of <past month>" questions only |
 |---|---|---|
-| Flat top-k retrieval | 70% | **40%** |
+| Flat top-k retrieval | 60% | **20%** |
 | Timeline replay | **100%** | **100%** |
+
+A smarter model doesn't fix this — it makes it *worse* (gpt-4o-mini flat scored 40% on as-of-past;
+gpt-5-mini scores 20%, because it reasons more confidently over timestamp-free memories). The
+failure is structural: the store has no concept of time, so no amount of model capability at read
+time can recover it.
 
 Every flat failure is the same mechanism: asked *"where did the user live in May?"*, it answers
 *"NYC"* — the user's current city, not their city in May. The information was never lost; the
@@ -29,8 +34,8 @@ Q (May): Where did the user live?   [gold: Boston (moved to NYC in Aug)]
 python demos/01-stale-memory/run.py
 ```
 
-~30 seconds, ~$0.01 (gpt-4o-mini + text-embedding-3-small). Writes `results.json`
-(the committed copy is a real run from 2026-07-03).
+~60 seconds, ~$0.01 (gpt-5-mini + text-embedding-3-small; override with `DEMO_MODEL=...`).
+Writes `results.json` (the committed copy is a real run from 2026-07-03).
 
 ## How it works
 

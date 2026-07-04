@@ -21,7 +21,7 @@ python demos/01-stale-memory/run.py
 
 | Demo | Claim | Result |
 |---|---|---|
-| [01-stale-memory](demos/01-stale-memory/) | Similarity search returns yesterday's truth; timeline replay answers "as of when" | flat 40% → replay **100%** on as-of-past questions |
+| [01-stale-memory](demos/01-stale-memory/) | Similarity search returns yesterday's truth; timeline replay answers "as of when" — and a smarter model makes it *worse* | flat 20% → replay **100%** on as-of-past questions (gpt-5-mini) |
 
 More in [demos/README.md](demos/README.md).
 

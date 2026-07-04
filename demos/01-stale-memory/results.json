@@ -3,22 +3,94 @@
     {
       "q": "Where did the user live?",
       "T": "May",
-      "a": "The user lived in NYC.",
+      "a": "You lived in New York City.",
       "ok": false,
       "gold": "Boston (moved to NYC in Aug)"
     },
     {
       "q": "Where does the user live?",
       "T": "Dec",
-      "a": "The user lives in NYC.",
+      "a": "No \u2014 the user lives in New York City.",
       "ok": true,
       "gold": "NYC"
     },
     {
       "q": "What was the user's diet?",
       "T": "Mar",
-      "a": "The user's diet was pescatarian.",
+      "a": "You were pescatarian.",
       "ok": false,
+      "gold": "vegetarian (went pescatarian in Jul)"
+    },
+    {
+      "q": "What is the user's diet?",
+      "T": "Dec",
+      "a": "You eat fish now \u2014 you went pescatarian.",
+      "ok": true,
+      "gold": "pescatarian"
+    },
+    {
+      "q": "Was the user in a relationship?",
+      "T": "Jul",
+      "a": "No \u2014 you and Alex broke up.",
+      "ok": false,
+      "gold": "yes, with Alex (broke up in Sep)"
+    },
+    {
+      "q": "Is the user dating Alex?",
+      "T": "Dec",
+      "a": "No \u2014 Alex and you broke up, unfortunately.",
+      "ok": true,
+      "gold": "no, they broke up in Sep"
+    },
+    {
+      "q": "Where did the user work?",
+      "T": "Jun",
+      "a": "You worked at a fintech startup in Boston.",
+      "ok": true,
+      "gold": "the fintech startup (changed jobs in Aug)"
+    },
+    {
+      "q": "What is the user's job level?",
+      "T": "Dec",
+      "a": "No \u2014 the memories conflict: they show being promoted to senior engineer at a new job and also moving for a new job at a fintech startup, so job level is unclear.",
+      "ok": true,
+      "gold": "senior engineer (promoted in Nov)"
+    },
+    {
+      "q": "Was the user into rock climbing?",
+      "T": "Jun",
+      "a": "Yes \u2014 they've been getting really into rock climbing.",
+      "ok": false,
+      "gold": "no (started in Oct)"
+    },
+    {
+      "q": "What hobby is the user into?",
+      "T": "Dec",
+      "a": "You're really into rock climbing.",
+      "ok": true,
+      "gold": "rock climbing"
+    }
+  ],
+  "replay": [
+    {
+      "q": "Where did the user live?",
+      "T": "May",
+      "a": "They lived in Boston.",
+      "ok": true,
+      "gold": "Boston (moved to NYC in Aug)"
+    },
+    {
+      "q": "Where does the user live?",
+      "T": "Dec",
+      "a": "They live in New York City.",
+      "ok": true,
+      "gold": "NYC"
+    },
+    {
+      "q": "What was the user's diet?",
+      "T": "Mar",
+      "a": "The user's diet was vegetarian.",
+      "ok": true,
       "gold": "vegetarian (went pescatarian in Jul)"
     },
     {
@@ -31,132 +103,60 @@
     {
       "q": "Was the user in a relationship?",
       "T": "Jul",
-      "a": "Yes.",
+      "a": "Yes \u2014 dating Alex.",
       "ok": true,
       "gold": "yes, with Alex (broke up in Sep)"
     },
     {
       "q": "Is the user dating Alex?",
       "T": "Dec",
-      "a": "No.",
+      "a": "No \u2014 as of Dec the most recent relationship state (from Sep) is \"single.\"",
       "ok": true,
       "gold": "no, they broke up in Sep"
     },
     {
       "q": "Where did the user work?",
       "T": "Jun",
-      "a": "The user worked at a fintech startup in Boston.",
+      "a": "They worked at a fintech startup.",
       "ok": true,
       "gold": "the fintech startup (changed jobs in Aug)"
     },
     {
       "q": "What is the user's job level?",
       "T": "Dec",
-      "a": "The user's job level is senior engineer.",
+      "a": "Senior engineer.",
       "ok": true,
       "gold": "senior engineer (promoted in Nov)"
     },
     {
       "q": "Was the user into rock climbing?",
       "T": "Jun",
-      "a": "Yes.",
-      "ok": false,
-      "gold": "no (started in Oct)"
-    },
-    {
-      "q": "What hobby is the user into?",
-      "T": "Dec",
-      "a": "The user is into rock climbing.",
-      "ok": true,
-      "gold": "rock climbing"
-    }
-  ],
-  "replay": [
-    {
-      "q": "Where did the user live?",
-      "T": "May",
-      "a": "The user lived in Boston.",
-      "ok": true,
-      "gold": "Boston (moved to NYC in Aug)"
-    },
-    {
-      "q": "Where does the user live?",
-      "T": "Dec",
-      "a": "As of December, the user lives in NYC.",
-      "ok": true,
-      "gold": "NYC"
-    },
-    {
-      "q": "What was the user's diet?",
-      "T": "Mar",
-      "a": "As of March, the user's diet was vegetarian.",
-      "ok": true,
-      "gold": "vegetarian (went pescatarian in Jul)"
-    },
-    {
-      "q": "What is the user's diet?",
-      "T": "Dec",
-      "a": "As of Dec, the user's diet is pescatarian.",
-      "ok": true,
-      "gold": "pescatarian"
-    },
-    {
-      "q": "Was the user in a relationship?",
-      "T": "Jul",
-      "a": "Yes, the user was in a relationship as of July.",
-      "ok": true,
-      "gold": "yes, with Alex (broke up in Sep)"
-    },
-    {
-      "q": "Is the user dating Alex?",
-      "T": "Dec",
-      "a": "No.",
-      "ok": true,
-      "gold": "no, they broke up in Sep"
-    },
-    {
-      "q": "Where did the user work?",
-      "T": "Jun",
-      "a": "The user worked at a fintech startup in Boston.",
-      "ok": true,
-      "gold": "the fintech startup (changed jobs in Aug)"
-    },
-    {
-      "q": "What is the user's job level?",
-      "T": "Dec",
-      "a": "The user's job level is senior engineer.",
-      "ok": true,
-      "gold": "senior engineer (promoted in Nov)"
-    },
-    {
-      "q": "Was the user into rock climbing?",
-      "T": "Jun",
-      "a": "No, there is no information indicating that the user was into rock climbing as of June.",
+      "a": "No \u2014 there\u2019s no record of the user being into rock climbing as of June.",
       "ok": true,
       "gold": "no (started in Oct)"
     },
     {
       "q": "What hobby is the user into?",
       "T": "Dec",
-      "a": "As of December, the user is into rock climbing.",
+      "a": "As of Dec: rock climbing.",
       "ok": true,
       "gold": "rock climbing"
     }
   ],
   "timeline": [
     {
-      "attribute": "job",
-      "value": "new job at a fintech startup",
-      "month": 1
-    },
-    {
       "attribute": "location",
       "value": "Boston",
       "month": 1
     },
     {
+      "attribute": "job",
+      "value": "new job at a fintech startup",
+      "month": 1
+    },
+    {
       "attribute": "diet",
-      "value": "vegetarian",
+      "value": "vegetarian (frequents vegetarian cafes)",
       "month": 2
     },
     {
@@ -165,23 +165,28 @@
       "month": 4
     },
     {
+      "attribute": "job",
+      "value": "considering leaving startup",
+      "month": 6
+    },
+    {
       "attribute": "diet",
-      "value": "pescatarian",
+      "value": "pescatarian (eats fish)",
       "month": 7
     },
     {
-      "attribute": "job",
-      "value": "moved to a bigger company",
+      "attribute": "location",
+      "value": "moved to New York City",
       "month": 8
     },
     {
-      "attribute": "location",
-      "value": "NYC",
+      "attribute": "job",
+      "value": "took a job at a bigger company",
       "month": 8
     },
     {
       "attribute": "relationship",
-      "value": "broken up with Alex",
+      "value": "single",
       "month": 9
     },
     {
@@ -191,15 +196,15 @@
     },
     {
       "attribute": "job",
-      "value": "promoted to senior engineer",
+      "value": "senior engineer at new job",
       "month": 11
     }
   ],
   "summary": {
     "n": 10,
-    "flat_acc": 0.7,
+    "flat_acc": 0.6,
     "replay_acc": 1.0,
-    "flat_asof_past": 0.4,
+    "flat_asof_past": 0.2,
     "replay_asof_past": 1.0,
     "scoring": "deterministic regex, no LLM judge"
   }
