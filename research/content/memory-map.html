@@ -1,0 +1,440 @@
+<style>
+  :root{
+    --bg:#0b0c16; --bg2:#141626; --bg3:#1c1f33; --line:#272b45;
+    --ink:#e8e9f2; --muted:#9698b8; --faint:#5c5f80;
+    --teal:#34d3b5;   /* works on any model / closed API */
+    --amber:#f5b544;  /* needs open weights to train */
+    --rose:#fb6f92;   /* needs model internals (KV/activations) */
+    --accent:#8b7bf0; /* structure, axes, active highlight */
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  .wrap{
+    background:
+      radial-gradient(1200px 600px at 78% -10%, #171a30 0%, rgba(23,26,48,0) 60%),
+      radial-gradient(900px 500px at 8% 110%, #15172b 0%, rgba(21,23,43,0) 55%),
+      var(--bg);
+    color:var(--ink); font-family:var(--sans);
+    padding:clamp(20px,4vw,44px); min-height:100%;
+    -webkit-font-smoothing:antialiased;
+  }
+  .inner{max-width:1120px; margin:0 auto}
+
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 14px; display:flex; gap:10px; align-items:center;
+  }
+  .eyebrow::before{content:""; width:26px; height:1px; background:var(--accent); opacity:.6}
+  h1{
+    font-size:clamp(30px,5.4vw,52px); line-height:1.02; letter-spacing:-.022em;
+    font-weight:760; margin:0 0 14px; text-wrap:balance;
+  }
+  .dek{
+    font-size:clamp(15px,2vw,18px); line-height:1.5; color:var(--muted);
+    max-width:60ch; margin:0 0 26px;
+  }
+  .dek b{color:var(--ink); font-weight:600}
+
+  .legend{
+    display:flex; flex-wrap:wrap; gap:8px 18px; align-items:center;
+    font-family:var(--mono); font-size:12.5px; color:var(--muted);
+    padding:12px 16px; border:1px solid var(--line); border-radius:12px;
+    background:linear-gradient(180deg,rgba(28,31,51,.55),rgba(20,22,38,.35)); margin-bottom:8px;
+  }
+  .legend .lg{display:flex; align-items:center; gap:8px}
+  .legend .k{color:var(--faint); letter-spacing:.04em}
+  .dot{width:10px; height:10px; border-radius:50%; flex:none; box-shadow:0 0 0 3px rgba(255,255,255,.03)}
+  .dot.teal{background:var(--teal); box-shadow:0 0 10px -1px var(--teal)}
+  .dot.amber{background:var(--amber); box-shadow:0 0 10px -1px var(--amber)}
+  .dot.rose{background:var(--rose); box-shadow:0 0 10px -1px var(--rose)}
+
+  .stage{display:grid; grid-template-columns:1fr 320px; gap:22px; margin-top:20px; align-items:start}
+  @media(max-width:880px){ .stage{grid-template-columns:1fr} }
+
+  .plotscroll{overflow-x:auto; overflow-y:hidden; border-radius:16px;
+    -webkit-overflow-scrolling:touch; border:1px solid var(--line);
+    background:linear-gradient(180deg,#101223, #0d0f1d);
+  }
+  .plot{
+    position:relative; min-width:720px; height:560px;
+    padding:18px 20px 46px 78px;
+  }
+  /* y axis label */
+  .ylab{
+    position:absolute; left:14px; top:50%; transform:translateY(-50%) rotate(-90deg);
+    transform-origin:left center; font-family:var(--mono); font-size:11px;
+    letter-spacing:.24em; text-transform:uppercase; color:var(--faint); white-space:nowrap;
+  }
+  /* bands */
+  .band{position:absolute; left:78px; right:20px; border-top:1px dashed var(--line)}
+  .band .btag{
+    position:absolute; left:-64px; top:-8px; width:60px; text-align:right;
+    font-family:var(--mono); font-size:11px; line-height:1.25; color:var(--muted);
+  }
+  .band .btag small{display:block; color:var(--faint); font-size:9.5px; letter-spacing:.04em}
+  .band .bnote{
+    position:absolute; right:6px; top:8px; font-family:var(--mono); font-size:11px;
+    color:var(--faint); letter-spacing:.02em; text-align:right; max-width:210px;
+  }
+  /* x axis */
+  .xaxis{
+    position:absolute; left:78px; right:20px; bottom:16px; height:1px; background:var(--line);
+  }
+  .xaxis::after{
+    content:"WHEN you organize it"; position:absolute; left:50%; top:12px; transform:translateX(-50%);
+    font-family:var(--mono); font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--faint);
+  }
+  .xend{position:absolute; bottom:-2px; font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:.03em}
+  .xend.l{left:0} .xend.r{right:0; text-align:right}
+  .xend small{display:block; color:var(--faint); font-size:9.5px}
+
+  /* nodes */
+  .node{
+    position:absolute; transform:translate(-50%,-50%);
+    display:inline-flex; align-items:center; gap:7px;
+    font-family:var(--mono); font-size:12.5px; color:var(--ink);
+    background:var(--bg3); border:1px solid var(--line); border-radius:999px;
+    padding:5px 11px 5px 9px; cursor:pointer; white-space:nowrap;
+    transition:transform .16s ease, border-color .16s ease, box-shadow .16s ease, background .16s ease;
+  }
+  .node:hover,.node:focus-visible{
+    outline:none; transform:translate(-50%,-50%) scale(1.06);
+    border-color:var(--accent); background:#232645;
+    box-shadow:0 0 0 1px var(--accent), 0 10px 30px -12px var(--accent);
+    z-index:40;
+  }
+  .node.active{
+    border-color:var(--accent); background:#262a4d;
+    box-shadow:0 0 0 1px var(--accent), 0 12px 34px -12px var(--accent); z-index:41;
+  }
+  .node .d{width:9px;height:9px;border-radius:50%;flex:none}
+  .node.teal .d{background:var(--teal); box-shadow:0 0 9px -1px var(--teal)}
+  .node.amber .d{background:var(--amber); box-shadow:0 0 9px -1px var(--amber)}
+  .node.rose .d{background:var(--rose); box-shadow:0 0 9px -1px var(--rose)}
+
+  /* the crowded cluster box */
+  .cluster{
+    position:absolute; border:1px solid rgba(139,123,240,.4);
+    background:linear-gradient(180deg, rgba(139,123,240,.10), rgba(139,123,240,.03));
+    border-radius:14px; padding:14px 12px 12px;
+    display:flex; flex-wrap:wrap; gap:8px; align-content:flex-start;
+  }
+  .cluster .clab{
+    position:absolute; top:-10px; left:14px; background:var(--bg);
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--accent); padding:0 8px;
+  }
+  .cluster .cnote{
+    position:absolute; bottom:-30px; left:2px; font-family:var(--mono); font-size:11px;
+    color:var(--accent); letter-spacing:.02em;
+  }
+  .cluster .node{position:static; transform:none}
+  .cluster .node:hover,.cluster .node:focus-visible{transform:scale(1.06)}
+
+  /* detail panel */
+  .panel{
+    position:sticky; top:18px; background:linear-gradient(180deg,var(--bg2),#101122);
+    border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:14px;
+    padding:20px; min-height:360px;
+  }
+  .panel .phead{font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--faint); margin-bottom:6px}
+  .panel h3{margin:0 0 4px; font-size:22px; letter-spacing:-.01em; font-weight:700}
+  .panel .sub{font-family:var(--mono); font-size:12px; color:var(--muted); margin-bottom:16px}
+  .panel .row{margin:0 0 14px}
+  .panel .row .rk{font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); margin-bottom:5px}
+  .panel .row p{margin:0; font-size:14.5px; line-height:1.5; color:var(--ink)}
+  .panel .row.why p{color:var(--muted)}
+  .access{display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:12.5px; padding:6px 11px; border-radius:8px; background:var(--bg3); border:1px solid var(--line)}
+  .access .d{width:9px;height:9px;border-radius:50%}
+  .access.teal{color:var(--teal)} .access.teal .d{background:var(--teal)}
+  .access.amber{color:var(--amber)} .access.amber .d{background:var(--amber)}
+  .access.rose{color:var(--rose)} .access.rose .d{background:var(--rose)}
+  .srclink{display:inline-flex; align-items:center; gap:7px; margin-top:4px; font-family:var(--mono); font-size:12.5px; color:var(--accent); text-decoration:none; border-bottom:1px solid transparent}
+  .srclink:hover{border-bottom-color:var(--accent)}
+  .srclink::after{content:"↗"; font-size:12px}
+  .panel .hint{font-size:13.5px; line-height:1.55; color:var(--muted)}
+  .panel .hint b{color:var(--ink); font-weight:600}
+  .panel .hint .mini{display:flex; gap:9px; align-items:baseline; margin-top:10px}
+  .panel .hint .mini .dot{margin-top:5px}
+
+  .reveal{
+    margin-top:22px; padding:18px 20px; border:1px solid var(--line); border-radius:14px;
+    background:linear-gradient(180deg,rgba(52,211,181,.05),rgba(20,22,38,.2));
+    font-size:14.5px; line-height:1.6; color:var(--muted); max-width:78ch;
+  }
+  .reveal b{color:var(--ink); font-weight:600}
+  .reveal .tk{color:var(--teal); font-weight:600}
+  .reveal .ch{color:var(--rose); font-weight:600}
+  .reveal .wt{color:var(--amber); font-weight:600}
+
+  .foot{margin-top:22px; font-family:var(--mono); font-size:12px; color:var(--faint); display:flex; flex-wrap:wrap; gap:6px 16px; justify-content:space-between}
+  .foot a{color:var(--muted); text-decoration:none; border-bottom:1px solid var(--line)}
+  .foot a:hover{color:var(--ink)}
+
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important; animation:none !important} }
+  .node{animation:rise .5s cubic-bezier(.2,.7,.2,1) backwards}
+  @keyframes rise{from{opacity:0; transform:translate(-50%,-40%)} to{opacity:1}}
+  .cluster .node{animation:fade .5s ease backwards}
+  @keyframes fade{from{opacity:0} to{opacity:1}}
+</style>
+
+<div class="wrap">
+  <div class="inner">
+    <p class="eyebrow">Working Memory · field map</p>
+    <h1>The Shape of Memory</h1>
+    <p class="dek">Every AI memory system answers two questions it never separates: <b>where</b> what-the-agent-knows physically lives, and <b>when</b> you spend compute to organize it. Plot both, and the whole field snaps into focus — including why almost everyone is crowded into a single square. <b>Hover any system.</b></p>
+
+    <div class="legend" aria-hidden="false">
+      <span class="k">access needed to build it:</span>
+      <span class="lg"><span class="dot teal"></span> works on any model (closed API is fine)</span>
+      <span class="lg"><span class="dot amber"></span> needs open weights to train</span>
+      <span class="lg"><span class="dot rose"></span> needs model internals (KV&nbsp;/&nbsp;activations)</span>
+    </div>
+
+    <div class="stage">
+      <div class="plotscroll">
+        <div class="plot" id="plot">
+          <div class="ylab">where knowledge lives</div>
+
+          <!-- bands -->
+          <div class="band" style="top:34px">
+            <div class="btag">weights<small>parameter</small></div>
+            <div class="bnote">research only — you must own the weights</div>
+          </div>
+          <div class="band" style="top:210px">
+            <div class="btag">cache<small>activation</small></div>
+            <div class="bnote">nearly empty — needs model internals</div>
+          </div>
+          <div class="band" style="top:322px">
+            <div class="btag">tokens<small>context</small></div>
+          </div>
+
+          <!-- x axis -->
+          <div class="xaxis"></div>
+          <div class="xend l">write&#8209;time<small>compress now</small></div>
+          <div class="xend r">read&#8209;time<small>reconstruct later</small></div>
+
+          <!-- cluster box (tokens + write-time) -->
+          <div class="cluster" id="cluster" style="left:70px; top:352px; width:360px; height:168px">
+            <span class="clab">tokens × write-time</span>
+            <span class="cnote">↑ the entire commercial field builds in this one square</span>
+          </div>
+
+          <!-- nodes injected by JS -->
+        </div>
+      </div>
+
+      <aside class="panel" id="panel" aria-live="polite">
+        <div class="phead">read the map</div>
+        <h3>Two axes, one field</h3>
+        <p class="hint">
+          The vertical axis is <b>where</b> knowledge lives — as re-read <b>text</b>, as a pre-digested <b>KV cache</b>, or baked into <b>weights</b>. The horizontal axis is <b>when</b> you pay to organize it — up front at <b>write-time</b>, or on demand at <b>read-time</b>.
+          <span class="mini"><span class="dot teal"></span><span>The color is the catch: it marks what access you need to build each one — and it’s what explains the map’s lopsided shape.</span></span>
+        </p>
+        <p class="hint" style="margin-top:16px">Hover or tap any node for what it is, why it sits there, and its one real bottleneck.</p>
+      </aside>
+    </div>
+
+    <div class="reveal">
+      <b>What the colors reveal:</b> the crowded <span class="tk">token</span> row is almost entirely green — it runs on any closed API, so anyone can build there, and everyone did. The <span class="ch">cache</span> row is red: it needs access to the model’s internals, so it’s nearly empty of products. The <span class="wt">weights</span> row is amber: it needs open weights to train, so it lives only in research. The field isn’t shaped like this by taste. It’s shaped by <b>who’s allowed through the door</b> — and the two open rows are where memory turns into genuine learning.
+    </div>
+
+    <div class="foot">
+      <span>Working Memory · a series on how models remember, reason about time, and learn</span>
+      <span><a href="https://github.com/pkempire/pie">github.com/pkempire/pie</a></span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // x: 0 (write-time) .. 100 (read-time).  tier: weights|cache|tokens.  cluster:true => rendered inside the box.
+  var N=[
+    // ---- tokens × write-time : the crowded cluster ----
+    {id:"mem0",name:"Mem0",tier:"tokens",cluster:1,access:"teal",
+      sub:"vector store of extracted facts",
+      what:"Reads each turn and writes ADD / UPDATE / DELETE / NONE against a vector store of extracted facts.",
+      why:"Pure write-time compression; knowledge lives as retrievable text you fetch by similarity.",
+      bottleneck:"Lossy extraction — its own paper reports a ~40% extraction-failure rate; whatever the extractor drops is gone.",
+      url:"https://github.com/mem0ai/mem0"},
+    {id:"zep",name:"Zep / Graphiti",tier:"tokens",cluster:1,access:"teal",
+      sub:"bi-temporal knowledge graph",
+      what:"Builds a knowledge graph where every edge carries valid-time and ingestion-time; facts are marked superseded, not deleted.",
+      why:"Still write-time extraction — the graph is text-structure computed at ingest and stored.",
+      bottleneck:"LLM-heavy graph ingestion is expensive; self-hosting means running your own graph database.",
+      url:"https://github.com/getzep/graphiti"},
+    {id:"mastra",name:"Mastra OM",tier:"tokens",cluster:1,access:"teal",
+      sub:"observer + reflector log",
+      what:"Background Observer turns turns into dated observations; a Reflector compresses them into a durable log that replaces history.",
+      why:"Write-time, but reflective — among the best open LongMemEval numbers, with no graph at all.",
+      bottleneck:"The reflection is a frozen, hand-tuned prompt — smart, but never corrected by whether it actually helped.",
+      url:"https://mastra.ai/research/observational-memory"},
+    {id:"letta",name:"Letta",tier:"tokens",cluster:1,access:"teal",
+      sub:"git-backed memory files",
+      what:"The agent edits git-backed markdown memory files; sleep-time subagents consolidate them in the background.",
+      why:"Write-time curation of human-readable text you can diff and review.",
+      bottleneck:"Curation quality rests on the agent’s own judgement; no learned signal for what to keep.",
+      url:"https://www.letta.com/blog/context-repositories"},
+    {id:"supermemory",name:"Supermemory",tier:"tokens",cluster:1,access:"teal",
+      sub:"vector store + “dreaming”",
+      what:"Own vector store and parser with a background “dynamic dreaming” consolidation pass; consumer app + API.",
+      why:"Write-time compression with scheduled consolidation.",
+      bottleneck:"Same recall-shaped ceiling as the rest of the cell; consolidation is heuristic.",
+      url:"https://supermemory.ai"},
+    {id:"honcho",name:"Honcho",tier:"tokens",cluster:1,access:"teal",
+      sub:"theory-of-mind inference",
+      what:"Fine-tuned small models infer user psychology from messages; queries are answered by a reasoning agent, not a vector search.",
+      why:"Write-time inference into stored user models — memory framed as reasoning, not retrieval.",
+      bottleneck:"Leans on their own fine-tuned model internally; you consume it, you don’t shape it.",
+      url:"https://honcho.dev"},
+    {id:"cognee",name:"Cognee",tier:"tokens",cluster:1,access:"teal",
+      sub:"graph + vector + BM25",
+      what:"Memory-native API (remember / recall / forget) over a hybrid graph, vector and BM25 store fused with RRF.",
+      why:"Write-time structuring of documents into a queryable store.",
+      bottleneck:"More document-to-graph than conversational memory; the write step is still hand-designed.",
+      url:"https://www.cognee.ai"},
+    {id:"hindsight",name:"Hindsight",tier:"tokens",cluster:1,access:"teal",
+      sub:"4 retrievers, fact/belief split",
+      what:"Embedded-Postgres memory with four parallel retrievers and a fact / belief / observation / opinion separation; MCP-first.",
+      why:"Write-time, with strong open-source LongMemEval numbers.",
+      bottleneck:"Still optimizes retrieval accuracy — recall, not whether the agent got better.",
+      url:"https://vectorize.io/blog/hindsight-building-ai-agents-that-actually-learn"},
+    {id:"memos",name:"MemOS",tier:"tokens",cluster:1,access:"teal",
+      sub:"a “memory operating system”",
+      what:"A management layer spanning multiple memory stores with strong LoCoMo claims.",
+      why:"Write-time orchestration of text memory (its activation-memory idea sits one row up).",
+      bottleneck:"Headline benchmark numbers have drawn reproduction disputes; treat with care.",
+      url:"https://github.com/MemTensor/MemOS"},
+    {id:"basic",name:"Basic Memory",tier:"tokens",cluster:1,access:"teal",
+      sub:"local markdown graph",
+      what:"A local-first markdown knowledge graph exposed over MCP — memory you own, on disk.",
+      why:"Write-time notes, human-readable, no cloud.",
+      bottleneck:"Manual-ish; capture and curation are largely up to you.",
+      url:"https://www.basicmemory.com"},
+    {id:"langmem",name:"LangMem",tier:"tokens",cluster:1,access:"teal",
+      sub:"LangChain memory utils",
+      what:"LangChain’s store / retrieve memory helpers for LangGraph agents.",
+      why:"Write-time store-and-fetch primitives.",
+      bottleneck:"Largely in maintenance mode; energy moved into LangGraph’s own stores.",
+      url:"https://github.com/langchain-ai/langmem"},
+
+    // ---- tokens × read-time ----
+    {id:"rlm",name:"RLM",tier:"tokens",cluster:0,x:74,y:392,access:"teal",
+      sub:"recursive language models",
+      what:"Keeps the raw log and, at query time, recurses over it — slicing, reasoning over pieces, recombining — to reconstruct the answer.",
+      why:"Read-time: spends compute only when asked, and never throws the past away. A small model wrapped this way beats a frontier model on long context.",
+      bottleneck:"Per-query cost scales with question hardness; a fine-tuned RLM variant needs open weights.",
+      url:"https://arxiv.org/abs/2512.24601"},
+    {id:"searchr1",name:"Search-R1",tier:"tokens",cluster:0,x:88,y:440,access:"amber",
+      sub:"RL-trained search policy",
+      what:"Reinforcement-learns a model to issue its own search queries and reason over what comes back.",
+      why:"Read-time retrieval turned into a learned skill rather than a fixed top-k.",
+      bottleneck:"Training the policy needs open weights and an RL loop — not a drop-in for a closed API.",
+      url:"https://arxiv.org/abs/2503.09516"},
+    {id:"arag",name:"Agentic RAG",tier:"tokens",cluster:0,x:72,y:472,access:"teal",
+      sub:"iterative retrieve–reason loops",
+      what:"Retrieve, reason, decide you’re missing something, retrieve again — a loop at query time. Many implementations.",
+      why:"Read-time: organization happens live, per question.",
+      bottleneck:"Latency and token cost grow with each hop; quality depends on the loop’s stopping sense.",
+      url:"https://arxiv.org/abs/2503.09516"},
+
+    // ---- cache × activation ----
+    {id:"memos-act",name:"MemOS activation mem",tier:"cache",cluster:0,x:30,y:196,access:"rose",
+      sub:"memory as KV activations",
+      what:"Injects memory as key–value cache activations instead of tokens, so it’s ‘already read.’",
+      why:"Cache tier: knowledge lives pre-digested in the model’s attention state.",
+      bottleneck:"Requires KV-cache / internals access — only possible on self-hosted open weights.",
+      url:"https://github.com/MemTensor/MemOS"},
+    {id:"kv",name:"Shared / prefix KV",tier:"cache",cluster:0,x:46,y:216,access:"rose",
+      sub:"compute a prefix once, reuse it",
+      what:"Compute a context’s KV cache once and reuse or share it across calls and agents (vLLM prefix caching; Ramp’s compressed-KV briefing).",
+      why:"Cache tier: an efficiency substrate quietly becoming a memory tier.",
+      bottleneck:"Lives inside the serving stack — needs internals; you can’t bolt it onto a closed API.",
+      url:"https://docs.vllm.ai/en/latest/features/automatic_prefix_caching.html"},
+
+    // ---- weights × parameter ----
+    {id:"memr1",name:"Memory-R1",tier:"weights",cluster:0,x:26,y:44,access:"amber",
+      sub:"RL-trained memory manager",
+      what:"Reinforcement-learns a policy over ADD / UPDATE / DELETE / NOOP from downstream answer reward.",
+      why:"The strategy for managing memory lives in the weights, not a prompt.",
+      bottleneck:"Needs open weights and an RL loop; credit assignment over writes is expensive.",
+      url:"https://arxiv.org/abs/2508.19828"},
+    {id:"mema",name:"Mem-α",tier:"weights",cluster:0,x:33,y:78,access:"amber",
+      sub:"RL-trained memory construction",
+      what:"Trains memory construction as sequential decisions, generalizing from short training inputs to far longer ones.",
+      why:"Learned, parametric memory-building policy.",
+      bottleneck:"Open-weights + RL; reward is trajectory-level, so credit diffuses.",
+      url:"https://arxiv.org/abs/2509.25911"},
+    {id:"distill",name:"On-policy distillation",tier:"weights",cluster:0,x:52,y:52,access:"amber",
+      sub:"move context into weights",
+      what:"Distills a teacher that has the context into a student that doesn’t — knowledge ends up in parameters.",
+      why:"The clean bridge from token-space memory into weight-space skill.",
+      bottleneck:"Needs open weights; you choose what’s stable enough to bake in.",
+      url:"https://thinkingmachines.ai/blog/on-policy-distillation/"},
+    {id:"lettamm",name:"Letta “memory models”",tier:"weights",cluster:0,x:60,y:86,access:"amber",
+      sub:"train models to make their own memory",
+      what:"A proposal to train models end-to-end, via meta-RL, to generate and curate their own token-space memory during sleep-time compute.",
+      why:"Weight-space learning of the memory function itself — vision, not yet a product.",
+      bottleneck:"Unshipped; needs open weights and a training loop most teams don’t have.",
+      url:"https://www.letta.com/blog/towards-agents-that-learn/"}
+  ];
+
+  var plot=document.getElementById('plot');
+  var cluster=document.getElementById('cluster');
+  var panel=document.getElementById('panel');
+  var defaultHTML=panel.innerHTML;
+  var pinned=null;
+
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+  var accessLabel={teal:"Works on any model — a closed API is enough",
+                   amber:"Needs open weights to train",
+                   rose:"Needs model internals (KV / activations)"};
+
+  function show(n){
+    panel.innerHTML=
+      '<div class="phead">'+ (n.tier==='tokens'?'token space':n.tier==='cache'?'activation space':'parameter space') +' · '+
+        (n.x!==undefined && n.x>60 || false ? '' : '') +'</div>'+
+      '<h3>'+esc(n.name)+'</h3>'+
+      '<div class="sub">'+esc(n.sub)+'</div>'+
+      '<div class="row"><div class="rk">what it is</div><p>'+esc(n.what)+'</p></div>'+
+      '<div class="row why"><div class="rk">why it sits here</div><p>'+esc(n.why)+'</p></div>'+
+      '<div class="row"><div class="rk">the real bottleneck</div><p>'+esc(n.bottleneck)+'</p></div>'+
+      '<div class="row"><div class="rk">access to build it</div>'+
+        '<span class="access '+n.access+'"><span class="d"></span>'+accessLabel[n.access]+'</span></div>'+
+      '<a class="srclink" href="'+n.url+'" target="_blank" rel="noopener">source</a>';
+  }
+  function reset(){ if(!pinned) panel.innerHTML=defaultHTML; }
+
+  var tierTop={weights:0, cache:0, tokens:0}; // y provided per-node in px within plot
+
+  N.forEach(function(n,i){
+    var el=document.createElement('button');
+    el.className='node '+n.access;
+    el.type='button';
+    el.setAttribute('aria-label', n.name+' — '+n.sub);
+    el.innerHTML='<span class="d"></span>'+esc(n.name);
+    if(n.cluster){ cluster.appendChild(el); el.style.animationDelay=(i*22)+'ms'; }
+    else {
+      el.style.left=n.x+'%';
+      el.style.top=n.y+'px';
+      el.style.animationDelay=(i*22)+'ms';
+      plot.appendChild(el);
+    }
+    function on(){ el.classList.add('active'); show(n); }
+    function off(){ el.classList.remove('active'); reset(); }
+    el.addEventListener('mouseenter',on);
+    el.addEventListener('mouseleave',off);
+    el.addEventListener('focus',on);
+    el.addEventListener('blur',off);
+    el.addEventListener('click',function(e){
+      e.preventDefault();
+      if(pinned===el){ pinned=null; el.classList.remove('active'); reset(); }
+      else{
+        if(pinned) pinned.classList.remove('active');
+        pinned=el; el.classList.add('active'); show(n);
+      }
+    });
+  });
+})();
+</script>
