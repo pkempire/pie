@@ -3,7 +3,7 @@ title: "Choosing Agent Memory: A Practical Guide for Operators"
 subtitle: "What the memory landscape actually offers, what it trades off, and how to pick — for CTOs, founders, and product leaders"
 author: "Working Memory"
 companion: "The Shape of Memory (interactive field map)"
-status: "v1 — 2026-07-04"
+status: "v2 — 2026-07-04 — actionable pass"
 audience: "technical decision-makers evaluating agent memory; assumes no ML research background"
 ---
 
@@ -43,6 +43,8 @@ The reason this matters was made concrete by a 2026 study called ["Machine Study
 
 The takeaway for a buyer: **if your goal is recall, buy a memory product today. If your goal is genuine competence in your domain, understand that no product on the market fully delivers it yet** — the closest lever is a strong consolidation/"studying" step, and that capability is still nascent. Don't let a vendor's demo convince you that retrieval is understanding.
 
+**In practice — a 60-second test to tell which you need.** Take ten real questions your agent will face and sort them into two piles: could a sharp new hire answer this by *looking it up* in your docs, or would they need to have *worked here a while* to get it right? The lookups are recall — buy a product, you're well served. The "you'd have to understand how this place actually works" questions are competence — and those are exactly the ones today's products quietly miss. If most of your value sits in the second pile, no amount of retrieval tuning gets you there; skip to the consolidation and self-study approaches in sections 5 and 8.
+
 ---
 
 ## 3. The decision framework
@@ -80,6 +82,8 @@ Before you buy a memory system, price the alternative. With million-token contex
 
 The rough crossover: **long context wins for bounded, single-session, or low-query-volume work; external memory wins once history exceeds the window, or you re-query the same corpus enough that re-reading it becomes the dominant cost** (studies put this break-even around ten-plus queries against the same context). If you're below that line, a memory pipeline is complexity you don't need.
 
+**In practice.** Put everything stable — the system prompt, the retrieved knowledge, the document being worked over — at the very front of the prompt and freeze it, then switch on your provider's prompt caching: Anthropic marks cache breakpoints with a `cache_control` flag, OpenAI caches long prompt prefixes automatically, Google exposes explicit context caching. Cached input bills at roughly a tenth of the normal rate and skips re-processing, so a 200K-token knowledge base that costs ~$0.60 to read on the first call costs ~$0.06 on every call after — for as long as you don't alter the prefix. The engineering is about a day: order the prompt stable-part-first, keep that part byte-identical across turns, and append only the user's new message. Before greenlighting any memory-vendor project, have the team run exactly this for a week and log two numbers — tokens per query and median latency, with caching and without. A meaningful share of "we need a memory system" tickets close right there.
+
 ---
 
 ## 5. The tradeoffs, stated plainly
@@ -108,11 +112,15 @@ The rough crossover: **long context wins for bounded, single-session, or low-que
 - **Build on the cache/weight tiers** only if you already run open-weight models and have ML engineers — the payoff (cost at scale, eventual real learning) is real but so is the cost.
 - **Wait / watch** for the competence layer. The thing that will actually make agents *learn your domain* — optimized consolidation and trained memory policies — is the active research frontier, not a purchasable product. Budget for it as a 2026–2027 capability, not a today one.
 
+**In practice — the starter stack if you build.** You don't need a research lab. The working setup today: an open-weight model (Qwen3, Llama, or a GLM-class model) served on **vLLM** — which gives you prefix caching essentially for free — with LoRA fine-tuning via standard tooling (PEFT/Unsloth, or a managed trainer like Tinker) and the open **Cartridges** implementation when you want a self-study cache over a specific corpus. Rented H100 time by the hour is enough to start; a first Cartridge or domain LoRA is a days-to-weeks project for one competent ML engineer, not a quarter. Start with one narrow, high-value corpus (your best-documented service, your most-queried policy set) and measure it against the long-context baseline from section 4.
+
 ---
 
 ## 7. How to evaluate — because the benchmarks lie
 
-Do not trust vendor leaderboard numbers. The most-cited memory benchmark, LoCoMo, was [publicly audited in 2026](https://github.com/dial481/locomo-audit): ~6% of its answer key is wrong and the standard automated judge accepts a majority of confidently-wrong answers. Headline scores have been reproduced tens of points lower by third parties. The only defensible evaluation is **on your own data, with your own questions, scored by a method you trust** (ideally deterministic checks, not an LLM judge, which flips its verdict on identical answers). Build a small, representative test set from real usage before you sign anything, and re-run it against two or three candidates. The vendor that wins on *your* set is the only ranking that means anything.
+Do not trust vendor leaderboard numbers. The most-cited memory benchmark, LoCoMo, was [publicly audited in 2026](https://github.com/dial481/locomo-audit): ~6% of its answer key is wrong and the standard automated judge accepts a majority of confidently-wrong answers. Headline scores have been reproduced tens of points lower by third parties. The only defensible evaluation is **on your own data, with your own questions, scored by a method you trust** (ideally deterministic checks, not an LLM judge, which flips its verdict on identical answers).
+
+**In practice — the recipe.** (1) Pull 50–100 real interactions from your logs. (2) For each, write the question and the correct answer *by hand* — this is a half-day, and it's the highest-value half-day in the whole project. (3) Wherever you can, make the answer checkable by exact string or number match rather than judgment, so scoring is deterministic and re-runnable at zero cost. (4) Run each candidate system over the identical inputs and score. (5) Read every failure — the *pattern* (stale facts? multi-hop questions? recent events?) tells you far more than the aggregate number. Budget one engineer-week. Any vendor worth buying will happily help you run this on your data; one that steers you back to its own leaderboard is answering the question for you.
 
 ---
 
