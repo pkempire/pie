@@ -1,0 +1,358 @@
+<style>
+  :root{
+    --ink:#171a1f; --ink2:#565b64; --ink3:#878c96; --hair:#dcdfe4; --hair2:#e9ebef;
+    --paper:#eef0ec; --card:#fcfcfb;
+    --teal:#0d8a77; --teal-wash:rgba(13,138,119,.055); --teal-edge:rgba(13,138,119,.32);
+    --rose:#bd3356; --rose-wash:rgba(189,51,86,.055); --rose-edge:rgba(189,51,86,.32);
+    --amber:#a2680b; --amber-wash:rgba(162,104,11,.06); --amber-edge:rgba(162,104,11,.32);
+    --struct:#28324e;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  .wrap{background:var(--paper); color:var(--ink); font-family:var(--sans);
+    padding:clamp(20px,3.5vw,40px); min-height:100%; -webkit-font-smoothing:antialiased}
+  .inner{max-width:1180px; margin:0 auto}
+
+  .masthead{border-bottom:1.5px solid var(--ink); padding-bottom:16px; margin-bottom:22px}
+  .kicker{display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+    font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink2); margin-bottom:14px}
+  .kicker .r{color:var(--ink3); letter-spacing:.08em}
+  h1{font-size:clamp(30px,5vw,50px); line-height:1; letter-spacing:-.025em; font-weight:800; margin:0 0 12px; text-wrap:balance}
+  .dek{font-size:clamp(15px,1.7vw,17.5px); line-height:1.5; color:var(--ink2); max-width:70ch; margin:0}
+  .dek b{color:var(--ink); font-weight:600}
+
+  .legend{display:flex; flex-wrap:wrap; gap:10px 22px; align-items:center; margin:20px 0 10px;
+    font-family:var(--mono); font-size:12px; color:var(--ink2)}
+  .legend .lk{color:var(--ink3); letter-spacing:.05em; text-transform:uppercase; font-size:11px}
+  .lg{display:flex; align-items:center; gap:9px}
+  .gy{width:13px; height:13px; flex:none; border-radius:2px}
+  .gy.teal{background:var(--teal)}
+  .gy.rose{background:transparent; border:2px solid var(--rose); border-radius:50%}
+  .gy.amber{background:linear-gradient(135deg,var(--amber) 0 50%,transparent 50% 100%); border:1.5px solid var(--amber)}
+  .lg b{color:var(--ink); font-weight:600}
+
+  .stage{display:grid; grid-template-columns:1fr 322px; gap:20px; align-items:start; margin-top:14px}
+  @media(max-width:900px){ .stage{grid-template-columns:1fr} }
+
+  .matrixscroll{overflow-x:auto; -webkit-overflow-scrolling:touch}
+  .matrix{min-width:648px; border:1.5px solid var(--ink); background:var(--card)}
+  .colhead{display:grid; grid-template-columns:120px 1fr 1fr .92fr; border-bottom:1px solid var(--ink)}
+  .colhead .ch{padding:9px 12px; font-family:var(--mono); font-size:11px; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--ink); border-left:1px solid var(--hair)}
+  .colhead .ch:first-child{border-left:none}
+  .colhead .ch small{display:block; text-transform:none; letter-spacing:0; color:var(--ink3); font-size:10.5px; margin-top:2px}
+  .colhead .ch.axis{color:var(--ink3); font-weight:400}
+
+  .rrow{display:grid; grid-template-columns:120px 1fr 1fr .92fr; border-bottom:1px solid var(--hair)}
+  .rrow:last-child{border-bottom:none}
+  .rrow.tokens{background:var(--teal-wash)}
+  .rrow.cache{background:var(--rose-wash)}
+  .rrow.weights{background:var(--amber-wash)}
+  .rowhead{padding:12px 12px; border-right:1px solid var(--hair)}
+  .rowhead .rt{font-family:var(--mono); font-size:13px; font-weight:600; letter-spacing:.02em}
+  .rowhead .rs{font-family:var(--mono); font-size:10px; color:var(--ink3); margin-top:3px; letter-spacing:.02em}
+  .rowhead .acc{margin-top:8px; font-family:var(--mono); font-size:10px; line-height:1.4}
+  .tokens .rowhead .acc{color:var(--teal)} .cache .rowhead .acc{color:var(--rose)} .weights .rowhead .acc{color:var(--amber)}
+  .cell{padding:11px 11px; border-left:1px solid var(--hair); display:flex; flex-wrap:wrap; gap:7px; align-content:flex-start}
+  .cell.empty{align-items:center; justify-content:center; color:var(--ink3); font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase}
+  .cell.span{grid-column:2 / 5}
+
+  .chip{display:inline-flex; align-items:center; gap:8px; background:var(--card);
+    border:1px solid var(--hair); border-radius:5px; padding:5px 9px 5px 6px; cursor:pointer;
+    font-family:var(--mono); font-size:12px; color:var(--ink); white-space:nowrap;
+    transition:border-color .13s, box-shadow .13s, transform .13s}
+  .chip .tile{width:22px; height:22px; flex:none; border-radius:5px; overflow:hidden; display:grid; place-items:center;
+    font-size:9.5px; font-weight:700; letter-spacing:-.02em; color:#fff; line-height:1}
+  .chip .tile svg{width:100%; height:100%; display:block}
+  .chip .acx{width:9px; height:9px; flex:none; margin-left:1px}
+  .chip.teal .acx{background:var(--teal); border-radius:2px}
+  .chip.rose .acx{background:transparent; border:1.6px solid var(--rose); border-radius:50%}
+  .chip.amber .acx{background:linear-gradient(135deg,var(--amber) 0 50%,transparent 50%); border:1.4px solid var(--amber)}
+  .chip.vision{border-style:dashed}
+  .chip:hover,.chip:focus-visible{outline:none; border-color:var(--ink); transform:translateY(-1px);
+    box-shadow:0 4px 0 -1px var(--hair), 0 8px 22px -14px rgba(20,22,30,.6)}
+  .chip.active{border-color:var(--ink); box-shadow:inset 0 0 0 1px var(--ink)}
+
+  /* detail panel */
+  .panel{position:sticky; top:16px; background:var(--card); border:1.5px solid var(--ink)}
+  .panel .ph{padding:9px 14px; border-bottom:1px solid var(--hair); font-family:var(--mono);
+    font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink3);
+    display:flex; justify-content:space-between; align-items:center}
+  .panel .pb{padding:16px 16px 18px; min-height:352px}
+  .panel .idrow{display:flex; align-items:center; gap:11px; margin-bottom:5px}
+  .panel .bigtile{width:36px; height:36px; flex:none; border-radius:7px; overflow:hidden; display:grid; place-items:center; color:#fff; font-family:var(--mono); font-weight:700; font-size:13px}
+  .panel .bigtile svg{width:100%; height:100%; display:block}
+  .panel h3{margin:0; font-size:19px; letter-spacing:-.01em; font-weight:700; line-height:1.05}
+  .panel .sub{font-family:var(--mono); font-size:11.5px; color:var(--ink2); margin:2px 0 14px}
+  .panel .row{margin:0 0 12px}
+  .panel .rk{font-family:var(--mono); font-size:9.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--ink3); margin-bottom:4px}
+  .panel .row p{margin:0; font-size:13.5px; line-height:1.5; color:var(--ink)}
+  .panel .row.why p,.panel .row.how p{color:var(--ink2)}
+  .panel .row.how p{border-left:2px solid var(--hair); padding-left:10px}
+  .tags{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:13px}
+  .tag{font-family:var(--mono); font-size:10.5px; padding:3px 8px; border:1px solid var(--hair); border-radius:3px; color:var(--ink2)}
+  .tag.acc-teal{color:var(--teal); border-color:var(--teal-edge)}
+  .tag.acc-rose{color:var(--rose); border-color:var(--rose-edge)}
+  .tag.acc-amber{color:var(--amber); border-color:var(--amber-edge)}
+  .ground{display:block; font-family:var(--mono); font-size:11px; color:var(--ink2); margin-bottom:13px; line-height:1.4}
+  .ground b{color:var(--ink); font-weight:600}
+  .src{display:inline-flex; align-items:center; gap:7px; font-family:var(--mono); font-size:12px; color:var(--struct); text-decoration:none; border-bottom:1px solid var(--hair); padding-bottom:1px}
+  .src:hover{border-bottom-color:var(--struct)}
+  .src::after{content:"↗"}
+  .panel .hint{font-size:13px; line-height:1.5; color:var(--ink2)}
+  .panel .hint b{color:var(--ink)}
+  .panel .hint .ex{margin-top:12px; padding-top:12px; border-top:1px solid var(--hair2); font-family:var(--mono); font-size:11.5px; color:var(--ink3)}
+
+  .reveal{margin-top:20px; border:1px solid var(--hair); border-left:3px solid var(--ink); background:var(--card);
+    padding:16px 18px; font-size:13.5px; line-height:1.55; color:var(--ink2); max-width:82ch}
+  .reveal b{color:var(--ink); font-weight:600}
+  .reveal .tk{color:var(--teal); font-weight:600} .reveal .ch{color:var(--rose); font-weight:600} .reveal .wt{color:var(--amber); font-weight:600}
+
+  .foot{margin-top:18px; padding-top:12px; border-top:1px solid var(--hair);
+    font-family:var(--mono); font-size:11px; color:var(--ink3); display:flex; flex-wrap:wrap; gap:6px 18px; justify-content:space-between}
+  .foot a{color:var(--ink2); text-decoration:none; border-bottom:1px solid var(--hair)}
+  .foot a:hover{color:var(--ink)}
+
+  @media (prefers-reduced-motion:reduce){ *{transition:none!important; animation:none!important} }
+  .chip{animation:in .4s ease backwards}
+  @keyframes in{from{opacity:0; transform:translateY(3px)} to{opacity:1}}
+</style>
+
+<div class="wrap">
+  <div class="inner">
+    <header class="masthead">
+      <div class="kicker"><span>Working Memory — Field Map №1 · systems view</span><span class="r">verified 2026-07-04 · hover any system</span></div>
+      <h1>The Shape of Memory — the systems</h1>
+      <p class="dek">The companion to the <b>approaches</b> map — same two axes (<b>where</b> knowledge lives, <b>when</b> the system organizes it), but plotting the real products people ship, each with how it actually ingests and retrieves. Every one is a serious, well-built system; grouping them by shared mechanism isn't a ranking — it's a map of a healthy, crowded field.</p>
+    </header>
+
+    <div class="legend">
+      <span class="lk">Access needed to build it =</span>
+      <span class="lg"><span class="gy teal"></span><b>any model</b>&nbsp;· a closed API works</span>
+      <span class="lg"><span class="gy rose"></span><b>model internals</b>&nbsp;· KV / activations</span>
+      <span class="lg"><span class="gy amber"></span><b>open weights</b>&nbsp;· must train</span>
+    </div>
+
+    <div class="stage">
+      <div>
+        <div class="matrixscroll">
+          <div class="matrix" id="matrix">
+            <div class="colhead">
+              <div class="ch axis">where&nbsp;↓&nbsp;/&nbsp;when&nbsp;→</div>
+              <div class="ch">Write-time<small>organize at ingest</small></div>
+              <div class="ch">Hybrid<small>both ends</small></div>
+              <div class="ch">Read-time<small>organize at query</small></div>
+            </div>
+
+            <div class="rrow weights">
+              <div class="rowhead">
+                <div class="rt">weights</div>
+                <div class="rs">parameter space</div>
+                <div class="acc">◨ open weights<br>to train</div>
+              </div>
+              <div class="cell" data-cell="weights-write"></div>
+              <div class="cell empty">open frontier</div>
+              <div class="cell empty">—</div>
+            </div>
+
+            <div class="rrow cache">
+              <div class="rowhead">
+                <div class="rt">cache</div>
+                <div class="rs">activation space</div>
+                <div class="acc">◯ model internals<br>(KV / activations)</div>
+              </div>
+              <div class="cell span" data-cell="cache-span"></div>
+            </div>
+
+            <div class="rrow tokens">
+              <div class="rowhead">
+                <div class="rt">tokens</div>
+                <div class="rs">context space</div>
+                <div class="acc">■ any model<br>(closed API is fine)</div>
+              </div>
+              <div class="cell" data-cell="tokens-write"></div>
+              <div class="cell" data-cell="tokens-hybrid"></div>
+              <div class="cell" data-cell="tokens-read"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="panel" id="panel" aria-live="polite">
+        <div class="ph"><span>read the map</span><span id="phcount"></span></div>
+        <div class="pb" id="pbody">
+          <h3 style="font-size:20px;margin:0 0 8px">Three tiers, one question</h3>
+          <p class="hint">Down the side: <b>where</b> knowledge lives — as re-read <b>text</b>, as a pre-computed <b>KV cache</b>, or trained into <b>weights</b>. Across the top: <b>when</b> you pay to organize it.
+          <span class="ex">Each tier's color is the access you need to build there — and that, not taste, is what explains the map's lopsided shape. Hover any system for how it actually works, why it's placed there, its real bottleneck, and a primary source.</span></p>
+        </div>
+      </aside>
+    </div>
+
+    <div class="reveal">
+      <b>What the shape is telling you.</b> The <span class="tk">token</span> tier is packed because it's the only one you can build on a closed API — so every funded company is there, differentiated only by how cleverly it compresses text. The <span class="ch">cache</span> tier is nearly empty: reusing knowledge as KV activations needs access to the model's internals, so it exists only where people self-host. The <span class="wt">weights</span> tier — actually changing the model from experience — needs open weights to train, so it lives almost entirely in research. The field isn't shaped like this by what works best; it's shaped by <b>who's allowed through the door</b> — and the two sparse tiers are where memory stops being retrieval and starts becoming learning.
+    </div>
+
+    <div class="foot">
+      <span>Working Memory · a series on how models remember, reason about time, and learn</span>
+      <span>primary source on every node · <a href="https://github.com/pkempire/pie">github.com/pkempire/pie</a></span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var C={teal:"#0d8a77",rose:"#bd3356",amber:"#a2680b",ink:"#3a3f4a",indigo:"#5b4bdb",
+         mag:"#c8478f",blue:"#2f6fed",violet:"#6d5ae6",lgreen:"#1a9c7a",terra:"#d97757"};
+  var LOGO={
+    mem0:'<svg viewBox="0 0 40 40"><rect width="40" height="40" rx="9" fill="#c9b7f6"/><g stroke="#0a0a0a" stroke-width="2.1"><line x1="20" y1="20" x2="20" y2="9.5"/><line x1="20" y1="20" x2="29.6" y2="14.4"/><line x1="20" y1="20" x2="29.9" y2="25.8"/><line x1="20" y1="20" x2="20" y2="30.5"/><line x1="20" y1="20" x2="10.1" y2="25.8"/><line x1="20" y1="20" x2="10.4" y2="14.4"/></g><g fill="#0a0a0a"><circle cx="20" cy="20" r="4.8"/><circle cx="20" cy="9.5" r="2.5"/><circle cx="29.6" cy="14.4" r="2.5"/><circle cx="29.9" cy="25.8" r="2.5"/><circle cx="20" cy="30.5" r="2.5"/><circle cx="10.1" cy="25.8" r="2.5"/><circle cx="10.4" cy="14.4" r="2.5"/></g></svg>',
+    zep:'<svg viewBox="0 0 40 40"><rect width="40" height="40" rx="9" fill="#3a2b9d"/><path d="M14.5 10.5 h6.2 l-6.2 4.4 h6.2" fill="none" stroke="#fff" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><rect x="9.5" y="17" width="21" height="14" rx="4.5" fill="#fff"/><rect x="18.7" y="14.6" width="2.6" height="3" fill="#fff"/><circle cx="16.3" cy="24" r="2.5" fill="#3a2b9d"/><circle cx="23.7" cy="24" r="2.5" fill="#3a2b9d"/></svg>',
+    mastra:'<svg viewBox="0 0 40 40"><rect width="40" height="40" rx="9" fill="#0a0a0a"/><circle cx="9.5" cy="13.5" r="2.6" fill="#fff"/><circle cx="16.5" cy="26" r="5.4" fill="#fff"/><circle cx="28" cy="26" r="5.4" fill="#fff"/><rect x="16" y="20.6" width="12.5" height="5.6" fill="#fff"/></svg>',
+    cognee:'<svg viewBox="0 0 40 40"><defs><linearGradient id="cg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7b3ff2"/><stop offset="1" stop-color="#00c586"/></linearGradient></defs><rect width="40" height="40" rx="9" fill="url(#cg1)"/><g stroke="#fff" stroke-width="2.5" stroke-linecap="round"><line x1="11.5" y1="17" x2="11.5" y2="23"/><line x1="16.5" y1="12.5" x2="16.5" y2="27.5"/><line x1="21.5" y1="15" x2="21.5" y2="25"/><line x1="26.5" y1="10.5" x2="26.5" y2="29.5"/><line x1="31" y1="17.5" x2="31" y2="22.5"/></g></svg>'
+  };
+  // access: teal=any-model, rose=model-internals, amber=open-weights
+  var N=[
+   {cell:"tokens-write",name:"Mem0",logo:"mem0",access:"teal",sub:"LLM-extracted fact store",
+    how:"Ingest: an LLM reads each new message and writes out the durable facts it finds. Retrieval: your question is embedded and the most similar saved facts are pulled back into the prompt.",
+    why:"Pure write-time compression, in token space — the archetype of the whole cluster.",
+    bottleneck:"Silent extraction failures: its own blog admits the old algorithm 'destroyed context', and open issues document facts dropped to empty on parse errors.",
+    ground:"self-reported benchmarks (LoCoMo numbers disputed)",url:"https://github.com/mem0ai/mem0",lic:"Apache-2.0"},
+   {cell:"tokens-write",name:"Zep / Graphiti",logo:"zep",access:"teal",sub:"bi-temporal knowledge graph",
+    how:"Ingest: new messages are turned into a graph of entities and relationships, each edge stamped with when it became true and when it stopped. Retrieval: the query walks that graph and filters by time.",
+    why:"Write-time extraction, stored as graph structure — still text you query.",
+    bottleneck:"LLM-heavy graph ingestion is costly; self-hosting means running the graph database yourself.",
+    ground:"paper arXiv:2501.13956; LongMemEval ~71% (gpt-4o), now mid-pack",url:"https://github.com/getzep/graphiti",lic:"Apache-2.0"},
+   {cell:"tokens-write",name:"Mastra OM",logo:"mastra",access:"teal",sub:"observer + reflector log",
+    how:"Ingest: a background pass rewrites the running conversation into a tidy, dated list of observations that replaces the raw transcript. Retrieval: there isn't one — it just keeps that list in context and reads it.",
+    why:"Write-time compression into a static, cacheable context — the strongest instance of 'compress well, don't retrieve'.",
+    bottleneck:"The reflection prompt is fixed and hand-tuned; it's never corrected by whether a note actually helped.",
+    ground:"independently reproducible runner; 94.87% LongMemEval (gpt-5-mini), record",url:"https://mastra.ai/research/observational-memory",lic:"open source"},
+   {cell:"tokens-write",name:"Cognee",logo:"cognee",access:"teal",sub:"Extract–Cognify–Load graph",
+    how:"Ingest: documents from many sources run through a build step that produces a knowledge graph plus a vector index. Retrieval: combines graph lookups with similarity search.",
+    why:"Write-time: the graph is built and 'cognified' at ingest.",
+    bottleneck:"More document-to-graph than conversational memory; the build step is hand-designed.",
+    ground:"open benchmarks; brand color verified from repo",url:"https://github.com/topoteretes/cognee",lic:"Apache-2.0"},
+   {cell:"tokens-write",name:"Honcho",mk:"H",mkc:C.mag,access:"teal",sub:"reasons about you, doesn't retrieve",
+    how:"Ingest: instead of saving raw facts, a background reasoning pass (its own fine-tuned small models) infers what a user is like and stores those conclusions. Retrieval: you query that reasoning layer, not a vector search.",
+    why:"Write-time inference into stored user models — vectors only index the reasoning outputs.",
+    bottleneck:"The theory-of-mind quality rests on Honcho's proprietary tuned models; you consume them, you don't shape them.",
+    ground:"open-source lib + managed service",url:"https://honcho.dev",lic:"open source"},
+   {cell:"tokens-hybrid",name:"Letta",mk:"Le",mkc:C.terra,access:"teal",sub:"self-editing memory (ex-MemGPT)",
+    how:"Ingest: the agent itself decides what to write into a small set of always-loaded memory blocks and a larger archive, editing as it goes. Retrieval: it pages relevant archive entries into context when needed.",
+    why:"Hybrid — the agent organizes at both write and read time.",
+    bottleneck:"Curation quality rests on the agent's own judgement; there's no learned signal for what's worth keeping.",
+    ground:"platform + paper lineage (MemGPT)",url:"https://github.com/letta-ai/letta",lic:"Apache-2.0"},
+   {cell:"tokens-hybrid",name:"Supermemory",mk:"Sm",mkc:C.ink,access:"teal",sub:"universal memory API",
+    how:"Ingest: extractors turn incoming data into profile facts and a memory graph. Retrieval: a fast layer pulls the relevant pieces at query time (sub-400ms).",
+    why:"Hybrid — extractors compress at write-time, retrieval happens at read-time.",
+    bottleneck:"Same recall-shaped ceiling as the rest of the tier; consolidation is heuristic.",
+    ground:"self-reported; ~82–85% LongMemEval",url:"https://github.com/supermemoryai/supermemory",lic:"MIT"},
+   {cell:"tokens-hybrid",name:"Hindsight",mk:"Hs",mkc:C.blue,access:"teal",sub:"world facts / experiences / beliefs",
+    how:"Ingest: new information is sorted into facts, experiences, and beliefs, each stored with a confidence score and a timestamp. Retrieval: four retrievers run in parallel and a reflection step reconciles them at answer time.",
+    why:"Hybrid — retain/consolidate at write-time, agentic reflect at read-time.",
+    bottleneck:"Still optimizes retrieval accuracy — recall, not whether the agent improved.",
+    ground:"independently reproduced (Virginia Tech + Washington Post); 91.4% LongMemEval",url:"https://github.com/vectorize-io/hindsight",lic:"MIT"},
+   {cell:"tokens-hybrid",name:"MemOS",mk:"MOS",mkc:C.violet,access:"teal",sub:"a memory operating system",
+    how:"Ingest: memories are stored as inspectable units in a graph, scheduled in the background. Retrieval: mixes graph and vector lookup. Its research lineage also reaches into a KV / weight tier (see cache row).",
+    why:"Hybrid token-space management — the only system here that also gestures one tier up.",
+    bottleneck:"Headline LoCoMo claims drew a formal reproduction audit (38% reproduced vs 92% claimed on the related EverMemOS line).",
+    ground:"disputed benchmarks — see dial481/locomo-audit",url:"https://github.com/MemTensor/MemOS",lic:"Apache-2.0"},
+   {cell:"tokens-hybrid",name:"LangMem",mk:"Lm",mkc:C.lgreen,access:"teal",sub:"LangChain memory SDK",
+    how:"Ingest: two paths — tools the agent calls mid-conversation to jot notes, and a background job that extracts and consolidates memories into a store. Retrieval: search over that store.",
+    why:"Hybrid — record/search during the conversation (read) and consolidate in the background (write).",
+    bottleneck:"Primitive layer; persistence comes from LangGraph's store, and it's largely in maintenance.",
+    ground:"SDK; pairs with LangGraph",url:"https://github.com/langchain-ai/langmem",lic:"MIT-family"},
+   {cell:"tokens-read",name:"Basic Memory",mk:"BM",mkc:C.ink,access:"teal",sub:"plain-markdown graph you own",
+    how:"Ingest: everything is saved as plain Markdown files linked to each other — there is no extraction step. Retrieval: the agent reads and follows those links at query time, with a local index to help.",
+    why:"Read-time: the files stay plain text and the agent traverses them link-by-link when asked.",
+    bottleneck:"Capture and curation are largely manual; the AGPL-3.0 license is the outlier among these peers.",
+    ground:"local-first; most human-owned of the set",url:"https://github.com/basicmachines-co/basic-memory",lic:"AGPL-3.0"},
+   {cell:"tokens-read",name:"RLM",mk:"RLM",mkc:C.ink,access:"teal",sub:"recursive language models",
+    how:"Ingest: nothing is pre-processed — the raw history just sits in a code environment. Retrieval: when asked, the model writes small programs to slice and re-read only the relevant parts, calling itself on each slice.",
+    why:"Read-time: all the work happens at query time, and nothing is thrown away.",
+    bottleneck:"Per-query cost scales with question hardness; a fine-tuned RLM variant would need open weights.",
+    ground:"arXiv:2512.24601 (Zhang, Kraska, Khattab) — RLM(GPT-5-mini) beats base GPT-5 by >100% on OOLONG",url:"https://arxiv.org/abs/2512.24601",lic:"research"},
+   {cell:"tokens-read",name:"Agentic RAG",mk:"aR",mkc:C.ink,access:"teal",sub:"iterative retrieve–reason loops",
+    how:"Ingest: documents in an ordinary index. Retrieval becomes a loop: search, read, decide if it's enough, search again — until the model has what it needs to answer.",
+    why:"Read-time: organization happens live, per question.",
+    bottleneck:"Latency and token cost grow with each hop; quality depends on the loop's sense of when to stop.",
+    ground:"survey arXiv:2501.09136 (umbrella pattern, no single number)",url:"https://arxiv.org/abs/2501.09136",lic:"pattern"},
+   {cell:"tokens-read",name:"Letta “memory models”",mk:"MM",mkc:C.terra,access:"teal",vision:1,sub:"vision — tokens over weights",
+    how:"Proposal: train models to write and curate their own durable text memory via agentic management and 'dreaming', so the notes improve as the model is used — learning that lives in text, not weights.",
+    why:"Read-time curation of durable text; the explicit counterpoint to distilling into weights.",
+    bottleneck:"A vision, not a shipped system; the proposed 'memory model' would itself need open-weights training.",
+    ground:"vision blog — no benchmark",url:"https://www.letta.com/blog/towards-agents-that-learn/",lic:"position"},
+   {cell:"cache-span",name:"MemOS activation memory",mk:"kv",mkc:C.rose,access:"rose",sub:"memory stored as computation, not text",
+    how:"Formally: when a transformer reads text it turns it into internal Key/Value tensors (the 'KV cache') that attention reads from — normally recomputed every call and discarded. This precomputes the KV tensors for frequently-used memories once and injects them straight into the cache, so the model has 'already read' that memory without re-processing the tokens.",
+    why:"Cache tier: knowledge lives as attention state, not as tokens in the prompt.",
+    bottleneck:"Needs direct KV-cache access, so it only runs on self-hosted open weights; the payoff is speed (faster first token), not accuracy.",
+    ground:"MemOS docs — efficiency claim (~35% token savings overall)",url:"https://memos-docs.openmem.net/open_source/modules/memories/kv_cache_memory/",lic:"Apache-2.0"},
+   {cell:"cache-span",name:"Shared / prefix KV",mk:"KV",mkc:C.rose,access:"rose",sub:"vLLM prefix caching · Ramp Latent Briefing",
+    how:"The model's internal read (KV cache) of a chunk of context is computed once and reused instead of re-read. vLLM reuses any identical shared prefix; Ramp's Latent Briefing selectively compacts it and hands a worker agent the relevant KV directly.",
+    why:"Cache tier: an efficiency substrate quietly becoming a memory tier.",
+    bottleneck:"Lives inside the serving stack — needs internals; not bolt-on-able to a closed API.",
+    ground:"vLLM docs; Ramp Latent Briefing ~49% token savings, +3pp acc (eng blog, not a paper)",url:"https://docs.vllm.ai/en/stable/design/prefix_caching/",lic:"infra"},
+   {cell:"weights-write",name:"Memory-R1",mk:"R1",mkc:C.amber,access:"amber",sub:"RL-trained memory manager",
+    how:"Ingest: a model, trained by trial-and-reward, decides when to add / update / delete / skip a memory in an external bank. Retrieval: a second trained agent distills the retrieved candidates before answering. The skill lives in the weights.",
+    why:"The management strategy is parametric, even though the memory content is tokens.",
+    bottleneck:"Needs open weights and an RL loop; credit assignment over writes is expensive.",
+    ground:"arXiv:2508.19828 — outperforms Mem0 on LoCoMo (delta shifts across versions)",url:"https://arxiv.org/abs/2508.19828",lic:"research"},
+   {cell:"weights-write",name:"Mem-α",mk:"α",mkc:C.amber,access:"amber",sub:"RL-learned memory construction",
+    how:"Learns, from practice with reward, how to build and organize a whole memory system — which store to use, what to keep, when to update — then applies that learned procedure to new, much longer conversations.",
+    why:"The memory-construction policy is parametric; it generalizes past its training length.",
+    bottleneck:"Open weights + RL; reward is downstream, so credit is coarse.",
+    ground:"arXiv:2509.25911 (code released)",url:"https://arxiv.org/abs/2509.25911",lic:"research"},
+   {cell:"weights-write",name:"Search-R1",mk:"SR",mkc:C.amber,access:"amber",sub:"RL-trained search-and-reason",
+    how:"Trained so the model issues its own search queries mid-reasoning and learns, from whether the final answer was right, which queries actually help. The search behavior is baked into weights; facts still arrive as tokens.",
+    why:"The learned asset is a retrieval behavior in parameters.",
+    bottleneck:"Needs open weights and an RL framework — not a drop-in for a closed API.",
+    ground:"arXiv:2503.09516 — +41% (7B) / +20% (3B) over RAG across 7 QA sets",url:"https://arxiv.org/abs/2503.09516",lic:"research"},
+   {cell:"weights-write",name:"On-policy distillation",mk:"OD",mkc:C.amber,access:"amber",sub:"move capability into weights",
+    how:"Takes something the model can only do with notes in its context and trains it into the weights: the student practices on its own outputs, graded token-by-token against a teacher that has the notes, until it knows the skill without them.",
+    why:"The parameter-space pole of the map: knowledge ends up in weights, not context.",
+    bottleneck:"Needs open weights; you choose what's stable enough to bake in. Pitched for continual learning without catastrophic forgetting.",
+    ground:"Thinking Machines Lab (Kevin Lu et al.) — large compute savings vs RL",url:"https://thinkingmachines.ai/blog/on-policy-distillation/",lic:"method"},
+  ];
+
+  var accName={teal:"any model — closed API is fine",rose:"model internals — KV / activations",amber:"open weights — must train"};
+  var accCls={teal:"acc-teal",rose:"acc-rose",amber:"acc-amber"};
+  var pbody=document.getElementById('pbody'), phcount=document.getElementById('phcount');
+  var def=pbody.innerHTML, pinned=null;
+  function esc(s){return (s||"").replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+  function tile(n,cls){ return n.logo ? '<span class="'+cls+'">'+LOGO[n.logo]+'</span>'
+                                      : '<span class="'+cls+'" style="background:'+n.mkc+'">'+esc(n.mk)+'</span>'; }
+
+  function show(n){
+    pbody.innerHTML=
+      '<div class="idrow">'+tile(n,'bigtile')+'<h3>'+esc(n.name)+'</h3></div>'+
+      '<div class="sub">'+esc(n.sub)+'</div>'+
+      '<div class="tags">'+
+        '<span class="tag '+accCls[n.access]+'">'+accName[n.access]+'</span>'+
+        '<span class="tag">'+esc(n.lic)+'</span>'+
+        (n.vision?'<span class="tag">vision, not shipped</span>':'')+
+      '</div>'+
+      '<div class="row how"><div class="rk">how it works</div><p>'+esc(n.how)+'</p></div>'+
+      '<div class="row why"><div class="rk">why it sits here</div><p>'+esc(n.why)+'</p></div>'+
+      '<div class="row"><div class="rk">the real bottleneck</div><p>'+esc(n.bottleneck)+'</p></div>'+
+      '<div class="ground">grounding — <b>'+esc(n.ground)+'</b></div>'+
+      '<a class="src" href="'+n.url+'" target="_blank" rel="noopener">primary source</a>';
+  }
+  function reset(){ if(!pinned){ pbody.innerHTML=def; phcount.textContent=''; } }
+
+  N.forEach(function(n,i){
+    var cell=document.querySelector('[data-cell="'+n.cell+'"]'); if(!cell) return;
+    var b=document.createElement('button'); b.type='button'; b.className='chip '+n.access+(n.vision?' vision':'');
+    b.setAttribute('aria-label',n.name+' — '+n.sub);
+    b.innerHTML=tile(n,'tile')+esc(n.name)+'<span class="acx"></span>';
+    b.style.animationDelay=(i*20)+'ms';
+    cell.appendChild(b);
+    function on(){ b.classList.add('active'); show(n); phcount.textContent=n.access==='teal'?'token tier':n.access==='rose'?'cache tier':'weights tier'; }
+    function off(){ b.classList.remove('active'); reset(); }
+    b.addEventListener('mouseenter',on); b.addEventListener('mouseleave',off);
+    b.addEventListener('focus',on); b.addEventListener('blur',off);
+    b.addEventListener('click',function(e){e.preventDefault();
+      if(pinned===b){pinned=null;b.classList.remove('active');reset();}
+      else{ if(pinned)pinned.classList.remove('active'); pinned=b; b.classList.add('active'); show(n);} });
+  });
+})();
+</script>
