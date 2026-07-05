@@ -20,10 +20,10 @@ This guide is the decision framework, the tradeoffs, and an honest read of where
 The [field map](./memory-map.html) sorts every memory system onto two axes — *where* the knowledge physically lives, and *when* the system does the work of organizing it. The "where" axis is the one that matters for a buyer, because it splits the market into three genuinely different products with different economics:
 
 - **Token memory (text).** The agent's knowledge is stored as text and re-read into the prompt when needed. This is ~every commercial product: Mem0, Zep, Mastra, Letta, Supermemory, Cognee, Hindsight, MemOS, LangMem. It works on top of any model (including closed APIs like GPT-5 or Claude), which is exactly why the whole industry is here.
-- **Cache memory (activations).** Knowledge is stored as the model's pre-computed internal state (the "KV cache") and reused without re-reading. Faster and cheaper per query, but it requires access to the model's internals — so it only exists if you self-host open-weight models. Almost no products live here yet.
-- **Weight memory (parameters).** Knowledge is trained into the model itself, so it needs no context at all to use it. This is where actual *learning* happens — but it needs open weights and a training pipeline, so today it's essentially research-only (Memory-R1, on-policy distillation).
+- **Cache memory (activations).** Knowledge is stored as the model's pre-computed internal state (the "KV cache") and reused without re-reading. This needs access to the model's internals, so it means self-hosting an open-weight model — which in 2026 is no longer exotic: GLM-, Qwen- and Llama-class models are strong and cheap to run. The anchor method here, **Cartridges** (Stanford, 2025), trains a small KV cache per corpus and hits in-context-learning quality at ~38× less memory and ~26× higher throughput. This tier is underbuilt, not impractical.
+- **Weight memory (parameters).** Knowledge is trained into the model itself, so it needs no context at all to use it — this is where actual *learning* happens. It needs open weights and a training pipeline, but the tooling has caught up (LoRA adapters, on-policy distillation, RL memory policies like Memory-R1). It's early for products, but entirely buildable today if you self-host.
 
-**Practical implication:** if you're building on a closed API, you are choosing within *token memory* whether you realize it or not. That's fine — it's the mature, supported tier — but know its ceiling (section 5).
+**Practical implication:** if you're building on a closed API, you are choosing within *token memory* whether you realize it or not. That's the mature, supported tier and it's the right default. But if you self-host an open-weight model — increasingly the serious choice for anything memory-heavy — the cache and weight tiers open up, and that's where the real leverage is (sections 5 and 8).
 
 ---
 
@@ -89,13 +89,15 @@ The rough crossover: **long context wins for bounded, single-session, or low-que
 - *Downside:* lossy. Extraction throws away what it didn't think to keep (Mem0's own writing concedes the old algorithm "destroyed context"). It optimizes recall, not competence. And it's the most crowded, commoditized tier — the products differ more in polish and pricing than in fundamental capability.
 - *Within it:* **compress-at-write** (Mem0, Mastra, Cognee) gives cheap, fast reads but can't recover what it discarded; **reconstruct-at-read** (RLM, agentic RAG, Basic Memory) never loses information but pays compute on every query; **hybrid/agent-managed** (Letta) is flexible but only as good as the agent's own judgment about what to keep.
 
-**Cache memory (KV caching, MemOS activation memory)**
-- *Upside:* big latency and cost wins when the same context is reused; the knowledge is "already read."
-- *Downside:* needs self-hosted open weights; it's a speed optimization, not a capability or accuracy gain. Don't expect it to make the agent smarter — expect it to make it cheaper.
+**Cache memory (Cartridges, KV / prefix caching, MemOS activation memory)**
+- *Upside:* big latency and cost wins when the same context recurs — and with **Cartridges**, genuinely more than that: you train a small KV cache on a corpus once (via "self-study" — synthetic Q&A the model generates about the corpus) and then serve in-context-quality answers about it at a fraction of the memory and cost. That's a real capability, not just an optimization.
+- *Downside:* needs self-hosted open weights. Plain prefix caching is a cost play; Cartridges is a build-it-yourself capability that takes an offline training step per corpus.
+- *When it wins:* you have a big, relatively stable body of knowledge (a codebase, a documentation set, a policy manual) that you'll query many times — exactly the "expert on my corpus" case (section 8).
 
-**Weight memory (Memory-R1, Mem-α, on-policy distillation)**
-- *Upside:* the only tier where the model actually *learns* — knowledge becomes free to use, with no context cost.
-- *Downside:* needs open weights, a training pipeline, and real ML capability; it's research-stage, not a product you can buy. This is the frontier, not a current option — but it's the direction competence will eventually come from.
+**Weight memory (LoRA fine-tuning, context distillation, Memory-R1 / Mem-α)**
+- *Upside:* the only tier where the model actually *learns* — knowledge becomes free to use, with no context cost per query.
+- *Downside:* needs open weights and a training pipeline. Naive fine-tuning on a corpus underperforms (the Machine Studying result); the versions that work are targeted — distilling a specific studied artifact into a LoRA, or training a memory *policy*.
+- *When it wins:* stable knowledge or skills you use constantly and want baked in — and when you're willing to run a training step to get there. Buildable today on OSS models; just not yet a product you buy.
 
 ---
 
@@ -114,16 +116,49 @@ Do not trust vendor leaderboard numbers. The most-cited memory benchmark, LoCoMo
 
 ---
 
-## 8. Where this is all going (so you don't over-invest in today's answer)
+## 8. Worked examples: the questions people actually ask
+
+The framework is abstract; here are the three concrete cases that come up most, answered directly.
+
+### "I have a long agent trace — days or weeks of a project. How do I build good memory from it? What does 'optimal' even mean?"
+
+First, define optimal, because it's not "store the most." **Optimal memory is the smallest representation of that trace that lets the agent act as well as if it had the whole thing** — best task performance per token of context (equivalently, per dollar and per unit of latency). It's a point on a curve, not an absolute; you're trading fidelity against cost, and the right spot depends on how you'll use it.
+
+The practical recipe, in order of effort:
+
+1. **Consolidate, don't dump.** Run a consolidation pass over the trace that produces a compact *studied artifact*: the durable facts, the decisions made and why, what was tried and failed, the current state, and the open threads. This is the single highest-leverage step — a few thousand tokens of well-structured summary beats tens of thousands of raw transcript. (This is exactly what "reflection" and "sleep-time consolidation" do; it's also what a good engineer's handoff doc is.)
+2. **Keep the raw trace addressable, not resident.** Don't carry the full log in context. Store it so the agent can reach back into it for the rare deep question — read-time reconstruction (RLM-style) for the 5% of queries the summary can't answer.
+3. **If you'll query it a lot and can self-host: turn it into a Cartridge.** Train a KV cache on the trace once; then every future session loads that instead of re-reading the log, at a fraction of the cost. This is the "make the trace cheap to think with, forever" move.
+
+So "optimal" concretely = a compact studied artifact for the common case + addressable raw log for the tail + (if high-volume) a trained cache so you stop paying to re-read. Most teams do only step 1 and already win.
+
+### "I have a large codebase / corpus. How do I build an agent that's genuinely expert at it — not just able to grep it?"
+
+This is the important one, and it's where the *recall vs competence* distinction bites hardest. Grep and RAG make an agent that can *find* code; they don't make it *understand* the system. Here's the ladder, weakest to strongest:
+
+1. **RAG over the repo** — cheap, and fine for "where is the function that does X." It will not give you architectural judgment; retrieval returns snippets, not a mental model.
+2. **Agent-maintained wiki (DeepWiki-style)** — have the agent read the repo and write a structured wiki about it: the architecture, the key modules, the invariants, the gotchas. Now the agent reads *its own studied understanding* first and greps second. Works on a closed API, cheap, reviewable — the best effort-to-value option, and what tools like Devin's DeepWiki do.
+3. **Cartridges / self-study (if you self-host)** — the strongest practical answer. Train a Cartridge on the codebase via self-study, and you get an agent that carries in-context-quality knowledge of the *whole* repo at serve time without stuffing it in the prompt. This is the closest thing to "an expert on your codebase" you can build today.
+4. **Fine-tune a LoRA** — bake stable knowledge (conventions, APIs, patterns) into weights. Do it as targeted distillation of a studied artifact, not brute next-token training on the source (which the Machine Studying result shows underperforms).
+
+The right architecture is usually a **stack**: a studied wiki for structure and judgment + RAG for pinpoint lookup + (if you're serious and self-hosting) a Cartridge for whole-repo depth. Recall and competence are different jobs; give each its own layer.
+
+### "Is that basically what Machine Studying's StudyBench measures?"
+
+Yes — essentially exactly that. StudyBench tests whether an agent can become *expert* at a corpus it wasn't trained on (including a codebase and a framework released after the model's cutoff) by answering questions where **retrieval alone fails because you have to know which retrieved thing matters.** That's the operational definition of "expert at my codebase": the questions you *can't* just look up. Its headline findings map straight onto the ladder above — a *studied artifact* (the wiki/cartridge idea) beat both raw retrieval and naive fine-tuning. So if you want to know whether your "expert-on-our-code" agent actually works, StudyBench is the shape of eval to build: hold out questions that require understanding, not lookup, and score those.
+
+---
+
+## 9. Where this is all going (so you don't over-invest in today's answer)
 
 The rest of the current literature, compressed to what a decision-maker needs:
 
 - **Background consolidation ("dreaming") is the consensus mechanism.** Every serious system in 2026 — OpenAI, Letta, Honcho, Supermemory — now processes memory in the background between sessions rather than only at write time. If a vendor doesn't do this, they're behind.
 - **Temporal correctness is the universal weak spot.** On tests of "what was true at an earlier time," production memory systems score in the single digits. If your use case depends on evolving truth, this is your highest risk; test it explicitly.
 - **The write step is where errors are born.** Recent work shows most memory hallucinations originate at extraction/update time and then propagate. A system that writes carefully beats one that retrieves cleverly.
-- **The field is shifting from recall to competence.** The whole current market optimizes retrieval; the next wave — learned consolidation, trained memory policies, the "studying" idea — optimizes whether the agent actually improves. The two sparse tiers on the field map (cache and weights) are where that shift happens, and they're where the durable advantage will be.
+- **The field is shifting from recall to competence.** The whole current market optimizes retrieval; the next wave — learned consolidation, self-study (Cartridges), trained memory policies — optimizes whether the agent actually improves. The two sparse tiers on the field map (cache and weights) are where that shift happens, and the barrier to entry there (self-hosting open weights) is lower every quarter.
 
-**The one-line strategy:** buy token-memory for recall today, keep it modular so you can swap it, evaluate ruthlessly on your own data, and treat genuine "learns-your-domain" competence as a capability you'll build or adopt in the next 12–24 months — not one you can buy off the shelf right now.
+**The one-line strategy:** buy token-memory for recall today and keep it modular so you can swap it; evaluate ruthlessly on your own data; and if genuine "expert-in-our-domain" competence matters to you, start self-hosting an open-weight model and building on the cache/weight tiers — because that's where the durable advantage is, and it's no longer out of reach.
 
 ---
 
