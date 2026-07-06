@@ -178,3 +178,6 @@ legacy/local/
 research/wiki/_site/
 # Personal business docs
 research/content/lucid-academy-research-residency.md
+
+# TicToc dataset clone (external, not ours to redistribute)
+demos/02-temporal-awareness/TicToc/

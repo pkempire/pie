@@ -1,0 +1,17 @@
+{
+  "model": "gpt-5-mini",
+  "n": 36,
+  "seed": 7,
+  "reasoning": "low",
+  "alignment": {
+    "blind": 0.4167,
+    "raw": 0.4722,
+    "state": 0.5278
+  },
+  "deltas": {
+    "raw_minus_blind": 0.0555,
+    "state_minus_raw": 0.0556,
+    "state_minus_blind": 0.1111
+  },
+  "note": "smoke, single seed, n=36 balanced (18 tool / 18 direct) from TicToc test; direction not significance. Monotonic blind < raw < state supports: raw timestamps are barely usable (blindness); computing elapsed-time-as-state helps most."
+}
