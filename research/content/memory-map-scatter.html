@@ -1,0 +1,275 @@
+<style>
+  :root{
+    --ink:#171a1f; --ink2:#565b64; --ink3:#878c96; --hair:#dcdfe4; --hair2:#e9ebef;
+    --paper:#eef0ec; --card:#fcfcfb;
+    --teal:#0d8a77; --teal-wash:rgba(13,138,119,.07); --teal-edge:rgba(13,138,119,.32);
+    --rose:#bd3356; --rose-wash:rgba(189,51,86,.07); --rose-edge:rgba(189,51,86,.32);
+    --amber:#a2680b; --amber-wash:rgba(162,104,11,.08); --amber-edge:rgba(162,104,11,.32);
+    --struct:#28324e;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  .wrap{background:var(--paper); color:var(--ink); font-family:var(--sans);
+    padding:clamp(20px,3.5vw,40px); min-height:100%; -webkit-font-smoothing:antialiased}
+  .inner{max-width:1180px; margin:0 auto}
+  .masthead{border-bottom:1.5px solid var(--ink); padding-bottom:16px; margin-bottom:20px}
+  .kicker{display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+    font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink2); margin-bottom:14px}
+  .kicker .r{color:var(--ink3); letter-spacing:.08em}
+  h1{font-size:clamp(30px,5vw,50px); line-height:1; letter-spacing:-.025em; font-weight:800; margin:0 0 12px; text-wrap:balance}
+  .dek{font-size:clamp(15px,1.7vw,17.5px); line-height:1.5; color:var(--ink2); max-width:70ch; margin:0}
+  .dek b{color:var(--ink); font-weight:600}
+  .subnote{font-family:var(--mono); font-size:11px; color:var(--ink3); margin-top:12px; letter-spacing:.02em}
+
+  .legend{display:flex; flex-wrap:wrap; gap:10px 22px; align-items:center; margin:16px 0 10px;
+    font-family:var(--mono); font-size:12px; color:var(--ink2)}
+  .legend .lk{color:var(--ink3); letter-spacing:.05em; text-transform:uppercase; font-size:11px}
+  .lg{display:flex; align-items:center; gap:9px}
+  .gy{width:13px; height:13px; flex:none; border-radius:2px}
+  .gy.teal{background:var(--teal)}
+  .gy.rose{background:transparent; border:2px solid var(--rose); border-radius:50%}
+  .gy.amber{background:linear-gradient(135deg,var(--amber) 0 50%,transparent 50% 100%); border:1.5px solid var(--amber)}
+  .lg b{color:var(--ink); font-weight:600}
+
+  .stage{display:grid; grid-template-columns:1fr 330px; gap:20px; align-items:start; margin-top:14px}
+  @media(max-width:920px){ .stage{grid-template-columns:1fr} }
+
+  .plotscroll{overflow-x:auto; -webkit-overflow-scrolling:touch; border:1.5px solid var(--ink); background:var(--card)}
+  .plot{position:relative; min-width:660px; height:580px}
+  /* tier bands (horizontal washes) */
+  .band{position:absolute; left:0; right:0}
+  .band .blabel{position:absolute; left:12px; top:8px; font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.02em}
+  .band .bsub{position:absolute; left:12px; top:24px; font-family:var(--mono); font-size:9.5px; letter-spacing:.02em}
+  .band.weights{background:var(--amber-wash)} .band.weights .blabel,.band.weights .bsub{color:var(--amber)}
+  .band.cache{background:var(--rose-wash)} .band.cache .blabel,.band.cache .bsub{color:var(--rose)}
+  .band.tokens{background:var(--teal-wash)} .band.tokens .blabel,.band.tokens .bsub{color:var(--teal)}
+  .bandline{position:absolute; left:0; right:0; border-top:1px dashed var(--hair)}
+  /* x axis */
+  .xaxis{position:absolute; left:0; right:0; bottom:0; height:26px; border-top:1px solid var(--hair);
+    display:flex; justify-content:space-between; align-items:center; padding:0 14px;
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink3)}
+  .xaxis .mid{position:absolute; left:50%; transform:translateX(-50%); color:var(--ink3)}
+
+  .node{position:absolute; transform:translate(-50%,-50%);
+    display:inline-flex; align-items:center; gap:7px; background:var(--card);
+    border:1px solid var(--hair); border-radius:5px; padding:4px 8px 4px 5px; cursor:pointer;
+    font-family:var(--mono); font-size:11.5px; color:var(--ink); white-space:nowrap;
+    transition:border-color .13s, box-shadow .13s, transform .13s}
+  .node .tile{min-width:28px; height:17px; padding:0 4px; flex:none; border-radius:4px; display:grid; place-items:center;
+    font-size:8.5px; font-weight:700; letter-spacing:.02em; color:#fff; line-height:1}
+  .node .acx{width:8px; height:8px; flex:none}
+  .node.teal .acx{background:var(--teal); border-radius:2px}
+  .node.rose .acx{background:transparent; border:1.5px solid var(--rose); border-radius:50%}
+  .node.amber .acx{background:linear-gradient(135deg,var(--amber) 0 50%,transparent 50%); border:1.3px solid var(--amber)}
+  .node.informal{border-style:dotted}
+  .node .star{color:var(--rose); margin-left:-2px}
+  .node:hover,.node:focus-visible{outline:none; transform:translate(-50%,-50%) scale(1.06);
+    border-color:var(--ink); box-shadow:0 6px 22px -12px rgba(20,22,30,.7); z-index:30}
+  .node.active{border-color:var(--ink); box-shadow:0 0 0 1px var(--ink); z-index:31}
+
+  .panel{position:sticky; top:16px; background:var(--card); border:1.5px solid var(--ink)}
+  .panel .ph{padding:9px 14px; border-bottom:1px solid var(--hair); font-family:var(--mono);
+    font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink3); display:flex; justify-content:space-between}
+  .panel .pb{padding:16px 16px 18px; min-height:372px}
+  .panel .idrow{display:flex; align-items:center; gap:11px; margin-bottom:4px}
+  .panel .bigtile{min-width:44px; height:26px; padding:0 8px; flex:none; border-radius:6px; display:grid; place-items:center; color:#fff; font-family:var(--mono); font-weight:700; font-size:11px; letter-spacing:.03em}
+  .panel h3{margin:0; font-size:18px; letter-spacing:-.01em; font-weight:700; line-height:1.08}
+  .panel .srcline{font-family:var(--mono); font-size:11px; margin:1px 0 3px}
+  .tokens-c{color:var(--teal)} .cache-c{color:var(--rose)} .weights-c{color:var(--amber)}
+  .panel .sub{font-family:var(--mono); font-size:11.5px; color:var(--ink2); margin:0 0 13px}
+  .panel .row{margin:0 0 11px}
+  .panel .rk{font-family:var(--mono); font-size:9.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--ink3); margin-bottom:4px}
+  .panel .row p{margin:0; font-size:13.5px; line-height:1.5; color:var(--ink)}
+  .panel .row.why p,.panel .row.catch p{color:var(--ink2)}
+  .panel .row.how p{border-left:2px solid var(--hair); padding-left:10px}
+  .tags{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px}
+  .tag{font-family:var(--mono); font-size:10.5px; padding:3px 8px; border:1px solid var(--hair); border-radius:3px; color:var(--ink2)}
+  .tag.acc-teal{color:var(--teal); border-color:var(--teal-edge)}
+  .tag.acc-rose{color:var(--rose); border-color:var(--rose-edge)}
+  .tag.acc-amber{color:var(--amber); border-color:var(--amber-edge)}
+  .seen{display:flex; flex-wrap:wrap; gap:6px; margin-top:4px}
+  .seenchip{display:inline-flex; align-items:center; gap:6px; font-family:var(--mono); font-size:11px; color:var(--ink2); border:1px solid var(--hair); border-radius:4px; padding:3px 8px 3px 5px}
+  .seenchip .lt{width:16px; height:16px; flex:none; border-radius:4px; overflow:hidden}
+  .seenchip .lt svg{width:100%; height:100%; display:block}
+  .seenchip.txt{padding-left:8px}
+  .src{display:inline-flex; align-items:center; gap:7px; font-family:var(--mono); font-size:12px; color:var(--struct); text-decoration:none; border-bottom:1px solid var(--hair); padding-bottom:1px; margin-top:12px}
+  .src:hover{border-bottom-color:var(--struct)} .src::after{content:"↗"}
+  .panel .hint{font-size:13px; line-height:1.5; color:var(--ink2)} .panel .hint b{color:var(--ink)}
+  .panel .hint .ex{margin-top:12px; padding-top:12px; border-top:1px solid var(--hair2); font-family:var(--mono); font-size:11.5px; color:var(--ink3)}
+
+  .reveal{margin-top:20px; border:1px solid var(--hair); border-left:3px solid var(--ink); background:var(--card);
+    padding:16px 18px; font-size:13.5px; line-height:1.55; color:var(--ink2); max-width:84ch}
+  .reveal b{color:var(--ink); font-weight:600}
+  .reveal .tk{color:var(--teal); font-weight:600} .reveal .ch{color:var(--rose); font-weight:600} .reveal .wt{color:var(--amber); font-weight:600}
+  .foot{margin-top:18px; padding-top:12px; border-top:1px solid var(--hair); font-family:var(--mono); font-size:11px; color:var(--ink3); display:flex; flex-wrap:wrap; gap:6px 18px; justify-content:space-between}
+  .foot a{color:var(--ink2); text-decoration:none; border-bottom:1px solid var(--hair)} .foot a:hover{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){ *{transition:none!important; animation:none!important} }
+  .node{animation:in .45s ease backwards}
+  @keyframes in{from{opacity:0; transform:translate(-50%,-42%)} to{opacity:1}}
+</style>
+
+<div class="wrap">
+  <div class="inner">
+    <header class="masthead">
+      <div class="kicker"><span>Working Memory — Field Map №1 · scatter view</span><span class="r">verified 2026-07-04 · hover any approach</span></div>
+      <h1>The Shape of Memory</h1>
+      <p class="dek">Give an AI a past and you face two questions the field keeps tangling together: <b>where</b> what it knows lives, and <b>when</b> it does the work of organizing it. Placed on those axes, every method — vector database to trained model — sorts into three tiers, and the crowding tells you why agents can't yet <b>learn</b>.</p>
+      <p class="subnote">Each point is an <b style="color:var(--ink2)">approach</b> with its original source; products underneath are examples. ★ = worth knowing by name.</p>
+    </header>
+
+    <div class="legend">
+      <span class="lk">Access to build =</span>
+      <span class="lg"><span class="gy teal"></span><b>any model</b>&nbsp;· closed API works</span>
+      <span class="lg"><span class="gy rose"></span><b>model internals</b>&nbsp;· KV / activations</span>
+      <span class="lg"><span class="gy amber"></span><b>open weights</b>&nbsp;· must train</span>
+    </div>
+
+    <div class="stage">
+      <div>
+        <div class="plotscroll">
+          <div class="plot" id="plot">
+            <div class="band weights" style="top:0; height:33%"><span class="blabel">WEIGHTS</span><span class="bsub">parameter space · train it</span></div>
+            <div class="band cache" style="top:33%; height:26%"><span class="blabel">CACHE</span><span class="bsub">activation space · self-host</span></div>
+            <div class="band tokens" style="top:59%; height:41%"><span class="blabel">TOKENS</span><span class="bsub">context space · any API</span></div>
+            <div class="bandline" style="top:33%"></div>
+            <div class="bandline" style="top:59%"></div>
+            <div class="xaxis"><span>◄ write-time · organize at ingest</span><span class="mid">WHEN →</span><span>read-time · organize at query ►</span></div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="panel" id="panel" aria-live="polite">
+        <div class="ph"><span>read the map</span><span id="phcount"></span></div>
+        <div class="pb" id="pbody">
+          <h3 style="font-size:19px;margin:0 0 8px">Two axes, three tiers</h3>
+          <p class="hint">Vertical = <b>where</b> knowledge lives: re-read <b>text</b> (bottom), a pre-computed <b>KV cache</b> (middle), or trained <b>weights</b> (top). Horizontal = <b>when</b> you organize it, from ingest (left) to query (right).
+          <span class="ex">The tier's color is the access you need to build there — the gate that explains the crowding. Hover any point for how it works, its source, and where you've seen it.</span></p>
+        </div>
+      </aside>
+    </div>
+
+    <div class="reveal">
+      <b>Why the bottom row is packed.</b> The <span class="tk">token</span> tier is the only one you can build on a closed API, so every funded company lives there, differentiated mostly by how it compresses text. The <span class="ch">cache</span> and <span class="wt">weight</span> tiers were gated behind open weights — a gate now falling as GLM-, Qwen- and Llama-class models get strong and cheap, and methods like <b>Cartridges</b> make corpus-specific memory practical. The sparse upper tiers are where memory stops being retrieval and starts becoming learning.
+    </div>
+
+    <div class="foot"><span>Working Memory · how models remember, reason about time, and learn</span><span>grid view + sources · <a href="https://github.com/pkempire/pie">github.com/pkempire/pie</a></span></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var LOGO={
+    mem0:'<svg viewBox="0 0 40 40"><rect width="40" height="40" rx="9" fill="#c9b7f6"/><g stroke="#0a0a0a" stroke-width="2.4"><line x1="20" y1="20" x2="20" y2="9.5"/><line x1="20" y1="20" x2="29.6" y2="14.4"/><line x1="20" y1="20" x2="29.9" y2="25.8"/><line x1="20" y1="20" x2="20" y2="30.5"/><line x1="20" y1="20" x2="10.1" y2="25.8"/><line x1="20" y1="20" x2="10.4" y2="14.4"/></g><g fill="#0a0a0a"><circle cx="20" cy="20" r="5"/><circle cx="20" cy="9.5" r="2.7"/><circle cx="29.6" cy="14.4" r="2.7"/><circle cx="29.9" cy="25.8" r="2.7"/><circle cx="20" cy="30.5" r="2.7"/><circle cx="10.1" cy="25.8" r="2.7"/><circle cx="10.4" cy="14.4" r="2.7"/></g></svg>',
+    zep:'<svg viewBox="0 0 40 40"><rect width="40" height="40" rx="9" fill="#3a2b9d"/><path d="M14.5 10.5 h6.2 l-6.2 4.4 h6.2" fill="none" stroke="#fff" stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round"/><rect x="9.5" y="17" width="21" height="14" rx="4.5" fill="#fff"/><rect x="18.7" y="14.6" width="2.6" height="3" fill="#fff"/><circle cx="16.3" cy="24" r="2.6" fill="#3a2b9d"/><circle cx="23.7" cy="24" r="2.6" fill="#3a2b9d"/></svg>',
+    mastra:'<svg viewBox="0 0 40 40"><rect width="40" height="40" rx="9" fill="#0a0a0a"/><circle cx="9.5" cy="13.5" r="2.8" fill="#fff"/><circle cx="16.5" cy="26" r="5.6" fill="#fff"/><circle cx="28" cy="26" r="5.6" fill="#fff"/><rect x="16" y="20.4" width="12.5" height="6" fill="#fff"/></svg>',
+    cognee:'<svg viewBox="0 0 40 40"><defs><linearGradient id="cgs1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7b3ff2"/><stop offset="1" stop-color="#00c586"/></linearGradient></defs><rect width="40" height="40" rx="9" fill="url(#cgs1)"/><g stroke="#fff" stroke-width="2.5" stroke-linecap="round"><line x1="11.5" y1="17" x2="11.5" y2="23"/><line x1="16.5" y1="12.5" x2="16.5" y2="27.5"/><line x1="21.5" y1="15" x2="21.5" y2="25"/><line x1="26.5" y1="10.5" x2="26.5" y2="29.5"/><line x1="31" y1="17.5" x2="31" y2="22.5"/></g></svg>'
+  };
+  var TC={teal:"#0d8a77",rose:"#bd3356",amber:"#a2680b"};
+  // x: 0=write .. 100=read ; y in % (top). access=tier color.
+  var N=[
+   {x:16,y:66,cell:"tokens",code:"RAG",name:"Vector RAG",access:"teal",src:"Lewis et al., 2020 — the original RAG paper",sub:"retrieve by similarity",
+    how:"Split the corpus into chunks and embed each as a vector. At query time, embed the question and pull back the most similar chunks into the prompt.",
+    why:"The base of the entire token tier: cheap, model-agnostic, everywhere. Every fact-store product descends from it.",
+    catch:"Similarity isn't relevance, and it returns passages — not understanding. Great for lookup, weak for expertise.",
+    seen:[{n:"Mem0",l:"mem0"},{n:"Supermemory"},{n:"most RAG stacks"}],url:"https://arxiv.org/abs/2005.11401"},
+   {x:23,y:82,cell:"tokens",code:"REFLECT",name:"Reflection / memory stream",access:"teal",src:"Park et al. (Generative Agents), 2023",sub:"observe, then synthesize",
+    how:"Log raw observations as they happen, then periodically distill them into higher-level reflections you retrieve later.",
+    why:"The origin of observe-then-consolidate; compresses at write time into durable summaries.",
+    catch:"The reflection prompt is hand-tuned and never corrected by whether a note actually helped.",
+    seen:[{n:"Mastra OM",l:"mastra"},{n:"Honcho"}],url:"https://arxiv.org/abs/2304.03442"},
+   {x:15,y:92,cell:"tokens",code:"GRAPH",name:"Knowledge-graph memory",access:"teal",src:"GraphRAG (Microsoft), 2024 · temporal: Zep, 2025",sub:"entities + relationships",
+    how:"Extract entities and relationships into a graph — optionally time-stamped — then answer by traversing and summarizing the relevant part.",
+    why:"Structure a flat store never had; temporal graphs also track when each fact was true.",
+    catch:"LLM-heavy to build and maintain; extraction is lossy.",
+    seen:[{n:"Zep / Graphiti",l:"zep"},{n:"Cognee",l:"cognee"},{n:"GraphRAG"}],url:"https://arxiv.org/abs/2404.16130"},
+   {x:47,y:68,cell:"tokens",code:"MemGPT",name:"Self-editing / paging",access:"teal",src:"Packer et al. (MemGPT), 2023",sub:"the agent manages its own memory",
+    how:"Give the agent a small always-in-context memory plus a large archive, and tools to page items in/out and rewrite its own notes.",
+    why:"The origin of 'the model manages its own memory' — it decides what to keep and recall at both ends.",
+    catch:"Only as good as the agent's own judgment about what's worth keeping.",
+    seen:[{n:"Letta (the MemGPT platform)"}],url:"https://arxiv.org/abs/2310.08560"},
+   {x:54,y:84,cell:"tokens",code:"NOTES",name:"Atomic notes / Zettelkasten",access:"teal",src:"A-Mem (Xu et al.), 2025",sub:"interlinked evolving notes",
+    how:"Write each memory as a small self-contained note, link it to related notes, and let those links evolve as new memories arrive.",
+    why:"Interlinked notes give multi-hop recall a flat pile of facts can't, without a heavy graph pipeline.",
+    catch:"Newer; link quality depends on the model doing the linking.",
+    seen:[{n:"A-Mem"},{n:"Basic Memory (wikilinks)"}],url:"https://arxiv.org/abs/2502.12110"},
+   {x:75,y:66,cell:"tokens",code:"WIKI",name:"Agent-maintained wiki",access:"teal",kind:"informal",src:"no single paper — the de-facto practice",sub:"the informal one everyone actually uses",
+    how:"The agent writes and maintains durable, human-readable notes/wiki about the project — plain files — then reads and edits them as it works. No extraction pipeline, no vector DB.",
+    why:"Read-time and dead simple: notes stay plain text, the agent traverses and updates them directly. Portable, reviewable, git-diffable, any model.",
+    catch:"Curation is semi-manual; without a consolidation habit the wiki drifts stale.",
+    seen:[{n:"Claude Code (CLAUDE.md / MEMORY.md)"},{n:"AGENTS.md"},{n:"Devin DeepWiki"},{n:"Basic Memory"}],url:"https://code.claude.com/docs/en/memory"},
+   {x:87,y:80,cell:"tokens",code:"RLM",name:"Recursive reconstruction",access:"teal",src:"Zhang, Kraska, Khattab (RLM), 2025",sub:"re-read the raw log on demand",
+    how:"Keep the raw history untouched in a code environment. At query time the model writes small programs to slice and re-read only what it needs, recursing on each slice.",
+    why:"Read-time in its purest form: nothing is discarded, all work happens per question.",
+    catch:"Per-query compute scales with how hard the question is.",
+    seen:[{n:"RLM (raw.works)"},{n:"DSPy.RLM"}],url:"https://arxiv.org/abs/2512.24601"},
+   {x:77,y:93,cell:"tokens",code:"aRAG",name:"Agentic RAG",access:"teal",src:"Self-RAG (Asai 2023) → survey 2501.09136",sub:"retrieve in a loop",
+    how:"Turn retrieval into a loop: search, read, judge if it's enough, search again — until the model can answer.",
+    why:"Read-time retrieval as an iterative behavior rather than one fixed fetch.",
+    catch:"Latency and token cost grow with every hop.",
+    seen:[{n:"search-augmented agents broadly"}],url:"https://arxiv.org/abs/2501.09136"},
+   {x:36,y:44,cell:"cache",code:"CARTRIDGE",name:"Cartridges — self-study KV",access:"rose",star:1,src:"Eyuboglu, Arora … Ré (Stanford), 2025",sub:"train a tiny KV cache per corpus",
+    how:"Offline, generate synthetic conversations about a corpus and train a small KV cache — a 'Cartridge' — on it by context-distillation. At inference, load the Cartridge instead of the whole corpus and decode.",
+    why:"The cache tier's anchor: the corpus becomes pre-computed attention state, amortized across every future query. 'Self-study' is the studying idea applied to the KV cache.",
+    catch:"Matches in-context quality at ~38× less memory and ~26× throughput, extends effective context (128k→484k), and Cartridges compose without retraining. Needs open weights to train — now routine.",
+    seen:[{n:"self-hosted OSS (Qwen / Llama / GLM-class)"}],url:"https://arxiv.org/abs/2506.06266"},
+   {x:63,y:41,cell:"cache",code:"PREFIX",name:"Prefix / prompt caching",access:"rose",src:"vLLM APC · provider prompt caching",sub:"compute a shared prefix once",
+    how:"Compute the KV cache for a shared prefix — a standing system prompt or reference doc — once, and reuse it across requests instead of re-reading it every call.",
+    why:"The cheapest cache win when the same context recurs; increasingly a first-class memory tactic.",
+    catch:"Only helps for identical/near-identical prefixes; saves cost, doesn't add capability.",
+    seen:[{n:"vLLM"},{n:"Anthropic / OpenAI prompt caching"}],url:"https://docs.vllm.ai/en/stable/design/prefix_caching/"},
+   {x:71,y:52,cell:"cache",code:"KV-INJECT",name:"KV injection / sharing",access:"rose",src:"MemOS activation memory · Ramp Latent Briefing",sub:"inject memory as attention state",
+    how:"Precompute the KV tensors for frequently-used memories and inject them into the attention cache; Ramp's Latent Briefing selectively compacts them and hands a worker agent the relevant KV.",
+    why:"Cache tier: memory stored as computation state, reused across calls or shared across agents.",
+    catch:"Needs internals access; the payoff is speed and cost, not accuracy.",
+    seen:[{n:"MemOS"},{n:"Ramp"}],url:"https://memos-docs.openmem.net/open_source/modules/memories/kv_cache_memory/"},
+   {x:27,y:14,cell:"weights",code:"RL-MEM",name:"RL memory policies",access:"amber",src:"Memory-R1 (2025) · Mem-α (2025)",sub:"learn what to remember",
+    how:"Train the model by trial-and-reward to decide what to store/update/delete (Memory-R1), or how to build the whole memory system (Mem-α), so later answers come out right.",
+    why:"Weight tier: the management strategy itself is learned into parameters, not hand-coded in a prompt.",
+    catch:"Open weights plus an RL loop; assigning credit to individual write decisions is expensive.",
+    seen:[{n:"Memory-R1"},{n:"Mem-α"}],url:"https://arxiv.org/abs/2508.19828"},
+   {x:41,y:26,cell:"weights",code:"FINE-TUNE",name:"Continued pretraining",access:"amber",src:"the classic baseline (see: Machine Studying, 2026)",sub:"train the corpus into the model",
+    how:"Keep training the model on your corpus so the knowledge ends up in the weights, needing no context to use. Usually a LoRA adapter today, not a full retrain.",
+    why:"Weight tier: once it's in the parameters, using the knowledge costs zero context tokens.",
+    catch:"Naive next-token training on a corpus underperforms in-context learning and risks forgetting — the Machine Studying result. Do it as targeted distillation, not brute drilling.",
+    seen:[{n:"domain LoRAs"},{n:"continued-pretrain models"}],url:"https://jacobxli.com/blog/2026/machine-studying/"},
+   {x:53,y:16,cell:"weights",code:"DISTILL",name:"Context distillation",access:"amber",src:"On-policy distillation, Thinking Machines, 2025",sub:"move a skill from context into weights",
+    how:"Take something the model can only do with notes in context and train it into the weights: the student practices on its own outputs, graded token-by-token against a teacher that has the notes.",
+    why:"Weight tier: the clean bridge from context-dependent behavior to parametric skill.",
+    catch:"Needs open weights and a teacher; you pick what's stable enough to bake in.",
+    seen:[{n:"on-policy distillation (Tinker)"}],url:"https://thinkingmachines.ai/blog/on-policy-distillation/"},
+  ];
+
+  var accName={teal:"any model — closed API is fine",rose:"model internals — self-host OSS",amber:"open weights — train it"};
+  var accCls={teal:"acc-teal",rose:"acc-rose",amber:"acc-amber"};
+  var tierName={teal:"tokens · context",rose:"cache · activations",amber:"weights · parameters"};
+  var tierCls={teal:"tokens-c",rose:"cache-c",amber:"weights-c"};
+  var plot=document.getElementById('plot'), pbody=document.getElementById('pbody'), phcount=document.getElementById('phcount');
+  var def=pbody.innerHTML, pinned=null;
+  function esc(s){return (s||"").replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+  function seenHTML(a){return a.map(function(s){return s.l?'<span class="seenchip"><span class="lt">'+LOGO[s.l]+'</span>'+esc(s.n)+'</span>':'<span class="seenchip txt">'+esc(s.n)+'</span>';}).join('')}
+  function show(n){
+    pbody.innerHTML='<div class="idrow"><span class="bigtile" style="background:'+TC[n.access]+'">'+esc(n.code)+'</span><h3>'+esc(n.name)+(n.star?' <span class="star">★</span>':'')+'</h3></div>'+
+      '<div class="srcline '+tierCls[n.access]+'">◦ '+esc(n.src)+'</div><div class="sub">'+esc(n.sub)+'</div>'+
+      '<div class="tags"><span class="tag '+accCls[n.access]+'">'+accName[n.access]+'</span><span class="tag">'+(n.kind==='informal'?'informal practice':'approach')+'</span></div>'+
+      '<div class="row how"><div class="rk">how it works</div><p>'+esc(n.how)+'</p></div>'+
+      '<div class="row why"><div class="rk">why it sits here</div><p>'+esc(n.why)+'</p></div>'+
+      '<div class="row catch"><div class="rk">'+(n.star?'what it buys you':'the catch')+'</div><p>'+esc(n.catch)+'</p></div>'+
+      '<div class="row"><div class="rk">seen in</div><div class="seen">'+seenHTML(n.seen)+'</div></div>'+
+      '<a class="src" href="'+n.url+'" target="_blank" rel="noopener">original source</a>';
+  }
+  function reset(){ if(!pinned){ pbody.innerHTML=def; phcount.textContent=''; } }
+  N.forEach(function(n,i){
+    var b=document.createElement('button'); b.type='button'; b.className='node '+n.access+(n.kind==='informal'?' informal':'');
+    b.style.left=n.x+'%'; b.style.top=n.y+'%'; b.style.animationDelay=(i*22)+'ms';
+    b.setAttribute('aria-label',n.name+' — '+n.sub);
+    b.innerHTML='<span class="tile" style="background:'+TC[n.access]+'">'+esc(n.code)+'</span>'+esc(n.name)+(n.star?'<span class="star">★</span>':'')+'<span class="acx"></span>';
+    plot.appendChild(b);
+    function on(){b.classList.add('active');show(n);phcount.textContent=tierName[n.access];}
+    function off(){b.classList.remove('active');reset();}
+    b.addEventListener('mouseenter',on); b.addEventListener('mouseleave',off);
+    b.addEventListener('focus',on); b.addEventListener('blur',off);
+    b.addEventListener('click',function(e){e.preventDefault(); if(pinned===b){pinned=null;b.classList.remove('active');reset();} else {if(pinned)pinned.classList.remove('active'); pinned=b; b.classList.add('active'); show(n);}});
+  });
+})();
+</script>
