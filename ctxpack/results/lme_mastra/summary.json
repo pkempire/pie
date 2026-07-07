@@ -1,0 +1,31 @@
+{
+  "n": 30,
+  "mastra_acc": 0.2667,
+  "by_type": {
+    "knowledge-update": {
+      "n": 5,
+      "mastra": 0.2
+    },
+    "multi-session": {
+      "n": 5,
+      "mastra": 0.2
+    },
+    "single-session-assistant": {
+      "n": 5,
+      "mastra": 0.0
+    },
+    "single-session-preference": {
+      "n": 5,
+      "mastra": 0.8
+    },
+    "single-session-user": {
+      "n": 5,
+      "mastra": 0.2
+    },
+    "temporal-reasoning": {
+      "n": 5,
+      "mastra": 0.2
+    }
+  },
+  "note": "Mastra OM Observer/Reflector prompts via same compile path, same sample/budget as baseline"
+}
