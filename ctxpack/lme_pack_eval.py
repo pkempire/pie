@@ -59,7 +59,8 @@ def sessions_text(q: dict) -> list[str]:
     return out
 
 
-def compile_pack(q: dict, budget_tokens: int) -> str:
+def compile_pack(q: dict, budget_tokens: int, map_sys: str = MAP_SYS,
+                 reduce_sys: str = REDUCE_SYS) -> str:
     groups, cur, used = [], [], 0
     for s in sessions_text(q):
         s = s[:24_000]
@@ -68,9 +69,9 @@ def compile_pack(q: dict, budget_tokens: int) -> str:
         cur.append(s); used += len(s)
     if cur:
         groups.append("\n\n".join(cur))
-    notes = [chat(MAP_SYS, g, max_tokens=6000, effort="minimal") for g in groups]
+    notes = [chat(map_sys, g, max_tokens=6000, effort="minimal") for g in groups]
     budget_chars = budget_tokens * 4
-    pack = chat(REDUCE_SYS.format(budget=budget_tokens, chars=budget_chars),
+    pack = chat(reduce_sys.format(budget=budget_tokens, chars=budget_chars),
                 "\n\n---\n\n".join(notes), max_tokens=budget_tokens * 2 + 4000)
     return pack[:budget_chars]
 
