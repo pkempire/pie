@@ -9,5 +9,5 @@
 {"id": "r-checkpoint-env", "q": "Which environment variable supplies a trained read-policy checkpoint to Phase B training?", "accept": [["mempol_r_checkpoint"]]}
 {"id": "raw-open-penalty", "q": "In the universal memory RL recipe, what is the penalty value applied when the policy answers without freezing raw access?", "accept": [["0\\.15"]]}
 {"id": "counterfactual-mech", "q": "How does the counterfactual reward assign credit to an individual write operation?", "accept": [["without|minus|remov|leave|ablat|omit|exclud"], ["replay|re-?run|re-?execut|reconstruct"]]}
-{"id": "group-size", "q": "What is the default GRPO group size in the write environment?", "accept": [["\\b8\\b"]]}
+{"id": "group-size", "q": "What is the default GRPO group size in the write environment?", "accept": [["\\b4\\b"]]}
 {"id": "embed-cache-key", "q": "How are entries keyed in the embedding cache?", "accept": [["sha-?1|hash"]]}

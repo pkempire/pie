@@ -1,0 +1,239 @@
+{
+  "model": "gpt-5-mini",
+  "budget_tokens": 4000,
+  "n": 12,
+  "corpus_files": 43,
+  "corpus_chars": 338744,
+  "compression_ratio": 21.2,
+  "accuracy": {
+    "handwritten": 0.0,
+    "rag": 0.4167,
+    "pack": 0.4167
+  },
+  "pack_chars": 16000,
+  "results": {
+    "handwritten": [
+      {
+        "id": "reward-weights",
+        "q": "What are the default weights for the counterfactual component and the QA judge component in the write reward?",
+        "a": "not in context",
+        "ok": false
+      },
+      {
+        "id": "coverage-floor",
+        "q": "What is the default weight of the evidence-coverage floor term in the write reward?",
+        "a": "not in context",
+        "ok": false
+      },
+      {
+        "id": "non-mutating-ops",
+        "q": "Which write-tool operations are classified as non-mutating?",
+        "a": "not in context",
+        "ok": false
+      },
+      {
+        "id": "mutating-ops",
+        "q": "Name three write-tool operations classified as mutating.",
+        "a": "not in context",
+        "ok": false
+      },
+      {
+        "id": "kmax",
+        "q": "What is the default hard retention budget K_max used to prune the knowledge graph before scoring?",
+        "a": "not in context",
+        "ok": false
+      },
+      {
+        "id": "fusion",
+        "q": "What rank-fusion method combines the BM25, dense, and NER retrieval signals in the backends?",
+        "a": "not in context",
+        "ok": false
+      },
+      {
+        "id": "judge-bucket",
+        "q": "Above what raw score threshold does the LLM judge bucket a score as 1.0?",
+        "a": "not in context",
+        "ok": false
+      },
+      {
+        "id": "r-checkpoint-env",
+        "q": "Which environment variable supplies a trained read-policy checkpoint to Phase B training?",
+        "a": "not in context",
+        "ok": false
+      },
+      {
+        "id": "raw-open-penalty",
+        "q": "In the universal memory RL recipe, what is the penalty value applied when the policy answers without freezing raw access?",
+        "a": "not in context",
+        "ok": false
+      },
+      {
+        "id": "counterfactual-mech",
+        "q": "How does the counterfactual reward assign credit to an individual write operation?",
+        "a": "not in context",
+        "ok": false
+      },
+      {
+        "id": "group-size",
+        "q": "What is the default GRPO group size in the write environment?",
+        "a": "not in context",
+        "ok": false
+      },
+      {
+        "id": "embed-cache-key",
+        "q": "How are entries keyed in the embedding cache?",
+        "a": "not in context",
+        "ok": false
+      }
+    ],
+    "rag": [
+      {
+        "id": "reward-weights",
+        "q": "What are the default weights for the counterfactual component and the QA judge component in the write reward?",
+        "a": "not in context",
+        "ok": false
+      },
+      {
+        "id": "coverage-floor",
+        "q": "What is the default weight of the evidence-coverage floor term in the write reward?",
+        "a": "DEFAULT_W_COV_FLOOR = 0.05",
+        "ok": true
+      },
+      {
+        "id": "non-mutating-ops",
+        "q": "Which write-tool operations are classified as non-mutating?",
+        "a": "not in context",
+        "ok": false
+      },
+      {
+        "id": "mutating-ops",
+        "q": "Name three write-tool operations classified as mutating.",
+        "a": "Not in context",
+        "ok": false
+      },
+      {
+        "id": "kmax",
+        "q": "What is the default hard retention budget K_max used to prune the knowledge graph before scoring?",
+        "a": "DEFAULT_K_MAX = 12",
+        "ok": true
+      },
+      {
+        "id": "fusion",
+        "q": "What rank-fusion method combines the BM25, dense, and NER retrieval signals in the backends?",
+        "a": "Reciprocal Rank Fusion (RRF)",
+        "ok": true
+      },
+      {
+        "id": "judge-bucket",
+        "q": "Above what raw score threshold does the LLM judge bucket a score as 1.0?",
+        "a": "0.75",
+        "ok": true
+      },
+      {
+        "id": "r-checkpoint-env",
+        "q": "Which environment variable supplies a trained read-policy checkpoint to Phase B training?",
+        "a": "MEMPOL_R_CHECKPOINT",
+        "ok": true
+      },
+      {
+        "id": "raw-open-penalty",
+        "q": "In the universal memory RL recipe, what is the penalty value applied when the policy answers without freezing raw access?",
+        "a": "not in context",
+        "ok": false
+      },
+      {
+        "id": "counterfactual-mech",
+        "q": "How does the counterfactual reward assign credit to an individual write operation?",
+        "a": "not in context",
+        "ok": false
+      },
+      {
+        "id": "group-size",
+        "q": "What is the default GRPO group size in the write environment?",
+        "a": "not in context",
+        "ok": false
+      },
+      {
+        "id": "embed-cache-key",
+        "q": "How are entries keyed in the embedding cache?",
+        "a": "not in context",
+        "ok": false
+      }
+    ],
+    "pack": [
+      {
+        "id": "reward-weights",
+        "q": "What are the default weights for the counterfactual component and the QA judge component in the write reward?",
+        "a": "DEFAULT_W_CF = 0.7 (counterfactual), DEFAULT_W_QA = 0.3 (QA judge).",
+        "ok": true
+      },
+      {
+        "id": "coverage-floor",
+        "q": "What is the default weight of the evidence-coverage floor term in the write reward?",
+        "a": "DEFAULT_W_COV_FLOOR = 0.05",
+        "ok": true
+      },
+      {
+        "id": "non-mutating-ops",
+        "q": "Which write-tool operations are classified as non-mutating?",
+        "a": "not in context",
+        "ok": false
+      },
+      {
+        "id": "mutating-ops",
+        "q": "Name three write-tool operations classified as mutating.",
+        "a": "create_entity\nupdate_state\nmerge_entities",
+        "ok": false
+      },
+      {
+        "id": "kmax",
+        "q": "What is the default hard retention budget K_max used to prune the knowledge graph before scoring?",
+        "a": "DEFAULT_K_MAX = 12",
+        "ok": true
+      },
+      {
+        "id": "fusion",
+        "q": "What rank-fusion method combines the BM25, dense, and NER retrieval signals in the backends?",
+        "a": "not in context",
+        "ok": false
+      },
+      {
+        "id": "judge-bucket",
+        "q": "Above what raw score threshold does the LLM judge bucket a score as 1.0?",
+        "a": "not in context",
+        "ok": false
+      },
+      {
+        "id": "r-checkpoint-env",
+        "q": "Which environment variable supplies a trained read-policy checkpoint to Phase B training?",
+        "a": "MEMPOL_R_CHECKPOINT",
+        "ok": true
+      },
+      {
+        "id": "raw-open-penalty",
+        "q": "In the universal memory RL recipe, what is the penalty value applied when the policy answers without freezing raw access?",
+        "a": "The penalty is raw_left_open_penalty = 0.15.",
+        "ok": true
+      },
+      {
+        "id": "counterfactual-mech",
+        "q": "How does the counterfactual reward assign credit to an individual write operation?",
+        "a": "not in context",
+        "ok": false
+      },
+      {
+        "id": "group-size",
+        "q": "What is the default GRPO group size in the write environment?",
+        "a": "not in context",
+        "ok": false
+      },
+      {
+        "id": "embed-cache-key",
+        "q": "How are entries keyed in the embedding cache?",
+        "a": "not in context",
+        "ok": false
+      }
+    ]
+  },
+  "note": "v0 floor: pack is UNOPTIMIZED (no GEPA); deterministic regex scoring; single seed"
+}

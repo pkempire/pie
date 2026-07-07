@@ -1,0 +1,385 @@
+{
+  "budget_tokens": 4000,
+  "handwritten": {
+    "train_acc": 0.0,
+    "heldout_acc": 0.16666666666666666
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "train_acc": 0.16666666666666666,
+      "heldout_acc": 0.5,
+      "pack_chars": 16000,
+      "train": [
+        {
+          "id": "reward-weights",
+          "q": "What are the default weights for the counterfactual component and the QA judge component in the write reward?",
+          "a": "DEFAULT_W_CF = 0.7 (counterfactual component)\nDEFAULT_W_QA = 0.3 (QA judge component)",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "non-mutating-ops",
+          "q": "Which write-tool operations are classified as non-mutating?",
+          "a": "not in context",
+          "ok": false,
+          "fact_in_pack": true
+        },
+        {
+          "id": "judge-bucket",
+          "q": "Above what raw score threshold does the LLM judge bucket a score as 1.0?",
+          "a": "not in context",
+          "ok": false,
+          "fact_in_pack": true
+        },
+        {
+          "id": "counterfactual-mech",
+          "q": "How does the counterfactual reward assign credit to an individual write operation?",
+          "a": "not in context",
+          "ok": false,
+          "fact_in_pack": true
+        },
+        {
+          "id": "group-size",
+          "q": "What is the default GRPO group size in the write environment?",
+          "a": "Not in context",
+          "ok": false,
+          "fact_in_pack": true
+        },
+        {
+          "id": "embed-cache-key",
+          "q": "How are entries keyed in the embedding cache?",
+          "a": "not in context",
+          "ok": false,
+          "fact_in_pack": false
+        }
+      ],
+      "heldout": [
+        {
+          "id": "coverage-floor",
+          "q": "What is the default weight of the evidence-coverage floor term in the write reward?",
+          "a": "DEFAULT_W_COV_FLOOR = 0.05",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "mutating-ops",
+          "q": "Name three write-tool operations classified as mutating.",
+          "a": "create_entity\nupdate_state\nmerge_entities",
+          "ok": false,
+          "fact_in_pack": true
+        },
+        {
+          "id": "kmax",
+          "q": "What is the default hard retention budget K_max used to prune the knowledge graph before scoring?",
+          "a": "DEFAULT_K_MAX = 12",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "fusion",
+          "q": "What rank-fusion method combines the BM25, dense, and NER retrieval signals in the backends?",
+          "a": "not in context",
+          "ok": false,
+          "fact_in_pack": false
+        },
+        {
+          "id": "r-checkpoint-env",
+          "q": "Which environment variable supplies a trained read-policy checkpoint to Phase B training?",
+          "a": "MEMPOL_R_CHECKPOINT",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "raw-open-penalty",
+          "q": "In the universal memory RL recipe, what is the penalty value applied when the policy answers without freezing raw access?",
+          "a": "not in context",
+          "ok": false,
+          "fact_in_pack": true
+        }
+      ]
+    },
+    {
+      "round": 1,
+      "train_acc": 0.5,
+      "heldout_acc": 0.5,
+      "pack_chars": 16000,
+      "train": [
+        {
+          "id": "reward-weights",
+          "q": "What are the default weights for the counterfactual component and the QA judge component in the write reward?",
+          "a": "MEMPOL_W_CF default \"0.7\" (counterfactual).  \nMEMPOL_W_QA default \"0.3\" (QA judge).",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "non-mutating-ops",
+          "q": "Which write-tool operations are classified as non-mutating?",
+          "a": "(\"lookup_entity\", \"lookup_relation\", \"noop\")",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "judge-bucket",
+          "q": "Above what raw score threshold does the LLM judge bucket a score as 1.0?",
+          "a": "Not in context",
+          "ok": false,
+          "fact_in_pack": true
+        },
+        {
+          "id": "counterfactual-mech",
+          "q": "How does the counterfactual reward assign credit to an individual write operation?",
+          "a": "not in context",
+          "ok": false,
+          "fact_in_pack": true
+        },
+        {
+          "id": "group-size",
+          "q": "What is the default GRPO group size in the write environment?",
+          "a": "Default group_size = 4.",
+          "ok": false,
+          "fact_in_pack": true
+        },
+        {
+          "id": "embed-cache-key",
+          "q": "How are entries keyed in the embedding cache?",
+          "a": "Embeddings are cached on-disk per-model keyed by the SHA1 hex digest of the full text.",
+          "ok": true,
+          "fact_in_pack": true
+        }
+      ],
+      "heldout": [
+        {
+          "id": "coverage-floor",
+          "q": "What is the default weight of the evidence-coverage floor term in the write reward?",
+          "a": "0.05",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "mutating-ops",
+          "q": "Name three write-tool operations classified as mutating.",
+          "a": "create_entity, update_state, merge_entities",
+          "ok": false,
+          "fact_in_pack": true
+        },
+        {
+          "id": "kmax",
+          "q": "What is the default hard retention budget K_max used to prune the knowledge graph before scoring?",
+          "a": "MEMPOL_K_MAX default \"12\" \u2192 k_max = 12.",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "fusion",
+          "q": "What rank-fusion method combines the BM25, dense, and NER retrieval signals in the backends?",
+          "a": "not in context",
+          "ok": false,
+          "fact_in_pack": false
+        },
+        {
+          "id": "r-checkpoint-env",
+          "q": "Which environment variable supplies a trained read-policy checkpoint to Phase B training?",
+          "a": "MEMPOL_R_CHECKPOINT",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "raw-open-penalty",
+          "q": "In the universal memory RL recipe, what is the penalty value applied when the policy answers without freezing raw access?",
+          "a": "not in context",
+          "ok": false,
+          "fact_in_pack": true
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "train_acc": 0.8333333333333334,
+      "heldout_acc": 0.8333333333333334,
+      "pack_chars": 14623,
+      "train": [
+        {
+          "id": "reward-weights",
+          "q": "What are the default weights for the counterfactual component and the QA judge component in the write reward?",
+          "a": "w_cf \"0.7\" (counterfactual), w_qa \"0.3\" (QA judge)",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "non-mutating-ops",
+          "q": "Which write-tool operations are classified as non-mutating?",
+          "a": "(\"lookup_entity\",\"lookup_relation\",\"noop\")",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "judge-bucket",
+          "q": "Above what raw score threshold does the LLM judge bucket a score as 1.0?",
+          "a": "0.75",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "counterfactual-mech",
+          "q": "How does the counterfactual reward assign credit to an individual write operation?",
+          "a": "per_op_counterfactual replays the full ops_log to get a full_state_score. For each mutating op index it replays a leave-one-out variant (skipping that mutating op), re-scores the QA battery, and records the mean score delta relative to the full_state. Each op's marginal utility = that mean score delta. Trajectory reward = sum(per-op deltas) \u2212 cost_per_mut * n_mutating_ops. WriteReward typically supplies cost_per_op (default 0.001) so effective per-op penalty is typically 0.001. [src: mempol/eval/counterfactual.py]",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "group-size",
+          "q": "What is the default GRPO group size in the write environment?",
+          "a": "default group_size = 4",
+          "ok": false,
+          "fact_in_pack": true
+        },
+        {
+          "id": "embed-cache-key",
+          "q": "How are entries keyed in the embedding cache?",
+          "a": "embeddings cached on-disk per-model keyed by sha1(text) hex digest.",
+          "ok": true,
+          "fact_in_pack": true
+        }
+      ],
+      "heldout": [
+        {
+          "id": "coverage-floor",
+          "q": "What is the default weight of the evidence-coverage floor term in the write reward?",
+          "a": "0.05",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "mutating-ops",
+          "q": "Name three write-tool operations classified as mutating.",
+          "a": "create_entity\nupdate_state\nmerge_entities",
+          "ok": false,
+          "fact_in_pack": true
+        },
+        {
+          "id": "kmax",
+          "q": "What is the default hard retention budget K_max used to prune the knowledge graph before scoring?",
+          "a": "MEMPOL_K_MAX default = \"12\" (string) \u2014 interpreted as hard retention budget k_max = 12.",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "fusion",
+          "q": "What rank-fusion method combines the BM25, dense, and NER retrieval signals in the backends?",
+          "a": "Reciprocal Rank Fusion (RRF).",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "r-checkpoint-env",
+          "q": "Which environment variable supplies a trained read-policy checkpoint to Phase B training?",
+          "a": "MEMPOL_R_CHECKPOINT",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "raw-open-penalty",
+          "q": "In the universal memory RL recipe, what is the penalty value applied when the policy answers without freezing raw access?",
+          "a": "0.15",
+          "ok": true,
+          "fact_in_pack": true
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "train_acc": 0.6666666666666666,
+      "heldout_acc": 0.3333333333333333,
+      "pack_chars": 6388,
+      "train": [
+        {
+          "id": "reward-weights",
+          "q": "What are the default weights for the counterfactual component and the QA judge component in the write reward?",
+          "a": "w_cf = 0.7 (counterfactual), w_qa = 0.3 (QA judge)",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "non-mutating-ops",
+          "q": "Which write-tool operations are classified as non-mutating?",
+          "a": "(\"lookup_entity\",\"lookup_relation\",\"noop\")",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "judge-bucket",
+          "q": "Above what raw score threshold does the LLM judge bucket a score as 1.0?",
+          "a": ">= 0.75",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "counterfactual-mech",
+          "q": "How does the counterfactual reward assign credit to an individual write operation?",
+          "a": "It replays the ops log to compute a full_state_score, then for each mutating op (identified via WriteTool.MUTATING_OPS) replays a leave-one-out variant that skips that op, re-scores the QA battery, and records the mean score delta relative to the full_state_score. Each operation\u2019s marginal utility = that mean score delta. The trajectory reward = sum(per-op deltas) \u2212 cost_per_mut * n_mutating_ops (WriteReward normally supplies cost_per_op, default 0.001).",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "group-size",
+          "q": "What is the default GRPO group size in the write environment?",
+          "a": "4",
+          "ok": false,
+          "fact_in_pack": true
+        },
+        {
+          "id": "embed-cache-key",
+          "q": "How are entries keyed in the embedding cache?",
+          "a": "not in context",
+          "ok": false,
+          "fact_in_pack": false
+        }
+      ],
+      "heldout": [
+        {
+          "id": "coverage-floor",
+          "q": "What is the default weight of the evidence-coverage floor term in the write reward?",
+          "a": "0.05",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "mutating-ops",
+          "q": "Name three write-tool operations classified as mutating.",
+          "a": "create_entity, update_state, merge_entities",
+          "ok": false,
+          "fact_in_pack": true
+        },
+        {
+          "id": "kmax",
+          "q": "What is the default hard retention budget K_max used to prune the knowledge graph before scoring?",
+          "a": "12",
+          "ok": true,
+          "fact_in_pack": true
+        },
+        {
+          "id": "fusion",
+          "q": "What rank-fusion method combines the BM25, dense, and NER retrieval signals in the backends?",
+          "a": "not in context",
+          "ok": false,
+          "fact_in_pack": false
+        },
+        {
+          "id": "r-checkpoint-env",
+          "q": "Which environment variable supplies a trained read-policy checkpoint to Phase B training?",
+          "a": "not in context",
+          "ok": false,
+          "fact_in_pack": true
+        },
+        {
+          "id": "raw-open-penalty",
+          "q": "In the universal memory RL recipe, what is the penalty value applied when the policy answers without freezing raw access?",
+          "a": "not in context",
+          "ok": false,
+          "fact_in_pack": false
+        }
+      ]
+    }
+  ]
+}

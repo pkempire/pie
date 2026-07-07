@@ -147,7 +147,9 @@ ANSWER_SYS = (
 
 
 def answer(context: str, question: str) -> str:
-    return chat(ANSWER_SYS, f"Context:\n{context}\n\nQuestion: {question}", max_tokens=200)
+    # minimal effort + generous cap: reasoning tokens otherwise starve the visible answer
+    return chat(ANSWER_SYS, f"Context:\n{context}\n\nQuestion: {question}",
+                max_tokens=1200, effort="minimal")
 
 
 def score(pred: str, accept: list[list[str]]) -> bool:
