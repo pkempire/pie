@@ -60,6 +60,10 @@ def main():
     ap.add_argument("--run-name", default=None)
     ap.add_argument("--qids-file", default=None,
                     help="JSON list of question_ids to run (paired comparison with other harnesses)")
+    ap.add_argument("--read-protocol", default="full_context",
+                    choices=["full_context", "policy"],
+                    help="full_context = Mastra's real protocol (whole OM log in context, no "
+                         "retrieval). policy = legacy top-k retrieval (INVALID for OM claims).")
     args = ap.parse_args()
 
     print(f"[run_mastra_lme] models:")
@@ -107,8 +111,27 @@ def main():
 
             qa = qas[0]
             t_q = time.time()
-            policy = PolicyCls()
-            trace = policy.run(qa.question, b)
+            if args.read_protocol == "full_context":
+                # Mastra's ACTUAL protocol: the entire compressed observation log goes in
+                # context — no retrieval. (Prior runs used top-k snippet retrieval via
+                # NaivePolicy, which cripples OM and produced an invalid 24% — harness bug,
+                # not a property of their system.)
+                from mempol.llm import chat as llm_chat
+                full_ctx = b.get_full_context()
+                ans = llm_chat(
+                    [{"role": "system",
+                      "content": "Answer the question using the memory below. Be concise and "
+                                 "specific. If the memory lacks the answer, say you don't know."},
+                     {"role": "user",
+                      "content": f"Memory:\n{full_ctx}\n\nQuestion: {qa.question}"}],
+                    model=config.ANSWER_MODEL)
+                class _T:  # minimal trace shim
+                    answer = ans
+                    steps: list = []
+                trace = _T()
+            else:
+                policy = PolicyCls()
+                trace = policy.run(qa.question, b)
             score, reason = judge(qa.question, qa.answer, trace.answer)
             q_secs = time.time() - t_q
 
