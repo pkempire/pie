@@ -58,6 +58,8 @@ def main():
                     help="Mastra's actual default for LongMemEval is 30k tokens.")
     ap.add_argument("--reflector-threshold", type=int, default=40_000)
     ap.add_argument("--run-name", default=None)
+    ap.add_argument("--qids-file", default=None,
+                    help="JSON list of question_ids to run (paired comparison with other harnesses)")
     args = ap.parse_args()
 
     print(f"[run_mastra_lme] models:")
@@ -67,8 +69,15 @@ def main():
     print(f"  judge     = {config.JUDGE_MODEL}")
 
     # Each LongMemEval row is (1 conv, 1 qa). We iterate row-by-row.
-    n_load = args.max_qs if args.max_qs else 1000
-    rows = load_lme(variant=args.variant, n_convs=n_load)
+    if args.qids_file:
+        wanted = set(json.load(open(args.qids_file)))
+        rows = load_lme(variant=args.variant, n_convs=0 or 1000)
+        rows = [(c, q) for (c, q) in rows if c.sample_id in wanted]
+        args.max_qs = 0  # run all matched
+        print(f"[{args.variant}] qids-file matched {len(rows)}/{len(wanted)} rows")
+    else:
+        n_load = args.max_qs if args.max_qs else 1000
+        rows = load_lme(variant=args.variant, n_convs=n_load)
     print(f"[{args.variant}] loaded {len(rows)} (conv, qa) rows")
 
     run_name = args.run_name or f"mastra_lme_{args.variant}_{config.ANSWER_MODEL.replace('-','_')}"
