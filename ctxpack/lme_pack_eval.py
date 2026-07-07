@@ -98,6 +98,22 @@ def answer(ctx: str, q: dict) -> str:
                             f"Question: {q['question']}", max_tokens=1200, effort="minimal")
 
 
+def hybrid_answer(pack: str, q: dict, budget_chars: int) -> tuple[str, bool]:
+    """Pack-first; escalate to targeted raw-haystack retrieval only if the pack can't answer.
+
+    Returns (answer, escalated). Escalation budget = same total budget: half pack, half raw hits,
+    so the hybrid never sees more tokens than either pure condition.
+    """
+    a = answer(pack, q)
+    low = a.lower()
+    if not any(s in low for s in ("don't know", "do not know", "not in", "no information",
+                                  "cannot", "unsure", "not mentioned")):
+        return a, False
+    raw = rag_context(q, budget_chars // 2)
+    ctx = pack[: budget_chars // 2] + "\n\n=== retrieved raw turns (escalation) ===\n" + raw
+    return answer(ctx, q), True
+
+
 def judge(q: dict, pred: str) -> tuple[bool, str]:
     raw = chat(JUDGE_SYS, f"Question: {q['question']}\nGold: {q['answer']}\nModel answer: {pred}",
                max_tokens=900, effort="minimal")

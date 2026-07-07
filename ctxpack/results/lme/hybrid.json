@@ -1,0 +1,349 @@
+{
+  "summary": {
+    "n": 30,
+    "hybrid_acc": 0.6,
+    "pack_acc": 0.4,
+    "rag_acc": 0.5667,
+    "escalation_rate": 0.333,
+    "by_type": {
+      "knowledge-update": {
+        "n": 5,
+        "hybrid": 0.6,
+        "pack": 0.8,
+        "rag": 0.8
+      },
+      "multi-session": {
+        "n": 5,
+        "hybrid": 0.4,
+        "pack": 0.2,
+        "rag": 0.4
+      },
+      "single-session-assistant": {
+        "n": 5,
+        "hybrid": 0.8,
+        "pack": 0.0,
+        "rag": 0.8
+      },
+      "single-session-preference": {
+        "n": 5,
+        "hybrid": 0.8,
+        "pack": 0.8,
+        "rag": 0.4
+      },
+      "single-session-user": {
+        "n": 5,
+        "hybrid": 0.6,
+        "pack": 0.6,
+        "rag": 0.6
+      },
+      "temporal-reasoning": {
+        "n": 5,
+        "hybrid": 0.4,
+        "pack": 0.0,
+        "rag": 0.4
+      }
+    }
+  },
+  "rows": [
+    {
+      "qid": "69fee5aa",
+      "qtype": "knowledge-update",
+      "ok_hybrid": false,
+      "escalated": false,
+      "a": "You have 37 pre-1920 American coins.",
+      "reason": "The model's answer (37) does not match the gold answer (38).",
+      "ok_pack": false,
+      "ok_rag": false
+    },
+    {
+      "qid": "0ea62687",
+      "qtype": "multi-session",
+      "ok_hybrid": true,
+      "escalated": true,
+      "a": "A few months ago your car was getting 30 mpg city; now it's about 28 mpg city. That's 2 mpg better a few months ago.",
+      "reason": "Both answers state the difference is 2 mpg; the model explains values (30 vs 28) and concludes 2 mpg better previously, matching the gold.",
+      "ok_pack": false,
+      "ok_rag": true
+    },
+    {
+      "qid": "1b9b7252",
+      "qtype": "single-session-assistant",
+      "ok_hybrid": true,
+      "escalated": true,
+      "a": "That was Mindful.org \u2014 it has free guided imagery exercises including \"The Mountain Meditation\" and \"The Body Scan Meditation.\"",
+      "reason": "The model correctly identifies Mindful.org as the website offering those free guided imagery exercises and matches the gold answer.",
+      "ok_pack": false,
+      "ok_rag": true
+    },
+    {
+      "qid": "06878be2",
+      "qtype": "single-session-preference",
+      "ok_hybrid": true,
+      "escalated": false,
+      "a": "From your memory: camera is a Sony A7R IV with Sony 24\u201370mm f/2.8 and Godox V1 flash chosen. You were considering flash cases, external battery packs, tripods, and a camera bag upgrade. Based on that, accessories that complement your setup:\n\nEssential/near-term\n- Extra batteries for A7R IV (Sony NP-FZ100) \u2014 always carry 1\u20132 spares for long shoots.\n- Dual/triple battery charger for NP-FZ100 (external USB-chargers speed turnaround).\n- High-capacity, fast SD cards (UHS-II, V90) \u2014 at least two 128GB cards for large ARW/RAW files.\n- Godox V1 spare battery and replacement head cap \u2014 keeps flash runtime reliable.\n- Protective UV / clear filter sized for 24\u201370mm \u2014 for front-element protection (use good-quality multi-coated).\n\nPower & runtime\n- External battery pack (you were considering): Anker PowerCore 20000 PD (good balance of capacity/price) or Jackery Titan S if you want higher capacity/AC output for charging multiple devices in the field.\n- USB-C to camera charging cable for in-camera charging (compatible with NP-FZ100 charging via USB-C) \u2014 useful for location shoots.\n\nStability & support\n- Tripod: Gitzo GT3543LS (you mentioned) \u2014 excellent lightweight, sturdy carbon-fiber option for long exposures and landscape work.\n- Quick-release L-bracket (Arca-Swiss compatible) sized for A7R IV \u2014 speeds switching between portrait/landscape and works with your G-Lock/Arca system.\n- Compact travel ball head or G-Lock Ultra system components you were looking at \u2014 for fast, secure mounting.\n\nLighting & modifiers\n- Godox V1 accessories: Bounce head diffuser, color gels set, small softbox/mini-umbrella and Godox round flash modifier for softer light.\n- Light stands (2) \u2014 lightweight, 8\u201310 ft for off-camera flash with Godox triggers.\n- Godox X-series wireless trigger (e.g., X2T-S/XPro) for Sony \u2014 reliable TTL/remote triggering for off-camera flashes.\n\nProtection & transport\n- Hard case / padded pouch for Godox V1: Think Tank or Lowepro flash pouches you were considering \u2014 pick one sized for V1 with pockets for batteries/gels.\n- Camera bag upgrade: a weather-resistant backpack or roller with laptop compartment and dividers for A7R IV + 24\u201370 + flash + accessories (Think Tank Retrospective or Peak Design Everyday Backpack are good starts\u2014choose capacity matching your kit).\n- Lens pouch and body cap tether for safe storage.\n\nCare & maintenance\n- Microfiber lens cloth, blower, lens pen, sensor-cleaning swabs (specific for full-frame sensors) and a good cleaning solution suited to coatings.\n- Protective camera rain cover for unpredictable shoots.\n\nExtras for practice & workflow\n- Remote shutter release / intervalometer (wireless or wired USB-C) for long exposures and timelapses.\n- Portable reflector (5-in-1 collapsible) for fill light in portraits.\n- Portable SSD or backup drive for field backup of RAW files (Samsung T7 or Sandisk Extreme SSD).\n- Color checker/gray card for accurate color profiles and tethered capture calibration.\n\nGiven your priorities (product photography, outdoor/family trips, and eco-friendly styling), add:\n- Small collapsible reflectors and natural-fiber props for rustic shoots.\n- A compact foldable backdrop or reclaimed-wood surface for consistent product shots.\n- Macro extension tubes or a dedicated 50\u201390mm macro if you plan close-up candle/product detail shots.\n\nIf you want, I can prioritize this list into a shopping plan at three budget levels (essential / mid-range / pro) or suggest exact models and links. Which would you prefer?",
+      "reason": "Model suggestions match the gold constraints: Sony-compatible and high-quality accessories that enhance the Sony A7R IV setup (Sony batteries, Sony-compatible triggers, Godox V1 accessories, quality tripods, cards, bags, etc.). Recommendations avoid low-quality or non-Sony brand pushes and align with user's stated priorities.",
+      "ok_pack": true,
+      "ok_rag": true
+    },
+    {
+      "qid": "f8c5f88b",
+      "qtype": "single-session-user",
+      "ok_hybrid": true,
+      "escalated": false,
+      "a": "You bought your new tennis racket from a downtown sports store.",
+      "reason": "The model's answer conveys the same information as the gold: the racket was purchased at a sports store downtown.",
+      "ok_pack": true,
+      "ok_rag": true
+    },
+    {
+      "qid": "bcbe585f",
+      "qtype": "temporal-reasoning",
+      "ok_hybrid": true,
+      "escalated": false,
+      "a": "You attended the bird-watching workshop on 2023-04-01. Today is 2023-05-01, so that was 4 weeks ago.",
+      "reason": "The model's answer states the event was 4 weeks ago and explains dates matching that interval, which matches the gold answer of 4.",
+      "ok_pack": false,
+      "ok_rag": true
+    },
+    {
+      "qid": "7e974930",
+      "qtype": "knowledge-update",
+      "ok_hybrid": true,
+      "escalated": false,
+      "a": "You earned $420 at your most recent Downtown Farmers Market visit.",
+      "reason": "The model's answer matches the gold answer exactly: both state $420 earned at the Downtown Farmers Market.",
+      "ok_pack": true,
+      "ok_rag": true
+    },
+    {
+      "qid": "db467c8c",
+      "qtype": "knowledge-update",
+      "ok_hybrid": true,
+      "escalated": false,
+      "a": "They have been staying with you for nine months as of 2023-10-20.",
+      "reason": "Model answer matches the gold answer (nine months) and adds a timestamp indicating when that duration applied, which does not contradict the gold.",
+      "ok_pack": true,
+      "ok_rag": true
+    },
+    {
+      "qid": "5c40ec5b",
+      "qtype": "knowledge-update",
+      "ok_hybrid": false,
+      "escalated": false,
+      "a": "You've met Alex from Germany three times: once a few weeks before 2023-08-11 (met at a music festival), then you've met up twice already prior to 2023-09-30 \u2014 totaling three meetups.",
+      "reason": "Gold answer states two meetups, but the model claims three meetups (contradicting the gold). The counts do not match.",
+      "ok_pack": true,
+      "ok_rag": true
+    },
+    {
+      "qid": "603deb26",
+      "qtype": "knowledge-update",
+      "ok_hybrid": true,
+      "escalated": false,
+      "a": "You\u2019ve made Negroni at home 10 times total since Emma showed you.",
+      "reason": "The model answer matches the gold answer stating 10 times.",
+      "ok_pack": true,
+      "ok_rag": true
+    },
+    {
+      "qid": "81507db6",
+      "qtype": "multi-session",
+      "ok_hybrid": false,
+      "escalated": false,
+      "a": "From the memory pack covering up to 2023-07-21, you attended these graduations in the past three months:\n\n- Cousin Emma\u2019s preschool graduation (around May 2023)\n- Your sister\u2019s friend / friend Rachel\u2019s master\u2019s graduation (a couple weeks before 2023-07-21)\n- Walk for a Cure volunteer event note mentions meeting colleague Rachel but not a graduation\n- You missed nephew Jack\u2019s eighth grade graduation (so not attended)\n\nAdditionally, on 2023-07-21 you attended a niece\u2019s birthday party, not a graduation.\n\nSo you attended 2 graduation ceremonies in the past three months.",
+      "reason": "The model answer concludes 2 graduations attended, but the gold answer is 3. The model miscounted or excluded an attended ceremony (it listed two attended graduations and one missed), so its numeric result conflicts with the gold.",
+      "ok_pack": false,
+      "ok_rag": false
+    },
+    {
+      "qid": "60472f9c",
+      "qtype": "multi-session",
+      "ok_hybrid": false,
+      "escalated": true,
+      "a": "From the retrieved turns: you said you were juggling a group project for your Database Systems course in addition to other work. No other specific simultaneous projects (besides your thesis) are listed.\n\nSo: I only know of one additional project \u2014 the Database Systems group project. If you meant others, the context doesn't record them.",
+      "reason": "Gold answer is 2, but the model says 1. The model's count disagrees with the gold label.",
+      "ok_pack": false,
+      "ok_rag": true
+    },
+    {
+      "qid": "5025383b",
+      "qtype": "multi-session",
+      "ok_hybrid": false,
+      "escalated": false,
+      "a": "Photography and Lightroom/post-processing (night photography techniques and editing).",
+      "reason": "Model mentioned only photography-related hobbies (photography and post-processing) and omitted cooking, so it does not match the gold answer.",
+      "ok_pack": false,
+      "ok_rag": false
+    },
+    {
+      "qid": "87f22b4a",
+      "qtype": "multi-session",
+      "ok_hybrid": true,
+      "escalated": false,
+      "a": "You sold 40 dozen eggs in the referenced month. At $3 per dozen, you've made 40 \u00d7 $3 = $120 this month from eggs.",
+      "reason": "Model computes $120 from 40 dozen at $3/dozen, which matches the gold answer of $120.",
+      "ok_pack": true,
+      "ok_rag": false
+    },
+    {
+      "qid": "8cf51dda",
+      "qtype": "single-session-assistant",
+      "ok_hybrid": true,
+      "escalated": true,
+      "a": "From the memory context, the three objectives outlined were:\n\n1. To identify molecular subtypes of endometrial cancer using a combination of genomic and transcriptomic approaches.\n2. To investigate the clinical and biological significance of the identified molecular subtypes, including their association with patient outcomes and response to therapy.\n3. To develop biomarkers for the early detection and prognosis of endometrial cancer based on the identified molecular subtypes.",
+      "reason": "The model's three objectives match the gold: identify molecular subtypes; investigate their clinical/biological significance; develop biomarkers for early detection and prognosis. Wording differences are minor and consistent with the gold.",
+      "ok_pack": false,
+      "ok_rag": true
+    },
+    {
+      "qid": "b759caee",
+      "qtype": "single-session-assistant",
+      "ok_hybrid": true,
+      "escalated": true,
+      "a": "The UK-based designer who works with unusual gemstones was Jessica Poole \u2014 Instagram handle @jessica_poole_jewellery.",
+      "reason": "The model's Instagram handle matches the gold answer exactly and correctly identifies the UK-based designer Jessica Poole.",
+      "ok_pack": false,
+      "ok_rag": true
+    },
+    {
+      "qid": "8aef76bc",
+      "qtype": "single-session-assistant",
+      "ok_hybrid": true,
+      "escalated": true,
+      "a": "You recommended Mod Podge as the sealant for the newspaper flower vase.",
+      "reason": "The model answer correctly states Mod Podge as the recommended sealant, matching the gold answer which lists Mod Podge or another sealant.",
+      "ok_pack": false,
+      "ok_rag": true
+    },
+    {
+      "qid": "4baee567",
+      "qtype": "single-session-assistant",
+      "ok_hybrid": false,
+      "escalated": true,
+      "a": "I don't know \u2014 the memory context doesn't include any information about Chiefs vs. Jaguars games or how many times they played at Arrowhead Stadium.",
+      "reason": "The gold answer states a specific fact (12 times). The model answered that it didn't know, contradicting the gold answer rather than confirming it.",
+      "ok_pack": false,
+      "ok_rag": false
+    },
+    {
+      "qid": "54026fce",
+      "qtype": "single-session-preference",
+      "ok_hybrid": true,
+      "escalated": false,
+      "a": "Here are several practical ideas that fit your routines, mobility limits, and tastes from your recent contexts:\n\nLow-effort, regular touchpoints\n- Weekly short check-ins: 10\u201315 minute virtual or in-person catch-ups (standing agenda: wins, blockers, help needed). Keeps connection without long standing.\n- \u201cCoffee roulette\u201d: Pair colleagues randomly once every 2\u20133 weeks for a 20\u201330 minute chat (video or walk-and-talk). You can use calendar invites and keep them informal.\n\nSmall gestures that scale\n- Personalized e\u2011mails or Slack notes: congratulate on wins, share quick resources (article, book rec), or a thoughtful emoji \u2014 low effort but high impact.\n- Celebrate milestones: coordinate small e\u2011cards or group Slack GIFs for birthdays, work anniversaries, project launches.\n\nShared activities aligned with your situation\n- Short virtual learning sessions: 20\u201330 minute \u201clunch & learn\u201d where someone shares a skill (analytics tips, Git workflow, a plant-care trick). Matches your interest in courses/certification and colleagues\u2019 skills.\n- Micro book club: pick a short article or 1\u20132 chapters a month (you already buy books/gift them). Meet once a month to discuss\u2014light commitment.\n\nHybrid social ideas (in-person + low physical strain)\n- Casual outdoor meetups: short patio coffee or walk in a nearby park (you\u2019re into running/hiking and may prefer low-impact outings while recovering). Keeps standing/time reasonable.\n- Potluck or themed snack day: bring easy, no-cook items (you favor minimal standing foods) and ask others to contribute\u2014good for office morale.\n\nFun, low-overhead traditions\n- Friday highlights thread: a single Slack channel thread where everyone posts one win or funny moment each Friday.\n- \u201cKudos\u201d board: a shared virtual board (Miro/Notion/Trello) where teammates pin thank-you notes and shout-outs.\n\nLeverage your planning strengths and tools\n- Use calendar batching and reminders (you already use digital reminders) to schedule recurring social touchpoints so they don\u2019t get missed during busy weeks.\n- Rotate organizers so the effort doesn\u2019t fall on one person \u2014 set up a lightweight template for invites/agenda.\n\nGifts & thoughtful tokens\n- Occasional small, personalized gifts (you already buy Etsy mugs and thoughtful presents). Examples: a handwritten note, a curated playlist, or a thoughtful book recommendation with a short note.\n- Group gifting for major life events (you plan baby gifts and farewells)\u2014coordinate contributions in advance.\n\nFor remote teams / mixed schedules\n- Async engagement: short Loom videos to share updates or kudos, and a shared playlist or photo-of-the-week channel.\n- Office hub: keep one persistent channel (e.g., #watercooler) for non-work sharing\u2014memes, plants, pet photos (you have Max/Luna/Whiskers).\n\nIf you want, I can:\n- Draft a reusable Slack template (weekly check-in, kudos, or invite message).\n- Propose a 3-month schedule (rotating pairings, learning sessions, and social events) tailored to your availability while you\u2019re recovering and using crutches.",
+      "reason": "The model response acknowledges the user's desire for social interaction and collaboration, tailors suggestions to the user's routines, mobility limits, and past behaviors, and offers specific virtual and hybrid activities (check-ins, coffee roulette, lunch & learns, book club, Slack threads, gifting). It avoids generic advice and even offers concrete follow-ups (templates, schedules) as the gold answer indicates.",
+      "ok_pack": true,
+      "ok_rag": true
+    },
+    {
+      "qid": "38146c39",
+      "qtype": "single-session-preference",
+      "ok_hybrid": true,
+      "escalated": false,
+      "a": "From your memory pack: you like richer, complex sugar flavors and warm spices, and you\u2019ve been experimenting with turbinado and muscovado sugars in baking. You\u2019re also testing substitutions (brown sugar, almond flour) in a clafoutis. Using that, here are concise, tailored ideas to give your chocolate chip cookies \u201csomething extra\u201d while staying close to your preferences:\n\n1. Swap sugars for depth\n- Replace part of the granulated sugar with turbinado or demerara (about 25\u201350%) for caramel notes and crunch.  \n- Or replace some brown sugar with muscovado (up to half the brown sugar) for a deep molasses flavor.\n\n2. Salt contrast\n- Use flaky sea salt (Maldon) as a finishing sprinkle right after baking. The sweet\u2013salty pop elevates the chocolate.\n\n3. Toasted nuts or seeds\n- Fold in toasted chopped pecans or walnuts (lightly salted) for texture and warm nuttiness that pairs with muscovado/turbinado.\n\n4. Browned-butter base\n- Brown your butter before cooling and using it in the dough \u2014 adds nutty, caramelized richness that complements the sugars.\n\n5. Use a mix of chocolate\n- Combine chopped dark chocolate (60\u201370%) with mix-ins like milk chocolate chips or chopped bittersweet for varied melt and flavor. A few chunks of high-quality single-origin chocolate can add complexity.\n\n6. Add a spice note (you like warm spices)\n- A pinch (1/8\u20131/4 tsp per batch) of ground cinnamon or a tiny bit of ground cardamom can add warmth without making them \u201cspiced\u201d cookies.\n\n7. Texture play\n- Chill the dough overnight (8\u201324 hrs). This concentrates flavor and improves texture. For chewier centers + crispy edges, press slightly flattened dough balls just before baking and bake at a slightly higher temp for a shorter time.\n\n8. Layered flavor add-ins\n- Try a small amount (1 tsp) of instant espresso powder to intensify chocolate flavor. Or add a teaspoon of vanilla bean paste (or a split vanilla bean scraped) for a more aromatic vanilla note.\n\n9. Finishing touches\n- Right after baking, brush a tiny bit of salted caramel or dulce de leche into the warm cookies\u2019 centers, or sandwich two cookies with a thin layer for an indulgent version.\n\n10. Test & report\n- Given you like to test and report back (clafoutis plan), try two small batches: one with browned-butter + turbinado + Maldon salt; another with muscovado + toasted pecans + espresso powder. Compare and pick your winner.\n\nWant a simple recipe adjustment using your current recipe? Tell me your usual cookie recipe (flour/sugar/butter/eggs proportions) and I\u2019ll give exact substitutions and bake times.",
+      "reason": "The model answer builds on the user's use of turbinado sugar and preference for richer, complex flavors. It provides tailored ingredient and technique suggestions (turbinado/muscovado substitutions, Maldon salt, browned butter, spices, espresso, nuts, chilling dough) rather than generic tips, and invites the user to provide their recipe for exact adjustments\u2014matching the gold guidance.",
+      "ok_pack": true,
+      "ok_rag": false
+    },
+    {
+      "qid": "06f04340",
+      "qtype": "single-session-preference",
+      "ok_hybrid": true,
+      "escalated": false,
+      "a": "You have cherry tomatoes, fresh basil, and mint from your garden. With those, here are three dinner ideas (easy, fresh, and using what you grow):\n\n1) Cherry\u2011tomato + basil pasta (classic, quick)\n- Use pasta (spaghetti or penne). Saut\u00e9 halved cherry tomatoes in olive oil with garlic, a pinch of chili flakes, salt & pepper until softened. Toss in cooked pasta, lots of torn basil, a squeeze of lemon (if you have), and finish with grated Parmesan or Pecorino. Add a drizzle of good olive oil. Optional: top with toasted breadcrumbs or cooked shrimp/chicken.\n\n2) Caprese\u2011style salad + grilled protein\n- Halve cherry tomatoes and layer with fresh mozzarella (or burrata) and whole basil leaves. Drizzle with olive oil, balsamic reduction (or a splash of vinegar + honey), salt & cracked pepper. Serve with grilled chicken, salmon, or a simple pan\u2011seared fish and crusty bread.\n\n3) Middle Eastern\u2011inspired tomato & herb bowl (uses mint)\n- Make a warm grain bowl with brown rice or quinoa. Saut\u00e9 cherry tomatoes with onion and cumin, fold in lots of chopped basil and mint, lemon juice, olive oil, and chopped cucumber if available. Top with yogurt or labneh, toasted pine nuts, and grilled halloumi or roasted chickpeas for protein.\n\nBonus: Tomato & basil bruschetta starter\n- Toast sliced bread, rub with garlic, top with chopped cherry tomatoes, basil, olive oil, salt, and optional balsamic. Great as appetizer for any of the above.\n\nIf you tell me what proteins or pantry staples you have (cheese, pasta, grains, lemon, yogurt, chicken, fish, etc.), I can give a specific recipe and timing for the weekend dinner.",
+      "reason": "The model answer focuses on using the user's homegrown cherry tomatoes, basil, and mint, offering multiple dinner ideas that showcase those ingredients (pasta, Caprese salad, herb grain bowl, bruschetta) and asks about available proteins/staples for a tailored recipe\u2014matching the gold guidance.",
+      "ok_pack": true,
+      "ok_rag": false
+    },
+    {
+      "qid": "75832dbd",
+      "qtype": "single-session-preference",
+      "ok_hybrid": false,
+      "escalated": true,
+      "a": "I don't know \u2014 the memory context doesn't include any recent publications or conferences.",
+      "reason": "The model answer refuses and says it doesn't know, but the user asked for recommendations specific to AI in healthcare/deep learning for medical imaging. The gold expects specific recent papers, articles, or conferences; the model should have provided relevant suggestions rather than saying memory lacks that information.",
+      "ok_pack": false,
+      "ok_rag": false
+    },
+    {
+      "qid": "58bf7951",
+      "qtype": "single-session-user",
+      "ok_hybrid": false,
+      "escalated": true,
+      "a": "You didn't say the name of the play \u2014 only that you went to a play at the local community theater and were impressed by the lead actress. I don't know which play it was.",
+      "reason": "Gold specifies the play title 'The Glass Menagerie', but the model answered that the user didn't say the name and claimed not to know. That contradicts the gold answer.",
+      "ok_pack": false,
+      "ok_rag": false
+    },
+    {
+      "qid": "66f24dbb",
+      "qtype": "single-session-user",
+      "ok_hybrid": false,
+      "escalated": false,
+      "a": "You bought a yellow dress and matching earrings for your sister's birthday.",
+      "reason": "Gold answer specifies only 'a yellow dress'. The model added 'matching earrings', which is extra information not in the gold answer, so it does not match exactly.",
+      "ok_pack": false,
+      "ok_rag": false
+    },
+    {
+      "qid": "8a137a7f",
+      "qtype": "single-session-user",
+      "ok_hybrid": true,
+      "escalated": false,
+      "a": "You replaced the bedside-bulb with a warm-toned Philips LED (about 2700\u20133000K).",
+      "reason": "Model answer matches: identifies a Philips LED bulb. Additional detail about warm color temperature is extra but consistent and doesn't contradict the gold answer.",
+      "ok_pack": true,
+      "ok_rag": true
+    },
+    {
+      "qid": "8550ddae",
+      "qtype": "single-session-user",
+      "ok_hybrid": true,
+      "escalated": false,
+      "a": "You tried a lavender gin fizz last weekend, substituting honey+water for simple syrup.",
+      "reason": "Model answer matches the gold: it identifies the cocktail as a lavender gin fizz. The added detail about substituting honey+water for simple syrup is extra but doesn't contradict the gold.",
+      "ok_pack": true,
+      "ok_rag": true
+    },
+    {
+      "qid": "gpt4_2c50253f",
+      "qtype": "temporal-reasoning",
+      "ok_hybrid": true,
+      "escalated": false,
+      "a": "You wake at 07:00 AM daily, and on Tuesdays/Thursdays you wake 15 minutes earlier for meditation & yoga \u2014 i.e., at 06:45 AM.",
+      "reason": "The model states the Tuesday/Thursday wake time is 6:45 AM, which matches the gold answer (6:45 AM).",
+      "ok_pack": false,
+      "ok_rag": false
+    },
+    {
+      "qid": "gpt4_e072b769",
+      "qtype": "temporal-reasoning",
+      "ok_hybrid": false,
+      "escalated": false,
+      "a": "You started using Ibotta on 2023-04-16. Today is 2023-05-06, so that was 2 weeks and 3 days ago \u2014 about 2.5 weeks ago.",
+      "reason": "Gold answer: 3 weeks ago. Model answer: about 2.5 weeks ago (2 weeks and 3 days). These do not match.",
+      "ok_pack": false,
+      "ok_rag": false
+    },
+    {
+      "qid": "af082822",
+      "qtype": "temporal-reasoning",
+      "ok_hybrid": false,
+      "escalated": true,
+      "a": "You attended the friends and family sale at Nordstrom \"yesterday\" according to the memory (entry dated 2022/11/18). Given today is 2022/12/01, that was 13 days ago \u2014 which is 1 week and 6 days (just under 2 weeks).",
+      "reason": "Gold answer is 2 weeks; model said 13 days (~1 week 6 days, just under 2 weeks). That does not match the gold value of 2 weeks.",
+      "ok_pack": false,
+      "ok_rag": true
+    },
+    {
+      "qid": "gpt4_e061b84g",
+      "qtype": "temporal-reasoning",
+      "ok_hybrid": false,
+      "escalated": false,
+      "a": "You completed a Spring Sprint Triathlon (including a 20K bike ride) on 2023-06-02. That is the sports event you mentioned having participated in about two weeks earlier.",
+      "reason": "The model answer describes a Spring Sprint Triathlon on 2023-06-02, which does not match the gold answer stating a company's annual charity soccer tournament.",
+      "ok_pack": false,
+      "ok_rag": false
+    }
+  ]
+}
