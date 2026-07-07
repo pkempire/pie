@@ -34,18 +34,22 @@ REFLECT_SYS = (
 )
 
 
-def eval_prompts(qs: list[dict], map_sys: str, reduce_sys: str, budget: int) -> list[dict]:
-    rows = []
-    for q in qs:
-        try:
-            pack = compile_pack(q, budget, map_sys=map_sys, reduce_sys=reduce_sys)
-            a = answer(pack, q)
-            ok, reason = judge(q, a)
-        except Exception as e:
-            pack, a, ok, reason = "", f"[error {e}]", False, "error"
-        rows.append({"qid": q["question_id"], "qtype": q["question_type"], "q": q["question"],
-                     "gold": q["answer"], "a": a, "ok": ok, "reason": reason, "pack_head": pack[:800]})
-    return rows
+def _eval_one(q: dict, map_sys: str, reduce_sys: str, budget: int) -> dict:
+    try:
+        pack = compile_pack(q, budget, map_sys=map_sys, reduce_sys=reduce_sys)
+        a = answer(pack, q)
+        ok, reason = judge(q, a)
+    except Exception as e:
+        pack, a, ok, reason = "", f"[error {e}]", False, "error"
+    return {"qid": q["question_id"], "qtype": q["question_type"], "q": q["question"],
+            "gold": q["answer"], "a": a, "ok": ok, "reason": reason, "pack_head": pack[:800]}
+
+
+def eval_prompts(qs: list[dict], map_sys: str, reduce_sys: str, budget: int,
+                 workers: int = 5) -> list[dict]:
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(max_workers=workers) as ex:
+        return list(ex.map(lambda q: _eval_one(q, map_sys, reduce_sys, budget), qs))
 
 
 def acc(rows): return sum(r["ok"] for r in rows) / max(1, len(rows))
