@@ -156,9 +156,22 @@ def main() -> None:
     rows = [json.loads(l) for l in traces_f.read_text().splitlines()]
     rows = [r for r in rows if "error" not in r]
     n = len(rows)
+    # cost accounting (tokens ~ chars/4). Answer-time context is budget-matched by design;
+    # the asymmetry is amortization: the pack is compiled ONCE per corpus and is cache-stable
+    # (same prefix every query -> prompt-cache rates); RAG re-retrieves and re-reads a fresh,
+    # uncacheable context every query.
+    pack_tok = [len(r.get("pack", "")) // 4 for r in rows]
+    rag_tok = [r.get("rag_chars", 0) // 4 for r in rows]
     summ = {"n": n,
             "pack_acc": round(sum(r["ok_pack"] for r in rows) / max(1, n), 4),
             "rag_acc": round(sum(r["ok_rag"] for r in rows) / max(1, n), 4),
+            "cost": {
+                "answer_ctx_tokens_pack_mean": round(sum(pack_tok) / max(1, n)),
+                "answer_ctx_tokens_rag_mean": round(sum(rag_tok) / max(1, n)),
+                "pack_compile_secs_mean": round(sum(r.get("secs", 0) for r in rows) / max(1, n), 1),
+                "pack_amortization": "compile once per corpus; cache-stable prefix at answer time",
+                "rag_amortization": "no compile; per-query retrieval + uncacheable fresh context",
+            },
             "by_type": {}}
     for t in sorted({r["qtype"] for r in rows}):
         tr = [r for r in rows if r["qtype"] == t]
