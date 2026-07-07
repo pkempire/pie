@@ -61,6 +61,15 @@ def sessions_text(q: dict) -> list[str]:
 
 def compile_pack(q: dict, budget_tokens: int, map_sys: str = MAP_SYS,
                  reduce_sys: str = REDUCE_SYS) -> str:
+    # Deterministic per policy: cache the compiled pack by (qid, prompts, budget).
+    # Kills within-policy compile stochasticity — paired comparisons become stable —
+    # and makes re-evals free. (Variance finding: identical config scored 33/67/75%
+    # held-out across three uncached runs.)
+    import hashlib
+    key = hashlib.sha1(f"{q['question_id']}|{map_sys}|{reduce_sys}|{budget_tokens}".encode()).hexdigest()[:20]
+    cache = OUT / "pack_cache" / f"{key}.md"
+    if cache.exists():
+        return cache.read_text()
     groups, cur, used = [], [], 0
     for s in sessions_text(q):
         s = s[:24_000]
@@ -72,8 +81,10 @@ def compile_pack(q: dict, budget_tokens: int, map_sys: str = MAP_SYS,
     notes = [chat(map_sys, g, max_tokens=6000, effort="minimal") for g in groups]
     budget_chars = budget_tokens * 4
     pack = chat(reduce_sys.format(budget=budget_tokens, chars=budget_chars),
-                "\n\n---\n\n".join(notes), max_tokens=budget_tokens * 2 + 4000)
-    return pack[:budget_chars]
+                "\n\n---\n\n".join(notes), max_tokens=budget_tokens * 2 + 4000)[:budget_chars]
+    cache.parent.mkdir(parents=True, exist_ok=True)
+    cache.write_text(pack)
+    return pack
 
 
 def rag_context(q: dict, budget_chars: int) -> str:
@@ -114,12 +125,21 @@ def hybrid_answer(pack: str, q: dict, budget_chars: int) -> tuple[str, bool]:
     return answer(ctx, q), True
 
 
-def judge(q: dict, pred: str) -> tuple[bool, str]:
+def _judge_once(q: dict, pred: str) -> tuple[bool, str]:
     raw = chat(JUDGE_SYS, f"Question: {q['question']}\nGold: {q['answer']}\nModel answer: {pred}",
                max_tokens=900, effort="minimal")
     m = re.search(r'"correct"\s*:\s*(true|false)', raw.lower())
     reason = (re.search(r'"reason"\s*:\s*"([^"]*)"', raw) or [None, ""])[1]
     return (m.group(1) == "true" if m else False), reason
+
+
+def judge(q: dict, pred: str) -> tuple[bool, str]:
+    # Triple-judge majority: single LLM judges flip verdicts run-to-run (measured here and
+    # documented field-wide, e.g. the Coin-Flip-Judge result). Majority of 3 stabilizes.
+    votes = [_judge_once(q, pred) for _ in range(3)]
+    ok = sum(v for v, _ in votes) >= 2
+    reason = next((r for v, r in votes if v == ok and r), votes[0][1])
+    return ok, f"{sum(v for v, _ in votes)}/3 · {reason}"
 
 
 def main() -> None:

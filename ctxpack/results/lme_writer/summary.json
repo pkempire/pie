@@ -1,0 +1,32 @@
+{
+  "iters": [
+    {
+      "iter": 0,
+      "train_acc": 0.3333333333333333,
+      "held_acc": 0.3333333333333333
+    },
+    {
+      "iter": 1,
+      "train_acc": 0.3333333333333333,
+      "held_acc": 0.5833333333333334
+    },
+    {
+      "iter": 2,
+      "train_acc": 0.3333333333333333,
+      "held_acc": 0.4166666666666667
+    },
+    {
+      "iter": 3,
+      "train_acc": 0.5,
+      "held_acc": 0.5833333333333334
+    },
+    {
+      "iter": 4,
+      "train_acc": 0.5,
+      "held_acc": 0.5833333333333334
+    }
+  ],
+  "best_iter_by_train": 3,
+  "budget_tokens": 4000,
+  "note": "held-out reported, never optimized; single seed"
+}

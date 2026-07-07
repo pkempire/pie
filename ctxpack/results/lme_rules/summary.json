@@ -1,0 +1,66 @@
+{
+  "history": [
+    {
+      "iter": 0,
+      "train_acc": 0.4166666666666667,
+      "held_acc": 0.75,
+      "n_active_rules": 0
+    },
+    {
+      "iter": 1,
+      "train_acc": 0.4166666666666667,
+      "held_acc": 0.6666666666666666,
+      "n_active_rules": 0,
+      "proposed": [
+        "R1",
+        "R2",
+        "R3"
+      ],
+      "verdict": "REJECTED",
+      "delta": -0.0833,
+      "secs": 865
+    },
+    {
+      "iter": 2,
+      "train_acc": 0.5,
+      "held_acc": 0.5,
+      "n_active_rules": 3,
+      "proposed": [
+        "R4",
+        "R5",
+        "R6"
+      ],
+      "verdict": "ADMITTED",
+      "delta": 0.0833,
+      "secs": 1055
+    },
+    {
+      "iter": 3,
+      "train_acc": 0.5,
+      "held_acc": 0.5833333333333334,
+      "n_active_rules": 4,
+      "proposed": [
+        "R7",
+        "R8"
+      ],
+      "verdict": "ADMITTED",
+      "delta": 0.0,
+      "secs": 980
+    },
+    {
+      "iter": 4,
+      "train_acc": 0.5,
+      "held_acc": 0.4166666666666667,
+      "n_active_rules": 4,
+      "proposed": [
+        "R9",
+        "R10"
+      ],
+      "verdict": "REJECTED",
+      "delta": -0.0833,
+      "secs": 19384
+    }
+  ],
+  "base_train": 0.4166666666666667,
+  "note": "rule accretion with gated admission; same seed/splits as evolve_writer"
+}
