@@ -1,0 +1,13 @@
+{"corpus_globs": ["mempol/recipes/memory_rl/*.py", "mempol/eval/*.py", "mempol/policies/*.py", "mempol/backends/*.py", "mempol/llm.py", "mempol/config.py", "mempol/rollout.py"], "handwritten_docs": ["mempol/README.md", "mempol/EXPLAINER.md", "mempol/RL-FOUNDATIONS.md"]}
+{"id": "reward-weights", "q": "What are the default weights for the counterfactual component and the QA judge component in the write reward?", "accept": [["0\\.7"], ["0\\.3"]]}
+{"id": "coverage-floor", "q": "What is the default weight of the evidence-coverage floor term in the write reward?", "accept": [["0\\.05"]]}
+{"id": "non-mutating-ops", "q": "Which write-tool operations are classified as non-mutating?", "accept": [["lookup_entity"], ["noop"]]}
+{"id": "mutating-ops", "q": "Name three write-tool operations classified as mutating.", "accept": [["merge_entities|update_state|create_entity"], ["mark_contradiction|forget|add_relation"]]}
+{"id": "kmax", "q": "What is the default hard retention budget K_max used to prune the knowledge graph before scoring?", "accept": [["\\b12\\b"]]}
+{"id": "fusion", "q": "What rank-fusion method combines the BM25, dense, and NER retrieval signals in the backends?", "accept": [["rrf|reciprocal.rank"]]}
+{"id": "judge-bucket", "q": "Above what raw score threshold does the LLM judge bucket a score as 1.0?", "accept": [["0\\.75"]]}
+{"id": "r-checkpoint-env", "q": "Which environment variable supplies a trained read-policy checkpoint to Phase B training?", "accept": [["mempol_r_checkpoint"]]}
+{"id": "raw-open-penalty", "q": "In the universal memory RL recipe, what is the penalty value applied when the policy answers without freezing raw access?", "accept": [["0\\.15"]]}
+{"id": "counterfactual-mech", "q": "How does the counterfactual reward assign credit to an individual write operation?", "accept": [["without|minus|remov|leave|ablat|omit|exclud"], ["replay|re-?run|re-?execut|reconstruct"]]}
+{"id": "group-size", "q": "What is the default GRPO group size in the write environment?", "accept": [["\\b8\\b"]]}
+{"id": "embed-cache-key", "q": "How are entries keyed in the embedding cache?", "accept": [["sha-?1|hash"]]}
