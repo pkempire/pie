@@ -33,13 +33,22 @@ CHARS_PER_TOKEN = 4  # coarse budget accounting; consistent across conditions
 def chat(system: str, user: str, max_tokens: int = 700, effort: str = "low") -> str:
     # NB: reasoning models spend completion tokens on reasoning; max_tokens must include
     # generous headroom or the visible output silently starves (observed: empty map notes).
-    r = client.chat.completions.create(
-        model=MODEL,
-        messages=[{"role": "system", "content": system}, {"role": "user", "content": user}],
-        reasoning_effort=effort,
-        max_completion_tokens=max_tokens,
-    )
-    return r.choices[0].message.content or ""
+    # Timeout + retry: a single hung call once stalled a 5-worker run for 5+ hours.
+    last = None
+    for attempt in range(3):
+        try:
+            r = client.chat.completions.create(
+                model=MODEL,
+                messages=[{"role": "system", "content": system}, {"role": "user", "content": user}],
+                reasoning_effort=effort,
+                max_completion_tokens=max_tokens,
+                timeout=180,
+            )
+            return r.choices[0].message.content or ""
+        except Exception as e:  # noqa: BLE001
+            last = e
+            time.sleep(5 * (attempt + 1))
+    raise RuntimeError(f"chat failed after 3 attempts: {last}")
 
 
 # ---------------- corpus ----------------
