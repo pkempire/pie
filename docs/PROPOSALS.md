@@ -79,8 +79,38 @@ evidence spans), never a similarity threshold; (ii) every alias carries provenan
 test-suite as the regression gate for the ingestion pipeline (same gate pattern as ctxpack);
 (v) related-but-distinct becomes a typed RELATED edge, not an alias. Then re-ingest the ChatGPT
 export and ship the graph viewers on top.
-**First experiment.** Re-resolve the existing 1,975 entities under v2 rules; report merge-error
+**First experiment.** Re-resolve the existing entities under v2 rules; report merge-error
 rate vs v1 on a hand-labeled 100-pair identity set; then full re-ingest.
+
+**Deep-dive findings on the LIVE model (2026-07-07, world_model.json, 4,003 entities / 6,716
+transitions / 3,241 relationships — the step-function list):**
+- **S1 — There is no self entity.** A *personal* world model with no node for the owner. 122
+  well-formed beliefs ("Diet: fruit-heavy", "Preference: short/clean domain names") float
+  unanchored. v2 schema: an owner node; every belief/preference/goal is an attributed, dated
+  state on it → profile views, and importance becomes *personalized PageRank from the self
+  node* (importance-as-centrality-to-you).
+- **S2 — Events are entities and shouldn't be.** 1,603 event nodes (40% of the graph), 89%
+  single-transition, 56% orphaned — "Common App editing session (chat)", "Physics problem set
+  Ch.13" as world entities. v2: events are *evidence rows* that trigger state transitions on
+  real entities, never nodes. Halves the graph, kills the junk class.
+- **S3 — Identity failures shatter even the best data.** The strongest trajectory (Pulse-Fi)
+  is split across duplicate entities (one fragment has 102 transitions, another 2). Same root
+  cause as the alias garbage. → identity-test merges + revertible supersession merges.
+- **S4 — Importance is mention-salience, not centrality.** "Digestive enzyme stack" (0.25)
+  outranks nearly everything user-related; distribution is flat (~0.13 mean). Replace with
+  graph centrality × cross-conversation recurrence × recency.
+- **S5 — The model is 6 months stale** (coverage ends 2026-01; it knows nothing of the entire
+  memory-research arc). Ingest is batch+manual. v2: incremental delta-ingest with the ctxpack
+  maintenance pattern (new export → affected entities recompiled → identity test-suite gate).
+- **S6 — `related_to` is 37% of all edges** — the junk-drawer relation; demote to typed edges
+  with evidence or drop.
+- **What's genuinely solid (keep):** the transition+timestamp core — 6,716 dated transitions
+  across 13 months, typed edges, near-zero empty states. Nobody ships dated state-transition
+  logs for personal memory; this is the defensible bet. The belief *content* is good — it's
+  unanchored and never revised, not wrong.
+- **Product tie-in:** "understand me" = compile the personal context pack from the graph (P3
+  writer over the world model) + the staleness feed ("these beliefs are 9 months old — still
+  true?"). PIE v2 is the ledger's consumer-data twin.
 
 ---
 
