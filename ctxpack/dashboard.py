@@ -24,7 +24,8 @@ with tab_lme:
                "~115k-token haystack before seeing the question) vs query-adaptive lexical RAG, at "
                "matched 4k-token budget. LLM-judged (free-form answers) — judge reasons logged. "
                "Data: LongMemEval-S, balanced across 6 question types. Auto-refresh: rerun the page.")
-    st.markdown('<meta http-equiv="refresh" content="30">', unsafe_allow_html=True)  # auto-refresh 30s
+    if st.button("🔄 refresh data"):
+        st.rerun()
     lme_f = REPO / "ctxpack" / "results" / "lme" / "traces.jsonl"
     if not lme_f.exists():
         st.warning("No LME run yet. Run: python -m ctxpack.lme_pack_eval")

@@ -51,6 +51,43 @@ transfer test (writer trained on split A → unseen haystacks B) · maintenance-
 experiment · calibrated escalation trigger (logprob, not string match) · cost accounting
 figure (compile amortization vs per-query retrieval).
 
+## Methodology in standard terms (no invented vocabulary)
+
+What this system actually is, mapped to the literature by mechanism:
+
+| Our working name | Standard mechanism | Closest prior work |
+|---|---|---|
+| "pack" / compile | memory consolidation via hierarchical summarization into a fixed, reusable working context | Generative Agents reflection (2304.03442); Mastra OM; sleep-time compute (2504.13171); the Machine Studying "cheatsheet" |
+| "pack + escalate" | hierarchical memory: small always-in-context tier + fallback search over the raw archive | **MemGPT (2310.08560), exactly** — core memory + archival search |
+| "rule ledger" | experiential insight extraction into a curated insight pool with add/edit/vote operations | **ExpeL (2308.10144)** — closest; also Voyager skill library, ACE playbooks, Reflexion |
+| "writer-prompt mutation" | reflective prompt optimization | GEPA (2507.19457), OPRO, Promptbreeder |
+| "temporal store / supersession" | bi-temporal fact validity + invalidation in a structured world model | Zep/Graphiti (2501.13956) |
+| "maintenance loop / regression gate" | incremental view maintenance + CI regression testing, applied to consolidated memory artifacts | promptfoo-style CI; DB view maintenance — **the combination is unclaimed** (verified scans) |
+| "blame decomposition" | containment-based credit attribution between content and organization | related: retrieval-usage attribution in MemBuilder's ADRPO |
+
+**Honest novelty assessment by mechanism, not name:**
+- *Not novel:* consolidation, hierarchical fallback, insight pools, prompt reflection — all
+  established 2023–2025. We implement them; we do not claim them.
+- *Incremental:* held-out-gated insight admission with per-batch measured deltas and provenance
+  (= ExpeL + evaluation discipline); the confidence-gated escalation trigger.
+- *Actually open (verified against mid-2026 literature):* (1) **maintenance** — diff-scoped
+  invalidation + regression-gated updates of consolidated memory; (2) **the economics** —
+  budget-matched, amortization-aware measurement of consolidation vs retrieval vs hierarchical
+  fallback (compile-once-cacheable vs pay-per-query), with escalation rate as the key statistic;
+  (3) **the noise audit** — our identical-config spread (33/67/75% held-out, n=12) implies many
+  published small-n prompt-optimization gains may be evaluation noise; demonstrated
+  systematically, this is a standalone finding.
+
+**The system design, end to end, in standard terms:** (L1) append-only raw history + a
+bi-temporal structured world model as ground truth; (L2) a consolidation policy that compiles a
+budgeted, cache-stable working context from L1 per task distribution; (L3) confidence-gated
+fallback search over L1; learning = insight-pool updates to the consolidation policy, admitted
+only on held-out improvement; integrity = incremental invalidation on source change + a
+regression suite before any updated artifact ships. **End result:** agent memory that is cheap
+(cacheable), auditable (provenance end to end), self-improving (gated), and stays true under
+change — evaluated with paired, budget-matched, variance-controlled protocols.
+
 ## Venue path
 Workshop (agents/memory) with C1+C2+C4 → main conference (NeurIPS D&B or ACL) once C3 +
-full-set + multi-seed land.
+full-set + multi-seed land. Candidate spin-out: the noise-audit finding as its own short paper
+("how much of prompt-optimization improvement is evaluation noise?").
