@@ -1,0 +1,44 @@
+{
+  "n": 30,
+  "pack_acc": 0.4,
+  "rag_acc": 0.5667,
+  "cost": {
+    "answer_ctx_tokens_pack_mean": 3987,
+    "answer_ctx_tokens_rag_mean": 3751,
+    "pack_compile_secs_mean": 143.0,
+    "pack_amortization": "compile once per corpus; cache-stable prefix at answer time",
+    "rag_amortization": "no compile; per-query retrieval + uncacheable fresh context"
+  },
+  "by_type": {
+    "knowledge-update": {
+      "n": 5,
+      "pack": 0.8,
+      "rag": 0.8
+    },
+    "multi-session": {
+      "n": 5,
+      "pack": 0.2,
+      "rag": 0.4
+    },
+    "single-session-assistant": {
+      "n": 5,
+      "pack": 0.0,
+      "rag": 0.8
+    },
+    "single-session-preference": {
+      "n": 5,
+      "pack": 0.8,
+      "rag": 0.4
+    },
+    "single-session-user": {
+      "n": 5,
+      "pack": 0.6,
+      "rag": 0.6
+    },
+    "temporal-reasoning": {
+      "n": 5,
+      "pack": 0.0,
+      "rag": 0.4
+    }
+  }
+}
