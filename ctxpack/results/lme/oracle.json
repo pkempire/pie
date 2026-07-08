@@ -1,0 +1,226 @@
+{
+  "summary": {
+    "n": 30,
+    "oracle_acc": 0.7333,
+    "by_type": {
+      "knowledge-update": 0.8,
+      "multi-session": 0.8,
+      "single-session-assistant": 1.0,
+      "single-session-preference": 0.8,
+      "single-session-user": 0.8,
+      "temporal-reasoning": 0.2
+    }
+  },
+  "rows": [
+    {
+      "qid": "69fee5aa",
+      "qtype": "knowledge-update",
+      "ok": false,
+      "a": "You have 37 pre-1920 American coins in your collection.",
+      "reason": "0/3 \u00b7 The model answer (37) does not match the gold answer (38)."
+    },
+    {
+      "qid": "0ea62687",
+      "qtype": "multi-session",
+      "ok": true,
+      "a": "A few months ago your car was getting 30 miles per gallon in the city. You said it's at about 28 mpg now. So it's getting 2 mpg less than it was a few months ago.",
+      "reason": "3/3 \u00b7 The model states the earlier MPG was 30 and current is 28, concluding a 2 mpg decrease, which matches the gold answer (2)."
+    },
+    {
+      "qid": "1b9b7252",
+      "qtype": "single-session-assistant",
+      "ok": true,
+      "a": "That was Mindful.org \u2014 they offer free guided exercises including \u201cThe Mountain Meditation\u201d and the body scan.",
+      "reason": "3/3 \u00b7 The model correctly named Mindful.org and referenced the specific guided exercises mentioned in the gold answer."
+    },
+    {
+      "qid": "06878be2",
+      "qtype": "single-session-preference",
+      "ok": true,
+      "a": "Sure \u2014 I can suggest accessories that pair well with a typical enthusiast/professional photography kit. I don\u2019t know every item you already own, so I\u2019ll cover a range of useful, high-impact additions. Pick what fits your camera (you mentioned Sony A7R IV earlier in the conversation) and shooting style.\n\nCore lighting and flash accessories\n- Spare batteries and fast charger for your Godox V1 (or whatever flash you use) \u2014 never run out mid-shoot.  \n- Small LED continuous light (e.g., Aputure Amaran or Godox LED panels) \u2014 great for fill, video, and modeling light.  \n- Light stands and a compact collapsible tripod light arm \u2014 stable support for off-camera flashes/LEDs.  \n- Softbox/flash modifiers sized for speedlight (e.g., Godox S-type bracket + small softbox, MagBox) \u2014 soften and shape flash for portraits.  \n- Round flash diffuser (magnetic or clip-on) \u2014 quick, portable softening for on-camera flash.  \n- Wireless radio triggers (Godox/X system or Sony-compatible) \u2014 reliable off-camera flash control and TTL support.\n\nSupport, stabilization & motion\n- Travel tripod (carbon-fiber if you carry it a lot) \u2014 Gitzo, Really Right Stuff, Peak Design, or similar (you asked about GT3543LS earlier).  \n- Compact travel/mini tripod or tabletop tripod \u2014 for vlogging, product shots, or low-angle work.  \n- Gimbal for mirrorless (if you do video): DJI RS series or Zhiyun \u2014 smooth handheld motion.  \n- Camera strap upgrade: cushioned sling or peak-design anchors \u2014 more comfort and speed when moving between handheld and tripod.\n\nPower & storage\n- High-capacity USB-C power bank with PD (20,000mAh+) \u2014 can charge A7R IV via USB-C or power lights/phone on location.  \n- Extra camera batteries (Sony NP-FZ100) \u2014 at least 2\u20133 spares.  \n- Fast UHS-II SD cards (or CFexpress if your camera supports it) and a rugged card wallet.  \n- Portable SSD for offloading RAW files in the field (USB\u2011C Thunderbolt or NVMe enclosure).\n\nLenses & optics care\n- Lens cleaning kit: microfiber cloths, blower, sensor cleaning swabs, lens pen, cleaning solution.  \n- UV/clear filters and protective lens caps \u2014 protect expensive front elements during travel.  \n- Circular polarizer and variable ND filters \u2014 for landscape and long exposure control.  \n- Quality lens pouch or padded inserts to protect glass in a backpack.\n\nCamera protection & transport\n- Weather-sealed camera backpack or roller case with customizable dividers (Peak Design, Lowepro, MindShift, F-Stop) \u2014 comfortable carry and quick access.  \n- Rain cover for pack and camera \u2014 cheap insurance for bad weather.  \n- Hard case (Pelican/Nanuk) if you travel with a lot of gear by car/plane.\n\nAccessories for composition, portrait & studio work\n- Portable reflector kit (gold/silver/white) \u2014 shape natural light outdoors and interiors.  \n- Background support system + collapsible muslin/backdrop (neutral colors) \u2014 for portraits, product shots or client work.  \n- Bounce card, grids, or snoots for directional control of flash.  \n- Light meter (if you prefer precise exposure control for strobes).\n\nTethering, monitoring & workflow\n- Tether cable (USB-C or compatible) or wireless tether solution for shooting to laptop/tablet \u2014 helpful for studio/product shoots and client reviews.  \n- Portable monitor for video/composition checks (if you do video or need larger live view).  \n- Color calibration tool (X-Rite ColorChecker) \u2014 ensures consistent color across shoots and edits.\n\nAudio & video add-ons (if you shoot hybrid)\n- Shotgun mic and lavalier mic (Rode/Deity) for interviews and vlogs.  \n- Small on-camera LED panel for fill light in video.\n\nMiscellaneous but handy\n- Multi-tool and gaffer tape \u2014 always useful on location.  \n- Cable organizer and small accessory pouch for batteries, memory cards, filters, and adapters.  \n- Notebook or pocket guide for shot lists and location notes.\n\nIf you tell me your primary subjects (portraits, landscapes, weddings, studio, product, travel, video) and which gear you already own (camera, lenses, flash), I can narrow this list to the most impactful items and specific models matched to your budget. Which direction would you like to prioritize?",
+      "reason": "3/3 \u00b7 The model recommended Sony-compatible items (Sony NP-FZ100 batteries, USB-C charging) and high-quality gear brands and avoided suggesting low-quality or non-Sony-only equipment. It covered appropriate accessories across lighting, support, power, protection, and workflow and offered to tailor recommendations further\u2014matching the gold guidance."
+    },
+    {
+      "qid": "f8c5f88b",
+      "qtype": "single-session-user",
+      "ok": true,
+      "a": "You said you bought your new tennis racket from a sports store downtown.",
+      "reason": "3/3 \u00b7 The model answer conveys the same information as the gold answer: the racket was bought from the sports store downtown."
+    },
+    {
+      "qid": "bcbe585f",
+      "qtype": "temporal-reasoning",
+      "ok": true,
+      "a": "You attended the bird watching workshop on 2023-04-01 (Sat). Today is 2023-05-01. That was 4 weeks ago.",
+      "reason": "3/3 \u00b7 The model's answer states the workshop date (2023-04-01), the current date (2023-05-01), and correctly computes that interval as 4 weeks ago, matching the gold answer."
+    },
+    {
+      "qid": "7e974930",
+      "qtype": "knowledge-update",
+      "ok": true,
+      "a": "You earned $420 at the Downtown Farmers Market on your most recent visit.",
+      "reason": "3/3 \u00b7 The model's answer matches the gold answer exactly: both state $420 earned at the Downtown Farmers Market on the most recent visit."
+    },
+    {
+      "qid": "db467c8c",
+      "qtype": "knowledge-update",
+      "ok": true,
+      "a": "Your parents have been staying with you for nine months.",
+      "reason": "3/3 \u00b7 The model's answer matches the gold answer exactly in meaning: both state the parents have been staying for nine months."
+    },
+    {
+      "qid": "5c40ec5b",
+      "qtype": "knowledge-update",
+      "ok": true,
+      "a": "You said you\u2019ve met up with Alex twice already.",
+      "reason": "3/3 \u00b7 Both responses state that you have met up with Alex twice; the model's phrasing conveys the same fact as the gold answer."
+    },
+    {
+      "qid": "603deb26",
+      "qtype": "knowledge-update",
+      "ok": true,
+      "a": "You said you\u2019ve tried making a Negroni at home 10 times since your friend Emma showed you.",
+      "reason": "3/3 \u00b7 The model answer states 10 times, which matches the gold answer."
+    },
+    {
+      "qid": "81507db6",
+      "qtype": "multi-session",
+      "ok": false,
+      "a": "You attended one graduation ceremony in the past three months: your best friend Rachel's master's degree graduation a couple of weeks ago.",
+      "reason": "0/3 \u00b7 Gold answer is 3 but model states 1 and gives specifics; this contradicts the gold number."
+    },
+    {
+      "qid": "60472f9c",
+      "qtype": "multi-session",
+      "ok": true,
+      "a": "You mentioned working on a group project for your Database Systems course and a Data Mining course project (covering the Bike Sharing dataset). Excluding your thesis, that\u2019s 2 projects.",
+      "reason": "3/3 \u00b7 The model identified the two non-thesis projects (Database Systems group project and Data Mining project) and gave the correct count of 2, matching the gold answer."
+    },
+    {
+      "qid": "5025383b",
+      "qtype": "multi-session",
+      "ok": true,
+      "a": "You said you joined online communities related to cooking and (earlier) photography. So the two hobbies are cooking and photography.",
+      "reason": "3/3 \u00b7 The model's answer lists the two hobbies\u2014cooking and photography\u2014matching the gold answer."
+    },
+    {
+      "qid": "87f22b4a",
+      "qtype": "multi-session",
+      "ok": true,
+      "a": "You said earlier you sold a total of 40 dozen eggs so far this month. If you sell them at $3 per dozen (the price you mentioned), your revenue is:\n\n40 dozen \u00d7 $3/dozen = $120.",
+      "reason": "3/3 \u00b7 Model's calculation matches the gold answer: 40 dozen \u00d7 $3 = $120, and the explanation aligns with the given price and quantity."
+    },
+    {
+      "qid": "8cf51dda",
+      "qtype": "single-session-assistant",
+      "ok": true,
+      "a": "The three objectives we outlined were:\n\n1. Identify molecular subtypes of endometrial cancer using comprehensive genomic and transcriptomic approaches.  \n2. Investigate the clinical and biological significance of the identified molecular subtypes, including associations with patient outcomes and therapy response.  \n3. Develop biomarkers for early detection and prognosis of endometrial cancer based on those molecular subtypes.",
+      "reason": "3/3 \u00b7 The model's three objectives match the gold: identify molecular subtypes; investigate clinical/biological significance; develop biomarkers for early detection and prognosis."
+    },
+    {
+      "qid": "b759caee",
+      "qtype": "single-session-assistant",
+      "ok": true,
+      "a": "The UK-based designer who works with unusual gemstones and was mentioned earlier is Jessica Poole \u2014 Instagram handle: @jessica_poole_jewellery.",
+      "reason": "3/3 \u00b7 The model provided the same Instagram handle as the gold answer: @jessica_poole_jewellery, and correctly identified the UK-based designer Jessica Poole."
+    },
+    {
+      "qid": "8aef76bc",
+      "qtype": "single-session-assistant",
+      "ok": true,
+      "a": "You used newspaper to make a vase earlier. I recommended sealing it with Mod Podge (or \u201canother sealant\u201d) to make the vase water\u2011resistant.",
+      "reason": "3/3 \u00b7 The model answer matches the gold answer: it states Mod Podge (or another sealant) was recommended to seal the newspaper vase and make it water-resistant."
+    },
+    {
+      "qid": "4baee567",
+      "qtype": "single-session-assistant",
+      "ok": true,
+      "a": "You (previously) asked that and I answered: 12 games at Arrowhead Stadium.",
+      "reason": "3/3 \u00b7 Model answer states 12 games at Arrowhead Stadium, matching the gold answer."
+    },
+    {
+      "qid": "54026fce",
+      "qtype": "single-session-preference",
+      "ok": true,
+      "a": "Great\u2014here are practical, low-friction ways to stay connected with colleagues while working remotely, prioritized by ease of setup and likely impact:\n\n1. Regular short virtual coffee breaks\n- Format: 15\u201320 minute twice-weekly informal video calls.\n- Keep optional, same day/time each week (e.g., Tuesdays/Thursdays 10:30\u201310:50) so it becomes a habit.\n- Use an icebreaker queue (one person volunteers a topic) to avoid awkward silences.\n- Tip: Use calendar invites and name the meeting \u201cCoffee \u2014 optional\u201d so it\u2019s visible but not mandatory.\n\n2. Async \u201cwatercooler\u201d channel\n- Platform: Slack/Teams/Mattermost.\n- Channels: #random or themed ones (pets, recipes, weekend-photo).\n- Rules: pin a few community guidelines (no work threads, keep it positive).\n- Benefit: colleagues in different time zones can still participate.\n\n3. Weekly 15-minute team check-ins\n- Focus: three quick items each: win, blocker, non-work highlight.\n- Keep structured and short; no deep problem solving\u2014use for relationship building and signal issues early.\n\n4. Interest-based micro-groups\n- Create voluntary small groups: book club, running group, cooking club, coding dojo.\n- Run a single monthly 30\u201345 minute session (e.g., lunchtime) to lower commitment barriers.\n\n5. Mentorship / buddy program\n- Pair people across teams (monthly 30\u201360 minutes).\n- Explicit goals: career chat, skill swap, or just social catch-up.\n- Rotate every 3\u20136 months to widen networks.\n\n6. Casual co-working / \u201copen office\u201d video rooms\n- A persistent video room where people can drop in for focused work or short chats.\n- Guidelines: camera optional, mute by default, short greetings only.\n- Good for remote pair work or casual company.\n\n7. Short social rituals in existing meetings\n- Start 2\u20133 meetings/week with a 2-minute personal check-in (e.g., highlight of the week).\n- Keeps team cohesion without adding meetings.\n\n8. Virtual team activities & games\n- Light options: 10\u201315 minute trivia, Pictionary, two-truths game.\n- Schedule quarterly; rotate hosts so different people can contribute.\n\n9. Celebrate people publicly\n- Weekly shout-outs channel or 1-minute celebration segment in all-hands.\n- Recognize non-work wins too (birthdays, new pets, home projects).\n\n10. Facilitate psychological safety and inclusion\n- Encourage leaders to model vulnerability (short personal updates).\n- Invite quieter colleagues explicitly but gently to share.\n- Provide guidance on respectful, inclusive communication norms.\n\nImplementation tips\n- Start small: pilot 1\u20132 initiatives for 6\u20138 weeks, gather feedback, iterate.\n- Make participation optional and low-effort\u2014pressure kills engagement.\n- Measure success qualitatively: quick pulse survey, ask \u201cDid you feel more connected?\u201d after 6 weeks.\n- Timezone-aware scheduling: rotate times or record/async options for anyone missing events.\n- Provide small budget for occasional treats (virtual coffee cards, trivia prizes) to boost adoption.\n\nIf you want, I can:\n- Draft ready-to-send calendar invites and message templates for Slack/Teams.\n- Propose a 6-week pilot plan (schedule + metrics + feedback questions).\nWhich would you prefer?",
+      "reason": "3/3 \u00b7 The model response acknowledges the user's desire for social interaction and collaboration while remote and provides tailored, non-generic suggestions (virtual coffee breaks, async channels, check-ins, interest groups, buddy programs, co-working rooms, short rituals, games, recognition, psychological safety) along with implementation tips and offers to draft templates\u2014matching the gold guidance."
+    },
+    {
+      "qid": "38146c39",
+      "qtype": "single-session-preference",
+      "ok": true,
+      "a": "Great\u2014here are a few easy ways to take your chocolate chip cookies from good to memorable. Pick one or combine a few:\n\n1. Salt contrast\n- Sprinkle a small pinch of flaky sea salt (Maldon, fleur de sel) on top just as they come out of the oven. The sweet/salty contrast brightens flavor and makes the chocolate pop.\n\n2. Brown butter\n- Brown the butter first (cook until nutty aroma and light brown bits), cool slightly, then use in place of plain melted or softened butter. Adds toasty, caramel notes and depth.\n\n3. Toasted nuts or seeds\n- Fold in toasted chopped pecans, walnuts, or hazelnuts for texture and nuttiness. Or add a tablespoon of toasted sesame or pumpkin seeds to the dough for an unexpected note.\n\n4. Use two chocolates\n- Combine semi-sweet chips with chunks of high-quality dark chocolate or milk chocolate. Different melting points and textures make the bites more interesting.\n\n5. A touch of espresso or coffee\n- Add 1\u20132 teaspoons of instant espresso powder or strong brewed espresso to the dough to intensify the chocolate flavor without adding a coffee taste.\n\n6. Brown sugar balance\n- Increase the ratio of brown sugar (especially dark brown) vs. granulated sugar for more chew, moisture, and caramel flavor. Try replacing 25\u201350% of the granulated sugar with dark brown.\n\n7. Chill the dough\n- Refrigerate the shaped dough for at least 30 minutes (or overnight). Chilling concentrates flavor and helps the cookies keep a chewier center with crisp edges.\n\n8. Add texture contrast\n- Fold in a small amount of crushed pretzel, cornflakes, or toffee bits. Adds crunch and savory-sweet contrast.\n\n9. Extracts and spices\n- Try 1 tsp vanilla + 1/4 tsp almond extract for complexity. Or add a pinch of cinnamon or cardamom for warmth.\n\n10. Finishing glaze or drizzle\n- After baking, drizzle a little salted caramel or melted chocolate over the cooled cookies for an elegant finish.\n\n11. Better salt inside\n- Replace some table salt in the dough with flaky sea salt for a milder, more interesting salt profile throughout.\n\nA simple combo to try: brown the butter, use 1 cup dark brown + 1/2 cup granulated sugar, add 1 tsp vanilla + 1 tsp espresso powder, fold in 2 types of chocolate (chips + chopped dark), chill the dough overnight, bake, and finish with a light sprinkle of flaky sea salt.  \n\nIf you want, tell me your current recipe (ratios or method) and I\u2019ll suggest specific adjustments.",
+      "reason": "3/3 \u00b7 The model response builds on the user's prior experimentation with turbinado sugar by offering complementary ingredients and techniques (salt contrast, brown butter, two chocolates, espresso, more brown sugar, chilling, etc.) rather than generic tips. It also invites the user to share their recipe for tailored adjustments, matching the gold's intent."
+    },
+    {
+      "qid": "06f04340",
+      "qtype": "single-session-preference",
+      "ok": true,
+      "a": "Nice\u2014let\u2019s use what you\u2019re growing. Tell me what homegrown ingredients you have (vegetables, herbs, any fruit, eggs, etc.) and any dietary preferences or time you want to spend cooking. \n\nIf you want a quick suggestion assuming common home garden items (tomatoes, basil, leafy greens, zucchini, garlic, onions, maybe eggs), here are three themed options you can pick from:\n\n1) Rustic Mediterranean Dinner (\u224845\u201360 min)\n- Main: Pan-roasted lemon-garlic chicken or baked herb salmon (use rosemary/thyme if you have them).\n- Veg: Saut\u00e9ed zucchini and cherry tomatoes with garlic and torn basil, finished with olive oil and a squeeze of lemon.\n- Side: Warm crusty bread or quick herbed couscous.\n- Finish: Simple tomato\u2013basil salad (sliced tomatoes, basil, olive oil, salt, pepper) or grilled peaches with honey if you have fruit.\n\n2) Light, Fresh Vegetarian Meal (\u224830\u201340 min)\n- Main: Heirloom tomato, basil & burrata (or fresh mozzarella) on toasted bread \u2014 serve as main with big salad.\n- Veg/Salad: Mixed greens tossed with shaved zucchini ribbons, lemon vinaigrette, chives or scallions, and toasted seeds/nuts.\n- Extra: Herb omelet or frittata with garden greens and zucchini (easy protein and uses up produce).\n- Finish: Fresh fruit compote or yogurt with honey and chopped fresh herbs (mint).\n\n3) Comfort Bowl (\u224840\u201350 min)\n- Grain base: Rice, farro, or quinoa.\n- Protein: Pan-seared tofu, grilled chicken, or fried egg.\n- Veg topping: Roasted zucchini, tomatoes, onions and garlic tossed with soy or miso glaze; finish with chopped herbs (basil, parsley).\n- Sauce: Quick tahini-lemon or soy-sesame dressing.\n- Crunch: Crispy shallots or toasted seeds.\n\nTell me which direction you prefer and what you actually have in your garden and pantry, and I\u2019ll give you a tailored recipe and step\u2011by\u2011step cooking plan.",
+      "reason": "3/3 \u00b7 The model's answer focuses on using homegrown ingredients (cherry tomatoes, basil, mint implied), offers multiple dinner options that showcase garden produce, and asks for specifics. This matches the user's preference in the gold answer to emphasize recipes using homegrown tomatoes and herbs."
+    },
+    {
+      "qid": "75832dbd",
+      "qtype": "single-session-preference",
+      "ok": false,
+      "a": "Sure \u2014 based on your interests from our conversation (sustainability, social media, UX/design, medical AI, gardening, community-building, and event/entertainment planning), here are some recent or regularly held publications and conferences you might find relevant. I\u2019m listing types and well-known venues so you can look up the latest editions and calls for papers or attendees.\n\nUX / Product Design\n- Conferences: UXPA, Interaction (IxDA) Conference, CHI (ACM Conference on Human Factors in Computing Systems), UXDX\n- Publications / outlets: Smashing Magazine, Nielsen Norman Group articles, A List Apart, UX Collective\n\nEdTech & Community Learning\n- Conferences: ISTE Conference & Expo, OEB (Online Educa Berlin), EDUCAUSE Annual Conference\n- Publications: EDUCAUSE Review, Journal of Online Learning and Teaching (JOLT), EdSurge\n\nDigital Product / Social Media Marketing\n- Conferences: Social Media Marketing World (Social Media Examiner), Content Marketing World, SXSW (Strands on community & digital culture)\n- Publications: Social Media Examiner, Content Marketing Institute, Harvard Business Review (digital marketing pieces)\n\nSustainability / Regenerative Agriculture / Food Systems\n- Conferences: Regenerative Agriculture conferences (various regional events), Global Forum for Food and Agriculture (GFFA), Soil & Water Conservation Society meetings\n- Publications: Journal of Sustainable Agriculture, Frontiers in Sustainable Food Systems, Land Use Policy, Rodale/Regeneration-focused outlets\n\nMedical AI & Explainable AI\n- Conferences: MICCAI (Medical Image Computing & Computer Assisted Intervention), NeurIPS (esp. ML for health workshops), MIDL (Medical Imaging with Deep Learning), RSNA (radiology), AIES (AI, Ethics & Society)\n- Journals/ArXiv categories: IEEE Transactions on Medical Imaging, Medical Image Analysis, Nature Machine Intelligence, papers on arXiv (cs.CV, stat.ML, cs.AI)\n\nMachine Learning / Domain Adaptation / Self-Supervised Learning\n- Conferences: NeurIPS, ICML, ICLR, CVPR, ECCV\n- Publications: Proceedings of the above conferences; arXiv preprints; journals like JMLR\n\nGardening / Sustainable Landscaping / Rainwater Harvesting\n- Conferences / events: Local Master Gardener workshops, American Rainwater Catchment Systems Association (ARCSA) conferences, Xeriscape and native-plant symposiums\n- Publications / resources: Extension service guides (e.g., university extension), National Wildlife Federation native-plant resources, EPA WaterSense\n\nCommunity-Building & Nonprofit / Faith / Civic Collaboration\n- Conferences: Nonprofit Technology Conference (NTC), Civic Tech conferences, regional faith/denominational gatherings\n- Publications: Stanford Social Innovation Review, Nonprofit Quarterly\n\nPractical tips to find the latest:\n- Check the conference websites for the current year (most run annual editions).\n- Use Google Scholar / arXiv to follow recent papers and filter by date.\n- Follow key organizations and conference accounts on Twitter/LinkedIn for CFPs and program announcements.\n- For local/sector-specific meetings (gardening, community, faith-based networks), check university extension programs, local NGOs, and municipal event calendars.\n\nIf you tell me which of these areas you want to prioritize (or give me your location and timeframe), I can pull together a shorter, targeted list of upcoming conferences, journals, and direct links for this year.",
+      "reason": "0/3 \u00b7 The user specifically wanted recommendations focused on AI in healthcare, especially deep learning for medical image analysis. The model's answer lists many unrelated topics and only briefly mentions relevant conferences/journals; it does not prioritize or focus on recent papers/conferences in medical AI as requested."
+    },
+    {
+      "qid": "58bf7951",
+      "qtype": "single-session-user",
+      "ok": true,
+      "a": "You said you attended a production of The Glass Menagerie.",
+      "reason": "3/3 \u00b7 The model's answer matches the gold answer exactly, stating the play was The Glass Menagerie."
+    },
+    {
+      "qid": "66f24dbb",
+      "qtype": "single-session-user",
+      "ok": false,
+      "a": "You bought your sister a yellow dress and a pair of earrings to match.",
+      "reason": "0/3 \u00b7 The gold answer specifies only 'a yellow dress.' The model added 'a pair of earrings,' which is extra incorrect information."
+    },
+    {
+      "qid": "8a137a7f",
+      "qtype": "single-session-user",
+      "ok": true,
+      "a": "You replaced a Philips LED bulb in your bedside lamp.",
+      "reason": "3/3 \u00b7 The model answer conveys the same information: that a Philips LED bulb was replaced in the bedside lamp."
+    },
+    {
+      "qid": "8550ddae",
+      "qtype": "single-session-user",
+      "ok": true,
+      "a": "You tried a lavender gin fizz last weekend.",
+      "reason": "3/3 \u00b7 The model's answer exactly matches the gold answer: 'lavender gin fizz.'"
+    },
+    {
+      "qid": "gpt4_2c50253f",
+      "qtype": "temporal-reasoning",
+      "ok": false,
+      "a": "You wake up at 7:00 AM on Tuesdays and Thursdays.",
+      "reason": "0/3 \u00b7 The model's answer (7:00 AM) does not match the gold answer (6:45 AM)."
+    },
+    {
+      "qid": "gpt4_e072b769",
+      "qtype": "temporal-reasoning",
+      "ok": false,
+      "a": "You said earlier: \"I downloaded Ibotta\" and later mentioned using it; the memory shows you started using Ibotta during the grocery-planning conversation on 2023/04/16. Today's date in this session is 2023/05/06. That means you started using Ibotta about 2 weeks ago.",
+      "reason": "0/3 \u00b7 The model answered 'about 2 weeks ago,' but the gold answer is '3 weeks ago.' The model's calculation conflicts with the gold."
+    },
+    {
+      "qid": "af082822",
+      "qtype": "temporal-reasoning",
+      "ok": false,
+      "a": "You said you attended the friends and family sale at Nordstrom \"yesterday\" in the session where you mentioned picking up dresses and tops for 20% off and getting a $20 gift card. That message is dated in the memory: session 2022/10/23 (Sun) 10:23. Today's date in this context is 2022/12/01.\n\nFrom 2022-10-23 to 2022-12-01 is 39 days, which is 5 weeks and 4 days \u2014 so about 5 weeks ago.",
+      "reason": "0/3 \u00b7 Gold answer is 2 weeks; model computed ~5 weeks based on dates and gave 5 weeks \u2014 this contradicts the gold answer."
+    },
+    {
+      "qid": "gpt4_e061b84g",
+      "qtype": "temporal-reasoning",
+      "ok": false,
+      "a": "You said you completed the Spring Sprint Triathlon two weeks ago (it included a 20K bike ride).",
+      "reason": "0/3 \u00b7 The model's answer identifies a different event (Spring Sprint Triathlon with a 20K bike ride) that does not match the gold answer (company's annual charity soccer tournament)."
+    }
+  ]
+}
