@@ -1,6 +1,27 @@
+# The Referee and the Compiler
+
+**The program (2026-07-08).** One open-source system for engineers that does two things nobody
+does rigorously: (a) **referee** — evaluate agent memory with paired design, cached compiles,
+triple-judge majority, a full-context ceiling row, budget-matching, and amortization-aware cost
+accounting; (b) **compiler** — compile and *maintain* budgeted context packs (the CLAUDE.md
+replacement) behind that same regression gate. Launch paper: **the noise audit** — "your memory
+benchmark is measuring your harness" — quantify how much of published memory/prompt-optimization
+gains survive controlled reruns. Our receipts are first-person: identical config scored 33/67/75%
+held-out before controls, and our own harness produced a fake 24% for Mastra via a wrong read
+protocol. The field's receipts: the LoCoMo audit, the 93.4→73.8 reproductions, no neutral referee.
+
+**Phased plan (mirrored on the task board):**
+P1 *Calibrate* — ceiling row → corrected Mastra (full-context + their TS code) → controlled
+evolution reruns. P2 *Audit* — 3-5 OSS systems + a prompt-opt loop under controls; effect-size
+shrinkage table = paper 1. P3 *Ship* — harness + compiler + diff-invalidation/regression-gate
+as installable OSS + GitHub Action. P4 *Swing* — learned writer on open weights via Tinker
+(transfer DPO/GRPO; label-free next-interaction objective).
+
+---
+
 # ctxpack — a compiler for agent context
 
-**Canonical research + product document.** Supersedes the compiled-KV maintenance program (v1 of
+**Canonical research + product document (program details).** Supersedes the compiled-KV maintenance program (v1 of
 this file) after competitive verification. Last updated 2026-07-06. Running results in
 `ctxpack/results/`; code-substance notes in `MASTER-NOTES.md`; content pipeline in
 `research/content/PIPELINE.md`.
