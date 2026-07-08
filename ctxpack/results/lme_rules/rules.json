@@ -2,178 +2,155 @@
   {
     "id": "R1",
     "scope": "map",
-    "rule": "For each session, extract and store every explicit, atomic factual claim the user makes (named people, exact counts, purchases, specific venue or hostel names, job titles, trip plans, and direct preferences), attach the session date and a one-line source tag, and do not infer or generalize beyond the exact wording.",
-    "rationale": "Many failures come from missing explicit facts (names, counts, purchases) or from the system failing to record them. Mapping every explicit atomic claim with its date/source ensures later stages can answer fact queries without inventing or omitting details. Prohibiting inference at map time prevents adding unsupported details that later appear as hallucinations.",
+    "rule": "When creating a dated note from a session, extract and record each atomic fact as its own short statement that includes any explicit numeric values, proper names, or dates mentioned (e.g., counts, miles, purchase items, hostel name, person named) and keep the original date of the session with that statement.",
+    "rationale": "Many failures came from missing concrete facts (a coin added, hostel name, advisor name). Capturing atomic facts with their numeric values/names and the session date ensures later stages can find exact facts instead of answering 'I don't know.'",
     "provenance": [
       "69fee5aa",
-      "ba61f0b9",
+      "6c49646a",
       "e3fc4d6e",
       "7e00a6cb",
       "a89d7624",
       "0edc2aef",
+      "gpt4_8c8961ae",
       "6e984302"
     ],
     "added_iter": 1,
-    "status": "rejected",
-    "train_delta": -0.0833
+    "status": "active",
+    "train_delta": 0.25
   },
   {
     "id": "R2",
     "scope": "map",
-    "rule": "When the user expresses a preference or a memorable experience (e.g., likes 'live music' or 'enjoyed a bar encounter with Brandon Flowers'), record it as a concise preference/experience entry tied to the session date, but do not add related inferred hobbies, venues, or specifics unless the user explicitly stated them.",
-    "rationale": "Failures show the pack either omits personal preferences or adds unsupported specifics. Capturing only explicit preferences/experiences preserves useful personalization while preventing the introduction of unsupported details.",
+    "rule": "Record user preferences, experiences, and stated affinities exactly as given (brief paraphrase or quoted phrase) and do not add inferred context or extra specifics beyond what the user said.",
+    "rationale": "Answers that added unsupported personal details (extra experiences, invented travel dates, additional items) harmed accuracy. Storing only what was actually stated prevents downstream hallucination.",
     "provenance": [
       "69fee5aa",
-      "ba61f0b9",
+      "6c49646a",
       "e3fc4d6e",
       "7e00a6cb",
       "a89d7624",
       "0edc2aef",
+      "gpt4_8c8961ae",
       "6e984302"
     ],
     "added_iter": 1,
-    "status": "rejected",
-    "train_delta": -0.0833
+    "status": "active",
+    "train_delta": 0.25
   },
   {
     "id": "R3",
     "scope": "reduce",
-    "rule": "When merging entries about the same fact, keep the most recent explicit statement as authoritative for that fact, do not perform arithmetic or aggregations across dated counts unless the user explicitly recorded an aggregate, and mark any ambiguous or conflicting facts as 'conflict \u2014 multiple dated values' rather than choosing arbitrarily.",
-    "rationale": "Incorrect numeric answers (off-by-one) and lost/contradicted facts arose from incorrect merging/aggregation. Using the latest explicit value prevents accidental overwriting with older data; forbidding implicit arithmetic and flagging conflicts prevents producing false confident answers.",
+    "rule": "When merging dated notes, do not invent or infer new numeric values, dates, or item details; compute aggregate totals (sums, counts, total distance) only if every contributing dated note explicitly provides the necessary numeric value\u2014otherwise mark the aggregate as unknown and list the source notes used.",
+    "rationale": "Incorrect totals and invented specifics caused several failures. This rule forces aggregates to be provable from the map notes and prevents the pack from asserting unsupported counts or dates.",
     "provenance": [
       "69fee5aa",
-      "ba61f0b9",
+      "6c49646a",
       "e3fc4d6e",
       "7e00a6cb",
       "a89d7624",
       "0edc2aef",
+      "gpt4_8c8961ae",
       "6e984302"
     ],
     "added_iter": 1,
-    "status": "rejected",
-    "train_delta": -0.0833
+    "status": "superseded",
+    "train_delta": 0.25,
+    "superseded_by": "R5"
   },
   {
     "id": "R4",
     "scope": "map",
-    "rule": "Whenever the user asserts a concrete personal fact (counts, purchases, place names, people and their roles, explicit preferences, or recommendations), create a discrete dated note that records the fact exactly as a short factual statement (subject, predicate, value) with the original session date and session id; include numeric values exactly and preserve proper names and titles verbatim.",
-    "rationale": "Many failures come from missing explicit facts (counts, purchases, hostel name, advisor name) that were present earlier but not compiled into the memory pack. Capturing asserted facts verbatim, dated, and as structured short statements makes them retrievable and prevents later 'I don't know' answers when the information is actually present.",
+    "rule": "When a session mentions a named person or organization in connection with a specific role, title, recommendation, or fact (e.g., 'President's Chief Advisor for Science and Technology: Dr. X', a recommended hostel name, or 'manager Rachel led team Y'), extract and record an atomic dated statement that links the name and the role/title/recommendation and cite the source/session date.",
+    "rationale": "Failures show the reducer claims 'no record' of explicit person-title links and specific recommendations. R1 demands extraction of proper names but does not require recording explicit person\u2194role or recommendation pairings; this map rule ensures role/title/recommendation facts are captured as distinct atomic notes so downstream merge/answers can retrieve them.",
     "provenance": [
       "69fee5aa",
       "ba61f0b9",
       "e3fc4d6e",
       "7e00a6cb",
-      "a89d7624",
-      "0edc2aef",
-      "6e984302"
+      "0edc2aef"
     ],
     "added_iter": 2,
-    "status": "active",
-    "train_delta": 0.0833
+    "status": "rejected",
+    "train_delta": -0.1667
   },
   {
     "id": "R5",
-    "scope": "map",
-    "rule": "If the user expresses a stable preference (e.g., travel preferences, venue types, dislikes) or a repeated personal interest, record it as a short dated preference note prefixed with 'pref:' and do not generalize or extrapolate beyond what was explicitly stated.",
-    "rationale": "Failures include either missing preference data (hotel view/top amenities) or overly broad extrapolations. Explicit, labeled preference notes make it clear what may be used for personalization while avoiding unsupported assumptions.",
+    "scope": "reduce",
+    "rule": "When merging dated numeric statements about the same item/category, preserve all original dated numeric statements and, if at least one numeric value exists, compute and include an explicit aggregated value (sum or count) labeled as 'computed from' with the list of contributing dated notes; if some relevant notes lack numeric values, mark which source notes lacked numbers rather than treating the aggregate as wholly unknown.",
+    "rationale": "Current rule R3 is too conservative and led to answers that claimed 'unknown' or produced incorrect counts. Keeping all source numeric statements and exposing a computed aggregate with provenance avoids dropping valid numerical facts and makes it clear when some notes are missing numeric data.",
     "provenance": [
       "69fee5aa",
       "ba61f0b9",
       "e3fc4d6e",
       "7e00a6cb",
-      "a89d7624",
-      "0edc2aef",
-      "6e984302"
+      "0edc2aef"
     ],
     "added_iter": 2,
-    "status": "active",
-    "train_delta": 0.0833
+    "status": "rejected",
+    "train_delta": -0.1667
   },
   {
     "id": "R6",
-    "scope": "reduce",
-    "rule": "When merging notes about the same fact or entity, keep the most recent explicit factual statement as the canonical pack entry but also retain previous dated variants as provenance; never synthesize or infer undeclared details when conflicting or absent\u2014if only older or ambiguous mentions exist, preserve them rather than inventing specifics.",
-    "rationale": "Errors arose from missing or changed facts (counts, names) and from hallucinated inferences. Choosing the most recent explicit note as canonical while keeping provenance prevents loss of correct latest data and avoids inventing unsupported details.",
+    "scope": "map",
+    "rule": "When creating dated notes, extract and record every explicit enumerated or countable item and every explicit named recommendation or role as its own atomic statement (e.g., inventory counts, team member counts, counts of items, named hostel/hotel recommendations, named persons with titles), preserving exact numeric values, exact names, and the original session date.",
+    "rationale": "Failures show that numeric counts, roster sizes, named recommendations, and titled persons were not captured into the pack. This rule forces the map stage to capture any explicit counts, enumerations, and named recommendations/titles so those facts are available later for answering direct factual queries.",
     "provenance": [
       "69fee5aa",
       "ba61f0b9",
       "e3fc4d6e",
       "7e00a6cb",
-      "a89d7624",
-      "0edc2aef",
-      "6e984302"
+      "0edc2aef"
     ],
-    "added_iter": 2,
-    "status": "superseded",
-    "train_delta": 0.0833,
-    "superseded_by": "R8"
+    "added_iter": 3,
+    "status": "rejected",
+    "train_delta": -0.0833
   },
   {
     "id": "R7",
-    "scope": "map",
-    "rule": "When the user states any concrete numeric, membership, or identity fact (counts, quantities, team composition numbers, explicit names or titles, purchases), create a dated discrete note that (a) records the exact value verbatim, (b) classifies the note with a type label such as 'count', 'identity', or 'purchase', and (c) marks an explicitness flag (explicit/implicit) so downstream stages can treat exact explicit statements as authoritative.",
-    "rationale": "Many failures arise from numeric or identity facts being recorded but not classified or flagged as explicit, which makes them easy to omit or hedge when answering. Explicit type labels and an explicitness flag let the reduce stage identify authoritative facts (counts, names, purchases) and surface them directly.",
+    "scope": "reduce",
+    "rule": "When merging dated notes about the same factual subject (same inventory, same person/title, same recommended place), keep all distinct dated statements but select the single most recent explicit statement as the canonical fact for quick answers; when multiple numeric statements exist, do not average\u2014use the latest numeric value and record its source date.",
+    "rationale": "Pack-level answers must reflect the latest explicit facts rather than omit or average them. Several failures came from missing or wrong counts and names because the merge step dropped or obscured the most recent explicit statement. This rule keeps historical entries while ensuring the canonical value used for answers is the most recent explicit one.",
     "provenance": [
       "69fee5aa",
       "ba61f0b9",
       "e3fc4d6e",
       "7e00a6cb",
-      "0edc2aef",
-      "6e984302"
+      "0edc2aef"
     ],
     "added_iter": 3,
-    "status": "active",
-    "train_delta": 0.0
+    "status": "rejected",
+    "train_delta": -0.0833
   },
   {
     "id": "R8",
-    "scope": "reduce",
-    "rule": "When merging notes, if there exists any most recent dated note flagged explicit for a given entity+type (e.g., a 'count' or 'identity' note), promote that note as the canonical pack entry and answer user queries about that fact directly and without hedging; keep older dated variants only as provenance. Separately, if there are two or more dated 'pref:' notes about the same topic that are consistent, synthesize a single stable preference entry summarizing them for use in recommendations.",
-    "rationale": "Existing guidance to keep the most recent explicit statement is too vague in practice and led to either omission or hedged answers. This rule forces the reducer to produce and use a single canonical explicit fact (for counts/names/purchases) so answers are confident and accurate, and to consolidate repeated preference notes into a usable stable preference for suggestions.",
+    "scope": "map",
+    "rule": "When creating a dated note, record every explicit named entity and title (people, organizations, place names, product/hostel/hotel names) and every explicit factual assertion (e.g., counts, dates, job titles, named roles) verbatim as separate atomic statements, even if they occur only once or seem incidental.",
+    "rationale": "Training failures show specific named facts (person names, hostel names, job titles) and explicit counts were missing from the compiled pack. Ensuring every explicit named entity and factual assertion is captured as its own atomic statement prevents one-off but important facts from being dropped at the map stage.",
     "provenance": [
       "69fee5aa",
       "ba61f0b9",
       "e3fc4d6e",
       "7e00a6cb",
-      "0edc2aef",
-      "6e984302"
+      "0edc2aef"
     ],
-    "added_iter": 3,
-    "status": "active",
-    "train_delta": 0.0
+    "added_iter": 4,
+    "status": "rejected",
+    "train_delta": -0.3333
   },
   {
     "id": "R9",
-    "scope": "map",
-    "rule": "When the user reports or refers to a factual detail from an external source (an article, news item, recommendation, or other third-party content) as something they read, discussed, or want to remember, create a dated discrete note that records that fact verbatim and mark it explicit (include source label if provided, e.g., 'article', 'email', or URL).",
-    "rationale": "Many failures came from facts the user mentioned only as 'in that article' or 'you recommended' (e.g., a named person in an article, a hostel name). Those are external facts the user treats as part of their memory context and should be captured as explicit dated notes so downstream merging can surface them.",
+    "scope": "reduce",
+    "rule": "When merging map notes into the final pack, preserve all unique atomic factual statements (including numeric counts and named entities) from the map stage; if budget constraints require removal, preferentially keep atomic factual statements and drop or compress subjective, ambiguous, or conversational material instead.",
+    "rationale": "The model omitted concrete facts and counts in the final pack, causing incorrect 'I don't know' answers. This rule ensures that verifiable facts and numbers survive the reduce stage, and that any trimming favors removing non-factual content rather than dropping explicit facts.",
     "provenance": [
       "69fee5aa",
+      "ba61f0b9",
       "e3fc4d6e",
       "7e00a6cb",
-      "0edc2aef",
-      "36580ce8",
-      "6e984302"
+      "0edc2aef"
     ],
     "added_iter": 4,
     "status": "rejected",
-    "train_delta": -0.0833
-  },
-  {
-    "id": "R10",
-    "scope": "map",
-    "rule": "When the user affirms, confirms, accepts, or corrects a specific factual statement (including counts, diagnoses, purchases, or a previously suggested recommendation), create or update a dated discrete note recording the confirmed fact verbatim and mark it explicit; if this confirms or corrects an earlier note, link the new note to the prior note id for provenance.",
-    "rationale": "Failures show the system missed facts users explicitly confirmed (counts, purchases, health issue, recommendation acceptance). Recording confirmations as explicit updates ensures the most recent user-affirmed value will be promoted by reduce-stage logic.",
-    "provenance": [
-      "69fee5aa",
-      "e3fc4d6e",
-      "7e00a6cb",
-      "0edc2aef",
-      "36580ce8",
-      "6e984302"
-    ],
-    "added_iter": 4,
-    "status": "rejected",
-    "train_delta": -0.0833
+    "train_delta": -0.3333
   }
 ]

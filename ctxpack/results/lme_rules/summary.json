@@ -2,65 +2,64 @@
   "history": [
     {
       "iter": 0,
-      "train_acc": 0.4166666666666667,
-      "held_acc": 0.75,
+      "train_acc": 0.3333333333333333,
+      "held_acc": 0.5833333333333334,
       "n_active_rules": 0
     },
     {
       "iter": 1,
-      "train_acc": 0.4166666666666667,
-      "held_acc": 0.6666666666666666,
-      "n_active_rules": 0,
+      "train_acc": 0.5833333333333334,
+      "held_acc": 0.5,
+      "n_active_rules": 3,
       "proposed": [
         "R1",
         "R2",
         "R3"
       ],
-      "verdict": "REJECTED",
-      "delta": -0.0833,
-      "secs": 865
+      "verdict": "ADMITTED",
+      "delta": 0.25,
+      "secs": 882
     },
     {
       "iter": 2,
-      "train_acc": 0.5,
-      "held_acc": 0.5,
-      "n_active_rules": 3,
+      "train_acc": 0.5833333333333334,
+      "held_acc": 0.4166666666666667,
+      "n_active_rules": 2,
       "proposed": [
         "R4",
-        "R5",
-        "R6"
+        "R5"
       ],
-      "verdict": "ADMITTED",
-      "delta": 0.0833,
-      "secs": 1055
+      "verdict": "REJECTED",
+      "delta": -0.1667,
+      "secs": 929
     },
     {
       "iter": 3,
-      "train_acc": 0.5,
-      "held_acc": 0.5833333333333334,
-      "n_active_rules": 4,
-      "proposed": [
-        "R7",
-        "R8"
-      ],
-      "verdict": "ADMITTED",
-      "delta": 0.0,
-      "secs": 980
-    },
-    {
-      "iter": 4,
-      "train_acc": 0.5,
+      "train_acc": 0.5833333333333334,
       "held_acc": 0.4166666666666667,
-      "n_active_rules": 4,
+      "n_active_rules": 2,
       "proposed": [
-        "R9",
-        "R10"
+        "R6",
+        "R7"
       ],
       "verdict": "REJECTED",
       "delta": -0.0833,
-      "secs": 19384
+      "secs": 508
+    },
+    {
+      "iter": 4,
+      "train_acc": 0.5833333333333334,
+      "held_acc": 0.4166666666666667,
+      "n_active_rules": 2,
+      "proposed": [
+        "R8",
+        "R9"
+      ],
+      "verdict": "REJECTED",
+      "delta": -0.3333,
+      "secs": 588
     }
   ],
-  "base_train": 0.4166666666666667,
+  "base_train": 0.3333333333333333,
   "note": "rule accretion with gated admission; same seed/splits as evolve_writer"
 }
