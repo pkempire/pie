@@ -14,8 +14,50 @@ protocol. The field's receipts: the LoCoMo audit, the 93.4→73.8 reproductions,
 P1 *Calibrate* — ceiling row → corrected Mastra (full-context + their TS code) → controlled
 evolution reruns. P2 *Audit* — 3-5 OSS systems + a prompt-opt loop under controls; effect-size
 shrinkage table = paper 1. P3 *Ship* — harness + compiler + diff-invalidation/regression-gate
-as installable OSS + GitHub Action. P4 *Swing* — learned writer on open weights via Tinker
-(transfer DPO/GRPO; label-free next-interaction objective).
+as installable OSS + GitHub Action. P4 *The swing* — **Corpus-RLVR** (below).
+
+## P4 — Corpus-RLVR: the R1 recipe for corpus expertise (the breakthrough bet)
+
+**The gap, at the intersection of the training literature and ours.** The frontier training
+stack (2026 survey: 3D-parallel pre-training, RLHF/DPO, GRPO/RLVR, distillation, PEFT, TTC) has
+a working recipe for *reasoning* (DeepSeek-R1: cold-start SFT → RLVR → rejection sampling →
+distill; AIME 15.6→71.0) — and **no working recipe for turning a specific corpus into expert
+weights.** "Continual pre-training for domain adaptation" is listed as unlocked by open weights,
+but the empirical record says naive CPT on a fresh corpus *fails* and synthetic-QA SFT
+*memorizes without competence* (Machine Studying, 2026 — the only thing that worked was a
+studied context artifact). RLVR cracked reasoning because math/code have verifiers. Corpus
+knowledge never had one. **That's the missing chapter of both literatures.**
+
+**The claim.** The corpus IS the verifier. Rewards for knowledge-RLVR can be generated
+deterministically from the corpus itself: string/AST-checkable questions from code, containment
+and provenance checks, git-diff freshness oracles — exactly the machinery this repo spent six
+months building, along with the referee discipline (paired, cached, triple-judge, ceiling rows)
+that makes reward signals trustworthy. In RLVR the verifier is the moat; the RL loop is now
+commodity (Tinker GRPO, QLoRA single-GPU).
+
+**The recipe (R1 stages → corpus expertise):**
+1. *Cold start*: self-study SFT — study data generated from the corpus (our compile/consolidation
+   machinery is the data engine; Cartridges' self-study is the KV-space precedent, we target weights).
+2. *RLVR*: GRPO on Qwen3-4B (Tinker, QLoRA) with corpus-verifiable rewards. Anti-memorization by
+   design: evaluation uses **held-out question generators** (novel question styles, not held-out
+   items from the training generator) and the competence metric is **accuracy at matched
+   inference compute** (Machine Studying's expertise), closed-book and budget-matched.
+3. *Rejection sampling*: keep high-reward study trajectories as new SFT data (R1 stage 3 analog).
+4. *Distill/compose*: on-policy distillation from teacher-with-corpus into student-without;
+   output = an **expert adapter** (LoRA) per corpus.
++ *Continual chapter*: on corpus diff, incremental RLVR on the delta + unlearning of superseded
+  facts (the supersession machinery, now in weights) — measured with rot curves. The revision
+  problem, finally with a verifier.
+
+**Baselines to beat at matched inference compute:** long-context ICL · RAG · the studied
+cheatsheet (current champion) · our pack+escalate. **Falsifier:** if expert adapters can't beat
+the cheatsheet at matched cost on held-out question styles, publish the rigorous negative (*why*
+knowledge-RLVR memorizes — credible because of the referee). **Product:** `expert adapters` —
+compile a repo into a LoRA your local model loads; continual updates per commit.
+
+Everything already built slots in: question harness = the verifier · compile machinery = the
+data engine · pack/escalate numbers = the token-space baselines · referee = the credibility ·
+temporal/supersession = the continual chapter · Tinker/Qwen3 = the substrate.
 
 ---
 
