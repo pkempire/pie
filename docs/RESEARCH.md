@@ -28,12 +28,31 @@ but the empirical record says naive CPT on a fresh corpus *fails* and synthetic-
 studied context artifact). RLVR cracked reasoning because math/code have verifiers. Corpus
 knowledge never had one. **That's the missing chapter of both literatures.**
 
-**The claim.** The corpus IS the verifier. Rewards for knowledge-RLVR can be generated
-deterministically from the corpus itself: string/AST-checkable questions from code, containment
-and provenance checks, git-diff freshness oracles — exactly the machinery this repo spent six
-months building, along with the referee discipline (paired, cached, triple-judge, ceiling rows)
-that makes reward signals trustworthy. In RLVR the verifier is the moat; the RL loop is now
-commodity (Tinker GRPO, QLoRA single-GPU).
+**The claim.** The corpus IS the verifier — but the verifier must be **execution-grounded, not
+string-grounded**. A regex-checkable reward trains a regex-answering expert (the verifier defines
+what the policy learns; string-match rewards bound learnable knowledge to greppable trivia — the
+recall trap). The verifier hierarchy, strongest first:
+
+- **Tier 1 — execution.** Auto-generate tasks from the repo whose reward is computed by *running
+  it*: masked-function reconstruction (delete a body; reward = the repo's real tests pass —
+  R2E/SWE-smith-style task synthesis); test-outcome prediction (will test T pass at commit C? —
+  run it); mutant localization/repair (inject a mutation; reward = tests green again); and
+  answer-by-probe (the model answers a question by writing an executable assertion, which is run).
+- **Tier 2 — history as ground truth.** The repo's own future is a free label: given the issue,
+  predict which files the fixing commit touched; given a diff, predict CI breakage — verified
+  against what actually happened. This is the label-free "next-interaction" objective,
+  instantiated on code where the next interaction is the next commit.
+- **Tier 3 — generative verifier**, with our variance controls, only for non-executable
+  knowledge; never the primary training signal. Regex/string checks survive only as harness
+  smoke-tests, never as reward.
+
+Honest adjacency: R2E, SWE-Gym, SWE-smith, and SWE-RL auto-generate executable tasks / RL on
+software-evolution data to train **general** coding ability across many repos. **Our delta:
+per-corpus expertise** — train on ONE repo's generated tasks to make a small model expert *in
+that repo* (closed-book / budget-matched vs studied-cheatsheet and RAG), with continual updates
+per commit. Nobody ships per-repo expert adapters with execution-verified training. The referee
+discipline (paired, cached, ceilings) remains our credibility layer; the RL loop is commodity
+(Tinker GRPO, QLoRA single-GPU).
 
 **The recipe (R1 stages → corpus expertise):**
 1. *Cold start*: self-study SFT — study data generated from the corpus (our compile/consolidation
