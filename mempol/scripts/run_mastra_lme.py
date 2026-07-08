@@ -128,6 +128,8 @@ def main():
                 class _T:  # minimal trace shim
                     answer = ans
                     steps: list = []
+                    n_retrievals = 0
+                    cost_tokens = 0
                 trace = _T()
             else:
                 policy = PolicyCls()
