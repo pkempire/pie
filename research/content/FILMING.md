@@ -2,6 +2,8 @@
 
 **FULL SCRIPT (use this, not the essay, as the spoken backbone): `research/content/video-script-shape-of-memory.md`** — zero-to-expert walk of every method with [SHOW] cues, timings, per-method implement-it steps, and the two framing corrections baked in (read/write = economics not ceiling; stores-knowledge vs learns-process). Map + buyer's guide revamped 07-22: map nodes now carry ◆/⚙ badges and "run it yourself" setups; guide has the play-along repo table (§6).
 
+**THE FILMING SURFACE (2026-07-22): Miro whiteboard — https://miro.com/app/board/uXjVH5PY6Cc=/** — 12 scenes left→right mirroring the script: 0 control-room (off-camera: approved numbers, do-not-say, paper order) · 1 hook · 2 where-knowledge-lives · 3 the map · 4 the two distinctions · 5 text tier (7 method cards) · 6 recall≠competence · 7 cache tier · 8 weights tier · 9 benchmark confession · 10 this-week + play-along repo table · 11 what-we-built close. Screenshare this and scroll; the HTML maps below are now b-roll/thumbnail assets only.
+
 ## Assets (paths + live URLs)
 - **Field map, grid view**: `research/content/memory-map.html` · live: claude.ai/code/artifact/97163d29-90b1-4c34-a2f6-e1c50679642d — hoverable approaches w/ sources; the "everyone's in one row" reveal box
 - **Field map, scatter view**: `research/content/memory-map-scatter.html` · live: claude.ai/code/artifact/1db6528e-ce6e-4fb7-8a5b-5f07b3d0c87e — better for camera pans
