@@ -3,7 +3,7 @@ title: "Choosing Agent Memory: A Practical Guide for Operators"
 subtitle: "What the memory landscape actually offers, what it trades off, and how to pick — for CTOs, founders, and product leaders"
 author: "Working Memory"
 companion: "The Shape of Memory (interactive field map)"
-status: "v2 — 2026-07-04 — actionable pass"
+status: "v3 — 2026-07-22 — currency + play-along pass"
 audience: "technical decision-makers evaluating agent memory; assumes no ML research background"
 ---
 
@@ -41,7 +41,7 @@ The reason this matters was made concrete by a 2026 study called ["Machine Study
 2. **Fine-tuning on your data didn't work either.** Drilling the model on your corpus improved rote recall and did *not* make it more competent at the actual task. Memorization is not skill.
 3. **What worked was a "studied" artifact** — a compact, worked-through summary the model built by actively processing the material before questions arrived. Consolidation, done well, is the thing that produced competence.
 
-The takeaway for a buyer: **if your goal is recall, buy a memory product today. If your goal is genuine competence in your domain, understand that no product on the market fully delivers it yet** — the closest lever is a strong consolidation/"studying" step, and that capability is still nascent. Don't let a vendor's demo convince you that retrieval is understanding.
+The takeaway for a buyer: **if your goal is recall, buy a memory product today — that market is mature and well served. If your goal is genuine competence in your domain, the good news is that as of mid-2026 the recipe is public**: a strong consolidation/"studying" step (buyable now in DeepWiki-style tools and background-consolidation products), self-study caches with open code ([Cartridges](https://github.com/HazyResearch/cartridges)), and RL-based continual training that forgets ~4× less than standard fine-tuning. What the frontier labs are doing is no longer a secret — it's a stack you can assemble (sections 5, 6 and 8). The only trap left is letting a vendor's demo convince you that retrieval alone is understanding.
 
 **In practice — a 60-second test to tell which you need.** Take ten real questions your agent will face and sort them into two piles: could a sharp new hire answer this by *looking it up* in your docs, or would they need to have *worked here a while* to get it right? The lookups are recall — buy a product, you're well served. The "you'd have to understand how this place actually works" questions are competence — and those are exactly the ones today's products quietly miss. If most of your value sits in the second pile, no amount of retrieval tuning gets you there; skip to the consolidation and self-study approaches in sections 5 and 8.
 
@@ -110,9 +110,26 @@ The rough crossover: **long context wins for bounded, single-session, or low-que
 - **Buy a token-memory vendor** if you need cross-session recall now, you're on a closed API, and your data mostly consists of facts to retrieve. This is most teams. Pick on operational fit — latency, pricing (watch for graph features gated behind steep tiers), self-host option, license, and whether their benchmark numbers were *independently reproduced* (only Mastra and Hindsight can currently claim that; treat the rest as marketing).
 - **Lean on long context + caching** if your history fits the window or your query volume is low. Cheaper and more accurate than it gets credit for.
 - **Build on the cache/weight tiers** only if you already run open-weight models and have ML engineers — the payoff (cost at scale, eventual real learning) is real but so is the cost.
-- **Wait / watch** for the competence layer. The thing that will actually make agents *learn your domain* — optimized consolidation and trained memory policies — is the active research frontier, not a purchasable product. Budget for it as a 2026–2027 capability, not a today one.
+- **Pilot the competence layer now.** The thing that makes agents *learn your domain* — studied artifacts, self-study caches, trained memory policies — crossed from papers into runnable code over the past year: Cartridges' implementation is open, every serious product now runs background consolidation, and RL-style updates have largely solved the forgetting problem that made continual fine-tuning scary (RFT loses ~2% of prior capability where SFT loses ~10%). It isn't a shrink-wrapped product yet, which is precisely why it's an edge: a small team that assembles the stack below is ahead of the market rather than waiting for it.
 
-**In practice — the starter stack if you build.** You don't need a research lab. The working setup today: an open-weight model (Qwen3, Llama, or a GLM-class model) served on **vLLM** — which gives you prefix caching essentially for free — with LoRA fine-tuning via standard tooling (PEFT/Unsloth, or a managed trainer like Tinker) and the open **Cartridges** implementation when you want a self-study cache over a specific corpus. Rented H100 time by the hour is enough to start; a first Cartridge or domain LoRA is a days-to-weeks project for one competent ML engineer, not a quarter. Start with one narrow, high-value corpus (your best-documented service, your most-queried policy set) and measure it against the long-context baseline from section 4.
+**In practice — the starter stack if you build.** You don't need a research lab. The working setup today: an open-weight model (Qwen3, Llama, or a GLM-class model) served on [vLLM](https://github.com/vllm-project/vllm) — which gives you prefix caching essentially for free — with LoRA fine-tuning via standard tooling ([Unsloth](https://github.com/unslothai/unsloth)/PEFT, or a managed trainer like [Tinker](https://thinkingmachines.ai/tinker)) and the open [Cartridges](https://github.com/HazyResearch/cartridges) implementation when you want a self-study cache over a specific corpus. Rented H100 time by the hour is enough to start; a first Cartridge or domain LoRA is a days-to-weeks project for one competent ML engineer, not a quarter. Start with one narrow, high-value corpus (your best-documented service, your most-queried policy set) and measure it against the long-context baseline from section 4.
+
+**Play along — every rung of the ladder, with prereqs.** Each approach in this guide has open code you can run this week; effort is honest, not aspirational:
+
+| Approach | Code | Prereqs | First step |
+|---|---|---|---|
+| Vector RAG | [mem0](https://github.com/mem0ai/mem0) or ~20 lines of chromadb | API key, an afternoon | embed chunks → cosine top-k into the prompt |
+| Consolidation / reflection | [generative_agents](https://github.com/joonspk-research/generative_agents) (pattern) | API key, no framework | nightly LLM pass: "what durable facts did today produce?" → notes file |
+| Temporal knowledge graph | [graphiti](https://github.com/getzep/graphiti) | Neo4j in docker, a weekend | `pip install graphiti-core`, ingest a week of logs, ask "what changed?" |
+| Self-editing memory (MemGPT) | [letta](https://github.com/letta-ai/letta) | API key, an afternoon | give the agent memory-edit + archival-search tools and a paging rule |
+| Linked atomic notes | [basic-memory](https://github.com/basicmachines-co/basic-memory) | any MCP client, an afternoon | markdown notes with wikilinks, agent maintains them |
+| Agent wiki | Claude Code `/init` | you already have it | make the agent *update* CLAUDE.md after sessions, not just read it |
+| Read-time reconstruction | [dspy](https://github.com/stanfordnlp/dspy) (`dspy.RLM`) | code sandbox, an evening | point it at raw logs, ask questions, nothing pre-computed |
+| Prompt/prefix caching | [vLLM](https://github.com/vllm-project/vllm) or provider flag | minutes | stable-part-first prompt, byte-identical prefix (section 4) |
+| Self-study KV cache | [cartridges](https://github.com/HazyResearch/cartridges) | open-weight model + 1 rented GPU, a serious weekend | run self-study on one corpus, load the cartridge at inference |
+| Fine-tune / LoRA | [unsloth](https://github.com/unslothai/unsloth) | consumer GPU, a weekend | QLoRA on generated Q&A about the corpus — never raw next-token drilling |
+| Distill context → weights | [trl](https://github.com/huggingface/trl) (GKD) or [Tinker](https://thinkingmachines.ai/tinker) | teacher + open student, serious | train the student to match a teacher that has the notes in context |
+| RL memory policy | [verl](https://github.com/volcengine/verl) | GPU + RL experience, serious | GRPO with reward = "did the eventual answer improve after this write?" |
 
 ---
 

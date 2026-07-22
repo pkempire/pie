@@ -1,4 +1,6 @@
-# Shape of Memory — filming & editing kit (2026-07-09)
+# Shape of Memory — filming & editing kit (2026-07-09, updated 07-22)
+
+**FULL SCRIPT (use this, not the essay, as the spoken backbone): `research/content/video-script-shape-of-memory.md`** — zero-to-expert walk of every method with [SHOW] cues, timings, per-method implement-it steps, and the two framing corrections baked in (read/write = economics not ceiling; stores-knowledge vs learns-process). Map + buyer's guide revamped 07-22: map nodes now carry ◆/⚙ badges and "run it yourself" setups; guide has the play-along repo table (§6).
 
 ## Assets (paths + live URLs)
 - **Field map, grid view**: `research/content/memory-map.html` · live: claude.ai/code/artifact/97163d29-90b1-4c34-a2f6-e1c50679642d — hoverable approaches w/ sources; the "everyone's in one row" reveal box
